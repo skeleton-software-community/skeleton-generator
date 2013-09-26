@@ -1,15 +1,17 @@
 package com.skeleton.generator.model.enumeration;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public enum FileType {
-	JAVA ("JAVA", ".java", "UTF8", "/* Specific Code Start */", "/* Specific Code End */"),
-    SQL ("SQL", ".sql", "UTF8", "/* Specific Code Start */", "/* Specific Code End */"),
-    XML ("XML", ".xml", "UTF8", "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
-    XHTML ("XHTML", ".xhtml", "UTF8", "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
-    BAT ("BAT", ".bat", "UTF8", "# Specific Code Start", "# Specific Code End"),
-    PROPERTIES ("PROPERTIES", ".properties", "UTF8", "-- Specific Code Start --", "-- Specific Code End --");
+	JAVA ("JAVA", ".java", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
+    SQL ("SQL", ".sql", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --"),
+    XML ("XML", ".xml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
+    XHTML ("XHTML", ".xhtml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
+    BAT ("BAT", ".bat", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
+    PROPERTIES ("PROPERTIES", ".properties", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --");
 	
 	private static final Map<String, FileType> reverseMap = new HashMap<String, FileType>();
 	static{
@@ -20,11 +22,11 @@ public enum FileType {
 	
 	private String value;
 	private String extension;
-	private String encoding;
+	private Charset encoding;
 	private String specificCodeStartMark;
 	private String specificCodeEndMark;
 	
-	private FileType(String value, String extension, String encoding, String specificCodeStartMark, String specificCodeEndMark){
+	private FileType(String value, String extension, Charset encoding, String specificCodeStartMark, String specificCodeEndMark){
 		this.value = value;
 		this.extension = extension;
 		this.encoding = encoding;
@@ -40,7 +42,7 @@ public enum FileType {
 		return extension;
 	}
 	
-	public String getEncoding() {
+	public Charset getEncoding() {
 		return encoding;
 	}
 	
