@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import com.skeleton.generator.bl.command.file.impl.JavaFileWriteCommand;
-import com.skeleton.generator.bl.command.file.interfaces.FileWriteCommand;
+import com.skeleton.generator.bl.command.file.impl.java.JavaFileWriteCommand;
 import com.skeleton.generator.model.om.Bean;
 import com.skeleton.generator.model.om.Property;
 
@@ -42,6 +41,7 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine("* auto generated view bean class file");
         writeLine("* <br/>basic representation of what is going to be considered as model in MVC patterns");
+        writeLine("* <br/>write modifications between specific code marks");
         writeLine("* <br/>processed by skeleton-generator");
         writeLine("*/");
         writeLine("public class " + this.bean.viewClassName + " implements Serializable {");

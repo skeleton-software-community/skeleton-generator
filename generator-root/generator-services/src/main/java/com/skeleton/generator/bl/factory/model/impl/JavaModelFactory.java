@@ -1,4 +1,4 @@
-package com.skeleton.generator.bl.factory.impl;
+package com.skeleton.generator.bl.factory.model.impl;
 
 import java.util.ArrayList;
 
@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.skeleton.generator.bl.factory.interfaces.ModelFactory;
-import com.skeleton.generator.bl.factory.interfaces.PackageFactory;
-import com.skeleton.generator.bl.factory.interfaces.ProjectFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.ModelFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.PackageFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.ProjectFactory;
 import com.skeleton.generator.model.metadata.PackageMetaData;
 import com.skeleton.generator.model.metadata.ProjectMetaData;
 import com.skeleton.generator.model.om.Model;

@@ -1,10 +1,10 @@
-package com.skeleton.generator.bl.factory.impl;
+package com.skeleton.generator.bl.factory.model.impl;
 
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import com.skeleton.generator.bl.factory.interfaces.TableFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.TableFactory;
 import com.skeleton.generator.bl.helper.naming.SQLNaming;
 import com.skeleton.generator.model.enumeration.DataType;
 import com.skeleton.generator.model.enumeration.Format;

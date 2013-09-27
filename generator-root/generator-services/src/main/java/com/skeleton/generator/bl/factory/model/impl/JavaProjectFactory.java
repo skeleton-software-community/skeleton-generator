@@ -1,4 +1,4 @@
-package com.skeleton.generator.bl.factory.impl;
+package com.skeleton.generator.bl.factory.model.impl;
 
 import javax.annotation.Resource;
 
@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.skeleton.generator.bl.factory.interfaces.ModelFactory;
-import com.skeleton.generator.bl.factory.interfaces.ProjectFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.ModelFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.ProjectFactory;
 import com.skeleton.generator.model.enumeration.DatabaseEngine;
 import com.skeleton.generator.model.enumeration.SkeletonType;
 import com.skeleton.generator.model.metadata.ProjectMetaData;

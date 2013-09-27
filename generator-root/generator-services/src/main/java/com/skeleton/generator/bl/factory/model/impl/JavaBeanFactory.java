@@ -1,10 +1,10 @@
-package com.skeleton.generator.bl.factory.impl;
+package com.skeleton.generator.bl.factory.model.impl;
 
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import com.skeleton.generator.bl.factory.interfaces.BeanFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.BeanFactory;
 import com.skeleton.generator.bl.helper.naming.JavaClassNaming;
 import com.skeleton.generator.model.enumeration.DataType;
 import com.skeleton.generator.model.enumeration.RelationType;
@@ -30,7 +30,17 @@ public class JavaBeanFactory implements BeanFactory {
         table.myPackage.beanList.add(bean);
         bean.myPackage = table.myPackage;
         bean.isComponent = false;
+        
         bean.cardinality = table.cardinality;
+        bean.interfaces = tableMetaData.getInterfaceList();
+        bean.annotations = tableMetaData.getAnnotationList();
+        bean.createEnabled = tableMetaData.isCreateEnabled();
+        bean.updateEnabled = tableMetaData.isUpdateEnabled();
+        bean.deleteEnabled = tableMetaData.isDeleteEnabled();
+        bean.hasComboBox = tableMetaData.isComboxable();
+        bean.detailRendering = tableMetaData.getDetailRendering();
+        bean.listRendering = tableMetaData.getListRendering();
+        
         bean.className = JavaClassNaming.getClassName(table.originalName);
         bean.objectName = JavaClassNaming.getObjectName(table.originalName);
         bean.viewClassName = bean.className + "View";
