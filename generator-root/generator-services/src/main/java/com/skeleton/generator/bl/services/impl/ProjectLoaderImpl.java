@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.skeleton.generator.bl.factory.interfaces.ProjectFactory;
+import com.skeleton.generator.bl.factory.model.interfaces.ProjectFactory;
 import com.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import com.skeleton.generator.exception.InvalidProjectMetaDataException;
 import com.skeleton.generator.exception.ProjectNotFoundException;

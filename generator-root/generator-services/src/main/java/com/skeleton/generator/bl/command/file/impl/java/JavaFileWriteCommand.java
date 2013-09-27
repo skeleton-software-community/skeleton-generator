@@ -1,13 +1,12 @@
-package com.skeleton.generator.bl.command.file.impl;
+package com.skeleton.generator.bl.command.file.impl.java;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.skeleton.generator.bl.command.file.interfaces.FileWriteCommand;
+import com.skeleton.generator.bl.command.file.impl.AbstractFileWriteCommand;
 import com.skeleton.generator.model.enumeration.FileType;
 
 

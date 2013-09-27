@@ -1,4 +1,4 @@
-package com.skeleton.generator.bl.factory.interfaces;
+package com.skeleton.generator.bl.factory.model.interfaces;
 
 import com.skeleton.generator.model.metadata.PackageMetaData;
 import com.skeleton.generator.model.om.Model;
