@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.skeleton</groupId>
+	<groupId>org.skeleton</groupId>
 	<artifactId>generator-root</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>Generator - Root</name>
@@ -10,8 +10,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>generator-util</module>
 		<module>generator-business-model</module>
-		<module>generator-persistence</module>
+		<module>generator-repository</module>
+		<module>generator-business-component</module>
 		<module>generator-services</module>
 		<module>generator-command</module>
 	</modules>
@@ -47,21 +49,33 @@
 	<dependencyManagement>
 	
 		<dependencies>
+		
+			<dependency>
+				<groupId>org.skeleton</groupId>
+				<artifactId>generator-util</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<dependency>
-				<groupId>com.skeleton</groupId>
+				<groupId>org.skeleton</groupId>
 				<artifactId>generator-business-model</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.skeleton</groupId>
-				<artifactId>generator-persistence</artifactId>
+				<groupId>org.skeleton</groupId>
+				<artifactId>generator-repository</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.skeleton</groupId>
+				<artifactId>generator-business-component</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.skeleton</groupId>
+				<groupId>org.skeleton</groupId>
 				<artifactId>generator-services</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -93,6 +107,7 @@
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc6</artifactId>
 				<version>11.2.0.3</version>
+				<scope>runtime</scope>
 			</dependency>
 			
 			<!-- Spring -->

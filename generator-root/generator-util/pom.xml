@@ -8,19 +8,10 @@
 	</parent>
 
 	<groupId>org.skeleton</groupId>
-	<artifactId>generator-business-model</artifactId>
-	<name>Generator - Business Model</name>
-	<description>Module Business Model du projet Generator</description>
+	<artifactId>generator-util</artifactId>
+	<name>Generator - Util</name>
+	<description>Module Utilitaire du projet Generator</description>
 
 	<packaging>jar</packaging>
-	
-	<dependencies>
-		
-		<dependency>
-			<groupId>org.skeleton</groupId>
-			<artifactId>generator-util</artifactId>
-		</dependency>
-		
-	</dependencies>
 
 </project>
