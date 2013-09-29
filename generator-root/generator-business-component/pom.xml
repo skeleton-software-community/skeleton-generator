@@ -8,9 +8,9 @@
 	</parent>
 
 	<groupId>org.skeleton</groupId>
-	<artifactId>generator-services</artifactId>
-	<name>Generator - Services</name>
-	<description>Module Services du projet Generator</description>
+	<artifactId>generator-business-component</artifactId>
+	<name>Generator - Business component</name>
+	<description>Module Business component du projet Generator</description>
 
 	<packaging>jar</packaging>
 
@@ -24,11 +24,6 @@
 		<dependency>
 			<groupId>org.skeleton</groupId>
 			<artifactId>generator-repository</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.skeleton</groupId>
-			<artifactId>generator-business-component</artifactId>
 		</dependency>
 	
 		<!-- gestion des logs -->
