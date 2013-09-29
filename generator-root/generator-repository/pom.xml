@@ -8,9 +8,9 @@
 	</parent>
 
 	<groupId>org.skeleton</groupId>
-	<artifactId>generator-services</artifactId>
-	<name>Generator - Services</name>
-	<description>Module Services du projet Generator</description>
+	<artifactId>generator-repository</artifactId>
+	<name>Generator - Repository</name>
+	<description>Module persistance du projet Generator</description>
 
 	<packaging>jar</packaging>
 
@@ -20,19 +20,9 @@
 			<groupId>org.skeleton</groupId>
 			<artifactId>generator-business-model</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.skeleton</groupId>
-			<artifactId>generator-repository</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.skeleton</groupId>
-			<artifactId>generator-business-component</artifactId>
-		</dependency>
-	
+		   	   		
 		<!-- gestion des logs -->
-
+			
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -59,6 +49,13 @@
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		
+		<!-- utilitaires -->
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
 		</dependency>
 		
 	</dependencies>
