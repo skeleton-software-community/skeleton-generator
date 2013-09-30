@@ -20,25 +20,29 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 <context:annotation-config/>
 
-<context:component-scan base-package="com.skeleton.generator"/>
+<context:component-scan base-package="org.skeleton.generator"/>
 
 
 <!-- to handle metadata persistence with files -->
 
-<bean id="projetctMetaDataFileManager" class="com.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="projetctMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
 	<constructor-arg name="columnNumber" value="2"/>
 </bean>
 
-<bean id="packageMetaDataFileManager" class="com.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="packageMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
 	<constructor-arg name="columnNumber" value="1"/>
 </bean>
 
-<bean id="tableMetaDataFileManager" class="com.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="tableMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
 	<constructor-arg name="columnNumber" value="10"/>
 </bean>
 
-<bean id="columnMetaDataFileManager" class="com.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="columnMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
 	<constructor-arg name="columnNumber" value="9"/>
 </bean>
+
+<!-- code writer -->
+
+<bean id="codeWriter" class="org.skeleton.generator.bl.services.impl.CodeWriterImpl"/>
 
 </beans>
