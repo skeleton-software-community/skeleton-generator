@@ -119,7 +119,7 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 		String content = getNotOverridableContent();
 
 		writeLine(fileType.getSpecificCodeStartMark());
-		writeLine(content);
+		write(content);
 		writeLine(fileType.getSpecificCodeEndMark());
 	}
         

@@ -11,6 +11,6 @@ public class FileWriteCommandTree extends JTree {
 	}
 
 	public void launch() {
-		
+		((FileWriteCommandTreeNode)getModel().getRoot()).execute();
 	}
 }

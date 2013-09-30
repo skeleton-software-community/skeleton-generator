@@ -4,171 +4,180 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DataType {
-	TEXT ("TEXT"),
-    STRING ("STRING"),
-    LONG ("LONG"),
-    DOUBLE ("DOUBLE"),
-    DATETIME ("DATETIME"),
-    BOOLEAN ("BOOLEAN");
-	
+	TEXT("TEXT"), STRING("STRING"), LONG("LONG"), DOUBLE("DOUBLE"), DATETIME("DATETIME"), BOOLEAN("BOOLEAN");
+
 	private static final Map<String, DataType> reverseMap = new HashMap<String, DataType>();
-	static{
-		for(DataType dataType : values()){
+	static {
+		for (DataType dataType : values()) {
 			reverseMap.put(dataType.getValue(), dataType);
 		}
 	}
-	
+
 	private String value;
-	
-	private DataType(String value){
+
+	private DataType(String value) {
 		this.value = value;
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
-	
-	public static DataType byValue(String value){
+
+	public static DataType byValue(String value) {
 		DataType dataType = reverseMap.get(value);
-		if(dataType==null) {
+		if (dataType == null) {
 			throw new IllegalArgumentException("No DataType corresponding to value " + value);
 		}
 		return dataType;
 	}
-	
-	
-	public static String getJavaType(DataType dataType)
-    {
-        switch (dataType)
-        {
-            case TEXT:
-                return "String";
 
-            case STRING:
-                return "String";
+	public static String getJavaType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "String";
 
-            case LONG:
-                return "Long";
+		case STRING:
+			return "String";
 
-            case DOUBLE:
-                return "Double";
+		case LONG:
+			return "Long";
 
-            case DATETIME:
-                return "Date";
+		case DOUBLE:
+			return "Double";
 
-            case BOOLEAN:
-                return "Boolean";
+		case DATETIME:
+			return "Date";
 
-            default:
-            	throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-        }
-    }
+		case BOOLEAN:
+			return "Boolean";
 
-    public static String getMySQLType(DataType dataType)
-    {
-        switch (dataType)
-        {
-            case TEXT:
-                return "TEXT";
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
 
-            case STRING:
-                return "VARCHAR(255)";
+	public static String getMySQLType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "TEXT";
 
-            case LONG:
-                return "BIGINT";
+		case STRING:
+			return "VARCHAR(255)";
 
-            case DOUBLE:
-                return "DOUBLE PRECISION";
+		case LONG:
+			return "BIGINT";
 
-            case DATETIME:
-                return "DATETIME";
+		case DOUBLE:
+			return "DOUBLE PRECISION";
 
-            case BOOLEAN:
-                return "BIT";
+		case DATETIME:
+			return "DATETIME";
 
-            default:
-            	throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-        }
-    }
+		case BOOLEAN:
+			return "BIT";
 
-    public static String getMsSQLType(DataType dataType)
-    {
-        switch (dataType)
-        {
-            case TEXT:
-                return "TEXT";
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
 
-            case STRING:
-                return "VARCHAR(255)";
+	public static String getMsSQLType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "TEXT";
 
-            case LONG:
-                return "BIGINT";
+		case STRING:
+			return "VARCHAR(255)";
 
-            case DOUBLE:
-                return "DOUBLE PRECISION";
+		case LONG:
+			return "BIGINT";
 
-            case DATETIME:
-                return "DATETIME";
+		case DOUBLE:
+			return "DOUBLE PRECISION";
 
-            case BOOLEAN:
-                return "BIT";
+		case DATETIME:
+			return "DATETIME";
 
-            default:
-            	throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-        }
-    }
+		case BOOLEAN:
+			return "BIT";
 
-    public static String getPostgresqlType(DataType dataType)
-    {
-        switch (dataType)
-        {
-            case TEXT:
-                return "TEXT";
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
 
-            case STRING:
-                return "VARCHAR(255)";
+	public static String getPostgresqlType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "TEXT";
 
-            case LONG:
-                return "BIGINT";
+		case STRING:
+			return "VARCHAR(255)";
 
-            case DOUBLE:
-                return "DOUBLE PRECISION";
+		case LONG:
+			return "BIGINT";
 
-            case DATETIME:
-                return "TIMESTAMP WITHOUT TIME ZONE";
+		case DOUBLE:
+			return "DOUBLE PRECISION";
 
-            case BOOLEAN:
-                return "BOOLEAN";
+		case DATETIME:
+			return "TIMESTAMP WITHOUT TIME ZONE";
 
-            default:
-            	throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-        }
-    }
-    
-    public static String getOracleType(DataType dataType)
-    {
-        switch (dataType)
-        {
-            case TEXT:
-                return "CLOB";
+		case BOOLEAN:
+			return "BOOLEAN";
 
-            case STRING:
-                return "VARCHAR2(255)";
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
 
-            case LONG:
-                return "NUMBER(19,0)";
+	public static String getOracleType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "CLOB";
 
-            case DOUBLE:
-                return "FLOAT(24)";
+		case STRING:
+			return "VARCHAR2(255)";
 
-            case DATETIME:
-                return "DATE";
+		case LONG:
+			return "NUMBER(19,0)";
 
-            case BOOLEAN:
-                return "NUMBER(1,0)";
+		case DOUBLE:
+			return "FLOAT(24)";
 
-            default:
-            	throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-        }
-    }
+		case DATETIME:
+			return "DATE";
+
+		case BOOLEAN:
+			return "NUMBER(1,0)";
+
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
+
+	public static String getPlOracleType(DataType dataType) {
+		switch (dataType) {
+		case TEXT:
+			return "CLOB";
+
+		case STRING:
+			return "VARCHAR2";
+
+		case LONG:
+			return "NUMBER";
+
+		case DOUBLE:
+			return "FLOAT";
+
+		case DATETIME:
+			return "DATE";
+
+		case BOOLEAN:
+			return "NUMBER";
+
+		default:
+			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+		}
+	}
 }

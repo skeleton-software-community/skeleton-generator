@@ -3,6 +3,7 @@ package org.skeleton.generator.bc.command.file.impl.java.model;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.lang.StringUtils;
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToMany;
@@ -99,12 +100,12 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("@Entity");
 		writeLine("@Table(name=" + (char) 34 + this.bean.table.name + (char) 34 + ")");
-		if (bean.annotations != "") {
+		if (!StringUtils.isEmpty(bean.annotations)) {
 			writeLine(this.bean.annotations);
 		}
 
-		writeLine("public class " + bean.className + " implements Serializable");
-		if (this.bean.interfaces != "") {
+		write("public class " + bean.className + " implements Serializable");
+		if (!StringUtils.isEmpty(this.bean.interfaces)) {
 			write(", " + this.bean.interfaces);
 		}
 		writeLine(" {");
@@ -128,7 +129,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine("* no argument constructor");
 		writeLine("*/");
-		skipLine();
 
 		writeLine("public " + this.bean.className + "(){");
 		writeLine("}");
@@ -184,22 +184,26 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(")");
 			}
 			writeLine("private " + property.beanDataType + " " + property.name + ";");
+			skipLine();
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			writeLine("@OneToMany(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToMany.referenceProperty.name + (char) 34 + ")");
 			writeLine("private Collection <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ";");
+			skipLine();
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			writeLine("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)");
 			writeLine("@JoinColumn(name = " + (char) 34 + oneToManyComponent.referenceColumn.name + (char) 34 + ", nullable=false)");
 			writeLine("private Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
+			skipLine();
 		}
 
 		for (OneToOne oneToOne : this.bean.oneToOneList) {
 			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToOne.referenceProperty.name + (char) 34 + ")");
 			writeLine("private " + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ";");
+			skipLine();
 		}
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
@@ -210,6 +214,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 			writeLine(")");
 			writeLine("private " + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ";");
+			skipLine();
 		}
 
 		skipLine();
@@ -223,17 +228,16 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine("* getters and setters");
 		writeLine("*/");
-		skipLine();
 
 		for (Property property : this.bean.propertyList) {
 			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");
 			writeLine("return this." + property.name + ";");
-			;
 			writeLine("}");
 			skipLine();
 			writeLine("public void " + property.setterName + "(" + property.beanDataType + " " + property.name + ") {");
 			writeLine("this." + property.name + " = " + property.name + ";");
 			writeLine("}");
+			skipLine();
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
@@ -263,6 +267,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("public " + oneToOne.referenceBean.className + " " + oneToOne.getterName + " () {");
 			writeLine("return this." + oneToOne.referenceBean.objectName + ";");
 			writeLine("}");
+			skipLine();
 			writeLine("public void " + oneToOne.setterName + " (" + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ") {");
 			writeLine("this." + oneToOne.referenceBean.objectName + " = " + oneToOne.referenceBean.objectName + ";");
 			writeLine("}");
