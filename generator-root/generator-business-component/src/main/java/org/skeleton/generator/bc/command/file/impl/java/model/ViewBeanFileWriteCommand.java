@@ -40,11 +40,11 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("/**");
-        writeLine("* auto generated view bean class file");
-        writeLine("* <br/>basic representation of what is going to be considered as model in MVC patterns");
-        writeLine("* <br/>write modifications between specific code marks");
-        writeLine("* <br/>processed by skeleton-generator");
-        writeLine("*/");
+        writeLine(" * auto generated view bean class file");
+        writeLine(" * <br/>basic representation of what is going to be considered as model in MVC patterns");
+        writeLine(" * <br/>write modifications between specific code marks");
+        writeLine(" * <br/>processed by skeleton-generator");
+        writeLine(" */");
         writeLine("public class " + this.bean.viewClassName + " implements Serializable {");
         skipLine();
 
@@ -62,8 +62,8 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
     private void createProperties()
     {
         writeLine("/*");
-        writeLine("* properties");
-        writeLine("*/");
+        writeLine(" * properties");
+        writeLine(" */");
         writeLine("private Long id;");
         writeLine("private boolean selected;");
 
@@ -80,8 +80,8 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
     private void createGettersAndSetters()
     {
         writeLine("/*");
-        writeLine("* getters and setters");
-        writeLine("*/");
+        writeLine(" * getters and setters");
+        writeLine(" */");
         writeLine("public Long getId() {");
         writeLine("return this.id;");
         writeLine("}");
