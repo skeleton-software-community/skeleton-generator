@@ -23,6 +23,8 @@ public class SpringHibernateRichFacesCommandTreeFactory implements FileWriteComm
 		addDatabaseNode(rootNode, project);
 
 		addBusinessModelNode(rootNode, project);
+		
+		addPersistenceNode(rootNode, project);
 
 		return tree;
 	}
@@ -92,5 +94,11 @@ public class SpringHibernateRichFacesCommandTreeFactory implements FileWriteComm
 			}
 		}
 
+	}
+	
+	private void addPersistenceNode(FileWriteCommandTreeNode rootNode, Project project) {
+		
+		FileWriteCommandTreeNode persistenceTreeNode = new FileWriteCommandTreeNode("Persistence Layer");
+		rootNode.add(persistenceTreeNode);
 	}
 }

@@ -92,10 +92,10 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		writeLine("/**");
-		writeLine("* auto generated entity class file");
-		writeLine("* <br/>write modifications between specific code marks");
-		writeLine("* <br/>processed by skeleton-generator");
-		writeLine("*/");
+		writeLine(" * auto generated entity class file");
+		writeLine(" * <br/>write modifications between specific code marks");
+		writeLine(" * <br/>processed by skeleton-generator");
+		writeLine(" */");
 		skipLine();
 
 		writeLine("@Entity");
@@ -127,8 +127,8 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 	private void createNoArgConstructor() {
 		writeLine("/*");
-		writeLine("* no argument constructor");
-		writeLine("*/");
+		writeLine(" * no argument constructor");
+		writeLine(" */");
 
 		writeLine("public " + this.bean.className + "(){");
 		writeLine("}");
@@ -140,8 +140,8 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	private void createProperties() {
 		writeLine("/*");
-		writeLine("* properties");
-		writeLine("*/");
+		writeLine(" * properties");
+		writeLine(" */");
 
 		writeLine("@Id");
 		writeLine("@Column(name = " + (char) 34 + "id" + (char) 34 + ", nullable = false)");
@@ -226,8 +226,8 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
      */
 	private void createGettersAndSetters() {
 		writeLine("/*");
-		writeLine("* getters and setters");
-		writeLine("*/");
+		writeLine(" * getters and setters");
+		writeLine(" */");
 
 		for (Property property : this.bean.propertyList) {
 			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");
