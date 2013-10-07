@@ -72,7 +72,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("-- table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		writeLine(table.columnList.get(0).name + " " + DataType.getOracleType(table.columnList.get(0).dataType) + " PRIMARY KEY");
+		write(table.columnList.get(0).name + " " + DataType.getOracleType(table.columnList.get(0).dataType) + " PRIMARY KEY");
 
 		for (int i = 1; i < this.table.columnList.size(); i++) {
 			writeLine(",");
@@ -137,8 +137,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		}
 
 		writeLine("BEGIN");
-		skipLine();
-
 		writeLine("IF v" + fieldDictionary.get(findColumnList.get(0).name) + " IS NULL");
 
 		for (int i = 1; i < findColumnList.size(); i++) {
@@ -201,10 +199,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		skipLine();
 		writeLine(") AS");
-		skipLine();
-
 		writeLine("BEGIN");
-
 		write("INSERT INTO " + table.name + " (ID, " + this.table.columnList.get(1).name);
 
 		for (int i = 2; i < this.table.columnList.size(); i++) {
@@ -241,7 +236,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			}
 		}
 		writeLine("BEGIN");
-		skipLine();
 
 		for (int i = 1; i < this.table.columnList.size(); i++) {
 			if (this.table.columnList.get(i).referenceTable != null) {

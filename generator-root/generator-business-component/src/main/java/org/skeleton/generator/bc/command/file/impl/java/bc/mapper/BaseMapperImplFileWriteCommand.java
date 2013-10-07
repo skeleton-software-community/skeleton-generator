@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.java.bc;
+package org.skeleton.generator.bc.command.file.impl.java.bc.mapper;
 
 import java.io.File;
 import java.io.IOException;
