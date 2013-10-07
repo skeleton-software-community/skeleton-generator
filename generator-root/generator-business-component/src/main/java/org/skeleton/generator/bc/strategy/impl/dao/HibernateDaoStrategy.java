@@ -7,8 +7,8 @@ import org.skeleton.generator.bc.command.file.impl.java.dao.DaoInterfaceFileWrit
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
 import org.skeleton.generator.model.om.Bean;
-import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Package;
+import org.skeleton.generator.model.om.Project;
 
 public class HibernateDaoStrategy implements LayerStrategy {
 
