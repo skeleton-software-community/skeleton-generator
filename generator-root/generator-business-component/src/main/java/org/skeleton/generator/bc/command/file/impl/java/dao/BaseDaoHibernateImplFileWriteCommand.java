@@ -275,7 +275,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("public Long save" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
 		writeLine("return (Long)this.sessionFactory.getCurrentSession().save(" + this.bean.objectName + ");");
-		write("}");
+		writeLine("}");
 		skipLine();
 	}
 

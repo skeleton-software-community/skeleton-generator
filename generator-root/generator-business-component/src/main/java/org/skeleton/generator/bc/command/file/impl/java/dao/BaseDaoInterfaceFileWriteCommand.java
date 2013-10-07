@@ -48,7 +48,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
         writeLine("public interface " + this.bean.baseDaoInterfaceName + " {");
-        
+        skipLine();
 
         createLoadObjectList();
         createLoadObject();
