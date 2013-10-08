@@ -144,7 +144,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 
 		writeLine("@Id");
-		writeLine("@Column(name = " + (char) 34 + "id" + (char) 34 + ")");
+		writeLine("@Column(name = " + (char) 34 + "id" + (char) 34 + ", nullable = false)");
 		writeLine("@SequenceGenerator(name = " + (char) 34 + "generator" + (char) 34 + ", sequenceName = " + (char) 34 + this.bean.table.name + "_id_seq" + (char) 34 + ", allocationSize=1)");
 		writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + (char) 34 + "generator" + (char) 34 + ")");
 		writeLine("private Long id;");

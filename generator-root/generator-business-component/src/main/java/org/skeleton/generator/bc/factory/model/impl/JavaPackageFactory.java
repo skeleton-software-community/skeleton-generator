@@ -67,10 +67,10 @@ public class JavaPackageFactory implements PackageFactory {
         myPackage.mapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".impl";
         myPackage.mapperInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".interfaces";
 
-        myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basetransitionvalidator." + myPackage.name + ".impl";
-        myPackage.baseStateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basetransitionvalidator." + myPackage.name + ".interfaces";
-        myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.transitionvalidator." + myPackage.name + ".impl";
-        myPackage.stateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.transitionvalidator." + myPackage.name + ".interfaces";
+        myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".impl";
+        myPackage.baseStateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".interfaces";
+        myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".impl";
+        myPackage.stateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".interfaces";
 
 
         myPackage.facadeImplPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".impl";

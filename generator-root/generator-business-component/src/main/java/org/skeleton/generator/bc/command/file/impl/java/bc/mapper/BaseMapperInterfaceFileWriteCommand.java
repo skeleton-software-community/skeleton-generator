@@ -153,14 +153,14 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * mapping business object to visible object");
 		writeLine(" */");
 		skipLine();
-		writeLine("public " + this.bean.viewClassName + " map" + this.bean.viewClassName + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ", " + this.bean.className + " "
+		writeLine(this.bean.viewClassName + " map" + this.bean.viewClassName + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ", " + this.bean.className + " "
 				+ this.bean.objectName + ");");
 		skipLine();
 
 		writeLine("/**");
 		writeLine(" * mapping visible object to business object");
 		writeLine(" */");
-		writeLine("public " + this.bean.className + " map" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " "
+		writeLine(this.bean.className + " map" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " "
 				+ this.bean.viewObjectName + ") throws ObjectNotFoundException;");
 		skipLine();
 	}
@@ -174,7 +174,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			skipLine();
 
-			writeLine("public " + currentBean.viewClassName + " map" + currentBean.viewClassName + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", " + currentBean.className
+			writeLine(currentBean.viewClassName + " map" + currentBean.viewClassName + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", " + currentBean.className
 					+ " " + currentBean.objectName + ");");
 			skipLine();
 
@@ -183,7 +183,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			skipLine();
 
-			writeLine("public " + currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
+			writeLine(currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
 					+ currentBean.viewObjectName + ") throws ObjectNotFoundException;");
 			skipLine();
 		}
@@ -196,14 +196,14 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * mapping business one to many component to visible one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public " + currentBean.viewClassName + " map" + currentBean.viewClassName + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", " + currentBean.className
+			writeLine(currentBean.viewClassName + " map" + currentBean.viewClassName + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", " + currentBean.className
 					+ " " + currentBean.objectName + ");");
 			skipLine();
 
 			writeLine("/**");
 			writeLine(" * mapping visible one to many component to business one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public " + currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
+			writeLine(currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
 					+ currentBean.viewObjectName + ") throws ObjectNotFoundException;");
 			skipLine();
 		}

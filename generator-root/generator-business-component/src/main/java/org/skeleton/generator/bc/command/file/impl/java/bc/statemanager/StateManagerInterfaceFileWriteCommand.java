@@ -23,7 +23,7 @@ public class StateManagerInterfaceFileWriteCommand extends JavaFileWriteCommand 
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.baseStateManagerInterfaceName + ";");
+		javaImports.add("import " + this.bean.myPackage.baseStateManagerInterfacePackageName + "." + this.bean.baseStateManagerInterfaceName + ";");
 		
 	}
 
@@ -44,7 +44,8 @@ public class StateManagerInterfaceFileWriteCommand extends JavaFileWriteCommand 
         skipLine();
 
         writeLine("public interface " + this.bean.stateManagerInterfaceName + " extends " + this.bean.baseStateManagerInterfaceName + " {");
-
+        skipLine();
+        
         this.writeNotOverridableContent();
 
         writeLine("}");

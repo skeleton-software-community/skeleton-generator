@@ -1,8 +1,10 @@
 package org.skeleton.generator.bc.factory.command.impl;
 
+import org.skeleton.generator.bc.strategy.impl.bc.BusinessComponentStrategy;
 import org.skeleton.generator.bc.strategy.impl.dao.HibernateDaoStrategy;
 import org.skeleton.generator.bc.strategy.impl.database.DefaultDatabaseStrategy;
 import org.skeleton.generator.bc.strategy.impl.model.HibernateBusinessModelStrategy;
+import org.skeleton.generator.bc.strategy.impl.services.ServiceStrategy;
 
 
 public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWriteCommandTreeFactory {
@@ -12,5 +14,7 @@ public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWrit
 		layerStrategies.add(new DefaultDatabaseStrategy());
 		layerStrategies.add(new HibernateBusinessModelStrategy());
 		layerStrategies.add(new HibernateDaoStrategy());
+		layerStrategies.add(new BusinessComponentStrategy());
+		layerStrategies.add(new ServiceStrategy());
 	}
 }

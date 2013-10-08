@@ -66,13 +66,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**"); 
         writeLine(" * load object list");
         writeLine(" */");
-        writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "List();");
+        writeLine("List<" + this.bean.className + "> load" + this.bean.className + "List();");
         skipLine();
 
         writeLine("/**"); 
         writeLine(" * load object list eagerly");
         writeLine(" */");
-        writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly();");
+        writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly();");
         skipLine();
 
         for (Property property : this.bean.propertyList)
@@ -83,13 +83,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
                 writeLine("/**");
                 writeLine(" * load object list from list of " + property.referenceBean.objectName); 
                 writeLine(" */");
-                writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
                 skipLine();
 
                 writeLine("/**");
                 writeLine(" * load object list eagerly from list of " + property.referenceBean.objectName);
                 writeLine(" */");
-                writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
                 skipLine();
 
             }
@@ -101,7 +101,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * load object");
         writeLine(" */");
-        writeLine("public " + this.bean.className + " load" + this.bean.className + "(Long id);");
+        writeLine(this.bean.className + " load" + this.bean.className + "(Long id);");
         skipLine();
     }
 
@@ -112,7 +112,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * exists object");
         writeLine(" */");
-        write("public boolean exists" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
+        write("boolean exists" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
         for (int i = 1; i < findPropertyList.size(); i++)
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -128,7 +128,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * find object");  
         writeLine(" */");
-        write("public " + this.bean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
+        write(this.bean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -142,7 +142,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine("* save object");
         writeLine("*/");
-        writeLine("public Long save" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
+        writeLine("Long save" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
     }
 
@@ -151,7 +151,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**"); 
         writeLine(" * update object");
         writeLine(" */");
-        writeLine("public void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
+        writeLine("void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
     }
 
@@ -160,7 +160,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**"); 
         writeLine(" * delete object");
         writeLine(" */");
-        writeLine("public void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
+        writeLine("void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
     }
 }

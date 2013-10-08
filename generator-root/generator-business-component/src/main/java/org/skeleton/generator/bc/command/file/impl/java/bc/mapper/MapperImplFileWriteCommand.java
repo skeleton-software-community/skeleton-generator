@@ -47,7 +47,8 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
 
         writeLine("@Component");
         writeLine("public class " + this.bean.mapperClassName + " extends " + this.bean.baseMapperClassName + " implements " + bean.mapperInterfaceName + " {");
-
+        skipLine();
+        
         this.writeNotOverridableContent();
 
         writeLine("}");
