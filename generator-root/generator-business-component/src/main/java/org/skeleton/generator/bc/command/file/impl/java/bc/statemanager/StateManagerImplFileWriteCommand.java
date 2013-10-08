@@ -39,7 +39,7 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("/**");
-        writeLine(" * auto generated stateManager class file");
+        writeLine(" * auto generated state manager class file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
@@ -47,7 +47,8 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 
         writeLine("@Component");
         writeLine("public class " + this.bean.stateManagerClassName + " extends " + this.bean.baseStateManagerClassName + " implements " + bean.stateManagerInterfaceName + " {");
-
+        skipLine();
+        
         this.writeNotOverridableContent();
 
         writeLine("}");

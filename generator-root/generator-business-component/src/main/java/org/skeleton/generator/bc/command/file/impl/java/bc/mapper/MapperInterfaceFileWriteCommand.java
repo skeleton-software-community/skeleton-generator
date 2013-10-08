@@ -23,7 +23,7 @@ public class MapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.baseMapperInterfaceName + ";");
+		javaImports.add("import " + this.bean.myPackage.baseMapperInterfacePackageName + "." + this.bean.baseMapperInterfaceName + ";");
 		
 	}
 
@@ -44,7 +44,8 @@ public class MapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("public interface " + this.bean.mapperInterfaceName + " extends " + this.bean.baseMapperInterfaceName + " {");
-
+        skipLine();
+        
         this.writeNotOverridableContent();
 
         writeLine("}");
