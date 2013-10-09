@@ -109,8 +109,7 @@ public class JavaBeanFactory implements BeanFactory {
 				property.relation = column.relation;
 				property.unique = column.unique;
 				property.format = column.format;
-				property.listVisible = column.listVisible;
-				property.detailVisible = column.detailVisible;
+				property.visibility = column.visibility;
 				property.editable = column.editable;
 				property.rendering = column.rendering;
 				bean.propertyList.add(property);

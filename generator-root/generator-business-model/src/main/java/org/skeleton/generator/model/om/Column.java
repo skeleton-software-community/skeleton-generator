@@ -3,6 +3,7 @@ package org.skeleton.generator.model.om;
 import org.skeleton.generator.util.metadata.DataType;
 import org.skeleton.generator.util.metadata.Format;
 import org.skeleton.generator.util.metadata.RelationType;
+import org.skeleton.generator.util.metadata.Visibility;
 
 public class Column {
 	
@@ -17,8 +18,7 @@ public class Column {
 
     public Format format;
     public boolean editable;
-    public boolean listVisible;
-    public boolean detailVisible;
+    public Visibility visibility;
     public String rendering;
 
 }
