@@ -50,9 +50,7 @@ public class TableFactoryImpl implements TableFactory {
             column.unique = (RelationType.isUnique(column.relation));
             column.format = Format.byValue(columnMetaData.getFormat());
             column.editable = columnMetaData.isEditable();
-            Visibility visibility = Visibility.byValue(columnMetaData.getVisibility());
-            column.listVisible = visibility.isListVisible();
-            column.detailVisible = visibility.isDetailVisible();
+            column.visibility = Visibility.byValue(columnMetaData.getVisibility());
             column.rendering = columnMetaData.getRendering();
             table.columnList.add(column);
         }

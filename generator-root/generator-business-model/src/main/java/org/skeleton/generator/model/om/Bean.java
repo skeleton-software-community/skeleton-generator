@@ -92,8 +92,7 @@ public class Bean {
 					property.dataType = tempPropertyList.get(j).dataType;
 					property.format = tempPropertyList.get(j).format;
 					property.nullable = this.propertyList.get(i).nullable;
-					property.listVisible = this.propertyList.get(i).listVisible;
-					property.detailVisible = this.propertyList.get(i).detailVisible;
+					property.visibility = this.propertyList.get(i).visibility;
 					property.editable = this.propertyList.get(i).editable;
 					property.lastPropertyName = tempPropertyList.get(j).lastPropertyName;
 					property.joinedAliasName = propertyList.get(i).capName + tempPropertyList.get(j).joinedAliasName;
@@ -110,8 +109,7 @@ public class Bean {
 				property.dataType = propertyList.get(i).dataType;
 				property.format = propertyList.get(i).format;
 				property.nullable = this.propertyList.get(i).nullable;
-				property.listVisible = this.propertyList.get(i).listVisible;
-				property.detailVisible = this.propertyList.get(i).detailVisible;
+				property.visibility = this.propertyList.get(i).visibility;
 				property.editable = this.propertyList.get(i).editable;
 				property.lastPropertyName = propertyList.get(i).name;
 				property.joinedAliasName = "";
@@ -147,8 +145,7 @@ public class Bean {
 					property.dataType = tempPropertyList.get(j).dataType;
 					property.format = tempPropertyList.get(j).format;
 					property.nullable = this.propertyList.get(i).nullable;
-					property.listVisible = this.propertyList.get(i).listVisible;
-					property.detailVisible = this.propertyList.get(i).detailVisible;
+					property.visibility = this.propertyList.get(i).visibility;
 					property.editable = this.propertyList.get(i).editable;
 					property.comboBoxBean = tempPropertyList.get(j).comboBoxBean;
 					property.rendering = tempPropertyList.get(j).rendering;
@@ -162,8 +159,7 @@ public class Bean {
 				property.dataType = propertyList.get(i).dataType;
 				property.format = propertyList.get(i).format;
 				property.nullable = this.propertyList.get(i).nullable;
-				property.listVisible = this.propertyList.get(i).listVisible;
-				property.detailVisible = this.propertyList.get(i).detailVisible;
+				property.visibility = this.propertyList.get(i).visibility;
 				property.editable = this.propertyList.get(i).editable;
 				property.rendering = propertyList.get(i).rendering;
 				visiblePropertyList.add(property);
