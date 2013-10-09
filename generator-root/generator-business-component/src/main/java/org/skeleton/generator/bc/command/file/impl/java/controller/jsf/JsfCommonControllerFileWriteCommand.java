@@ -43,7 +43,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("myPackage " + this.project.model.controllerPackageName + ";");
+		writeLine("package " + this.project.model.controllerPackageName + ";");
 		skipLine();
 
 		writeImports();
@@ -72,6 +72,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		skipLine();
 
 		writeLine("/*");
 		writeLine(" * view navigation");
@@ -92,6 +93,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		skipLine();
 
 		writeLine("/*");
 		writeLine(" * select items");
@@ -103,6 +105,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		skipLine();
 
 		writeLine("/*");
 		writeLine(" * getters and setters");
@@ -189,10 +192,6 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		writeLine("/*");
-		writeLine(" * load combobox items");
-		writeLine(" */");
-		skipLine();
 
 		for (Package myPackage : this.project.model.packageList) {
 			for (Bean bean : myPackage.beanList) {
@@ -239,6 +238,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		writeLine("}");
+		skipLine();
 
 		this.writeNotOverridableContent();
 
