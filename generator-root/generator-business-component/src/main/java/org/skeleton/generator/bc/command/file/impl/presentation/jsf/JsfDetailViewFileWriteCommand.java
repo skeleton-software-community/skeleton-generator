@@ -1,14 +1,11 @@
 package org.skeleton.generator.bc.command.file.impl.presentation.jsf;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.skeleton.generator.bc.command.file.impl.presentation.XhtmlFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.model.om.UniqueComponent;
-import org.skeleton.generator.util.metadata.Visibility;
 
 public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -70,7 +67,7 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
         for (Property property : this.bean.getVisiblePropertyList())
         {
-            if (!property.visibility.equals(Visibility.NOT_VISIBLE))
+            if (property.visibility.isDetailVisible())
             {
                 writeLine("<h:outputText value=" + (char)34 + "#{i18n." + this.bean.objectName + property.capName + "} : " + (char)34 + "/>");
                 
@@ -89,18 +86,13 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         skipLine();
         
         writeLine("<h:panelGrid columns=" + (char)34 + "3" + (char)34 + ">");
-        skipLine();
         
         if (this.bean.updateEnabled)
         {
             writeLine("<a4j:commandButton value=" + (char)34 + "#{i18n.update}" + (char)34 + " action=" + (char)34 + "#{" + this.bean.controllerObjectName + ".update" + this.bean.className + "AndRefresh" + this.bean.className + "}" + (char)34 + " rendered=" + (char)34 + "#{!" + this.bean.controllerObjectName + ".creationTag}" + (char)34 + " styleClass=" + (char)34 + "simpleButton" + (char)34 + " reRender=" + (char)34 + this.bean.objectName + "DetailPanelGroup" + (char)34 + "/>"); 
-            skipLine();
         }
         writeLine("<a4j:commandButton value=" + (char)34 + "#{i18n.save}" + (char)34 + " action=" + (char)34 + "#{" + this.bean.controllerObjectName + ".save" + this.bean.className + "AndRefresh" + this.bean.className + "}" + (char)34 + " rendered=" + (char)34 + "#{" + this.bean.controllerObjectName + ".creationTag}" + (char)34 + " disabled=" + (char)34 + "#{!" + this.bean.controllerObjectName + ".creationTag}" + (char)34 + " styleClass=" + (char)34 + "simpleButton" + (char)34 + " reRender=" + (char)34 + this.bean.objectName + "TabPanel" + (char)34 + "/>");
-        skipLine();
-        
         writeLine("<h:commandButton value=" + (char)34 + "#{i18n.cancel}" + (char)34 + " action=" + (char)34 + "#{" + this.bean.controllerObjectName + ".display}" + (char)34 + " styleClass=" + (char)34 + "simpleButton" + (char)34 + " immediate=" + (char)34 + "true" + (char)34 + "/>");
-        skipLine();
         
         writeLine("</h:panelGrid>");
         skipLine();

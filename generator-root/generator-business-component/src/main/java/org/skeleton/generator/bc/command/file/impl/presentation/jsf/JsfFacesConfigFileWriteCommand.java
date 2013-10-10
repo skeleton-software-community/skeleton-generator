@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.conf.XmlFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
-import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Package;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.util.metadata.RelationType;
 

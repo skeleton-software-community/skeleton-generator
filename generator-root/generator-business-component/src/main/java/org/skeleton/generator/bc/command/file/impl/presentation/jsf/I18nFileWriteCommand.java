@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.skeleton.generator.bc.command.file.impl.conf.PropertiesFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
-import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Package;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Property;
 
 public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
@@ -34,7 +34,8 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 				writeLine(bean.objectName + "List=" + bean.listRendering);
 				writeLine(bean.objectName + "Detail=" + bean.detailRendering);
 
-				for (Property property : bean.propertyList) {
+				for (int i = 1; i< bean.propertyList.size();i++) {
+					Property property = bean.propertyList.get(i);
 					if (property.referenceBean != null) {
 						List<Property> findPropertyList = property.getFindPropertyList();
 						for (Property findProperty : findPropertyList) {

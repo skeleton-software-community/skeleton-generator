@@ -153,10 +153,11 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			}
 		} else {
 			if (property.comboBoxBean != null) {
-				writeLine("<h:selectOneMenu id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
+				write("<h:selectOneMenu id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
 						+ bean.objectName + "." + property.name + "}" + (char) 34);
 				if (!property.nullable) {
-					writeLine(" required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+					skipLine();
+					write(" required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 				}
 				writeLine(">");
 
@@ -218,25 +219,27 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 
 					switch (property.format) {
 					case DATE:
-						writeLine(" datePattern=" + (char) 34 + "dd MMMM yyyy" + (char) 34);
+						write(" datePattern=" + (char) 34 + "dd MMMM yyyy" + (char) 34);
 						break;
 
 					default:
-						writeLine(" datePattern=" + (char) 34 + "dd MMMM yyyy HH:mm" + (char) 34);
+						write(" datePattern=" + (char) 34 + "dd MMMM yyyy HH:mm" + (char) 34);
 						break;
 					}
 
 					if (!property.nullable) {
-						writeLine("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+						skipLine();
+						write("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 					}
 					writeLine("/>");
 					break;
 
 				case DOUBLE:
-					writeLine("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
+					write("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
 							+ bean.objectName + "." + property.name + "}" + (char) 34);
 					if (!property.nullable) {
-						writeLine("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+						skipLine();
+						write("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 					}
 					writeLine(">");
 
@@ -257,10 +260,11 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					break;
 
 				case LONG:
-					writeLine("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
+					write("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
 							+ bean.objectName + "." + property.name + "}" + (char) 34);
 					if (!property.nullable) {
-						writeLine("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+						skipLine();
+						write("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 					}
 					writeLine(">");
 					writeLine("<f:convertNumber pattern=" + (char) 34 + "#,##0" + (char) 34 + "/>");
@@ -268,19 +272,21 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					break;
 
 				case STRING:
-					writeLine("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
+					write("<h:inputText id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:300px" + (char) 34 + " value=" + (char) 34 + "#{"
 							+ bean.objectName + "." + property.name + "}" + (char) 34);
 					if (!property.nullable) {
-						writeLine("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+						skipLine();
+						write("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 					}
 					writeLine("/>");
 					break;
 
 				case TEXT:
-					writeLine("<h:inputTextarea id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:600px" + (char) 34 + " rows=" + (char) 34 + "10"
+					write("<h:inputTextarea id=" + (char) 34 + bean.objectName + property.capName + (char) 34 + " style=" + (char) 34 + "width:600px" + (char) 34 + " rows=" + (char) 34 + "10"
 							+ (char) 34 + " value=" + (char) 34 + "#{" + bean.objectName + "." + property.name + "}" + (char) 34);
 					if (!property.nullable) {
-						writeLine("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
+						skipLine();
+						write("required=" + (char) 34 + "true" + (char) 34 + " requiredMessage=" + (char) 34 + "#{i18n.mandatoryField}" + (char) 34);
 					}
 					writeLine("/>");
 					break;
