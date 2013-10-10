@@ -180,4 +180,25 @@ public enum DataType {
 			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
 		}
 	}
+	
+	public static String stringToBuildArg(String value, DataType dataType)
+    {
+        switch (dataType)
+        {
+            case DATETIME:
+                return "new SimpleDateFormat(" + (char)34 + "yyyy-MM-dd" + (char)34 + ").parse(" + value + ")";
+
+            case DOUBLE:
+                return "Double.valueOf(" + value + ")";
+
+            case LONG:
+                return "Long.valueOf(" + value + ")";
+
+            case BOOLEAN:
+                return "Boolean.valueOf(" + value + ")";
+
+            default:
+                return value;
+        }
+    }
 }
