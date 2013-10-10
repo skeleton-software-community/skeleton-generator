@@ -45,7 +45,7 @@ public class JsfControllerStrategy implements LayerStrategy {
 
 		for (Package myPackage : project.model.packageList) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
-			baseControllerTreeNode.add(packageTreeNode);
+			controllerTreeNode.add(packageTreeNode);
 
 			for (Bean bean : myPackage.beanList) {
 				if (!bean.isComponent) {

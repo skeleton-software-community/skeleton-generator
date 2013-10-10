@@ -57,7 +57,7 @@ public class FileWriteCommandExecutor {
 				try {
 					command.execute();
 				} catch (Exception e) {
-					logger.error("command " + label + "has failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+					logger.error("command " + label + " has failed : " + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
 				}
 			}
 		}
