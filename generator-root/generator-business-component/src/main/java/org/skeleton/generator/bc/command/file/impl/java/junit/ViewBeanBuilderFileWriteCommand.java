@@ -40,12 +40,10 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-        skipLine();
-
         writeLine("public class " + bean.viewClassName + "Builder {");
         skipLine();
     
-        writeLine("private static final String SEPARATOR = " + (char)34 + "\\$" + (char)34 + ";");
+        writeLine("private static final String SEPARATOR = " + (char)34 + "\\\\$" + (char)34 + ";");
         skipLine();
         
         writeLine("public static " + bean.viewClassName + " build(String line) throws BuildFailureException {");
@@ -53,7 +51,7 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 	    writeLine(bean.viewClassName + " " + bean.viewObjectName + " = new " + bean.viewClassName + "();");
 	    skipLine();
         writeLine("try {");
-        writeLine("String[] args = line.split(SEPARATOR, " + bean.getFindPropertyList().size() + ");");
+        writeLine("String[] args = line.split(SEPARATOR, " + bean.getVisiblePropertyList().size() + ");");
         skipLine();
         
         Integer argNumber = 0;
