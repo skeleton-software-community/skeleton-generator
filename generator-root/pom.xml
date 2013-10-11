@@ -15,7 +15,7 @@
 		<module>generator-repository</module>
 		<module>generator-business-component</module>
 		<module>generator-services</module>
-		<module>generator-command</module>
+		<module>generator-bash</module>
 	</modules>
 
 	<developers>
