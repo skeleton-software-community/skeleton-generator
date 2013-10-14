@@ -7,10 +7,6 @@ import org.skeleton.generator.bc.command.file.impl.java.junit.ViewBeanCommandFil
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewOneToManyComponentBuilderFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewOneToManyComponentCommandBuilderFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewOneToManyComponentCommandFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.services.BaseServiceImplFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.services.BaseServiceInterfaceFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.services.ServiceImplFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.services.ServiceInterfaceFileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
 import org.skeleton.generator.model.om.Bean;

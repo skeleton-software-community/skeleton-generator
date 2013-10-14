@@ -11,7 +11,7 @@ import org.skeleton.generator.util.metadata.DataType;
 
 public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFileWriteCommand {
 	
-	private OneToManyComponent oneToManyComponent;
+	//private OneToManyComponent oneToManyComponent;
 	private Bean referenceBean;
     private Bean parentBean;
 
@@ -20,7 +20,7 @@ public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFi
         super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-services\\src\\test\\java\\" + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".", "\\"),
         oneToManyComponent.referenceBean.viewClassName + "CommandBuilder");
     
-        this.oneToManyComponent = oneToManyComponent;
+        //this.oneToManyComponent = oneToManyComponent;
         referenceBean = oneToManyComponent.referenceBean;
         parentBean = oneToManyComponent.parentBean;
     }
