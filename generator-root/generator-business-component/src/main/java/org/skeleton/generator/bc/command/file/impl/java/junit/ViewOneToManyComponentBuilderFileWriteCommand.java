@@ -51,12 +51,14 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
         writeLine("private static final String SEPARATOR = " + (char)34 + "\\\\$" + (char)34 + ";");
         skipLine();
         
+        Integer splitSize = parentBean.getFindPropertyList().size() + referenceBean.getVisiblePropertyList().size();
+        
         writeLine("public static " + referenceBean.viewClassName + " build(String line) throws BuildFailureException {");
         skipLine();
 	    writeLine(referenceBean.viewClassName + " " + referenceBean.viewObjectName + " = new " + referenceBean.viewClassName + "();");
 	    skipLine();
         writeLine("try {");
-        writeLine("String[] args = line.split(SEPARATOR, " + referenceBean.getVisiblePropertyList().size() + ");");
+        writeLine("String[] args = line.split(SEPARATOR, " + splitSize + ");");
         skipLine();
         
         Integer argNumber = parentBean.getFindPropertyList().size();
