@@ -85,7 +85,9 @@ public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFi
             writeLine(property.beanDataType + " " + property.name + " = null;");
         }
         
-        writeLine("String[] args = line.split(SEPARATOR, " + findPropertyList.size() + ");");
+        Integer splitSize = parentBean.getFindPropertyList().size() + referenceBean.getVisiblePropertyList().size();
+        
+        writeLine("String[] args = line.split(SEPARATOR, " + splitSize + ");");
         skipLine();
         
         Integer argNumber = 0;
