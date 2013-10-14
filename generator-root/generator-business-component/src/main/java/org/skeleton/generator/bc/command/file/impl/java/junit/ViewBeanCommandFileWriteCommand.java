@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
-import org.skeleton.generator.model.om.Property;
-import org.skeleton.generator.util.metadata.DataType;
 
 public class ViewBeanCommandFileWriteCommand extends JavaFileWriteCommand {
 

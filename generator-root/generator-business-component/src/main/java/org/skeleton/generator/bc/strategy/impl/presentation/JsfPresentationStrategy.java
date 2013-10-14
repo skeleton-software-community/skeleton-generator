@@ -1,9 +1,5 @@
 package org.skeleton.generator.bc.strategy.impl.presentation;
 
-import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.BaseJsfControllerFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.BaseSimpleJsfControllerFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.JsfCommonControllerFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.JsfControllerFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.presentation.jsf.I18nFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfDetailViewFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfFacesConfigFileWriteCommand;
