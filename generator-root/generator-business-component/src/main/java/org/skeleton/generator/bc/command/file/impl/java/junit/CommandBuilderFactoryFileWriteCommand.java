@@ -82,29 +82,6 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
         }
 
         skipLine();
-        writeLine("/*");
-        writeLine(" * getters and setters");
-        writeLine(" */");
-
-
-        for (Package myPackage : this.project.model.packageList)
-        {
-            for (Bean bean : myPackage.beanList)
-            {
-                if (!bean.isComponent)
-                {
-                    writeLine("public " + bean.serviceInterfaceName + " get" + bean.serviceClassName + "() {");
-                    writeLine("return " + bean.serviceObjectName + ";");
-                    writeLine("}");
-                    skipLine();
-
-                    writeLine("public void set" + bean.serviceClassName + "(" + bean.serviceInterfaceName + " " + bean.serviceObjectName + ") {");
-                    writeLine("this." + bean.serviceObjectName + " = " + bean.serviceObjectName + ";");
-                    writeLine("}");
-                    skipLine();
-                }
-            }
-        }
 
         writeLine("/**");
         writeLine(" * create the appropriate command builder depending on what class is tested.");
@@ -112,7 +89,6 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
         writeLine(" * @return a commandBuilder, if it is implemented.");
         writeLine(" * @throws BuildFailureException");
         writeLine(" */");
-
         writeLine("public CommandBuilder createCommandBuilder(String line, Class<?> clazz) throws BuildFailureException {");
         skipLine();
 
