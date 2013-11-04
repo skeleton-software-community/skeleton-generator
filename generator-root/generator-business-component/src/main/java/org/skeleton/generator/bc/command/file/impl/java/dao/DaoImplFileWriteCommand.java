@@ -25,6 +25,7 @@ public class DaoImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
+		javaImports.add("import org.springframework.stereotype.Repository;");
 		javaImports.add("import " + bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         javaImports.add("import " + bean.myPackage.baseDAOImplPackageName + "." + this.bean.baseDaoClassName + ";");
 	}

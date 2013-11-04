@@ -30,6 +30,23 @@ public class SQLNaming {
                 }
                 result += firstCar + coreBody + lastCar;
             }
+            
+            if (result.length() > 20) {
+            	result = "";
+                start = true;
+            	for (String element : elements)
+                {
+                    if (start == false)
+                    {
+                        result += separator;
+                    }
+                    else
+                    {
+                        start = false;
+                    }
+                    result += element.substring(0,Math.min(element.length(), 3));
+                }
+            }
 
             return result.toUpperCase();
         }

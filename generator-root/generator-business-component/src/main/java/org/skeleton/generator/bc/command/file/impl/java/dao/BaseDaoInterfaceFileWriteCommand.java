@@ -30,7 +30,6 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
-		javaImports.add("org.springframework.stereotype.Repository;");
 		javaImports.add("import " + bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
 	}
