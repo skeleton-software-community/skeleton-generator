@@ -1,7 +1,8 @@
-package org.skeleton.generator.bc.command.file.impl.presentation.jsf;
+package org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu;
 
 import java.io.IOException;
 
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfXhtmlFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
@@ -40,7 +41,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<!-- -->");
 		skipLine();
 
-		writeLine("<script language=" + (char) 34 + "javascript" + (char) 34 + ">");
+		writeLine("<script>");
 		writeLine("<!--");
 		skipLine();
 
@@ -176,11 +177,10 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</h:panelGrid>");
 		writeLine("</rich:column>");
 		skipLine();
-
-		writeLine("<f:facet name=" + (char) 34 + "footer" + (char) 34 + ">");
-		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + "/>");
-		writeLine("</f:facet>");
 		writeLine("</rich:dataTable>");
+		skipLine();
+		
+		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + currentBean.objectName + "List" + (char) 34 + "/>");
 		skipLine();
 
 		writeLine("<br/>");
