@@ -190,7 +190,6 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * refresh object list");
 		writeLine(" */");
 		writeLine("public void refresh() {");
-		writeLine("this.setDefault();");
 		writeLine("if (this.loadedFrom == null){");
 		writeLine("try {");
 		writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "List();");
@@ -225,7 +224,6 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * refresh object");
 		writeLine(" */");
 		writeLine("public void refresh" + this.bean.className + "() {");
-		writeLine("this.setDefault();");
 		writeLine("try {");
 
 		for (Property property : this.bean.getVisiblePropertyList()) {
@@ -271,6 +269,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("public String load() {");
 		writeLine("this.commonController.setDefault();");
+		writeLine("this.setDefault();");
 		writeLine("this.loadedFrom = null;");
 		writeLine("this.refresh();");
 		writeLine("return SUCCESS;");
@@ -284,6 +283,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * load object list form list of " + property.referenceBean.objectName);
 				writeLine(" */");
 				writeLine("public String loadFrom" + property.referenceBean.className + "() {");
+				writeLine("this.setDefault();");
 				writeLine("if (this.commonController.getSelected" + property.referenceBean.className + "IdList() == null) {");
 				writeLine("return FAILURE;");
 				writeLine("}");
@@ -301,6 +301,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * display object list");
 		writeLine(" */");
 		writeLine("public String display() {");
+		writeLine("this.setDefault();");
 		writeLine("this.refresh();");
 		writeLine("return SUCCESS;");
 		writeLine("}");
@@ -313,6 +314,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * display object");
 		writeLine(" */");
 		writeLine("public void display" + this.bean.className + "() {");
+		writeLine("this.setDefault();");
 		writeLine("this.refresh" + this.bean.className + "();");
 		writeLine("}");
 		skipLine();
@@ -394,6 +396,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("this.commonController.setSelected" + this.bean.className + "Id(" + this.bean.serviceObjectName + ".save" + this.bean.className + "(this.selected" + this.bean.className + "));");
 		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
 		writeLine("displayInfo(SAVE_SUCCESSFULL);");
+		writeLine("this.creationTag = false;");
 		writeLine("} catch (ObjectNotFoundException e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
@@ -432,6 +435,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(this.selected" + currentBean.className + ",this.commonController.getSelected" + this.bean.className + "Id());");
 			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
 			writeLine("displayInfo(SAVE_SUCCESSFULL);");
+			writeLine("this.creationTag = false;");
 			writeLine("} catch (ObjectNotFoundException e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 			writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
@@ -456,6 +460,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * edit object");
 		writeLine(" */");
 		writeLine("public String edit" + this.bean.className + "() {");
+		writeLine("this.setDefault();");
 		writeLine("this.refresh" + this.bean.className + "();");
 		writeLine("return SUCCESS;");
 		writeLine("}");

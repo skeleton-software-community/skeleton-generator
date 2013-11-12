@@ -1,14 +1,14 @@
 package org.skeleton.generator.bc.strategy.impl.presentation;
 
 import org.skeleton.generator.bc.command.file.impl.presentation.jsf.I18nFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfDetailViewFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfFacesConfigFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfListViewFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfOneToManyComponentDetailViewFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfOneToManyComponentListViewFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.JsfUniqueComponentDetailViewFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.SimpleJsfDetailViewFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.presentation.jsf.SimpleJsfListViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.JsfDetailViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.JsfListViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.JsfOneToManyComponentDetailViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.JsfOneToManyComponentListViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.JsfUniqueComponentDetailViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.SimpleJsfDetailViewFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu.SimpleJsfListViewFileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
 import org.skeleton.generator.model.om.Bean;
