@@ -6,13 +6,13 @@ import org.skeleton.generator.bc.strategy.impl.dao.HibernateDaoStrategy;
 import org.skeleton.generator.bc.strategy.impl.database.DefaultDatabaseStrategy;
 import org.skeleton.generator.bc.strategy.impl.junit.JUnitStrategy;
 import org.skeleton.generator.bc.strategy.impl.model.HibernateBusinessModelStrategy;
-import org.skeleton.generator.bc.strategy.impl.presentation.JsfPresentationStrategy;
+import org.skeleton.generator.bc.strategy.impl.presentation.BasicJsfPresentationStrategy;
 import org.skeleton.generator.bc.strategy.impl.services.ServiceStrategy;
 
 
-public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWriteCommandTreeFactory {
+public class BasicSpringHibernateRichFacesCommandTreeFactory extends AbstractFileWriteCommandTreeFactory {
 
-	public SpringHibernateRichFacesCommandTreeFactory() {
+	public BasicSpringHibernateRichFacesCommandTreeFactory() {
 		super();
 		layerStrategies.add(new DefaultDatabaseStrategy());
 		layerStrategies.add(new HibernateBusinessModelStrategy());
@@ -21,6 +21,6 @@ public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWrit
 		layerStrategies.add(new ServiceStrategy());
 		layerStrategies.add(new JUnitStrategy());
 		layerStrategies.add(new JsfControllerStrategy());
-		layerStrategies.add(new JsfPresentationStrategy());
+		layerStrategies.add(new BasicJsfPresentationStrategy());
 	}
 }

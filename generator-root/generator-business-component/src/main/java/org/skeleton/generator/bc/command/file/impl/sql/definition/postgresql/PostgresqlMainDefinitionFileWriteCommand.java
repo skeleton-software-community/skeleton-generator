@@ -7,6 +7,7 @@ import org.skeleton.generator.model.om.Project;
 
 public class PostgresqlMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
+	@SuppressWarnings("unused")
 	private Project project;
 
 	public PostgresqlMainDefinitionFileWriteCommand(Project project) {
