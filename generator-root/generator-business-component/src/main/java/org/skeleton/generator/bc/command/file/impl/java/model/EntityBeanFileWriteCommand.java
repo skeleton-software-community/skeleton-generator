@@ -12,6 +12,7 @@ import org.skeleton.generator.model.om.OneToOne;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.model.om.UniqueComponent;
 import org.skeleton.generator.util.metadata.DataType;
+import org.skeleton.generator.util.metadata.DatabaseEngine;
 
 
 
@@ -171,7 +172,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				if (property.dataType.equals(DataType.DATETIME)) {
 					writeLine("@Temporal(TemporalType.TIMESTAMP)");
 				}
-				if (property.dataType.equals(DataType.TEXT)) {
+				if (property.dataType.equals(DataType.TEXT) && bean.myPackage.model.project.databaseEngine.equals(DatabaseEngine.ORACLE)) {
 					writeLine("@Lob");
 				}
 				write("@Column(name = " + (char) 34 + property.column.name + (char) 34);
