@@ -9,6 +9,10 @@ public class FileWrirteCommandTreeFactoryBuilder {
 		switch (project.skeletonType) {
 			case SPRING_HIBERNATE_RICHFACES:
 				return new SpringHibernateRichFacesCommandTreeFactory();
+				
+			case BASIC_SPRING_HIBERNATE_RICHFACES:
+				return new BasicSpringHibernateRichFacesCommandTreeFactory();
+				
 			default:
 				throw new IllegalArgumentException("Unhandled Skeleton type : " + project.skeletonType.name());
 		}

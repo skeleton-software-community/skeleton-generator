@@ -137,8 +137,6 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		skipLine();
-
 		writeLine("public class " + this.bean.baseMapperClassName + " implements " + this.bean.baseMapperInterfaceName + " {");
 		skipLine();
 
@@ -229,6 +227,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		skipLine();
 
 		createMapping();
 		createUniqueComponentMapping();
@@ -242,7 +241,6 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * mapping business object to visible object");
 		writeLine(" */");
-		skipLine();
 		writeLine("public " + this.bean.viewClassName + " map" + this.bean.viewClassName + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ", " + this.bean.className + " "
 				+ this.bean.objectName + ") {");
 		writeLine(this.bean.viewObjectName + ".setSelected(false);");
