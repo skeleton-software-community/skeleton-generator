@@ -11,7 +11,7 @@ public enum FileType {
     XML ("XML", ".xml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     XHTML ("XHTML", ".xhtml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     BAT ("BAT", ".bat", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
-    PROPERTIES ("PROPERTIES", ".properties", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End");
+    PROPERTIES ("PROPERTIES", ".properties", StandardCharsets.ISO_8859_1, "# Specific Code Start", "# Specific Code End");
 	
 	private static final Map<String, FileType> reverseMap = new HashMap<String, FileType>();
 	static{
