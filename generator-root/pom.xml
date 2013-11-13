@@ -44,6 +44,8 @@
 		<cglib.version>2.2</cglib.version>
 		<javassist.version>3.9.0.GA</javassist.version>
 		
+		<postgresql.version>9.1-901.jdbc4</postgresql.version>
+		
 	</properties>
 
 	<dependencyManagement>
@@ -110,6 +112,13 @@
 				<scope>runtime</scope>
 			</dependency>
 			
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			 </dependency>
+			 
+			 
 			<!-- Spring -->
 			
 			<dependency>
