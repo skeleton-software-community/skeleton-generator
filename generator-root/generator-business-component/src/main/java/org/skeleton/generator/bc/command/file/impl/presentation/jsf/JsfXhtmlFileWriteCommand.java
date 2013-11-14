@@ -182,7 +182,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						+ " value=" + (char) 34 + "#{" + bean.objectName + "."
 						+ property.name + "}" + (char) 34);
 				writeLine("readonly=" + (char) 34 + "true" + (char) 34 + ">");
-				writeLine("<f:convertNumber pattern=" + (char) 34 + "#,##0"
+				writeLine("<f:convertNumber integerOnly=" + (char) 34 + "true" + (char) 34 + " pattern=" + (char) 34 + "#,##0"
 						+ (char) 34 + "/>");
 				writeLine("</h:inputText>");
 				break;
@@ -217,9 +217,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						+ (char) 34);
 				if (!property.nullable) {
 					skipLine();
-					write(" required=" + (char) 34 + "true" + (char) 34
-							+ " requiredMessage=" + (char) 34
-							+ "#{i18n.mandatoryField}" + (char) 34);
+					write(" required=" + (char) 34 + "true" + (char) 34);
 				}
 				writeLine(">");
 
@@ -261,7 +259,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					break;
 
 				case LONG:
-					writeLine("<f:convertNumber pattern=" + (char) 34 + "#,##0"
+					writeLine("<f:convertNumber integerOnly=" + (char) 34 + "true" + (char) 34 + " pattern=" + (char) 34 + "#,##0"
 							+ (char) 34 + "/>");
 					break;
 
@@ -320,9 +318,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 
 					if (!property.nullable) {
 						skipLine();
-						write("required=" + (char) 34 + "true" + (char) 34
-								+ " requiredMessage=" + (char) 34
-								+ "#{i18n.mandatoryField}" + (char) 34);
+						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine("/>");
 					break;
@@ -335,9 +331,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ property.name + "}" + (char) 34);
 					if (!property.nullable) {
 						skipLine();
-						write("required=" + (char) 34 + "true" + (char) 34
-								+ " requiredMessage=" + (char) 34
-								+ "#{i18n.mandatoryField}" + (char) 34);
+						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine(">");
 
@@ -368,12 +362,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ property.name + "}" + (char) 34);
 					if (!property.nullable) {
 						skipLine();
-						write("required=" + (char) 34 + "true" + (char) 34
-								+ " requiredMessage=" + (char) 34
-								+ "#{i18n.mandatoryField}" + (char) 34);
+						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine(">");
-					writeLine("<f:convertNumber pattern=" + (char) 34 + "#,##0"
+					writeLine("<f:convertNumber integerOnly=" + (char) 34 + "true" + (char) 34 + " pattern=" + (char) 34 + "#,##0"
 							+ (char) 34 + "/>");
 					writeLine("</h:inputText>");
 					break;
@@ -386,9 +378,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ property.name + "}" + (char) 34);
 					if (!property.nullable) {
 						skipLine();
-						write("required=" + (char) 34 + "true" + (char) 34
-								+ " requiredMessage=" + (char) 34
-								+ "#{i18n.mandatoryField}" + (char) 34);
+						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine("/>");
 					break;
@@ -402,9 +392,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ property.name + "}" + (char) 34);
 					if (!property.nullable) {
 						skipLine();
-						write("required=" + (char) 34 + "true" + (char) 34
-								+ " requiredMessage=" + (char) 34
-								+ "#{i18n.mandatoryField}" + (char) 34);
+						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine("/>");
 					break;
