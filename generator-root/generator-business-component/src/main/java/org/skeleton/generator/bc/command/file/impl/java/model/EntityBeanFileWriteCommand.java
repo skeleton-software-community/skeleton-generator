@@ -34,6 +34,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 	@Override
 	protected void fetchSpecificImports() {
+		if (bean.myPackage.model.project.audited) {
+			javaImports.add("import org.hibernate.envers.Audited;");
+		}
 		javaImports.add("import java.util.Collection;");
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import java.io.Serializable;");
@@ -100,6 +103,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		writeLine("@Entity");
+		if (bean.myPackage.model.project.audited) {
+			writeLine("@Audited");
+		}
 		writeLine("@Table(name=" + (char) 34 + this.bean.table.name + (char) 34 + ")");
 		if (!StringUtils.isEmpty(bean.annotations)) {
 			writeLine(this.bean.annotations);

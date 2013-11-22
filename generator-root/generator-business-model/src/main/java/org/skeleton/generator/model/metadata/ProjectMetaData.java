@@ -19,6 +19,7 @@ public class ProjectMetaData {
     private String databaseName;
     private String userName;
     private String password;
+    private String audited;
     
     private List<PackageMetaData> packageMetaDataList;
 
@@ -127,5 +128,13 @@ public class ProjectMetaData {
 
 	public void setPackageMetaDataList(List<PackageMetaData> packageMetaDataList) {
 		this.packageMetaDataList = packageMetaDataList;
-	}   
+	}
+
+	public String getAudited() {
+		return audited;
+	}
+
+	public void setAudited(String audited) {
+		this.audited = audited;
+	}
 }

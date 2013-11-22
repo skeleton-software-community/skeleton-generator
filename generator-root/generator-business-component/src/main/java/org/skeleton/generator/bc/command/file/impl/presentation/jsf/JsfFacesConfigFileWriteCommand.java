@@ -39,6 +39,10 @@ public class JsfFacesConfigFileWriteCommand extends XmlFileWriteCommand {
 		writeLine("<application>");
 		writeLine("<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>");
 		writeLine("<message-bundle>i18n</message-bundle>");
+		writeLine("<resource-bundle>");
+		writeLine("<base-name>i18n</base-name>");
+		writeLine("<var>i18n</var>");
+		writeLine("</resource-bundle>");
 		writeLine("<locale-config>");
 		writeLine("<default-locale>fr</default-locale>");
 		writeLine("</locale-config>");
