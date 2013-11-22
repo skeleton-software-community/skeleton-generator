@@ -24,6 +24,7 @@ public class Project {
     public String databaseName;
     public String userName;
     public String password;
+    public boolean audited;
     
     public Model model;
 }

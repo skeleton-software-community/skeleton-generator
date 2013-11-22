@@ -34,6 +34,7 @@ public class ProjectMetaDataMapperImpl implements ProjectMetaDataMapper {
 		projectMetaData.setDatabaseName(elements.get("Database Name"));
 		projectMetaData.setUserName(elements.get("User Name"));
 		projectMetaData.setPassword(elements.get("Password"));
+		projectMetaData.setAudited(elements.get("Audited"));
 		
 		return projectMetaData;
 	}

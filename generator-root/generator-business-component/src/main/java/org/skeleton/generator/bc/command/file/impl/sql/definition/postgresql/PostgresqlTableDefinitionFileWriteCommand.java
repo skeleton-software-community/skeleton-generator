@@ -40,6 +40,10 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	@Override
 	public void writeContent() throws IOException {
 		createTable();
+		
+		if (table.myPackage.model.project.audited) {
+			createAuditTable();
+		}
 		createFind();
 		createInsert();
 		createUpdate();
@@ -110,6 +114,33 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
             }
         }
 
+        skipLine();
+    }
+	
+	
+	/*
+	 * create table
+	 */
+	private void createAuditTable()
+    {
+        writeLine("-- table d'audit des elements --");
+        writeLine("CREATE TABLE " + table.name + "_aud");
+        writeLine("(");
+        writeLine(table.columnList.get(0).name + " integer NOT NULL,");
+        writeLine("rev integer NOT NULL,");
+        writeLine("revtype smallint NOT NULL,");
+
+        for (int i = 1;i<this.table.columnList.size();i++)
+        {
+            writeLine(this.table.columnList.get(i).name + " " + DataType.getPostgresqlType(table.columnList.get(i).dataType) + " NULL,");
+        }
+
+        writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (id, rev),");
+        writeLine("CONSTRAINT " + table.name + "_aud_rev FOREIGN KEY (rev)");
+        writeLine("REFERENCES auditentity (id) MATCH SIMPLE");
+        writeLine("ON UPDATE NO ACTION ON DELETE NO ACTION");
+        writeLine(")");
+        writeLine(";");
         skipLine();
     }
 	
