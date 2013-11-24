@@ -69,6 +69,7 @@ public class Bean {
 
 	public boolean isComponent = false;
 	public boolean hasStatus = false;
+	public boolean isManyToOneComponent = false;
 
 	/**
 	 * get the list of properties that will be used in bean views to show

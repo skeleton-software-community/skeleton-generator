@@ -156,6 +156,18 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + (char) 34 + "generator" + (char) 34 + ")");
 		writeLine("private Long id;");
 		skipLine();
+		
+		if (bean.myPackage.model.project.audited) {
+			if (bean.isManyToOneComponent) {
+				
+				Bean parentBean = bean.myPackage.model.findBean(bean.table.columnList.get(1).referenceTable.originalName);
+				
+				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
+				writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columnList.get(1).name + (char) 34 + ", nullable = false)");				
+				writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
+				skipLine();
+			}
+		}
 
 		for (int i = 1; i < this.bean.propertyList.size(); i++) {
 			Property property = this.bean.propertyList.get(i);
@@ -201,8 +213,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			writeLine("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)");
-			writeLine("@JoinColumn(name = " + (char) 34 + oneToManyComponent.referenceColumn.name + (char) 34 + ", nullable=false)");
+			write("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true");
+			if (bean.myPackage.model.project.audited){
+				writeLine(", mappedBy = " + (char) 34 + oneToManyComponent.parentBean.objectName + (char) 34 + ")");
+			} else {
+				writeLine(")");
+				writeLine("@JoinColumn(name = " + (char) 34 + oneToManyComponent.referenceColumn.name + (char) 34 + ", nullable=false)");
+			}
+
 			writeLine("private Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
 			skipLine();
 		}
@@ -235,6 +253,22 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * getters and setters");
 		writeLine(" */");
+		
+		if (bean.myPackage.model.project.audited) {
+			if (bean.isManyToOneComponent) {
+				
+				Bean parentBean = bean.myPackage.model.findBean(bean.table.columnList.get(1).referenceTable.originalName);
+				
+				writeLine("public " + parentBean.className + " get" + parentBean.className + "() {");
+				writeLine("return this." + parentBean.objectName + ";");
+				writeLine("}");
+				skipLine();
+				writeLine("public void set" + parentBean.className + "(" + parentBean.className + " " + parentBean.objectName + ") {");
+				writeLine("this." + parentBean.objectName + " = " + parentBean.objectName + ";");
+				writeLine("}");
+				skipLine();
+			}
+		}
 
 		for (Property property : this.bean.propertyList) {
 			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");

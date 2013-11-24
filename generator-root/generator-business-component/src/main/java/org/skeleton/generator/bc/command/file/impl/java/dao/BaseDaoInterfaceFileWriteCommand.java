@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
+import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.util.metadata.RelationType;
 
@@ -32,6 +33,11 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import " + bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
+		
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+		}
 	}
 
 	@Override
@@ -144,6 +150,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("*/");
         writeLine("Long save" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
+        
+        for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * save one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
+			skipLine();
+		}
     }
 
     private void createUpdateObject()
