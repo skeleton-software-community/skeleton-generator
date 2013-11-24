@@ -102,7 +102,7 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 				+ ".creationTag}" + (char) 34 + " styleClass=" + (char) 34 + "simpleButton" + (char) 34 + " reRender=" + (char) 34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
 				+ "DetailPanelGroup" + (char) 34 + " oncomplete=" + (char) 34 + "if (#{facesContext.maximumSeverity.ordinal ==0}) Richfaces.hideModalPanel('" + currentBean.objectName + "ModalPanel')"
 				+ (char) 34 + "/>");
-		writeLine("<a4j:commandButton value=" + (char) 34 + "#{i18n.cancel}" + (char) 34 + " action=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".display" + parentBean.className + "}"
+		writeLine("<a4j:commandButton value=" + (char) 34 + "#{i18n.cancel}" + (char)34 + " actionListener=" + (char)34 + "#{" + parentBean.controllerObjectName + ".resetForm}" + (char)34 + " action=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".display" + parentBean.className + "}"
 				+ (char) 34 + " styleClass=" + (char) 34 + "simpleButton" + (char) 34 + " immediate=" + (char) 34 + "true" + (char) 34 + " reRender=" + (char) 34 + currentBean.objectName
 				+ "PanelGroup" + (char) 34 + " oncomplete=" + (char) 34 + "Richfaces.hideModalPanel('" + currentBean.objectName + "ModalPanel')" + (char) 34 + "/>");
 
