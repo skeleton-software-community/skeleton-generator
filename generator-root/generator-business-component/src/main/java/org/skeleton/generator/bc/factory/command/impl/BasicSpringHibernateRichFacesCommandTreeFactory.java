@@ -7,6 +7,7 @@ import org.skeleton.generator.bc.strategy.impl.database.DefaultDatabaseStrategy;
 import org.skeleton.generator.bc.strategy.impl.junit.JUnitStrategy;
 import org.skeleton.generator.bc.strategy.impl.model.HibernateBusinessModelStrategy;
 import org.skeleton.generator.bc.strategy.impl.presentation.BasicJsfPresentationStrategy;
+import org.skeleton.generator.bc.strategy.impl.presentation.JsfPresentationStrategy;
 import org.skeleton.generator.bc.strategy.impl.services.ServiceStrategy;
 
 
@@ -21,6 +22,6 @@ public class BasicSpringHibernateRichFacesCommandTreeFactory extends AbstractFil
 		layerStrategies.add(new ServiceStrategy());
 		layerStrategies.add(new JUnitStrategy());
 		layerStrategies.add(new JsfControllerStrategy());
-		layerStrategies.add(new BasicJsfPresentationStrategy());
+		layerStrategies.add(new JsfPresentationStrategy());
 	}
 }

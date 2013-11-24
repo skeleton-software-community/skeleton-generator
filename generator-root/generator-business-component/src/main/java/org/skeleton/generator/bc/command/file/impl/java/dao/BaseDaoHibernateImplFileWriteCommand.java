@@ -7,6 +7,7 @@ import java.util.List;
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Alias;
 import org.skeleton.generator.model.om.Bean;
+import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.util.metadata.RelationType;
 import org.springframework.util.StringUtils;
@@ -42,6 +43,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.stereotype.Repository;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
+	
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+		}
 	}
 
 	@Override
@@ -278,7 +284,24 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return (Long)this.sessionFactory.getCurrentSession().save(" + this.bean.objectName + ");");
 		writeLine("}");
 		skipLine();
+		
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * save one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ") {");
+			writeLine(this.bean.objectName + ".get" + currentBean.className + "Collection().add(" + currentBean.objectName + ");");
+            
+			if (bean.myPackage.model.project.audited) {
+				writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
+				writeLine("this.sessionFactory.getCurrentSession().save(" + oneToManyComponent.referenceBean.objectName + ");");
+			}
+			writeLine("}");
+			skipLine();
+		}
 	}
+	
 
 	private void createUpdateObject() {
 		writeLine("/**");

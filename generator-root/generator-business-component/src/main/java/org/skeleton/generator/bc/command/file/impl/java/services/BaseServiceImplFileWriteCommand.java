@@ -325,7 +325,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + bean.mapperObjectName + ".map" + currentBean.className + "(new " + currentBean.className + "()," + currentBean.viewObjectName + ");");
             writeLine("this." + this.bean.stateManagerObjectName + ".setDefault" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
-            writeLine(this.bean.objectName + ".get" + currentBean.className + "Collection().add(" + currentBean.objectName + ");");
+            writeLine(this.bean.daoObjectName + ".save" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.objectName + ");");
             writeLine("}");
             skipLine();
         }
