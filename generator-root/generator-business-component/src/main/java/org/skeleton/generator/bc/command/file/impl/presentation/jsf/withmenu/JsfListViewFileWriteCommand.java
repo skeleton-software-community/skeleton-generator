@@ -43,42 +43,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<ui:define name=" + (char) 34 + "content" + (char) 34 + ">");
 		skipLine();
 
-		writeLine("<script>");
-		writeLine("<!--");
-		skipLine();
-
-		writeLine("function selectUnselectAll(checkbox){");
-		writeLine("var elements = checkbox.form.elements;");
-		writeLine("for (var i = 0; i < elements.length; i++) {");
-		writeLine("var element = elements[i];");
-		writeLine("if (/" + this.bean.objectName + "Selected$/.test(element.id)) {");
-		writeLine("element.checked = checkbox.checked;");
-		writeLine("}");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-
-		writeLine("function selectBox() {");
-		writeLine("checkbox = document.getElementById(" + (char) 34 + this.bean.objectName + "Form:" + this.bean.objectName + "List:selectUnselectAll" + (char) 34 + ");");
-		writeLine("var elements = checkbox.form.elements;");
-		writeLine("var allSelected=true;");
-		writeLine("var selectedItemNumber=0;");
-		writeLine("for (var elementIndex = 0; elementIndex < elements.length; elementIndex++) {");
-		writeLine("var element = elements[elementIndex];");
-		writeLine("if (/" + this.bean.objectName + "Selected$/.test(element.id)) {");
-		writeLine("if (!element.checked){");
-		writeLine("allSelected=false;");
-		writeLine("}else{");
-		writeLine("selectedItemNumber++;");
-		writeLine("}");
-		writeLine("}");
-		writeLine("}");
-		writeLine("checkbox.checked=allSelected;");
-		writeLine("}");
-		skipLine();
-
-		writeLine("-->");
-		writeLine("</script>");
+		writeLine("<script type=" + (char)34 + "text/javascript" + (char)34 + " src=" + (char)34 + "resources/js/util.js" + (char)34 + "/>");
 		skipLine();
 
 		writeLine("<br/>");
@@ -180,8 +145,8 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true" + (char) 34
 				+ " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
 		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + this.bean.objectName + "Selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34
-				+ " onclick=" + (char) 34 + "selectBox()" + (char) 34 + "/>");
+		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34
+				+ " onclick=" + (char) 34 + "selectBox('" + bean.objectName + "Form:" + bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
 

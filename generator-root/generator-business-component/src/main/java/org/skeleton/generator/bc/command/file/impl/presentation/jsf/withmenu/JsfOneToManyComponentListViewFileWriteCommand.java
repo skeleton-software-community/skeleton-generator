@@ -41,62 +41,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<!-- -->");
 		skipLine();
 
-		writeLine("<script>");
-		writeLine("<!--");
-		skipLine();
-
-		writeLine("function selectUnselectAll(checkbox){");
-		writeLine("var elements = checkbox.form.elements;");
-		writeLine("for (var i = 0; i < elements.length; i++) {");
-		writeLine("var element = elements[i];");
-		writeLine("if (/" + currentBean.objectName + "Selected$/.test(element.id)) {");
-		writeLine("element.checked = checkbox.checked;");
-		writeLine("}");
-		writeLine("}");
-		writeLine("if (checkbox.checked==true){");
-		writeLine("showActions();");
-		writeLine("}else{");
-		writeLine("hideActions();");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-
-		writeLine("function selectBox() {");
-		writeLine("checkbox = document.getElementById(" + (char) 34 + currentBean.objectName + "Form:" + currentBean.objectName + "List:selectUnselectAll" + (char) 34 + ");");
-		writeLine("var elements = checkbox.form.elements;");
-		writeLine("var allSelected=true;");
-		writeLine("var selectedItemNumber=0;");
-		writeLine("for (var elementIndex = 0; elementIndex < elements.length; elementIndex++) {");
-		writeLine("var element = elements[elementIndex];");
-		writeLine("if (/" + currentBean.objectName + "Selected$/.test(element.id)) {");
-		writeLine("if (!element.checked){");
-		writeLine("allSelected=false;");
-		writeLine("}else{");
-		writeLine("selectedItemNumber++;");
-		writeLine("}");
-		writeLine("}");
-		writeLine("}");
-		writeLine("checkbox.checked=allSelected;");
-		writeLine("if (selectedItemNumber>0){");
-		writeLine("showActions();");
-		writeLine("}else{");
-		writeLine("hideActions();");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-
-		writeLine("function showActions(){");
-		writeLine("document.getElementById('" + currentBean.objectName + "Actions').style.display=" + (char) 34 + "block" + (char) 34 + ";");
-		writeLine("}");
-		skipLine();
-
-		writeLine("function hideActions(){");
-		writeLine("document.getElementById('" + currentBean.objectName + "Actions').style.display=" + (char) 34 + "none" + (char) 34 + ";");
-		writeLine("}");
-		skipLine();
-
-		writeLine("-->");
-		writeLine("</script>");
+		writeLine("<script type=" + (char)34 + "text/javascript" + (char)34 + " src=" + (char)34 + "resources/js/util.js" + (char)34 + "/>");
 		skipLine();
 
 		String header = "#{i18n." + currentBean.objectName + "List}";
@@ -130,10 +75,10 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true" + (char) 34
-				+ " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
+				+ " onclick=" + (char) 34 + "selectUnselectAllComponents(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
 		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + currentBean.objectName + "Selected" + (char) 34 + " value=" + (char) 34 + "#{" + currentBean.objectName + ".selected}" + (char) 34
-				+ " onclick=" + (char) 34 + "selectBox()" + (char) 34 + "/>");
+		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + currentBean.objectName + ".selected}" + (char) 34
+				+ " onclick=" + (char) 34 + "selectComponentBox(" + currentBean.objectName + "Form:" + currentBean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
 
@@ -197,7 +142,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<br/>");
 		skipLine();
 
-		writeLine("<div id=" + (char) 34 + currentBean.objectName + "Actions" + (char) 34 + " style=" + (char) 34 + "display:none;margin:2px;" + (char) 34 + ">");
+		writeLine("<div id=" + (char) 34 + "actions" + (char) 34 + " style=" + (char) 34 + "display:none;margin:2px;" + (char) 34 + ">");
 		writeLine("Actions on selection:");
 		writeLine("<br/>");
 
