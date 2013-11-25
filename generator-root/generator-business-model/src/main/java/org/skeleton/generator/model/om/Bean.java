@@ -49,6 +49,9 @@ public class Bean {
 	public String baseControllerClassName;
 	public String controllerClassName;
 	public String controllerObjectName;
+	
+	public String filterClassName;
+	public String filterObjectName;
 
 	public int cardinality;
 	public String listRendering;

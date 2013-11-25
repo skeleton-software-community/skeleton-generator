@@ -2,6 +2,7 @@ package org.skeleton.generator.bc.strategy.impl.controller;
 
 import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.BaseJsfControllerFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.BaseSimpleJsfControllerFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.DataTableFilterFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.JsfCommonControllerFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.controller.jsf.JsfControllerFileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
@@ -52,6 +53,21 @@ public class JsfControllerStrategy implements LayerStrategy {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfControllerFileWriteCommand(bean), bean.controllerClassName);
 					controllerTreeNode.add(beanTreeNode);
 				}
+			}
+		}
+		
+		FileWriteCommandTreeNode filterTreeNode = new FileWriteCommandTreeNode("DataTable filters");
+		controllerLayerTreeNode.add(filterTreeNode);
+
+		for (Package myPackage : project.model.packageList) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			filterTreeNode.add(packageTreeNode);
+
+			for (Bean bean : myPackage.beanList) {
+				
+				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DataTableFilterFileWriteCommand(bean), bean.filterClassName);
+				filterTreeNode.add(beanTreeNode);
+
 			}
 		}
 		

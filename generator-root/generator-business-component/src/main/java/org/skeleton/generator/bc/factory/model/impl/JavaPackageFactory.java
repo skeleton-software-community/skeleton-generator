@@ -78,6 +78,8 @@ public class JavaPackageFactory implements PackageFactory {
 
         myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.basecontroller." + myPackage.name + ".impl";
         myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".impl";
+        
+        myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name + ".impl";
 
         myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".builder";
         myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".command";

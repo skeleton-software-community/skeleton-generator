@@ -30,6 +30,7 @@ public class SimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("xmlns:rich = " + (char) 34 + "http://richfaces.org/rich" + (char) 34);
 		writeLine("xmlns:a4j = " + (char) 34 + "http://richfaces.org/a4j" + (char) 34);
 		writeLine("xmlns:c=" + (char) 34 + "http://java.sun.com/jstl/core" + (char) 34);
+		writeLine("xmlns:fn=" + (char) 34 + "http://java.sun.com/jsp/jstl/functions" + (char) 34);
 		writeLine("template=" + (char) 34 + "/templates/template.xhtml" + (char) 34 + ">");
 		skipLine();
 
@@ -41,9 +42,6 @@ public class SimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		skipLine();
 
 		writeLine("<ui:define name=" + (char) 34 + "content" + (char) 34 + ">");
-		skipLine();
-
-		writeLine("<script type=" + (char)34 + "text/javascript" + (char)34 + " src=" + (char)34 + "resources/js/util.js" + (char)34 + "/>");
 		skipLine();
 
 		writeLine("<br/>");
@@ -141,20 +139,39 @@ public class SimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 				+ "/>");
 		skipLine();
 
+		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
+		writeLine("<rich:columnGroup>");
+		writeLine("<rich:column>");
+		writeLine("</rich:column>");
+
+		for (Property property : this.bean.getVisiblePropertyList()) {
+			if (property.visibility.isListVisible()) {
+				writeLine("<rich:column>");
+				writeFilter(property, this.bean);
+				writeLine("</rich:column>");
+			}
+		}
+		
+		writeLine("<rich:column>");
+		writeLine("</rich:column>");
+
+		writeLine("</rich:columnGroup>");
+		writeLine("</f:facet>");
+
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true" + (char) 34
 				+ " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + "/>");
 		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34
-				+ " onclick=" + (char) 34 + "selectBox('" + this.bean.objectName + "Form:" + this.bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
+		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34 + " onclick=" + (char) 34
+				+ "selectBox('" + this.bean.objectName + "Form:" + this.bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
 
 		for (Property property : this.bean.getVisiblePropertyList()) {
 			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34 + " filterBy=" + (char) 34 + "#{" + this.bean.objectName + "."
-						+ property.name + "}" + (char) 34 + " filterEvent=" + (char) 34 + "onkeyup" + (char) 34 + ">");
+				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34);
+				writeFilterExpression(property, bean);
 				writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 				writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + this.bean.objectName + property.capName + "}" + (char) 34 + " />");
 				writeLine("</f:facet>");
@@ -193,11 +210,11 @@ public class SimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("</rich:column>");
 		skipLine();
 
-
 		writeLine("</rich:dataTable>");
 		skipLine();
-		
-		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + "/>");
+
+		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + this.bean.objectName + "List"
+				+ (char) 34 + "/>");
 
 		if (bean.createEnabled) {
 			writeLine("<br/>");
