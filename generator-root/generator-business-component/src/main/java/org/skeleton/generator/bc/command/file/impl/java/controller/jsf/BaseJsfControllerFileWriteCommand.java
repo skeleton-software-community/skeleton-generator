@@ -34,6 +34,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
@@ -43,6 +44,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
 		}
 
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
@@ -85,6 +87,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * view");
 		writeLine(" */");
 		writeLine("protected List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List;");
+		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + ";");
 		writeLine("protected " + this.bean.viewClassName + " selected" + this.bean.className + ";");
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
@@ -95,6 +98,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("protected List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List;");
+			writeLine("protected " + currentBean.filterClassName + " " + currentBean.filterObjectName + ";");
 			writeLine("protected " + currentBean.viewClassName + " selected" + currentBean.className + ";");
 		}
 		skipLine();
@@ -109,6 +113,16 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("public void set" + this.bean.className + "List(List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List) {");
 		writeLine("this." + this.bean.objectName + "List = " + this.bean.objectName + "List;");
+		writeLine("}");
+		skipLine();
+		
+		writeLine("public " + this.bean.filterClassName + " get" + this.bean.filterClassName + "() {");
+		writeLine("return " + this.bean.filterObjectName + ";");
+		writeLine("}");
+		skipLine();
+
+		writeLine("public void set" + this.bean.filterClassName + "(" + this.bean.filterClassName + " " + this.bean.filterObjectName + ") {");
+		writeLine("this." + this.bean.filterObjectName + " = " + this.bean.filterObjectName + ";");
 		writeLine("}");
 		skipLine();
 
@@ -146,6 +160,16 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this." + currentBean.objectName + "List = " + currentBean.objectName + "List;");
 			writeLine("}");
 			skipLine();
+			
+			writeLine("public " + currentBean.filterClassName + " get" + currentBean.filterClassName + "() {");
+			writeLine("return " + currentBean.filterObjectName + ";");
+			writeLine("}");
+			skipLine();
+
+			writeLine("public void set" + currentBean.filterClassName + "(" + currentBean.filterClassName + " " + currentBean.filterObjectName + ") {");
+			writeLine("this." + currentBean.filterObjectName + " = " + currentBean.filterObjectName + ";");
+			writeLine("}");
+			skipLine();
 
 			writeLine("public " + currentBean.viewClassName + " getSelected" + currentBean.className + "() {");
 			writeLine("return selected" + currentBean.className + ";");
@@ -180,10 +204,12 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		createListenSelectedOneToManyComponent();
 		createListenSelectedObjectList();
 		createListenSelectedOneToManyComponentList();
+		createResetFlters();
 
 		writeLine("}");
 
 	}
+
 
 	private void createRefresh() {
 		writeLine("/**");
@@ -269,6 +295,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("public String load() {");
 		writeLine("this.commonController.setDefault();");
+		writeLine("this.reset" + bean.filterClassName + "();");
 		writeLine("this.setDefault();");
 		writeLine("this.loadedFrom = null;");
 		writeLine("this.refresh();");
@@ -316,6 +343,13 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("public void display" + this.bean.className + "() {");
 		writeLine("this.setDefault();");
 		writeLine("this.refresh" + this.bean.className + "();");
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+
+			writeLine("this.reset" + currentBean.filterClassName + "();");
+		}
+		
 		writeLine("}");
 		skipLine();
 
@@ -787,6 +821,29 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this.commonController.setSelected" + currentBean.className + "IdList(null);");
 			writeLine("displayError(EMPTY_SELECTION);");
 			writeLine("}");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	private void createResetFlters() {
+		
+		writeLine("/**");
+		writeLine(" * reset object datatable filter");
+		writeLine(" */");
+		writeLine("public void reset" + bean.filterClassName + "() {");
+		writeLine("this." + bean.filterObjectName + " = new " + bean.filterClassName + "();");
+		writeLine("}");
+		skipLine();
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * reset one to many component " + bean.filterClassName + " datatable filter");
+			writeLine(" */");
+			writeLine("public void reset" + currentBean.filterClassName + "() {");
+			writeLine("this." + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
 			writeLine("}");
 			skipLine();
 		}

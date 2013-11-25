@@ -73,6 +73,9 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.baseControllerClassName = bean.className + "BaseController";
 		bean.controllerClassName = bean.className + "Controller";
 		bean.controllerObjectName = bean.objectName + "Controller";
+		
+		bean.filterClassName = bean.className + "DataTableFilter";
+		bean.filterObjectName = bean.objectName + "DataTableFilter";
 
 		bean.propertyList = new ArrayList<Property>();
 		bean.oneToManyComponentList = new ArrayList<OneToManyComponent>();

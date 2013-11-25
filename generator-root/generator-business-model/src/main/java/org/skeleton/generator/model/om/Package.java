@@ -46,6 +46,7 @@ public class Package {
 
     public String baseControllerPackageName;
     public String controllerPackageName;
+    public String filterPackageName;
 
     public String builderPackageName;
     public String commandPackageName;

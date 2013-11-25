@@ -43,9 +43,6 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<ui:define name=" + (char) 34 + "content" + (char) 34 + ">");
 		skipLine();
 
-		writeLine("<script type=" + (char)34 + "text/javascript" + (char)34 + " src=" + (char)34 + "resources/js/util.js" + (char)34 + "/>");
-		skipLine();
-
 		writeLine("<br/>");
 		writeLine("<rich:messages infoClass=" + (char) 34 + "infoMessage" + (char) 34 + " errorClass=" + (char) 34 + "errorMessage" + (char) 34 + " globalOnly=" + (char) 34 + "true" + (char) 34
 				+ "/>");

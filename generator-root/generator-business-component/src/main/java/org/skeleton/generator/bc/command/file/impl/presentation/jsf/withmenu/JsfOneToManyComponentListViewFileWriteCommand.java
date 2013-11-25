@@ -41,9 +41,6 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<!-- -->");
 		skipLine();
 
-		writeLine("<script type=" + (char)34 + "text/javascript" + (char)34 + " src=" + (char)34 + "resources/js/util.js" + (char)34 + "/>");
-		skipLine();
-
 		String header = "#{i18n." + currentBean.objectName + "List}";
 
 		for (Property property : parentBean.getFindPropertyList()) {

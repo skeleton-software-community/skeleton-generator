@@ -16,19 +16,31 @@ public class SQLNaming {
             boolean start = true;
             for (String element : elements)
             {
-                String firstCar = element.substring(0, 1);
-                String lastCar = element.substring(element.length() - 1,element.length());
-                String coreBody = element.substring(1, element.length() - 1);
-                coreBody = coreBody.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").replace("y", "");
-                if (start == false)
-                {
-                    result += separator;
-                }
-                else
-                {
-                    start = false;
-                }
-                result += firstCar + coreBody + lastCar;
+            	if (element.length()>2) {
+	                String firstCar = element.substring(0, 1);
+	                String lastCar = element.substring(element.length() - 1,element.length());
+	                String coreBody = element.substring(1, element.length() - 1);
+	                coreBody = coreBody.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "").replace("y", "");
+	                if (start == false)
+	                {
+	                    result += separator;
+	                }
+	                else
+	                {
+	                    start = false;
+	                }
+	                result += firstCar + coreBody + lastCar;
+            	} else {
+            		if (start == false)
+	                {
+	                    result += separator;
+	                }
+	                else
+	                {
+	                    start = false;
+	                }
+	                result += element;
+            	}
             }
             
             if (result.length() > 20) {

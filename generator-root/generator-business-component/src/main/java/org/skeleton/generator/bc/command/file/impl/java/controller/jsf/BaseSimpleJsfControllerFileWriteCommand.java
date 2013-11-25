@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
+import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.util.metadata.RelationType;
 import org.skeleton.generator.util.metadata.Visibility;
@@ -34,6 +35,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
 		javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
 	}
 
 	@Override
@@ -72,6 +74,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * view");
 		writeLine(" */");
 		writeLine("protected List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List;");
+		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + ";");
 		writeLine("protected " + this.bean.viewClassName + " selected" + this.bean.className + ";");
 		skipLine();
 
@@ -85,6 +88,16 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 
 		writeLine("public void set" + this.bean.className + "List(List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List) {");
 		writeLine("this." + this.bean.objectName + "List = " + this.bean.objectName + "List;");
+		writeLine("}");
+		skipLine();
+		
+		writeLine("public " + this.bean.filterClassName + " get" + this.bean.filterClassName + "() {");
+		writeLine("return " + this.bean.filterObjectName + ";");
+		writeLine("}");
+		skipLine();
+
+		writeLine("public void set" + this.bean.filterClassName + "(" + this.bean.filterClassName + " " + this.bean.filterObjectName + ") {");
+		writeLine("this." + this.bean.filterObjectName + " = " + this.bean.filterObjectName + ";");
 		writeLine("}");
 		skipLine();
 
@@ -111,6 +124,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		createDeleteObjectList();
 		createListenSelectedObject();
 		createListenSelectedObjectList();
+		createResetFlters();
 
 		writeLine("}");
 
@@ -179,6 +193,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" */");
 		writeLine("public String load() {");
 		writeLine("this.commonController.setDefault();");
+		writeLine("this.reset" + bean.filterClassName + "();");
 		writeLine("this.setDefault();");
 		writeLine("this.loadedFrom = null;");
 		writeLine("this.refresh();");
@@ -420,6 +435,17 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("this.commonController.setSelected" + this.bean.className + "IdList(null);");
 		writeLine("displayError(EMPTY_SELECTION);");
 		writeLine("}");
+		writeLine("}");
+		skipLine();
+	}
+	
+	private void createResetFlters() {
+		
+		writeLine("/**");
+		writeLine(" * reset object datatable filter");
+		writeLine(" */");
+		writeLine("public void reset" + bean.filterClassName + "() {");
+		writeLine("this." + bean.filterObjectName + " = new " + bean.filterClassName + "();");
 		writeLine("}");
 		skipLine();
 	}
