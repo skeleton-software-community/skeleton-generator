@@ -74,7 +74,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * view");
 		writeLine(" */");
 		writeLine("protected List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List;");
-		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + ";");
+		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + " = new " + this.bean.filterClassName + "();");
 		writeLine("protected " + this.bean.viewClassName + " selected" + this.bean.className + ";");
 		skipLine();
 

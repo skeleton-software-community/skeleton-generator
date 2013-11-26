@@ -32,6 +32,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 		writeLine("xmlns:h = " + (char) 34 + "http://java.sun.com/jsf/html" + (char) 34);
 		writeLine("xmlns:rich = " + (char) 34 + "http://richfaces.org/rich" + (char) 34);
 		writeLine("xmlns:a4j = " + (char) 34 + "http://richfaces.org/a4j" + (char) 34);
+		writeLine("xmlns:fn=" + (char) 34 + "http://java.sun.com/jsp/jstl/functions" + (char) 34);
 		writeLine("xmlns:c=" + (char) 34 + "http://java.sun.com/jstl/core" + (char) 34 + ">");
 		skipLine();
 
@@ -80,12 +81,17 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 		for (Property property : currentBean.getVisiblePropertyList()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column>");
-				writeFilter(property, currentBean);
+				writeFilter(property, currentBean, parentBean);
 				writeLine("</rich:column>");
 			}
 		}
 
 		writeLine("<rich:column>");
+		
+		writeLine("<a4j:commandLink action=" + (char)34 + "#{" + parentBean.controllerObjectName + ".reset" + currentBean.filterClassName + "}" + (char)34 + " reRender=" + (char)34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + (char)34 + ">");
+		writeLine("<h:graphicImage url=" + (char)34 + "/resources/images/icons/refresh.png" + (char)34 + " styleClass=" + (char)34 + "imageIcon" + (char)34 + " title=" + (char)34 + "#{i18n.resetFilter}" + (char)34 + "/>");
+		writeLine("</a4j:commandLink>");
+		
 		writeLine("</rich:column>");
 
 		writeLine("</rich:columnGroup>");
@@ -106,7 +112,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 		for (Property property : currentBean.getVisiblePropertyList()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + currentBean.objectName + "." + property.name + "}" + (char) 34);
-				writeFilterExpression(property, currentBean);
+				writeFilterExpression(property, currentBean, parentBean);
 				writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 				writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + currentBean.objectName + property.capName + "}" + (char) 34 + " />");
 				writeLine("</f:facet>");

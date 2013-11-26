@@ -87,7 +87,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * view");
 		writeLine(" */");
 		writeLine("protected List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List;");
-		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + ";");
+		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + " = new " + this.bean.filterClassName + "();");
 		writeLine("protected " + this.bean.viewClassName + " selected" + this.bean.className + ";");
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
@@ -98,7 +98,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("protected List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List;");
-			writeLine("protected " + currentBean.filterClassName + " " + currentBean.filterObjectName + ";");
+			writeLine("protected " + currentBean.filterClassName + " " + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
 			writeLine("protected " + currentBean.viewClassName + " selected" + currentBean.className + ";");
 		}
 		skipLine();
