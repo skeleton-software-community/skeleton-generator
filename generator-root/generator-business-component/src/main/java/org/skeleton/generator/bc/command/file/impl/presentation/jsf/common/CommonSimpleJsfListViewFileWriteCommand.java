@@ -161,6 +161,11 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		}
 
 		writeLine("<rich:column>");
+		
+		writeLine("<a4j:commandLink action=" + (char)34 + "#{" + bean.controllerObjectName + ".reset" + bean.filterClassName + "}" + (char)34 + " reRender=" + (char)34 + bean.objectName + "List, " + bean.objectName + "Scroller" + (char)34 + ">");
+		writeLine("<h:graphicImage url=" + (char)34 + "/resources/images/icons/refresh.png" + (char)34 + " styleClass=" + (char)34 + "imageIcon" + (char)34 + " title=" + (char)34 + "#{i18n.resetFilter}" + (char)34 + "/>");
+		writeLine("</a4j:commandLink>");
+		
 		writeLine("</rich:column>");
 
 		writeLine("</rich:columnGroup>");
