@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu;
+package org.skeleton.generator.bc.command.file.impl.presentation.jsf.common;
 
 import java.io.IOException;
 
@@ -9,15 +9,19 @@ import org.skeleton.generator.model.om.OneToOne;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.util.metadata.RelationType;
 
-public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private Bean bean;
+	private boolean handleToolBar;
+	private boolean handleSelection;
 
-	public JsfListViewFileWriteCommand(Bean bean) {
+	public CommonJsfListViewFileWriteCommand(Bean bean, boolean handleToolBar, boolean handleSelection) {
 		super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\webapp\\sections\\" + bean.myPackage.name + "\\"
 				+ bean.className.toLowerCase(), bean.className + "List");
 
 		this.bean = bean;
+		this.handleToolBar = handleToolBar;
+		this.handleSelection = handleSelection;
 	}
 
 	@Override
@@ -30,6 +34,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("xmlns:rich = " + (char) 34 + "http://richfaces.org/rich" + (char) 34);
 		writeLine("xmlns:a4j = " + (char) 34 + "http://richfaces.org/a4j" + (char) 34);
 		writeLine("xmlns:c=" + (char) 34 + "http://java.sun.com/jstl/core" + (char) 34);
+		writeLine("xmlns:fn=" + (char) 34 + "http://java.sun.com/jsp/jstl/functions" + (char) 34);
 		writeLine("template=" + (char) 34 + "/templates/template.xhtml" + (char) 34 + ">");
 		skipLine();
 
@@ -50,58 +55,62 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 		writeLine("<h:form id=" + (char) 34 + this.bean.objectName + "Form" + (char) 34 + ">");
 
-		writeLine("<rich:toolBar>");
-		writeLine("<rich:dropDownMenu value=" + (char) 34 + "Navigation" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
+		if (handleToolBar) {
 
-		for (Property property : this.bean.propertyList) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-				writeLine("<rich:menuItem value=" + (char) 34 + "back to #{i18n." + property.referenceBean.objectName + "List}" + (char) 34);
-				writeLine("rendered=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".loadedFrom == '" + property.referenceBean.className + "'}" + (char) 34);
-				writeLine("submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{" + property.referenceBean.controllerObjectName + ".display}" + (char) 34 + "/>");
+			writeLine("<rich:toolBar>");
+			writeLine("<rich:dropDownMenu value=" + (char) 34 + "Navigation" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
+
+			for (Property property : this.bean.propertyList) {
+				if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
+					writeLine("<rich:menuItem value=" + (char) 34 + "back to #{i18n." + property.referenceBean.objectName + "List}" + (char) 34);
+					writeLine("rendered=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".loadedFrom == '" + property.referenceBean.className + "'}" + (char) 34);
+					writeLine("submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{" + property.referenceBean.controllerObjectName + ".display}" + (char) 34 + "/>");
+
+				}
+			}
+
+			for (OneToMany oneToMany : this.bean.oneToManyList) {
+				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToMany.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34);
+				writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
+						+ oneToMany.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
 
 			}
+
+			for (OneToOne oneToOne : this.bean.oneToOneList) {
+				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToOne.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34
+						+ " actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
+						+ oneToOne.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
+			}
+
+			writeLine("</rich:dropDownMenu>");
+			skipLine();
+
+			writeLine("<rich:dropDownMenu value=" + (char) 34 + "Actions" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
+
+			if (this.bean.createEnabled) {
+				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.create}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{"
+						+ this.bean.controllerObjectName + ".create" + this.bean.className + "}" + (char) 34 + "/>");
+			}
+			if (this.bean.deleteEnabled) {
+				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.dropSelection}" + (char) 34 + " submitMode=" + (char) 34 + "ajax" + (char) 34);
+				writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34);
+				writeLine("action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".delete" + this.bean.className + "List}" + (char) 34);
+				writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + (char) 34);
+				writeLine("reRender=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + "/>");
+			}
+			skipLine();
+
+			this.writeNotOverridableContent();
+			skipLine();
+
+			writeLine("</rich:dropDownMenu>");
+			writeLine("</rich:toolBar>");
+			skipLine();
+
+			writeLine("<br/>");
+			skipLine();
+
 		}
-
-		for (OneToMany oneToMany : this.bean.oneToManyList) {
-			writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToMany.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34);
-			writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
-					+ oneToMany.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
-
-		}
-
-		for (OneToOne oneToOne : this.bean.oneToOneList) {
-			writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToOne.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34
-					+ " actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
-					+ oneToOne.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
-		}
-
-		writeLine("</rich:dropDownMenu>");
-		skipLine();
-
-		writeLine("<rich:dropDownMenu value=" + (char) 34 + "Actions" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
-
-		if (this.bean.createEnabled) {
-			writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.create}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{"
-					+ this.bean.controllerObjectName + ".create" + this.bean.className + "}" + (char) 34 + "/>");
-		}
-		if (this.bean.deleteEnabled) {
-			writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.dropSelection}" + (char) 34 + " submitMode=" + (char) 34 + "ajax" + (char) 34);
-			writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34);
-			writeLine("action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".delete" + this.bean.className + "List}" + (char) 34);
-			writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + (char) 34);
-			writeLine("reRender=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + "/>");
-		}
-		skipLine();
-
-		this.writeNotOverridableContent();
-		skipLine();
-
-		writeLine("</rich:dropDownMenu>");
-		writeLine("</rich:toolBar>");
-		skipLine();
-
-		writeLine("<br/>");
-		skipLine();
 
 		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
 		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
@@ -137,24 +146,49 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 				+ "/>");
 		skipLine();
 
-		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true" + (char) 34
-				+ " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
-		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34
-				+ " onclick=" + (char) 34 + "selectBox('" + bean.objectName + "Form:" + bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
+		writeLine("<rich:columnGroup>");
+
+		if (handleSelection) {
+			writeLine("<rich:column>");
+			writeLine("</rich:column>");
+		}
+		for (Property property : this.bean.getVisiblePropertyList()) {
+			if (property.visibility.isListVisible()) {
+				writeLine("<rich:column>");
+				writeFilter(property, this.bean);
+				writeLine("</rich:column>");
+			}
+		}
+
+		writeLine("<rich:column>");
 		writeLine("</rich:column>");
-		skipLine();
+
+		writeLine("</rich:columnGroup>");
+		writeLine("</f:facet>");
+
+		if (handleSelection) {
+			writeLine("<rich:column>");
+			writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
+			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true"
+					+ (char) 34 + " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
+			writeLine("</f:facet>");
+			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34 + " onclick=" + (char) 34
+					+ "selectBox('" + bean.objectName + "Form:" + bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
+			writeLine("</rich:column>");
+			skipLine();
+		}
 
 		for (Property property : this.bean.getVisiblePropertyList()) {
 			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34 + " filterBy=" + (char) 34 + "#{" + this.bean.objectName + "."
-						+ property.name + "}" + (char) 34 + " filterEvent=" + (char) 34 + "onkeyup" + (char) 34 + ">");
+				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34);
+				writeFilterExpression(property, bean);
 				writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 				writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + this.bean.objectName + property.capName + "}" + (char) 34 + " />");
 				writeLine("</f:facet>");
+
 				writeListComponent(property, this.bean);
+
 				writeLine("</rich:column>");
 				skipLine();
 			}
@@ -188,8 +222,9 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 		writeLine("</rich:dataTable>");
 		skipLine();
-		
-		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + "/>");
+
+		writeLine("<rich:datascroller id=" + (char) 34 + bean.objectName + "Scroller" + (char) 34 + " maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false"
+				+ (char) 34 + " for=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + "/>");
 		skipLine();
 
 		if (this.bean.createEnabled) {

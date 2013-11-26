@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.presentation.jsf.basic;
+package org.skeleton.generator.bc.command.file.impl.presentation.jsf.complete;
 
 import java.io.IOException;
 
@@ -12,6 +12,6 @@ import org.skeleton.generator.util.metadata.RelationType;
 
 public class JsfListViewFileWriteCommand extends CommonJsfListViewFileWriteCommand {
 	public JsfListViewFileWriteCommand(Bean bean) {
-		super(bean,false,false);
+		super(bean,true,true);
 	}
 }

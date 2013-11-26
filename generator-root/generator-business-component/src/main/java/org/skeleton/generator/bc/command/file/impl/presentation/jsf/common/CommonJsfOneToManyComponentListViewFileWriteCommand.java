@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu;
+package org.skeleton.generator.bc.command.file.impl.presentation.jsf.common;
 
 import java.io.IOException;
 
@@ -7,16 +7,17 @@ import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 
-public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private OneToManyComponent oneToManyComponent;
+	private boolean handleSelection;
 
-	public JsfOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
+	public CommonJsfOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent, boolean handleSelection) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
 				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
 				oneToManyComponent.referenceBean.className + "List");
 		this.oneToManyComponent = oneToManyComponent;
-
+		this.handleSelection = handleSelection;
 	}
 
 	@Override
@@ -69,20 +70,43 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 				+ (char) 34 + "/>");
 		skipLine();
 
-		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true" + (char) 34
-				+ " onclick=" + (char) 34 + "selectUnselectAllComponents(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
-		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + currentBean.objectName + ".selected}" + (char) 34
-				+ " onclick=" + (char) 34 + "selectComponentBox(" + currentBean.objectName + "Form:" + currentBean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
+		writeLine("<rich:columnGroup>");
+
+		if (handleSelection) {
+			writeLine("<rich:column>");
+			writeLine("</rich:column>");
+		}
+		for (Property property : currentBean.getVisiblePropertyList()) {
+			if (property.visibility.isListVisible()) {
+				writeLine("<rich:column>");
+				writeFilter(property, currentBean);
+				writeLine("</rich:column>");
+			}
+		}
+
+		writeLine("<rich:column>");
 		writeLine("</rich:column>");
-		skipLine();
+
+		writeLine("</rich:columnGroup>");
+		writeLine("</f:facet>");
+
+		if (handleSelection) {
+			writeLine("<rich:column>");
+			writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
+			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true"
+					+ (char) 34 + " onclick=" + (char) 34 + "selectUnselectAllComponents(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
+			writeLine("</f:facet>");
+			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + currentBean.objectName + ".selected}" + (char) 34 + " onclick=" + (char) 34
+					+ "selectComponentBox(" + currentBean.objectName + "Form:" + currentBean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
+			writeLine("</rich:column>");
+			skipLine();
+		}
 
 		for (Property property : currentBean.getVisiblePropertyList()) {
 			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + currentBean.objectName + "." + property.name + "}" + (char) 34 + " filterBy=" + (char) 34 + "#{" + currentBean.objectName + "."
-						+ property.name + "}" + (char) 34 + " filterEvent=" + (char) 34 + "onkeyup" + (char) 34 + ">");
+				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + currentBean.objectName + "." + property.name + "}" + (char) 34);
+				writeFilterExpression(property, currentBean);
 				writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 				writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + currentBean.objectName + property.capName + "}" + (char) 34 + " />");
 				writeLine("</f:facet>");
@@ -121,8 +145,9 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		skipLine();
 		writeLine("</rich:dataTable>");
 		skipLine();
-		
-		writeLine("<rich:datascroller maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + currentBean.objectName + "List" + (char) 34 + "/>");
+
+		writeLine("<rich:datascroller id=" + (char) 34 + currentBean.objectName + "Scroller" + (char) 34 + " maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false" + (char) 34 + " for=" + (char) 34 + currentBean.objectName + "List"
+				+ (char) 34 + "/>");
 		skipLine();
 
 		writeLine("<br/>");
@@ -139,27 +164,31 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<br/>");
 		skipLine();
 
-		writeLine("<div id=" + (char) 34 + "actions" + (char) 34 + " style=" + (char) 34 + "display:none;margin:2px;" + (char) 34 + ">");
-		writeLine("Actions on selection:");
-		writeLine("<br/>");
+		if (handleSelection) {
 
-		writeLine("<h:panelGrid columns=" + (char) 34 + "1" + (char) 34 + ">");
+			writeLine("<div id=" + (char) 34 + "actions" + (char) 34 + " style=" + (char) 34 + "display:none;margin:2px;" + (char) 34 + ">");
+			writeLine("Actions on selection:");
+			writeLine("<br/>");
 
-		if (this.oneToManyComponent.referenceBean.deleteEnabled) {
-			writeLine("<a4j:commandButton value=" + (char) 34 + "#{i18n.dropSelection}" + (char) 34 + " actionListener=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".listenSelected"
-					+ currentBean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".delete" + currentBean.className + "List}" + (char) 34
-					+ " styleClass=" + (char) 34 + "simpleButton" + (char) 34);
-			writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18.confirmDropSelection}')) return false" + (char) 34 + " reRender=" + (char) 34 + currentBean.objectName + "PanelGroup" + (char) 34
-					+ "/>");
+			writeLine("<h:panelGrid columns=" + (char) 34 + "1" + (char) 34 + ">");
+
+			if (this.oneToManyComponent.referenceBean.deleteEnabled) {
+				writeLine("<a4j:commandButton value=" + (char) 34 + "#{i18n.dropSelection}" + (char) 34 + " actionListener=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".listenSelected"
+						+ currentBean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".delete" + currentBean.className + "List}" + (char) 34
+						+ " styleClass=" + (char) 34 + "simpleButton" + (char) 34);
+				writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18.confirmDropSelection}')) return false" + (char) 34 + " reRender=" + (char) 34 + currentBean.objectName + "PanelGroup"
+						+ (char) 34 + "/>");
+			}
+			writeLine("</h:panelGrid>");
+			skipLine();
+
+			this.writeNotOverridableContent();
+			skipLine();
+
+			writeLine("</div>");
+			skipLine();
+
 		}
-		writeLine("</h:panelGrid>");
-		skipLine();
-
-		this.writeNotOverridableContent();
-		skipLine();
-
-		writeLine("</div>");
-		skipLine();
 
 		writeLine("</h:form>");
 		skipLine();
