@@ -418,7 +418,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			
 			writeLine("<h:inputText id=" + (char)34 + bean.objectName
 					+ property.capName + "DataTableFilter" + (char)34 + " value=" + (char)34 + "#{" + bean.controllerObjectName + "." + bean.filterObjectName + "." + property.name + "}" + (char)34 + ">");
-			writeLine("<a4j:support event=" + (char)34 + "onkeyup" + (char)34 + " reRender=" + (char)34 + bean.objectName + "List" + (char)34);
+			writeLine("<a4j:support event=" + (char)34 + "onkeyup" + (char)34 + " reRender=" + (char)34 + bean.objectName + "List, " + bean.objectName + "Scroller" + (char)34);
 			writeLine("ignoreDupResponses=" + (char)34 + "true" + (char)34 + " requestDelay=" + (char)34 + "500" + (char)34);
 			writeLine("oncomplete=" + (char)34 + "setCaretToEnd(event);" + (char)34 + " />");
 			writeLine("</h:inputText>");

@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.presentation.jsf.withmenu;
+package org.skeleton.generator.bc.command.file.impl.presentation.jsf.common;
 
 import java.io.IOException;
 
@@ -7,11 +7,11 @@ import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Property;
 
-public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class CommonJsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private OneToManyComponent oneToManyComponent;
 
-	public JsfOneToManyComponentDetailViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
+	public CommonJsfOneToManyComponentDetailViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
 				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
 				oneToManyComponent.referenceBean.className + "Details");
