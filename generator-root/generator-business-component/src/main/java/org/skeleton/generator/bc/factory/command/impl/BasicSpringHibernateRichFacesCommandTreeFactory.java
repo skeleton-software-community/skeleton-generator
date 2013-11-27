@@ -22,6 +22,6 @@ public class BasicSpringHibernateRichFacesCommandTreeFactory extends AbstractFil
 		layerStrategies.add(new ServiceStrategy());
 		layerStrategies.add(new JUnitStrategy());
 		layerStrategies.add(new JsfControllerStrategy());
-		layerStrategies.add(new JsfPresentationStrategy());
+		layerStrategies.add(new BasicJsfPresentationStrategy());
 	}
 }
