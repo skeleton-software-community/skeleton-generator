@@ -185,9 +185,9 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		List<Property> findPropertyList = this.bean.getFindPropertyList();
 		List<Alias> findAliasList = this.bean.getFindAliasList();
 
-		write("/**");
-		write(" * exists object");
-		write(" */");
+		writeLine("/**");
+		writeLine(" * exists object");
+		writeLine(" */");
 
 		write("public boolean exists" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
 		for (int i = 1; i < findPropertyList.size(); i++) {
@@ -203,7 +203,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("return false;");
 
-		write("}");
+		writeLine("}");
 
 		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
 		writeLine(this.bean.className + ".class)");

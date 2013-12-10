@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +23,7 @@ public class TextDelimitedFileManager implements FileManager {
 	 * properties
 	 */
 	private int columnNumber;
-	private Charset charset = Charset.forName("ISO-8859-1");
+	private Charset charset;
 	private String separator = "\\$";
 	
 	
@@ -31,6 +32,12 @@ public class TextDelimitedFileManager implements FileManager {
 	 */
 	public TextDelimitedFileManager(int columnNumber) {
 		this.columnNumber = columnNumber;
+		this.charset = StandardCharsets.ISO_8859_1;
+	}
+	
+	public TextDelimitedFileManager(int columnNumber, Charset charset) {
+		this.columnNumber = columnNumber;
+		this.charset = charset;
 	}
 	
 
