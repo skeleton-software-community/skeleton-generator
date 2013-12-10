@@ -1,6 +1,7 @@
 package org.skeleton.generator.repository.dao.datasource.impl;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class TextDelimitedFileBackupReader implements BackupReader {
 	 */
 	public TextDelimitedFileBackupReader(Table table, String backupFilePath) {
 		this.table = table;
-		this.backupFileManager = new TextDelimitedFileManager(table.getInsertColumnList().size());
+		this.backupFileManager = new TextDelimitedFileManager(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
 		this.backupFilePath = backupFilePath;
 	}
 	
