@@ -3,6 +3,8 @@ package org.skeleton.generator.command;
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
 import org.skeleton.generator.bl.services.interfaces.CodeWriter;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
+import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +37,11 @@ public class CodeGenerator {
 			try {
 				logger.info("start loading project");
 				
+				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
 				ProjectLoader projectLoader = appContext.getBean(ProjectLoader.class);
-				project = projectLoader.loadProject(folderPath);
+				
+				ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData(folderPath);
+				project = projectLoader.loadProject(projectMetaData);
 				
 				logger.info("loading project " + project.projectName + " completed");
 					
