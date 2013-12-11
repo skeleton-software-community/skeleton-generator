@@ -7,7 +7,6 @@ import org.skeleton.generator.bc.strategy.impl.database.DefaultDatabaseStrategy;
 import org.skeleton.generator.bc.strategy.impl.junit.JUnitStrategy;
 import org.skeleton.generator.bc.strategy.impl.model.HibernateBusinessModelStrategy;
 import org.skeleton.generator.bc.strategy.impl.presentation.BasicJsfPresentationStrategy;
-import org.skeleton.generator.bc.strategy.impl.presentation.JsfPresentationStrategy;
 import org.skeleton.generator.bc.strategy.impl.services.ServiceStrategy;
 
 

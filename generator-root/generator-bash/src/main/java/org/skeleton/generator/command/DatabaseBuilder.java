@@ -8,6 +8,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.skeleton.generator.bl.services.impl.DatabaseCleaner;
 import org.skeleton.generator.bl.services.impl.TableBuilder;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
+import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
@@ -44,8 +46,11 @@ public class DatabaseBuilder {
 			try {
 				logger.info("start loading project");
 				
+				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
 				ProjectLoader projectLoader = appContext.getBean(ProjectLoader.class);
-				project = projectLoader.loadProject(folderPath);
+				
+				ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData(folderPath);
+				project = projectLoader.loadProject(projectMetaData);
 				
 				logger.info("loading project " + project.projectName + " completed");
 					
