@@ -295,7 +295,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             
 			if (bean.myPackage.model.project.audited) {
 				writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
-				writeLine("this.sessionFactory.getCurrentSession().save(" + oneToManyComponent.referenceBean.objectName + ");");
 			}
 			writeLine("}");
 			skipLine();
