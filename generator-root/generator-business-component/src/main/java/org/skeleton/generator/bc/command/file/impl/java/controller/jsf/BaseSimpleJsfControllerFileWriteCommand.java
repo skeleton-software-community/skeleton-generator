@@ -283,7 +283,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SAVE_FAILED_INVALID_STATE);");
+		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("displayError(SAVE_FAILED);");
@@ -328,7 +328,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(UPDATE_FAILED_INVALID_STATE);");
+		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("displayError(UPDATE_FAILED);");

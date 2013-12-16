@@ -436,7 +436,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SAVE_FAILED_INVALID_STATE);");
+		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("displayError(SAVE_FAILED);");
@@ -476,7 +476,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("return;");
 			writeLine("} catch (InvalidStateException e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(SAVE_FAILED_INVALID_STATE);");
+			writeLine("displayError(e.getMessage());");
 			writeLine("return;");
 			writeLine("} catch (Exception e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
@@ -547,7 +547,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(UPDATE_FAILED_INVALID_STATE);");
+		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("displayError(UPDATE_FAILED);");
@@ -586,7 +586,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("return;");
 			writeLine("} catch (InvalidStateException e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED_INVALID_STATE);");
+			writeLine("displayError(e.getMessage());");
 			writeLine("return;");
 			writeLine("} catch (Exception e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
@@ -621,7 +621,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("return;");
 			writeLine("} catch (InvalidStateException e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED_INVALID_STATE);");
+			writeLine("displayError(e.getMessage());");
 			writeLine("return;");
 			writeLine("} catch (Exception e) {");
 			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
