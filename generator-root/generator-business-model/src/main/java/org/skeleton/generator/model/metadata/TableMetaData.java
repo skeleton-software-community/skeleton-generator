@@ -90,4 +90,15 @@ public class TableMetaData {
 	public void setAnnotationList(String annotationList) {
 		this.annotationList = annotationList;
 	}
+	@Override
+	public String toString() {
+		return "TableMetaData [name=" + name + ", cardinality=" + cardinality
+				+ ", listRendering=" + listRendering + ", detailRendering="
+				+ detailRendering + ", comboxable=" + comboxable
+				+ ", createEnabled=" + createEnabled + ", updateEnabled="
+				+ updateEnabled + ", deleteEnabled=" + deleteEnabled
+				+ ", interfaceList=" + interfaceList + ", annotationList="
+				+ annotationList + ", columnMetaDataList=" + columnMetaDataList
+				+ "]";
+	}
 }

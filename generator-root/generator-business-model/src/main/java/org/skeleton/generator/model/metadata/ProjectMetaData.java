@@ -137,4 +137,17 @@ public class ProjectMetaData {
 	public void setAudited(String audited) {
 		this.audited = audited;
 	}
+
+	@Override
+	public String toString() {
+		return "ProjectMetaData [domainName=" + domainName + ", projectName="
+				+ projectName + ", sourceFolder=" + sourceFolder
+				+ ", workspaceFolder=" + workspaceFolder + ", serverDNS="
+				+ serverDNS + ", serverPort=" + serverPort + ", wsUrl=" + wsUrl
+				+ ", skeleton=" + skeleton + ", databaseEngine="
+				+ databaseEngine + ", databaseName=" + databaseName
+				+ ", userName=" + userName + ", password=" + password
+				+ ", audited=" + audited + ", packageMetaDataList="
+				+ packageMetaDataList + "]";
+	}
 }
