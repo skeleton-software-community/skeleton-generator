@@ -71,5 +71,14 @@ public class ColumnMetaData {
 	}
 	public void setRendering(String rendering) {
 		this.rendering = rendering;
+	}
+	@Override
+	public String toString() {
+		return "ColumnMetaData [name=" + name + ", dataType=" + dataType
+				+ ", nullable=" + nullable + ", referenceTableName="
+				+ referenceTableName + ", referenceTableRelation="
+				+ referenceTableRelation + ", format=" + format + ", editable="
+				+ editable + ", visibility=" + visibility + ", rendering="
+				+ rendering + "]";
 	}	
 }

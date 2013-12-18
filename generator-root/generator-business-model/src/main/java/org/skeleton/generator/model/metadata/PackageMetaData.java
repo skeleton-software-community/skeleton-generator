@@ -31,4 +31,12 @@ public class PackageMetaData {
 	public void setTableMetaDataList(List<TableMetaData> tableMetaDataList) {
 		this.tableMetaDataList = tableMetaDataList;
 	}
+
+	@Override
+	public String toString() {
+		return "PackageMetaData [name=" + name + ", tableMetaDataList="
+				+ tableMetaDataList + "]";
+	}
+	
+	
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.skeleton.generator.exception.ConfigurationReadException;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.exception.ProjectNotFoundException;
@@ -43,12 +44,12 @@ public class ProjectMetaDataDaoImpl implements ProjectMetaDataDao {
 	 * @see com.skeleton.generator.repository.dao.interfaces.ProjectMetaDataDao#loadProjectMetaData(java.lang.String)
 	 */
 	@Override
-	public ProjectMetaData loadProjectMetaData(String folderPath) throws ProjectNotFoundException, InvalidProjectMetaDataException {
+	public ProjectMetaData loadProjectMetaData(String folderPath)  throws ConfigurationReadException{
 
 		Path parametersPath = Paths.get(folderPath + File.separator + PARAMETERS_FILE_NAME);
 		
 		if (!Files.exists(parametersPath)) {
-			throw new ProjectNotFoundException("Unable to find project in folder : " + folderPath);
+			throw new ConfigurationReadException(new ProjectNotFoundException("Unable to find project in folder : " + folderPath));
 		}
 		
 		List<String[]> tokensList = null;
@@ -56,12 +57,16 @@ public class ProjectMetaDataDaoImpl implements ProjectMetaDataDao {
 		try {
 			tokensList = metaDataFileManager.readData(parametersPath.toString());
 		} catch (IOException | InvalidFileException e) {
-			throw new InvalidProjectMetaDataException("Could not read parameters", e);
+			throw new ConfigurationReadException(new InvalidProjectMetaDataException("Could not read parameters", e));
 		}
 		
 		ProjectMetaData projectMetaData = projectMetaDataMapper.mapProjectMetaData(tokensList, new ProjectMetaData());
 		
-		projectMetaData.setPackageMetaDataList(packageMetaDataDao.loadPackageMetaDataList(folderPath + File.separator + MODEL_FOLDER_NAME));
+		try {
+			projectMetaData.setPackageMetaDataList(packageMetaDataDao.loadPackageMetaDataList(folderPath + File.separator + MODEL_FOLDER_NAME));
+		} catch (InvalidProjectMetaDataException e) {
+			throw new ConfigurationReadException(e);
+		}
 		
 		
 		return projectMetaData;

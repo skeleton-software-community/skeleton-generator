@@ -2,8 +2,7 @@ package org.skeleton.generator.bl.services.impl;
 
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.skeleton.generator.exception.InvalidProjectMetaDataException;
-import org.skeleton.generator.exception.ProjectNotFoundException;
+import org.skeleton.generator.exception.ConfigurationReadException;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.PackageMetaData;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
@@ -28,7 +27,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	@Autowired
 	ProjectMetaDataDao projectMetaDataDao;
 
-	public ProjectMetaData loadProjectMetaData(String folderPath) throws ProjectNotFoundException, InvalidProjectMetaDataException {
+	public ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException{
 		logger.info("start reading meta data");
 		ProjectMetaData projectMetaData = projectMetaDataDao.loadProjectMetaData(folderPath);
 		logger.info("end reading meta data");
