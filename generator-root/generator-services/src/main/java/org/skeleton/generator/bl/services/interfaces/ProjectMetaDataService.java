@@ -8,11 +8,13 @@ import org.skeleton.generator.model.metadata.TableMetaData;
 
 public interface ProjectMetaDataService {
 
-	public ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException;
+	ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException;
 	
-	public void insertPackageMetaData(PackageMetaData packageMetaData, int index, ProjectMetaData projectMetaData);
+	void insertPackageMetaData(PackageMetaData packageMetaData, int index, ProjectMetaData projectMetaData);
 	
-	public void insertTableMetaData(TableMetaData tableMetaData, int index, PackageMetaData packageMetaData);
+	void insertTableMetaData(TableMetaData tableMetaData, int index, PackageMetaData packageMetaData);
 	
-	public void insertColumnMetaData(ColumnMetaData columnMetaData, int index, TableMetaData tableMetaData);
+	void insertColumnMetaData(ColumnMetaData columnMetaData, int index, TableMetaData tableMetaData);
+
+	void persistProjectMetaData(ProjectMetaData projectMetaData);
 }

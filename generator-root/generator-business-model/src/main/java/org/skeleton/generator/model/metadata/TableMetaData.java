@@ -15,8 +15,8 @@ public class TableMetaData {
 	private boolean createEnabled;
 	private boolean updateEnabled;
 	private boolean deleteEnabled;
-	private String interfaceList;
-	private String annotationList;
+	private List<String> interfaceList;
+	private List<String> annotationList;
 	
 	private List<ColumnMetaData> columnMetaDataList;
 	
@@ -72,11 +72,17 @@ public class TableMetaData {
 	public void setDeleteEnabled(boolean deleteEnabled) {
 		this.deleteEnabled = deleteEnabled;
 	}
-	public String getInterfaceList() {
+	public List<String> getInterfaceList() {
 		return interfaceList;
 	}
-	public void setInterfaceList(String interfaceList) {
+	public void setInterfaceList(List<String> interfaceList) {
 		this.interfaceList = interfaceList;
+	}
+	public List<String> getAnnotationList() {
+		return annotationList;
+	}
+	public void setAnnotationList(List<String> annotationList) {
+		this.annotationList = annotationList;
 	}
 	public List<ColumnMetaData> getColumnMetaDataList() {
 		return columnMetaDataList;
@@ -84,12 +90,7 @@ public class TableMetaData {
 	public void setColumnMetaDataList(List<ColumnMetaData> columnMetaDataList) {
 		this.columnMetaDataList = columnMetaDataList;
 	}
-	public String getAnnotationList() {
-		return annotationList;
-	}
-	public void setAnnotationList(String annotationList) {
-		this.annotationList = annotationList;
-	}
+	
 	@Override
 	public String toString() {
 		return "TableMetaData [name=" + name + ", cardinality=" + cardinality

@@ -80,15 +80,12 @@ public class TableMetaDataParser {
 		return (NodeList) xPathColumn.evaluate(item, XPathConstants.NODESET);
 	}
 
-	private String elementListToString(NodeList elemsList){
-		StringBuilder sb = new StringBuilder();
+	private List<String> elementListToString(NodeList elemsList){
+		List<String> result = new ArrayList<String>();
 		for(int i=0; i<elemsList.getLength(); i++){
-			sb.append(elemsList.item(i).getTextContent()).append(',');
+			result.add(elemsList.item(i).getTextContent());
 		}
-		if(sb.length()>0){
-			sb.deleteCharAt(sb.length()-1);
-		}
-		return sb.toString();
+		return result;
 	}
 
 	private boolean extractUpdateEnabled(Element item) {

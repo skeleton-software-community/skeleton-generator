@@ -1,5 +1,6 @@
 package org.skeleton.generator.repository.mapper.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.TableMetaData;
@@ -22,8 +23,27 @@ public class TableMetaDataMapperImpl implements TableMetaDataMapper {
 			tableMetaData.setListRendering(tokens[2]);
 			tableMetaData.setDetailRendering(tokens[3]);
 			tableMetaData.setComboxable((tokens[4].equals("ComboBox")?true:false));
-			tableMetaData.setInterfaceList(tokens[5]);
-			tableMetaData.setAnnotationList(tokens[6]);
+			
+			String[] interfaces = tokens[5].split(",");
+			List<String> interfaceList = new ArrayList<String>();
+			for (String token:interfaces) {
+				token = token.trim();
+				if (!token.isEmpty()) {
+					interfaceList.add(token);
+				}
+			}
+			tableMetaData.setInterfaceList(interfaceList);
+			
+			String[] annotations = tokens[6].split(";");
+			List<String> annotationList = new ArrayList<String>();
+			for (String token:annotations) {
+				token = token.trim();
+				if (!token.isEmpty()) {
+					annotationList.add(token);
+				}
+			}
+			tableMetaData.setAnnotationList(annotationList);
+			
 			tableMetaData.setCreateEnabled((tokens[7].equals("Not enabled")?false:true));
 			tableMetaData.setUpdateEnabled((tokens[8].equals("Not enabled")?false:true));
 			tableMetaData.setDeleteEnabled((tokens[9].equals("Not enabled")?false:true));
