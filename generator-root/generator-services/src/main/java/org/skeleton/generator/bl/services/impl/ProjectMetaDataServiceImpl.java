@@ -27,6 +27,8 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	@Autowired
 	ProjectMetaDataDao projectMetaDataDao;
 
+	
+	
 	public ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException{
 		logger.info("start reading meta data");
 		ProjectMetaData projectMetaData = projectMetaDataDao.loadProjectMetaData(folderPath);
@@ -54,4 +56,12 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
+		logger.info("start persisting meta data");
+		projectMetaDataDao.persistProjectMetaData(projectMetaData);
+		logger.info("end persisting meta data");
+	}
+	
 }
