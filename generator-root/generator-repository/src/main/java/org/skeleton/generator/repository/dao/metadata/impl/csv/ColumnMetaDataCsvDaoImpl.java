@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,21 +13,21 @@ import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.TableMetaData;
+import org.skeleton.generator.repository.dao.metadata.impl.csv.mapper.ColumnMetaDataMapper;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ColumnMetaDataDao;
-import org.skeleton.generator.repository.file.interfaces.FileManager;
-import org.skeleton.generator.repository.mapper.interfaces.ColumnMetaDataMapper;
+import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class ColumnMetaDataDaoImpl implements ColumnMetaDataDao {
+public class ColumnMetaDataCsvDaoImpl implements ColumnMetaDataDao {
 	
 	/*
 	 * properties
 	 */
-	@Resource(name="columnMetaDataFileManager")
-	private FileManager metaDataFileManager;
+	@Resource(name="columnMetaDataCsvFileParser")
+	private CsvFileParser parser;
 	@Autowired
 	private ColumnMetaDataMapper columnMetaDataMapper;
 
@@ -48,7 +48,7 @@ public class ColumnMetaDataDaoImpl implements ColumnMetaDataDao {
 		List<String[]> tokensList = null;
 		
 		try {
-			tokensList = metaDataFileManager.readData(columnsPath.toString());
+			tokensList = parser.readData(columnsPath.toString());
 		} catch (IOException | InvalidFileException e) {
 			throw new InvalidProjectMetaDataException("Could not read columns", e);
 		}

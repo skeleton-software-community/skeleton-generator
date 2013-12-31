@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,16 +13,16 @@ import javax.annotation.Resource;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.model.metadata.TableMetaData;
+import org.skeleton.generator.repository.dao.metadata.impl.csv.mapper.TableMetaDataMapper;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ColumnMetaDataDao;
 import org.skeleton.generator.repository.dao.metadata.interfaces.TableMetaDataDao;
-import org.skeleton.generator.repository.file.interfaces.FileManager;
-import org.skeleton.generator.repository.mapper.interfaces.TableMetaDataMapper;
+import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class TableMetaDataDaoImpl implements TableMetaDataDao {
+public class TableMetaDataCsvDaoImpl implements TableMetaDataDao {
 
 	private static final String TABLES_FILE_NAME = "TABLES.txt";
 	private static final String TABLES_FOLDER_NAME = "TABLES";
@@ -30,8 +30,8 @@ public class TableMetaDataDaoImpl implements TableMetaDataDao {
 	/*
 	 * properties
 	 */
-	@Resource(name="tableMetaDataFileManager")
-	private FileManager metaDataFileManager;
+	@Resource(name="tableMetaDataCsvFileParser")
+	private CsvFileParser parser;
 	@Autowired
 	private TableMetaDataMapper tableMetaDataMapper;
 	@Autowired
@@ -54,7 +54,7 @@ public class TableMetaDataDaoImpl implements TableMetaDataDao {
 		List<String[]> tokensList = null;
 		
 		try {
-			tokensList = metaDataFileManager.readData(tablesPath.toString());
+			tokensList = parser.readData(tablesPath.toString());
 		} catch (IOException | InvalidFileException e) {
 			throw new InvalidProjectMetaDataException("Could not read tables", e);
 		}

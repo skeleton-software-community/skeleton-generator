@@ -1,12 +1,14 @@
-package org.skeleton.generator.repository.dao.metadata.impl.xml;
+package org.skeleton.generator.repository.dao.metadata.impl.xml.parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.ColumnMetaData;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+@Component
 public class ColumnMetaDataParser {
 	
 	private static final String RENDERING_ATTR = "rendering";

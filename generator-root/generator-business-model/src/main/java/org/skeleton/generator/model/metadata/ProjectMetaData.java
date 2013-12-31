@@ -2,44 +2,39 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import org.skeleton.generator.util.metadata.PersistenceMode;
+
 public class ProjectMetaData {
 
 	/*
 	 * properties
 	 */
+	private PersistenceMode persistenceMode;
+	private String sourceFolder;
+    private String workspaceFolder;
 	private String domainName;
     private String projectName;
-    private String sourceFolder;
-    private String workspaceFolder;
-    private String serverDNS;
-    private String serverPort;
-    private String wsUrl;
     private String skeleton;
     private String databaseEngine;
     private String databaseName;
-    private String userName;
-    private String password;
+    private String databaseDNS;
+    private String databasePort;
+    private String databaseUserName;
+    private String databasePassword;
     private String audited;
     
     private List<PackageMetaData> packageMetaDataList;
 
+    
     /*
      * getters and setters
      */
-	public String getDomainName() {
-		return domainName;
+    public PersistenceMode getPersistenceMode() {
+		return persistenceMode;
 	}
 
-	public void setDomainName(String domainName) {
-		this.domainName = domainName;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setPersistenceMode(PersistenceMode persistenceMode) {
+		this.persistenceMode = persistenceMode;
 	}
 
 	public String getSourceFolder() {
@@ -58,28 +53,20 @@ public class ProjectMetaData {
 		this.workspaceFolder = workspaceFolder;
 	}
 
-	public String getServerDNS() {
-		return serverDNS;
+	public String getDomainName() {
+		return domainName;
 	}
 
-	public void setServerDNS(String serverDNS) {
-		this.serverDNS = serverDNS;
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
 	}
 
-	public String getServerPort() {
-		return serverPort;
+	public String getProjectName() {
+		return projectName;
 	}
 
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
-	}
-
-	public String getWsUrl() {
-		return wsUrl;
-	}
-
-	public void setWsUrl(String wsUrl) {
-		this.wsUrl = wsUrl;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public String getSkeleton() {
@@ -106,28 +93,36 @@ public class ProjectMetaData {
 		this.databaseName = databaseName;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getDatabaseDNS() {
+		return databaseDNS;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setDatabaseDNS(String databaseDNS) {
+		this.databaseDNS = databaseDNS;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getDatabasePort() {
+		return databasePort;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setDatabasePort(String databasePort) {
+		this.databasePort = databasePort;
 	}
 
-	public List<PackageMetaData> getPackageMetaDataList() {
-		return packageMetaDataList;
+	public String getDatabaseUserName() {
+		return databaseUserName;
 	}
 
-	public void setPackageMetaDataList(List<PackageMetaData> packageMetaDataList) {
-		this.packageMetaDataList = packageMetaDataList;
+	public void setDatabaseUserName(String databaseUserName) {
+		this.databaseUserName = databaseUserName;
+	}
+
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
+
+	public void setDatabasePassword(String databasePassword) {
+		this.databasePassword = databasePassword;
 	}
 
 	public String getAudited() {
@@ -138,16 +133,11 @@ public class ProjectMetaData {
 		this.audited = audited;
 	}
 
-	@Override
-	public String toString() {
-		return "ProjectMetaData [domainName=" + domainName + ", projectName="
-				+ projectName + ", sourceFolder=" + sourceFolder
-				+ ", workspaceFolder=" + workspaceFolder + ", serverDNS="
-				+ serverDNS + ", serverPort=" + serverPort + ", wsUrl=" + wsUrl
-				+ ", skeleton=" + skeleton + ", databaseEngine="
-				+ databaseEngine + ", databaseName=" + databaseName
-				+ ", userName=" + userName + ", password=" + password
-				+ ", audited=" + audited + ", packageMetaDataList="
-				+ packageMetaDataList + "]";
+	public List<PackageMetaData> getPackageMetaDataList() {
+		return packageMetaDataList;
+	}
+
+	public void setPackageMetaDataList(List<PackageMetaData> packageMetaDataList) {
+		this.packageMetaDataList = packageMetaDataList;
 	}
 }

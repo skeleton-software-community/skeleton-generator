@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,24 +13,24 @@ import javax.annotation.Resource;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.model.metadata.PackageMetaData;
+import org.skeleton.generator.repository.dao.metadata.impl.csv.mapper.PackageMetaDataMapper;
 import org.skeleton.generator.repository.dao.metadata.interfaces.PackageMetaDataDao;
 import org.skeleton.generator.repository.dao.metadata.interfaces.TableMetaDataDao;
-import org.skeleton.generator.repository.file.interfaces.FileManager;
-import org.skeleton.generator.repository.mapper.interfaces.PackageMetaDataMapper;
+import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class PackageMetaDataDaoImpl implements PackageMetaDataDao {
+public class PackageMetaDataCsvDaoImpl implements PackageMetaDataDao {
 
 	private static final String PACKAGES_FILE_NAME = "PACKAGES.txt";
 	
 	/*
 	 * properties
 	 */
-	@Resource(name="packageMetaDataFileManager")
-	private FileManager metaDataFileManager;
+	@Resource(name="packageMetaDataCsvFileParser")
+	private CsvFileParser parser;
 	@Autowired
 	private PackageMetaDataMapper packageMetaDataMapper;
 	@Autowired
@@ -53,7 +53,7 @@ public class PackageMetaDataDaoImpl implements PackageMetaDataDao {
 		List<String[]> tokensList = null;
 		
 		try {
-			tokensList = metaDataFileManager.readData(packagesPath.toString());
+			tokensList = parser.readData(packagesPath.toString());
 		} catch (IOException | InvalidFileException e) {
 			throw new InvalidProjectMetaDataException("Could not read packages", e);
 		}

@@ -1,17 +1,15 @@
-package org.skeleton.generator.repository.mapper.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.PackageMetaData;
-import org.skeleton.generator.repository.mapper.interfaces.PackageMetaDataMapper;
 import org.springframework.stereotype.Component;
 
 
 
 @Component
-public class PackageMetaDataMapperImpl implements PackageMetaDataMapper {
+public class PackageMetaDataMapper {
 
-	@Override
 	public List<PackageMetaData> mapPackageMetaDataList(List<String[]> tokensList, List<PackageMetaData> packageMetaDataList) {
 		
 		for (String[] tokens:tokensList) {
