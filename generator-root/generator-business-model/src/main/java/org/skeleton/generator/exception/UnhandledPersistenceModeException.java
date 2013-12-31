@@ -5,19 +5,19 @@ package org.skeleton.generator.exception;
  * @author Mounir Regragui
  *
  */
-public class ConfigurationReadException extends Exception{
+public class UnhandledPersistenceModeException extends RuntimeException {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3909954112331400976L;
 
-	public ConfigurationReadException(Throwable t) {
-		super(t);
+	public UnhandledPersistenceModeException(String message) {
+		super(message);
 	}
 	
-	public ConfigurationReadException(String msg){
-		super(msg);
+	public UnhandledPersistenceModeException(String message, Throwable t) {
+		super(message, t);
 	}
 
 }

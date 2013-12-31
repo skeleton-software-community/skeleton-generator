@@ -1,18 +1,16 @@
-package org.skeleton.generator.repository.mapper.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.TableMetaData;
-import org.skeleton.generator.repository.mapper.interfaces.TableMetaDataMapper;
 import org.springframework.stereotype.Component;
 
 
 
 @Component
-public class TableMetaDataMapperImpl implements TableMetaDataMapper {
+public class TableMetaDataMapper {
 
-	@Override
 	public List<TableMetaData> mapTableMetaDataList(List<String[]> tokensList, List<TableMetaData> tableMetaDataList) {
 		
 		for (String[] tokens:tokensList) {

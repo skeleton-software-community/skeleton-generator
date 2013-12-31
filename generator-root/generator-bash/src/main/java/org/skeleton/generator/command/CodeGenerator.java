@@ -1,6 +1,7 @@
 package org.skeleton.generator.command;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
+import org.skeleton.generator.bl.services.impl.CodeWriterImpl;
 import org.skeleton.generator.bl.services.interfaces.CodeWriter;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
@@ -53,7 +54,7 @@ public class CodeGenerator {
 			try {
 				logger.info("start executing code writing");
 				
-				CodeWriter codeWriter = appContext.getBean(CodeWriter.class);
+				CodeWriter codeWriter = new CodeWriterImpl();
 				FileWriteCommandTree tree = codeWriter.buildFileWriteCommandTree(project);
 				tree.launch();
 				

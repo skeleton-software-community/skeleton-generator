@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl.xml;
+package org.skeleton.generator.repository.dao.metadata.impl.xml.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,20 @@ import javax.xml.xpath.XPathFactory;
 
 import org.skeleton.generator.model.metadata.PackageMetaData;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+@Component
 public class ProjectMetaDataParser {
 	
-	private XPathExpression xPathDomain, xPathName, xPathSkeletons, xPathServerUrl, xPathServerPort, xPathDbEngine, xPathDbName, xPathDbUsername,
-		xPathDbPassword, xPathSrcPath, xPathDstPath, xPathAudited, xPathPackages;
+	@Autowired
 	private PackageMetaDataParser packageParser;
+	
+	private XPathExpression xPathDomain, xPathName, xPathSkeletons, xPathServerUrl, xPathServerPort, xPathDbEngine, xPathDbName, xPathDbUsername,
+		xPathDbPassword, xPathAudited, xPathPackages;	
+	
 	
 	public ProjectMetaDataParser() throws XPathExpressionException {
 		XPath xPath = XPathFactory.newInstance().newXPath();
@@ -31,12 +37,8 @@ public class ProjectMetaDataParser {
 		xPathDbName = xPath.compile("database/name");
 		xPathDbUsername = xPath.compile("database/username");
 		xPathDbPassword = xPath.compile("database/password");
-		xPathSrcPath = xPath.compile("configuration/sourcePath");
-		xPathDstPath = xPath.compile("configuration/targetPath");
 		xPathAudited = xPath.compile("configuration/audited");
 		xPathPackages = xPath.compile("packages/package");
-		
-		this.packageParser = new PackageMetaDataParser(new TableMetaDataParser(new ColumnMetaDataParser()));
 	}
 
 	public ProjectMetaData parse(Element root) throws XPathExpressionException {
@@ -54,9 +56,6 @@ public class ProjectMetaDataParser {
 		String dbUsername = extractDbUsername(root);
 		String dbPassword = extractDbPassword(root);
 		
-		String srcPath = extractSrcPath(root);
-		String dstPath = extractDstPath(root);
-		
 		boolean audited = extractAudited(root);
 		
 		NodeList packageElems = extractPackages(root);
@@ -65,20 +64,21 @@ public class ProjectMetaDataParser {
 		
 		
 		ProjectMetaData result = new ProjectMetaData();
-		result.setAudited(String.valueOf(audited));
+		
+		result.setDomainName(domain);
+		result.setProjectName(name);
+		result.setSkeleton(skeletonToString(skeletons));
+		
 		result.setDatabaseEngine(dbEngine);
 		result.setDatabaseName(dbName);
-		result.setDomainName(domain);
+		result.setDatabaseDNS(serverUrl);
+		result.setDatabasePort(serverPort);
+		result.setDatabaseUserName(dbUsername);
+		result.setDatabasePassword(dbPassword);
+		
+		result.setAudited(String.valueOf(audited));
+		
 		result.setPackageMetaDataList(packageMetaDataList);
-		result.setPassword(dbPassword);
-		result.setProjectName(name);
-		result.setServerDNS(serverUrl);
-		result.setServerPort(serverPort);
-		result.setSkeleton(skeletonToString(skeletons));
-		result.setSourceFolder(srcPath);
-		result.setUserName(dbUsername);
-		result.setWorkspaceFolder(dstPath);
-		result.setWsUrl("notconfigured");
 
 		return result;
 	}
@@ -89,14 +89,6 @@ public class ProjectMetaDataParser {
 
 	private boolean extractAudited(Element root) throws XPathExpressionException{
 		return new Boolean(xPathAudited.evaluate(root));
-	}
-
-	private String extractDstPath(Element root) throws XPathExpressionException{
-		return xPathDstPath.evaluate(root);
-	}
-
-	private String extractSrcPath(Element root) throws XPathExpressionException{
-		return xPathSrcPath.evaluate(root);
 	}
 
 	private String extractDbPassword(Element root) throws XPathExpressionException{

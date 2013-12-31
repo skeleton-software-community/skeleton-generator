@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl.xml;
+package org.skeleton.generator.repository.dao.metadata.impl.xml.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,21 +11,24 @@ import javax.xml.xpath.XPathFactory;
 
 import org.skeleton.generator.model.metadata.PackageMetaData;
 import org.skeleton.generator.model.metadata.TableMetaData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+@Component
 public class PackageMetaDataParser {
 	
 	private static final String NAME_ATTR = "name";
 	private XPathExpression xPathTables;
+	
+	@Autowired
 	private TableMetaDataParser tableParser;
 	
 	
-	
-	public PackageMetaDataParser(TableMetaDataParser tableParser) throws XPathExpressionException {
+	public PackageMetaDataParser() throws XPathExpressionException {
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		xPathTables = xPath.compile("tables/table");
-		this.tableParser = tableParser;
 	}
 
 	public List<PackageMetaData> parse(NodeList packageElems) throws XPathExpressionException{

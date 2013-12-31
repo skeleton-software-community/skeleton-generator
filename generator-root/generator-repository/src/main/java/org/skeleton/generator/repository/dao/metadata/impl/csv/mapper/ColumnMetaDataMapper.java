@@ -1,17 +1,15 @@
-package org.skeleton.generator.repository.mapper.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.ColumnMetaData;
-import org.skeleton.generator.repository.mapper.interfaces.ColumnMetaDataMapper;
 import org.springframework.stereotype.Component;
 
 
 
 @Component
-public class ColumnMetaDataMapperImpl implements ColumnMetaDataMapper {
+public class ColumnMetaDataMapper {
 
-	@Override
 	public List<ColumnMetaData> mapColumnMetaDataList(List<String[]> tokensList, List<ColumnMetaData> columnMetaDataList) {
 		for (String[] tokens:tokensList) {
 			ColumnMetaData columnMetaData = new ColumnMetaData();

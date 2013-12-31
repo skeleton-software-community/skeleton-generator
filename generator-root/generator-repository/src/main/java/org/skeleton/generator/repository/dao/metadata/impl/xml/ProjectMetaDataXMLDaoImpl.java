@@ -11,9 +11,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.skeleton.generator.exception.ConfigurationReadException;
+import org.skeleton.generator.exception.InvalidProjectMetaDataException;
+import org.skeleton.generator.exception.ProjectNotFoundException;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
+import org.skeleton.generator.repository.dao.metadata.impl.xml.parser.ProjectMetaDataParser;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
+import org.skeleton.generator.util.metadata.PersistenceMode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -23,21 +28,24 @@ import org.xml.sax.SAXException;
  * @author Mounir Regragui
  *
  */
-public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao{
-	
-	private static final String CONFIG_FILE_NAME = "skeleton.xml";
+@Component(value="projectMetaDataXmlDao")
+public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	
 	private DocumentBuilderFactory dbFactory;
+	
+	@Autowired
 	private ProjectMetaDataParser parser;
 	
-	public ProjectMetaDataXMLDaoImpl(ProjectMetaDataParser parser) {
-		this.parser = parser;
+	public ProjectMetaDataXMLDaoImpl() {
 		this.dbFactory = DocumentBuilderFactory.newInstance();
 	}
 
 	@Override
-	public ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException{
-		File configFile = getConfigurationFile(folderPath);
+	public ProjectMetaData loadProjectMetaData(String workspacePath) {
+		
+		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
+		
+		File configFile = getConfigurationFile(sourcePath);
 		
 		try {
 			DocumentBuilder builder = dbFactory.newDocumentBuilder();
@@ -46,18 +54,25 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao{
 			Element root = doc.getDocumentElement();
 			root.normalize();
 			
-			return parser.parse(root);
+			ProjectMetaData projectMetaData = parser.parse(root);
+			
+			projectMetaData.setWorkspaceFolder(workspacePath);
+			projectMetaData.setSourceFolder(sourcePath);
+			projectMetaData.setPersistenceMode(PersistenceMode.XML);
+			
+			return projectMetaData;
 			
 		} catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException e) {
-			throw new ConfigurationReadException(e);
+			throw new InvalidProjectMetaDataException("",e);
 		}
 		
 	}
 	
-	private File getConfigurationFile(String folderPath) throws ConfigurationReadException{
-		Path parametersPath = Paths.get(folderPath + File.separator + CONFIG_FILE_NAME);
+	private File getConfigurationFile(String sourcePath) {
+		
+		Path parametersPath = Paths.get(sourcePath + File.separator + XML_CONFIG_FILE_NAME);
 		if (!Files.exists(parametersPath)) {
-			throw new ConfigurationReadException("Unable to find project in folder : " + folderPath);
+			throw new ProjectNotFoundException("Unable to find project in folder : " + sourcePath);
 		}
 		return parametersPath.toFile();
 	}
@@ -67,13 +82,4 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public static void main(String[] args) throws XPathExpressionException, ConfigurationReadException {
-		ProjectMetaDataParser theParser = new ProjectMetaDataParser();
-		ProjectMetaDataXMLDaoImpl runner = new ProjectMetaDataXMLDaoImpl(theParser);
-		
-		ProjectMetaData result = runner.loadProjectMetaData("C:\\Workspaces\\afklm\\distribution\\distribution-root\\dallas-root\\data-model");
-		System.out.println(result.toString());
-	}
-
 }

@@ -9,8 +9,8 @@ import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.ReadBackupFailureException;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
-import org.skeleton.generator.repository.file.impl.TextDelimitedFileManager;
-import org.skeleton.generator.repository.file.interfaces.FileManager;
+import org.skeleton.generator.repository.file.impl.CsvFileParserImpl;
+import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.skeleton.generator.util.jdbc.JdbcUtil;
 
 
@@ -19,7 +19,7 @@ public class TextDelimitedFileBackupReader implements BackupReader {
 	/*
 	 * properties
 	 */
-	private FileManager backupFileManager;
+	private CsvFileParser backupFileManager;
 	private String backupFilePath;
 	private Table table;
 	
@@ -28,7 +28,7 @@ public class TextDelimitedFileBackupReader implements BackupReader {
 	 */
 	public TextDelimitedFileBackupReader(Table table, String backupFilePath) {
 		this.table = table;
-		this.backupFileManager = new TextDelimitedFileManager(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
+		this.backupFileManager = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
 		this.backupFilePath = backupFilePath;
 	}
 	

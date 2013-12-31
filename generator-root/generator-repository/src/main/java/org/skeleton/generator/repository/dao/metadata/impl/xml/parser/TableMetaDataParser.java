@@ -1,4 +1,4 @@
-package org.skeleton.generator.repository.dao.metadata.impl.xml;
+package org.skeleton.generator.repository.dao.metadata.impl.xml.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,12 @@ import javax.xml.xpath.XPathFactory;
 
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.TableMetaData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+@Component
 public class TableMetaDataParser {
 
 	private static final String CARDINALITY_ATTR = "cardinality";
@@ -23,14 +26,15 @@ public class TableMetaDataParser {
 	private static final String NAME_ATTR = "name";
 	private static final String UPDATE_ENABLED_ATTR = "updateEnabled";
 	private XPathExpression xPathInterface, xPathAnnotation, xPathColumn;
+	
+	@Autowired
 	private ColumnMetaDataParser columnParser;
 	
-	public TableMetaDataParser(ColumnMetaDataParser columnParser) throws XPathExpressionException {
+	public TableMetaDataParser() throws XPathExpressionException {
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		xPathInterface = xPath.compile("interfaces/interface");
 		xPathAnnotation = xPath.compile("annotations/annotation");
 		xPathColumn = xPath.compile("columns/column");
-		this.columnParser = columnParser;
 	}
 	
 	public List<TableMetaData> parse(NodeList tableElems) throws XPathExpressionException {

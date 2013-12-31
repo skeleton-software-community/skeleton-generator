@@ -1,13 +1,12 @@
 package org.skeleton.generator.bl.services.impl;
 
+import org.skeleton.generator.bc.persistence.interfaces.ProjectMetaDataPersistenceHandler;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.skeleton.generator.exception.ConfigurationReadException;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.PackageMetaData;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.metadata.TableMetaData;
-import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,13 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	 * properties injected by spring
 	 */
 	@Autowired
-	ProjectMetaDataDao projectMetaDataDao;
+	ProjectMetaDataPersistenceHandler projectMetaDataPersistenceHandler;
 
 	
 	
-	public ProjectMetaData loadProjectMetaData(String folderPath) throws ConfigurationReadException{
+	public ProjectMetaData loadProjectMetaData(String folderPath) {
 		logger.info("start reading meta data");
-		ProjectMetaData projectMetaData = projectMetaDataDao.loadProjectMetaData(folderPath);
+		ProjectMetaData projectMetaData = projectMetaDataPersistenceHandler.loadProjectMetaData(folderPath);
 		logger.info("end reading meta data");
 		
 		return projectMetaData;
@@ -60,7 +59,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	@Override
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
 		logger.info("start persisting meta data");
-		projectMetaDataDao.persistProjectMetaData(projectMetaData);
+		projectMetaDataPersistenceHandler.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");
 	}
 	

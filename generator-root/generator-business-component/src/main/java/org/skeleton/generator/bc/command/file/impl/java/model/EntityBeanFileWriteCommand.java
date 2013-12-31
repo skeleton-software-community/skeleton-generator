@@ -3,7 +3,6 @@ package org.skeleton.generator.bc.command.file.impl.java.model;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.lang.StringUtils;
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToMany;
