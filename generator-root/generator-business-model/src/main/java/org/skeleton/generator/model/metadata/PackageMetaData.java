@@ -2,6 +2,12 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
 public class PackageMetaData {
 
 	/*
@@ -10,6 +16,7 @@ public class PackageMetaData {
 	
 	private String name;
 	
+
 	private List<TableMetaData> tableMetaDataList;
 
 	

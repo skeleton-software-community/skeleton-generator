@@ -2,27 +2,50 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import org.skeleton.generator.util.metadata.PersistenceMode;
 
+@XmlRootElement
+@XmlType
 public class ProjectMetaData {
 
 	/*
 	 * properties
 	 */
+	@XmlTransient
 	private PersistenceMode persistenceMode;
+	@XmlTransient
 	private String sourceFolder;
+	@XmlTransient
     private String workspaceFolder;
+	
 	private String domainName;
+	
     private String projectName;
+	
     private String skeleton;
+	
     private String databaseEngine;
+	
     private String databaseName;
+	
     private String databaseDNS;
+	
     private String databasePort;
+	
     private String databaseUserName;
+	
     private String databasePassword;
+	
     private String audited;
     
+
     private List<PackageMetaData> packageMetaDataList;
 
     
