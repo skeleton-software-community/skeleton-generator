@@ -39,8 +39,7 @@ public class ProjectMetaDataPersistenceHandlerImpl implements ProjectMetaDataPer
 
 	@Override
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
-		// TODO Auto-generated method stub
-
+		projectMetaDataDaoFactory.getProjectMetaDataDao(projectMetaData).persistProjectMetaData(projectMetaData);
 	}
 
 }

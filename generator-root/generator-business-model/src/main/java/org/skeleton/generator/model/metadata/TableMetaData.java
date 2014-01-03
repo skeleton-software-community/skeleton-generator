@@ -2,22 +2,41 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlList;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
 public class TableMetaData {
 
 	/*
 	 * properties
 	 */
+	
 	private String name;
+	
 	private int cardinality;
+	
 	private String listRendering;
+	
 	private String detailRendering;
+	
 	private boolean comboxable;
+	
 	private boolean createEnabled;
+	
 	private boolean updateEnabled;
+	
 	private boolean deleteEnabled;
+
+	
 	private List<String> interfaceList;
+
 	private List<String> annotationList;
 	
+
 	private List<ColumnMetaData> columnMetaDataList;
 	
 	

@@ -1,18 +1,31 @@
 package org.skeleton.generator.model.metadata;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
 public class ColumnMetaData {
 
 	/*
 	 * properties
 	 */
+	
 	private String name;
+	
 	private String dataType;
+	
 	private boolean nullable;
+	
 	private String referenceTableName;
+	
 	private String referenceTableRelation;
+	
 	private String format;
+	
 	private boolean editable;
+	
 	private String visibility;
+	
 	private String rendering;
 	
 	/*
