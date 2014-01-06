@@ -22,9 +22,9 @@ public class ColumnMetaDataMapper {
 				nullable = false;
 			}
 			columnMetaData.setNullable(nullable);
-			columnMetaData.setReferenceTableName(tokens[3]);
-			columnMetaData.setReferenceTableRelation(tokens[4]);
-			columnMetaData.setFormat(tokens[5]);
+			columnMetaData.setReferenceTableName(tokens[3].isEmpty()?null:tokens[3]);
+			columnMetaData.setReferenceTableRelation(tokens[4].isEmpty()?null:tokens[4]);
+			columnMetaData.setFormat(tokens[5].isEmpty()?null:tokens[5]);
 			
 			boolean editable = true;
 			if (tokens[6].equals("Not Editable")){
@@ -32,7 +32,7 @@ public class ColumnMetaDataMapper {
 			}
 			columnMetaData.setEditable(editable);
 			
-			columnMetaData.setVisibility(tokens[7]);
+			columnMetaData.setVisibility(tokens[7].isEmpty()?null:tokens[7]);
 			columnMetaData.setRendering(tokens[8]);
 			
 			columnMetaDataList.add(columnMetaData);

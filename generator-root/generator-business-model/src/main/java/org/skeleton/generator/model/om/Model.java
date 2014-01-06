@@ -33,6 +33,9 @@ public class Model {
      */
 	public Table findTable(String tableName) {
 		
+		if (tableName == null) {
+			return null;
+		}
 		if (tableName.isEmpty()) {
 			return null;
 		}

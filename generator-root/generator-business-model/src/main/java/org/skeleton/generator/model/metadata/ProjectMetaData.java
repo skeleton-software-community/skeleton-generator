@@ -2,17 +2,18 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 
 import org.skeleton.generator.util.metadata.PersistenceMode;
 
-@XmlRootElement
-@XmlType
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="project")
 public class ProjectMetaData {
 
 	/*
@@ -24,28 +25,29 @@ public class ProjectMetaData {
 	private String sourceFolder;
 	@XmlTransient
     private String workspaceFolder;
-	
+	@XmlAttribute(required=true)
 	private String domainName;
-	
+	@XmlAttribute(required=true)
     private String projectName;
-	
+	@XmlAttribute(required=true)
     private String skeleton;
-	
+	@XmlAttribute(required=true)
     private String databaseEngine;
-	
+	@XmlAttribute(required=true)
     private String databaseName;
-	
+	@XmlAttribute
     private String databaseDNS;
-	
+	@XmlAttribute
     private String databasePort;
-	
+	@XmlAttribute
     private String databaseUserName;
-	
+	@XmlAttribute
     private String databasePassword;
-	
-    private String audited;
+	@XmlAttribute
+    private boolean audited = false;
     
-
+	@XmlElementWrapper(name="packages")
+	@XmlElement(name="package")
     private List<PackageMetaData> packageMetaDataList;
 
     
@@ -148,11 +150,11 @@ public class ProjectMetaData {
 		this.databasePassword = databasePassword;
 	}
 
-	public String getAudited() {
+	public boolean getAudited() {
 		return audited;
 	}
 
-	public void setAudited(String audited) {
+	public void setAudited(boolean audited) {
 		this.audited = audited;
 	}
 

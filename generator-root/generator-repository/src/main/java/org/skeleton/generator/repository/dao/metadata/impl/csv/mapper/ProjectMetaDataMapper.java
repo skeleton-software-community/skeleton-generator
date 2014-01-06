@@ -29,7 +29,7 @@ public class ProjectMetaDataMapper {
 		projectMetaData.setDatabaseName(elements.get("Database Name"));
 		projectMetaData.setDatabaseUserName(elements.get("Database User Name"));
 		projectMetaData.setDatabasePassword(elements.get("Database Password"));
-		projectMetaData.setAudited(elements.get("Audited"));
+		projectMetaData.setAudited(Boolean.valueOf(elements.get("Audited")));
 		
 		return projectMetaData;
 	}

@@ -44,13 +44,26 @@ public class TableFactoryImpl implements TableFactory {
             column.name = SQLNaming.rename(column.originalName, table.myPackage.model.project.databaseEngine);
             column.dataType = DataType.byValue(columnMetaData.getDataType());
             column.nullable = (columnMetaData.isNullable());
-            column.relation = RelationType.byValue(columnMetaData.getReferenceTableRelation());
+            if (columnMetaData.getReferenceTableRelation() != null) {
+            	column.relation = RelationType.byValue(columnMetaData.getReferenceTableRelation());
+            } else {
+            	column.relation = RelationType.PROPERTY;
+            }
+            
             column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT) || column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT));
             column.referenceTable = myPackage.model.findTable(columnMetaData.getReferenceTableName());
             column.unique = (RelationType.isUnique(column.relation));
-            column.format = Format.byValue(columnMetaData.getFormat());
+            if (columnMetaData.getFormat()!=null) {
+            	column.format = Format.byValue(columnMetaData.getFormat());
+            } else {
+            	column.format = Format.DEFAULT;
+            }
             column.editable = columnMetaData.isEditable();
-            column.visibility = Visibility.byValue(columnMetaData.getVisibility());
+            if (columnMetaData.getVisibility()!=null) {
+            	column.visibility = Visibility.byValue(columnMetaData.getVisibility());
+            } else {
+            	column.visibility = Visibility.VISIBLE;
+            }
             column.rendering = columnMetaData.getRendering();
             table.columnList.add(column);
         }
