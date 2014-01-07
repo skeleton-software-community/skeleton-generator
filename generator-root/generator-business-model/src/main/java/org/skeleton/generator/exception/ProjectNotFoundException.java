@@ -1,6 +1,6 @@
 package org.skeleton.generator.exception;
 
-public class ProjectNotFoundException extends Exception {
+public class ProjectNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	

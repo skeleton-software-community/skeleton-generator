@@ -1,6 +1,6 @@
 package org.skeleton.generator.exception;
 
-public class DataSourceNotFoundException extends Exception {
+public class DataSourceNotFoundException extends RuntimeException {
 
 private static final long serialVersionUID = 1L;
 	

@@ -60,8 +60,8 @@ public class Bean {
 	public boolean createEnabled;
 	public boolean updateEnabled;
 	public boolean deleteEnabled;
-	public String interfaces;
-	public String annotations;
+	public List<String> interfaces;
+	public List<String> annotations;
 
 	public List<Property> propertyList;
 	public List<OneToMany> oneToManyList;

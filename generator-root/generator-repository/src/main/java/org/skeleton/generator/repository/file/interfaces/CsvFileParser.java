@@ -5,8 +5,14 @@ import java.util.List;
 
 import org.skeleton.generator.exception.InvalidFileException;
 
-
-public interface FileManager {
+/**
+ * provides two methodes to :
+ * <li>read a csv file as a list of string arrays
+ * <li>write a csv file from a list of string arrays
+ * @author Nicolas Thibault
+ *
+ */
+public interface CsvFileParser {
 
 	List<String[]> readData(String filePath) throws IOException, InvalidFileException;
 	

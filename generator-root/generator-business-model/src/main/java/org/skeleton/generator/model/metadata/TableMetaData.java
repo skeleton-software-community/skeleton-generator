@@ -2,22 +2,47 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name="table")
 public class TableMetaData {
 
 	/*
 	 * properties
 	 */
+	@XmlAttribute(required=true)
 	private String name;
+	@XmlAttribute
 	private int cardinality;
+	@XmlAttribute
 	private String listRendering;
+	@XmlAttribute
 	private String detailRendering;
+	@XmlAttribute
 	private boolean comboxable;
-	private boolean createEnabled;
-	private boolean updateEnabled;
-	private boolean deleteEnabled;
-	private String interfaceList;
-	private String annotationList;
+	@XmlAttribute
+	private boolean createEnabled = true;
+	@XmlAttribute
+	private boolean updateEnabled = true;
+	@XmlAttribute
+	private boolean deleteEnabled = true;
 	
+	@XmlElementWrapper(name="interfaces")
+	@XmlElement(name="interface")
+	private List<String> interfaceList;
+	
+	@XmlElementWrapper(name="annotations")
+	@XmlElement(name="annotation")
+	private List<String> annotationList;
+	
+	@XmlElementWrapper(name="columns")
+	@XmlElement(name="column")
 	private List<ColumnMetaData> columnMetaDataList;
 	
 	
@@ -72,11 +97,17 @@ public class TableMetaData {
 	public void setDeleteEnabled(boolean deleteEnabled) {
 		this.deleteEnabled = deleteEnabled;
 	}
-	public String getInterfaceList() {
+	public List<String> getInterfaceList() {
 		return interfaceList;
 	}
-	public void setInterfaceList(String interfaceList) {
+	public void setInterfaceList(List<String> interfaceList) {
 		this.interfaceList = interfaceList;
+	}
+	public List<String> getAnnotationList() {
+		return annotationList;
+	}
+	public void setAnnotationList(List<String> annotationList) {
+		this.annotationList = annotationList;
 	}
 	public List<ColumnMetaData> getColumnMetaDataList() {
 		return columnMetaDataList;
@@ -84,10 +115,16 @@ public class TableMetaData {
 	public void setColumnMetaDataList(List<ColumnMetaData> columnMetaDataList) {
 		this.columnMetaDataList = columnMetaDataList;
 	}
-	public String getAnnotationList() {
-		return annotationList;
-	}
-	public void setAnnotationList(String annotationList) {
-		this.annotationList = annotationList;
+	
+	@Override
+	public String toString() {
+		return "TableMetaData [name=" + name + ", cardinality=" + cardinality
+				+ ", listRendering=" + listRendering + ", detailRendering="
+				+ detailRendering + ", comboxable=" + comboxable
+				+ ", createEnabled=" + createEnabled + ", updateEnabled="
+				+ updateEnabled + ", deleteEnabled=" + deleteEnabled
+				+ ", interfaceList=" + interfaceList + ", annotationList="
+				+ annotationList + ", columnMetaDataList=" + columnMetaDataList
+				+ "]";
 	}
 }

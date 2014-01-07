@@ -1,18 +1,35 @@
 package org.skeleton.generator.model.metadata;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name="column")
 public class ColumnMetaData {
 
 	/*
 	 * properties
 	 */
+	@XmlAttribute(required=true)
 	private String name;
+	@XmlAttribute(required=true)
 	private String dataType;
-	private boolean nullable;
+	@XmlAttribute
+	private boolean nullable = true;
+	@XmlAttribute
 	private String referenceTableName;
+	@XmlAttribute
 	private String referenceTableRelation;
+	@XmlAttribute
 	private String format;
-	private boolean editable;
+	@XmlAttribute
+	private boolean editable = true;
+	@XmlAttribute
 	private String visibility;
+	@XmlAttribute
 	private String rendering;
 	
 	/*
@@ -71,5 +88,14 @@ public class ColumnMetaData {
 	}
 	public void setRendering(String rendering) {
 		this.rendering = rendering;
+	}
+	@Override
+	public String toString() {
+		return "ColumnMetaData [name=" + name + ", dataType=" + dataType
+				+ ", nullable=" + nullable + ", referenceTableName="
+				+ referenceTableName + ", referenceTableRelation="
+				+ referenceTableRelation + ", format=" + format + ", editable="
+				+ editable + ", visibility=" + visibility + ", rendering="
+				+ rendering + "]";
 	}	
 }

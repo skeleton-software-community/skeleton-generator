@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://www.skeleton-generator.org/model/metadata" xmlns:tns="http://www.skeleton-generator.org/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:metadata="http://www.skeleton-generator.org/model/metadata">
+
+  <xs:element name="project" type="tns:project"/>
+
+  <xs:complexType name="column">
+    <xs:sequence/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="dataType" type="xs:string" use="required"/>
+    <xs:attribute name="nullable" type="xs:boolean" use="required"/>
+    <xs:attribute name="referenceTableName" type="xs:string"/>
+    <xs:attribute name="referenceTableRelation" type="xs:string"/>
+    <xs:attribute name="format" type="xs:string"/>
+    <xs:attribute name="editable" type="xs:boolean" use="required"/>
+    <xs:attribute name="visibility" type="xs:string"/>
+    <xs:attribute name="rendering" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="package">
+    <xs:sequence>
+      <xs:element name="tables" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" type="tns:table" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="table">
+    <xs:sequence>
+      <xs:element name="interfaces" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="interface" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="columns" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="column" type="tns:column" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="cardinality" type="xs:int" use="required"/>
+    <xs:attribute name="listRendering" type="xs:string"/>
+    <xs:attribute name="detailRendering" type="xs:string"/>
+    <xs:attribute name="comboxable" type="xs:boolean" use="required"/>
+    <xs:attribute name="createEnabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="updateEnabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="deleteEnabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="project">
+    <xs:sequence>
+      <xs:element name="domainName" type="xs:string"/>
+      <xs:element name="projectName" type="xs:string"/>
+      <xs:element name="skeleton" type="xs:string"/>
+      <xs:element name="databaseEngine" type="xs:string"/>
+      <xs:element name="databaseName" type="xs:string"/>
+      <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
+      <xs:element name="databaseUserName" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePassword" type="xs:string" minOccurs="0"/>
+      <xs:element name="audited" type="xs:boolean" default="false"/>
+      <xs:element name="packages" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="package" type="tns:package" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
