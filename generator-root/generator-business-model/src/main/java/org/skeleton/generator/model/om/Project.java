@@ -12,18 +12,19 @@ import org.skeleton.generator.util.metadata.SkeletonType;
  */
 public class Project {
 
-	public String domainName;
-    public String projectName;
     public String sourceFolder;
     public String workspaceFolder;
-    public String serverDNS;
-    public String serverPort;
-    public String wsUrl;
+	public String domainName;
+    public String projectName;
     public SkeletonType skeletonType;
+    
     public DatabaseEngine databaseEngine;
     public String databaseName;
-    public String userName;
-    public String password;
+    public String databaseDNS;
+    public String databasePort;
+ public String databaseUserName;
+    public String databasePassword;
+    
     public boolean audited;
     
     public Model model;

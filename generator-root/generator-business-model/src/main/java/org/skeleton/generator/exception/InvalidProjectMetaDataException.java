@@ -1,6 +1,6 @@
 package org.skeleton.generator.exception;
 
-public class InvalidProjectMetaDataException extends Exception {
+public class InvalidProjectMetaDataException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 	

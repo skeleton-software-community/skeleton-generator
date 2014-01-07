@@ -1,19 +1,17 @@
-package org.skeleton.generator.repository.mapper.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.skeleton.generator.model.metadata.ProjectMetaData;
-import org.skeleton.generator.repository.mapper.interfaces.ProjectMetaDataMapper;
 import org.springframework.stereotype.Component;
 
 
 
 @Component
-public class ProjectMetaDataMapperImpl implements ProjectMetaDataMapper {
+public class ProjectMetaDataMapper {
 
-	@Override
 	public ProjectMetaData mapProjectMetaData(List<String[]> tokensList, ProjectMetaData projectMetaData) {
 
 		Map<String, String> elements = new HashMap<String, String>();
@@ -24,17 +22,14 @@ public class ProjectMetaDataMapperImpl implements ProjectMetaDataMapper {
 		
 		projectMetaData.setDomainName(elements.get("Domain Name"));
 		projectMetaData.setProjectName(elements.get("Project Name"));
-		projectMetaData.setSourceFolder(elements.get("Source Folder"));
-		projectMetaData.setWorkspaceFolder(elements.get("Workspace Folder"));
-		projectMetaData.setServerDNS(elements.get("Server DNS"));
-		projectMetaData.setServerPort(elements.get("Server Port"));
-		projectMetaData.setWsUrl(elements.get("Web Service URL"));
 		projectMetaData.setSkeleton(elements.get("Skeleton"));
+		projectMetaData.setDatabaseDNS(elements.get("Database DNS"));
+		projectMetaData.setDatabasePort(elements.get("Database Port"));
 		projectMetaData.setDatabaseEngine(elements.get("Database Engine"));
 		projectMetaData.setDatabaseName(elements.get("Database Name"));
-		projectMetaData.setUserName(elements.get("User Name"));
-		projectMetaData.setPassword(elements.get("Password"));
-		projectMetaData.setAudited(elements.get("Audited"));
+		projectMetaData.setDatabaseUserName(elements.get("Database User Name"));
+		projectMetaData.setDatabasePassword(elements.get("Database Password"));
+		projectMetaData.setAudited(Boolean.valueOf(elements.get("Audited")));
 		
 		return projectMetaData;
 	}

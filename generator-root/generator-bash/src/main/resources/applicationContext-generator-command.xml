@@ -23,26 +23,23 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 <context:component-scan base-package="org.skeleton.generator"/>
 
 
-<!-- to handle metadata persistence with files -->
+<!-- to handle metadata persistence with csv files -->
 
-<bean id="projetctMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="projetctMetaDataCsvFileParser" class="org.skeleton.generator.repository.file.impl.CsvFileParserImpl">
 	<constructor-arg name="columnNumber" value="2"/>
 </bean>
 
-<bean id="packageMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="packageMetaDataCsvFileParser" class="org.skeleton.generator.repository.file.impl.CsvFileParserImpl">
 	<constructor-arg name="columnNumber" value="1"/>
 </bean>
 
-<bean id="tableMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="tableMetaDataCsvFileParser" class="org.skeleton.generator.repository.file.impl.CsvFileParserImpl">
 	<constructor-arg name="columnNumber" value="10"/>
 </bean>
 
-<bean id="columnMetaDataFileManager" class="org.skeleton.generator.repository.file.impl.TextDelimitedFileManager">
+<bean id="columnMetaDataCsvFileParser" class="org.skeleton.generator.repository.file.impl.CsvFileParserImpl">
 	<constructor-arg name="columnNumber" value="9"/>
 </bean>
 
-<!-- code writer -->
-
-<bean id="codeWriter" class="org.skeleton.generator.bl.services.impl.CodeWriterImpl"/>
 
 </beans>

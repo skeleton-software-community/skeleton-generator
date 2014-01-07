@@ -14,30 +14,38 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.skeleton.generator.exception.InvalidFileException;
-import org.skeleton.generator.repository.file.interfaces.FileManager;
+import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 
 
-public class TextDelimitedFileManager implements FileManager {
+public class CsvFileParserImpl implements CsvFileParser {
 	
 	/*
 	 * properties
 	 */
 	private int columnNumber;
 	private Charset charset;
-	private String separator = "\\$";
+	private String separator;
 	
 	
 	/*
 	 * constructor
 	 */
-	public TextDelimitedFileManager(int columnNumber) {
+	public CsvFileParserImpl(int columnNumber) {
 		this.columnNumber = columnNumber;
 		this.charset = StandardCharsets.ISO_8859_1;
+		this.separator = "\\$";
 	}
 	
-	public TextDelimitedFileManager(int columnNumber, Charset charset) {
+	public CsvFileParserImpl(int columnNumber, Charset charset) {
 		this.columnNumber = columnNumber;
 		this.charset = charset;
+		this.separator = "\\$";
+	}
+	
+	public CsvFileParserImpl(int columnNumber, Charset charset, String separator) {
+		this.columnNumber = columnNumber;
+		this.charset = charset;
+		this.separator = separator;
 	}
 	
 

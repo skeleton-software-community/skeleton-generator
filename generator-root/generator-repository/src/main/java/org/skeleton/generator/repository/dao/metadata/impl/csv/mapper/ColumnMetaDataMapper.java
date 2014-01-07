@@ -1,17 +1,15 @@
-package org.skeleton.generator.repository.mapper.impl;
+package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.ColumnMetaData;
-import org.skeleton.generator.repository.mapper.interfaces.ColumnMetaDataMapper;
 import org.springframework.stereotype.Component;
 
 
 
 @Component
-public class ColumnMetaDataMapperImpl implements ColumnMetaDataMapper {
+public class ColumnMetaDataMapper {
 
-	@Override
 	public List<ColumnMetaData> mapColumnMetaDataList(List<String[]> tokensList, List<ColumnMetaData> columnMetaDataList) {
 		for (String[] tokens:tokensList) {
 			ColumnMetaData columnMetaData = new ColumnMetaData();
@@ -24,9 +22,9 @@ public class ColumnMetaDataMapperImpl implements ColumnMetaDataMapper {
 				nullable = false;
 			}
 			columnMetaData.setNullable(nullable);
-			columnMetaData.setReferenceTableName(tokens[3]);
-			columnMetaData.setReferenceTableRelation(tokens[4]);
-			columnMetaData.setFormat(tokens[5]);
+			columnMetaData.setReferenceTableName(tokens[3].isEmpty()?null:tokens[3]);
+			columnMetaData.setReferenceTableRelation(tokens[4].isEmpty()?null:tokens[4]);
+			columnMetaData.setFormat(tokens[5].isEmpty()?null:tokens[5]);
 			
 			boolean editable = true;
 			if (tokens[6].equals("Not Editable")){
@@ -34,7 +32,7 @@ public class ColumnMetaDataMapperImpl implements ColumnMetaDataMapper {
 			}
 			columnMetaData.setEditable(editable);
 			
-			columnMetaData.setVisibility(tokens[7]);
+			columnMetaData.setVisibility(tokens[7].isEmpty()?null:tokens[7]);
 			columnMetaData.setRendering(tokens[8]);
 			
 			columnMetaDataList.add(columnMetaData);

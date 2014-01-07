@@ -2,44 +2,66 @@ package org.skeleton.generator.model.metadata;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
+import org.skeleton.generator.util.metadata.PersistenceMode;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="project")
+@XmlType(name="project")
 public class ProjectMetaData {
 
 	/*
 	 * properties
 	 */
-	private String domainName;
-    private String projectName;
-    private String sourceFolder;
+	@XmlTransient
+	private PersistenceMode persistenceMode;
+	@XmlTransient
+	private String sourceFolder;
+	@XmlTransient
     private String workspaceFolder;
-    private String serverDNS;
-    private String serverPort;
-    private String wsUrl;
+	@XmlElement(required=true)
+	private String domainName;
+	@XmlElement(required=true)
+    private String projectName;
+	@XmlElement(required=true)
     private String skeleton;
+	@XmlElement(required=true)
     private String databaseEngine;
+	@XmlElement(required=true)
     private String databaseName;
-    private String userName;
-    private String password;
-    private String audited;
+	@XmlElement
+    private String databaseDNS;
+	@XmlElement
+    private String databasePort;
+	@XmlElement
+    private String databaseUserName;
+	@XmlElement
+    private String databasePassword;
+	@XmlElement(defaultValue="false")
+    private boolean audited = false;
     
+	@XmlElementWrapper(name="packages")
+	@XmlElement(name="package")
     private List<PackageMetaData> packageMetaDataList;
 
+    
     /*
      * getters and setters
      */
-	public String getDomainName() {
-		return domainName;
+    public PersistenceMode getPersistenceMode() {
+		return persistenceMode;
 	}
 
-	public void setDomainName(String domainName) {
-		this.domainName = domainName;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setPersistenceMode(PersistenceMode persistenceMode) {
+		this.persistenceMode = persistenceMode;
 	}
 
 	public String getSourceFolder() {
@@ -58,28 +80,20 @@ public class ProjectMetaData {
 		this.workspaceFolder = workspaceFolder;
 	}
 
-	public String getServerDNS() {
-		return serverDNS;
+	public String getDomainName() {
+		return domainName;
 	}
 
-	public void setServerDNS(String serverDNS) {
-		this.serverDNS = serverDNS;
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
 	}
 
-	public String getServerPort() {
-		return serverPort;
+	public String getProjectName() {
+		return projectName;
 	}
 
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
-	}
-
-	public String getWsUrl() {
-		return wsUrl;
-	}
-
-	public void setWsUrl(String wsUrl) {
-		this.wsUrl = wsUrl;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public String getSkeleton() {
@@ -106,20 +120,44 @@ public class ProjectMetaData {
 		this.databaseName = databaseName;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getDatabaseDNS() {
+		return databaseDNS;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setDatabaseDNS(String databaseDNS) {
+		this.databaseDNS = databaseDNS;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getDatabasePort() {
+		return databasePort;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setDatabasePort(String databasePort) {
+		this.databasePort = databasePort;
+	}
+
+	public String getDatabaseUserName() {
+		return databaseUserName;
+	}
+
+	public void setDatabaseUserName(String databaseUserName) {
+		this.databaseUserName = databaseUserName;
+	}
+
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
+
+	public void setDatabasePassword(String databasePassword) {
+		this.databasePassword = databasePassword;
+	}
+
+	public boolean getAudited() {
+		return audited;
+	}
+
+	public void setAudited(boolean audited) {
+		this.audited = audited;
 	}
 
 	public List<PackageMetaData> getPackageMetaDataList() {
@@ -128,13 +166,5 @@ public class ProjectMetaData {
 
 	public void setPackageMetaDataList(List<PackageMetaData> packageMetaDataList) {
 		this.packageMetaDataList = packageMetaDataList;
-	}
-
-	public String getAudited() {
-		return audited;
-	}
-
-	public void setAudited(String audited) {
-		this.audited = audited;
 	}
 }
