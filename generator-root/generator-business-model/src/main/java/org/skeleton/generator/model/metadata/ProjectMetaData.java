@@ -9,11 +9,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import org.skeleton.generator.util.metadata.PersistenceMode;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="project")
+@XmlType(name="project")
 public class ProjectMetaData {
 
 	/*
@@ -25,25 +27,25 @@ public class ProjectMetaData {
 	private String sourceFolder;
 	@XmlTransient
     private String workspaceFolder;
-	@XmlAttribute(required=true)
+	@XmlElement(required=true)
 	private String domainName;
-	@XmlAttribute(required=true)
+	@XmlElement(required=true)
     private String projectName;
-	@XmlAttribute(required=true)
+	@XmlElement(required=true)
     private String skeleton;
-	@XmlAttribute(required=true)
+	@XmlElement(required=true)
     private String databaseEngine;
-	@XmlAttribute(required=true)
+	@XmlElement(required=true)
     private String databaseName;
-	@XmlAttribute
+	@XmlElement
     private String databaseDNS;
-	@XmlAttribute
+	@XmlElement
     private String databasePort;
-	@XmlAttribute
+	@XmlElement
     private String databaseUserName;
-	@XmlAttribute
+	@XmlElement
     private String databasePassword;
-	@XmlAttribute
+	@XmlElement(defaultValue="false")
     private boolean audited = false;
     
 	@XmlElementWrapper(name="packages")

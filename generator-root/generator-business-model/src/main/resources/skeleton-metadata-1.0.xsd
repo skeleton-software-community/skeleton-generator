@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" targetNamespace="http://www.skeleton-generator.org/model/metadata" xmlns:tns="http://www.skeleton-generator.org/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema version="1.0" targetNamespace="http://www.skeleton-generator.org/model/metadata" xmlns:tns="http://www.skeleton-generator.org/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:metadata="http://www.skeleton-generator.org/model/metadata">
 
-  <xs:element name="project" type="tns:projectMetaData"/>
+  <xs:element name="project" type="tns:project"/>
 
   <xs:complexType name="column">
     <xs:sequence/>
@@ -63,8 +63,18 @@
     <xs:attribute name="deleteEnabled" type="xs:boolean" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="projectMetaData">
+  <xs:complexType name="project">
     <xs:sequence>
+      <xs:element name="domainName" type="xs:string"/>
+      <xs:element name="projectName" type="xs:string"/>
+      <xs:element name="skeleton" type="xs:string"/>
+      <xs:element name="databaseEngine" type="xs:string"/>
+      <xs:element name="databaseName" type="xs:string"/>
+      <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
+      <xs:element name="databaseUserName" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePassword" type="xs:string" minOccurs="0"/>
+      <xs:element name="audited" type="xs:boolean" default="false"/>
       <xs:element name="packages" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
@@ -73,16 +83,6 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="domainName" type="xs:string" use="required"/>
-    <xs:attribute name="projectName" type="xs:string" use="required"/>
-    <xs:attribute name="skeleton" type="xs:string" use="required"/>
-    <xs:attribute name="databaseEngine" type="xs:string" use="required"/>
-    <xs:attribute name="databaseName" type="xs:string" use="required"/>
-    <xs:attribute name="databaseDNS" type="xs:string"/>
-    <xs:attribute name="databasePort" type="xs:string"/>
-    <xs:attribute name="databaseUserName" type="xs:string"/>
-    <xs:attribute name="databasePassword" type="xs:string"/>
-    <xs:attribute name="audited" type="xs:boolean" use="required"/>
   </xs:complexType>
 </xs:schema>
 
