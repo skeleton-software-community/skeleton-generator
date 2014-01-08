@@ -1,6 +1,8 @@
 package org.skeleton.generator.command;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -15,6 +17,7 @@ import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -38,9 +41,12 @@ public class DatabasePopulator {
 		if (args.length < 1) {
 			throw new IllegalArgumentException("Path is Mandatory");
 		}
-		String folderPath = args[0];
+		String workspacePath = args[0];
+		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
-		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-command.xml",folderPath + File.separator + DATASOURCE_CONTEXT_FILE);){
+		Set<String> tables = extractTables(args);
+		
+		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-command.xml",sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			
 			Project project;
@@ -51,7 +57,7 @@ public class DatabasePopulator {
 				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
 				ProjectLoader projectLoader = appContext.getBean(ProjectLoader.class);
 				
-				ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData(folderPath);
+				ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData(workspacePath);
 				project = projectLoader.loadProject(projectMetaData);
 				
 				logger.info("loading project " + project.projectName + " completed");
@@ -71,14 +77,20 @@ public class DatabasePopulator {
 					logger.info("start populating package : " + myPackage.name);
 					
 					for (Table table:myPackage.tableList) {
-						logger.info("start populating table : " + table.name);
 						
-						try {
-							TablePopulator tablePopulator = TablePopulatorFactory.buildTablePopulator(table, dataSource, inputSourceProvider);
-							tablePopulator.populateTable();
-							logger.info("populating table : " + table.name + " completed");
-						} catch (BackupFileNotFoundException e) {
-							logger.error(e.getMessage());
+						if (tables == null || tables.contains(table.originalName)) {
+						
+							logger.info("start populating table : " + table.name);
+							
+							try {
+								TablePopulator tablePopulator = TablePopulatorFactory.buildTablePopulator(table, dataSource, inputSourceProvider);
+								tablePopulator.populateTable();
+								logger.info("populating table : " + table.name + " completed");
+							} catch (BackupFileNotFoundException e) {
+								logger.error(e.getMessage());
+							}
+						} else {
+							logger.info("table : " + table.name + " skipped");
 						}
 					}
 					logger.info("populating package " + myPackage.name + " completed");
@@ -90,5 +102,21 @@ public class DatabasePopulator {
 				return;
 			}
 		}
+	}
+	
+	private static Set<String> extractTables(String[] args) {
+		
+		Set<String> tables = null;
+		
+		if (args.length > 1) {
+			String tablesArg = args[1];
+			String[] tableTokens = tablesArg.split(";");
+			tables = new HashSet<String>();
+			for (String table:tableTokens) {
+				tables.add(table);
+			}
+		}
+		
+		return tables;
 	}
 }
