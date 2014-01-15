@@ -42,6 +42,11 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	@Override
 	public void writeContent() throws IOException {
 		createTable();
+		
+		if (table.myPackage.model.project.audited) {
+			createAuditTable();
+		}
+		
 		createFind();
 		createInsert();
 		createUpdate();
@@ -97,7 +102,10 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		}
 
 		writeLine(",");
-		write("CONSTRAINT " + table.name + "_UC UNIQUE (" + this.table.columnList.get(1).name);
+		
+		
+		
+		write("CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columnList.get(1).name);
 
 		for (int i = 2; i <= this.table.cardinality; i++) {
 			write("," + this.table.columnList.get(i).name);
@@ -112,6 +120,41 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 	}
+	
+	/*
+	 * create audit table
+	 */
+	private void createAuditTable()
+    {
+		
+		writeLine("-- suppression de la table d'audit --");
+		writeLine("BEGIN");
+		writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "_AUD';");
+		writeLine("EXCEPTION");
+		writeLine("WHEN OTHERS THEN NULL;");
+		writeLine("END;");
+		writeLine("/");
+		skipLine();
+		
+        writeLine("-- table d'audit des elements --");
+        writeLine("CREATE TABLE " + table.name + "_AUD");
+        writeLine("(");
+        writeLine(table.columnList.get(0).name + " int NOT NULL,");
+        writeLine("REV int NOT NULL,");
+        writeLine("REVTYPE smallint NOT NULL,");
+
+        for (int i = 1;i<this.table.columnList.size();i++)
+        {
+            writeLine(this.table.columnList.get(i).name + " " + DataType.getOracleType(table.columnList.get(i).dataType) + " NULL,");
+        }
+
+        writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (ID, REV),");
+        writeLine("CONSTRAINT " + table.name + "_aud_rev FOREIGN KEY (REV)");
+        writeLine("REFERENCES AUDITENTITY (ID)");
+        writeLine(")");
+        writeLine("/");
+        skipLine();
+    }
 
 	/* create find stored procedure */
 
@@ -200,20 +243,44 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		skipLine();
 		writeLine(") AS");
+		writeLine("vREV NUMBER;");
+		writeLine("vID NUMBER;");
 		writeLine("BEGIN");
+		writeLine("vID := " + sequenceName + ".NEXTVAL;");
 		write("INSERT INTO " + table.name + " (ID, " + this.table.columnList.get(1).name);
 
 		for (int i = 2; i < this.table.columnList.size(); i++) {
 			write(", " + this.table.columnList.get(i).name);
 		}
 
-		write(") VALUES (" + sequenceName + ".NEXTVAL, v" + this.table.columnList.get(1).name);
+		write(") VALUES (vID, v" + this.table.columnList.get(1).name);
 
 		for (int i = 2; i < this.table.columnList.size(); i++) {
 			write(", v" + this.table.columnList.get(i).name);
 		}
-
 		writeLine(");");
+		
+		if (table.myPackage.model.project.audited) {
+		
+			writeLine("vREV := hibernate_sequence.NEXTVAL;");
+			
+			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'SYS');");
+			
+			write("INSERT INTO " + table.name + "_AUD (ID, REV, REVTYPE, " + this.table.columnList.get(1).name);
+	
+			for (int i = 2; i < this.table.columnList.size(); i++) {
+				write(", " + this.table.columnList.get(i).name);
+			}
+	
+			write(") VALUES (vID, vREV, 0, v" + this.table.columnList.get(1).name);
+	
+			for (int i = 2; i < this.table.columnList.size(); i++) {
+				write(", v" + this.table.columnList.get(i).name);
+			}
+	
+			writeLine(");");
+			
+		}
 		writeLine("END;");
 		writeLine("/");
 		skipLine();
@@ -285,6 +352,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		skipLine();
 		writeLine(") AS");
+		writeLine("vREV NUMBER;");
 		writeLine("BEGIN");
 		writeLine("UPDATE " + table.name + " set " + this.table.columnList.get(1).name + " = v" + this.table.columnList.get(1).name);
 
@@ -293,6 +361,28 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		}
 
 		writeLine("where ID = vID;");
+		
+		if (table.myPackage.model.project.audited) {
+			
+			writeLine("vREV := hibernate_sequence.NEXTVAL;");
+			
+			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'SYS');");
+			
+			write("INSERT INTO " + table.name + "_AUD (ID, REV, REVTYPE, " + this.table.columnList.get(1).name);
+	
+			for (int i = 2; i < this.table.columnList.size(); i++) {
+				write(", " + this.table.columnList.get(i).name);
+			}
+	
+			write(") VALUES (vID, vREV, 1, v" + this.table.columnList.get(1).name);
+	
+			for (int i = 2; i < this.table.columnList.size(); i++) {
+				write(", v" + this.table.columnList.get(i).name);
+			}
+	
+			writeLine(");");
+		}
+		
 		writeLine("END;");
 		writeLine("/");
 		skipLine();

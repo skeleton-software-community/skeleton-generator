@@ -44,6 +44,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		if (table.myPackage.model.project.audited) {
 			createAuditTable();
 		}
+		
 		createFind();
 		createInsert();
 		createUpdate();
@@ -119,7 +120,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	
 	
 	/*
-	 * create table
+	 * create audit table
 	 */
 	private void createAuditTable()
     {
