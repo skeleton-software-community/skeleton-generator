@@ -30,6 +30,17 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				writeLine("END;");
 				writeLine("/");
 				skipLine();
+				
+				if (project.audited) {
+					writeLine("-- suppression de la table d'audit --");
+					writeLine("BEGIN");
+					writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "_AUD';");
+					writeLine("EXCEPTION");
+					writeLine("WHEN OTHERS THEN NULL;");
+					writeLine("END;");
+					writeLine("/");
+					skipLine();
+				}
 
 				writeLine("-- suppression des procedures stockees --");
 				writeLine("BEGIN");
@@ -107,6 +118,60 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			}
 		}
 		
+		if (project.audited) {
+        	skipLine();
+        	createAuditTable();
+        	skipLine();
+        }
+		
 		writeNotOverridableContent();
+	}
+	
+	private void createAuditTable() {
+		
+		writeLine("-- suppression de la table d'audit --");
+		writeLine("BEGIN");
+		writeLine("EXECUTE IMMEDIATE 'DROP TABLE AUDITENTITY';");
+		writeLine("EXCEPTION");
+		writeLine("WHEN OTHERS THEN NULL;");
+		writeLine("END;");
+		writeLine("/");
+		skipLine();
+	
+		writeLine("-- table d'audit --");
+		writeLine("CREATE TABLE AUDITENTITY");
+		writeLine("(");
+		writeLine("ID int NOT NULL,");
+		writeLine((char)34 + "TIMESTAMP" + (char)34 + " int NOT NULL,");
+		writeLine("LOGIN VARCHAR2(255),");
+		writeLine("CONSTRAINT auditentity_pkey PRIMARY KEY (ID)");
+		writeLine(")");
+		writeLine(";");
+		
+		writeLine("-- suppression de la sequence --");
+		writeLine("BEGIN");
+		writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE hibernate_sequence';");
+		writeLine("EXCEPTION");
+		writeLine("WHEN OTHERS THEN NULL;");
+		writeLine("END;");
+		writeLine("/");
+		skipLine();
+		
+		writeLine("-- sequence --");
+		writeLine("CREATE SEQUENCE hibernate_sequence MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
+		writeLine("/");
+		skipLine();
+		
+		writeLine("-- epoch in millis --");
+		writeLine("CREATE OR REPLACE FUNCTION current_millis RETURN integer");
+		writeLine("IS");
+		writeLine("BEGIN");
+		writeLine("return extract(day    from (systimestamp - timestamp '1970-01-01 00:00:00')) * 86400000");
+		writeLine("+ (extract(hour   from (systimestamp - timestamp '1970-01-01 00:00:00'))-1) * 3600000");
+		writeLine("+ extract(minute from (systimestamp - timestamp '1970-01-01 00:00:00')) * 60000");
+		writeLine("+ extract(second from (systimestamp - timestamp '1970-01-01 00:00:00')) * 1000;");
+		writeLine("END;");
+		writeLine("/");
+
 	}
 }

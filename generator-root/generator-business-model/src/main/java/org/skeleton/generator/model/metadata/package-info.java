@@ -3,5 +3,5 @@ xmlns = {@XmlNs( prefix = "metadata", namespaceURI = "http://www.skeleton-genera
 elementFormDefault = javax.xml.bind.annotation.XmlNsForm.UNSET)
 package org.skeleton.generator.model.metadata;
 
-import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.bind.annotation.XmlNs;
+import javax.xml.bind.annotation.XmlSchema;
