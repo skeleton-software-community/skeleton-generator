@@ -1,12 +1,14 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.oracle;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
 import org.skeleton.generator.model.om.Column;
+import org.skeleton.generator.model.om.QualifiedColumn;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.util.metadata.DataType;
 
@@ -41,6 +43,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	@Override
 	public void writeContent() throws IOException {
+		
+		createGet();
+		
 		createTable();
 		
 		if (table.myPackage.model.project.audited) {
@@ -78,7 +83,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("-- table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write(table.columnList.get(0).name + " " + DataType.getOracleType(table.columnList.get(0).dataType) + " PRIMARY KEY");
+		write(table.columnList.get(0).name + " " + DataType.getOracleType(table.columnList.get(0).dataType));
 
 		for (int i = 1; i < this.table.columnList.size(); i++) {
 			writeLine(",");
@@ -103,14 +108,24 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		writeLine(",");
 		
-		
-		
 		write("CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columnList.get(1).name);
-
 		for (int i = 2; i <= this.table.cardinality; i++) {
 			write("," + this.table.columnList.get(i).name);
 		}
 		writeLine(")");
+		
+		writeLine(", CONSTRAINT PK_" + table.name + " PRIMARY KEY (" + this.table.columnList.get(0).name + ")");
+		
+		for (int i = 1; i < this.table.columnList.size(); i++) {
+			if (this.table.columnList.get(i).referenceTable != null) {
+				write(", CONSTRAINT FK_" + table.name + "_" + i + " FOREIGN KEY (" + this.table.columnList.get(i).name + ") REFERENCES " + table.columnList.get(i).referenceTable.name);
+				if (this.table.columnList.get(i).deleteCascade) {
+					write(" ON DELETE CASCADE");
+				}
+				skipLine();
+			}
+		}
+
 		writeLine(")");
 		writeLine("/");
 		skipLine();
@@ -148,15 +163,77 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
             writeLine(this.table.columnList.get(i).name + " " + DataType.getOracleType(table.columnList.get(i).dataType) + " NULL,");
         }
 
-        writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (ID, REV),");
-        writeLine("CONSTRAINT " + table.name + "_aud_rev FOREIGN KEY (REV)");
+        writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
+        writeLine("CONSTRAINT FK_" + table.name + "_AUD FOREIGN KEY (REV)");
         writeLine("REFERENCES AUDITENTITY (ID)");
         writeLine(")");
         writeLine("/");
         skipLine();
     }
+	
+	/*
+	 * create get stored procedure
+	 */
+	
+	private void createGet() {
+		
+		writeLine("-- requete permettant de recupperer les elements par business key --");
+		
+		writeLine("/*SELECT");
+		
+		List<String> fields = getSelectedFields(table.getQualifiedColumns());
+		List<String> jointures = getJointures(table.getQualifiedColumns());
+		
+		boolean start = true;
+		
+		for (String field:fields) {
+			if (start) {
+				start = false;
+			} else {
+				writeLine(",");
+			}
+			write(field);
+		}
+		
+		skipLine();
+		
+		writeLine("FROM " + table.name);
+		
+		for (String jointure:jointures) {
+			writeLine(jointure);
+		}
+		
+		writeLine("*/");
+		
+	}
+	
+	private List<String> getSelectedFields(List<QualifiedColumn> qualifiedColumns) {
+		List<String> selectedFields = new ArrayList<String>();
+		for (QualifiedColumn qualifiedColumn:qualifiedColumns) {
+			if (qualifiedColumn.children != null) {
+				selectedFields.addAll(getSelectedFields(qualifiedColumn.children));
+			} else {
+				selectedFields.add(qualifiedColumn.tableAlias + "." + qualifiedColumn.columnName);
+			}
+		}
+		return selectedFields;
+	}	
 
-	/* create find stored procedure */
+	private List<String> getJointures(List<QualifiedColumn> qualifiedColumns) {
+		List<String> jointures = new ArrayList<String>();
+		for (QualifiedColumn qualifiedColumn:qualifiedColumns) {
+			if (qualifiedColumn.children != null) {
+				jointures.add("LEFT OUTER JOIN " + qualifiedColumn.children.get(0).tableName + " " + qualifiedColumn.children.get(0).tableAlias + " ON " + qualifiedColumn.tableAlias + "." + qualifiedColumn.columnName + " = " + qualifiedColumn.children.get(0).tableAlias  + ".ID");
+				jointures.addAll(getJointures(qualifiedColumn.children));
+			}
+		}
+		return jointures;
+	}
+	
+
+	/* 
+	 * create find stored procedure
+	 */
 
 	private void createFind() {
 
@@ -264,7 +341,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		
 			writeLine("vREV := hibernate_sequence.NEXTVAL;");
 			
-			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'SYS');");
+			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'sys');");
 			
 			write("INSERT INTO " + table.name + "_AUD (ID, REV, REVTYPE, " + this.table.columnList.get(1).name);
 	
@@ -366,7 +443,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			
 			writeLine("vREV := hibernate_sequence.NEXTVAL;");
 			
-			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'SYS');");
+			writeLine("INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'sys');");
 			
 			write("INSERT INTO " + table.name + "_AUD (ID, REV, REVTYPE, " + this.table.columnList.get(1).name);
 	
