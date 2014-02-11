@@ -58,7 +58,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.annotations.Fetch;");
 		javaImports.add("import org.hibernate.annotations.FetchMode;");
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				javaImports.add("import " + property.referenceBean.myPackage.omPackageName + "." + property.referenceBean.className + ";");
 			}
@@ -159,17 +159,25 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			if (bean.isManyToOneComponent) {
 				
-				Bean parentBean = bean.myPackage.model.findBean(bean.table.columnList.get(1).referenceTable.originalName);
+				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
+				
+				for (String annotation:bean.properties.get(1).annotations) {
+					writeLine(annotation);
+				}
 				
 				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
-				writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columnList.get(1).name + (char) 34 + ", nullable = false)");				
+				writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columns.get(1).name + (char) 34 + ", nullable = false)");				
 				writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
 				skipLine();
 			}
 		}
 
-		for (int i = 1; i < this.bean.propertyList.size(); i++) {
-			Property property = this.bean.propertyList.get(i);
+		for (int i = 1; i < this.bean.properties.size(); i++) {
+			Property property = this.bean.properties.get(i);
+			
+			for (String annotation:property.annotations) {
+				writeLine(annotation);
+			}
 
 			if (property.referenceBean != null) {
 				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
@@ -256,7 +264,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			if (bean.isManyToOneComponent) {
 				
-				Bean parentBean = bean.myPackage.model.findBean(bean.table.columnList.get(1).referenceTable.originalName);
+				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
 				
 				writeLine("public " + parentBean.className + " get" + parentBean.className + "() {");
 				writeLine("return this." + parentBean.objectName + ";");
@@ -269,7 +277,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");
 			writeLine("return this." + property.name + ";");
 			writeLine("}");

@@ -73,7 +73,7 @@ public class CommonJsfOneToManyComponentDetailViewFileWriteCommand extends JsfXh
 		writeLine("<h:panelGrid columns=" + (char) 34 + "3" + (char) 34 + ">");
 		skipLine();
 
-		for (Property property : currentBean.getVisiblePropertyList()) {
+		for (Property property : currentBean.getVisibleProperties()) {
 			if (property.visibility.isDetailVisible()) {
 				writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + currentBean.objectName + property.capName + "} : " + (char) 34 + "/>");
 				writeDetailComponent(property, currentBean);

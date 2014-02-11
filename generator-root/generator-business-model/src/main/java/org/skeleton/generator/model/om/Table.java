@@ -22,7 +22,7 @@ public class Table {
 	public String originalName;
 	public int cardinality;
 
-	public List<Column> columnList;
+	public List<Column> columns;
 
 	/**
 	 * get the list of arguments used in find stored procedure
@@ -34,20 +34,20 @@ public class Table {
 		List<Column> tempColumnList = new ArrayList<Column>();
 
 		for (int i = 1; i <= this.cardinality; i++) {
-			if (this.columnList.get(i).referenceTable != null) {
-				tempColumnList = this.columnList.get(i).referenceTable.getFindColumnList();
+			if (this.columns.get(i).referenceTable != null) {
+				tempColumnList = this.columns.get(i).referenceTable.getFindColumnList();
 				for (int j = 0; j < tempColumnList.size(); j++) {
 					Column column = new Column();
-					column.name = columnList.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name;
+					column.name = columns.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name;
 					column.dataType = tempColumnList.get(j).dataType;
-					column.nullable = this.columnList.get(i).nullable;
+					column.nullable = this.columns.get(i).nullable;
 					findColumnList.add(column);
 				}
 			} else {
 				Column column = new Column();
-				column.name = columnList.get(i).name;
-				column.dataType = columnList.get(i).dataType;
-				column.nullable = this.columnList.get(i).nullable;
+				column.name = columns.get(i).name;
+				column.dataType = columns.get(i).dataType;
+				column.nullable = this.columns.get(i).nullable;
 				findColumnList.add(column);
 			}
 		}
@@ -65,21 +65,21 @@ public class Table {
 		List<Column> insertColumnList = new ArrayList<Column>();
 		List<Column> tempColumnList = new ArrayList<Column>();
 
-		for (int i = 1; i < this.columnList.size(); i++) {
-			if (this.columnList.get(i).referenceTable != null) {
-				tempColumnList = this.columnList.get(i).referenceTable.getFindColumnList();
+		for (int i = 1; i < this.columns.size(); i++) {
+			if (this.columns.get(i).referenceTable != null) {
+				tempColumnList = this.columns.get(i).referenceTable.getFindColumnList();
 				for (int j = 0; j < tempColumnList.size(); j++) {
 					Column column = new Column();
-					column.name = columnList.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name;
+					column.name = columns.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name;
 					column.dataType = tempColumnList.get(j).dataType;
-					column.nullable = this.columnList.get(i).nullable;
+					column.nullable = this.columns.get(i).nullable;
 					insertColumnList.add(column);
 				}
 			} else {
 				Column column = new Column();
-				column.name = columnList.get(i).name;
-				column.dataType = columnList.get(i).dataType;
-				column.nullable = this.columnList.get(i).nullable;
+				column.name = columns.get(i).name;
+				column.dataType = columns.get(i).dataType;
+				column.nullable = this.columns.get(i).nullable;
 				insertColumnList.add(column);
 			}
 		}
@@ -96,11 +96,11 @@ public class Table {
 		
 		List<QualifiedColumn> result = new ArrayList<QualifiedColumn>();
 		
-		for (int i = 1; i< columnList.size(); i++) {
-			if (columnList.get(i).referenceTable != null) {
-				result.add(getReferenceQualifiedColumn(alias, columnList.get(i), tableAliases));
+		for (int i = 1; i< columns.size(); i++) {
+			if (columns.get(i).referenceTable != null) {
+				result.add(getReferenceQualifiedColumn(alias, columns.get(i), tableAliases));
 			} else {
-				result.add(new QualifiedColumn(this, alias, columnList.get(i)));
+				result.add(new QualifiedColumn(this, alias, columns.get(i)));
 			}
 		}
 		
@@ -126,10 +126,10 @@ public class Table {
 		tableAliases.add(alias);
 		
 		for (int i = 1; i<= cardinality; i++) {
-			if (columnList.get(i).referenceTable != null) {
-				result.add(getReferenceQualifiedColumn(alias, columnList.get(i), tableAliases));
+			if (columns.get(i).referenceTable != null) {
+				result.add(getReferenceQualifiedColumn(alias, columns.get(i), tableAliases));
 			} else {
-				result.add(new QualifiedColumn(parent, this, alias, columnList.get(i)));
+				result.add(new QualifiedColumn(parent, this, alias, columns.get(i)));
 			}
 		}
 		

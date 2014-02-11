@@ -33,11 +33,11 @@ public class JsfPresentationStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode listViewTreeNode = new FileWriteCommandTreeNode("List view files");
 		presentationLayerTreeNode.add(listViewTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			listViewTreeNode.add(packageTreeNode);
 			
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					if (bean.isSimple()) {
 						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfListViewFileWriteCommand(bean), bean.className + "List");
@@ -58,11 +58,11 @@ public class JsfPresentationStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode detailViewTreeNode = new FileWriteCommandTreeNode("Detail view files");
 		presentationLayerTreeNode.add(detailViewTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			detailViewTreeNode.add(packageTreeNode);
 
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					if (bean.isSimple()) {
 						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfDetailViewFileWriteCommand(bean), bean.className + "Detail");

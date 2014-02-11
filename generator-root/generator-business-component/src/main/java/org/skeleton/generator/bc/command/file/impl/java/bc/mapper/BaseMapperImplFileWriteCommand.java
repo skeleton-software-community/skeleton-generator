@@ -42,7 +42,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
 		this.daoSet.add(this.bean.daoClassName);
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 				if (test) {
@@ -57,7 +57,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -72,7 +72,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -92,7 +92,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 				javaImports.add("import " + currentBean.myPackage.DAOInterfacePackageName + "." + currentBean.daoInterfaceName + ";");
 
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -111,7 +111,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 			if (test) {
 				javaImports.add("import " + currentBean.myPackage.DAOInterfacePackageName + "." + currentBean.daoInterfaceName + ";");
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -149,7 +149,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		this.daoSet = new HashSet<>();
 		this.daoSet.add(this.bean.daoClassName);
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				boolean test = this.daoSet.add(property.referenceBean.daoClassName);
 				if (test) {
@@ -162,7 +162,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoClassName);
 					if (test) {
@@ -176,7 +176,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoClassName);
 					if (test) {
@@ -196,7 +196,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("protected " + currentBean.daoInterfaceName + " " + currentBean.daoObjectName + ";");
 
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoClassName);
 					if (test) {
@@ -216,7 +216,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("protected " + currentBean.daoInterfaceName + " " + currentBean.daoObjectName + ";");
 
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoClassName);
 					if (test) {
@@ -245,11 +245,11 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 				+ this.bean.objectName + ") {");
 		writeLine(this.bean.viewObjectName + ".setSelected(false);");
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean == null) {
 				writeLine(this.bean.viewObjectName + "." + property.setterName + "(" + this.bean.objectName + "." + property.fetchName + ");");
 			} else {
-				List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+				List<Property> findPropertyList = property.referenceBean.getFindProperties();
 				if (property.nullable) {
 					writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
 					for (Property findProperty : findPropertyList) {
@@ -278,11 +278,11 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("public " + this.bean.className + " map" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " "
 				+ this.bean.viewObjectName + ") throws ObjectNotFoundException {");
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean == null) {
 				writeLine(this.bean.objectName + "." + property.setterName + "(" + this.bean.viewObjectName + "." + property.fetchName + ");");
 			} else {
-				List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+				List<Property> findPropertyList = property.referenceBean.getFindProperties();
 				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
 				writeLine(this.bean.viewObjectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
 				for (int j = 1; j < findPropertyList.size(); j++) {
@@ -312,12 +312,12 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
 			writeLine(currentBean.viewObjectName + ".setSelected(false);");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean == null) {
 					writeLine(currentBean.viewObjectName + "." + property.setterName + "(" + currentBean.objectName + "." + property.fetchName + ");");
 
 				} else {
-					List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+					List<Property> findPropertyList = property.referenceBean.getFindProperties();
 					if (property.nullable) {
 						writeLine("if (" + currentBean.objectName + "." + property.getterName + "() != null) {");
 
@@ -348,11 +348,11 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("public " + currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
 					+ currentBean.viewObjectName + ") throws ObjectNotFoundException {");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean == null) {
 					writeLine(currentBean.objectName + "." + property.setterName + "(" + currentBean.viewObjectName + "." + property.fetchName + ");");
 				} else {
-					List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+					List<Property> findPropertyList = property.referenceBean.getFindProperties();
 					writeLine(currentBean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
 					writeLine(currentBean.viewObjectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
 					for (int j = 1; j < findPropertyList.size(); j++) {
@@ -379,11 +379,11 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 					+ " " + currentBean.objectName + ") {");
 			writeLine(currentBean.viewObjectName + ".setSelected(false);");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean == null) {
 					writeLine(currentBean.viewObjectName + "." + property.setterName + "(" + currentBean.objectName + "." + property.fetchName + ");");
 				} else {
-					List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+					List<Property> findPropertyList = property.referenceBean.getFindProperties();
 					if (property.nullable) {
 						writeLine("if (" + currentBean.objectName + "." + property.getterName + "() != null) {");
 
@@ -412,11 +412,11 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("public " + currentBean.className + " map" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " "
 					+ currentBean.viewObjectName + ") throws ObjectNotFoundException {");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean == null) {
 					writeLine(currentBean.objectName + "." + property.setterName + "(" + currentBean.viewObjectName + "." + property.fetchName + ");");
 				} else {
-					List<Property> findPropertyList = property.referenceBean.getFindPropertyList();
+					List<Property> findPropertyList = property.referenceBean.getFindProperties();
 					writeLine(currentBean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
 					writeLine(currentBean.viewObjectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
 					for (int j = 1; j < findPropertyList.size(); j++) {

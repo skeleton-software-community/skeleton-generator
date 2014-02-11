@@ -30,7 +30,7 @@ public class TableMetaDataMapper {
 					interfaceList.add(token);
 				}
 			}
-			tableMetaData.setInterfaceList(interfaceList);
+			tableMetaData.setInterfaces(interfaceList);
 			
 			String[] annotations = tokens[6].split(";");
 			List<String> annotationList = new ArrayList<String>();
@@ -40,7 +40,7 @@ public class TableMetaDataMapper {
 					annotationList.add(token);
 				}
 			}
-			tableMetaData.setAnnotationList(annotationList);
+			tableMetaData.setAnnotations(annotationList);
 			
 			tableMetaData.setCreateEnabled((tokens[7].equals("Not enabled")?false:true));
 			tableMetaData.setUpdateEnabled((tokens[8].equals("Not enabled")?false:true));

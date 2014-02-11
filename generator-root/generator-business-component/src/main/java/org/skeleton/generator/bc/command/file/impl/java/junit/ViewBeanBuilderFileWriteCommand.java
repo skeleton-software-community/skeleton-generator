@@ -51,11 +51,11 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 	    writeLine(bean.viewClassName + " " + bean.viewObjectName + " = new " + bean.viewClassName + "();");
 	    skipLine();
         writeLine("try {");
-        writeLine("String[] args = line.split(SEPARATOR, " + bean.getVisiblePropertyList().size() + ");");
+        writeLine("String[] args = line.split(SEPARATOR, " + bean.getVisibleProperties().size() + ");");
         skipLine();
         
         Integer argNumber = 0;
-        for (Property property : bean.getVisiblePropertyList())
+        for (Property property : bean.getVisibleProperties())
         {
             writeLine("if (!args[" + argNumber.toString() + "].isEmpty()) {");
             writeLine(bean.viewObjectName + ".set" + property.capName + "(" + DataType.stringToBuildArg("args[" + argNumber + "]",property.dataType) + ");");

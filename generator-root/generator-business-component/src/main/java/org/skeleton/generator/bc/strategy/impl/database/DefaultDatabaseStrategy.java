@@ -52,10 +52,10 @@ public class DefaultDatabaseStrategy implements LayerStrategy {
 		definitionFilesTreeNode.add(batchFileTreeNode);
 		
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			definitionFilesTreeNode.add(packageTreeNode);
-			for (Table table : myPackage.tableList) {
+			for (Table table : myPackage.tables) {
 				FileWriteCommandTreeNode tableTreeNode = new FileWriteCommandTreeNode(table.name);
 				switch (project.databaseEngine) {
 

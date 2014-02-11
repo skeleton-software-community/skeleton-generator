@@ -58,7 +58,7 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * properties");
 		writeLine(" */");
 		
-		List<Property> visiblePropertyList = this.bean.getVisiblePropertyList();
+		List<Property> visiblePropertyList = this.bean.getVisibleProperties();
 
 		for (int i = 0; i < visiblePropertyList.size(); i++) {
 			writeLine("private String " + visiblePropertyList.get(i).name + ";");
@@ -72,7 +72,7 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 
-		List<Property> visiblePropertyList = this.bean.getVisiblePropertyList();
+		List<Property> visiblePropertyList = this.bean.getVisibleProperties();
 
 		for (int i = 0; i < visiblePropertyList.size(); i++) {
 			writeLine("public String get" + visiblePropertyList.get(i).capName + "() {");

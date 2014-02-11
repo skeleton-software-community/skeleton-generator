@@ -49,8 +49,8 @@ public class JsfFacesConfigFileWriteCommand extends XmlFileWriteCommand {
 		writeLine("</application>");
 		skipLine();
 
-		for (Package myPackage : project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					writeLine("<navigation-rule>");
 					skipLine();
@@ -71,7 +71,7 @@ public class JsfFacesConfigFileWriteCommand extends XmlFileWriteCommand {
 					writeLine("</navigation-case>");
 					skipLine();
 
-					for (Property property : bean.propertyList) {
+					for (Property property : bean.properties) {
 						if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
 							writeLine("<navigation-case>");
 							writeLine("<from-action>#{" + bean.controllerObjectName + ".loadFrom" + property.referenceBean.className + "}</from-action>");

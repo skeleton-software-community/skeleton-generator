@@ -66,7 +66,7 @@ public class CsvFileParserImpl implements CsvFileParser {
 				String[] tokens = line.split(separator, columnNumber);
 				
 				if (tokens.length != columnNumber) {
-					throw new InvalidFileException("Invalid number of tokens");
+					throw new InvalidFileException("Invalid number of tokens in : " + filePath.toString());
 				}
 				
 				tokensList.add(tokens);

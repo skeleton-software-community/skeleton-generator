@@ -50,12 +50,15 @@ public class ColumnMetaDataCsvDaoImpl implements ColumnMetaDataDao {
 		try {
 			tokensList = parser.readData(columnsPath.toString());
 		} catch (IOException | InvalidFileException e) {
-			throw new InvalidProjectMetaDataException("Could not read columns", e);
+			throw new InvalidProjectMetaDataException("Could not read columns in : " + columnsPath.toString(), e);
 		}
 		
-		List<ColumnMetaData> columnMetaDataList = columnMetaDataMapper.mapColumnMetaDataList(tokensList, new ArrayList<ColumnMetaData>());
-		
-		return columnMetaDataList;
+		try {
+			List<ColumnMetaData> columnMetaDataList = columnMetaDataMapper.mapColumnMetaDataList(tokensList, new ArrayList<ColumnMetaData>());
+			return columnMetaDataList;
+		} catch (Exception e) {
+			throw new InvalidProjectMetaDataException("Could not map columns in : " + columnsPath.toString(), e);
+		}
 	}
 	
 

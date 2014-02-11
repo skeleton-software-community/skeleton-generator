@@ -61,7 +61,7 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 			writeLine("<rich:toolBar>");
 			writeLine("<rich:dropDownMenu value=" + (char) 34 + "Navigation" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
 
-			for (Property property : this.bean.propertyList) {
+			for (Property property : this.bean.properties) {
 				if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
 					writeLine("<rich:menuItem value=" + (char) 34 + "back to #{i18n." + property.referenceBean.objectName + "List}" + (char) 34);
 					writeLine("rendered=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".loadedFrom == '" + property.referenceBean.className + "'}" + (char) 34);
@@ -152,7 +152,7 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 			writeLine("<rich:column>");
 			writeLine("</rich:column>");
 		}
-		for (Property property : this.bean.getVisiblePropertyList()) {
+		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column>");
 				writeFilter(property, this.bean);
@@ -184,7 +184,7 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 			skipLine();
 		}
 
-		for (Property property : this.bean.getVisiblePropertyList()) {
+		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34);
 				writeFilterExpression(property, bean);

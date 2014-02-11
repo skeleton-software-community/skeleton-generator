@@ -30,8 +30,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.context.annotation.Scope;");
 		javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					javaImports.add("import " + bean.myPackage.serviceInterfacePackageName + "." + bean.serviceInterfaceName + ";");
 				}
@@ -64,8 +64,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * properties injected by spring");
 		writeLine(" */");
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					writeLine("@Autowired");
 					writeLine("private " + bean.serviceInterfaceName + " " + bean.serviceObjectName + ";");
@@ -77,8 +77,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * view navigation");
 		writeLine(" */");
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					writeLine("private Long selected" + bean.className + "Id;");
 					writeLine("private List<Long> selected" + bean.className + "IdList;");
@@ -98,10 +98,10 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * select items");
 		writeLine(" */");
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("private List<SelectItem>" + bean.objectName + bean.propertyList.get(1).capName + "List;");
+					writeLine("private List<SelectItem>" + bean.objectName + bean.properties.get(1).capName + "List;");
 				}
 			}
 		}
@@ -111,8 +111,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					writeLine("public Long getSelected" + bean.className + "Id() {");
 					writeLine("return selected" + bean.className + "Id;");
@@ -160,24 +160,24 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("public List<SelectItem> get" + bean.className + bean.propertyList.get(1).capName + "List() {");
-					writeLine("return " + bean.objectName + bean.propertyList.get(1).capName + "List;");
+					writeLine("public List<SelectItem> get" + bean.className + bean.properties.get(1).capName + "List() {");
+					writeLine("return " + bean.objectName + bean.properties.get(1).capName + "List;");
 					writeLine("}");
 					skipLine();
 
-					writeLine("public void set" + bean.className + bean.propertyList.get(1).capName + "List(List<SelectItem> " + bean.objectName + bean.propertyList.get(1).capName + "List) {");
-					writeLine("this." + bean.objectName + bean.propertyList.get(1).capName + "List = " + bean.objectName + bean.propertyList.get(1).capName + "List;");
+					writeLine("public void set" + bean.className + bean.properties.get(1).capName + "List(List<SelectItem> " + bean.objectName + bean.properties.get(1).capName + "List) {");
+					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List = " + bean.objectName + bean.properties.get(1).capName + "List;");
 					writeLine("}");
 					skipLine();
 				}
 			}
 		}
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					writeLine("public " + bean.serviceInterfaceName + " get" + bean.serviceInterfaceName + "() {");
 					writeLine("return " + bean.serviceObjectName + ";");
@@ -193,21 +193,21 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					writeLine("/**");
 					writeLine(" * load combobox items for " + bean.className);
 					writeLine(" */");
-					writeLine("public void load" + bean.className + bean.propertyList.get(1).capName + "List() {");
-					writeLine("this." + bean.objectName + bean.propertyList.get(1).capName + "List = new ArrayList<SelectItem>();");
-					writeLine("this." + bean.objectName + bean.propertyList.get(1).capName + "List.add(new SelectItem(null," + (char) 34 + (char) 34 + "));");
-					writeLine("List<" + bean.propertyList.get(1).beanDataType + "> " + bean.objectName + bean.propertyList.get(1).capName + "List = this." + bean.serviceObjectName + ".get"
-							+ bean.className + bean.propertyList.get(1).capName + "List ();");
-					writeLine("if (" + bean.objectName + bean.propertyList.get(1).capName + "List != null){");
-					writeLine("for (" + bean.propertyList.get(1).beanDataType + " " + bean.objectName + bean.propertyList.get(1).capName + ":" + bean.objectName + bean.propertyList.get(1).capName
+					writeLine("public void load" + bean.className + bean.properties.get(1).capName + "List() {");
+					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List = new ArrayList<SelectItem>();");
+					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List.add(new SelectItem(null," + (char) 34 + (char) 34 + "));");
+					writeLine("List<" + bean.properties.get(1).beanDataType + "> " + bean.objectName + bean.properties.get(1).capName + "List = this." + bean.serviceObjectName + ".get"
+							+ bean.className + bean.properties.get(1).capName + "List ();");
+					writeLine("if (" + bean.objectName + bean.properties.get(1).capName + "List != null){");
+					writeLine("for (" + bean.properties.get(1).beanDataType + " " + bean.objectName + bean.properties.get(1).capName + ":" + bean.objectName + bean.properties.get(1).capName
 							+ "List){");
-					writeLine("this." + bean.objectName + bean.propertyList.get(1).capName + "List.add(new SelectItem(" + bean.objectName + bean.propertyList.get(1).capName + "));");
+					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List.add(new SelectItem(" + bean.objectName + bean.properties.get(1).capName + "));");
 					writeLine("}");
 					writeLine("}");
 					writeLine("}");
@@ -221,8 +221,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("public void setDefault(){");
 
-		for (Package myPackage : this.project.model.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.project.model.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					writeLine("this.selected" + bean.className + "Id = null;");
 					writeLine("this.selected" + bean.className + "IdList = null;");

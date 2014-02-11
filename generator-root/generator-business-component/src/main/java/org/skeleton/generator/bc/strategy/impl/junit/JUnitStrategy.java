@@ -24,12 +24,12 @@ public class JUnitStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode builderTreeNode = new FileWriteCommandTreeNode("View Objects Builders");
         junitLayerTreeNode.add(builderTreeNode);
 
-        for (Package myPackage : project.model.packageList)
+        for (Package myPackage : project.model.packages)
         {
             FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
             builderTreeNode.add(packageTreeNode);
 
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {
@@ -49,12 +49,12 @@ public class JUnitStrategy implements LayerStrategy {
         FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode("View Objects commands");
         junitLayerTreeNode.add(commandTreeNode);
 
-        for (Package myPackage : project.model.packageList)
+        for (Package myPackage : project.model.packages)
         {
             FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
             commandTreeNode.add(packageTreeNode);
 
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {
@@ -73,12 +73,12 @@ public class JUnitStrategy implements LayerStrategy {
         FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode("View Objects command builders");
         junitLayerTreeNode.add(commandBuilderTreeNode);
 
-        for (Package myPackage : project.model.packageList)
+        for (Package myPackage : project.model.packages)
         {
             FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
             commandBuilderTreeNode.add(packageTreeNode);
 
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {

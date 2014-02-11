@@ -51,7 +51,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
         writeLine("private static final String SEPARATOR = " + (char)34 + "\\\\$" + (char)34 + ";");
         skipLine();
         
-        Integer splitSize = parentBean.getFindPropertyList().size() + referenceBean.getVisiblePropertyList().size();
+        Integer splitSize = parentBean.getFindProperties().size() + referenceBean.getVisibleProperties().size();
         
         writeLine("public static " + referenceBean.viewClassName + " build(String line) throws BuildFailureException {");
         skipLine();
@@ -61,8 +61,8 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
         writeLine("String[] args = line.split(SEPARATOR, " + splitSize + ");");
         skipLine();
         
-        Integer argNumber = parentBean.getFindPropertyList().size();
-        for (Property property : referenceBean.getVisiblePropertyList())
+        Integer argNumber = parentBean.getFindProperties().size();
+        for (Property property : referenceBean.getVisibleProperties())
         {
             writeLine("if (!args[" + argNumber.toString() + "].isEmpty()) {");
             writeLine(referenceBean.viewObjectName + ".set" + property.capName + "(" + DataType.stringToBuildArg("args[" + argNumber + "]",property.dataType) + ");");

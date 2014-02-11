@@ -57,7 +57,7 @@ public class CommonJsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtml
         writeLine("<h:panelGrid columns=" + (char)34 + "3" + (char)34 + ">");
         skipLine();
 
-        for (Property property : currentBean.getVisiblePropertyList())
+        for (Property property : currentBean.getVisibleProperties())
         {
             if (property.visibility.isDetailVisible())
             {

@@ -81,7 +81,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly();");
         skipLine();
 
-        for (Property property : this.bean.propertyList)
+        for (Property property : this.bean.properties)
         {
             if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
             {
@@ -113,7 +113,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
     private void createExistsObject()
     {
-        List<Property> findPropertyList = this.bean.getFindPropertyList();
+        List<Property> findPropertyList = this.bean.getFindProperties();
 
         writeLine("/**");
         writeLine(" * exists object");
@@ -129,7 +129,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
     
     private void createFindObject()
     {
-        List<Property> findPropertyList = this.bean.getFindPropertyList();
+        List<Property> findPropertyList = this.bean.getFindProperties();
 
         writeLine("/**");
         writeLine(" * find object");  

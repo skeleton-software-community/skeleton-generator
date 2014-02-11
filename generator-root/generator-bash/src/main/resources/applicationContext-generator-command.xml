@@ -38,7 +38,7 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 </bean>
 
 <bean id="columnMetaDataCsvFileParser" class="org.skeleton.generator.repository.file.impl.CsvFileParserImpl">
-	<constructor-arg name="columnNumber" value="9"/>
+	<constructor-arg name="columnNumber" value="10"/>
 </bean>
 
 

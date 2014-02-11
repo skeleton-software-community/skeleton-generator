@@ -16,7 +16,7 @@ public class Model {
 
 	public Project project;
 	
-	public List<Package> packageList;
+	public List<Package> packages;
 
     public String serviceExceptionPackageName;
     public String daoExceptionPackageName;
@@ -39,8 +39,8 @@ public class Model {
 		if (tableName.isEmpty()) {
 			return null;
 		}
-		for (Package myPackage : this.packageList) {
-			for (Table table : myPackage.tableList) {
+		for (Package myPackage : this.packages) {
+			for (Table table : myPackage.tables) {
 				if (table.originalName.equals(tableName)) {
 					return table;
 				}
@@ -58,8 +58,8 @@ public class Model {
 	 * @throws BeanNotFoundException if no bean which associated table has the corresponding name
 	 */
 	public Bean findBean(String tableName) {
-		for (Package myPackage : this.packageList) {
-			for (Bean bean : myPackage.beanList) {
+		for (Package myPackage : this.packages) {
+			for (Bean bean : myPackage.beans) {
 				if (bean.table.originalName.equals(tableName)) {
 					return bean;
 				}

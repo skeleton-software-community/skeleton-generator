@@ -1,8 +1,12 @@
 package org.skeleton.generator.model.metadata;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -30,6 +34,10 @@ public class ColumnMetaData {
 	private String visibility;
 	@XmlAttribute
 	private String rendering;
+	
+	@XmlElementWrapper(name="annotations")
+	@XmlElement(name="annotation")
+	private List<String> annotations;
 	
 	/*
 	 * getters and setters
@@ -88,13 +96,20 @@ public class ColumnMetaData {
 	public void setRendering(String rendering) {
 		this.rendering = rendering;
 	}
+	public List<String> getAnnotations() {
+		return annotations;
+	}
+	public void setAnnotations(List<String> annotations) {
+		this.annotations = annotations;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "ColumnMetaData [name=" + name + ", dataType=" + dataType
-				+ ", nullable=" + nullable + ", referenceTableName="
-				+ referenceTableName + ", referenceTableRelation="
-				+ referenceTableRelation + ", format=" + format + ", editable="
-				+ editable + ", visibility=" + visibility + ", rendering="
-				+ rendering + "]";
+		return "ColumnMetaData [name=" + name + ", dataType=" + dataType + ", nullable=" + nullable + ", referenceTableName=" + referenceTableName + ", referenceTableRelation="
+				+ referenceTableRelation + ", format=" + format + ", editable=" + editable + ", visibility=" + visibility + ", rendering=" + rendering + ", annotations=" + annotations + "]";
 	}	
 }

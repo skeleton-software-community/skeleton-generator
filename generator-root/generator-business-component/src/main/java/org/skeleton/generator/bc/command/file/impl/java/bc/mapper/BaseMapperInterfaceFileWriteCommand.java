@@ -40,7 +40,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
 		this.daoSet.add(this.bean.daoClassName);
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 				if (test) {
@@ -55,7 +55,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -70,7 +70,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -90,7 +90,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				javaImports.add("import " + currentBean.myPackage.DAOInterfacePackageName + "." + currentBean.daoInterfaceName + ";");
 
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -109,7 +109,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			if (test) {
 				javaImports.add("import " + currentBean.myPackage.DAOInterfacePackageName + "." + currentBean.daoInterfaceName + ";");
 			}
-			for (Property property : currentBean.propertyList) {
+			for (Property property : currentBean.properties) {
 				if (property.referenceBean != null) {
 					test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {

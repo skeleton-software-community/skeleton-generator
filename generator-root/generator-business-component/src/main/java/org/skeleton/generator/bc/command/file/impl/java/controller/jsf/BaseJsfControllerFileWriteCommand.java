@@ -226,7 +226,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return;");
 		writeLine("}");
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
 				writeLine("if (this.loadedFrom.equals(" + (char) 34 + property.referenceBean.className + (char) 34 + ")) {");
 				writeLine("try {");
@@ -252,9 +252,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("public void refresh" + this.bean.className + "() {");
 		writeLine("try {");
 
-		for (Property property : this.bean.getVisiblePropertyList()) {
+		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 			}
 		}
 
@@ -271,9 +271,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
 
-			for (Property property : currentBean.getVisiblePropertyList()) {
+			for (Property property : currentBean.getVisibleProperties()) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
 
@@ -303,7 +303,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		skipLine();
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
 
 				writeLine("/**");
@@ -363,18 +363,18 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("this.setDefault();");
 		writeLine("try {");
 
-		for (Property property : this.bean.getVisiblePropertyList()) {
+		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 			}
 		}
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
 
-			for (Property property : currentBean.getVisiblePropertyList()) {
+			for (Property property : currentBean.getVisibleProperties()) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
 		}
@@ -403,9 +403,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this.setDefault();");
 			writeLine("try {");
 
-			for (Property property : currentBean.getVisiblePropertyList()) {
+			for (Property property : currentBean.getVisibleProperties()) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
 
@@ -512,9 +512,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this.setDefault();");
 			writeLine("try{");
 
-			for (Property property : currentBean.getVisiblePropertyList()) {
+			for (Property property : currentBean.getVisibleProperties()) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.propertyList.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
 

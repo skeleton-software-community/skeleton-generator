@@ -20,14 +20,14 @@ public class HibernateDaoStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode baseDAOTreeNode = new FileWriteCommandTreeNode("Base DAO");
 		persistenceTreeNode.add(baseDAOTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseDAOTreeNode.add(packageTreeNode);
 
 			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
 			packageTreeNode.add(interfacesTreeNode);
 			
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseDaoInterfaceFileWriteCommand(bean), bean.baseDaoInterfaceName);
 					interfacesTreeNode.add(beanTreeNode);
@@ -37,7 +37,7 @@ public class HibernateDaoStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
 			packageTreeNode.add(implTreeNode);
 			
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseDaoHibernateImplFileWriteCommand(bean), bean.baseDaoClassName);
 					implTreeNode.add(beanTreeNode);
@@ -48,14 +48,14 @@ public class HibernateDaoStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode daoTreeNode = new FileWriteCommandTreeNode("DAO");
 		persistenceTreeNode.add(daoTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseDAOTreeNode.add(packageTreeNode);
 
 			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
 			packageTreeNode.add(interfacesTreeNode);
 
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DaoInterfaceFileWriteCommand(bean), bean.daoInterfaceName);
 					interfacesTreeNode.add(beanTreeNode);
@@ -65,7 +65,7 @@ public class HibernateDaoStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
 			packageTreeNode.add(implTreeNode);
 			
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DaoImplFileWriteCommand(bean), bean.daoClassName);
 					implTreeNode.add(beanTreeNode);
