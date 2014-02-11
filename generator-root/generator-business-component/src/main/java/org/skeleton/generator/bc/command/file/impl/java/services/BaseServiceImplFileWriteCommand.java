@@ -93,14 +93,14 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * get key list");
             writeLine(" */");
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public List<" + this.bean.propertyList.get(1).beanDataType + "> get" + this.bean.className + this.bean.propertyList.get(1).capName + "List() {");
+            writeLine("public List<" + this.bean.properties.get(1).beanDataType + "> get" + this.bean.className + this.bean.properties.get(1).capName + "List() {");
             writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List;");
             writeLine(this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "List();");
-            writeLine("List<" + this.bean.propertyList.get(1).beanDataType + "> " + this.bean.objectName + this.bean.propertyList.get(1).capName + "List = new ArrayList<" + this.bean.propertyList.get(1).beanDataType + ">();");
+            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> " + this.bean.objectName + this.bean.properties.get(1).capName + "List = new ArrayList<" + this.bean.properties.get(1).beanDataType + ">();");
             writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-            writeLine(this.bean.objectName + this.bean.propertyList.get(1).capName + "List.add(" + this.bean.objectName + ".get" + this.bean.propertyList.get(1).capName + "());");
+            writeLine(this.bean.objectName + this.bean.properties.get(1).capName + "List.add(" + this.bean.objectName + ".get" + this.bean.properties.get(1).capName + "());");
             writeLine("}");
-            writeLine("return " + this.bean.objectName + this.bean.propertyList.get(1).capName + "List;");
+            writeLine("return " + this.bean.objectName + this.bean.properties.get(1).capName + "List;");
             writeLine("}");
             skipLine();
 
@@ -144,7 +144,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (Property property : this.bean.propertyList)
+        for (Property property : this.bean.properties)
         {
             if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
             {
@@ -182,7 +182,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 
     private void createFindObject()
     {
-        List<Property> findPropertyList = this.bean.getFindPropertyList();
+        List<Property> findPropertyList = this.bean.getFindProperties();
 
         writeLine("/**");
         writeLine(" * find object");

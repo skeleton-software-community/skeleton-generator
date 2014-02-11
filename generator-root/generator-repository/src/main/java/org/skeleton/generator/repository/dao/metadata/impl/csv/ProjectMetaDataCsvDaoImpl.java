@@ -66,7 +66,7 @@ public class ProjectMetaDataCsvDaoImpl implements ProjectMetaDataDao {
 		
 		projectMetaData = projectMetaDataMapper.mapProjectMetaData(tokensList, projectMetaData);
 		
-		projectMetaData.setPackageMetaDataList(packageMetaDataDao.loadPackageMetaDataList(sourcePath + File.separator + CSV_MODEL_FOLDER_NAME));
+		projectMetaData.setPackages(packageMetaDataDao.loadPackageMetaDataList(sourcePath + File.separator + CSV_MODEL_FOLDER_NAME));
 		
 		return projectMetaData;
 	}

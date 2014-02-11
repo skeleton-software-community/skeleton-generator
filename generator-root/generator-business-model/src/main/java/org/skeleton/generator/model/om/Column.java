@@ -1,5 +1,7 @@
 package org.skeleton.generator.model.om;
 
+import java.util.List;
+
 import org.skeleton.generator.util.metadata.DataType;
 import org.skeleton.generator.util.metadata.Format;
 import org.skeleton.generator.util.metadata.RelationType;
@@ -20,5 +22,6 @@ public class Column {
     public boolean editable;
     public Visibility visibility;
     public String rendering;
+    public List<String> annotations;
 
 }

@@ -26,13 +26,13 @@ public class JavaBeanFactory implements BeanFactory {
 
 		Bean bean = new Bean();
 		bean.table = table;
-		table.myPackage.beanList.add(bean);
+		table.myPackage.beans.add(bean);
 		bean.myPackage = table.myPackage;
 		bean.isComponent = false;
 
 		bean.cardinality = table.cardinality;
-		bean.interfaces = tableMetaData.getInterfaceList();
-		bean.annotations = tableMetaData.getAnnotationList();
+		bean.interfaces = tableMetaData.getInterfaces();
+		bean.annotations = tableMetaData.getAnnotations();
 		bean.createEnabled = tableMetaData.isCreateEnabled();
 		bean.updateEnabled = tableMetaData.isUpdateEnabled();
 		bean.deleteEnabled = tableMetaData.isDeleteEnabled();
@@ -77,14 +77,14 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.filterClassName = bean.className + "DataTableFilter";
 		bean.filterObjectName = bean.objectName + "DataTableFilter";
 
-		bean.propertyList = new ArrayList<Property>();
+		bean.properties = new ArrayList<Property>();
 		bean.oneToManyComponentList = new ArrayList<OneToManyComponent>();
 		bean.oneToManyList = new ArrayList<OneToMany>();
 		bean.oneToOneList = new ArrayList<OneToOne>();
 		bean.oneToOneComponentList = new ArrayList<OneToOneComponent>();
 		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
 
-		for (Column column : table.columnList) {
+		for (Column column : table.columns) {
 			if (column.name.toLowerCase().equals("status")) {
 				bean.hasStatus = true;
 			}
@@ -115,7 +115,8 @@ public class JavaBeanFactory implements BeanFactory {
 				property.visibility = column.visibility;
 				property.editable = column.editable;
 				property.rendering = column.rendering;
-				bean.propertyList.add(property);
+				property.annotations = column.annotations;
+				bean.properties.add(property);
 			}
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE)) {

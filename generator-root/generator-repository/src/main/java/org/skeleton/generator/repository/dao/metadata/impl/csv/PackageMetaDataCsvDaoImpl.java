@@ -55,13 +55,18 @@ public class PackageMetaDataCsvDaoImpl implements PackageMetaDataDao {
 		try {
 			tokensList = parser.readData(packagesPath.toString());
 		} catch (IOException | InvalidFileException e) {
-			throw new InvalidProjectMetaDataException("Could not read packages", e);
+			throw new InvalidProjectMetaDataException("Could not read packages in " + packagesPath.toString(), e);
 		}
 		
-		List<PackageMetaData> packageMetaDataList = packageMetaDataMapper.mapPackageMetaDataList(tokensList, new ArrayList<PackageMetaData>());
+		List<PackageMetaData> packageMetaDataList;
+		try {
+			packageMetaDataList = packageMetaDataMapper.mapPackageMetaDataList(tokensList, new ArrayList<PackageMetaData>());
+		} catch (Exception e) {
+			throw new InvalidProjectMetaDataException("Could not map packages in : " + packagesPath.toString(), e);
+		}
 		
 		for (PackageMetaData packageMetaData:packageMetaDataList) {
-			packageMetaData.setTableMetaDataList(tableMetaDataDao.loadTableMetaDataList(folderPath + File.separator + packageMetaData.getName()));
+			packageMetaData.setTables(tableMetaDataDao.loadTableMetaDataList(folderPath + File.separator + packageMetaData.getName()));
 		}
 		return packageMetaDataList;
 	}

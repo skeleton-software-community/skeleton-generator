@@ -81,7 +81,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * get key list");
             writeLine(" */");
-            writeLine("List<" + this.bean.propertyList.get(1).beanDataType + "> get" + this.bean.className + this.bean.propertyList.get(1).capName + "List();");
+            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> get" + this.bean.className + this.bean.properties.get(1).capName + "List();");
             skipLine();
 
         }
@@ -116,7 +116,7 @@ private Bean bean;
         writeLine("List<" + this.bean.viewClassName + "> load" + this.bean.className + "List();");
         skipLine();
 
-        for (Property property : this.bean.propertyList)
+        for (Property property : this.bean.properties)
         {
             if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
             {
@@ -142,7 +142,7 @@ private Bean bean;
 
     private void createFindObject()
     {
-        List<Property> findPropertyList = this.bean.getFindPropertyList();
+        List<Property> findPropertyList = this.bean.getFindProperties();
 
         writeLine("/**");
         writeLine(" * find object");

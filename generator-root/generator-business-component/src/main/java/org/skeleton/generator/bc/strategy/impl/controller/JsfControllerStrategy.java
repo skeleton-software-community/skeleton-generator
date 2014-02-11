@@ -24,11 +24,11 @@ public class JsfControllerStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode("Base Controllers");
 		controllerLayerTreeNode.add(baseControllerTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseControllerTreeNode.add(packageTreeNode);
 			
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					if (bean.isSimple()) {
 						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseSimpleJsfControllerFileWriteCommand(bean), bean.baseControllerClassName);
@@ -44,11 +44,11 @@ public class JsfControllerStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode controllerTreeNode = new FileWriteCommandTreeNode("Controllers");
 		controllerLayerTreeNode.add(controllerTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			controllerTreeNode.add(packageTreeNode);
 
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfControllerFileWriteCommand(bean), bean.controllerClassName);
 					controllerTreeNode.add(beanTreeNode);
@@ -59,11 +59,11 @@ public class JsfControllerStrategy implements LayerStrategy {
 		FileWriteCommandTreeNode filterTreeNode = new FileWriteCommandTreeNode("DataTable filters");
 		controllerLayerTreeNode.add(filterTreeNode);
 
-		for (Package myPackage : project.model.packageList) {
+		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			filterTreeNode.add(packageTreeNode);
 
-			for (Bean bean : myPackage.beanList) {
+			for (Bean bean : myPackage.beans) {
 				
 				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DataTableFilterFileWriteCommand(bean), bean.filterClassName);
 				filterTreeNode.add(beanTreeNode);

@@ -49,9 +49,9 @@ public class JavaModelFactory implements ModelFactory {
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller.impl";
         model.commandPackageName = project.domainName + "." + project.projectName + ".junit.data.command";
 
-        model.packageList = new ArrayList<Package>();
+        model.packages = new ArrayList<Package>();
 
-        for (PackageMetaData packageMetaData : projectMetaData.getPackageMetaDataList())
+        for (PackageMetaData packageMetaData : projectMetaData.getPackages())
         {
         	logger.info("adding package : " + packageMetaData.getName());
 			Package myPackage = packageFactory.buildPackage(packageMetaData, model);

@@ -17,9 +17,9 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	@Override
 	public void writeContent() throws IOException {
-		for (int i = project.model.packageList.size() - 1; i >= 0; i--) {
-			for (int j = project.model.packageList.get(i).tableList.size() - 1; j >= 0; j--) {
-				Table table = project.model.packageList.get(i).tableList.get(j);
+		for (int i = project.model.packages.size() - 1; i >= 0; i--) {
+			for (int j = project.model.packages.get(i).tables.size() - 1; j >= 0; j--) {
+				Table table = project.model.packages.get(i).tables.get(j);
 				String sequenceName = table.name + "_ID_SEQ";
 
 				writeLine("-- suppression de la table --");

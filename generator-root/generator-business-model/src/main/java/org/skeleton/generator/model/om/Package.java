@@ -14,8 +14,8 @@ public class Package {
 
 	public Model model;
     public String name;
-    public List<Table> tableList;
-    public List<Bean> beanList;
+    public List<Table> tables;
+    public List<Bean> beans;
 
     public String omPackageName;
     public String ovPackageName;

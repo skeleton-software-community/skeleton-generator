@@ -63,7 +63,7 @@ public class Bean {
 	public List<String> interfaces;
 	public List<String> annotations;
 
-	public List<Property> propertyList;
+	public List<Property> properties;
 	public List<OneToMany> oneToManyList;
 	public List<OneToManyComponent> oneToManyComponentList;
 	public List<OneToOne> oneToOneList;
@@ -80,44 +80,44 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	public List<Property> getFindPropertyList() {
+	public List<Property> getFindProperties() {
 		List<Property> findPropertyList = new ArrayList<Property>();
 		List<Property> tempPropertyList = new ArrayList<Property>();
 
 		for (int i = 1; i <= this.cardinality; i++) {
-			if (this.propertyList.get(i).referenceBean != null) {
-				tempPropertyList = this.propertyList.get(i).referenceBean.getFindPropertyList();
+			if (this.properties.get(i).referenceBean != null) {
+				tempPropertyList = this.properties.get(i).referenceBean.getFindProperties();
 				for (int j = 0; j < tempPropertyList.size(); j++) {
 					Property property = new Property();
-					property.name = propertyList.get(i).name + tempPropertyList.get(j).capName;
-					property.capName = propertyList.get(i).capName + tempPropertyList.get(j).capName;
-					property.fetchName = propertyList.get(i).fetchName + "." + tempPropertyList.get(j).fetchName;
+					property.name = properties.get(i).name + tempPropertyList.get(j).capName;
+					property.capName = properties.get(i).capName + tempPropertyList.get(j).capName;
+					property.fetchName = properties.get(i).fetchName + "." + tempPropertyList.get(j).fetchName;
 					property.beanDataType = tempPropertyList.get(j).beanDataType;
 					property.dataType = tempPropertyList.get(j).dataType;
 					property.format = tempPropertyList.get(j).format;
-					property.nullable = this.propertyList.get(i).nullable;
-					property.visibility = this.propertyList.get(i).visibility;
-					property.editable = this.propertyList.get(i).editable;
+					property.nullable = this.properties.get(i).nullable;
+					property.visibility = this.properties.get(i).visibility;
+					property.editable = this.properties.get(i).editable;
 					property.lastPropertyName = tempPropertyList.get(j).lastPropertyName;
-					property.joinedAliasName = propertyList.get(i).capName + tempPropertyList.get(j).joinedAliasName;
+					property.joinedAliasName = properties.get(i).capName + tempPropertyList.get(j).joinedAliasName;
 					property.comboBoxBean = tempPropertyList.get(j).comboBoxBean;
 					property.rendering = tempPropertyList.get(j).rendering;
 					findPropertyList.add(property);
 				}
 			} else {
 				Property property = new Property();
-				property.name = propertyList.get(i).name;
-				property.capName = propertyList.get(i).capName;
-				property.fetchName = propertyList.get(i).fetchName;
-				property.beanDataType = propertyList.get(i).beanDataType;
-				property.dataType = propertyList.get(i).dataType;
-				property.format = propertyList.get(i).format;
-				property.nullable = this.propertyList.get(i).nullable;
-				property.visibility = this.propertyList.get(i).visibility;
-				property.editable = this.propertyList.get(i).editable;
-				property.lastPropertyName = propertyList.get(i).name;
+				property.name = properties.get(i).name;
+				property.capName = properties.get(i).capName;
+				property.fetchName = properties.get(i).fetchName;
+				property.beanDataType = properties.get(i).beanDataType;
+				property.dataType = properties.get(i).dataType;
+				property.format = properties.get(i).format;
+				property.nullable = this.properties.get(i).nullable;
+				property.visibility = this.properties.get(i).visibility;
+				property.editable = this.properties.get(i).editable;
+				property.lastPropertyName = properties.get(i).name;
 				property.joinedAliasName = "";
-				property.rendering = propertyList.get(i).rendering;
+				property.rendering = properties.get(i).rendering;
 				if (hasComboBox) {
 					property.comboBoxBean = this;
 				}
@@ -134,38 +134,38 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	public List<Property> getVisiblePropertyList() {
+	public List<Property> getVisibleProperties() {
 		List<Property> visiblePropertyList = new ArrayList<Property>();
 		List<Property> tempPropertyList = new ArrayList<Property>();
 
-		for (int i = 1; i < this.propertyList.size(); i++) {
-			if (this.propertyList.get(i).referenceBean != null) {
-				tempPropertyList = this.propertyList.get(i).referenceBean.getFindPropertyList();
+		for (int i = 1; i < this.properties.size(); i++) {
+			if (this.properties.get(i).referenceBean != null) {
+				tempPropertyList = this.properties.get(i).referenceBean.getFindProperties();
 				for (int j = 0; j < tempPropertyList.size(); j++) {
 					Property property = new Property();
-					property.name = propertyList.get(i).name + tempPropertyList.get(j).capName;
-					property.capName = propertyList.get(i).capName + tempPropertyList.get(j).capName;
+					property.name = properties.get(i).name + tempPropertyList.get(j).capName;
+					property.capName = properties.get(i).capName + tempPropertyList.get(j).capName;
 					property.beanDataType = tempPropertyList.get(j).beanDataType;
 					property.dataType = tempPropertyList.get(j).dataType;
 					property.format = tempPropertyList.get(j).format;
-					property.nullable = this.propertyList.get(i).nullable;
-					property.visibility = this.propertyList.get(i).visibility;
-					property.editable = this.propertyList.get(i).editable;
+					property.nullable = this.properties.get(i).nullable;
+					property.visibility = this.properties.get(i).visibility;
+					property.editable = this.properties.get(i).editable;
 					property.comboBoxBean = tempPropertyList.get(j).comboBoxBean;
 					property.rendering = tempPropertyList.get(j).rendering;
 					visiblePropertyList.add(property);
 				}
 			} else {
 				Property property = new Property();
-				property.name = propertyList.get(i).name;
-				property.capName = propertyList.get(i).capName;
-				property.beanDataType = propertyList.get(i).beanDataType;
-				property.dataType = propertyList.get(i).dataType;
-				property.format = propertyList.get(i).format;
-				property.nullable = this.propertyList.get(i).nullable;
-				property.visibility = this.propertyList.get(i).visibility;
-				property.editable = this.propertyList.get(i).editable;
-				property.rendering = propertyList.get(i).rendering;
+				property.name = properties.get(i).name;
+				property.capName = properties.get(i).capName;
+				property.beanDataType = properties.get(i).beanDataType;
+				property.dataType = properties.get(i).dataType;
+				property.format = properties.get(i).format;
+				property.nullable = this.properties.get(i).nullable;
+				property.visibility = this.properties.get(i).visibility;
+				property.editable = this.properties.get(i).editable;
+				property.rendering = properties.get(i).rendering;
 				visiblePropertyList.add(property);
 			}
 		}
@@ -178,18 +178,18 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	public List<Alias> getFindAliasList() {
+	public List<Alias> getFindAliases() {
 		List<Alias> aliasList = new ArrayList<Alias>();
 		List<Alias> tempAliasList = new ArrayList<Alias>();
 
 		for (int i = 1; i <= this.cardinality; i++) {
-			if (this.propertyList.get(i).referenceBean != null) {
+			if (this.properties.get(i).referenceBean != null) {
 				Alias alias = new Alias();
-				alias.propertyName = propertyList.get(i).name;
-				alias.name = propertyList.get(i).capName;
+				alias.propertyName = properties.get(i).name;
+				alias.name = properties.get(i).capName;
 				aliasList.add(alias);
 
-				tempAliasList = this.propertyList.get(i).referenceBean.getFindAliasList();
+				tempAliasList = this.properties.get(i).referenceBean.getFindAliases();
 				for (int j = 0; j < tempAliasList.size(); j++) {
 					Alias tempAlias = new Alias();
 					tempAlias.propertyName = alias.propertyName + "." + tempAliasList.get(j).propertyName;

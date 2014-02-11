@@ -67,7 +67,7 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private Long id;");
         writeLine("private boolean selected;");
 
-        List<Property> visiblePropertyList = this.bean.getVisiblePropertyList();
+        List<Property> visiblePropertyList = this.bean.getVisibleProperties();
 
         for (int i=0;i<visiblePropertyList.size();i++)
         {
@@ -102,7 +102,7 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        List<Property> visiblePropertyList = this.bean.getVisiblePropertyList();
+        List<Property> visiblePropertyList = this.bean.getVisibleProperties();
 
         for (int i=0;i<visiblePropertyList.size();i++)
         {

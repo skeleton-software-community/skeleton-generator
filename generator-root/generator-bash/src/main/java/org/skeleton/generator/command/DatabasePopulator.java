@@ -73,10 +73,10 @@ public class DatabasePopulator {
 				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
 				InputSourceProvider inputSourceProvider = (InputSourceProvider)appContext.getBean("inputSourceProvider");
 				
-				for (Package myPackage:project.model.packageList) {
+				for (Package myPackage:project.model.packages) {
 					logger.info("start populating package : " + myPackage.name);
 					
-					for (Table table:myPackage.tableList) {
+					for (Table table:myPackage.tables) {
 						
 						if (tables == null || tables.contains(table.originalName)) {
 						

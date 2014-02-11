@@ -1,5 +1,6 @@
 package org.skeleton.generator.repository.dao.metadata.impl.csv.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.skeleton.generator.model.metadata.ColumnMetaData;
@@ -34,6 +35,16 @@ public class ColumnMetaDataMapper {
 			
 			columnMetaData.setVisibility(tokens[7].isEmpty()?null:tokens[7]);
 			columnMetaData.setRendering(tokens[8]);
+			
+			String[] annotations = tokens[9].split(";");
+			List<String> annotationList = new ArrayList<String>();
+			for (String token:annotations) {
+				token = token.trim();
+				if (!token.isEmpty()) {
+					annotationList.add(token);
+				}
+			}
+			columnMetaData.setAnnotations(annotationList);
 			
 			columnMetaDataList.add(columnMetaData);
 		}

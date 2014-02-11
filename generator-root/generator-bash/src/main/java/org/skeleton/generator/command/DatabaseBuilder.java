@@ -70,10 +70,10 @@ public class DatabaseBuilder {
 				
 				logger.info("cleaning database completed");
 				
-				for (Package myPackage:project.model.packageList) {
+				for (Package myPackage:project.model.packages) {
 					logger.info("start building package : " + myPackage.name);
 					
-					for (Table table:myPackage.tableList) {
+					for (Table table:myPackage.tables) {
 						logger.info("start building table : " + table.name);
 						
 						TableBuilder tableBuilder = new TableBuilder(table, dataSource);

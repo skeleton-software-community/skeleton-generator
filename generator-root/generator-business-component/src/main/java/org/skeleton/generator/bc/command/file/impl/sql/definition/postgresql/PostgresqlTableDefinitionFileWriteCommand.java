@@ -30,9 +30,9 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 			fieldMap.put(table.getInsertColumnList().get(i).name, "ARG" + i);
 		}
 
-		for (int i = 0; i < table.columnList.size(); i++) {
-			if (table.columnList.get(i).referenceTable != null) {
-				fieldMap.put(table.columnList.get(i).name, "ID_ARG" + i);
+		for (int i = 0; i < table.columns.size(); i++) {
+			if (table.columns.get(i).referenceTable != null) {
+				fieldMap.put(table.columns.get(i).name, "ID_ARG" + i);
 			}
 		}
 	}
@@ -64,14 +64,14 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("-- table centrale des elements --");
         writeLine("CREATE TABLE " + table.name);
         writeLine("(");
-        write(table.columnList.get(0).name + " BIGSERIAL PRIMARY KEY");
+        write(table.columns.get(0).name + " BIGSERIAL PRIMARY KEY");
 
-        for (int i = 1;i<this.table.columnList.size();i++)
+        for (int i = 1;i<this.table.columns.size();i++)
         {
             writeLine(",");
             
-            write(this.table.columnList.get(i).name + " " + DataType.getPostgresqlType(table.columnList.get(i).dataType));
-            if (this.table.columnList.get(i).nullable)
+            write(this.table.columns.get(i).name + " " + DataType.getPostgresqlType(table.columns.get(i).dataType));
+            if (this.table.columns.get(i).nullable)
             {
                 write(" NULL");
             }
@@ -79,14 +79,14 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
             {
                 write(" NOT NULL");
             }
-            if (this.table.columnList.get(i).unique)
+            if (this.table.columns.get(i).unique)
             {
                 write(" UNIQUE");
             }
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                write(" REFERENCES " + table.columnList.get(i).referenceTable.name);
-                if (this.table.columnList.get(i).deleteCascade)
+                write(" REFERENCES " + table.columns.get(i).referenceTable.name);
+                if (this.table.columns.get(i).deleteCascade)
                 {
                     write(" ON DELETE CASCADE");
                 }
@@ -95,22 +95,22 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
         writeLine(",");
         
-        write("UNIQUE (" + this.table.columnList.get(1).name);
+        write("UNIQUE (" + this.table.columns.get(1).name);
 
         for (int i=2;i<=this.table.cardinality;i++)
         {
-            write("," + this.table.columnList.get(i).name);
+            write("," + this.table.columns.get(i).name);
         }
         writeLine(")");
         writeLine(")");
         writeLine(";");
         skipLine();
 
-        for (int i = 1; i < this.table.columnList.size(); i++)
+        for (int i = 1; i < this.table.columns.size(); i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                writeLine("CREATE INDEX ON " + this.table.name + "(" + this.table.columnList.get(i).name + ");");
+                writeLine("CREATE INDEX ON " + this.table.name + "(" + this.table.columns.get(i).name + ");");
                 
             }
         }
@@ -127,13 +127,13 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("-- table d'audit des elements --");
         writeLine("CREATE TABLE " + table.name + "_aud");
         writeLine("(");
-        writeLine(table.columnList.get(0).name + " integer NOT NULL,");
+        writeLine(table.columns.get(0).name + " integer NOT NULL,");
         writeLine("rev integer NOT NULL,");
         writeLine("revtype smallint NOT NULL,");
 
-        for (int i = 1;i<this.table.columnList.size();i++)
+        for (int i = 1;i<this.table.columns.size();i++)
         {
-            writeLine(this.table.columnList.get(i).name + " " + DataType.getPostgresqlType(table.columnList.get(i).dataType) + " NULL,");
+            writeLine(this.table.columns.get(i).name + " " + DataType.getPostgresqlType(table.columns.get(i).dataType) + " NULL,");
         }
 
         writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (id, rev),");
@@ -176,9 +176,9 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
         for (int i=1;i<=this.table.cardinality;i++)
         {
-            if (this.table.columnList.get(i).referenceTable!= null)
+            if (this.table.columns.get(i).referenceTable!= null)
             {
-                writeLine("v" + this.table.columnList.get(i).name + " BIGINT;");
+                writeLine("v" + this.table.columns.get(i).name + " BIGINT;");
                 
             }
         }
@@ -202,18 +202,18 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
         for (int i= 1;i<=this.table.cardinality;i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                write("SELECT find_" + this.table.columnList.get(i).referenceTable.name.toLowerCase() + " (");
+                write("SELECT find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
-                tempColumnList = this.table.columnList.get(i).referenceTable.getFindColumnList();
+                tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
 
                 for (int j = 0; j < tempColumnList.size(); j++)
                 {
-                    write("v" + this.table.columnList.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name + ",");
+                    write("v" + this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name + ",");
                 }
 
-                writeLine("v" + this.table.columnList.get(i).name + ");");
+                writeLine("v" + this.table.columns.get(i).name + ");");
                 
             }
         }
@@ -222,11 +222,11 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         
         writeLine("INTO vID"); 
         writeLine("FROM " + table.name);
-        writeLine("WHERE " + table.name + "." + this.table.columnList.get(1).name + " = v" + this.table.columnList.get(1).name);
+        writeLine("WHERE " + table.name + "." + this.table.columns.get(1).name + " = v" + this.table.columns.get(1).name);
 
         for (int i= 2;i<=this.table.cardinality;i++){
             
-            writeLine("AND " + table.name + "." + this.table.columnList.get(i).name + " = v" + this.table.columnList.get(i).name);
+            writeLine("AND " + table.name + "." + this.table.columns.get(i).name + " = v" + this.table.columns.get(i).name);
         }
 
         
@@ -260,12 +260,12 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("(");
         
 
-        write("v" + table.columnList.get(1).name + " " + DataType.getPostgresqlType(table.columnList.get(1).dataType));
+        write("v" + table.columns.get(1).name + " " + DataType.getPostgresqlType(table.columns.get(1).dataType));
 
-        for (int i= 2;i<table.columnList.size();i++)
+        for (int i= 2;i<table.columns.size();i++)
         {
             writeLine(","); 
-            write("v" + table.columnList.get(i).name + " " + DataType.getPostgresqlType(table.columnList.get(i).dataType));
+            write("v" + table.columns.get(i).name + " " + DataType.getPostgresqlType(table.columns.get(i).dataType));
         }
 
         
@@ -273,18 +273,18 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("RETURNS void AS '");
         writeLine("BEGIN");
 
-        write("INSERT INTO " + table.name + " (" + this.table.columnList.get(1).name);
+        write("INSERT INTO " + table.name + " (" + this.table.columns.get(1).name);
 
-        for (int i = 2; i < this.table.columnList.size(); i++)
+        for (int i = 2; i < this.table.columns.size(); i++)
         {
-            write(", " + this.table.columnList.get(i).name);
+            write(", " + this.table.columns.get(i).name);
         }
 
-        write(") VALUES (v" + this.table.columnList.get(1).name);
+        write(") VALUES (v" + this.table.columns.get(1).name);
 
-        for (int i= 2;i<this.table.columnList.size();i++)
+        for (int i= 2;i<this.table.columns.size();i++)
         {
-            write(", v" + this.table.columnList.get(i).name);
+            write(", v" + this.table.columns.get(i).name);
         }
 
         writeLine(");");
@@ -312,24 +312,24 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("DECLARE");
         
 
-        for (int i= 1;i<this.table.columnList.size();i++)
+        for (int i= 1;i<this.table.columns.size();i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                writeLine("v" + this.table.columnList.get(i).name + " BIGINT;");
+                writeLine("v" + this.table.columns.get(i).name + " BIGINT;");
                 
             }
         }
         writeLine("BEGIN");
         
 
-        for (int i= 1;i<this.table.columnList.size();i++)
+        for (int i= 1;i<this.table.columns.size();i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                write("SELECT find_" + this.table.columnList.get(i).referenceTable.name.toLowerCase() + " (");
+                write("SELECT find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
-                tempColumnList = this.table.columnList.get(i).referenceTable.getFindColumnList();
+                tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
                 boolean begin = true;
 
                 for (int j=0;j<tempColumnList.size();j++)
@@ -337,25 +337,25 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
                     if (begin)
                     {
 
-                        write("v" + this.table.columnList.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
+                        write("v" + this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
                         begin = false;
                     }
                     else
                     {
-                        write(", v" + this.table.columnList.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
+                        write(", v" + this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
                     }
                 }
 
-                writeLine(") into v" + this.table.columnList.get(i).name + ";");
+                writeLine(") into v" + this.table.columns.get(i).name + ";");
                 
             }
         }
 
-        write("PERFORM insert_" + table.name.toLowerCase() + " (v" + this.table.columnList.get(1).name);
+        write("PERFORM insert_" + table.name.toLowerCase() + " (v" + this.table.columns.get(1).name);
 
-        for (int i = 2; i < this.table.columnList.size(); i++)
+        for (int i = 2; i < this.table.columns.size(); i++)
         {
-            write(", v" + this.table.columnList.get(i).name);
+            write(", v" + this.table.columns.get(i).name);
         }
 
         writeLine(");");
@@ -394,11 +394,11 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine("DECLARE");
         
 
-        for (int i= 1;i<this.table.columnList.size();i++)
+        for (int i= 1;i<this.table.columns.size();i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                writeLine("v" + this.table.columnList.get(i).name + " BIGINT;");
+                writeLine("v" + this.table.columns.get(i).name + " BIGINT;");
                 
             }
         }
@@ -409,13 +409,13 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         
 
         boolean begin = true;
-        for (int i= 1;i<this.table.columnList.size();i++)
+        for (int i= 1;i<this.table.columns.size();i++)
         {
-            if (this.table.columnList.get(i).referenceTable != null)
+            if (this.table.columns.get(i).referenceTable != null)
             {
-                write("SELECT find_" + this.table.columnList.get(i).referenceTable.name.toLowerCase() + " (");
+                write("SELECT find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
-                tempColumnList = this.table.columnList.get(i).referenceTable.getFindColumnList();
+                tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
                 begin = true;
 
                 for (int j=0;j<tempColumnList.size();j++)
@@ -423,16 +423,16 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
                     if (begin)
                     {
 
-                        write("v" + this.table.columnList.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
+                        write("v" + this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
                         begin = false;
                     }
                     else
                     {
-                        writeLine(", v" + this.table.columnList.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
+                        writeLine(", v" + this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name);
                     }
                 }
 
-                writeLine(") into v" + this.table.columnList.get(i).name + ";");
+                writeLine(") into v" + this.table.columns.get(i).name + ";");
                 
             }
         }
@@ -455,13 +455,13 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
         writeLine(") into vID;");
         
 
-        writeLine("UPDATE " + table.name + " SET " + this.table.columnList.get(1).name + " = v" + this.table.columnList.get(1).name);
+        writeLine("UPDATE " + table.name + " SET " + this.table.columns.get(1).name + " = v" + this.table.columns.get(1).name);
 
-        for (int i= 2;i<this.table.columnList.size();i++)
+        for (int i= 2;i<this.table.columns.size();i++)
         {
             writeLine(",");
             
-            writeLine(this.table.columnList.get(i).name + " = v" + this.table.columnList.get(i).name);
+            writeLine(this.table.columns.get(i).name + " = v" + this.table.columns.get(i).name);
         }
 
         

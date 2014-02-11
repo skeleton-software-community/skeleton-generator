@@ -35,15 +35,15 @@ public class TableMetaData {
 	
 	@XmlElementWrapper(name="interfaces")
 	@XmlElement(name="interface")
-	private List<String> interfaceList;
+	private List<String> interfaces;
 	
 	@XmlElementWrapper(name="annotations")
 	@XmlElement(name="annotation")
-	private List<String> annotationList;
+	private List<String> annotations;
 	
 	@XmlElementWrapper(name="columns")
 	@XmlElement(name="column")
-	private List<ColumnMetaData> columnMetaDataList;
+	private List<ColumnMetaData> columns;
 	
 	
 	/*
@@ -97,23 +97,23 @@ public class TableMetaData {
 	public void setDeleteEnabled(boolean deleteEnabled) {
 		this.deleteEnabled = deleteEnabled;
 	}
-	public List<String> getInterfaceList() {
-		return interfaceList;
+	public List<String> getInterfaces() {
+		return interfaces;
 	}
-	public void setInterfaceList(List<String> interfaceList) {
-		this.interfaceList = interfaceList;
+	public void setInterfaces(List<String> interfaces) {
+		this.interfaces = interfaces;
 	}
-	public List<String> getAnnotationList() {
-		return annotationList;
+	public List<String> getAnnotations() {
+		return annotations;
 	}
-	public void setAnnotationList(List<String> annotationList) {
-		this.annotationList = annotationList;
+	public void setAnnotations(List<String> annotations) {
+		this.annotations = annotations;
 	}
-	public List<ColumnMetaData> getColumnMetaDataList() {
-		return columnMetaDataList;
+	public List<ColumnMetaData> getColumns() {
+		return columns;
 	}
-	public void setColumnMetaDataList(List<ColumnMetaData> columnMetaDataList) {
-		this.columnMetaDataList = columnMetaDataList;
+	public void setColumns(List<ColumnMetaData> columns) {
+		this.columns = columns;
 	}
 	
 	@Override
@@ -123,8 +123,8 @@ public class TableMetaData {
 				+ detailRendering + ", comboxable=" + comboxable
 				+ ", createEnabled=" + createEnabled + ", updateEnabled="
 				+ updateEnabled + ", deleteEnabled=" + deleteEnabled
-				+ ", interfaceList=" + interfaceList + ", annotationList="
-				+ annotationList + ", columnMetaDataList=" + columnMetaDataList
+				+ ", interfaces=" + interfaces + ", annotations="
+				+ annotations + ", columns=" + columns
 				+ "]";
 	}
 }

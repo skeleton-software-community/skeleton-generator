@@ -59,10 +59,15 @@ public class TableMetaDataCsvDaoImpl implements TableMetaDataDao {
 			throw new InvalidProjectMetaDataException("Could not read tables", e);
 		}
 		
-		List<TableMetaData> tableMetaDataList = tableMetaDataMapper.mapTableMetaDataList(tokensList, new ArrayList<TableMetaData>());
+		List<TableMetaData> tableMetaDataList;
+		try {
+			tableMetaDataList = tableMetaDataMapper.mapTableMetaDataList(tokensList, new ArrayList<TableMetaData>());
+		} catch (Exception e) {
+			throw new InvalidProjectMetaDataException("Could not map tables in : " + tablesPath.toString(), e);
+		}
 		
 		for (TableMetaData tableMetaData:tableMetaDataList) {
-			tableMetaData.setColumnMetaDataList(columnMetaDataDao.loadColumnMetaDataList(folderPath + File.separator + TABLES_FOLDER_NAME + File.separator + tableMetaData.getName() + ".txt"));
+			tableMetaData.setColumns(columnMetaDataDao.loadColumnMetaDataList(folderPath + File.separator + TABLES_FOLDER_NAME + File.separator + tableMetaData.getName() + ".txt"));
 		}
 		return tableMetaDataList;
 	}

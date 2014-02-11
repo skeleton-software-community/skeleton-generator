@@ -49,7 +49,7 @@ public class ProjectMetaData {
     
 	@XmlElementWrapper(name="packages")
 	@XmlElement(name="package")
-    private List<PackageMetaData> packageMetaDataList;
+    private List<PackageMetaData> packages;
 
     
     /*
@@ -159,11 +159,11 @@ public class ProjectMetaData {
 		this.audited = audited;
 	}
 
-	public List<PackageMetaData> getPackageMetaDataList() {
-		return packageMetaDataList;
+	public List<PackageMetaData> getPackages() {
+		return packages;
 	}
 
-	public void setPackageMetaDataList(List<PackageMetaData> packageMetaDataList) {
-		this.packageMetaDataList = packageMetaDataList;
+	public void setPackages(List<PackageMetaData> packages) {
+		this.packages = packages;
 	}
 }

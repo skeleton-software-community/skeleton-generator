@@ -45,7 +45,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 
 		String header = "#{i18n." + currentBean.objectName + "List}";
 
-		for (Property property : parentBean.getFindPropertyList()) {
+		for (Property property : parentBean.getFindProperties()) {
 			header = header + " " + "#{" + parentBean.controllerObjectName + ".selected" + parentBean.className + "." + property.name + "}";
 		}
 
@@ -78,7 +78,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 			writeLine("<rich:column>");
 			writeLine("</rich:column>");
 		}
-		for (Property property : currentBean.getVisiblePropertyList()) {
+		for (Property property : currentBean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column>");
 				writeFilter(property, currentBean, parentBean);
@@ -109,7 +109,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 			skipLine();
 		}
 
-		for (Property property : currentBean.getVisiblePropertyList()) {
+		for (Property property : currentBean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + currentBean.objectName + "." + property.name + "}" + (char) 34);
 				writeFilterExpression(property, currentBean, parentBean);

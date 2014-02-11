@@ -43,7 +43,7 @@ public class JavaPackageFactory implements PackageFactory {
 	 */
 	public Package buildPackage(PackageMetaData packageMetaData, Model model) {
 		Package myPackage = new Package();
-		model.packageList.add(myPackage);
+		model.packages.add(myPackage);
         myPackage.model = model;
         myPackage.name = packageMetaData.getName().toLowerCase();
 
@@ -84,10 +84,10 @@ public class JavaPackageFactory implements PackageFactory {
         myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".builder";
         myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".command";
 
-        myPackage.tableList = new ArrayList<Table>();
-        myPackage.beanList = new ArrayList<Bean>();
+        myPackage.tables = new ArrayList<Table>();
+        myPackage.beans = new ArrayList<Bean>();
 
-        for (TableMetaData tableMetaData : packageMetaData.getTableMetaDataList())
+        for (TableMetaData tableMetaData : packageMetaData.getTables())
         {
         	logger.info("adding table : " + tableMetaData.getName());
             Table table = tableFactory.buildTable(tableMetaData, myPackage);

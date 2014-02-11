@@ -22,9 +22,9 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
 	protected void fetchSpecificImports() {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 
-        for (Package myPackage : this.project.model.packageList)
+        for (Package myPackage : this.project.model.packages)
         {
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {
@@ -68,9 +68,9 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
         writeLine(" * properties");
         writeLine(" */");
 
-        for (Package myPackage : this.project.model.packageList)
+        for (Package myPackage : this.project.model.packages)
         {
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {
@@ -92,9 +92,9 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
         writeLine("public CommandBuilder createCommandBuilder(String line, Class<?> clazz) throws BuildFailureException {");
         skipLine();
 
-        for (Package myPackage : this.project.model.packageList)
+        for (Package myPackage : this.project.model.packages)
         {
-            for (Bean bean : myPackage.beanList)
+            for (Bean bean : myPackage.beans)
             {
                 if (!bean.isComponent)
                 {

@@ -21,7 +21,7 @@ public class PackageMetaData {
 	
 	@XmlElementWrapper(name="tables")
 	@XmlElement(name="table")
-	private List<TableMetaData> tableMetaDataList;
+	private List<TableMetaData> tables;
 
 	
 	/*
@@ -35,18 +35,18 @@ public class PackageMetaData {
 		this.name = name;
 	}
 	
-	public List<TableMetaData> getTableMetaDataList() {
-		return tableMetaDataList;
+	public List<TableMetaData> getTables() {
+		return tables;
 	}	
 
-	public void setTableMetaDataList(List<TableMetaData> tableMetaDataList) {
-		this.tableMetaDataList = tableMetaDataList;
+	public void setTables(List<TableMetaData> tables) {
+		this.tables = tables;
 	}
 
 	@Override
 	public String toString() {
-		return "PackageMetaData [name=" + name + ", tableMetaDataList="
-				+ tableMetaDataList + "]";
+		return "PackageMetaData [name=" + name + ", tables="
+				+ tables + "]";
 	}
 	
 	

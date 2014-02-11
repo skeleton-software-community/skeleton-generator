@@ -22,7 +22,7 @@ public class Project {
     public String databaseName;
     public String databaseDNS;
     public String databasePort;
- public String databaseUserName;
+    public String databaseUserName;
     public String databasePassword;
     
     public boolean audited;

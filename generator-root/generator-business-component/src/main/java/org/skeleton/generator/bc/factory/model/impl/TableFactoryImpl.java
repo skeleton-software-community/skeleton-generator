@@ -22,12 +22,12 @@ public class TableFactoryImpl implements TableFactory {
 
 	public Table buildTable(TableMetaData tableMetaData, Package myPackage) {
 		Table table = new Table();
-		myPackage.tableList.add(table);
+		myPackage.tables.add(table);
         table.myPackage = myPackage;
         table.originalName = tableMetaData.getName();
         table.name = SQLNaming.rename(table.originalName, myPackage.model.project.databaseEngine);
         table.cardinality = tableMetaData.getCardinality();
-        table.columnList = new ArrayList<Column>();
+        table.columns = new ArrayList<Column>();
 
         Column idColumn = new Column();
         idColumn.name = "ID";
@@ -36,9 +36,9 @@ public class TableFactoryImpl implements TableFactory {
         idColumn.relation = RelationType.PROPERTY;
         idColumn.nullable = false;
         idColumn.unique = true;
-        table.columnList.add(idColumn);
+        table.columns.add(idColumn);
 
-        for (ColumnMetaData columnMetaData : tableMetaData.getColumnMetaDataList()) {
+        for (ColumnMetaData columnMetaData : tableMetaData.getColumns()) {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
             column.name = SQLNaming.rename(column.originalName, table.myPackage.model.project.databaseEngine);
@@ -65,7 +65,8 @@ public class TableFactoryImpl implements TableFactory {
             	column.visibility = Visibility.VISIBLE;
             }
             column.rendering = columnMetaData.getRendering();
-            table.columnList.add(column);
+            column.annotations = columnMetaData.getAnnotations();
+            table.columns.add(column);
         }
 
         return table;

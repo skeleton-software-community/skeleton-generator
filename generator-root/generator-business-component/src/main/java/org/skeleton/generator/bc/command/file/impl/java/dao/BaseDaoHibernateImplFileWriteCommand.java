@@ -107,11 +107,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				writeLine("criteria.setFetchMode(" + (char) 34 + property.name + (char) 34 + ",FetchMode.JOIN);");
 
-				for (Alias alias : property.referenceBean.getFindAliasList()) {
+				for (Alias alias : property.referenceBean.getFindAliases()) {
 					writeLine("criteria.setFetchMode(" + (char) 34 + property.name + "." + alias.propertyName + (char) 34 + ",FetchMode.JOIN);");
 
 				}
@@ -123,7 +123,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		skipLine();
 
-		for (Property property : this.bean.propertyList) {
+		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
 				writeLine("/**");
 				writeLine(" * load object list from list of " + property.name);
@@ -152,11 +152,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("criteria.add(Restrictions.in(" + (char) 34 + property.name + ".id" + (char) 34 + ", " + property.name + "IdList));");
 				writeLine("}");
 
-				for (Property prop : this.bean.propertyList) {
+				for (Property prop : this.bean.properties) {
 					if (prop.referenceBean != null) {
 						writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + (char) 34 + ",FetchMode.JOIN);");
 
-						for (Alias alias : prop.referenceBean.getFindAliasList()) {
+						for (Alias alias : prop.referenceBean.getFindAliases()) {
 							writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + "." + alias.propertyName + (char) 34 + ",FetchMode.JOIN);");
 
 						}
@@ -182,8 +182,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createExistsObject() {
-		List<Property> findPropertyList = this.bean.getFindPropertyList();
-		List<Alias> findAliasList = this.bean.getFindAliasList();
+		List<Property> findPropertyList = this.bean.getFindProperties();
+		List<Alias> findAliasList = this.bean.getFindAliases();
 
 		writeLine("/**");
 		writeLine(" * exists object");
@@ -229,8 +229,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createFindObject() {
-		List<Property> findPropertyList = this.bean.getFindPropertyList();
-		List<Alias> findAliasList = this.bean.getFindAliasList();
+		List<Property> findPropertyList = this.bean.getFindProperties();
+		List<Alias> findAliasList = this.bean.getFindAliases();
 
 		writeLine("/**");
 		writeLine(" * find object");
