@@ -158,7 +158,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		skipLine();
 		
 		writeLine("-- sequence --");
-		writeLine("CREATE SEQUENCE hibernate_sequence MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
+		writeLine("CREATE SEQUENCE hibernate_sequence MINVALUE 1 NOMAXVALUE START WITH 1 INCREMENT BY 1 NOCYCLE");
 		writeLine("/");
 		skipLine();
 		
