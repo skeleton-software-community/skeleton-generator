@@ -42,9 +42,9 @@ public class PostgresqlMainDefinitionFileWriteCommand extends SqlFileWriteComman
 		
 		writeLine("CREATE SEQUENCE hibernate_sequence");
 		writeLine("INCREMENT 1");
-		writeLine("MINVALUE 0");
+		writeLine("MINVALUE 1");
 		writeLine("MAXVALUE 9223372036854775807");
-		writeLine("START 0");
+		writeLine("START 1");
 		writeLine("CACHE 1;");
 	}
 }
