@@ -4,7 +4,15 @@
   <xs:element name="project" type="tns:project"/>
 
   <xs:complexType name="column">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="dataType" type="xs:string" use="required"/>
     <xs:attribute name="nullable" type="xs:boolean" use="required"/>
@@ -84,5 +92,12 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:simpleType name="persistenceMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CSV"/>
+      <xs:enumeration value="XML"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
 
