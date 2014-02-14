@@ -1,4 +1,4 @@
-package org.skeleton.generator.util.metadata;
+package org.skeleton.generator.model.metadata;
 
 import java.util.HashMap;
 import java.util.Map;

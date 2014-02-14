@@ -1,8 +1,8 @@
 package org.skeleton.generator.command;
 
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
-import org.skeleton.generator.util.metadata.PersistenceMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;

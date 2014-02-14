@@ -12,12 +12,12 @@ import javax.annotation.Resource;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.exception.ProjectNotFoundException;
+import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.repository.dao.metadata.impl.csv.mapper.ProjectMetaDataMapper;
 import org.skeleton.generator.repository.dao.metadata.interfaces.PackageMetaDataDao;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
-import org.skeleton.generator.util.metadata.PersistenceMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

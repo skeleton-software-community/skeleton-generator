@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 import org.skeleton.generator.bc.persistence.interfaces.ProjectMetaDataDaoFactory;
 import org.skeleton.generator.exception.ProjectNotFoundException;
 import org.skeleton.generator.exception.UnhandledPersistenceModeException;
+import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
-import org.skeleton.generator.util.metadata.PersistenceMode;
 import org.springframework.stereotype.Component;
 
 @Component

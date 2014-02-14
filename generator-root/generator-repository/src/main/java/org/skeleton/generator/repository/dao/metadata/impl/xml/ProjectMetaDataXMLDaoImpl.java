@@ -1,6 +1,11 @@
 package org.skeleton.generator.repository.dao.metadata.impl.xml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -72,6 +77,11 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 		
 		try {
 			
+			if (Files.exists(Paths.get(sourcePath + File.separator + SCHEMA_LOCATION))) {
+				Files.delete(Paths.get(sourcePath + File.separator + SCHEMA_LOCATION));
+			}
+			copyXsd(sourcePath);
+			
 			JAXBContext jaxbContext = JAXBContext.newInstance(ProjectMetaData.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			
@@ -86,6 +96,24 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 			
 		} catch (JAXBException | SAXException e) {
 			throw new InvalidProjectMetaDataException("Failed to write skeleton.xml file", e);
+		} catch (IOException e) {
+			throw new InvalidProjectMetaDataException("Failed to write xsd file", e);
 		}
+	}
+
+
+	private void copyXsd(String sourcePath) throws IOException {
+		
+		try (
+				InputStream inputStream = getClass().getResourceAsStream("/" + SCHEMA_LOCATION);
+				OutputStream outputStream = new FileOutputStream(Files.createFile(Paths.get(sourcePath + File.separator + SCHEMA_LOCATION)).toFile());
+			) {
+				int read = 0;
+				byte[] bytes = new byte[1024];
+		 
+				while ((read = inputStream.read(bytes)) != -1) {
+					outputStream.write(bytes, 0, read);
+			}
+		}	
 	}
 }
