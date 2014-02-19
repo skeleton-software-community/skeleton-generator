@@ -53,6 +53,11 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		writeLine("globalOnly=" + (char) 34 + "true" + (char) 34 + "/>");
 		writeLine("<br/>");
 		skipLine();
+		
+		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
+		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
+		writeLine("</div>");
+		skipLine();
 
 		writeLine("<h:form id=" + (char) 34 + this.bean.objectName + "Form" + (char) 34 + ">");
 		skipLine();
@@ -106,18 +111,11 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 			writeLine("</rich:dropDownMenu>");
 			writeLine("</rich:toolBar>");
 			skipLine();
+			
+			writeLine("<br/>");
+			skipLine();
 		}
 
-		writeLine("<br/>");
-		skipLine();
-
-		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
-		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
-		writeLine("</div>");
-		skipLine();
-
-		writeLine("<br/>");
-		skipLine();
 
 		writeLine("<h:panelGroup id=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + ">");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{!" + this.bean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + " styleClass=" + (char) 34 + "errorMessage" + (char) 34
@@ -137,7 +135,7 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		writeLine("<rich:dataTable rows=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".numberOfRows}" + (char) 34);
 		writeLine("rendered=" + (char) 34 + "#{not empty " + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34);
 		writeLine("id=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + " var=" + (char) 34 + this.bean.objectName + (char) 34 + " name=" + (char) 34 + "datatable" + (char) 34);
-		writeLine("value=" + (char) 34 + "#{" + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34 + " headerClass=" + (char) 34 + "datatableHeader" + (char) 34);
+		writeLine("value=" + (char) 34 + "#{" + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34);
 		writeLine("rowClasses=" + (char) 34 + "datatableRow, datatableRowLight" + (char) 34 + ">");
 		skipLine();
 
