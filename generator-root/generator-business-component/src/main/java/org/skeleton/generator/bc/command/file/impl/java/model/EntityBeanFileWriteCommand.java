@@ -161,7 +161,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				
 				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
 				
-				for (String annotation:bean.properties.get(1).annotations) {
+				for (String annotation:bean.table.columns.get(1).annotations) {
 					writeLine(annotation);
 				}
 				

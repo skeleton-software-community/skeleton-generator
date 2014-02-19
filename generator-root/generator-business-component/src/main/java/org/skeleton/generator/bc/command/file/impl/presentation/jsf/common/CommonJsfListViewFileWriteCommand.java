@@ -52,6 +52,10 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("<rich:messages infoClass=" + (char) 34 + "infoMessage" + (char) 34 + " errorClass=" + (char) 34 + "errorMessage" + (char) 34 + " globalOnly=" + (char) 34 + "true" + (char) 34
 				+ "/>");
 		writeLine("<br/>");
+		
+		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
+		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
+		writeLine("</div>");
 
 		writeLine("<h:form id=" + (char) 34 + this.bean.objectName + "Form" + (char) 34 + ">");
 
@@ -112,14 +116,6 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 
 		}
 
-		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
-		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
-		writeLine("</div>");
-
-		skipLine();
-		writeLine("<br/>");
-		skipLine();
-
 		writeLine("<h:panelGroup id=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + ">");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{!" + this.bean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + " styleClass=" + (char) 34 + "errorMessage" + (char) 34
 				+ " layout=" + (char) 34 + "block" + (char) 34 + ">");
@@ -138,7 +134,7 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("<rich:dataTable rows=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".numberOfRows}" + (char) 34 + " rendered=" + (char) 34 + "#{not empty "
 				+ this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34);
 		writeLine("id=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + " var=" + (char) 34 + this.bean.objectName + (char) 34 + " name=" + (char) 34 + "datatable" + (char) 34);
-		writeLine("value=" + (char) 34 + "#{" + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34 + " headerClass=" + (char) 34 + "datatableHeader" + (char) 34
+		writeLine("value=" + (char) 34 + "#{" + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34
 				+ " rowClasses=" + (char) 34 + "datatableRow, datatableRowLight" + (char) 34 + ">");
 		skipLine();
 
@@ -238,7 +234,7 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 			skipLine();
 
 			writeLine("<h:commandButton value=" + (char) 34 + "#{i18n.create}" + (char) 34 + " action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".create" + this.bean.className + "}"
-					+ (char) 34 + "/>");
+					+ (char) 34 + " styleClass=" + (char) 34 + "simpleButton" + (char) 34 + "/>");
 
 		}
 
