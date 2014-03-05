@@ -98,12 +98,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 					write(" UNIQUE");
 				}
 			}
-			if (this.table.columns.get(i).referenceTable != null) {
-				write(" REFERENCES " + table.columns.get(i).referenceTable.name);
-				if (this.table.columns.get(i).deleteCascade) {
-					write(" ON DELETE CASCADE");
-				}
-			}
 		}
 
 		writeLine(",");
@@ -128,6 +122,15 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		writeLine(")");
 		writeLine("/");
+		
+		for (int i = 1; i < this.table.columns.size(); i++)
+        {
+            if (this.table.columns.get(i).referenceTable != null)
+            {
+                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ")/");
+                
+            }
+        }
 		skipLine();
 
 		writeLine("-- sequence --");
