@@ -6,6 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane id="borderPane" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="anchorPane" xmlns:fx="http://javafx.com/fxml">
 
-</BorderPane>
+</AnchorPane>
