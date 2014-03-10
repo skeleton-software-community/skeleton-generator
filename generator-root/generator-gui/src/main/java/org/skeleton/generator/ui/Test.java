@@ -7,12 +7,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class Generator extends Application {
+public class Test extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Skeleton Generator");
-		AnchorPane anchorPane = (AnchorPane)FXMLLoader.load(getClass().getResource("/fxml/generator.fxml"));
+		stage.setTitle("Test");
+		AnchorPane anchorPane = (AnchorPane)FXMLLoader.load(getClass().getResource("/fxml/test.fxml"));
 		Scene scene = new Scene(anchorPane);
 		stage.setScene(scene);
 		stage.show();
