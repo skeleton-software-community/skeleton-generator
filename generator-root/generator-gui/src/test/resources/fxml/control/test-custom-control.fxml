@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.skeleton.generator.ui.control.CustomControl?>
+
+<AnchorPane id="anchorPane" xmlns:fx="http://javafx.com/fxml">
+
+<HBox>
+    <CustomControl text="Hello World!"/>
+</HBox>
+	
+</AnchorPane>
