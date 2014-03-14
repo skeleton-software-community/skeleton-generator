@@ -107,8 +107,14 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			write("," + this.table.columns.get(i).name);
 		}
 		writeLine(")");
+		write("USING INDEX (CREATE INDEX UC_" + table.name + " ON " + table.name + "(" + this.table.columns.get(1).name);
+		for (int i = 2; i <= this.table.cardinality; i++) {
+			write("," + this.table.columns.get(i).name);
+		}
+		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND)");
 		
 		writeLine(", CONSTRAINT PK_" + table.name + " PRIMARY KEY (" + this.table.columns.get(0).name + ")");
+		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(" + this.table.columns.get(0).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND)");
 		
 		for (int i = 1; i < this.table.columns.size(); i++) {
 			if (this.table.columns.get(i).referenceTable != null) {
@@ -127,7 +133,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         {
             if (this.table.columns.get(i).referenceTable != null)
             {
-                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ")/");
+                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND/");
                 
             }
         }
@@ -172,6 +178,8 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine(")");
         writeLine("/");
         skipLine();
+        
+        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV)/");
     }
 	
 	/*
