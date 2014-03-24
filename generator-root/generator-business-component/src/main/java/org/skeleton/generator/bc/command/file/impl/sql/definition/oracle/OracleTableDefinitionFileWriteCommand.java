@@ -126,7 +126,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			}
 		}
 
-		writeLine(")");
+		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_TBL");
 		writeLine("/");
 		
 		for (int i = 1; i < this.table.columns.size(); i++)
@@ -175,7 +175,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
         writeLine("CONSTRAINT FK_" + table.name + "_AUD FOREIGN KEY (REV)");
         writeLine("REFERENCES AUDITENTITY (ID)");
-        writeLine(")");
+        writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_AUD");
         writeLine("/");
         skipLine();
         
