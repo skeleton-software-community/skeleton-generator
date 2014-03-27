@@ -6,4 +6,6 @@ import org.skeleton.generator.model.om.Project;
 public interface FileWriteCommandTreeFactory {
 
 	FileWriteCommandTree buildTree(Project project);
+	
+	FileWriteCommandTree buildConfigurationTree(Project project);
 }

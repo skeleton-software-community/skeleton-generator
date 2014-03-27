@@ -14,4 +14,6 @@ public interface ProjectMetaDataPersistenceHandler {
 	ProjectMetaData loadProjectMetaData(String workspacePath);
 	
 	void persistProjectMetaData(ProjectMetaData projectMetaData);
+
+	void initProjectMetaData(ProjectMetaData projectMetaData);
 }

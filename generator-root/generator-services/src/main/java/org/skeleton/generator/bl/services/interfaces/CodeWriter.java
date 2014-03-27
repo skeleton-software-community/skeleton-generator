@@ -7,5 +7,7 @@ public interface CodeWriter {
 	
 	FileWriteCommandTree buildFileWriteCommandTree(Project project);
 	
+	FileWriteCommandTree buildConfigurationTree(Project project);
+	
 	void writeCode(FileWriteCommandTree tree);
 }

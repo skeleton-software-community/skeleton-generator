@@ -13,6 +13,8 @@ public class AbstractFileWriteCommandTreeFactory implements FileWriteCommandTree
 
 	protected List<LayerStrategy> layerStrategies;
 	
+	protected LayerStrategy configurationStrategy;
+	
 	public AbstractFileWriteCommandTreeFactory() {
 		layerStrategies = new ArrayList<>();
 	}
@@ -28,6 +30,11 @@ public class AbstractFileWriteCommandTreeFactory implements FileWriteCommandTree
 		}
 		
 		return tree;
+	}
+
+	@Override
+	public FileWriteCommandTree buildConfigurationTree(Project project) {
+		return new FileWriteCommandTree(configurationStrategy.getLayerNode(project));
 	}
 
 }

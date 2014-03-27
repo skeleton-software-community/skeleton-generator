@@ -3,8 +3,9 @@ package org.skeleton.generator.repository.dao.metadata.interfaces;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 
 /**
- * provides two methodes to :
+ * provides methods to :
  * <li>read meta data from its persistent form
+ * <li>initialize meta data (puts a source "data-model" folder in the workspace folder)
  * <li>persist meta data
  * @author Nicolas Thibault
  *
@@ -20,6 +21,8 @@ public interface ProjectMetaDataDao {
 	
 
 	ProjectMetaData loadProjectMetaData(String workspacePath);
+	
+	void initProject(ProjectMetaData projectMetaData);
 	
 	void persistProjectMetaData(ProjectMetaData projectMetaData);
 }

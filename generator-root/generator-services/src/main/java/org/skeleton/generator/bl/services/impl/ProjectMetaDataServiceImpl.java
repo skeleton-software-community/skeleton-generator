@@ -25,9 +25,9 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	 */
 	@Autowired
 	ProjectMetaDataPersistenceHandler projectMetaDataPersistenceHandler;
-
 	
 	
+	@Override
 	public ProjectMetaData loadProjectMetaData(String folderPath) {
 		logger.info("start reading meta data");
 		ProjectMetaData projectMetaData = projectMetaDataPersistenceHandler.loadProjectMetaData(folderPath);
@@ -35,6 +35,8 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		
 		return projectMetaData;
 	}
+	
+	
 	
 	
 
@@ -58,6 +60,18 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	
 	@Override
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
+		logger.info("start persisting meta data");
+		projectMetaDataPersistenceHandler.persistProjectMetaData(projectMetaData);
+		logger.info("end persisting meta data");
+	}
+	
+	@Override
+	public void initProjectMetaData(ProjectMetaData projectMetaData) {
+		
+		logger.info("start initializing project");
+		projectMetaDataPersistenceHandler.initProjectMetaData(projectMetaData);
+		logger.info("end initializing meta data");
+		
 		logger.info("start persisting meta data");
 		projectMetaDataPersistenceHandler.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");

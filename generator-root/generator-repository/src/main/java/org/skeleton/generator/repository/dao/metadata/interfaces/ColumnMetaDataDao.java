@@ -6,7 +6,7 @@ import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.TableMetaData;
 
-
+@Deprecated
 public interface ColumnMetaDataDao {
 
 	List<ColumnMetaData> loadColumnMetaDataList(String folderPath) throws InvalidProjectMetaDataException;
