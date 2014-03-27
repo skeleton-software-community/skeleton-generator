@@ -5,3 +5,4 @@ package org.skeleton.generator.model.metadata;
 
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlSchema;
+

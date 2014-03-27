@@ -8,7 +8,7 @@ import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.springframework.stereotype.Component;
 
 
-
+@Deprecated
 @Component
 public class ProjectMetaDataMapper {
 

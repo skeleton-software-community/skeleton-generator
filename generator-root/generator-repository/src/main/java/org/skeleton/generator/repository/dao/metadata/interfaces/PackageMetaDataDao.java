@@ -5,7 +5,7 @@ import java.util.List;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
 import org.skeleton.generator.model.metadata.PackageMetaData;
 
-
+@Deprecated
 public interface PackageMetaDataDao {
 
 	List<PackageMetaData> loadPackageMetaDataList(String folderPath) throws InvalidProjectMetaDataException;

@@ -7,7 +7,7 @@ import org.skeleton.generator.model.metadata.TableMetaData;
 import org.springframework.stereotype.Component;
 
 
-
+@Deprecated
 @Component
 public class TableMetaDataMapper {
 

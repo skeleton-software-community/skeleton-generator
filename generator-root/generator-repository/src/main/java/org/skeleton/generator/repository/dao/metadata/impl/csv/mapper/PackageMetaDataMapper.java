@@ -6,7 +6,7 @@ import org.skeleton.generator.model.metadata.PackageMetaData;
 import org.springframework.stereotype.Component;
 
 
-
+@Deprecated
 @Component
 public class PackageMetaDataMapper {
 

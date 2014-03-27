@@ -9,8 +9,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
+import org.skeleton.generator.exception.ProjectAlreadyConfiguredException;
 import org.skeleton.generator.exception.ProjectNotFoundException;
 import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
@@ -21,7 +23,7 @@ import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+@Deprecated
 @Component(value="projectMetaDataCsvDao")
 public class ProjectMetaDataCsvDaoImpl implements ProjectMetaDataDao {
 	
@@ -73,8 +75,14 @@ public class ProjectMetaDataCsvDaoImpl implements ProjectMetaDataDao {
 
 	@Override
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
-		// TODO Auto-generated method stub
 		
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public void initProject(ProjectMetaData projectMetaData) {
+		
+		throw new NotImplementedException();
 	}
 
 }

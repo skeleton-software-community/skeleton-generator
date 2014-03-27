@@ -22,7 +22,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-
+/**
+ * This class can be launched to populate your database<br/>
+ * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
+ * Optional argument : if you want to limit the tables to populate
+ * Depending on the meta data that is going to be read, the main method will :
+ * <li>load the project representation
+ * <li>read the scripts/csv files in /data-model/BACKUP/ and populate the tables with this data
+ * the population of the tables uses generated stored procedures (insert by code)<br/>
+ * two kinds of file can be used to fetch data
+ * <li>a $ separated file (.txt)
+ * <li>a xml file representing a {@link SourceAndScript} where you mention a datasource and a script to read (xsd is given in /data-model/BACKUP/backup-1.0.xsd)
+ * in a xml file, you can mention every datasource that is available in the {@link InputSourceProvider} that is declared in your data-model/CONTEXT/datasource-context.xml file<br/>
+ * 
+ * @author Nicolas Thibault
+ *
+ */
 public class DatabasePopulator {
 
 	/*
@@ -34,7 +49,8 @@ public class DatabasePopulator {
 	
 	/**
 	 * 
-	 * @param args
+	 * @param args 0->the workspace folder where the "data-model" folder will be detected
+	 * @param args 1(optional)->a list of semicolon separated table names if you want to restrict the population with this list
 	 */
 	public static void main(String[] args) {
 		

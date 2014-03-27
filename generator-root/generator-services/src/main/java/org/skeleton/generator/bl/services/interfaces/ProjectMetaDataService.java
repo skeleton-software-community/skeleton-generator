@@ -16,4 +16,6 @@ public interface ProjectMetaDataService {
 	void insertColumnMetaData(ColumnMetaData columnMetaData, int index, TableMetaData tableMetaData);
 
 	void persistProjectMetaData(ProjectMetaData projectMetaData);
+
+	void initProjectMetaData(ProjectMetaData projectMetaData);
 }

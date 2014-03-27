@@ -41,5 +41,10 @@ public class ProjectMetaDataPersistenceHandlerImpl implements ProjectMetaDataPer
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
 		projectMetaDataDaoFactory.getProjectMetaDataDao(projectMetaData).persistProjectMetaData(projectMetaData);
 	}
+	
+	@Override
+	public void initProjectMetaData(ProjectMetaData projectMetaData) {
+		projectMetaDataDaoFactory.getProjectMetaDataDao(projectMetaData).initProject(projectMetaData);
+	}
 
 }

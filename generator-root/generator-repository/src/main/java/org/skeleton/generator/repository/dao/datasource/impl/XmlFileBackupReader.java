@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.skeleton.generator.exception.DataSourceNotFoundException;
 import org.skeleton.generator.exception.ReadBackupFailureException;
+import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;

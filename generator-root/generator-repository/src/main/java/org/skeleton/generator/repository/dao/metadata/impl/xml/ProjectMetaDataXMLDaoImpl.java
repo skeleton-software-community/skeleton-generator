@@ -1,7 +1,6 @@
 package org.skeleton.generator.repository.dao.metadata.impl.xml;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +18,8 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
+import org.skeleton.generator.exception.ProjectAlreadyConfiguredException;
+import org.skeleton.generator.exception.ProjectInitFailureException;
 import org.skeleton.generator.exception.ProjectNotFoundException;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
@@ -115,5 +116,26 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 					outputStream.write(bytes, 0, read);
 			}
 		}	
+	}
+
+
+	@Override
+	public void initProject(ProjectMetaData projectMetaData) {
+		
+		projectMetaData.setSourceFolder(projectMetaData.getWorkspaceFolder() + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME);
+		
+		Path sourcePath = Paths.get(projectMetaData.getSourceFolder());
+		
+		if (Files.exists(sourcePath)) {
+			throw new ProjectAlreadyConfiguredException("A project has already been configured at : " + projectMetaData.getWorkspaceFolder());
+		}
+		
+		try {
+			Files.createDirectories(sourcePath);
+		} catch (IOException e) {
+			throw new ProjectInitFailureException("Failed to initialize project at : " + projectMetaData.getWorkspaceFolder(),e);
+		}
+		
+		
 	}
 }

@@ -18,7 +18,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-
+/**
+ * This class can be launched to execute your database building<br/>
+ * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
+ * Depending on the meta data that is going to be read, the main method will :
+ * <li>load the project representation
+ * <li>clean the project database that must be set in /data-model/CONTEXT/datasource-context.xml
+ * <li>execute all the SQL files that have been previously generated to build your database
+ * in the datasource-context.xml file, your database is set as a bean named "projectDataSource" of class {@link org.apache.commons.dbcp.BasicDataSource}
+ * @author Nicolas Thibault
+ *
+ */
 public class DatabaseBuilder {
 	/*
 	 * logger
@@ -29,8 +39,8 @@ public class DatabaseBuilder {
 	
 	
 	/**
-	 * 
-	 * @param args
+	 * main method to be executed
+	 * @param args 0->the workspace folder where the "data-model" folder will be detected
 	 */
 	public static void main(String[] args) {
 		

@@ -7,6 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+/**
+ * As the csv representation of your project meta data will no longer be supported for next release<br/>
+ * This class aims at converting your meta data representation from csv to xml<br/>
+ * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
+ * @author Nicolas Thibault
+ *
+ */
 public class MetaDataConvertor {
 
 	/*
@@ -16,8 +23,8 @@ public class MetaDataConvertor {
 	
 	
 	/**
-	 * 
-	 * @param args
+	 * main method to be executed
+	 * @param args 0->the workspace folder where the "data-model" folder will be detected
 	 */
 	public static void main(String[] args) {
 		if (args.length < 1) {

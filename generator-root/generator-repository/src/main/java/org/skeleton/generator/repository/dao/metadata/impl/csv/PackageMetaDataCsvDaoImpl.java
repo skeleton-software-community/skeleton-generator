@@ -20,7 +20,7 @@ import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+@Deprecated
 @Component
 public class PackageMetaDataCsvDaoImpl implements PackageMetaDataDao {
 
