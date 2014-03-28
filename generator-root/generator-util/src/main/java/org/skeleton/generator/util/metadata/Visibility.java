@@ -3,6 +3,14 @@ package org.skeleton.generator.util.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Defines the differents kind of visibilities that are supported for the current version :
+ * <li>default : visible both in a list and in a detail view of the bean
+ * <li>not-list : only visible in a detail view
+ * <li>not-visible : hidden field
+ * @author Nicolas Thibault
+ *
+ */
 public enum Visibility {
 	VISIBLE ("", true, true),
     NOT_LIST ("Not List", false, true),

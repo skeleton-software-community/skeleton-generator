@@ -11,8 +11,14 @@ import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-
+/**
+ * Implementation of a {@link BackupReader} that uses a path to a Xml backup file, a {@link InputSourceProvider} and a {@link Table} for meta-data
+ * the processing will use a {@link SourceAndScriptBackupReader} by converting the xml backup file to a {@link SourceAndScript} to extract a {@link DataSource} and a script
+ * @author Nicolas Thibault
+ *
+ */
 public class XmlFileBackupReader implements BackupReader {
 	
 	/*
@@ -20,8 +26,8 @@ public class XmlFileBackupReader implements BackupReader {
 	 */
 	private String backupFilePath;
 	private Table table;
-	private XmlFileSourceAndScriptReader xmlFileScriptAndSourceReader;
 	private InputSourceProvider inputSourceProvider;
+	private XmlFileSourceAndScriptReader xmlFileScriptAndSourceReader;
 	private SourceAndScriptBackupReader sourceAndScriptBackupReader;
 	
 	/*

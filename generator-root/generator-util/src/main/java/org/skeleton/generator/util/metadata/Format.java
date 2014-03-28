@@ -3,6 +3,11 @@ package org.skeleton.generator.util.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The format will be used for UI generated files to define how to display data
+ * @author Nicolas Thibault
+ *
+ */
 public enum Format {
 	DEFAULT (""),
     TWO_DECIMALS ("two decimals"),

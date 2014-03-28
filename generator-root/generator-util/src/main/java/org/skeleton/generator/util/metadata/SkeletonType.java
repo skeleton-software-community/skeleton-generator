@@ -3,8 +3,14 @@ package org.skeleton.generator.util.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * For the current release, the following skeletons are supported :
+ * <li>RichFaces web application with spring and hibernate
+ * <li>A simple version of a RichFaces web application with spring and hibernate
+ * @author Nicolas Thibault
+ *
+ */
 public enum SkeletonType {
-	SPRING_HIBERNATE_CXF_RICHFACES("Spring Hibernate Cxf Richfaces"),
     SPRING_HIBERNATE_RICHFACES("Spring Hibernate Richfaces"),
     BASIC_SPRING_HIBERNATE_RICHFACES("Basic Spring Hibernate Richfaces");
 	

@@ -7,7 +7,11 @@ import javax.sql.DataSource;
 import org.skeleton.generator.exception.DataSourceNotFoundException;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
 
-
+/**
+ * Simple implementation of a {@link InputSourceProvider} with a Map of {@link DataSource}
+ * @author Nicolas Thibault
+ *
+ */
 public class InputSourceProviderImpl implements InputSourceProvider {
 
 	/*

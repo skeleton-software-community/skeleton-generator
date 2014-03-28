@@ -27,8 +27,8 @@ import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 /**
- * Implementation that uses jaxb
- * @author Mounir Regragui
+ * Implementation that uses jaxb to persist a project meta-data
+ * @author Nicolas Thibault
  *
  */
 @Component(value="projectMetaDataXmlDao")

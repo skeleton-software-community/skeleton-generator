@@ -7,6 +7,12 @@ import java.util.Date;
 import org.skeleton.generator.util.exception.DateFormatException;
 import org.skeleton.generator.util.metadata.DataType;
 
+/**
+ * A simple utility to convert a string to an object, given a {@link DataType}<br/>
+ * Usefull to read backup csv files then to inject data in your project database using the spring {@link JdbcTemplate}
+ * @author Nicolas Thibault
+ *
+ */
 public class JdbcUtil {
 
 	public static Object getObjectFromString(DataType dataType, String value) {

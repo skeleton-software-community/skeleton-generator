@@ -4,7 +4,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
 
-
+/**
+ * A node of the {@link FileWriteCommandTree}
+ * @author Nicolas Thibault
+ *
+ */
 public class FileWriteCommandTreeNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = 1L;

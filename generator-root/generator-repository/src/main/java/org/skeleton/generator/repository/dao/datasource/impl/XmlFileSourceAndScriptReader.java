@@ -10,6 +10,12 @@ import org.skeleton.generator.model.backup.SourceAndScript;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * This class is used to convert a xml file to a {@link SourceAndScript}<br/>
+ * should use Jaxb2 for next releases
+ * @author Nicolas Thibault
+ *
+ */
 public class XmlFileSourceAndScriptReader {
 
 	public SourceAndScript readScript(String scriptFilePath) throws IOException {

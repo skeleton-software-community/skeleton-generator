@@ -13,7 +13,12 @@ import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-
+/**
+ * Implementation of a {@link BackupReader} that uses a script, a {@link JdbcTemplate} and a {@link Table} for meta-data
+ * the {@link JdbcTemplate} is instantiated with a {@link DataSource} when instantiating the class
+ * @author Nicolas Thibault
+ *
+ */
 public class SourceAndScriptBackupReader implements BackupReader {
 
 	/*

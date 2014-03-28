@@ -3,8 +3,24 @@ package org.skeleton.generator.util.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * For the current release, the data types that are supported are :
+ * <li>TEXT
+ * <li>STRING (varchar(255))
+ * <li>LONG
+ * <li>DOUBLE
+ * <li>DATETIME (without timezone)
+ * <li>BOOLEAN
+ * @author Nicolas Thibault
+ *
+ */
 public enum DataType {
-	TEXT("TEXT"), STRING("STRING"), LONG("LONG"), DOUBLE("DOUBLE"), DATETIME("DATETIME"), BOOLEAN("BOOLEAN");
+	TEXT("TEXT"),
+	STRING("STRING"),
+	LONG("LONG"),
+	DOUBLE("DOUBLE"),
+	DATETIME("DATETIME"),
+	BOOLEAN("BOOLEAN");
 
 	private static final Map<String, DataType> reverseMap = new HashMap<String, DataType>();
 	static {
@@ -56,56 +72,7 @@ public enum DataType {
 		}
 	}
 
-	public static String getMySQLType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "TEXT";
-
-		case STRING:
-			return "VARCHAR(255)";
-
-		case LONG:
-			return "BIGINT";
-
-		case DOUBLE:
-			return "DOUBLE PRECISION";
-
-		case DATETIME:
-			return "DATETIME";
-
-		case BOOLEAN:
-			return "BIT";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-		}
-	}
-
-	public static String getMsSQLType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "TEXT";
-
-		case STRING:
-			return "VARCHAR(255)";
-
-		case LONG:
-			return "BIGINT";
-
-		case DOUBLE:
-			return "DOUBLE PRECISION";
-
-		case DATETIME:
-			return "DATETIME";
-
-		case BOOLEAN:
-			return "BIT";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
-		}
-	}
-
+	
 	public static String getPostgresqlType(DataType dataType) {
 		switch (dataType) {
 		case TEXT:
