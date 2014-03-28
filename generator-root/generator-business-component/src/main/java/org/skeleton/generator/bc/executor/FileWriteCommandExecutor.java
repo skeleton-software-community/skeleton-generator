@@ -4,7 +4,14 @@ import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * The code generator uses a tree of FileWriteCommandExecutor
+ * each FileWriteCommandExecutor contains a {@link FileWriteCommand} to be executed
+ * the only role of the executor is to launch the {@link FileWriteCommand} when selected through the ui<br/>
+ * When the embeded {@link FileWriteCommand} is null, a simple logging will occur (can be used for neutral nodes)
+ * @author Nicolas Thibault
+ *
+ */
 public class FileWriteCommandExecutor {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FileWriteCommandExecutor.class);

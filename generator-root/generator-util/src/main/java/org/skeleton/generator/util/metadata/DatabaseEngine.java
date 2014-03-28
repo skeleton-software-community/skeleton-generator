@@ -3,9 +3,14 @@ package org.skeleton.generator.util.metadata;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * For the current release, the only databases that are supported are :
+ * <li>Postgresql
+ * <li>Oracle
+ * @author Nicolas Thibault
+ *
+ */
 public enum DatabaseEngine {
-	MYSQL ("MySQL"),
-    MSSQL ("SQL Server"),
     POSTGRESQL ("Postgresql"),
     ORACLE ("Oracle");
     

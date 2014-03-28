@@ -5,7 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
-
+/**
+ * Using the command pattern, when populating a database<br/>
+ * This command is associated to a table and uses a spring {@link SimpleJdbcCall} with arguments as an array of objects 
+ * Used to execute an insert statement using a generated "insert by code" stored procedure
+ * @author Nicolas Thibault
+ *
+ */
 public class JdbcInsertCommand {
 	
 	/*

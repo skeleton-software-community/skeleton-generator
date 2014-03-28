@@ -5,6 +5,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Different kind of files can be generated :
+ * <li>.java
+ * <li>.sql
+ * <li>.xml
+ * <li>.xhtml
+ * <li>.bat
+ * <li>.properties
+ * @author Nicolas Thibault
+ *
+ */
 public enum FileType {
 	JAVA ("JAVA", ".java", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     SQL ("SQL", ".sql", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --"),

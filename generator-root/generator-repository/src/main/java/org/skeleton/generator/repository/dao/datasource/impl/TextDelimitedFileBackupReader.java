@@ -19,7 +19,7 @@ public class TextDelimitedFileBackupReader implements BackupReader {
 	/*
 	 * properties
 	 */
-	private CsvFileParser backupFileManager;
+	private CsvFileParser csvFileParser;
 	private String backupFilePath;
 	private Table table;
 	
@@ -28,13 +28,13 @@ public class TextDelimitedFileBackupReader implements BackupReader {
 	 */
 	public TextDelimitedFileBackupReader(Table table, String backupFilePath) {
 		this.table = table;
-		this.backupFileManager = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
+		this.csvFileParser = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
 		this.backupFilePath = backupFilePath;
 	}
 	
 	public List<Object[]> readBackupArgs()  {
 		try {
-			List<String[]> stringArgsList = backupFileManager.readData(backupFilePath);
+			List<String[]> stringArgsList = csvFileParser.readData(backupFilePath);
 			List<Object[]> argsList = new ArrayList<>();
 			
 			for (String[] stringArgs:stringArgsList) {

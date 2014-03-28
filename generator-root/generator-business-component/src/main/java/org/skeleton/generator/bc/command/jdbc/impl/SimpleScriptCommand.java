@@ -9,6 +9,12 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is used to execute a multiple statement script
+ * the statements must be separated by a /
+ * @author Nicolas Thibault
+ *
+ */
 public class SimpleScriptCommand {
 	
 	/*
