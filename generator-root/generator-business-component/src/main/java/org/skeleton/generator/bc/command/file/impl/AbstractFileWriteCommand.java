@@ -29,7 +29,7 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 	private String qualifiedFileName;
 	private String folderName;
 	
-	private StringWriter writer;
+	protected StringWriter writer;
 	private int rowCount = 0;
 	protected Path filePath;
 	
@@ -42,7 +42,7 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 	}
 	
 	
-	/*
+	/**
 	 * constructor
 	 */
 	public AbstractFileWriteCommand(String folderName, String fileName, FileType fileType) {
@@ -73,23 +73,42 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 		}
 	}
 	
+	/**
+	 * generic method to override to specialize the behavior of the command
+	 * @throws IOException
+	 */
 	protected abstract void writeContent() throws IOException;
 	
-	
+	/**
+	 * appends content to the embedded {@link StringWriter}
+	 * @param content
+	 */
 	protected final void write(String content) {
 		writer.append(content);
 	}
 	
+	/**
+	 * appends line then skips line
+	 * @param line
+	 */
 	protected final void writeLine(String line) {
 		write(line);
 		skipLine();
 	}
 	
+	/**
+	 * skips line
+	 */
 	protected final void skipLine() {
         writer.append(SKIP_LINE);
         rowCount++;
     }
 	
+	/**
+	 * extract non generated content from a file to keep it after next generation
+	 * @return
+	 * @throws IOException
+	 */
 	private final String getNotOverridableContent() throws IOException {
 
 		if (Files.exists(filePath)) {
@@ -113,7 +132,10 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 		return "";
 	}
 	
-	
+	/**
+	 * appends non generated content to be kept at next generation
+	 * @throws IOException
+	 */
 	protected final void writeNotOverridableContent() throws IOException {
 
 		String content = getNotOverridableContent();

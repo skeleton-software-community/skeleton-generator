@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.NotImplementedException;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.InvalidProjectMetaDataException;
-import org.skeleton.generator.exception.ProjectAlreadyConfiguredException;
 import org.skeleton.generator.exception.ProjectNotFoundException;
 import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.metadata.ProjectMetaData;

@@ -51,11 +51,13 @@ public class JavaModelFactory implements ModelFactory {
 
         model.packages = new ArrayList<Package>();
 
-        for (PackageMetaData packageMetaData : projectMetaData.getPackages())
-        {
-        	logger.info("adding package : " + packageMetaData.getName());
-			Package myPackage = packageFactory.buildPackage(packageMetaData, model);
-			logger.info("package : " + myPackage.name + " added");
+        if (projectMetaData.getPackages() != null) {
+	        for (PackageMetaData packageMetaData : projectMetaData.getPackages())
+	        {
+	        	logger.info("adding package : " + packageMetaData.getName());
+				Package myPackage = packageFactory.buildPackage(packageMetaData, model);
+				logger.info("package : " + myPackage.name + " added");
+	        }
         }
 
         return model;
