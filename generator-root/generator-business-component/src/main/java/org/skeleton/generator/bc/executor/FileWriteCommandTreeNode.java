@@ -5,7 +5,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
 
 /**
- * A node of the {@link FileWriteCommandTree}
+ * A node of the {@link FileWriteCommandTree} which contains a {@link FileWriteCommandExecutor}
  * @author Nicolas Thibault
  *
  */

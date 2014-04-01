@@ -12,6 +12,7 @@ import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.bl.services.interfaces.TablePopulator;
 import org.skeleton.generator.exception.BackupFileNotFoundException;
+import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
@@ -25,7 +26,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 /**
  * This class can be launched to populate your database<br/>
  * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
- * Optional argument : if you want to limit the tables to populate
+ * Optional argument : if you want to restrict the tables to populate<br/>
  * Depending on the meta data that is going to be read, the main method will :
  * <li>load the project representation
  * <li>read the scripts/csv files in /data-model/BACKUP/ and populate the tables with this data

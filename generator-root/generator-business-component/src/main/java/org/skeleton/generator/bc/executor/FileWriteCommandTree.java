@@ -2,6 +2,8 @@ package org.skeleton.generator.bc.executor;
 
 import javax.swing.JTree;
 
+import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
+
 /**
  * This class represents a tree of {@link FileWriteCommandTreeNode} wich will be cascade launched<br/>
  * Launching a code generation will build a tree that represents the skeleton of your application<br/>

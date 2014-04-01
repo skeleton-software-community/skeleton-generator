@@ -2,6 +2,8 @@ package org.skeleton.generator.bc.command.file.interfaces;
 
 import java.io.IOException;
 
+import org.skeleton.generator.bc.executor.FileWriteCommandExecutor;
+
 
 /**
  * The code generator uses a tree of {@link FileWriteCommandExecutor}

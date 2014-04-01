@@ -21,15 +21,13 @@
 			<artifactId>generator-business-model</artifactId>
 		</dependency>
 		   	   		
-		<!-- gestion des logs -->
-			
+		<!-- gestion des logs -->	
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
 		<!-- annotations spring -->
-		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -52,7 +50,6 @@
 		</dependency>
 		
 		<!-- utilitaires -->
-		
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.afklm.digitool</groupId>
+	<artifactId>digitool-root</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>digitool-root</name>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>digitool-util</module>
+		<module>digitool-business-model</module>
+		<module>digitool-repository</module>
+		<module>digitool-business-component</module>
+		<module>digitool-services</module>
+		<module>digitool-webapp</module>
+	</modules>
+	
+	<properties>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+					<additionalProjectFacets>
+						<jst.java>5.0</jst.java>
+					</additionalProjectFacets>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
