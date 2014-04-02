@@ -32,6 +32,7 @@ public class ProjectTemplatizedFileWriteCommand extends AbstractFileWriteCommand
 		engine = new VelocityEngine();
 		engine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		engine.setProperty("classpath.resource.loader.class",ClasspathResourceLoader.class.getName());
+		engine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
 		engine.init();
 	}
 	

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -6,20 +5,20 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.afklm.digitool</groupId>
-	<artifactId>digitool-root</artifactId>
+	<groupId>${project.domainName}.${project.projectName}</groupId>
+	<artifactId>${project.projectName}-root</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>digitool-root</name>
+	<name>${project.projectName}-root</name>
 
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>digitool-util</module>
-		<module>digitool-business-model</module>
-		<module>digitool-repository</module>
-		<module>digitool-business-component</module>
-		<module>digitool-services</module>
-		<module>digitool-webapp</module>
+		<module>${project.projectName}-util</module>
+		<module>${project.projectName}-business-model</module>
+		<module>${project.projectName}-repository</module>
+		<module>${project.projectName}-business-component</module>
+		<module>${project.projectName}-services</module>
+		<module>${project.projectName}-webapp</module>
 	</modules>
 	
 	<properties>
