@@ -96,6 +96,10 @@ public class CsvFileParserImpl implements CsvFileParser {
 			int i = 0;
 			for (String[] tokens:content) {
 				
+				if (tokens.length != columnNumber) {
+					throw new InvalidFileException("Invalid number of tokens");
+				}
+				
 				String line = "";
 				int j = 0;
 				while (j < tokens.length - 1) {

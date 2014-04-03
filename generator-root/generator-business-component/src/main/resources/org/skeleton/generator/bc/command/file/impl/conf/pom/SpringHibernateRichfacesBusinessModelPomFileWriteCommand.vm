@@ -28,13 +28,13 @@
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 		
-		#if ($project.audited)
+#if ($project.audited)
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-envers</artifactId>
 		</dependency>
 		
-		#end
+#end
 	</dependencies>
 
 </project>
