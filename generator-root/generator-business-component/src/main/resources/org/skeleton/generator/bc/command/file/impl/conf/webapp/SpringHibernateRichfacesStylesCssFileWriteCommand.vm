@@ -1,0 +1,332 @@
+/**
+* inputs
+*/
+input[type="text"] {
+	font-size:11px;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
+	padding: 2px 4px 2px 4px;
+}
+
+select {
+	font-size:11px;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
+	padding: 2px 4px 2px 4px;
+}
+
+input[type="input"] {
+	font-size:11px;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
+	padding: 2px 4px 2px 4px;
+}
+
+/**
+* tables definitions
+*/
+
+.rich-table {
+	border-right: 1px solid #C0C0C0;
+	width:800px;
+}
+
+.rich-table-cell {
+	font-size:10px;
+}
+
+.rich-table-footer {
+	background-color: #FFFFFF;
+}
+
+.rich-table-subheadercell {
+	vertical-align: top;
+	color: white;
+}
+
+.rich-table-headercell {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.rich-table-header {
+	font-size: 10px;
+	font-weight: bold;
+	background-color: #051039;
+	background-image: none;
+}
+
+.rich-table-subheader {
+	font-size: 10px;
+	font-weight: bold;
+	background-color: #086DB0;
+	background-image: none;
+	color: white;
+}
+
+
+.datatableRow {
+	font-size: 8px;
+	color: #000000;
+	background-color: #FFFFFF;
+	height: 22px;
+}
+
+.datatableRowLight {
+	font-size: 8px;
+	color: #000000;
+	background-color: #E8F5FC;
+	height: 22px;
+}
+
+.datatableCol {
+	color: blue;
+}
+
+.datatableLeftCol {
+	color: blue;
+	width: 15px;
+}
+
+.rich-filter-input {
+	width:80px;
+}
+
+.rich-datascr {
+	padding-top:12px;
+}
+
+
+/**
+* commands
+*/
+
+.imageIcon {
+	width: 19px;
+	height: 19px;
+	border: 0px;
+}
+
+.processImage {
+	width: 100%;
+	height: 100%;
+	border: 0px;
+}
+
+.simpleButton {
+	font-size: 11px;
+	font-weight: bold;
+	height: 17px;
+	color: white;
+	background-color: #051039;
+	border: 1px black solid;
+}
+	
+
+/**
+* details pages
+*/
+
+.commandLinkText {
+	color:black;
+}
+
+.detailErrorMessage {
+	color: darkred;
+}
+
+.editableString {
+	width: 300px;
+}
+
+.notEditableString {
+	width: 300px;
+	background: lightgrey;
+}
+
+.editableCalendar {
+	width: 280px;
+}
+
+
+/**
+* faces messages
+*/
+
+.errorMessage {
+	color:red;
+	font-size: 11px;
+	font-weight:bold;
+	text-align:center;
+	padding-top:3px;
+	padding-bottom:3px;
+	border-width:1px;
+	border-style:solid;
+	border-color:red;
+	background-color:#FFCCCC;
+	width:95%;
+}
+
+.infoMessage {
+	color:green;
+	font-size: 11px;
+	font-weight:bold;
+	align:center;
+	text-align:center;
+	padding-top:3px;
+	padding-bottom:3px;
+	border-width:1px;
+	border-style:solid;
+	border-color:green;
+	background-color:palegreen;
+	width:95%;
+}
+
+.title {
+	font-size:160%;
+	font-weight:bold;
+	margin:0 0 20px 0;
+	padding:0 0 0 0;
+	line-height:normal;
+	color:#051039;
+	background-color:inherit;
+	width:100%;
+	border-bottom:1px solid #f78704;
+}
+
+.rich-mpnl-panel{
+	position:static;
+}
+
+.warningRow {
+	background:orange;
+}
+
+.dataTableFilter {
+	width:80%;
+}
+
+
+/**
+* tabs
+*/
+
+div#content .rich-tab-bottom-line {
+	border-bottom-color:#f78704;
+}
+
+div#content .rich-tabpanel-content {
+	background-color: #FFF;
+	color: #000;
+	border-bottom-color: #f78704;
+	border-right-color: #f78704;
+	border-left-color: #f78704;
+	font-size: 11px;
+	font-family: Arial,Verdana,sans-serif;
+}
+
+div#content .rich-tab-active {
+	border-color:#f78704;
+	background-color: #051039;
+	color:white;
+	background-image:none;
+	padding: 4px 12px 4px 12px;
+}
+
+div#content .rich-tab-header {
+	border-color:#f78704;
+}
+
+div#content .rich-tab-inactive {
+	background-color: #3675ae;
+	color:white;
+	background-image:none;
+	padding: 4px 12px 4px 12px;
+}
+
+
+/**
+* toolbar
+*/
+
+div#content .rich-toolbar {
+	height:20px;
+	color: white;
+	background-image:none;
+	background-color:#051039;
+}
+
+div#content .rich-toolbar-item {
+	height:20px;
+	color: white;
+	background-image:none;
+	background-color:#051039;
+}
+
+div#content .rich-menu-item {
+	
+	font-size: 11px;
+	font-weight: bold;
+	height:14px;
+	color:rgb(72, 88, 145);
+	background-color:rgb(225, 221, 213);
+	background-image:none;
+}
+
+div#content .rich-menu-item:hover {
+	border:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:14px;
+	color:rgb(225, 221, 213);
+	background-color:rgb(72, 88, 145);
+	background-image:none;
+}
+
+div#content .rich-menu-group {
+	
+	font-size: 11px;
+	font-weight: bold;
+	height:16px;
+	background-color:white;
+	background-image:none;
+}
+
+div#content .rich-menu-group-hover {
+	border:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:16px;
+	color:#ea5a00;
+	background-color:rgb(211, 211, 211);
+	background-image:none;
+}
+
+div#content .rich-menu-list-border {
+	background-color:white;
+	background-image:none;
+	border:0px solid;
+}
+
+div#content .rich-ddmenu-label {
+	padding:4px 4px 4px 4px;
+	border-bottom:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+}
+
+div#content .rich-ddmenu-label-select {
+	padding:4px 4px 4px 4px;
+	border-bottom:1px solid #051039;
+	font-size: 11px;
+	font-weight: bold;
+	height:16px;
+	color:black;
+	background-color:white;
+}
+
+div#content .rich-ddmenu-label-unselect {
+	padding:4px 4px 4px 4px;
+	border-bottom:1px solid #051039;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+}}

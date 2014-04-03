@@ -21,6 +21,8 @@ public enum FileType {
     SQL ("SQL", ".sql", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --"),
     XML ("XML", ".xml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     XHTML ("XHTML", ".xhtml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
+    JS ("JS", ".js", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
+    CSS ("CSS", ".css", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     BAT ("BAT", ".bat", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
     PROPERTIES ("PROPERTIES", ".properties", StandardCharsets.ISO_8859_1, "# Specific Code Start", "# Specific Code End");
 	
