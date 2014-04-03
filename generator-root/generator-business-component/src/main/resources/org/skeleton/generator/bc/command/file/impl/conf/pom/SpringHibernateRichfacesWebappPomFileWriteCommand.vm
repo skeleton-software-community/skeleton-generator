@@ -37,18 +37,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		
 		<!-- hibernate -->
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		
-		
-		<!-- datasources -->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 				
@@ -122,6 +115,20 @@
 		<dependency>
 			<groupId>org.richfaces.framework</groupId>
 			<artifactId>richfaces-impl-jsf2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		
+		<!-- apache commons -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		

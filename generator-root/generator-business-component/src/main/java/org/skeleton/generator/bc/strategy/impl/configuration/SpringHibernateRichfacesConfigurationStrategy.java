@@ -15,9 +15,11 @@ import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRi
 import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRichfacesSpringWebappFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesErrorFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesFacesConfigFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesI18nFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesIndexFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesMenuCssFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesMenuFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesProjectPropertiesFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesStylesCssFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateCssFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateFileWriteCommand;
@@ -99,6 +101,12 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode stylesCssTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesStylesCssFileWriteCommand(project),"styles.css");
 		webappTreeNode.add(stylesCssTreeNode);
+		
+		FileWriteCommandTreeNode i18nTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesI18nFileWriteCommand(project),"i18n.properties");
+		webappTreeNode.add(i18nTreeNode);
+		
+		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesProjectPropertiesFileWriteCommand(project), project.projectName + ".properties");
+		webappTreeNode.add(propertiesTreeNode);
 		
 		
 		/*

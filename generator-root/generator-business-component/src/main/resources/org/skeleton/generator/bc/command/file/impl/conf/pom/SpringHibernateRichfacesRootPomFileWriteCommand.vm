@@ -123,14 +123,14 @@
 				<version>${javassist.version}</version>
 			</dependency>
 			
-			#if ($project.audited)
+#if ($project.audited)
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-envers</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
 			
-			#end
+#end
 			
 			<!-- Spring -->
 			<dependency>
@@ -245,11 +245,17 @@
 			</dependency>
 			
 			
-			<!-- apache commons -->			
+			<!-- apache commons -->
 			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
 				<version>1.4</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.8.1</version>
 			</dependency>
 					
 		</dependencies>
