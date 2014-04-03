@@ -19,6 +19,8 @@
 						<rich:menuItem value="Menu1" submitMode="server" action="/index.jsf?faces-redirect=true"/>
 						<rich:menuItem value="Menu2" submitMode="server" action="/index.jsf?faces-redirect=true"/>
 					</rich:menuGroup>
+					
+				</rich:dropDownMenu>
 			
 			</h:panelGrid>
 	
