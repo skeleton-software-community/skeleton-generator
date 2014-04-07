@@ -23,6 +23,7 @@ import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRi
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesStylesCssFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateCssFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesUtilJsFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesWebXmlFileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
@@ -101,6 +102,9 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode stylesCssTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesStylesCssFileWriteCommand(project),"styles.css");
 		webappTreeNode.add(stylesCssTreeNode);
+		
+		FileWriteCommandTreeNode utilJsTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesUtilJsFileWriteCommand(project),"util.js");
+		webappTreeNode.add(utilJsTreeNode);
 		
 		FileWriteCommandTreeNode i18nTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesI18nFileWriteCommand(project),"i18n.properties");
 		webappTreeNode.add(i18nTreeNode);
