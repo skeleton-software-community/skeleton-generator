@@ -9,10 +9,10 @@ template="/templates/template.xhtml">
 
 	<ui:define name="content">
 	
-	<div id="welcome-content">
-		#{i18n.welcomeContent}
+	<div id="error-content">
+		#{i18n.errorContent}
 	</div>
-	
+		
 	</ui:define>
 
 </ui:composition>

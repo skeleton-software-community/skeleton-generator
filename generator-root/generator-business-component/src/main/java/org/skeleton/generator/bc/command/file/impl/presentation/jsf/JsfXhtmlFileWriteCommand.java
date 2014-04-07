@@ -205,7 +205,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						+ (char) 34 + "#{" + bean.objectName + "."
 						+ property.name + "}" + (char) 34);
 				writeLine("readonly=" + (char) 34 + "true" + (char) 34 + ">");
-				writeLine("</h:inputText>");
+				writeLine("</h:inputTextarea>");
 				break;
 			}
 		} else {

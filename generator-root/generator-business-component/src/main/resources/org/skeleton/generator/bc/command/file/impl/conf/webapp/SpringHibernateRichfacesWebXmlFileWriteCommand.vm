@@ -10,7 +10,7 @@
 	</session-config>
 
 	<welcome-file-list>
-		<welcome-file>index.jsf?faces-redirect=true</welcome-file>
+		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 
 	<error-page>

@@ -38,6 +38,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- apache commons -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 </project>
