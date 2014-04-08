@@ -1,0 +1,8 @@
+package ${project.model.commandPackageName};
+
+import ${project.model.testExceptionPackageName}.BuildFailureException;
+
+public interface CommandBuilderFactory {
+
+	CommandBuilder createCommandBuilder(Class<?> clazz) throws BuildFailureException;
+}

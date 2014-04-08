@@ -1,0 +1,15 @@
+package ${project.model.testExceptionPackageName};
+
+public class BuildFailureException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+
+	public BuildFailureException(String message) {
+		super(message);
+
+	}
+
+	public BuildFailureException(String message, Throwable cause) {
+		super(message, cause);
+	}
+}

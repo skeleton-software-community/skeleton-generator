@@ -1,5 +1,15 @@
 package org.skeleton.generator.bc.strategy.impl.configuration;
 
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesBaseControllerFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandBuilderFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandExecutorFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCustomFilterFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.pom.SpringHibernateRichfacesBusinessComponentPomFileWriteCommand;
@@ -130,6 +140,43 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode springWebappTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringWebappFileWriteCommand(project),"applicationContext-" + project.projectName + "-webapp.xml");
 		springTreeNode.add(springWebappTreeNode);
+		
+		
+		/*
+		 * java files
+		 */
+		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
+		configurationTreeNode.add(javaTreeNode);
+		
+		FileWriteCommandTreeNode objectNotFoundExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand(project),"ObjectNotFoundException.java");
+		javaTreeNode.add(objectNotFoundExceptionTreeNode);
+		
+		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand(project),"InvalidStateException.java");
+		javaTreeNode.add(invalidStateExceptionTreeNode);
+		
+		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand(project),"BuildFailureException.java");
+		javaTreeNode.add(buildFailureExceptionTreeNode);
+		
+		FileWriteCommandTreeNode commandFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand(project),"CommandFailureException.java");
+		javaTreeNode.add(commandFailureExceptionTreeNode);
+		
+		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBaseControllerFileWriteCommand(project),"BaseController.java");
+		javaTreeNode.add(baseControllerTreeNode);
+		
+		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCustomFilterFileWriteCommand(project),"CustomFilter.java");
+		javaTreeNode.add(customFilterTreeNode);
+		
+		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFileWriteCommand(project),"Command.java");
+		javaTreeNode.add(commandTreeNode);
+		
+		FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFileWriteCommand(project),"CommandBuilder.java");
+		javaTreeNode.add(commandBuilderTreeNode);
+		
+		FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand(project),"CommandBuilderFactory.java");
+		javaTreeNode.add(commandBuilderFactoryTreeNode);
+		
+		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandExecutorFileWriteCommand(project),"CommandExecutor.java");
+		javaTreeNode.add(commandExecutorTreeNode);
 		
 		
 		return configurationTreeNode;

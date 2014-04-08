@@ -1,6 +1,6 @@
 package org.skeleton.generator.bc.strategy.impl.junit;
 
-import org.skeleton.generator.bc.command.file.impl.java.junit.CommandBuilderFactoryFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.java.junit.CommandBuilderFactoryImplFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewBeanBuilderFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewBeanCommandBuilderFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.java.junit.ViewBeanCommandFileWriteCommand;
@@ -94,7 +94,7 @@ public class JUnitStrategy implements LayerStrategy {
             }
         }
         
-        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryFileWriteCommand(project), "Command builder factory");
+        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryImplFileWriteCommand(project), "Command builder factory impl");
         junitLayerTreeNode.add(commandBuilderFactoryTreeNode);
         
         

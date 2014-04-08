@@ -1,4 +1,4 @@
-package ${project.daoExceptionPackageName};
+package ${project.model.daoExceptionPackageName};
 
 public class ObjectNotFoundException extends Exception {
 
