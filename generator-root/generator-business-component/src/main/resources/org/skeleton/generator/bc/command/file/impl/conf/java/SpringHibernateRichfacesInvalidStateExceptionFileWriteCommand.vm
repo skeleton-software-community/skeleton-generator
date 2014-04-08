@@ -1,4 +1,4 @@
-package ${project.serviceExceptionPackageName};
+package ${project.model.serviceExceptionPackageName};
 
 public class InvalidStateException extends Exception {
 

@@ -1,4 +1,4 @@
-package ${project.controllerPackageName};
+package ${project.model.controllerPackageName};
 
 import java.util.Iterator;
 
@@ -41,7 +41,6 @@ public abstract class BaseController {
 	/*
 	 * properties
 	 */
-	
 	@Value("10")
 	protected int numberOfRows;
 	protected boolean creationTag;
@@ -52,7 +51,6 @@ public abstract class BaseController {
 	/*
 	 * getters and setters
 	 */
-	
 	public int getNumberOfRows() {
 		return numberOfRows;
 	}
@@ -88,7 +86,6 @@ public abstract class BaseController {
 	/**
 	 * set default properties
 	 */
-	
 	protected void setDefault(){
 		this.creationTag = false;
 		this.displaySuccessfull = true;

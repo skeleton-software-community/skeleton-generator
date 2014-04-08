@@ -1,4 +1,4 @@
-package ${project.filterPackageName};
+package ${project.model.filterPackageName};
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

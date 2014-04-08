@@ -8,19 +8,20 @@ import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
 
-public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand {
+public class CommandBuilderFactoryImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	private Project project;
 	
-	public CommandBuilderFactoryFileWriteCommand(Project project) {
+	public CommandBuilderFactoryImplFileWriteCommand(Project project) {
 		super(project.workspaceFolder + "\\" + project.projectName + "-services\\src\\test\\java\\" + project.model.commandPackageName.replace(".", "\\"),
-				"CommandBuilderFactory");
+				"CommandBuilderFactoryImpl");
 		this.project = project;
 	}
 
 	@Override
 	protected void fetchSpecificImports() {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import org.springframework.stereotype.Component;");
 
         for (Package myPackage : this.project.model.packages)
         {
@@ -56,17 +57,13 @@ public class CommandBuilderFactoryFileWriteCommand extends JavaFileWriteCommand 
 
         
         writeLine("/**");
-        
         writeLine(" * auto generated command builder factory class file");
         writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
+		writeLine("@Component");
         writeLine("public class CommandBuilderFactory {");
         skipLine();
-
-        writeLine("/*");
-        writeLine(" * properties");
-        writeLine(" */");
 
         for (Package myPackage : this.project.model.packages)
         {
