@@ -47,6 +47,7 @@ public class JavaModelFactory implements ModelFactory {
         model.daoExceptionPackageName = project.domainName + "." + project.projectName + ".exception.repository";
         model.testExceptionPackageName = project.domainName + "." + project.projectName + ".exception.test";
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller.impl";
+        model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter.impl";
         model.commandPackageName = project.domainName + "." + project.projectName + ".junit.data.command";
 
         model.packages = new ArrayList<Package>();

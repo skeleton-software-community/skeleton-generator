@@ -9,11 +9,15 @@ import org.skeleton.generator.exception.TableNotFoundException;
 /**
  * Representation of a model associated to a project<br/>
  * Properties are willingly public because of their intensive use in file write commands<br/>
+ * getters are necessary for apache Velocity
  * @author Nicolas Thibault
  *
  */
 public class Model {
 
+	/*
+	 * properties
+	 */
 	public Project project;
 	
 	public List<Package> packages;
@@ -23,10 +27,62 @@ public class Model {
     public String testExceptionPackageName;
     public String controllerPackageName;
     public String commandPackageName;
+    public String filterPackageName;
 
+    /*
+     * getters and setters
+     */
+    public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public List<Package> getPackages() {
+		return packages;
+	}
+	public void setPackages(List<Package> packages) {
+		this.packages = packages;
+	}
+	public String getServiceExceptionPackageName() {
+		return serviceExceptionPackageName;
+	}
+	public void setServiceExceptionPackageName(String serviceExceptionPackageName) {
+		this.serviceExceptionPackageName = serviceExceptionPackageName;
+	}
+	public String getDaoExceptionPackageName() {
+		return daoExceptionPackageName;
+	}
+	public void setDaoExceptionPackageName(String daoExceptionPackageName) {
+		this.daoExceptionPackageName = daoExceptionPackageName;
+	}
+	public String getTestExceptionPackageName() {
+		return testExceptionPackageName;
+	}
+	public void setTestExceptionPackageName(String testExceptionPackageName) {
+		this.testExceptionPackageName = testExceptionPackageName;
+	}
+	public String getControllerPackageName() {
+		return controllerPackageName;
+	}
+	public void setControllerPackageName(String controllerPackageName) {
+		this.controllerPackageName = controllerPackageName;
+	}
+	public String getCommandPackageName() {
+		return commandPackageName;
+	}
+	public void setCommandPackageName(String commandPackageName) {
+		this.commandPackageName = commandPackageName;
+	}
+	public String getFilterPackageName() {
+		return filterPackageName;
+	}
+	public void setFilterPackageName(String filterPackageName) {
+		this.filterPackageName = filterPackageName;
+	}
     
     /**
-     * run through all the table until it is found
+     * run through all the tables until it is found
      * @param tableName
      * @return
      * @throws TableNotFoundException if no table with the corresponding name is found
@@ -50,9 +106,10 @@ public class Model {
 				+ tableName);
 	}
 
-	
+
+
 	/**
-	 * run through all the bean until it is found
+	 * run through all the beans until it is found
 	 * @param tableName
 	 * @return
 	 * @throws BeanNotFoundException if no bean which associated table has the corresponding name
