@@ -1,0 +1,143 @@
+package ${project.controllerPackageName};
+
+import java.util.Iterator;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.EditableValueHolder;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public abstract class BaseController {
+		
+	protected static final String SUCCESS = "success";
+	protected static final String FAILURE = "failure";
+	protected static final String ERROR = "error";
+	
+	protected static final String EMPTY_SELECTION = "Please select at least one element";
+	
+	protected static final String SAVE_SUCCESSFULL = "Saved successfully";
+	protected static final String SAVE_FAILED = "Saving has failed";
+	protected static final String SAVE_FAILED_INVALID_REFERENCE = "Saving has failed : invalid reference";
+	protected static final String SAVE_FAILED_INVALID_STATE = "Saving has failed : invalid state";
+	
+	protected static final String UPDATE_SUCCESSFULL = "Updated Successfully";
+	protected static final String UPDATE_FAILED = "Updating has failed";
+	protected static final String UPDATE_FAILED_INVALID_REFERENCE = "Updating has failed : invalid reference";
+	protected static final String UPDATE_FAILED_INVALID_STATE = "Updating has failed : invalid state";
+	
+	protected static final String DELETE_SUCCESSFULL = "Deleted successfully";
+	protected static final String DELETE_FAILED = "Deleting has failed";
+	protected static final String DELETE_FAILED_INVALID_STATE = "Deleting has failed : invalid state";
+	
+	protected static final String SELECTION_DELETE_SUCCESSFULL = "Selection has been deleted successfully";
+	protected static final String SELECTION_DELETE_FAILED = "Selection deleting has failed";
+	protected static final String SELECTION_DELETE_FAILED_INVALID_STATE = "Selection deleting has failed : invalid state";
+	
+	/*
+	 * properties
+	 */
+	
+	@Value("10")
+	protected int numberOfRows;
+	protected boolean creationTag;
+	protected boolean displaySuccessfull;
+	protected String loadedFrom;
+	
+	
+	/*
+	 * getters and setters
+	 */
+	
+	public int getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(int numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
+
+	public boolean isCreationTag() {
+		return creationTag;
+	}
+
+	public void setCreationTag(boolean creationTag) {
+		this.creationTag = creationTag;
+	}
+
+	public boolean isDisplaySuccessfull() {
+		return displaySuccessfull;
+	}
+
+	public void setDisplaySuccessfull(boolean displaySuccessfull) {
+		this.displaySuccessfull = displaySuccessfull;
+	}
+
+	public String getLoadedFrom() {
+		return loadedFrom;
+	}
+
+	public void setLoadedFrom(String loadedFrom) {
+		this.loadedFrom = loadedFrom;
+	}
+
+	/**
+	 * set default properties
+	 */
+	
+	protected void setDefault(){
+		this.creationTag = false;
+		this.displaySuccessfull = true;
+	}
+	
+	protected void displayInfo(String message) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+	}
+	
+	protected void displayWarning(String message) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, message, null));
+	}
+	
+	protected void displayError(String message) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+	}
+	
+	
+	
+	public void resetForm(ActionEvent event)
+			throws AbortProcessingException {
+
+		UIComponent component = event.getComponent();
+		UIForm form = findParentForm(component);
+
+		clearComponentHierarchy(form);
+
+	}
+
+	private UIForm findParentForm(UIComponent component) {
+		for (UIComponent parent = component; parent != null; parent = parent
+				.getParent()) {
+			if (parent instanceof UIForm) {
+				return (UIForm) parent;
+			}
+		}
+		return null;
+	}
+
+	private void clearComponentHierarchy(UIComponent pComponent) {
+
+		if (pComponent instanceof EditableValueHolder) {
+			EditableValueHolder editableValueHolder = (EditableValueHolder) pComponent;
+			editableValueHolder.resetValue();
+		}
+		for (Iterator<UIComponent> iterator = pComponent.getFacetsAndChildren(); iterator
+				.hasNext();) {
+			clearComponentHierarchy(iterator.next());
+		}
+
+	}
+}
