@@ -62,7 +62,7 @@ public class CommandBuilderFactoryImplFileWriteCommand extends JavaFileWriteComm
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-        writeLine("public class CommandBuilderFactory {");
+        writeLine("public class CommandBuilderFactoryImpl implements CommandBuilderFactory {");
         skipLine();
 
         for (Package myPackage : this.project.model.packages)
@@ -86,7 +86,7 @@ public class CommandBuilderFactoryImplFileWriteCommand extends JavaFileWriteComm
         writeLine(" * @return a commandBuilder, if it is implemented.");
         writeLine(" * @throws BuildFailureException");
         writeLine(" */");
-        writeLine("public CommandBuilder createCommandBuilder(String line, Class<?> clazz) throws BuildFailureException {");
+        writeLine("public CommandBuilder createCommandBuilder(Class<?> clazz) throws BuildFailureException {");
         skipLine();
 
         for (Package myPackage : this.project.model.packages)
