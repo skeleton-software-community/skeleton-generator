@@ -23,17 +23,13 @@ import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRi
 import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRichfacesSpringRepositoryFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRichfacesSpringServicesFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.spring.SpringHibernateRichfacesSpringWebappFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesErrorFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.test.SpringHibernateRichfacesLogbackTestFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.test.SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.test.SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.test.SpringHibernateRichfacesSpringTestServicesFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesFacesConfigFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesI18nFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesIndexFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesMenuCssFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesMenuFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesLogbackFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesProjectPropertiesFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesStylesCssFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateCssFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesTemplateFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesUtilJsFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.webapp.SpringHibernateRichfacesWebXmlFileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
@@ -92,35 +88,11 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode webXmlPomTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesWebXmlFileWriteCommand(project),"web.xml");
 		webappTreeNode.add(webXmlPomTreeNode);
 		
-		FileWriteCommandTreeNode templateTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesTemplateFileWriteCommand(project),"template.xhtml");
-		webappTreeNode.add(templateTreeNode);
-		
-		FileWriteCommandTreeNode menuTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesMenuFileWriteCommand(project),"menu.xhtml");
-		webappTreeNode.add(menuTreeNode);
-		
-		FileWriteCommandTreeNode indexTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesIndexFileWriteCommand(project),"index.xhtml");
-		webappTreeNode.add(indexTreeNode);
-		
-		FileWriteCommandTreeNode errorTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesErrorFileWriteCommand(project),"error.xhtml");
-		webappTreeNode.add(errorTreeNode);
-		
-		FileWriteCommandTreeNode templateCssTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesTemplateCssFileWriteCommand(project),"template.css");
-		webappTreeNode.add(templateCssTreeNode);
-		
-		FileWriteCommandTreeNode menuCssTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesMenuCssFileWriteCommand(project),"menu.css");
-		webappTreeNode.add(menuCssTreeNode);
-		
-		FileWriteCommandTreeNode stylesCssTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesStylesCssFileWriteCommand(project),"styles.css");
-		webappTreeNode.add(stylesCssTreeNode);
-		
-		FileWriteCommandTreeNode utilJsTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesUtilJsFileWriteCommand(project),"util.js");
-		webappTreeNode.add(utilJsTreeNode);
-		
-		FileWriteCommandTreeNode i18nTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesI18nFileWriteCommand(project),"i18n.properties");
-		webappTreeNode.add(i18nTreeNode);
-		
 		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesProjectPropertiesFileWriteCommand(project), project.projectName + ".properties");
 		webappTreeNode.add(propertiesTreeNode);
+		
+		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesLogbackFileWriteCommand(project), "logback.xml");
+		webappTreeNode.add(logbackTreeNode);
 		
 		
 		/*
@@ -178,6 +150,24 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandExecutorFileWriteCommand(project),"CommandExecutor.java");
 		javaTreeNode.add(commandExecutorTreeNode);
 		
+		
+		/*
+		 * spring test files
+		 */
+		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode("spring test configuration files");
+		configurationTreeNode.add(springTestTreeNode);
+		
+		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand(project),"applicationContext-" + project.projectName + "-repository-test.xml");
+		springTestTreeNode.add(springTestRepositoryTreeNode);
+		
+		FileWriteCommandTreeNode springTestBusinessComponentTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand(project),"applicationContext-" + project.projectName + "-business-component-test.xml");
+		springTestTreeNode.add(springTestBusinessComponentTreeNode);
+		
+		FileWriteCommandTreeNode springTestServicesTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestServicesFileWriteCommand(project),"applicationContext-" + project.projectName + "-services-test.xml");
+		springTestTreeNode.add(springTestServicesTreeNode);
+		
+		FileWriteCommandTreeNode logbackTestTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesLogbackTestFileWriteCommand(project), "logback-test.xml");
+		springTestTreeNode.add(logbackTestTreeNode);
 		
 		return configurationTreeNode;
 	}

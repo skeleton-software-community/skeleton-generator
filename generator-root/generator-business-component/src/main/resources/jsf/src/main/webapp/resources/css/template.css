@@ -22,10 +22,10 @@ div#header {
 	color:#fff;
 }
 
-div#header div#visuel {
+div#header div#visual {
 	height:62px;
 	margin:0;
-	background: no-repeat top left url(../images/header/header-af.jpg);
+	background: no-repeat top left url(../images/header/header.jpg);
 }
 
 div#header div#visual p {
