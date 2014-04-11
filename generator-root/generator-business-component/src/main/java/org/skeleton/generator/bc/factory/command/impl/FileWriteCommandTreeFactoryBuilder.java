@@ -3,6 +3,11 @@ package org.skeleton.generator.bc.factory.command.impl;
 import org.skeleton.generator.bc.factory.command.interfaces.FileWriteCommandTreeFactory;
 import org.skeleton.generator.model.om.Project;
 
+/**
+ * a static builder to get the {@link FileWriteCommandTreeFactory} o use depending on the project's skeleton
+ * @author Nicolas Thibault
+ *
+ */
 public class FileWriteCommandTreeFactoryBuilder {
 	
 	public static FileWriteCommandTreeFactory getFileWriteCommandTreeFactory(Project project) {

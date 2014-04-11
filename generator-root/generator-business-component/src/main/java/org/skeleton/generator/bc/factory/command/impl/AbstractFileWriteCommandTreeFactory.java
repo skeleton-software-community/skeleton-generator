@@ -11,12 +11,25 @@ import org.skeleton.generator.model.om.Project;
 
 public class AbstractFileWriteCommandTreeFactory implements FileWriteCommandTreeFactory {
 
-	protected List<LayerStrategy> layerStrategies;
+	protected LayerStrategy fileImportStrategy;
 	
 	protected LayerStrategy configurationStrategy;
 	
+	protected List<LayerStrategy> layerStrategies;
+	
 	public AbstractFileWriteCommandTreeFactory() {
 		layerStrategies = new ArrayList<>();
+	}
+	
+	
+	@Override
+	public FileWriteCommandTree buildFileImportTree(Project project) {
+		return new FileWriteCommandTree(configurationStrategy.getLayerNode(project));
+	}
+
+	@Override
+	public FileWriteCommandTree buildConfigurationTree(Project project) {
+		return new FileWriteCommandTree(configurationStrategy.getLayerNode(project));
 	}
 	
 	@Override
@@ -31,10 +44,4 @@ public class AbstractFileWriteCommandTreeFactory implements FileWriteCommandTree
 		
 		return tree;
 	}
-
-	@Override
-	public FileWriteCommandTree buildConfigurationTree(Project project) {
-		return new FileWriteCommandTree(configurationStrategy.getLayerNode(project));
-	}
-
 }
