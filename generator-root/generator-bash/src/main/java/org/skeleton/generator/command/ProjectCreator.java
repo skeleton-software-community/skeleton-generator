@@ -51,6 +51,8 @@ public class ProjectCreator {
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
 			Project project;
 			
+			CodeWriter codeWriter = appContext.getBean(CodeWriter.class);
+			
 			try {
 				logger.info("start loading project");
 				
@@ -65,13 +67,25 @@ public class ProjectCreator {
 			}
 			
 			try {
-				logger.info("start executing configuration writing");
+				logger.info("start copying resources");
 				
-				CodeWriter codeWriter = appContext.getBean(CodeWriter.class);
+				FileWriteCommandTree tree = codeWriter.buildFileImportTree(project);
+				codeWriter.writeCode(tree);
+				
+				logger.info("copying resources completed");
+				
+			} catch (Exception e) {
+				logger.error("failed", e);
+				return;
+			}
+			
+			try {
+				logger.info("start writing configuration");
+				
 				FileWriteCommandTree tree = codeWriter.buildConfigurationTree(project);
 				codeWriter.writeCode(tree);
 				
-				logger.info("executing configuration writing completed");
+				logger.info("writing configuration completed");
 				
 			} catch (Exception e) {
 				logger.error("failed", e);

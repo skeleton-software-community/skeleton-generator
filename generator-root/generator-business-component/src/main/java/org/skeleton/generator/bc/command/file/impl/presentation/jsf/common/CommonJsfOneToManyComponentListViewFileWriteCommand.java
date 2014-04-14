@@ -52,7 +52,7 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 		writeLine("<h:panelGroup id=" + (char) 34 + currentBean.objectName + "PanelGroup" + (char) 34 + ">");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{!" + parentBean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + " styleClass=" + (char) 34 + "errorMessage" + (char) 34
 				+ " layout=" + (char) 34 + "block" + (char) 34 + ">");
-		writeLine("<h:outputText value=" + (char) 34 + "#{i18n.dislayFailure}" + (char) 34 + "/>");
+		writeLine("<h:outputText value=" + (char) 34 + "#{i18n.displayFailure}" + (char) 34 + "/>");
 		writeLine("</h:panelGroup>");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{" + parentBean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + ">");
 		skipLine();
