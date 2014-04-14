@@ -1,5 +1,6 @@
 package org.skeleton.generator.bl.services.interfaces;
 
+import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
 import org.skeleton.generator.model.om.Project;
 

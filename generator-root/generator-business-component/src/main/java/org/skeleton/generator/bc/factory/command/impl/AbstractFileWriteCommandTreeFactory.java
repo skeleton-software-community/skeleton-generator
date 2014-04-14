@@ -24,7 +24,7 @@ public class AbstractFileWriteCommandTreeFactory implements FileWriteCommandTree
 	
 	@Override
 	public FileWriteCommandTree buildFileImportTree(Project project) {
-		return new FileWriteCommandTree(configurationStrategy.getLayerNode(project));
+		return new FileWriteCommandTree(fileImportStrategy.getLayerNode(project));
 	}
 
 	@Override

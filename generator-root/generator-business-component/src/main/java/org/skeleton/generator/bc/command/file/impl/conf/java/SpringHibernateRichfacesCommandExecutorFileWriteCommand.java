@@ -9,7 +9,7 @@ import org.skeleton.generator.util.metadata.FileType;
 public class SpringHibernateRichfacesCommandExecutorFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringHibernateRichfacesCommandExecutorFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-services/src/main/java/" + project.model.commandPackageName.replace(".", File.separator) + File.separator, "CommandExecutor", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-services/src/test/java/" + project.model.commandPackageName.replace(".", File.separator) + File.separator, "CommandExecutor", FileType.JAVA, project);
 	}
 
 }
