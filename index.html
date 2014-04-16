@@ -57,19 +57,21 @@
 
 			<p>In our different application skeletons, the domain model comes
 				in three different ways :
+			</p>
 			<ul>
 				<li>In the database</li>
 				<li>In the business objects that are handled by services</li>
 				<li>In the presentation layer where we use the MVC pattern with
 					"easy to bind" objects.</li>
 			</ul>
+			<p>
 			Each of these layers use a different projection of the domain model
 			and need additional metadata to manage it properly. We have chosen to
 			fully represent them the way we would represent a database in a
 			single XML file. We systematically use a "one business object - one
 			table" pattern. the additional metadata we add should allow to
 			describe :
-
+			</p>
 			<ul>
 				<li>The relationships between objects</li>
 				<li>The behaviour of objects with respect to other related
@@ -77,6 +79,7 @@
 				<li>The way objects will be handled in the UI (if there is
 					one).</li>
 			</ul>
+			<p>
 			This XML file will take its place in your SCM the most natural way !
 			</p>
 
@@ -118,10 +121,11 @@
 				still use those popular, widespread and well documented Java
 				frameworks without needing to spend a lot of time learning one or
 				another. But more important, you will keep the flexibility of those
-				frameworks : even if some "high productivity" are based on the same
+				frameworks : even if some high productivity frameworks are based on the same
 				frameworks (such as Grails), it can be a pain when you really need
 				to disturb the piping. In our case, you have a full access to the
-				pipe ! The point is : how to evolve our domain model without
+				pipe !<br/>
+				The point is : how to evolve our domain model without
 				breaking what we have rewritten ? We simply have a commentary header
 				that tells you whether you can edit or not a file. When you can edit
 				a file, we use tags to tell the generator not to overwrite what is
