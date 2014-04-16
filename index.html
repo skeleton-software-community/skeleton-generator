@@ -1,83 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>Skeleton Generator Project by nthibault</title>
 
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <title>Skeleton Generator by nthibault</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Skeleton Generator</h1>
-        <h2>Git Repository for skeleton-generator project</h2>
-        <a href="https://github.com/nthibault/skeleton-generator" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+    <div class="wrapper">
+      <header>
+        <h1>Skeleton Generator Project</h1>
+        <p>The Skeleton Software Community</p>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <p class="view"><a href="https://github.com/nthibault/skeleton-generator">View the Project on GitHub <small>nthibault/skeleton-generator</small></a></p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <ul>
+          <li><a href="https://github.com/nthibault/skeleton-generator/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/nthibault/skeleton-generator/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/nthibault/skeleton-generator">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a name="about-model-driven-development" class="anchor" href="#about-model-driven-development"><span class="octicon octicon-link"></span></a>About model driven development</h2>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Much has been written about the MDD. It would be useless and tedious to give you a comprehensive list of its benefits and pitfalls.
+The skeleton-generator project uses an original approach : whereas most of MDD tools are based on a UML representation of the domain model, we use a XML representation of a Database schema with additional metadata.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<h2>
+<a name="our-domain-model-representation" class="anchor" href="#our-domain-model-representation"><span class="octicon octicon-link"></span></a>Our domain model representation</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>In our different application skeletons, the domain model comes in three different ways :</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<ul>
+<li>In the database</li>
+<li>In the business objects that are handled by services</li>
+<li>In the presentation layer where we use the MVC pattern with "easy to bind" objects.
+Each of these layers use a different projection of the domain model and need additional metadata to manage it properly.
+We have chosen to fully represent them the way we would represent a database in a single XML file.
+We systematically use a "one business object - one table" pattern. the additional metadata we add should allow to describe :</li>
+<li>The relationships between objects</li>
+<li>The behaviour of objects with respect to other related objects</li>
+<li>The way objects will be handled in the UI (if there is one).
+This XML file will take its place in your SCM the most natural way !</li>
+</ul><h2>
+<a name="raise-productivity" class="anchor" href="#raise-productivity"><span class="octicon octicon-link"></span></a>Raise productivity...</h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Code generation is one the main axes on which "high productivity" frameworks are based. We don't have the ambition to provide such a framework. We simply use popular open source Java frameworks such as Hibernate, Spring,... and put them together so as to build a coherent skeleton that developers can rely on. This way, we can help you save time when setting up your project, produce and assemble your different layers and expose basic services.</p>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h2>
+<a name="improve-quality" class="anchor" href="#improve-quality"><span class="octicon octicon-link"></span></a>Improve quality...</h2>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>We have the ambition to help you produce high quality and sustainable code. The skeletons we generate rely on design patterns with accordance to Java standards. We have spent a lot of time (and will keep spending a lot of time) studying the official documentations of the frameworks we use to meet best practices.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h2>
+<a name="keep-flexibility-" class="anchor" href="#keep-flexibility-"><span class="octicon octicon-link"></span></a>...keep flexibility !</h2>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/nthibault/skeleton-generator/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/nthibault/skeleton-generator/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/nthibault/skeleton-generator"></a> is maintained by <a href="https://github.com/nthibault">nthibault</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+<p>One of the major advantages of our approach is that you can still use those popular, widespread and well documented Java frameworks without needing to spend a lot of time learning one or another. But more important, you will keep the flexibility of those frameworks : even if some "high productivity" are based on the same frameworks (such as Grails), it can be a pain when you really need to disturb the piping. In our case, you have a full access to the pipe !
+The point is : how to evolve our domain model without breaking what we have rewritten ? We simply have a commentary header that tells you whether you can edit or not a file. When you can edit a file, we use tags to tell the generator not to overwrite what is inside as well as it will take care of your java imports...
+The design patterns we use enable you to specialize your code by overriding some functions, or simply by enriching the classes or interfaces behaviour. We also strongly recommend aspect oriented programming to make things even more sustainable. Sure you will be astonished to see how generated and non-generated code can live together in harmony !</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/nthibault">nthibault</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-
-  
+    <script src="javascripts/scale.fix.js"></script>
+    
   </body>
 </html>
