@@ -10,12 +10,26 @@
 	<div id="menu">
 		<h:form>
 	
-			<h:panelGrid styleClass="vertical-menu-cell" columnClasses="option-list" columns="1">
+			<h:panelGrid columns="1">
 			
 				<rich:dropDownMenu value="Block1"
                         submitMode="none" direction="bottom-right" jointPoint="tr">
 		
 					<rich:menuGroup value="Group1">
+						<rich:menuItem value="Menu1" submitMode="server" action="/index.jsf?faces-redirect=true"/>
+						<rich:menuItem value="Menu2" submitMode="server" action="/index.jsf?faces-redirect=true"/>
+					</rich:menuGroup>
+					
+				</rich:dropDownMenu>
+				
+				<rich:dropDownMenu value="Block2"
+                        submitMode="none" direction="bottom-right" jointPoint="tr">
+		
+					<rich:menuGroup value="Group1">
+						<rich:menuItem value="Menu1" submitMode="server" action="/index.jsf?faces-redirect=true"/>
+						<rich:menuItem value="Menu2" submitMode="server" action="/index.jsf?faces-redirect=true"/>
+					</rich:menuGroup>
+					<rich:menuGroup value="Group2">
 						<rich:menuItem value="Menu1" submitMode="server" action="/index.jsf?faces-redirect=true"/>
 						<rich:menuItem value="Menu2" submitMode="server" action="/index.jsf?faces-redirect=true"/>
 					</rich:menuGroup>

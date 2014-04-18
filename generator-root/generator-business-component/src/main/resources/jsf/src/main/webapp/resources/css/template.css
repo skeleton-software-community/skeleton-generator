@@ -1,103 +1,90 @@
-html {
-	height:100%;
+body{
+	background-color: white;
+	margin-left:0px;
+	margin-right:0px;
+	font-family: Helvetica, arial, sans-serif;
 }
 
-body.page {
-	height:100%;
-}
-
-body {
-	padding:0px;
-	margin:0px;
-	display:block;
-	text-align:left;
-	background-color:#fff;
-	font:11px Verdana, Arial, Helvetica, sans-serif;
-	color:#252525;
-}
-
-div#header {
+div#header-wrapper {
+	position:fixed;
+	top:0px;
 	width:100%;
-	height:62px;
-	color:#fff;
+	height:100px;
+	margin-left:0px;
+	margin-right:0px;
+	border-bottom:1px solid rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
-div#header div#visual {
-	height:62px;
-	margin:0;
-	background: no-repeat top left url(../images/header/header.jpg);
-}
-
-div#header div#visual p {
-	font:20px Arial, Helvetica, sans-serif;
-	font-weight:bold;
-	background-color:inherit;
-	margin:0;
-	padding-left:20px;
-	padding-top:22px;
-}
-
-div#navigation {
+div#page-wrapper {
+	margin-top:100px;
+	margin-bottom:50px;
 	width:100%;
-	height:32px;
-	background-image:url(http://cmsintranet.airfrance.fr/charte_v03_001/img/lignage/lignage_trans.gif);
-	background-repeat:repeat-x;
-	background-position:left bottom;
 }
 
-div#page {
-	padding:0px;
-	margin-left:20px;
-	margin-right:20px;
-	text-align:left;
-	height:auto;
+div#footer-wrapper {
+	position:fixed;
+	bottom:0px;
+	width:100%;
+	height:50px;
+	margin-left:0px;
+	margin-right:0px;
+	border-top:1px solid rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
+div#header-wrapper div#header {
+	margin-left:auto;
+	margin-right:auto;
+	width:1200px;
+	height:100px;
+}
 
-
-div#page div#left {
-	width:160px;
-	padding-right:20px;
+div#header-wrapper div#header div#header-logo {
 	float:left;
-	height:100%;
+	width:200px;
+	height:100px;
+	text-align:center;
 }
 
-div#page div#right {
-	padding-right:20px;
+div#header-wrapper div#header div#header-image {
 	float:left;
-	width:800px;
-
+	width:1000px;
+	height:100px;
 }
 
-
-#content {
-	font-size:11px;
+div#page-wrapper div#page {
+	margin-left:auto;
+	margin-right:auto;
+	width:1200px;
 }
 
-
-#footer {
-	padding-top : 50px;
-	clear: both;
-	height: 20px;
-	width: 100%;
-	background-image: url(http://cmsintranet.airfrance.fr/charte_v03_001/img/lignage/footer_trans.gif);
-	background-repeat: repeat-x;
-	background-position: left bottom;
+div#page-wrapper div#page div#left {
+	float:left;
+	width:200px;
+	height:500px;
 }
 
-
-#welcome-content {
-	padding-top: 100px;
-	padding-left: 100px;
-	font-size: 160%;
-	font-weight: bold;
-	color:#051039;
+div#page-wrapper div#page div#left div#menu {
+	padding-top:30px;
+	padding-bottom:30px;
+	margin-top:1px;
+	width:200px;
+	position:fixed;
+	background-color: white;
 }
 
-#error-content {
-	padding-top: 100px;
-	padding-left: 100px;
-	font-size: 160%;
-	font-weight: bold;
-	color:darkred;
+div#page-wrapper div#page div#right {
+	float:left;
+	width:1000px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+div#footer-wrapper div#footer {
+	margin-left:auto;
+	margin-right:auto;
+	width:1200px;
 }
