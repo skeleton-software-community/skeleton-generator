@@ -93,6 +93,11 @@ input[type="input"] {
 	padding-top:12px;
 }
 
+.dataTableFilter {
+	width:80%;
+}
+
+
 
 /**
 * commands
@@ -195,13 +200,6 @@ input[type="input"] {
 	position:static;
 }
 
-.warningRow {
-	background:orange;
-}
-
-.dataTableFilter {
-	width:80%;
-}
 
 
 /**
