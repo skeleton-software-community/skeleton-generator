@@ -1,11 +1,12 @@
-package org.skeleton.generator.util.jdbc;
+package org.skeleton.generator.repository.jdbc;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.skeleton.generator.util.exception.DateFormatException;
-import org.skeleton.generator.util.metadata.DataType;
+import org.skeleton.generator.exception.DateFormatException;
+import org.skeleton.generator.model.metadata.DataType;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * A simple utility to convert a string to an object, given a {@link DataType}<br/>

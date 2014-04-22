@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
+import org.skeleton.generator.model.metadata.DataType;
 import org.skeleton.generator.model.om.Column;
 import org.skeleton.generator.model.om.Table;
-import org.skeleton.generator.util.metadata.DataType;
 
 public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 

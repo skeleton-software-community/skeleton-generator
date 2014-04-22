@@ -2,15 +2,11 @@ package org.skeleton.generator.bc.command.file.impl.templatized;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
 import org.skeleton.generator.model.om.Project;
-
-import sun.misc.IOUtils;
 
 /**
  * An implementation of the abstract file write command based on the copy of a resources

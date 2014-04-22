@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
+
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="project")
 @XmlType(name="project")
@@ -30,9 +31,9 @@ public class ProjectMetaData {
 	@XmlElement(required=true)
     private String projectName;
 	@XmlElement(required=true)
-    private String skeleton;
+    private SkeletonType skeletonType;
 	@XmlElement(required=true)
-    private String databaseEngine;
+    private DatabaseEngine databaseEngine;
 	@XmlElement(required=true)
     private String databaseName;
 	@XmlElement
@@ -94,19 +95,19 @@ public class ProjectMetaData {
 		this.projectName = projectName;
 	}
 
-	public String getSkeleton() {
-		return skeleton;
+	public SkeletonType getSkeletonType() {
+		return skeletonType;
 	}
 
-	public void setSkeleton(String skeleton) {
-		this.skeleton = skeleton;
+	public void setSkeletonType(SkeletonType skeletonType) {
+		this.skeletonType = skeletonType;
 	}
 
-	public String getDatabaseEngine() {
+	public DatabaseEngine getDatabaseEngine() {
 		return databaseEngine;
 	}
 
-	public void setDatabaseEngine(String databaseEngine) {
+	public void setDatabaseEngine(DatabaseEngine databaseEngine) {
 		this.databaseEngine = databaseEngine;
 	}
 

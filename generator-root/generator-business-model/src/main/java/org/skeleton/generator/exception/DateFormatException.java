@@ -1,4 +1,4 @@
-package org.skeleton.generator.util.exception;
+package org.skeleton.generator.exception;
 
 /**
  * This exception is thrown when reading a csv backup file and fail to convert a string to a date

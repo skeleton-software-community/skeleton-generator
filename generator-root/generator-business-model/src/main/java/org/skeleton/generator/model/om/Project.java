@@ -1,7 +1,7 @@
 package org.skeleton.generator.model.om;
 
-import org.skeleton.generator.util.metadata.DatabaseEngine;
-import org.skeleton.generator.util.metadata.SkeletonType;
+import org.skeleton.generator.model.metadata.DatabaseEngine;
+import org.skeleton.generator.model.metadata.SkeletonType;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.skeleton.generator.util.naming;
+package org.skeleton.generator.bc.naming;
 
 public class JavaClassNaming {
 	

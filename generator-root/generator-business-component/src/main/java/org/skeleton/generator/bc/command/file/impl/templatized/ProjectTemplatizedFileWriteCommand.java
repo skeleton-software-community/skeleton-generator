@@ -9,8 +9,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
+import org.skeleton.generator.model.metadata.FileType;
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.util.metadata.FileType;
 
 
 /**

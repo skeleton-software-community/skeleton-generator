@@ -1,7 +1,7 @@
 package org.skeleton.generator.bc.command.file.impl.batch;
 
 import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
-import org.skeleton.generator.util.metadata.FileType;
+import org.skeleton.generator.model.metadata.FileType;
 
 public abstract class BatchFileWriteCommand extends AbstractFileWriteCommand {
 
