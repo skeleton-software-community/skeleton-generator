@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
+import org.skeleton.generator.model.metadata.RelationType;
+import org.skeleton.generator.model.metadata.Visibility;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.Property;
-import org.skeleton.generator.util.metadata.RelationType;
-import org.skeleton.generator.util.metadata.Visibility;
 
 public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 

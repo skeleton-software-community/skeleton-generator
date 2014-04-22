@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
-import org.skeleton.generator.util.metadata.FileType;
+import org.skeleton.generator.model.metadata.FileType;
 
 
 

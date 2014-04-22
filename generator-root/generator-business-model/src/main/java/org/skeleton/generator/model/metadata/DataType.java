@@ -1,7 +1,6 @@
-package org.skeleton.generator.util.metadata;
+package org.skeleton.generator.model.metadata;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.xml.bind.annotation.XmlEnum;
 
 /**
  * For the current release, the data types that are supported are :
@@ -14,38 +13,14 @@ import java.util.Map;
  * @author Nicolas Thibault
  *
  */
+@XmlEnum(String.class)
 public enum DataType {
-	TEXT("TEXT"),
-	STRING("STRING"),
-	LONG("LONG"),
-	DOUBLE("DOUBLE"),
-	DATETIME("DATETIME"),
-	BOOLEAN("BOOLEAN");
-
-	private static final Map<String, DataType> reverseMap = new HashMap<String, DataType>();
-	static {
-		for (DataType dataType : values()) {
-			reverseMap.put(dataType.getValue(), dataType);
-		}
-	}
-
-	private String value;
-
-	private DataType(String value) {
-		this.value = value;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public static DataType byValue(String value) {
-		DataType dataType = reverseMap.get(value);
-		if (dataType == null) {
-			throw new IllegalArgumentException("No DataType corresponding to value " + value);
-		}
-		return dataType;
-	}
+	TEXT,
+	STRING,
+	LONG,
+	DOUBLE,
+	DATETIME,
+	BOOLEAN;
 
 	public static String getJavaType(DataType dataType) {
 		switch (dataType) {
@@ -68,7 +43,7 @@ public enum DataType {
 			return "Boolean";
 
 		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+			throw new IllegalArgumentException("Unhandled data type " + dataType);
 		}
 	}
 
@@ -94,7 +69,7 @@ public enum DataType {
 			return "BOOLEAN";
 
 		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+			throw new IllegalArgumentException("Unhandled data type " + dataType);
 		}
 	}
 
@@ -119,7 +94,7 @@ public enum DataType {
 			return "NUMBER(1,0)";
 
 		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+			throw new IllegalArgumentException("Unhandled data type " + dataType);
 		}
 	}
 
@@ -144,7 +119,7 @@ public enum DataType {
 			return "NUMBER";
 
 		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType.getValue());
+			throw new IllegalArgumentException("Unhandled data type " + dataType);
 		}
 	}
 	

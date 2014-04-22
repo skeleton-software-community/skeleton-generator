@@ -1,6 +1,6 @@
-package org.skeleton.generator.util.naming;
+package org.skeleton.generator.bc.naming;
 
-import org.skeleton.generator.util.metadata.DatabaseEngine;
+import org.skeleton.generator.model.metadata.DatabaseEngine;
 
 public class SQLNaming {
 	

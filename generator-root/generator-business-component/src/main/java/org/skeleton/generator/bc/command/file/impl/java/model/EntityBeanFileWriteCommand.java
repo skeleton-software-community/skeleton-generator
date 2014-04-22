@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.java.JavaFileWriteCommand;
+import org.skeleton.generator.model.metadata.DataType;
+import org.skeleton.generator.model.metadata.DatabaseEngine;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.OneToMany;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.OneToOne;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.model.om.UniqueComponent;
-import org.skeleton.generator.util.metadata.DataType;
-import org.skeleton.generator.util.metadata.DatabaseEngine;
 
 
 

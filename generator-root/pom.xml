@@ -10,7 +10,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>generator-util</module>
 		<module>generator-business-model</module>
 		<module>generator-repository</module>
 		<module>generator-business-component</module>
@@ -50,12 +49,6 @@
 	<dependencyManagement>
 	
 		<dependencies>
-		
-			<dependency>
-				<groupId>org.skeleton</groupId>
-				<artifactId>generator-util</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.skeleton</groupId>

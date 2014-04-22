@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
+
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name="column")
 public class ColumnMetaData {
@@ -19,19 +20,19 @@ public class ColumnMetaData {
 	@XmlAttribute(required=true)
 	private String name;
 	@XmlAttribute(required=true)
-	private String dataType;
+	private DataType dataType;
 	@XmlAttribute
 	private boolean nullable = true;
 	@XmlAttribute
 	private String referenceTableName;
 	@XmlAttribute
-	private String referenceTableRelation;
+	private RelationType referenceTableRelation;
 	@XmlAttribute
-	private String format;
+	private Format format;
 	@XmlAttribute
 	private boolean editable = true;
 	@XmlAttribute
-	private String visibility;
+	private Visibility visibility;
 	@XmlAttribute
 	private String rendering;
 	
@@ -48,10 +49,10 @@ public class ColumnMetaData {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDataType() {
+	public DataType getDataType() {
 		return dataType;
 	}
-	public void setDataType(String dataType) {
+	public void setDataType(DataType dataType) {
 		this.dataType = dataType;
 	}
 	public boolean isNullable() {
@@ -66,16 +67,16 @@ public class ColumnMetaData {
 	public void setReferenceTableName(String referenceTableName) {
 		this.referenceTableName = referenceTableName;
 	}
-	public String getReferenceTableRelation() {
+	public RelationType getReferenceTableRelation() {
 		return referenceTableRelation;
 	}
-	public void setReferenceTableRelation(String referenceTableRelation) {
+	public void setReferenceTableRelation(RelationType referenceTableRelation) {
 		this.referenceTableRelation = referenceTableRelation;
 	}
-	public String getFormat() {
+	public Format getFormat() {
 		return format;
 	}
-	public void setFormat(String format) {
+	public void setFormat(Format format) {
 		this.format = format;
 	}
 	public boolean isEditable() {
@@ -84,10 +85,10 @@ public class ColumnMetaData {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 	public String getRendering() {

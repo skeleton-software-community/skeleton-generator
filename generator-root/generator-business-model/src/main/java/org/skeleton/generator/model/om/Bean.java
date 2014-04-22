@@ -67,7 +67,6 @@ public class Bean {
 	public List<OneToMany> oneToManyList;
 	public List<OneToManyComponent> oneToManyComponentList;
 	public List<OneToOne> oneToOneList;
-	public List<OneToOneComponent> oneToOneComponentList;
 	public List<UniqueComponent> uniqueComponentList;
 
 	public boolean isComponent = false;

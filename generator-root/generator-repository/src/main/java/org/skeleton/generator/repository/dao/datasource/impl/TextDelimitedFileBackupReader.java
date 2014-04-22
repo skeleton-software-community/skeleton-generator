@@ -11,7 +11,7 @@ import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
 import org.skeleton.generator.repository.file.impl.CsvFileParserImpl;
 import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
-import org.skeleton.generator.util.jdbc.JdbcUtil;
+import org.skeleton.generator.repository.jdbc.JdbcUtil;
 
 
 public class TextDelimitedFileBackupReader implements BackupReader {

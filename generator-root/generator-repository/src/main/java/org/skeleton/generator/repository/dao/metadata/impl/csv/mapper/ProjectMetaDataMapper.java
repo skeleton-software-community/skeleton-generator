@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.skeleton.generator.model.metadata.DatabaseEngine;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
+import org.skeleton.generator.model.metadata.SkeletonType;
 import org.springframework.stereotype.Component;
 
 
@@ -22,10 +24,10 @@ public class ProjectMetaDataMapper {
 		
 		projectMetaData.setDomainName(elements.get("Domain Name"));
 		projectMetaData.setProjectName(elements.get("Project Name"));
-		projectMetaData.setSkeleton(elements.get("Skeleton"));
+		projectMetaData.setSkeletonType(SkeletonType.valueOf(elements.get("Skeleton Type")));
 		projectMetaData.setDatabaseDNS(elements.get("Database DNS"));
 		projectMetaData.setDatabasePort(elements.get("Database Port"));
-		projectMetaData.setDatabaseEngine(elements.get("Database Engine"));
+		projectMetaData.setDatabaseEngine(DatabaseEngine.valueOf(elements.get("Database Engine")));
 		projectMetaData.setDatabaseName(elements.get("Database Name"));
 		projectMetaData.setDatabaseUserName(elements.get("Database User Name"));
 		projectMetaData.setDatabasePassword(elements.get("Database Password"));

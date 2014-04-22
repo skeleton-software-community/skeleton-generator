@@ -13,14 +13,5 @@
 	<description>Module Business Model du projet Generator</description>
 
 	<packaging>jar</packaging>
-	
-	<dependencies>
-		
-		<dependency>
-			<groupId>org.skeleton</groupId>
-			<artifactId>generator-util</artifactId>
-		</dependency>
-		
-	</dependencies>
 
 </project>

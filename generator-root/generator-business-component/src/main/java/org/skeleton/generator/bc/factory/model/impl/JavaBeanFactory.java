@@ -3,19 +3,18 @@ package org.skeleton.generator.bc.factory.model.impl;
 import java.util.ArrayList;
 
 import org.skeleton.generator.bc.factory.model.interfaces.BeanFactory;
+import org.skeleton.generator.bc.naming.JavaClassNaming;
+import org.skeleton.generator.model.metadata.DataType;
+import org.skeleton.generator.model.metadata.RelationType;
 import org.skeleton.generator.model.metadata.TableMetaData;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.Column;
 import org.skeleton.generator.model.om.OneToMany;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.OneToOne;
-import org.skeleton.generator.model.om.OneToOneComponent;
 import org.skeleton.generator.model.om.Property;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.model.om.UniqueComponent;
-import org.skeleton.generator.util.metadata.DataType;
-import org.skeleton.generator.util.metadata.RelationType;
-import org.skeleton.generator.util.naming.JavaClassNaming;
 import org.springframework.stereotype.Component;
 
 @Component(value = "javaBeanFactory")
@@ -81,7 +80,6 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.oneToManyComponentList = new ArrayList<OneToManyComponent>();
 		bean.oneToManyList = new ArrayList<OneToMany>();
 		bean.oneToOneList = new ArrayList<OneToOne>();
-		bean.oneToOneComponentList = new ArrayList<OneToOneComponent>();
 		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
 
 		for (Column column : table.columns) {
@@ -152,17 +150,6 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToOne.setterName = "set" + bean.className;
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.oneToOneList.add(oneToOne);
-			}
-
-			if (column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT)) {
-				bean.isComponent = true;
-				OneToOneComponent oneToOne = new OneToOneComponent();
-				oneToOne.referenceBean = bean;
-				oneToOne.referenceColumn = column;
-				oneToOne.getterName = "get" + bean.className;
-				oneToOne.setterName = "set" + bean.className;
-				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				targetBean.oneToOneComponentList.add(oneToOne);
 			}
 
 			if (column.relation.equals(RelationType.UNIQUE_COMPONENT)) {

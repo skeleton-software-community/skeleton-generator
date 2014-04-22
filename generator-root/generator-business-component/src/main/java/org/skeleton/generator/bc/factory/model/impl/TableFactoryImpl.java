@@ -3,16 +3,16 @@ package org.skeleton.generator.bc.factory.model.impl;
 import java.util.ArrayList;
 
 import org.skeleton.generator.bc.factory.model.interfaces.TableFactory;
+import org.skeleton.generator.bc.naming.SQLNaming;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
+import org.skeleton.generator.model.metadata.DataType;
+import org.skeleton.generator.model.metadata.Format;
+import org.skeleton.generator.model.metadata.RelationType;
 import org.skeleton.generator.model.metadata.TableMetaData;
+import org.skeleton.generator.model.metadata.Visibility;
 import org.skeleton.generator.model.om.Column;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Table;
-import org.skeleton.generator.util.metadata.DataType;
-import org.skeleton.generator.util.metadata.Format;
-import org.skeleton.generator.util.metadata.RelationType;
-import org.skeleton.generator.util.metadata.Visibility;
-import org.skeleton.generator.util.naming.SQLNaming;
 import org.springframework.stereotype.Component;
 
 
@@ -42,25 +42,25 @@ public class TableFactoryImpl implements TableFactory {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
             column.name = SQLNaming.rename(column.originalName, table.myPackage.model.project.databaseEngine);
-            column.dataType = DataType.byValue(columnMetaData.getDataType());
+            column.dataType = columnMetaData.getDataType();
             column.nullable = (columnMetaData.isNullable());
             if (columnMetaData.getReferenceTableRelation() != null) {
-            	column.relation = RelationType.byValue(columnMetaData.getReferenceTableRelation());
+            	column.relation = columnMetaData.getReferenceTableRelation();
             } else {
             	column.relation = RelationType.PROPERTY;
             }
             
-            column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT) || column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT));
+            column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT));
             column.referenceTable = myPackage.model.findTable(columnMetaData.getReferenceTableName());
             column.unique = (RelationType.isUnique(column.relation));
             if (columnMetaData.getFormat()!=null) {
-            	column.format = Format.byValue(columnMetaData.getFormat());
+            	column.format = columnMetaData.getFormat();
             } else {
             	column.format = Format.DEFAULT;
             }
             column.editable = columnMetaData.isEditable();
             if (columnMetaData.getVisibility()!=null) {
-            	column.visibility = Visibility.byValue(columnMetaData.getVisibility());
+            	column.visibility = columnMetaData.getVisibility();
             } else {
             	column.visibility = Visibility.VISIBLE;
             }

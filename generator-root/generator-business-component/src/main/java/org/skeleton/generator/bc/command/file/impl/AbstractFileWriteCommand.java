@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
-import org.skeleton.generator.util.metadata.FileType;
+import org.skeleton.generator.model.metadata.FileType;
 
 
 

@@ -5,13 +5,13 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.skeleton.generator.bc.command.jdbc.impl.JdbcInsertCommand;
+import org.skeleton.generator.bc.naming.SQLNaming;
 import org.skeleton.generator.bl.services.interfaces.TablePopulator;
 import org.skeleton.generator.exception.PopulateTableFailureException;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.impl.XmlFileBackupReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
-import org.skeleton.generator.util.naming.SQLNaming;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 
