@@ -146,7 +146,8 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("LOGIN VARCHAR2(255),");
 		writeLine("CONSTRAINT PK_AUDITENTITY PRIMARY KEY (ID)");
 		writeLine(") TABLESPACE " + project.databaseName + "_AUD");
-		writeLine(";");
+		writeLine("/");
+		skipLine();
 		
 		writeLine("-- suppression de la sequence --");
 		writeLine("BEGIN");

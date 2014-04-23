@@ -38,19 +38,18 @@ public class SimpleScriptCommand {
 	
 	public void execute() throws SQLException {
 		
-		try (Connection connection = dataSource.getConnection()) {
+		try (Connection connection = dataSource.getConnection();) {
 			
 			connection.setAutoCommit(true);
+			Statement statement = connection.createStatement();
 			
 			String[] tokens = script.split("/");
 			
 			for (String token:tokens) {
-			
-				Statement statement = connection.createStatement();
 				
 				try {
 					logger.info("executing statement : " + token);
-					statement.execute(token);
+					statement.executeUpdate(token);
 				} catch (SQLException e) {
 					logger.error("statement failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
 				}
