@@ -43,12 +43,6 @@ public class CommonJsfOneToManyComponentListViewFileWriteCommand extends JsfXhtm
 		writeLine("<!-- -->");
 		skipLine();
 
-		String header = "#{i18n." + currentBean.objectName + "List}";
-
-		for (Property property : parentBean.getFindProperties()) {
-			header = header + " " + "#{" + parentBean.controllerObjectName + ".selected" + parentBean.className + "." + property.name + "}";
-		}
-
 		writeLine("<h:panelGroup id=" + (char) 34 + currentBean.objectName + "PanelGroup" + (char) 34 + ">");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{!" + parentBean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + " styleClass=" + (char) 34 + "errorMessage" + (char) 34
 				+ " layout=" + (char) 34 + "block" + (char) 34 + ">");

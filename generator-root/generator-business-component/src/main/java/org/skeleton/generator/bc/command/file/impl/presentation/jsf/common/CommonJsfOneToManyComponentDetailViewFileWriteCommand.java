@@ -47,9 +47,9 @@ public class CommonJsfOneToManyComponentDetailViewFileWriteCommand extends JsfXh
 		writeLine("<br/>");
 		skipLine();
 
-		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
-		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + currentBean.objectName + "Detail}" + (char) 34 + "/>");
-		writeLine("</div>");
+		writeLine("<h2>");
+		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("</h2>");
 		skipLine();
 
 		writeLine("<br/>");
