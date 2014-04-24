@@ -1,91 +1,128 @@
+
+
+div#menu .rich-ddmenu-label {
+	border-bottom:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+	width:190px;
+	margin:0px 0px 0px 0px;
+	padding-top:10px;
+	padding-left:10px;
+	padding-bottom:0px;
+	padding-right:0px;
+}
+
+div#menu .rich-ddmenu-label-select {
+	border-bottom:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+	width:190px;
+	color:rgb(100,100,100);;
+	background-color:rgb(240, 240, 240);
+	margin:0px 0px 0px 0px;
+	padding-top:10px;
+	padding-left:10px;
+	padding-bottom:0px;
+	padding-right:0px;
+}
+
+div#menu .rich-ddmenu-label-unselect {
+	border-bottom:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+	width:190px;
+	margin:0px 0px 0px 0px;
+	padding-top:10px;
+	padding-left:10px;
+	padding-bottom:0px;
+	padding-right:0px;
+}
+
+div#menu .rich-ddmenu-label-text-decor {
+	border-bottom:1px solid;
+	font-size: 11px;
+	font-weight: bold;
+	height:20px;
+	width:200px;
+	margin:0px 0px 0px 0px;
+	padding-top:10px;
+	padding-left:10px;
+	padding-bottom:0px;
+	padding-right:0px;
+}
+
 div#menu .rich-menu-list-border {
-	background-color:white;
-	border:1px solid;
-}
-
-div#menu .rich-menu-item {
-	font-size: 11px;
-	font-weight: bold;
-	height:14px;
+	border:none;
 	background-color:white;
 }
 
-div#menu .rich-menu-item:hover {
-	border:1px solid;
-	font-size: 11px;
-	font-weight: bold;
-	height:14px;
-	color:#ea5a00;
-	background-color:rgb(211, 211, 211);
+div#menu .rich-menu-list-bg {
+	border:1px solid rgb(220, 220, 220);
+	background-color:white;
 }
 
 div#menu .rich-menu-group {
 	font-size: 11px;
 	font-weight: bold;
-	height:16px;
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
 	background-color:white;
+	background-image:none;
 }
 
 div#menu .rich-menu-group-hover {
-	border:1px solid;
 	font-size: 11px;
 	font-weight: bold;
-	height:16px;
-	color:#ea5a00;
-	background-color:rgb(211, 211, 211);
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
+	color:rgb(100, 100, 100);
+	background-color:rgb(240, 240, 240);
+	background-image:none;
+	border:1px solid rgb(220, 220, 220);
 }
 
-div#menu .rich-ddmenu-label {
-	padding-top:4px;
-	padding-bottom:4px;
-	border-bottom:1px solid;
+div#menu .rich-menu-item {
 	font-size: 11px;
 	font-weight: bold;
-	height:20px;
-	width:160px;
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
+	background-color:white;
+	background-image:none;
 }
 
-div#menu .rich-ddmenu-label-select {
-	padding-top:4px;
-	padding-bottom:4px;
-	border-bottom:1px solid #051039;
+div#menu .rich-menu-item-hover {
 	font-size: 11px;
 	font-weight: bold;
-	height:20px;
-	color:#ea5a00;
-	background-color:rgb(211, 211, 211);
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
+	color:rgb(100, 100, 100);
+	background-color:rgb(240, 240, 240);
+	background-image:none;
+	border:1px solid rgb(220, 220, 220);
 }
 
-div#menu .rich-ddmenu-label-unselect {
-	padding-top:4px;
-	padding-bottom:4px;
-	border-bottom:1px solid #051039;
-	font-size: 11px;
-	font-weight: bold;
-	height:20px;
-}
 
-div#menu .main-menu {
-	padding-top:4px;
-	padding-bottom:4px;
-	border-bottom:1px solid #051039;
-	font-family: Arial, Verdana, sans-serif;
-	font-size: 11px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: bold;
-	height:20px;
-}
 
-div#menu .main-menu:hover {
-	padding-top:4px;
-	padding-bottom:4px;
-	border-bottom:1px solid #051039;
-	font-family: Arial, Verdana, sans-serif;
-	font-size: 11px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: bold;
-	color:#ea5a00;
-	background-color:rgb(211, 211, 211);
-}
