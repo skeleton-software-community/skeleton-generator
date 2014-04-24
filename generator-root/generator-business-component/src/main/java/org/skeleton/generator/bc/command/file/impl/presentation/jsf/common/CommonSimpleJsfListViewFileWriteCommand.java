@@ -54,9 +54,9 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		writeLine("<br/>");
 		skipLine();
 		
-		writeLine("<div class=" + (char) 34 + "title" + (char) 34 + ">");
-		writeLine("<h:outputText value=" + (char) 34 + "#{i18n." + bean.objectName + "List}" + (char) 34 + "/>");
-		writeLine("</div>");
+		writeLine("<h2>");
+		writeLine("#{i18n." + bean.objectName + "List}");
+		writeLine("</h2>");
 		skipLine();
 
 		writeLine("<h:form id=" + (char) 34 + this.bean.objectName + "Form" + (char) 34 + ">");

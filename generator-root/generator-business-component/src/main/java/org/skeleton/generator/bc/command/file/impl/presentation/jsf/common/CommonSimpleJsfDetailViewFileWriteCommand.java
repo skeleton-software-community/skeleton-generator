@@ -39,9 +39,9 @@ public class CommonSimpleJsfDetailViewFileWriteCommand extends JsfXhtmlFileWrite
         writeLine("<rich:messages infoClass=" + (char)34 + "infoMessage" + (char)34 + " errorClass=" + (char)34 + "errorMessage" + (char)34 + " globalOnly=" + (char)34 + "true" + (char)34 + "/>");
         writeLine("<br/>");
         
-        writeLine("<div class=" + (char)34 + "title" + (char)34 + ">");
-        writeLine("<h:outputText value=" + (char)34 + "#{i18n." + bean.objectName + "Detail}" + (char)34 + "/>");
-        writeLine("</div>");
+        writeLine("<h2>");
+        writeLine("#{i18n." + bean.objectName + "Detail}");
+        writeLine("</h2>");
         skipLine();
         
         writeLine("<br/>");
