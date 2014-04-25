@@ -4,9 +4,9 @@ import javax.xml.bind.annotation.XmlEnum;
 
 /**
  * Defines the differents kind of visibilities that are supported for the current version :
- * <li>default : visible both in a list and in a detail view of the bean
- * <li>not-list : only visible in a detail view
- * <li>not-visible : hidden field
+ * <li>VISIBLE : visible both in a list and in a detail view of the bean
+ * <li>NOT_LIST : only visible in a detail view
+ * <li>NOT_VISIBLE : hidden field
  * @author Nicolas Thibault
  *
  */
