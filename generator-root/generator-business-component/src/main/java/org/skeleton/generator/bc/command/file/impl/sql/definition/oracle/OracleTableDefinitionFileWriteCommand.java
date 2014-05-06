@@ -133,14 +133,14 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         {
             if (this.table.columns.get(i).referenceTable != null)
             {
-                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND/");
+                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND;/");
                 
             }
         }
 		skipLine();
 
 		writeLine("-- sequence --");
-		writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
+		writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE;");
 		writeLine("/");
 		skipLine();
 	}
@@ -179,7 +179,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("/");
         skipLine();
         
-        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV)/");
+        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV);/");
     }
 	
 	/*
