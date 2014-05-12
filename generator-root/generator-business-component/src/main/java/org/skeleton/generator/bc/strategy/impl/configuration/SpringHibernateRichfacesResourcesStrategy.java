@@ -10,7 +10,7 @@ public class SpringHibernateRichfacesResourcesStrategy  implements LayerStrategy
 	@Override
 	public FileWriteCommandTreeNode getLayerNode(Project project) {
 		
-		FileWriteCommandTreeNode resourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, "jsf/src/",project.projectName + "-webapp"),"Resources");
+		FileWriteCommandTreeNode resourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, "/jsf/src/",project.projectName + "-webapp"),"Resources");
 		
 		return resourcesTreeNode;
 	}
