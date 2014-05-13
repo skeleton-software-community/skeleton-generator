@@ -2,7 +2,7 @@ package org.skeleton.generator.bc.command.file.impl.templatized;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
@@ -15,6 +15,7 @@ import org.skeleton.generator.model.om.Project;
  */
 public class ResourcesFileWriteCommand implements FileWriteCommand {
 
+	private static final String separator = "/";
 	private String resourcesRootPath;
 	private String targetRootPath;
 	private Project project;
@@ -29,16 +30,21 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 	public void execute() throws IOException {
 		
 		try {
-			File resourcesFolder = Paths.get(getClass().getResource(resourcesRootPath).toURI()).toFile();
-			
+			URL url = getClass().getResource(resourcesRootPath);
 			File targetFolder = new File(project.workspaceFolder + File.separator + targetRootPath);
 			
-			FileUtils.copyDirectoryToDirectory(resourcesFolder, targetFolder);
+			if (url.getProtocol().equals("file")){
+				File resourcesFolder = new File(url.getPath());
+				FileUtils.copyDirectoryToDirectory(resourcesFolder, targetFolder);
+			} else {
+				
+			}
 			
 		} catch (Exception e) {
 			throw new IOException(e);
 		}
 	}
+
 
 	@Override
 	public int getRowCount() {
