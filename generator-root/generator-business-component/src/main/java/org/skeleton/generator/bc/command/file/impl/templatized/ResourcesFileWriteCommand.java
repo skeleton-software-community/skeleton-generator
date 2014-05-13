@@ -29,7 +29,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 	public void execute() throws IOException {
 		
 		try {
-			File resourcesFolder = Paths.get(getClass().getClassLoader().getResource(resourcesRootPath).toURI()).toFile();
+			File resourcesFolder = Paths.get(getClass().getResource(resourcesRootPath).toURI()).toFile();
 			
 			File targetFolder = new File(project.workspaceFolder + File.separator + targetRootPath);
 			
