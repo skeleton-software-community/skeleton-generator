@@ -9,6 +9,7 @@ import org.skeleton.generator.model.metadata.RelationType;
 import org.skeleton.generator.model.metadata.TableMetaData;
 import org.skeleton.generator.model.om.Bean;
 import org.skeleton.generator.model.om.Column;
+import org.skeleton.generator.model.om.Model;
 import org.skeleton.generator.model.om.OneToMany;
 import org.skeleton.generator.model.om.OneToManyComponent;
 import org.skeleton.generator.model.om.OneToOne;
@@ -21,11 +22,9 @@ import org.springframework.stereotype.Component;
 public class JavaBeanFactory implements BeanFactory {
 
 	@Override
-	public Bean buildBean(TableMetaData tableMetaData, Table table) {
-
+	public Bean scanBean(TableMetaData tableMetaData, Table table) {
 		Bean bean = new Bean();
 		bean.table = table;
-		table.myPackage.beans.add(bean);
 		bean.myPackage = table.myPackage;
 		bean.isComponent = false;
 
@@ -81,7 +80,14 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.oneToManyList = new ArrayList<OneToMany>();
 		bean.oneToOneList = new ArrayList<OneToOne>();
 		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
+		
+		return bean;
+	}
 
+	@Override
+	public Bean fillBean(Table table, Model model) {
+		Bean bean = model.findBean(table.originalName);
+		
 		for (Column column : table.columns) {
 			if (column.name.toLowerCase().equals("status")) {
 				bean.hasStatus = true;
