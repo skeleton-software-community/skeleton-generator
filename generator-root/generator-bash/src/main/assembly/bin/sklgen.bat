@@ -93,11 +93,16 @@ echo . populatedb
 goto END
 
 :INIT
+call sklgen-do-init.bat
+if not %INIT_OK%==Y goto INIT_CANCEL
 echo start initializing project
-
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %INIT_CLASS% %INIT_ARGS%
 echo end initializing project
 goto END
-call sklgen-do-init.bat
+:INIT_CANCEL
+echo initialization cancelled
+goto END
+
 :GENERATE
 echo start generating code
 %JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% %CD%

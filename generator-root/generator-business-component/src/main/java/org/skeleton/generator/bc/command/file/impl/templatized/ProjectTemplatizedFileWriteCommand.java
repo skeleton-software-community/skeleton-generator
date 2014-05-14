@@ -21,6 +21,7 @@ import org.skeleton.generator.model.om.Project;
 public class ProjectTemplatizedFileWriteCommand extends AbstractFileWriteCommand {
 	
 	private static VelocityEngine engine;
+	private static final String separator = "/";
 	private static final String UTF8 = "UTF8";
 	private static final String DOTVM = ".vm";
 	private VelocityContext context;
@@ -38,7 +39,7 @@ public class ProjectTemplatizedFileWriteCommand extends AbstractFileWriteCommand
 	public ProjectTemplatizedFileWriteCommand(String folderName, String fileName, FileType fileType, Project project) {
 		super(folderName, fileName, fileType);
 		this.context = new VelocityContext();
-		this.template = engine.getTemplate(File.separator + this.getClass().getName().replace(".", File.separator) + DOTVM, UTF8);
+		this.template = engine.getTemplate(separator + this.getClass().getName().replace(".", separator) + DOTVM, UTF8);
 		this.project = project;
 	}
 
