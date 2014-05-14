@@ -12,6 +12,9 @@ import org.skeleton.generator.model.om.Package;
  */
 public interface PackageFactory {
 
-	Package buildPackage(PackageMetaData packageMetaData, Model model);
+
+	Package scanPackage(PackageMetaData packageMetaData, Model model);
+
+	Package fillPackage(PackageMetaData packageMetaData, Model model);
 
 }

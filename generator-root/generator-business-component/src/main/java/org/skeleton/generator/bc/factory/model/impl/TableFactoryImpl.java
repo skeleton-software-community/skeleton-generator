@@ -20,9 +20,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TableFactoryImpl implements TableFactory {
 
-	public Table buildTable(TableMetaData tableMetaData, Package myPackage) {
+
+
+	@Override
+	public Table scanTable(TableMetaData tableMetaData, Package myPackage) {
 		Table table = new Table();
-		myPackage.tables.add(table);
         table.myPackage = myPackage;
         table.originalName = tableMetaData.getName();
         table.name = SQLNaming.rename(table.originalName, myPackage.model.project.databaseEngine);
@@ -37,7 +39,14 @@ public class TableFactoryImpl implements TableFactory {
         idColumn.nullable = false;
         idColumn.unique = true;
         table.columns.add(idColumn);
+        
+        return table;
+	}
 
+	@Override
+	public Table fillTable(TableMetaData tableMetaData, Package myPackage) {
+		Table table = myPackage.model.findTable(tableMetaData.getName());
+		
         for (ColumnMetaData columnMetaData : tableMetaData.getColumns()) {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
@@ -68,8 +77,8 @@ public class TableFactoryImpl implements TableFactory {
             column.annotations = columnMetaData.getAnnotations();
             table.columns.add(column);
         }
-
+		
         return table;
-    }
+	}
 	
 }
