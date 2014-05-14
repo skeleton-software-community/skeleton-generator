@@ -2,7 +2,15 @@ package org.skeleton.generator.bc.command.file.impl.templatized;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
 import org.skeleton.generator.bc.command.file.interfaces.FileWriteCommand;
@@ -14,8 +22,8 @@ import org.skeleton.generator.model.om.Project;
  *
  */
 public class ResourcesFileWriteCommand implements FileWriteCommand {
-
-	private static final String separator = "/";
+	
+	private static String separator = "/";
 	private String resourcesRootPath;
 	private String targetRootPath;
 	private Project project;
@@ -29,22 +37,48 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 	@Override
 	public void execute() throws IOException {
 		
-		try {
-			URL url = getClass().getResource(resourcesRootPath);
-			File targetFolder = new File(project.workspaceFolder + File.separator + targetRootPath);
+		URL url = getClass().getResource(resourcesRootPath);
+		File targetFolder = new File(project.workspaceFolder + File.separator + targetRootPath);
+		File resourcesFolder = null;
+		
+		if (url.getProtocol().equals("file")){
+			resourcesFolder = new File(url.getPath());
+			FileUtils.copyDirectoryToDirectory(resourcesFolder, targetFolder);
+		} else {
 			
-			if (url.getProtocol().equals("file")){
-				File resourcesFolder = new File(url.getPath());
-				FileUtils.copyDirectoryToDirectory(resourcesFolder, targetFolder);
-			} else {
-				
+			File jar;
+			try {
+				jar = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+			} catch (URISyntaxException e) {
+				throw new IOException("failed to jar path", e);
 			}
-			
-		} catch (Exception e) {
-			throw new IOException(e);
+
+			try (FileSystem jarMount = FileSystems.newFileSystem(jar.toPath(), null)) {
+				Path resourcesPath = jarMount.getPath(resourcesRootPath);
+				Path targetPath = targetFolder.toPath();
+				copyRecursively(resourcesPath, targetPath);
+			}
 		}
 	}
 
+	private void copyRecursively(Path resourcesPath, Path targetPath) throws IOException {
+		
+		File childTargetFile = new File(targetPath.toFile().getPath() + separator + resourcesPath.getFileName());
+		Path childTargetPath = childTargetFile.toPath();
+		
+		if (Files.isDirectory(resourcesPath)) {
+			childTargetPath = Files.createDirectories(childTargetPath);
+			try (DirectoryStream<Path> stream = Files.newDirectoryStream(resourcesPath)) {
+				Iterator<Path> iterator = stream.iterator();
+				while(iterator.hasNext()) {
+					Path childResourcesPath = iterator.next();
+					copyRecursively(childResourcesPath, childTargetPath);
+				}
+			}
+		} else {
+			Files.copy(resourcesPath, childTargetPath, StandardCopyOption.REPLACE_EXISTING);
+		}
+	}
 
 	@Override
 	public int getRowCount() {
