@@ -8,7 +8,7 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>${project.basedir}/src/main/scripts</directory>
+			<directory>${project.basedir}/src/main/assembly/bin</directory>
 			<outputDirectory>/bin</outputDirectory>
 			<includes>
 				<include>*.bat</include>
