@@ -33,7 +33,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerInterfaceFileWriteCommand(bean), bean.baseStateManagerInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -43,7 +43,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerImplFileWriteCommand(bean), bean.baseStateManagerClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}
@@ -61,7 +61,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerInterfaceFileWriteCommand(bean), bean.stateManagerInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -71,7 +71,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerImplFileWriteCommand(bean), bean.stateManagerClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}
@@ -91,7 +91,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperInterfaceFileWriteCommand(bean), bean.baseMapperInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -101,7 +101,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperImplFileWriteCommand(bean), bean.baseMapperClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}
@@ -119,7 +119,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperInterfaceFileWriteCommand(bean), bean.mapperInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -129,7 +129,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperImplFileWriteCommand(bean), bean.mapperClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}

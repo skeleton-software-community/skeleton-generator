@@ -33,12 +33,12 @@ public class JUnitStrategy implements LayerStrategy {
             {
                 if (!bean.isComponent)
                 {
-                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanBuilderFileWriteCommand(bean), bean.viewClassName + "Builder");
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanBuilderFileWriteCommand(bean));
                     packageTreeNode.add(beanTreeNode);
 
                     for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
                     {
-                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentBuilderFileWriteCommand(oneToManyComponent), oneToManyComponent.referenceBean.viewClassName + "Builder");
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentBuilderFileWriteCommand(oneToManyComponent));
                         packageTreeNode.add(oneToManyComponentTreeNode);
                     }
                 }
@@ -58,12 +58,12 @@ public class JUnitStrategy implements LayerStrategy {
             {
                 if (!bean.isComponent)
                 {
-                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandFileWriteCommand(bean), bean.viewClassName + "Command");
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandFileWriteCommand(bean));
                     packageTreeNode.add(beanTreeNode);
 
                     for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
                     {
-                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandFileWriteCommand(oneToManyComponent), oneToManyComponent.referenceBean.viewClassName + "Command");
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandFileWriteCommand(oneToManyComponent));
                         packageTreeNode.add(oneToManyComponentTreeNode);
                     }
                 }
@@ -82,19 +82,19 @@ public class JUnitStrategy implements LayerStrategy {
             {
                 if (!bean.isComponent)
                 {
-                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandBuilderFileWriteCommand(bean), bean.viewClassName + "CommandBuilder");
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandBuilderFileWriteCommand(bean));
                     packageTreeNode.add(beanTreeNode);
 
                     for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
                     {
-                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandBuilderFileWriteCommand(oneToManyComponent), oneToManyComponent.referenceBean.viewClassName + "CommandBuilder");
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandBuilderFileWriteCommand(oneToManyComponent));
                         packageTreeNode.add(oneToManyComponentTreeNode);
                     }
                 }
             }
         }
         
-        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryImplFileWriteCommand(project), "Command builder factory impl");
+        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryImplFileWriteCommand(project));
         junitLayerTreeNode.add(commandBuilderFactoryTreeNode);
         
         

@@ -13,8 +13,6 @@ import org.skeleton.generator.repository.dao.datasource.impl.SimpleScriptFileRea
 
 
 public class DatabaseCleaner {
-
-	private static final String SCRIPT_FOLDER = "SQL";
 	
 	/*
 	 * properties
@@ -34,7 +32,7 @@ public class DatabaseCleaner {
 
 	public void cleanDatabase() throws IOException, InvalidFileException, SQLException {
 		
-		String scriptFilePath = porject.sourceFolder + File.separator + SCRIPT_FOLDER + File.separator + "MAIN.sql";
+		String scriptFilePath = porject.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "MAIN.sql";
 		SimpleScriptFileReader scriptFileReader = new SimpleScriptFileReader(scriptFilePath);	
 		String script = scriptFileReader.readScript();
 			

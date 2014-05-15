@@ -1,9 +1,9 @@
 package org.skeleton.generator.bc.command.file.impl.sql;
 
-import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.SingleFileWriteCommand;
 import org.skeleton.generator.model.metadata.FileType;
 
-public abstract class SqlFileWriteCommand extends AbstractFileWriteCommand{
+public abstract class SqlFileWriteCommand extends SingleFileWriteCommand{
 
 	/*
 	 * constructor

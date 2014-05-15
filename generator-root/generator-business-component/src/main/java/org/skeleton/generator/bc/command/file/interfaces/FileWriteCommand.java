@@ -16,5 +16,7 @@ public interface FileWriteCommand {
 
 	void execute() throws IOException;
 	
+	String getLabel();
+	
 	int getRowCount();
 }

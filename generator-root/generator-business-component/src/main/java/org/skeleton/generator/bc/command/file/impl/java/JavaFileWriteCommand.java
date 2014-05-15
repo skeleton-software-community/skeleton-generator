@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.SingleFileWriteCommand;
 import org.skeleton.generator.model.metadata.FileType;
 
 
@@ -18,7 +18,7 @@ import org.skeleton.generator.model.metadata.FileType;
  * @author Nicolas Thibault
  *
  */
-public abstract class JavaFileWriteCommand extends AbstractFileWriteCommand {
+public abstract class JavaFileWriteCommand extends SingleFileWriteCommand {
 
 	/*
 	 * properties

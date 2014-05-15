@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
@@ -10,7 +11,7 @@ public class PostgresqlMainDefinitionFileWriteCommand extends SqlFileWriteComman
 	private Project project;
 
 	public PostgresqlMainDefinitionFileWriteCommand(Project project) {
-		super(project.sourceFolder + "\\SQL", "MAIN");
+		super(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER, "MAIN");
 		this.project = project;
 	}
 

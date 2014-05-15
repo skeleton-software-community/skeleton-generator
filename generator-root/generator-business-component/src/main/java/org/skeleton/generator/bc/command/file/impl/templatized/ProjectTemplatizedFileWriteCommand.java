@@ -1,6 +1,5 @@
 package org.skeleton.generator.bc.command.file.impl.templatized;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.velocity.Template;
@@ -8,7 +7,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.SingleFileWriteCommand;
 import org.skeleton.generator.model.metadata.FileType;
 import org.skeleton.generator.model.om.Project;
 
@@ -16,9 +15,9 @@ import org.skeleton.generator.model.om.Project;
 /**
  * An implementation of the abstract file write command based on a Velocity {@link Template}
  * @author Nicolas Thibault
- *
+ *	
  */
-public class ProjectTemplatizedFileWriteCommand extends AbstractFileWriteCommand {
+public class ProjectTemplatizedFileWriteCommand extends SingleFileWriteCommand {
 	
 	private static VelocityEngine engine;
 	private static final String separator = "/";

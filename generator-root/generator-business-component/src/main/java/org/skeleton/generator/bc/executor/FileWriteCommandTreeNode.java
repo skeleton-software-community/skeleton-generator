@@ -13,12 +13,12 @@ public class FileWriteCommandTreeNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = 1L;
 
-	public FileWriteCommandTreeNode(FileWriteCommand fileWriteCommand, String label) {
-		super(new FileWriteCommandExecutor(fileWriteCommand, label));
+	public FileWriteCommandTreeNode(FileWriteCommand fileWriteCommand) {
+		super(new FileWriteCommandExecutor(fileWriteCommand));
 	}
 	
 	public FileWriteCommandTreeNode(String label) {
-		super(new FileWriteCommandExecutor(null, label));
+		super(new FileWriteCommandExecutor(label));
 	}
 	
 	public void execute() {

@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.batch.BatchFileWriteCommand;
@@ -12,7 +13,7 @@ public class PostgresqlBatchFileWriteCommand extends BatchFileWriteCommand {
 	private Project project;
 
 	public PostgresqlBatchFileWriteCommand(Project project) {
-		super(project.sourceFolder + "\\SQL", "BUILD");
+		super(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER, "BUILD");
 		this.project = project;
 	}
 

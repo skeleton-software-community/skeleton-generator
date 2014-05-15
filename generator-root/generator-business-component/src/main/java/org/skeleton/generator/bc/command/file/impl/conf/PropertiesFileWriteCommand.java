@@ -1,9 +1,9 @@
 package org.skeleton.generator.bc.command.file.impl.conf;
 
-import org.skeleton.generator.bc.command.file.impl.AbstractFileWriteCommand;
+import org.skeleton.generator.bc.command.file.impl.SingleFileWriteCommand;
 import org.skeleton.generator.model.metadata.FileType;
 
-public abstract class PropertiesFileWriteCommand extends AbstractFileWriteCommand {
+public abstract class PropertiesFileWriteCommand extends SingleFileWriteCommand {
 
 	/*
 	 * constructor
