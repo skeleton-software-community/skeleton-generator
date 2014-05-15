@@ -26,7 +26,7 @@ public class XmlFileBackupReader implements BackupReader {
 	private String backupFilePath;
 	private Table table;
 	private InputSourceProvider inputSourceProvider;
-	private XmlFileSourceAndScriptReader xmlFileScriptAndSourceReader;
+	private XmlFileSourceAndScriptParser xmlFileSourceAndScriptParser;
 	private SourceAndScriptBackupReader sourceAndScriptBackupReader;
 	
 	/*
@@ -35,7 +35,7 @@ public class XmlFileBackupReader implements BackupReader {
 	public XmlFileBackupReader(Table table, String backupFilePath, InputSourceProvider inputSourceProvider) {
 		this.table = table;
 		this.backupFilePath = backupFilePath;
-		this.xmlFileScriptAndSourceReader = new XmlFileSourceAndScriptReader();
+		this.xmlFileSourceAndScriptParser = new XmlFileSourceAndScriptParser();
 		this.inputSourceProvider = inputSourceProvider;
 	}
 
@@ -46,7 +46,7 @@ public class XmlFileBackupReader implements BackupReader {
 		DataSource inputSource;
 		
 		try {
-			sourceAndScript = xmlFileScriptAndSourceReader.readScript(backupFilePath);
+			sourceAndScript = xmlFileSourceAndScriptParser.parse(backupFilePath);
 		} catch (IOException e) {
 			throw new ReadBackupFailureException("Failed to read source and script for table : " + table.name,e);
 		}
