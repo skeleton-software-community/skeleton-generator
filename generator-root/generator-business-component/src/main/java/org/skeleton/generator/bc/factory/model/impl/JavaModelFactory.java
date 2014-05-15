@@ -35,12 +35,24 @@ public class JavaModelFactory implements ModelFactory {
 	 * properties injected by spring
 	 */
 	@Resource(name="javaPackageFactory")
-	PackageFactory packageFactory;
+	private PackageFactory packageFactory;
 	
 	
 	public Model buildModel(ProjectMetaData projectMetaData, Project project)
     {
-        Model model = new Model();
+        Model model = setUpModel(project);
+        
+        if (projectMetaData.getPackages() != null) {
+	        scanPackages(projectMetaData, model);
+	        fillPackages(projectMetaData, model);
+        }
+
+        return model;
+    }
+
+
+	private Model setUpModel(Project project) {
+		Model model = new Model();
         model.project = project;
 
         model.serviceExceptionPackageName = project.domainName + "." + project.projectName + ".exception.services";
@@ -51,16 +63,25 @@ public class JavaModelFactory implements ModelFactory {
         model.commandPackageName = project.domainName + "." + project.projectName + ".junit.data.command";
 
         model.packages = new ArrayList<Package>();
+		return model;
+	}
 
-        if (projectMetaData.getPackages() != null) {
-	        for (PackageMetaData packageMetaData : projectMetaData.getPackages())
-	        {
-	        	logger.info("adding package : " + packageMetaData.getName());
-				Package myPackage = packageFactory.buildPackage(packageMetaData, model);
-				logger.info("package : " + myPackage.name + " added");
-	        }
-        }
 
-        return model;
-    }
+	private void fillPackages(ProjectMetaData projectMetaData, Model model) {
+		for (PackageMetaData packageMetaData : projectMetaData.getPackages()){
+			Package myPackage = packageFactory.fillPackage(packageMetaData, model);
+			logger.info("Filling package : " + myPackage.name);
+			
+		}
+	}
+
+
+	private void scanPackages(ProjectMetaData projectMetaData, Model model) {
+		for (PackageMetaData packageMetaData : projectMetaData.getPackages())
+		{
+			logger.info("Scanning package : " + packageMetaData.getName());
+			Package myPackage = packageFactory.scanPackage(packageMetaData, model);
+			model.packages.add(myPackage);
+		}
+	}
 }
