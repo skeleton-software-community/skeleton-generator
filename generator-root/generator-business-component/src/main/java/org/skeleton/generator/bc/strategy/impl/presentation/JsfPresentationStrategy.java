@@ -24,10 +24,10 @@ public class JsfPresentationStrategy implements LayerStrategy {
 		
 		FileWriteCommandTreeNode presentationLayerTreeNode = new FileWriteCommandTreeNode("Presentation Layer");
 
-		FileWriteCommandTreeNode i18nTreeNode = new FileWriteCommandTreeNode(new I18nFileWriteCommand(project), "I18n file");
+		FileWriteCommandTreeNode i18nTreeNode = new FileWriteCommandTreeNode(new I18nFileWriteCommand(project));
 		presentationLayerTreeNode.add(i18nTreeNode);
 		
-		FileWriteCommandTreeNode facesConfigTreeNode = new FileWriteCommandTreeNode(new JsfFacesConfigFileWriteCommand(project), "Faces Config");
+		FileWriteCommandTreeNode facesConfigTreeNode = new FileWriteCommandTreeNode(new JsfFacesConfigFileWriteCommand(project));
 		presentationLayerTreeNode.add(facesConfigTreeNode);
 		
 		FileWriteCommandTreeNode listViewTreeNode = new FileWriteCommandTreeNode("List view files");
@@ -40,14 +40,14 @@ public class JsfPresentationStrategy implements LayerStrategy {
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					if (bean.isSimple()) {
-						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfListViewFileWriteCommand(bean), bean.className + "List");
+						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfListViewFileWriteCommand(bean));
 						packageTreeNode.add(beanTreeNode);
 					} else {
-						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfListViewFileWriteCommand(bean), bean.className + "List");
+						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfListViewFileWriteCommand(bean));
 						packageTreeNode.add(beanTreeNode);
 						
 						for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
-							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentListViewFileWriteCommand(oneToManyComponent), oneToManyComponent.referenceBean.className + "List");
+							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentListViewFileWriteCommand(oneToManyComponent));
 							packageTreeNode.add(componentTreeNode);
 						}
 					}
@@ -65,19 +65,19 @@ public class JsfPresentationStrategy implements LayerStrategy {
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					if (bean.isSimple()) {
-						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfDetailViewFileWriteCommand(bean), bean.className + "Detail");
+						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new SimpleJsfDetailViewFileWriteCommand(bean));
 						packageTreeNode.add(beanTreeNode);
 					} else {
-						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfDetailViewFileWriteCommand(bean), bean.className + "Detail");
+						FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfDetailViewFileWriteCommand(bean));
 						packageTreeNode.add(beanTreeNode);
 						
 						for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
-							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentDetailViewFileWriteCommand(oneToManyComponent), oneToManyComponent.referenceBean.className + "Detail");
+							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentDetailViewFileWriteCommand(oneToManyComponent));
 							packageTreeNode.add(componentTreeNode);
 						}
 						
 						for (UniqueComponent uniqueComponent:bean.uniqueComponentList) {
-							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfUniqueComponentDetailViewFileWriteCommand(uniqueComponent), uniqueComponent.referenceBean.className + "Detail");
+							FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfUniqueComponentDetailViewFileWriteCommand(uniqueComponent));
 							packageTreeNode.add(componentTreeNode);
 						}
 					}

@@ -49,8 +49,13 @@ public class FileWriteCommandExecutor {
 	/*
 	 * constructor
 	 */
-	public FileWriteCommandExecutor(FileWriteCommand command, String label) {
+	public FileWriteCommandExecutor(FileWriteCommand command) {
 		this.command = command;
+		this.label = command.getLabel();
+		this.selected = true;
+	}
+	
+	public FileWriteCommandExecutor(String label) {
 		this.label = label;
 		this.selected = true;
 	}
@@ -59,7 +64,7 @@ public class FileWriteCommandExecutor {
 	public void execute() {
 		if (selected) {
 
-			logger.info("start executing command : " + label);
+			logger.info("executing command : " + label);
 			if (command != null) {
 				try {
 					command.execute();

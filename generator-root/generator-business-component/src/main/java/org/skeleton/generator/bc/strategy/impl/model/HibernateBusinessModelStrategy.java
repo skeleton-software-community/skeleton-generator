@@ -22,14 +22,14 @@ public class HibernateBusinessModelStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode omTreeNode = new FileWriteCommandTreeNode("Entities");
 			packageTreeNode.add(omTreeNode);
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new EntityBeanFileWriteCommand(bean), bean.className);
+				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new EntityBeanFileWriteCommand(bean));
 				omTreeNode.add(beanTreeNode);
 			}
 
 			FileWriteCommandTreeNode ovTreeNode = new FileWriteCommandTreeNode("View beans");
 			packageTreeNode.add(ovTreeNode);
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanFileWriteCommand(bean), bean.viewClassName);
+				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanFileWriteCommand(bean));
 				ovTreeNode.add(beanTreeNode);
 			}
 		}

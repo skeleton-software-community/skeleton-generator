@@ -1,6 +1,8 @@
 package org.skeleton.generator.command;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.sql.DataSource;
 
@@ -71,6 +73,8 @@ public class DatabaseBuilder {
 				return;
 			}
 			
+			int maxStep = resolveMaxStep(project);
+			
 			try {
 				logger.info("start cleaning database");
 				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
@@ -80,19 +84,28 @@ public class DatabaseBuilder {
 				
 				logger.info("cleaning database completed");
 				
-				for (Package myPackage:project.model.packages) {
-					logger.info("start building package : " + myPackage.name);
+				logger.info("start bulding database");
+				
+				for (int step = 1; step <= maxStep; step++) {
 					
-					for (Table table:myPackage.tables) {
-						logger.info("start building table : " + table.name);
+					logger.info("start bulding step " + step);
+				
+					for (Package myPackage:project.model.packages) {
+						logger.info("start building package : " + myPackage.name);
 						
-						TableBuilder tableBuilder = new TableBuilder(table, dataSource);
-						tableBuilder.buildTable();
-						
-						logger.info("building table : " + table.name + " completed");
+						for (Table table:myPackage.tables) {
+							logger.info("start building table : " + table.name);
+							
+							TableBuilder tableBuilder = new TableBuilder(table, dataSource, step);
+							tableBuilder.buildTable();
+							
+							logger.info("building table : " + table.name + " completed");
+						}
+						logger.info("building package " + myPackage.name + " completed");
 					}
-					logger.info("building package " + myPackage.name + " completed");
+					logger.info("bulding step " + step + " completed");
 				}
+				
 				logger.info("bulding database completed");
 				
 			} catch (Exception e) {
@@ -100,5 +113,14 @@ public class DatabaseBuilder {
 				return;
 			}
 		}
+	}
+
+
+	private static int resolveMaxStep(Project project) {
+		int maxStep = 0;
+		while (Files.exists(Paths.get(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + String.valueOf(maxStep+1)))) {
+			maxStep++;
+		}
+		return maxStep;
 	}
 }
