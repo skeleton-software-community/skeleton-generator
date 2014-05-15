@@ -3,6 +3,7 @@ package org.skeleton.generator.model.om;
 import java.util.List;
 
 import org.skeleton.generator.exception.BeanNotFoundException;
+import org.skeleton.generator.exception.PackageNotFoundException;
 import org.skeleton.generator.exception.TableNotFoundException;
 
 
@@ -106,22 +107,28 @@ public class Model {
 				+ tableName);
 	}
 
-
+	public Package findPackage(String packageName){
+		String lowerCaseName = packageName.toLowerCase();
+		for(Package packg : this.packages){
+			if(packg.name.equals(lowerCaseName)) return packg;
+		}
+		throw new PackageNotFoundException(packageName);
+	}
 
 	/**
 	 * run through all the beans until it is found
-	 * @param tableName
+	 * @param tableOriginalName the original table name
 	 * @return
 	 * @throws BeanNotFoundException if no bean which associated table has the corresponding name
 	 */
-	public Bean findBean(String tableName) {
+	public Bean findBean(String tableOriginalName) {
 		for (Package myPackage : this.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (bean.table.originalName.equals(tableName)) {
+				if (bean.table.originalName.equals(tableOriginalName)) {
 					return bean;
 				}
 			}
 		}
-		throw new BeanNotFoundException("invalid table reference : " + tableName);
+		throw new BeanNotFoundException("invalid table reference : " + tableOriginalName);
 	}
 }

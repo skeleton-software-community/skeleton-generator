@@ -6,5 +6,7 @@ import org.skeleton.generator.model.om.Table;
 
 public interface TableFactory {
 	
-	Table buildTable (TableMetaData tableMetaData, Package myPackage);
+	Table scanTable(TableMetaData tableMetaData, Package myPackage);
+	
+	Table fillTable(TableMetaData tableMetaData, Package myPackage);
 }
