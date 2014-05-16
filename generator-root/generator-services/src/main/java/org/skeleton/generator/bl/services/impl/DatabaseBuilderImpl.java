@@ -2,12 +2,11 @@ package org.skeleton.generator.bl.services.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.skeleton.generator.bc.folder.FolderUtil;
 import org.skeleton.generator.bl.services.interfaces.DatabaseBuilder;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.model.om.Package;
@@ -36,7 +35,7 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 		
 		logger.info("start bulding database");
 		
-		int maxStep = resolveMaxStep(project);
+		int maxStep = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER);
 		
 		for (int step = 1; step <= maxStep; step++) {
 			
@@ -62,12 +61,6 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 		
 	}
 	
-	private static int resolveMaxStep(Project project) {
-		int maxStep = 0;
-		while (Files.exists(Paths.get(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + String.valueOf(maxStep+1)))) {
-			maxStep++;
-		}
-		return maxStep;
-	}
+
 
 }
