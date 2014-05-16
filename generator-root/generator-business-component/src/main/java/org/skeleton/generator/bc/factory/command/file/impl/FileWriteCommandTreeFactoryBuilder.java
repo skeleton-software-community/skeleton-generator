@@ -1,6 +1,6 @@
-package org.skeleton.generator.bc.factory.command.impl;
+package org.skeleton.generator.bc.factory.command.file.impl;
 
-import org.skeleton.generator.bc.factory.command.interfaces.FileWriteCommandTreeFactory;
+import org.skeleton.generator.bc.factory.command.file.interfaces.FileWriteCommandTreeFactory;
 import org.skeleton.generator.model.om.Project;
 
 /**

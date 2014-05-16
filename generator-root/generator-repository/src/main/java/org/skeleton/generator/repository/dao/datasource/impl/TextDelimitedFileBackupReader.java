@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.ReadBackupFailureException;
-import org.skeleton.generator.model.backup.BackupCommandArguments;
 import org.skeleton.generator.model.backup.PopulateCommandType;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
@@ -22,17 +21,19 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 	 * properties
 	 */
 	private CsvFileParser csvFileParser;
+	private Table table;
 	
 	/*
 	 * constructor
 	 */
-	public TextDelimitedFileBackupReader(int columnNumber) {
-		this.csvFileParser = new CsvFileParserImpl(columnNumber, StandardCharsets.UTF_8);
+	public TextDelimitedFileBackupReader(Table table) {
+		this.csvFileParser = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
+		this.table = table;
 	}
 	
-	public BackupCommandArguments readBackupArgs(Table table, String backupFilePath)  {
+	public BackupCommandArguments readBackupArgs(String backupFilePath)  {
 		BackupCommandArguments result = new BackupCommandArguments();
-		result.setArguments(readArgs(table, backupFilePath));
+		result.setArguments(readArgs(backupFilePath));
 		result.setType(readType());
 		return result;
 	}
@@ -41,7 +42,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 		return PopulateCommandType.INSERT; //TODO put type in csv header
 	}
 
-	private List<Object[]> readArgs(Table table, String backupFilePath){
+	private List<Object[]> readArgs(String backupFilePath){
 		try {
 			List<String[]> stringArgsList = csvFileParser.readData(backupFilePath);
 			List<Object[]> argsList = new ArrayList<>();

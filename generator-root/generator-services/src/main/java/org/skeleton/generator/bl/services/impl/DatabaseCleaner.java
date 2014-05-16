@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.repository.dao.jdbc.impl.JdbcRawCommand;
-import org.skeleton.generator.repository.file.impl.SimpleScriptFileReaderImpl;
 import org.skeleton.generator.repository.file.interfaces.SimpleScriptFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

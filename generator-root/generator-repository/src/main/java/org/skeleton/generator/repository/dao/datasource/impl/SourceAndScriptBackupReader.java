@@ -25,18 +25,20 @@ public class SourceAndScriptBackupReader{
 	 * properties
 	 */
 	private JdbcTemplate jdbcTemplate;
+	private Table table;
 	
 	/*
 	 * constructor
 	 */
-	public SourceAndScriptBackupReader(DataSource dataSource) {
+	public SourceAndScriptBackupReader(DataSource dataSource, Table table) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.table = table;
 	}
 	
 	
-	public List<Object[]> readBackupArgs(Table table, String script) throws ReadBackupFailureException {
+	public List<Object[]> readBackupArgs(String script) throws ReadBackupFailureException {
 		
-		return jdbcTemplate.query(script, new BasicRowMapper(table));
+		return jdbcTemplate.query(script, new BasicRowMapper());
 
 	}
 	
@@ -44,15 +46,6 @@ public class SourceAndScriptBackupReader{
 
 	private class BasicRowMapper implements RowMapper<Object[]>{
 		
-		private Table table;
-		
-	    private BasicRowMapper(Table table) {
-			super();
-			this.table = table;
-		}
-
-
-
 		@Override
 	    public Object[] mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 

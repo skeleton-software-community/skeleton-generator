@@ -1,8 +1,8 @@
 package org.skeleton.generator.bl.services.impl;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
-import org.skeleton.generator.bc.factory.command.impl.FileWriteCommandTreeFactoryBuilder;
-import org.skeleton.generator.bc.factory.command.interfaces.FileWriteCommandTreeFactory;
+import org.skeleton.generator.bc.factory.command.file.impl.FileWriteCommandTreeFactoryBuilder;
+import org.skeleton.generator.bc.factory.command.file.interfaces.FileWriteCommandTreeFactory;
 import org.skeleton.generator.bl.services.interfaces.CodeGenerator;
 import org.skeleton.generator.model.om.Project;
 import org.springframework.stereotype.Component;

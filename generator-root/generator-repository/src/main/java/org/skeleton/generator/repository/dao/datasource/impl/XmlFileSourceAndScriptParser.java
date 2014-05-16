@@ -1,50 +1,57 @@
 package org.skeleton.generator.repository.dao.datasource.impl;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
+import org.skeleton.generator.exception.BackupFileNotFoundException;
+import org.skeleton.generator.exception.InvalidXmlBackupFileException;
 import org.skeleton.generator.model.backup.SourceAndScript;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * This class is used to convert a xml file to a {@link SourceAndScript}<br/>
- * should use Jaxb2 for next releases
  * @author Nicolas Thibault
  *
  */
 public class XmlFileSourceAndScriptParser {
+	
+	private static final String SCHEMA_LOCATION = "backup-1.0.xsd";
 
 	public SourceAndScript parse(String scriptFilePath) throws IOException {
 
-		String source = null;
-		String script = null;
-		Document document = null;
+		Path path = Paths.get(scriptFilePath);
+		
+		if (!Files.exists(path)) {
+			throw new BackupFileNotFoundException("Unable to find backup file : " + scriptFilePath);
+		}
+		File file = path.toFile();
 		
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			document = builder.parse(Paths.get(scriptFilePath).toFile());
+			JAXBContext jaxbContext = JAXBContext.newInstance(SourceAndScript.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			
-			Element element = document.getDocumentElement();
-			source = element.getElementsByTagName("source").item(0).getTextContent();
-			script = element.getElementsByTagName("script").item(0).getTextContent();
+			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI); 
+	        Schema schema = schemaFactory.newSchema(getClass().getClassLoader().getResource(SCHEMA_LOCATION));
+	        jaxbUnmarshaller.setSchema(schema);
 			
-
-		
-		} catch (Exception e) {
-			throw new IOException("failed to read xml file : " + scriptFilePath,e);
+	        SourceAndScript sourceAndScript = (SourceAndScript) jaxbUnmarshaller.unmarshal(file);
+			
+			return sourceAndScript;
+			
+		} catch (JAXBException | SAXException e) {
+			throw new InvalidXmlBackupFileException("Unable to parse backup file : " + scriptFilePath, e);
 		}
-		
-		SourceAndScript sourceAndScript = new SourceAndScript();
-		sourceAndScript.setScript(script);
-		sourceAndScript.setSource(source);
-		
-		return sourceAndScript;
 	}
 
 }

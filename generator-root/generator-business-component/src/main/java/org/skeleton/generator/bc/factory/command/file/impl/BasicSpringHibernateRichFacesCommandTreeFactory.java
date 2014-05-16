@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.factory.command.impl;
+package org.skeleton.generator.bc.factory.command.file.impl;
 
 import org.skeleton.generator.bc.strategy.impl.bc.BusinessComponentStrategy;
 import org.skeleton.generator.bc.strategy.impl.configuration.SpringHibernateRichfacesConfigurationStrategy;
