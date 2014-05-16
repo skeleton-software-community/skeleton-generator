@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.file.impl.templatized;
+package org.skeleton.generator.bc.command.file.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +32,11 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 		this.project = project;
 		this.resourcesRootPath = resourcesRootPath;
 		this.targetRootPath = targetRootPath;
+	}
+	
+	@Override
+	public String getLabel() {
+		return "resources copied to " + targetRootPath;
 	}
 
 	@Override

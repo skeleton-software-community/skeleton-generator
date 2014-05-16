@@ -9,10 +9,10 @@ set SKLGEN_RUNNABLE_JAR=%SKLGEN_HOME%\boot\generator-bash-%SKLGEN_VERSION%.jar
 set SKLGEN_LIB=%SKLGEN_HOME%\lib
 set SKLGEN_CLASSPATH=%SKLGEN_RUNNABLE_JAR%;%SKLGEN_LIB%\*
 
-set GENERATE_CLASS=org.skeleton.generator.command.CodeGenerator
-set INIT_CLASS=org.skeleton.generator.command.ProjectCreator
-set BUILDDB_CLASS=org.skeleton.generator.command.DatabaseBuilder
-set POPULATEDB_CLASS=org.skeleton.generator.command.DatabasePopulator
+set GENERATE_CLASS=org.skeleton.generator.command.CodeGeneratorLauncher
+set INIT_CLASS=org.skeleton.generator.command.ProjectInitializerLauncher
+set BUILDDB_CLASS=org.skeleton.generator.command.DatabaseBuilderLauncher
+set POPULATEDB_CLASS=org.skeleton.generator.command.DatabasePopulatorLauncher
 
 echo current directory : %CD%
 echo generator home : %SKLGEN_HOME%
@@ -66,12 +66,8 @@ goto ERROR
 
 :GET_SKLGEN_CMD_LINE_ARGS
 @REM ==== START COMMAND LINE ARGS ====
-if %1a==a goto CHECK_SKLGEN_CMD_LINE_ARGS
-set SKLGEN_CMD_LINE_ARGS=%SKLGEN_CMD_LINE_ARGS% %1
-shift
-goto GET_SKLGEN_CMD_LINE_ARGS
+set SKLGEN_CMD_LINE_ARGS=%1
 
-:CHECK_SKLGEN_CMD_LINE_ARGS
 if %SKLGEN_CMD_LINE_ARGS%==help goto HELP
 if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
 if %SKLGEN_CMD_LINE_ARGS%==generate goto GENERATE

@@ -6,38 +6,25 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.skeleton.generator.bc.command.jdbc.impl.SimpleScriptCommand;
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.repository.dao.datasource.impl.SimpleScriptFileReader;
+import org.skeleton.generator.repository.dao.jdbc.impl.JdbcRawCommand;
+import org.skeleton.generator.repository.file.impl.SimpleScriptFileReaderImpl;
+import org.skeleton.generator.repository.file.interfaces.SimpleScriptFileReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class DatabaseCleaner {
+	
+	@Autowired
+	private SimpleScriptFileReader scriptFileReader;	
 
-	private static final String SCRIPT_FOLDER = "SQL";
-	
-	/*
-	 * properties
-	 */
-	private Project porject;
-	private DataSource dataSource;
-	
-	/*
-	 * constructor
-	 */
-	public DatabaseCleaner(Project project, DataSource dataSource) {
-		this.porject = project;
-		this.dataSource = dataSource;
+	public void cleanDatabase(DataSource dataSource, Project project) throws IOException, InvalidFileException, SQLException {
 		
-	}
-	
-
-	public void cleanDatabase() throws IOException, InvalidFileException, SQLException {
-		
-		String scriptFilePath = porject.sourceFolder + File.separator + SCRIPT_FOLDER + File.separator + "MAIN.sql";
-		SimpleScriptFileReader scriptFileReader = new SimpleScriptFileReader(scriptFilePath);	
-		String script = scriptFileReader.readScript();
+		String scriptFilePath = project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "MAIN.sql";
+		String script = scriptFileReader.readScript(scriptFilePath);
 			
-		new SimpleScriptCommand(dataSource, script).execute();
+		new JdbcRawCommand(dataSource, script).execute();
 	}
 }

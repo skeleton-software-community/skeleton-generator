@@ -16,9 +16,9 @@ import org.w3c.dom.Element;
  * @author Nicolas Thibault
  *
  */
-public class XmlFileSourceAndScriptReader {
+public class XmlFileSourceAndScriptParser {
 
-	public SourceAndScript readScript(String scriptFilePath) throws IOException {
+	public SourceAndScript parse(String scriptFilePath) throws IOException {
 
 		String source = null;
 		String script = null;

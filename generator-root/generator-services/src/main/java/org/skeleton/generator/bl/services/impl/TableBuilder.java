@@ -6,38 +6,41 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.skeleton.generator.bc.command.jdbc.impl.SimpleScriptCommand;
 import org.skeleton.generator.exception.InvalidFileException;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
-import org.skeleton.generator.repository.dao.datasource.impl.SimpleScriptFileReader;
+import org.skeleton.generator.repository.dao.jdbc.impl.JdbcRawCommand;
+import org.skeleton.generator.repository.file.impl.SimpleScriptFileReaderImpl;
+import org.skeleton.generator.repository.file.interfaces.SimpleScriptFileReader;
 
 
 public class TableBuilder {
 
-	private static final String SCRIPT_FOLDER = "SQL";
-	
 	/*
 	 * properties
 	 */
 	private Table table;
 	private DataSource dataSource;
+	private SimpleScriptFileReader scriptFileReader;
+	private int step;
 	
 	/*
 	 * constructor
 	 */
-	public TableBuilder(Table table, DataSource dataSource) {
+	public TableBuilder(Table table, DataSource dataSource, int step) {
 		this.table = table;
 		this.dataSource = dataSource;
-		
+		this.scriptFileReader = new SimpleScriptFileReaderImpl();
+		this.step = step;
 	}
 	
 
 	public void buildTable() throws IOException, InvalidFileException, SQLException {
 		
-		String scriptFilePath = table.myPackage.model.project.sourceFolder + File.separator + SCRIPT_FOLDER + File.separator + table.myPackage.name + File.separator + table.originalName + ".sql";
-		SimpleScriptFileReader scriptFileReader = new SimpleScriptFileReader(scriptFilePath);	
-		String script = scriptFileReader.readScript();
+		String scriptFilePath = table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + step + File.separator + table.myPackage.name + File.separator + table.originalName + ".sql";
+		
+		String script = scriptFileReader.readScript(scriptFilePath);
 			
-		new SimpleScriptCommand(dataSource, script).execute();
+		new JdbcRawCommand(dataSource, script).execute();
 	}
 }
