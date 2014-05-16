@@ -7,17 +7,12 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.skeleton.generator.bl.services.impl.TablePopulatorFactory;
 import org.skeleton.generator.bl.services.interfaces.DatabasePopulator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.skeleton.generator.bl.services.interfaces.TablePopulator;
-import org.skeleton.generator.exception.BackupFileNotFoundException;
 import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
-import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
