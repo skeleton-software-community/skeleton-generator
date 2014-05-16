@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.oracle;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
 import org.skeleton.generator.model.metadata.DataType;
 import org.skeleton.generator.model.om.Column;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.QualifiedColumn;
 import org.skeleton.generator.model.om.Table;
 
@@ -23,7 +25,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	 */
 	public OracleTableDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + "\\SQL\\" + table.myPackage.name.toUpperCase(), table.originalName);
+		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
 
 		this.table = table;
 		this.sequenceName = table.name + "_id_seq";
@@ -45,7 +47,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	public void writeContent() throws IOException {
 		
 		createGet();
-		
 		createTable();
 		
 		if (table.myPackage.model.project.audited) {
@@ -62,7 +63,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	}
 
 	private void createTable() {
-		writeLine("-- suppression de la table --");
+		writeLine("-- drop table --");
 		writeLine("BEGIN");
 		writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "';");
 		writeLine("EXCEPTION");
@@ -71,16 +72,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 
-		writeLine("-- suppression de la sequence --");
-		writeLine("BEGIN");
-		writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE " + sequenceName + "';");
-		writeLine("EXCEPTION");
-		writeLine("WHEN OTHERS THEN NULL;");
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
+		
 
-		writeLine("-- table --");
+		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
 		write(table.columns.get(0).name + " " + DataType.getOracleType(table.columns.get(0).dataType));
@@ -115,32 +109,22 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		
 		writeLine(", CONSTRAINT PK_" + table.name + " PRIMARY KEY (" + this.table.columns.get(0).name + ")");
 		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(" + this.table.columns.get(0).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND)");
-		
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				write(", CONSTRAINT FK_" + table.name + "_" + i + " FOREIGN KEY (" + this.table.columns.get(i).name + ") REFERENCES " + table.columns.get(i).referenceTable.name);
-				if (this.table.columns.get(i).deleteCascade) {
-					write(" ON DELETE CASCADE");
-				}
-				skipLine();
-			}
-		}
 
 		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_TBL");
 		writeLine("/");
+		skipLine();
 		
-		for (int i = 1; i < this.table.columns.size(); i++)
-        {
-            if (this.table.columns.get(i).referenceTable != null)
-            {
-                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND;/");
-                
-            }
-        }
+		writeLine("-- drop sequence --");
+		writeLine("BEGIN");
+		writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE " + sequenceName + "';");
+		writeLine("EXCEPTION");
+		writeLine("WHEN OTHERS THEN NULL;");
+		writeLine("END;");
+		writeLine("/");
 		skipLine();
 
-		writeLine("-- sequence --");
-		writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE;");
+		writeLine("-- create sequence --");
+		writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
 		writeLine("/");
 		skipLine();
 	}
@@ -151,7 +135,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	private void createAuditTable()
     {
 		
-		writeLine("-- suppression de la table d'audit --");
+		writeLine("-- drop audit table --");
 		writeLine("BEGIN");
 		writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "_AUD';");
 		writeLine("EXCEPTION");
@@ -160,7 +144,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 		
-        writeLine("-- table d'audit des elements --");
+        writeLine("-- create audit table --");
         writeLine("CREATE TABLE " + table.name + "_AUD");
         writeLine("(");
         writeLine(table.columns.get(0).name + " int NOT NULL,");
@@ -179,7 +163,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("/");
         skipLine();
         
-        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV);/");
+        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV)");
+        writeLine("/");
+        skipLine();
     }
 	
 	/*
@@ -215,6 +201,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		}
 		
 		writeLine("*/");
+		skipLine();
 		
 	}
 	
@@ -251,7 +238,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		List<Column> findColumnList = this.table.getFindColumnList();
 		List<Column> tempColumnList;
 
-		writeLine("-- procedure permettant de trouver un element a partir de codes --");
+		writeLine("-- used to find element from business key --");
 		writeLine("CREATE OR REPLACE PROCEDURE find_" + table.name.toLowerCase());
 		writeLine("(");
 
@@ -315,10 +302,8 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	/* create insert stored procedures */
 
 	private void createInsert() {
-		List<Column> insertColumnList = this.table.getInsertColumnList();
-		List<Column> tempColumnList;
 
-		writeLine("-- procedure permettant d'inserer un nouvel element --");
+		writeLine("-- used to insert a new element --");
 		writeLine("CREATE OR REPLACE PROCEDURE ins_" + table.name.toLowerCase());
 		writeLine("(");
 
@@ -372,51 +357,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("END;");
 		writeLine("/");
 		skipLine();
-
-		writeLine("-- procedure permettant d'inserer un nouvel element a l'aide des codes --");
-		writeLine("CREATE OR REPLACE PROCEDURE ins_" + table.name.toLowerCase() + "_bc");
-		writeLine("(");
-		write("v" + fieldMap.get(insertColumnList.get(0).name) + " " + DataType.getPlOracleType(insertColumnList.get(0).dataType));
-
-		for (int i = 1; i < insertColumnList.size(); i++) {
-			writeLine(",");
-			write("v" + fieldMap.get(insertColumnList.get(i).name) + " " + DataType.getPlOracleType(insertColumnList.get(i).dataType));
-		}
-
-		skipLine();
-		writeLine(") AS");
-
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + " NUMBER;");
-			}
-		}
-		writeLine("BEGIN");
-
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				write("find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
-
-				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
-
-				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name) + ",");
-				}
-
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
-			}
-		}
-
-		write("ins_" + table.name.toLowerCase() + " (v" + fieldMap.get(this.table.columns.get(1).name));
-
-		for (int i = 2; i < this.table.columns.size(); i++) {
-			write(", v" + fieldMap.get(this.table.columns.get(i).name));
-		}
-
-		writeLine(");");
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
 	}
 	
 	
@@ -424,10 +364,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	private void createUpdate() {
 
-		List<Column> insertColumnList = this.table.getInsertColumnList();
-		List<Column> tempColumnList;
-
-		writeLine("-- procedure permettant de mettre a jour un element --");
+		writeLine("-- used to update an element --");
 		writeLine("CREATE OR REPLACE PROCEDURE upd_" + table.name.toLowerCase());
 		writeLine("(");
 
@@ -471,64 +408,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			writeLine(");");
 		}
 		
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
-
-		writeLine("-- procedure permettant de mettre a jour element a l'aide des codes --");
-		writeLine("CREATE OR REPLACE PROCEDURE upd_" + table.name.toLowerCase() + "_bc");
-		writeLine("(");
-		
-		write("v" + fieldMap.get(insertColumnList.get(0).name) + " " + DataType.getPlOracleType(insertColumnList.get(0).dataType));
-
-		for (int i = 1; i < insertColumnList.size(); i++) {
-			writeLine(",");
-			write("v" + fieldMap.get(insertColumnList.get(i).name) + " " + DataType.getPlOracleType(insertColumnList.get(i).dataType));
-		}
-
-		skipLine();
-		writeLine(") AS");
-
-		writeLine("vID NUMBER;");
-		
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + " NUMBER;");
-			}
-		}
-		writeLine("BEGIN");
-		
-		write("find_" + this.table.name.toLowerCase() + " (");
-
-		tempColumnList = this.table.getFindColumnList();
-
-		for (int j = 0; j < tempColumnList.size(); j++) {
-			write("v" + fieldMap.get(tempColumnList.get(j).name) + ",");
-		}
-
-		writeLine("vID);");
-
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				write("find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
-
-				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
-
-				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name) + ",");
-				}
-
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
-			}
-		}
-
-		write("upd_" + table.name.toLowerCase() + " (vID");
-
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			write(", v" + fieldMap.get(this.table.columns.get(i).name));
-		}
-
-		writeLine(");");
 		writeLine("END;");
 		writeLine("/");
 		skipLine();

@@ -19,7 +19,7 @@ import org.skeleton.generator.model.metadata.FileType;
  * @author Nicolas Thibault
  *
  */
-public abstract class AbstractFileWriteCommand implements FileWriteCommand {
+public abstract class SingleFileWriteCommand implements FileWriteCommand {
 
 	/*
 	 * properties
@@ -45,12 +45,16 @@ public abstract class AbstractFileWriteCommand implements FileWriteCommand {
 	/**
 	 * constructor
 	 */
-	public AbstractFileWriteCommand(String folderName, String fileName, FileType fileType) {
+	public SingleFileWriteCommand(String folderName, String fileName, FileType fileType) {
 		writer = new StringWriter();
 		this.fileType = fileType;
 		this.folderName = folderName;
 		this.qualifiedFileName = fileName + fileType.getExtension();
 		this.filePath = Paths.get(folderName + File.separator + qualifiedFileName);
+	}
+	
+	public String getLabel() {
+		return filePath.toString();
 	}
 	
 

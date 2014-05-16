@@ -1,7 +1,7 @@
 package org.skeleton.generator.command;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
-import org.skeleton.generator.bl.services.interfaces.CodeWriter;
+import org.skeleton.generator.bl.services.interfaces.CodeGenerator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
@@ -21,12 +21,12 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author Nicolas Thibault
  * 
  */
-public class CodeGenerator {
+public class CodeGeneratorLauncher {
 
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(CodeGenerator.class);
+	private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorLauncher.class);
 
 	/**
 	 * main method to be executed
@@ -66,9 +66,9 @@ public class CodeGenerator {
 			try {
 				logger.info("start executing code writing");
 
-				CodeWriter codeWriter = appContext.getBean(CodeWriter.class);
-				FileWriteCommandTree tree = codeWriter.buildFileWriteCommandTree(project);
-				codeWriter.writeCode(tree);
+				CodeGenerator codeGenerator = appContext.getBean(CodeGenerator.class);
+				FileWriteCommandTree tree = codeGenerator.buildFileWriteCommandTree(project);
+				codeGenerator.generateCode(tree);
 
 				logger.info("executing code writing completed");
 

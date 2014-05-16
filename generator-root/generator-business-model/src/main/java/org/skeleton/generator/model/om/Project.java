@@ -1,5 +1,7 @@
 package org.skeleton.generator.model.om;
 
+import java.io.File;
+
 import org.skeleton.generator.model.metadata.DatabaseEngine;
 import org.skeleton.generator.model.metadata.SkeletonType;
 
@@ -12,6 +14,8 @@ import org.skeleton.generator.model.metadata.SkeletonType;
  *
  */
 public class Project {
+	
+	public static final String BUILD_SCRIPT_FOLDER = "SQL" + File.separator + "BUILD";
 
 	/*
 	 * properties

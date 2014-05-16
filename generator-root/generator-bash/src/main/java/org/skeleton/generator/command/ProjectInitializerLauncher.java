@@ -1,7 +1,7 @@
 package org.skeleton.generator.command;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
-import org.skeleton.generator.bl.services.interfaces.CodeWriter;
+import org.skeleton.generator.bl.services.interfaces.CodeGenerator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.metadata.DatabaseEngine;
@@ -24,11 +24,11 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author Nicolas Thibault
  *
  */
-public class ProjectCreator {
+public class ProjectInitializerLauncher {
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(ProjectCreator.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProjectInitializerLauncher.class);
 	
 	
 	/**
@@ -53,7 +53,7 @@ public class ProjectCreator {
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
 			Project project;
 			
-			CodeWriter codeWriter = appContext.getBean(CodeWriter.class);
+			CodeGenerator codeWriter = appContext.getBean(CodeGenerator.class);
 			
 			try {
 				logger.info("start loading project");
@@ -72,7 +72,7 @@ public class ProjectCreator {
 				logger.info("start copying resources");
 				
 				FileWriteCommandTree tree = codeWriter.buildFileImportTree(project);
-				codeWriter.writeCode(tree);
+				codeWriter.generateCode(tree);
 				
 				logger.info("copying resources completed");
 				
@@ -85,7 +85,7 @@ public class ProjectCreator {
 				logger.info("start writing configuration");
 				
 				FileWriteCommandTree tree = codeWriter.buildConfigurationTree(project);
-				codeWriter.writeCode(tree);
+				codeWriter.generateCode(tree);
 				
 				logger.info("writing configuration completed");
 				

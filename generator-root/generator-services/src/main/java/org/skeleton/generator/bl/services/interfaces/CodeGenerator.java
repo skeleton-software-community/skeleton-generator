@@ -14,7 +14,7 @@ import org.skeleton.generator.model.om.Project;
  * @author Nicolas Thibault
  *
  */
-public interface CodeWriter {
+public interface CodeGenerator {
 	
 	/**
 	 * builds the {@link FileWriteCommandTree} tree for files that are going to be copied from resources at initialization
@@ -41,5 +41,5 @@ public interface CodeWriter {
 	 * executes all the {@link FileWriteCommand} nodes of a {@link FileWriteCommandTree} tree
 	 * @param project
 	 */
-	void writeCode(FileWriteCommandTree tree);
+	void generateCode(FileWriteCommandTree tree);
 }

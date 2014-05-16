@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.oracle;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
@@ -11,7 +12,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	private Project project;
 
 	public OracleMainDefinitionFileWriteCommand(Project project) {
-		super(project.sourceFolder + "\\SQL", "MAIN");
+		super(project.sourceFolder + File.separator + "SQL" + File.separator + "BUILD", "MAIN");
 		this.project = project;
 	}
 

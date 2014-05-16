@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.skeleton.generator.bl.services.impl.TablePopulatorFactory;
+import org.skeleton.generator.bl.services.interfaces.DatabasePopulator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.bl.services.interfaces.TablePopulator;
@@ -39,12 +40,12 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author Nicolas Thibault
  *
  */
-public class DatabasePopulator {
+public class DatabasePopulatorLauncher {
 
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulator.class);
+	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulatorLauncher.class);
 	
 	private static final String DATASOURCE_CONTEXT_FILE ="CONTEXT" + File.separator + "datasource-context.xml";
 	
@@ -85,34 +86,13 @@ public class DatabasePopulator {
 			}
 			
 			try {
-				logger.info("start populating database");
 				
 				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
 				InputSourceProvider inputSourceProvider = (InputSourceProvider)appContext.getBean("inputSourceProvider");
 				
-				for (Package myPackage:project.model.packages) {
-					logger.info("start populating package : " + myPackage.name);
-					
-					for (Table table:myPackage.tables) {
-						
-						if (tables == null || tables.contains(table.originalName)) {
-						
-							logger.info("start populating table : " + table.name);
-							
-							try {
-								TablePopulator tablePopulator = TablePopulatorFactory.buildTablePopulator(table, dataSource, inputSourceProvider);
-								tablePopulator.populateTable();
-								logger.info("populating table : " + table.name + " completed");
-							} catch (BackupFileNotFoundException e) {
-								logger.error(e.getMessage());
-							}
-						} else {
-							logger.info("table : " + table.name + " skipped");
-						}
-					}
-					logger.info("populating package " + myPackage.name + " completed");
-				}
-				logger.info("populating database completed");
+				DatabasePopulator databasePopulator = appContext.getBean(DatabasePopulator.class);
+				databasePopulator.populateDatabase(dataSource, inputSourceProvider, project, tables);
+				
 				
 			} catch (Exception e) {
 				logger.error("failed", e);

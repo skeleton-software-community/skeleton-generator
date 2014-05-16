@@ -29,7 +29,7 @@ public class ServiceStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseServiceInterfaceFileWriteCommand(bean), bean.baseServiceInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseServiceInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -39,7 +39,7 @@ public class ServiceStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseServiceImplFileWriteCommand(bean), bean.baseServiceClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseServiceImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}
@@ -57,7 +57,7 @@ public class ServiceStrategy implements LayerStrategy {
 
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ServiceInterfaceFileWriteCommand(bean), bean.serviceInterfaceName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ServiceInterfaceFileWriteCommand(bean));
 					interfacesTreeNode.add(beanTreeNode);
 				}
 			}
@@ -67,7 +67,7 @@ public class ServiceStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ServiceImplFileWriteCommand(bean), bean.serviceClassName);
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ServiceImplFileWriteCommand(bean));
 					implTreeNode.add(beanTreeNode);
 				}
 			}
