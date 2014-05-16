@@ -1,21 +1,15 @@
 package org.skeleton.generator.command;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.skeleton.generator.bl.services.impl.DatabaseCleaner;
-import org.skeleton.generator.bl.services.impl.TableBuilder;
 import org.skeleton.generator.bl.services.interfaces.DatabaseBuilder;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
-import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

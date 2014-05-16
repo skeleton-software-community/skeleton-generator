@@ -1,11 +1,11 @@
-package org.skeleton.generator.bc.factory.command.impl;
+package org.skeleton.generator.bc.factory.command.file.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
 import org.skeleton.generator.bc.executor.FileWriteCommandTreeNode;
-import org.skeleton.generator.bc.factory.command.interfaces.FileWriteCommandTreeFactory;
+import org.skeleton.generator.bc.factory.command.file.interfaces.FileWriteCommandTreeFactory;
 import org.skeleton.generator.bc.strategy.interfaces.LayerStrategy;
 import org.skeleton.generator.model.om.Project;
 

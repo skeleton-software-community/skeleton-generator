@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.factory.command.interfaces;
+package org.skeleton.generator.bc.factory.command.file.interfaces;
 
 import org.skeleton.generator.bc.executor.FileWriteCommandTree;
 import org.skeleton.generator.model.om.Project;

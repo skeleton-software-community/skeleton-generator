@@ -1,6 +1,8 @@
-package org.skeleton.generator.model.backup;
+package org.skeleton.generator.repository.dao.datasource.impl;
 
 import java.util.List;
+
+import org.skeleton.generator.model.backup.PopulateCommandType;
 
 public class BackupCommandArguments {
 

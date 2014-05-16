@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.factory.command;
+package org.skeleton.generator.bc.factory.command.jdbc.interfaces;
 
 import javax.sql.DataSource;
 

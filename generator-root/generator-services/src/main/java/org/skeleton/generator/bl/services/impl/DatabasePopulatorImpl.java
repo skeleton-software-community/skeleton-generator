@@ -9,26 +9,29 @@ import org.skeleton.generator.bc.factory.reader.BackupArgumentReaderFactory;
 import org.skeleton.generator.bc.folder.FolderUtil;
 import org.skeleton.generator.bl.services.interfaces.DatabasePopulator;
 import org.skeleton.generator.exception.BackupFileNotFoundException;
-import org.skeleton.generator.model.backup.BackupCommandArguments;
 import org.skeleton.generator.model.metadata.PersistenceMode;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
+import org.skeleton.generator.repository.dao.datasource.impl.BackupCommandArguments;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.skeleton.generator.bl.services.impl.TablePopulator;
 
 @Component
 public class DatabasePopulatorImpl implements DatabasePopulator {
 
 	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulatorImpl.class);
 
-	private TablePopulator tablePopulator = new TablePopulator();
+	@Autowired
+	private TablePopulator tablePopulator;
+	@Autowired
 	private BackupFileLocator backupLocator = new BackupFileLocator();
-	private BackupArgumentReaderFactory readerFactory = new BackupArgumentReaderFactory();
+	@Autowired
+	private BackupArgumentReaderFactory readerFactory;
 	
 	@Override
 	public void populateDatabase(DataSource dataSource, InputSourceProvider inputSourceProvider, Project project, Set<String> tables) {
@@ -50,8 +53,8 @@ public class DatabasePopulatorImpl implements DatabasePopulator {
 
 						try {
 							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
-							BackupArgumentReader argumentReader = readerFactory.getReaderFactory(mode, inputSourceProvider, table);
-							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(table, backupLocator.getBackupFilePath(step, table, mode));
+							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputSourceProvider, table);
+							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(backupLocator.getBackupFilePath(step, table, mode));
 							tablePopulator.populateTable(table, dataSource, commandArgs);
 							logger.info("populating table : " + table.name + " completed");
 						} catch (BackupFileNotFoundException e) {

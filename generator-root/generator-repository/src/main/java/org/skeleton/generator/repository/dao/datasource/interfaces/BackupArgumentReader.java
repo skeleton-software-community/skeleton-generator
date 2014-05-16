@@ -1,8 +1,7 @@
 package org.skeleton.generator.repository.dao.datasource.interfaces;
 
 import org.skeleton.generator.exception.ReadBackupFailureException;
-import org.skeleton.generator.model.backup.BackupCommandArguments;
-import org.skeleton.generator.model.om.Table;
+import org.skeleton.generator.repository.dao.datasource.impl.BackupCommandArguments;
 
 /**
  * This class provides a representation of Backup data through a List of object arrays<br/>
@@ -12,5 +11,5 @@ import org.skeleton.generator.model.om.Table;
  */
 public interface BackupArgumentReader {
 
-	BackupCommandArguments readBackupArgs(Table table, String backupFilePath) throws ReadBackupFailureException;
+	BackupCommandArguments readBackupArgs(String backupFilePath) throws ReadBackupFailureException;
 }

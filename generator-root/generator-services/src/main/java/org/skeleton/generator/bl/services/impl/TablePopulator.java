@@ -4,29 +4,22 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.skeleton.generator.bc.factory.command.JdbcCommandAbstractFactory;
-import org.skeleton.generator.bc.factory.command.JdbcCommandFactory;
+import org.skeleton.generator.bc.factory.command.jdbc.impl.JdbcCommandAbstractFactory;
+import org.skeleton.generator.bc.factory.command.jdbc.interfaces.JdbcCommandFactory;
 import org.skeleton.generator.exception.PopulateTableFailureException;
-import org.skeleton.generator.model.backup.BackupCommandArguments;
 import org.skeleton.generator.model.om.Table;
+import org.skeleton.generator.repository.dao.datasource.impl.BackupCommandArguments;
 import org.skeleton.generator.repository.dao.jdbc.interfaces.JdbcCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class TablePopulator{
 	
-	/*
-	 * properties
-	 */
+	@Autowired
 	private JdbcCommandAbstractFactory commandAbstractFactory;
 	
-	/*
-	 * constructor
-	 */
-	public TablePopulator() {
-		this.commandAbstractFactory = new JdbcCommandAbstractFactory();
-	}
 	
-
 	public void populateTable(Table table, DataSource dataSource, BackupCommandArguments commandArgs) throws PopulateTableFailureException {
 					
 		List<Object[]> argsList = commandArgs.getArguments();
@@ -38,6 +31,4 @@ public class TablePopulator{
 			command.execute();
 		}
 	}
-	
-
 }
