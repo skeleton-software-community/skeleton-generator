@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.skeleton.generator.bl.services.impl.DatabaseCleaner;
 import org.skeleton.generator.bl.services.impl.TableBuilder;
+import org.skeleton.generator.bl.services.interfaces.DatabaseBuilder;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
@@ -31,11 +32,11 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author Nicolas Thibault
  *
  */
-public class DatabaseBuilder {
+public class DatabaseBuilderLauncher {
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulator.class);
+	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulatorLauncher.class);
 	
 	private static final String DATASOURCE_CONTEXT_FILE ="CONTEXT" + File.separator + "datasource-context.xml";
 	
@@ -73,54 +74,16 @@ public class DatabaseBuilder {
 				return;
 			}
 			
-			int maxStep = resolveMaxStep(project);
-			
 			try {
-				logger.info("start cleaning database");
+				
 				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
-				
-				DatabaseCleaner databaseCleaner = new DatabaseCleaner(project, dataSource);
-				databaseCleaner.cleanDatabase();
-				
-				logger.info("cleaning database completed");
-				
-				logger.info("start bulding database");
-				
-				for (int step = 1; step <= maxStep; step++) {
-					
-					logger.info("start bulding step " + step);
-				
-					for (Package myPackage:project.model.packages) {
-						logger.info("start building package : " + myPackage.name);
-						
-						for (Table table:myPackage.tables) {
-							logger.info("start building table : " + table.name);
-							
-							TableBuilder tableBuilder = new TableBuilder(table, dataSource, step);
-							tableBuilder.buildTable();
-							
-							logger.info("building table : " + table.name + " completed");
-						}
-						logger.info("building package " + myPackage.name + " completed");
-					}
-					logger.info("bulding step " + step + " completed");
-				}
-				
-				logger.info("bulding database completed");
+				DatabaseBuilder databaseBuilder = appContext.getBean(DatabaseBuilder.class);
+				databaseBuilder.buildDatabase(dataSource, project);
 				
 			} catch (Exception e) {
 				logger.error("failed", e);
 				return;
 			}
 		}
-	}
-
-
-	private static int resolveMaxStep(Project project) {
-		int maxStep = 0;
-		while (Files.exists(Paths.get(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + String.valueOf(maxStep+1)))) {
-			maxStep++;
-		}
-		return maxStep;
 	}
 }

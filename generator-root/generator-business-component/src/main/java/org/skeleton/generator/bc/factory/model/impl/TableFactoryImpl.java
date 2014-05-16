@@ -3,7 +3,6 @@ package org.skeleton.generator.bc.factory.model.impl;
 import java.util.ArrayList;
 
 import org.skeleton.generator.bc.factory.model.interfaces.TableFactory;
-import org.skeleton.generator.bc.naming.SQLNaming;
 import org.skeleton.generator.model.metadata.ColumnMetaData;
 import org.skeleton.generator.model.metadata.DataType;
 import org.skeleton.generator.model.metadata.Format;
@@ -13,6 +12,7 @@ import org.skeleton.generator.model.metadata.Visibility;
 import org.skeleton.generator.model.om.Column;
 import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Table;
+import org.skeleton.generator.repository.jdbc.SQLNaming;
 import org.springframework.stereotype.Component;
 
 

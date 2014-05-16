@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.naming;
+package org.skeleton.generator.repository.jdbc;
 
 import org.skeleton.generator.model.metadata.DatabaseEngine;
 
@@ -72,7 +72,15 @@ public class SQLNaming {
 		if (databaseEngine.equals(DatabaseEngine.ORACLE)) {
 			return "ins_" + tableName.toLowerCase() + "_bc";
 		} else {
-			return "ins_" + tableName.toLowerCase() + "_by_code";
+			return "insert_" + tableName.toLowerCase() + "_by_code";
+		}
+	}
+
+	public static String getUpdateProcedureName(String tableName, DatabaseEngine databaseEngine) {
+		if (databaseEngine.equals(DatabaseEngine.ORACLE)) {
+			return "upd_" + tableName.toLowerCase() + "_bc";
+		} else {
+			return "update_" + tableName.toLowerCase() + "_by_code";
 		}
 	}
 	

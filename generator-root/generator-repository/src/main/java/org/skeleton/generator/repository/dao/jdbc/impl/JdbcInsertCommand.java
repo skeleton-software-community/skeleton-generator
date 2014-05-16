@@ -1,6 +1,10 @@
-package org.skeleton.generator.bc.command.jdbc.impl;
+package org.skeleton.generator.repository.dao.jdbc.impl;
+
+import javax.sql.DataSource;
 
 import org.skeleton.generator.model.om.Table;
+import org.skeleton.generator.repository.dao.jdbc.interfaces.JdbcCommand;
+import org.skeleton.generator.repository.jdbc.SQLNaming;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -12,7 +16,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
  * @author Nicolas Thibault
  *
  */
-public class JdbcInsertCommand {
+public class JdbcInsertCommand implements JdbcCommand {
 	
 	/*
 	 * logger
@@ -29,8 +33,9 @@ public class JdbcInsertCommand {
 	/*
 	 * constructor
 	 */
-	public JdbcInsertCommand(SimpleJdbcCall jdbcCall, Table table, Object[] args) {
-		this.jdbcCall = jdbcCall;
+	public JdbcInsertCommand(DataSource dataSource, Table table, Object[] args) {
+		this.jdbcCall = new SimpleJdbcCall(dataSource);
+		this.jdbcCall.setProcedureName(SQLNaming.getInsertProcedureName(table.name, table.myPackage.model.project.databaseEngine));
 		this.table = table;
 		this.args = args;
 	}
