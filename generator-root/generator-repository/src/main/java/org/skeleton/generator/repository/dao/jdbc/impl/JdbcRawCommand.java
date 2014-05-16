@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.command.jdbc.impl;
+package org.skeleton.generator.repository.dao.jdbc.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
  * @author Nicolas Thibault
  *
  */
-public class SimpleScriptCommand {
+public class JdbcRawCommand {
 	
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(SimpleScriptCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(JdbcRawCommand.class);
 	
 	/*
 	 * properties
@@ -31,7 +31,7 @@ public class SimpleScriptCommand {
 	/*
 	 * constructor
 	 */
-	public SimpleScriptCommand(DataSource dataSource, String script) {
+	public JdbcRawCommand(DataSource dataSource, String script) {
 		this.dataSource = dataSource;
 		this.script = script;
 	}
