@@ -4,27 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PersistenceMode {
-	CSV("csv"),
-    XML("xml");
+	CSV(".txt"),
+    XML(".xml");
 	
 	private static final Map<String, PersistenceMode> reverseMap = new HashMap<String, PersistenceMode>();
 	static{
 		for(PersistenceMode skeletonType : values()){
-			reverseMap.put(skeletonType.getValue(), skeletonType);
+			reverseMap.put(skeletonType.getExtension(), skeletonType);
 		}
 	}
 	
-	private String value;
+	private String extension;
 	
 	private PersistenceMode(String value){
-		this.value = value;
+		this.extension = value;
 	}
 	
-	public String getValue() {
-		return value;
+	public String getExtension() {
+		return extension;
 	}
 	
-	public static PersistenceMode byValue(String value){
+	public static PersistenceMode byExtension(String value){
 		PersistenceMode persistenceMode = reverseMap.get(value);
 		if(persistenceMode==null) {
 			throw new IllegalArgumentException("No PersistenceMode corresponding to value " + value);

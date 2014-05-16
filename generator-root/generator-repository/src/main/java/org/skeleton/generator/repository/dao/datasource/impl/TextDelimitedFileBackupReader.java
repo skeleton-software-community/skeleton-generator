@@ -7,32 +7,41 @@ import java.util.List;
 
 import org.skeleton.generator.exception.InvalidFileException;
 import org.skeleton.generator.exception.ReadBackupFailureException;
+import org.skeleton.generator.model.backup.BackupCommandArguments;
+import org.skeleton.generator.model.backup.PopulateCommandType;
 import org.skeleton.generator.model.om.Table;
-import org.skeleton.generator.repository.dao.datasource.interfaces.BackupReader;
+import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
 import org.skeleton.generator.repository.file.impl.CsvFileParserImpl;
 import org.skeleton.generator.repository.file.interfaces.CsvFileParser;
 import org.skeleton.generator.repository.jdbc.JdbcUtil;
 
 
-public class TextDelimitedFileBackupReader implements BackupReader {
+public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 
 	/*
 	 * properties
 	 */
 	private CsvFileParser csvFileParser;
-	private String backupFilePath;
-	private Table table;
 	
 	/*
 	 * constructor
 	 */
-	public TextDelimitedFileBackupReader(Table table, String backupFilePath) {
-		this.table = table;
-		this.csvFileParser = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
-		this.backupFilePath = backupFilePath;
+	public TextDelimitedFileBackupReader(int columnNumber) {
+		this.csvFileParser = new CsvFileParserImpl(columnNumber, StandardCharsets.UTF_8);
 	}
 	
-	public List<Object[]> readBackupArgs()  {
+	public BackupCommandArguments readBackupArgs(Table table, String backupFilePath)  {
+		BackupCommandArguments result = new BackupCommandArguments();
+		result.setArguments(readArgs(table, backupFilePath));
+		result.setType(readType());
+		return result;
+	}
+	
+	private PopulateCommandType readType() {
+		return PopulateCommandType.INSERT; //TODO put type in csv header
+	}
+
+	private List<Object[]> readArgs(Table table, String backupFilePath){
 		try {
 			List<String[]> stringArgsList = csvFileParser.readData(backupFilePath);
 			List<Object[]> argsList = new ArrayList<>();
