@@ -174,7 +174,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	
 	private void createGet() {
 		
-		writeLine("-- requete permettant de recupperer les elements par business key --");
+		writeLine("-- fetch elements with business keys --");
 		
 		writeLine("/*SELECT");
 		
@@ -299,8 +299,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		skipLine();
 	}
 
-	/* create insert stored procedures */
-
+	/*
+	 * create insert stored procedures
+	 */
 	private void createInsert() {
 
 		writeLine("-- used to insert a new element --");
@@ -360,8 +361,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	}
 	
 	
-	/* create update stored procedures */
-
+	/*
+	 * create update stored procedures
+	 */
 	private void createUpdate() {
 
 		writeLine("-- used to update an element --");

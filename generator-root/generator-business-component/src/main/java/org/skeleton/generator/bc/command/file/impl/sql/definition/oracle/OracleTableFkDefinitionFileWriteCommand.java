@@ -58,7 +58,7 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 			if (this.table.columns.get(i).referenceTable != null) {
 				write("ALTER TABLE " + table.name + " ADD CONSTRAINT FK_" + table.name + "_" + i + " FOREIGN KEY (" + this.table.columns.get(i).name + ") REFERENCES " + table.columns.get(i).referenceTable.name);
 				if (this.table.columns.get(i).deleteCascade) {
-					write(" ON DELETE CASCADE;");
+					write(" ON DELETE CASCADE");
 				}
 				skipLine();
 				writeLine("/");
@@ -78,8 +78,9 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 	}
 
 
-	/* create insert stored procedures */
-
+	/*
+	 * create insert stored procedures
+	 */
 	private void createInsert() {
 		List<Column> insertColumnList = this.table.getInsertColumnList();
 		List<Column> tempColumnList;
@@ -131,8 +132,9 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 	}
 	
 	
-	/* create update stored procedures */
-
+	/*
+	 * create update stored procedures
+	 */
 	private void createUpdate() {
 
 		List<Column> insertColumnList = this.table.getInsertColumnList();
