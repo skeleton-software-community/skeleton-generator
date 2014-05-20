@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
 import org.skeleton.generator.model.metadata.DataType;
 import org.skeleton.generator.model.om.Column;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -20,7 +22,7 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 	 */
 	public PostgresqlTableFkDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + "\\SQL\\" + table.myPackage.name.toUpperCase(), table.originalName);
+		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
 
 		this.table = table;
 
