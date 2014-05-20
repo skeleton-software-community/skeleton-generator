@@ -106,13 +106,17 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("@Audited");
 		}
 		writeLine("@Table(name=" + (char) 34 + this.bean.table.name + (char) 34 + ")");
-		for (String annotation:bean.annotations) {
-			writeLine(annotation);
+		if (bean.annotations != null) {
+			for (String annotation:bean.annotations) {
+				writeLine(annotation);
+			}
 		}
 
 		write("public class " + bean.className + " implements Serializable");
-		for (String interfaceElem:bean.interfaces) {
-			write(", " + interfaceElem);
+		if (bean.interfaces != null) {
+			for (String interfaceElem:bean.interfaces) {
+				write(", " + interfaceElem);
+			}
 		}
 		writeLine(" {");
 		skipLine();
@@ -161,8 +165,10 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				
 				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
 				
-				for (String annotation:bean.table.columns.get(1).annotations) {
-					writeLine(annotation);
+				if (bean.table.columns.get(1).annotations != null) {
+					for (String annotation:bean.table.columns.get(1).annotations) {
+						writeLine(annotation);
+					}
 				}
 				
 				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
@@ -175,8 +181,10 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		for (int i = 1; i < this.bean.properties.size(); i++) {
 			Property property = this.bean.properties.get(i);
 			
-			for (String annotation:property.annotations) {
-				writeLine(annotation);
+			if (property.annotations != null) {
+				for (String annotation:property.annotations) {
+					writeLine(annotation);
+				}
 			}
 
 			if (property.referenceBean != null) {
