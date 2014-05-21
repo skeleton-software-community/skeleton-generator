@@ -28,6 +28,8 @@ public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFi
 	@Override
 	protected void fetchSpecificImports() {
 		
+		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.text.SimpleDateFormat;");
 		javaImports.add("import " + referenceBean.myPackage.ovPackageName + "." + referenceBean.viewClassName + ";");
         javaImports.add("import " + referenceBean.myPackage.builderPackageName + "." + referenceBean.viewClassName + "Builder;");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
@@ -74,7 +76,7 @@ public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFi
         writeLine("@Override");
         writeLine("public Command buildCommand(String line) throws BuildFailureException {");
         skipLine();
-
+        writeLine("try {");
         writeLine(referenceBean.viewClassName + "Command command = new " + referenceBean.viewClassName + "Command();");
         writeLine("command.set" + parentBean.serviceInterfaceName + "(" + parentBean.serviceObjectName + ");");
         writeLine("command.set" + referenceBean.viewClassName + "(" + referenceBean.viewClassName + "Builder.build(line));");
@@ -99,18 +101,17 @@ public class ViewOneToManyComponentCommandBuilderFileWriteCommand extends JavaFi
             argNumber++;
         }
         
-
-        writeLine("try {");
+        skipLine();
         write("command.set" + parentBean.viewClassName + "(" + parentBean.serviceObjectName + ".find" + parentBean.className + "(" + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write(", " + findPropertyList.get(i).name);
         }
         writeLine("));");
+        writeLine("return command;");
         writeLine("} catch (Exception e) {");
         writeLine("throw new BuildFailureException(" + (char)34 + "faild to find parent object" + (char)34 + ", e);");
         writeLine("}");
-        writeLine("return command;");
         writeLine("}");
         writeLine("}");
 		
