@@ -1,4 +1,25 @@
 /**
+* sections
+*/
+h1 {
+	font-size:24px;
+	font-weight:bold;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
+	padding-top:20px;
+	padding-bottom:20px;
+
+}
+
+h2 {
+	width:100%;
+	font-size:14px;
+	font-weight:bold;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
+	padding: 2px 4px 2px 4px;
+	border-bottom:1px solid;
+}
+
+/**
 * inputs
 */
 input[type="text"] {
@@ -22,18 +43,13 @@ input[type="input"] {
 /**
 * tables definitions
 */
-
 .rich-table {
 	border-right: 1px solid #C0C0C0;
-	width:800px;
+	width:100%;
 }
 
 .rich-table-cell {
 	font-size:10px;
-}
-
-.rich-table-footer {
-	background-color: #FFFFFF;
 }
 
 .rich-table-subheadercell {
@@ -76,19 +92,6 @@ input[type="input"] {
 	height: 22px;
 }
 
-.datatableCol {
-	color: blue;
-}
-
-.datatableLeftCol {
-	color: blue;
-	width: 15px;
-}
-
-.rich-filter-input {
-	width:80px;
-}
-
 .rich-datascr {
 	padding-top:12px;
 }
@@ -96,7 +99,6 @@ input[type="input"] {
 .dataTableFilter {
 	width:80%;
 }
-
 
 
 /**
@@ -118,7 +120,7 @@ input[type="input"] {
 .simpleButton {
 	font-size: 11px;
 	font-weight: bold;
-	height: 17px;
+	height: 20px;
 	color: white;
 	background-color: #051039;
 	border: 1px black solid;
@@ -154,7 +156,6 @@ input[type="input"] {
 /**
 * faces messages
 */
-
 .errorMessage {
 	color:red;
 	font-size: 11px;
@@ -184,33 +185,23 @@ input[type="input"] {
 	width:95%;
 }
 
-.title {
-	font-size:160%;
-	font-weight:bold;
-	margin:0 0 20px 0;
-	padding:0 0 0 0;
-	line-height:normal;
-	color:#051039;
-	background-color:inherit;
-	width:100%;
-	border-bottom:1px solid #f78704;
-}
 
+/**
+* popups
+*/
 .rich-mpnl-panel{
 	position:static;
 }
 
 
-
 /**
 * tabs
 */
-
-div#content .rich-tab-bottom-line {
+div#right .rich-tab-bottom-line {
 	border-bottom-color:#f78704;
 }
 
-div#content .rich-tabpanel-content {
+div#right .rich-tabpanel-content {
 	background-color: #FFF;
 	color: #000;
 	border-bottom-color: #f78704;
@@ -220,7 +211,7 @@ div#content .rich-tabpanel-content {
 	font-family: Arial,Verdana,sans-serif;
 }
 
-div#content .rich-tab-active {
+div#right .rich-tab-active {
 	border-color:#f78704;
 	background-color: #051039;
 	color:white;
@@ -228,11 +219,11 @@ div#content .rich-tab-active {
 	padding: 4px 12px 4px 12px;
 }
 
-div#content .rich-tab-header {
+div#right .rich-tab-header {
 	border-color:#f78704;
 }
 
-div#content .rich-tab-inactive {
+div#right .rich-tab-inactive {
 	background-color: #3675ae;
 	color:white;
 	background-image:none;
@@ -243,88 +234,106 @@ div#content .rich-tab-inactive {
 /**
 * toolbar
 */
-
-div#content .rich-toolbar {
+div#right .rich-toolbar {
 	height:20px;
 	color: white;
 	background-image:none;
 	background-color:#051039;
 }
 
-div#content .rich-toolbar-item {
+div#right .rich-toolbar-item {
 	height:20px;
 	color: white;
 	background-image:none;
 	background-color:#051039;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
-div#content .rich-menu-item {
-	
-	font-size: 11px;
-	font-weight: bold;
-	height:14px;
-	color:rgb(72, 88, 145);
-	background-color:rgb(225, 221, 213);
-	background-image:none;
-}
-
-div#content .rich-menu-item:hover {
-	border:1px solid;
-	font-size: 11px;
-	font-weight: bold;
-	height:14px;
-	color:rgb(225, 221, 213);
-	background-color:rgb(72, 88, 145);
-	background-image:none;
-}
-
-div#content .rich-menu-group {
-	
-	font-size: 11px;
-	font-weight: bold;
-	height:16px;
-	background-color:white;
-	background-image:none;
-}
-
-div#content .rich-menu-group-hover {
-	border:1px solid;
-	font-size: 11px;
-	font-weight: bold;
-	height:16px;
-	color:#ea5a00;
-	background-color:rgb(211, 211, 211);
-	background-image:none;
-}
-
-div#content .rich-menu-list-border {
-	background-color:white;
-	background-image:none;
-	border:0px solid;
-}
-
-div#content .rich-ddmenu-label {
-	padding:4px 4px 4px 4px;
-	border-bottom:1px solid;
-	font-size: 11px;
-	font-weight: bold;
+div#right .rich-toolbar-item:hover {
 	height:20px;
+	color: white;
+	background-image:none;
+	background-color:#051039;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
-div#content .rich-ddmenu-label-select {
-	padding:4px 4px 4px 4px;
-	border-bottom:1px solid #051039;
+div#right .rich-ddmenu-label {
 	font-size: 11px;
 	font-weight: bold;
 	height:16px;
-	color:black;
+	margin:0px 0px 0px 0px;
+	padding-top:6px;
+	padding-left:10px;
+	padding-bottom:6px;
+	padding-right:10px;
+}
+
+div#right .rich-ddmenu-label-select {
+	font-size: 11px;
+	font-weight: bold;
+	height:16px;
+	color:rgb(100,100,100);;
+	background-color:rgb(240, 240, 240);
+	margin:0px 0px 0px 0px;
+	padding-top:6px;
+	padding-left:10px;
+	padding-bottom:6px;
+	padding-right:10px;
+	border:none;
+}
+
+div#right .rich-ddmenu-label-unselect {
+	font-size: 11px;
+	font-weight: bold;
+	height:16px;
+	margin:0px 0px 0px 0px;
+	padding-top:6px;
+	padding-left:10px;
+	padding-bottom:6px;
+	padding-right:10px;
+}
+
+
+
+div#right .rich-menu-list-border {
+	border:none;
 	background-color:white;
 }
 
-div#content .rich-ddmenu-label-unselect {
-	padding:4px 4px 4px 4px;
-	border-bottom:1px solid #051039;
+
+
+div#right .rich-menu-item {
 	font-size: 11px;
 	font-weight: bold;
-	height:20px;
-}}
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
+	background-color:white;
+	background-image:none;
+}
+
+div#right .rich-menu-item-hover {
+	font-size: 11px;
+	font-weight: bold;
+	height:15px;
+	width:150px;
+	margin:0px 0px 0px 0px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-bottom:3px;
+	padding-right:0px;
+	color:rgb(100, 100, 100);
+	background-color:rgb(240, 240, 240);
+	background-image:none;
+	border:1px solid rgb(220, 220, 220);
+}
