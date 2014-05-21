@@ -2,7 +2,8 @@ body{
 	background-color: white;
 	margin-left:0px;
 	margin-right:0px;
-	font-family: Helvetica, arial, sans-serif;
+	font-size:11px;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
 }
 
 div#header-wrapper {
@@ -66,8 +67,8 @@ div#page-wrapper div#page div#left {
 }
 
 div#page-wrapper div#page div#left div#menu {
-	padding-top:30px;
-	padding-bottom:30px;
+	padding-top:80px;
+	padding-bottom:80px;
 	margin-top:1px;
 	width:200px;
 	position:fixed;
@@ -76,15 +77,18 @@ div#page-wrapper div#page div#left div#menu {
 
 div#page-wrapper div#page div#right {
 	float:left;
-	width:1000px;
-	padding-left:10px;
+	width:960px;
+	padding-left:30px;
 	padding-right:10px;
 	padding-top:10px;
 	padding-bottom:10px;
 }
 
 div#footer-wrapper div#footer {
+	font-size:13px;
+	font-family: Arial, Verdana, Helvetica, Sans-serif;
 	margin-left:auto;
 	margin-right:auto;
+	padding-top:10px;
 	width:1200px;
 }
