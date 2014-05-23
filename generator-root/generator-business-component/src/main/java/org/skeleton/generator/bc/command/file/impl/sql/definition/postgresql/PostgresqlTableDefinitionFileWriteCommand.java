@@ -245,12 +245,18 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 				write("SELECT find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
 				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
+				boolean begin = true;
 
 				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name) + ",");
+					if (begin) {
+						write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name));
+						begin = false;
+					} else {
+						write(", v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_").replace("_id", "_") + tempColumnList.get(j).name));
+					}
 				}
 
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
+				writeLine(") into v" + fieldMap.get(this.table.columns.get(i).name) + ";");
 
 			}
 		}
