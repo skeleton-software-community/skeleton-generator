@@ -38,7 +38,7 @@ public class DefaultDatabaseStrategy implements LayerStrategy {
 		definitionFilesTreeNode.add(mainFileTreeNode);
 		
 		
-		FileWriteCommandTreeNode batchFileTreeNode;
+		/*FileWriteCommandTreeNode batchFileTreeNode;
 		switch (project.databaseEngine) {
 		case ORACLE:
 			batchFileTreeNode = new FileWriteCommandTreeNode("No batch File");
@@ -51,7 +51,7 @@ public class DefaultDatabaseStrategy implements LayerStrategy {
 		default:
 			throw new IllegalArgumentException("unhandled database");
 		}
-		definitionFilesTreeNode.add(batchFileTreeNode);
+		definitionFilesTreeNode.add(batchFileTreeNode);*/
 		
 
 		for (Package myPackage : project.model.packages) {
