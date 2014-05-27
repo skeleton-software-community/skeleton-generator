@@ -1,5 +1,7 @@
 package org.skeleton.generator.bc.factory.command.jdbc.impl;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.skeleton.generator.bc.factory.command.jdbc.interfaces.JdbcCommandFactory;
@@ -11,8 +13,8 @@ public class JdbcUpdateCommandFactory implements JdbcCommandFactory{
 
 	@Override
 	public JdbcCommand getCommand(DataSource dataSource, Table table,
-			Object[] args) {
-		return new JdbcUpdateCommand(dataSource, table, args);
+			List<Object[]> argsList) {
+		return new JdbcUpdateCommand(dataSource, table, argsList);
 	}
 
 }
