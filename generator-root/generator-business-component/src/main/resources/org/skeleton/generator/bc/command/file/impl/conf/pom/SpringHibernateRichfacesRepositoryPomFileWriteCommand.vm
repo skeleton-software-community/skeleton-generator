@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>${project.projectName}-repository</artifactId>
-	<name>${project.projectName}-business-component</name>
+	<name>${project.projectName}-repository</name>
 
 	<packaging>jar</packaging>
 
