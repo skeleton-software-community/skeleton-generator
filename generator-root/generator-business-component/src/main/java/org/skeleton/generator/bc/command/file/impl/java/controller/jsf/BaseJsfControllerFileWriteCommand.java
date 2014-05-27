@@ -449,7 +449,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("public void save" + this.bean.className + "AndRefresh" + this.bean.className + "() {");
 		writeLine("this.save" + this.bean.className + "();");
+		writeLine("if (!creationTag){");
 		writeLine("this.refresh" + this.bean.className + "();");
+		writeLine("}");
 		writeLine("}");
 		skipLine();
 
