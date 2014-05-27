@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
 import org.skeleton.generator.model.om.Project;
+import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Table;
 
 public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -18,12 +19,25 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	@Override
 	public void writeContent() throws IOException {
-		for (int i = project.model.packages.size() - 1; i >= 0; i--) {
-			for (int j = project.model.packages.get(i).tables.size() - 1; j >= 0; j--) {
-				Table table = project.model.packages.get(i).tables.get(j);
+		for (Package myPackage : project.model.packages) {
+			for (Table table : myPackage.tables) {
+				
 				String sequenceName = table.name + "_ID_SEQ";
+				
+				writeLine("-- drop foreign keys --");
+				for (int i = 1; i < table.columns.size(); i++) {
+					if (table.columns.get(i).referenceTable != null) {
+						writeLine("BEGIN");
+						writeLine("EXECUTE IMMEDIATE 'ALTER TABLE " + table.name + " DROP CONSTRAINT FK_" + table.name + "_" + i + "';");
+						writeLine("EXCEPTION");
+						writeLine("WHEN OTHERS THEN NULL;");
+						writeLine("END;");
+						writeLine("/");
+		                skipLine();
+					}
+				}
 
-				writeLine("-- suppression de la table --");
+				writeLine("-- drop table --");
 				writeLine("BEGIN");
 				writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "';");
 				writeLine("EXCEPTION");
@@ -33,7 +47,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				skipLine();
 				
 				if (project.audited) {
-					writeLine("-- suppression de la table d'audit --");
+					writeLine("-- drop audit table --");
 					writeLine("BEGIN");
 					writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "_AUD';");
 					writeLine("EXCEPTION");
@@ -43,7 +57,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 					skipLine();
 				}
 
-				writeLine("-- suppression des procedures stockees --");
+				writeLine("-- drop stored procedures --");
 				writeLine("BEGIN");
 				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE get_" + table.name.toLowerCase() + "';");
 				writeLine("EXCEPTION");
@@ -108,7 +122,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				writeLine("/");
 				skipLine();
 
-				writeLine("-- suppression de la sequence --");
+				writeLine("-- drop sequence --");
 				writeLine("BEGIN");
 				writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE " + sequenceName + "';");
 				writeLine("EXCEPTION");
@@ -130,7 +144,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	
 	private void createAuditTable() {
 		
-		writeLine("-- suppression de la table d'audit --");
+		writeLine("-- drop global audit table --");
 		writeLine("BEGIN");
 		writeLine("EXECUTE IMMEDIATE 'DROP TABLE AUDITENTITY';");
 		writeLine("EXCEPTION");
@@ -139,7 +153,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 	
-		writeLine("-- table d'audit --");
+		writeLine("-- create global audit table --");
 		writeLine("CREATE TABLE AUDITENTITY");
 		writeLine("(");
 		writeLine("ID int NOT NULL,");
@@ -150,7 +164,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 		
-		writeLine("-- suppression de la sequence --");
+		writeLine("-- drop hibernate sequence --");
 		writeLine("BEGIN");
 		writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE hibernate_sequence';");
 		writeLine("EXCEPTION");
@@ -159,7 +173,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("/");
 		skipLine();
 		
-		writeLine("-- sequence --");
+		writeLine("-- create hibernate sequence --");
 		writeLine("CREATE SEQUENCE hibernate_sequence MINVALUE 1 NOMAXVALUE START WITH 1 INCREMENT BY 1 NOCYCLE");
 		writeLine("/");
 		skipLine();

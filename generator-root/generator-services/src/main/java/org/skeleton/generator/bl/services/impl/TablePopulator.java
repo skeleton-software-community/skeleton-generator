@@ -26,9 +26,8 @@ public class TablePopulator{
 		
 		JdbcCommandFactory commandFactory = commandAbstractFactory.getFactory(commandArgs.getType());
 			
-		for (Object[] args:argsList) {
-			JdbcCommand command = commandFactory.getCommand(dataSource, table, args);
-			command.execute();
-		}
+		JdbcCommand command = commandFactory.getCommand(dataSource, table, argsList);
+		command.execute();
+
 	}
 }

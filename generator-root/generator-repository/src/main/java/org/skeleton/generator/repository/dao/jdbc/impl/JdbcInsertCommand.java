@@ -1,5 +1,7 @@
 package org.skeleton.generator.repository.dao.jdbc.impl;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.skeleton.generator.model.om.Table;
@@ -28,28 +30,30 @@ public class JdbcInsertCommand implements JdbcCommand {
 	 */
 	private SimpleJdbcCall jdbcCall;
 	private Table table;
-	private Object[] args;
+	private List<Object[]> argsList;
 	
 	/*
 	 * constructor
 	 */
-	public JdbcInsertCommand(DataSource dataSource, Table table, Object[] args) {
+	public JdbcInsertCommand(DataSource dataSource, Table table, List<Object[]> argsList) {
 		this.jdbcCall = new SimpleJdbcCall(dataSource);
 		this.jdbcCall.setProcedureName(SQLNaming.getInsertProcedureName(table.name, table.myPackage.model.project.databaseEngine));
 		this.table = table;
-		this.args = args;
+		this.argsList = argsList;
 	}
 	
 	public void execute() {
-		String message = "execute insert for table : " + table.name + " - args : ";
-		for (Object arg:args) {
-			message += "[" + arg + "]";
-		}
-		logger.info(message);
-		try {
-			jdbcCall.execute(args);
-		} catch (Exception e) {
-			logger.error(message + "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+		for (Object[] args:argsList) {
+			String message = "execute insert for table : " + table.name + " - args : ";
+			for (Object arg:args) {
+				message += "[" + arg + "]";
+			}
+			logger.info(message);
+			try {
+				jdbcCall.execute(args);
+			} catch (Exception e) {
+				logger.error(message + "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+			}
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package org.skeleton.generator.repository.dao.jdbc.impl;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.skeleton.generator.model.om.Table;
@@ -28,28 +30,30 @@ public class JdbcUpdateCommand implements JdbcCommand {
 	 */
 	private SimpleJdbcCall jdbcCall;
 	private Table table;
-	private Object[] args;
+	private List<Object[]> argsList;
 	
 	/*
 	 * constructor
 	 */
-	public JdbcUpdateCommand(DataSource dataSource, Table table, Object[] args) {
+	public JdbcUpdateCommand(DataSource dataSource, Table table, List<Object[]> argsList) {
 		this.jdbcCall = new SimpleJdbcCall(dataSource);
 		this.jdbcCall.setProcedureName(SQLNaming.getUpdateProcedureName(table.name, table.myPackage.model.project.databaseEngine));
 		this.table = table;
-		this.args = args;
+		this.argsList = argsList;
 	}
 	
 	public void execute() {
-		String message = "execute update for table : " + table.name + " - args : ";
-		for (Object arg:args) {
-			message += "[" + arg + "]";
-		}
-		logger.info(message);
-		try {
-			jdbcCall.execute(args);
-		} catch (Exception e) {
-			logger.error(message + "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+		for (Object[] args:argsList) {
+			String message = "execute update for table : " + table.name + " - args : ";
+			for (Object arg:args) {
+				message += "[" + arg + "]";
+			}
+			logger.info(message);
+			try {
+				jdbcCall.execute(args);
+			} catch (Exception e) {
+				logger.error(message + "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+			}
 		}
 	}
 }
