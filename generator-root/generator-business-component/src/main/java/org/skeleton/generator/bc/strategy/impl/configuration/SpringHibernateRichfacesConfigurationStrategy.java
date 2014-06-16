@@ -1,5 +1,6 @@
 package org.skeleton.generator.bc.strategy.impl.configuration;
 
+import org.skeleton.generator.bc.command.file.impl.conf.context.DataSourceContextFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesBaseControllerFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.conf.java.SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand;
@@ -41,6 +42,15 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 	public FileWriteCommandTreeNode getLayerNode(Project project) {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode("Configuration");
+		
+		/*
+		 * datasource context
+		 */
+		FileWriteCommandTreeNode contextTreeNode = new FileWriteCommandTreeNode("context");
+		configurationTreeNode.add(contextTreeNode);
+		
+		FileWriteCommandTreeNode dataSourceContextTreeNode = new FileWriteCommandTreeNode(new DataSourceContextFileWriteCommand(project));
+		contextTreeNode.add(dataSourceContextTreeNode);
 		
 		/*
 		 * poms
