@@ -20,14 +20,22 @@ public class PostgresqlBatchFileWriteCommand extends BatchFileWriteCommand {
 	@Override
 	public void writeContent() throws IOException {
 
-		writeLine("psql -h " + this.project.databaseDNS + " -p " + this.project.databasePort + " -U " + this.project.databaseUserName + " -w -d " + this.project.databaseName.toLowerCase() + " > " + (char)34 + "./LOG/MAIN.txt" + (char)34 + " < " + (char)34 + "./MAIN.sql" + (char)34);
+		writeLine("psql -h " + this.project.databaseDNS + " -p " + this.project.databasePort + " -U " + this.project.databaseUserName + " -w -d " + this.project.databaseName + " < " + (char)34 + "./MAIN.sql" + (char)34);
 
         
         for (Package myPackage : this.project.model.packages)
         {
             for (Table table : myPackage.tables)
             {
-                writeLine("psql -h " + this.project.databaseDNS + " -p " + this.project.databasePort + " -U " + this.project.databaseUserName + " -w -d " + this.project.databaseName.toLowerCase() + " > " + (char)34 + "./LOG/" + myPackage.name.toUpperCase() + "/" + table.name + ".txt" + (char)34 + " < " + (char)34 + "./" + myPackage.name.toUpperCase() + "/" + table.name + ".sql" + (char)34);
+                writeLine("psql -h " + this.project.databaseDNS + " -p " + this.project.databasePort + " -U " + this.project.databaseUserName + " -w -d " + this.project.databaseName + " < " + (char)34 + "./1/" + myPackage.name.toUpperCase() + "/" + table.name + ".sql" + (char)34);
+            }
+        }
+        
+        for (Package myPackage : this.project.model.packages)
+        {
+            for (Table table : myPackage.tables)
+            {
+                writeLine("psql -h " + this.project.databaseDNS + " -p " + this.project.databasePort + " -U " + this.project.databaseUserName + " -w -d " + this.project.databaseName + " < " + (char)34 + "./2/" + myPackage.name.toUpperCase() + "/" + table.name + ".sql" + (char)34);
             }
         }
 
