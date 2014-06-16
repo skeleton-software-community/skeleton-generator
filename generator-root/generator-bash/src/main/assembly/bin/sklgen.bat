@@ -67,6 +67,7 @@ goto ERROR
 :GET_SKLGEN_CMD_LINE_ARGS
 @REM ==== START COMMAND LINE ARGS ====
 set SKLGEN_CMD_LINE_ARGS=%1
+set DATABASE_NAME=%2
 
 if %SKLGEN_CMD_LINE_ARGS%==help goto HELP
 if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
@@ -101,19 +102,19 @@ goto END
 
 :GENERATE
 echo start generating code
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% %CD%
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% "%CD%"
 echo end generating code
 goto END
 
 :BUILDDB
 echo start building database
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% %CD%
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end building database
 goto END
 
 :POPULATEDB:
 echo start populating database
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% %CD%
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end populating database
 goto END
 

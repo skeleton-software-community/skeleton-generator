@@ -5,9 +5,9 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 
 public interface DatabasePopulator {
 
-	void populateDatabase(DataSource dataSource, InputSourceProvider inputSourceProvider, Project project, Set<String> tables);
+	void populateDatabase(DataSource dataSource, DataSourceProvider inputSourceProvider, Project project, Set<String> tables);
 }

@@ -6,13 +6,13 @@ import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.impl.TextDelimitedFileBackupReader;
 import org.skeleton.generator.repository.dao.datasource.impl.XmlFileBackupReader;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
-import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BackupArgumentReaderFactory {
 
-	public BackupArgumentReader getBackupArgumentReader(PersistenceMode type, InputSourceProvider inputSourceProvider, Table table) {
+	public BackupArgumentReader getBackupArgumentReader(PersistenceMode type, DataSourceProvider inputSourceProvider, Table table) {
 		switch (type) {
 			case CSV:
 				return new TextDelimitedFileBackupReader(table);

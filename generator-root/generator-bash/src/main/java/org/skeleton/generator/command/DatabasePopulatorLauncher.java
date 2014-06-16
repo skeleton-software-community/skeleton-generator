@@ -6,14 +6,13 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.skeleton.generator.bl.services.interfaces.DatabasePopulator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Project;
-import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +20,18 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * This class can be launched to populate your database<br/>
- * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
+ * Argument required : 
+ * <li>the workspace folder where the "data-model" folder will be detected
+ * <li>the database name that must be declared in /data-model/CONTEXT/datasource-context.xml
  * Optional argument : if you want to restrict the tables to populate<br/>
  * Depending on the meta data that is going to be read, the main method will :
  * <li>load the project representation
  * <li>read the scripts/csv files in /data-model/BACKUP/ and populate the tables with this data
- * the population of the tables uses generated stored procedures (insert by code)<br/>
+ * the population of the tables uses generated stored procedures (insert by code, update by code)<br/>
  * two kinds of file can be used to fetch data
  * <li>a $ separated file (.txt)
  * <li>a xml file representing a {@link SourceAndScript} where you mention a datasource and a script to read (xsd is given in /data-model/BACKUP/backup-1.0.xsd)
- * in a xml file, you can mention every datasource that is available in the {@link InputSourceProvider} that is declared in your data-model/CONTEXT/datasource-context.xml file<br/>
+ * in a xml file, you can mention every datasource that is available in the {@link DataSourceProvider} inputSourceProvider that is declared in your data-model/CONTEXT/datasource-context.xml file<br/>
  * 
  * @author Nicolas Thibault
  *
@@ -51,10 +52,12 @@ public class DatabasePopulatorLauncher {
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 1) {
-			throw new IllegalArgumentException("Path is Mandatory");
+		if (args.length < 2) {
+			throw new IllegalArgumentException("Path and datasource are Mandatory");
 		}
 		String workspacePath = args[0];
+		String databaseName = args[1];
+		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
 		Set<String> tables = extractTables(args);
@@ -82,11 +85,13 @@ public class DatabasePopulatorLauncher {
 			
 			try {
 				
-				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
-				InputSourceProvider inputSourceProvider = (InputSourceProvider)appContext.getBean("inputSourceProvider");
+				DataSourceProvider dataSourceProvider = (DataSourceProvider)appContext.getBean("projectDataSourceProvider");
+				DataSource dataSource = dataSourceProvider.getDataSource(databaseName);
+				
+				DataSourceProvider inputDataSourceProvider = (DataSourceProvider)appContext.getBean("inputDataSourceProvider");
 				
 				DatabasePopulator databasePopulator = appContext.getBean(DatabasePopulator.class);
-				databasePopulator.populateDatabase(dataSource, inputSourceProvider, project, tables);
+				databasePopulator.populateDatabase(dataSource, inputDataSourceProvider, project, tables);
 				
 				
 			} catch (Exception e) {
@@ -100,8 +105,8 @@ public class DatabasePopulatorLauncher {
 		
 		Set<String> tables = null;
 		
-		if (args.length > 1) {
-			String tablesArg = args[1];
+		if (args.length > 2) {
+			String tablesArg = args[2];
 			String[] tableTokens = tablesArg.split(";");
 			tables = new HashSet<String>();
 			for (String table:tableTokens) {
