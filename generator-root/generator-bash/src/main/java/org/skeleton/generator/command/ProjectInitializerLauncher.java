@@ -69,6 +69,19 @@ public class ProjectInitializerLauncher {
 			}
 			
 			try {
+				logger.info("start persisting project");
+				
+				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
+				projectMetaDataService.initProjectMetaData(projectMetaData);				
+				
+				logger.info("persisting project completed");
+					
+			} catch (Exception e) {
+				logger.error("failed", e);
+				return;
+			}
+			
+			try {
 				logger.info("start copying resources");
 				
 				FileWriteCommandTree tree = codeWriter.buildFileImportTree(project);
@@ -89,19 +102,6 @@ public class ProjectInitializerLauncher {
 				
 				logger.info("writing configuration completed");
 				
-			} catch (Exception e) {
-				logger.error("failed", e);
-				return;
-			}
-			
-			try {
-				logger.info("start persisting project");
-				
-				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
-				projectMetaDataService.initProjectMetaData(projectMetaData);				
-				
-				logger.info("persisting project completed");
-					
 			} catch (Exception e) {
 				logger.error("failed", e);
 				return;
