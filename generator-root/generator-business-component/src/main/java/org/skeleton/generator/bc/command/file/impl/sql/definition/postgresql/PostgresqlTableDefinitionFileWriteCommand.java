@@ -143,7 +143,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
 		writeLine("-- fetch elements with business keys --");
 
-		writeLine("/*SELECT");
+		writeLine("-- SELECT");
 
 		List<String> fields = getSelectedFields(table.getQualifiedColumns());
 		List<String> jointures = getJointures(table.getQualifiedColumns());
@@ -156,18 +156,17 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 			} else {
 				writeLine(",");
 			}
-			write(field);
+			write("-- " + field);
 		}
 
 		skipLine();
 
-		writeLine("FROM " + table.name);
+		writeLine("-- FROM " + table.name);
 
 		for (String jointure : jointures) {
-			writeLine(jointure);
+			writeLine("-- " + jointure);
 		}
 
-		writeLine("*/");
 		skipLine();
 
 	}
@@ -410,7 +409,6 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
 		writeLine("'");
 		writeLine("LANGUAGE plpgsql;");
-		writeLine("/");
 		skipLine();
 	}
 }
