@@ -15,7 +15,7 @@ import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.impl.BackupCommandArguments;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
-import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class DatabasePopulatorImpl implements DatabasePopulator {
 	private BackupArgumentReaderFactory readerFactory;
 	
 	@Override
-	public void populateDatabase(DataSource dataSource, InputSourceProvider inputSourceProvider, Project project, Set<String> tables) {
+	public void populateDatabase(DataSource dataSource, DataSourceProvider inputDataSourceProvider, Project project, Set<String> tables) {
 
 		logger.info("start populating database");
 
@@ -53,7 +53,7 @@ public class DatabasePopulatorImpl implements DatabasePopulator {
 
 						try {
 							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
-							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputSourceProvider, table);
+							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputDataSourceProvider, table);
 							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(backupLocator.getBackupFilePath(step, table, mode));
 							tablePopulator.populateTable(table, dataSource, commandArgs);
 							logger.info("populating table : " + table.name + " completed");

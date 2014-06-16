@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.skeleton.generator.bc.command.file.impl.sql.SqlFileWriteCommand;
-import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Package;
+import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
 
 public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -19,12 +19,11 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	@Override
 	public void writeContent() throws IOException {
+		
+		writeLine("-- drop foreign keys --");
 		for (Package myPackage : project.model.packages) {
 			for (Table table : myPackage.tables) {
 				
-				String sequenceName = table.name + "_ID_SEQ";
-				
-				writeLine("-- drop foreign keys --");
 				for (int i = 1; i < table.columns.size(); i++) {
 					if (table.columns.get(i).referenceTable != null) {
 						writeLine("BEGIN");
@@ -36,7 +35,14 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		                skipLine();
 					}
 				}
-
+			}
+		}
+				
+		for (Package myPackage : project.model.packages) {
+			for (Table table : myPackage.tables) {
+				writeLine("-- drop definitions for " + table.name + " --");
+				String sequenceName = table.name + "_ID_SEQ";
+				
 				writeLine("-- drop table --");
 				writeLine("BEGIN");
 				writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "';");
@@ -187,7 +193,6 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("+ extract(minute from (systimestamp - timestamp '1970-01-01 00:00:00')) * 60000");
 		writeLine("+ extract(second from (systimestamp - timestamp '1970-01-01 00:00:00')) * 1000;");
 		writeLine("END;");
-		writeLine("/");
 
 	}
 }

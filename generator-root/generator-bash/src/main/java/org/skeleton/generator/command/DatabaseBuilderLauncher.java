@@ -4,12 +4,12 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.skeleton.generator.bl.services.interfaces.DatabaseBuilder;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Project;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +17,13 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * This class can be launched to execute your database building<br/>
- * Argument required : the workspace folder where the "data-model" folder will be detected<br/>
+ * Argument required : 
+ * <li>the workspace folder where the "data-model" folder will be detected
+ * <li>the database name that must be declared in /data-model/CONTEXT/datasource-context.xml
  * Depending on the meta data that is going to be read, the main method will :
  * <li>load the project representation
- * <li>clean the project database that must be set in /data-model/CONTEXT/datasource-context.xml
+ * <li>clean the project database
  * <li>execute all the SQL files that have been previously generated to build your database
- * in the datasource-context.xml file, your database is set as a bean named "projectDataSource" of class {@link org.apache.commons.dbcp.BasicDataSource}
  * @author Nicolas Thibault
  *
  */
@@ -38,13 +39,16 @@ public class DatabaseBuilderLauncher {
 	/**
 	 * main method to be executed
 	 * @param args 0->the workspace folder where the "data-model" folder will be detected
+	 * @param args 1->the database name, declared in /data-model/CONTEXT/datasource-context.xml
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 1) {
-			throw new IllegalArgumentException("Path is Mandatory");
+		if (args.length < 2) {
+			throw new IllegalArgumentException("Path and datasource are Mandatory");
 		}
 		String workspacePath = args[0];
+		String databaseName = args[1];
+		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
 		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-command.xml", sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
@@ -69,8 +73,8 @@ public class DatabaseBuilderLauncher {
 			}
 			
 			try {
-				
-				DataSource dataSource = (BasicDataSource)appContext.getBean("projectDataSource");
+				DataSourceProvider dataSourceProvider = (DataSourceProvider)appContext.getBean("projectDataSourceProvider");
+				DataSource dataSource = dataSourceProvider.getDataSource(databaseName);
 				DatabaseBuilder databaseBuilder = appContext.getBean(DatabaseBuilder.class);
 				databaseBuilder.buildDatabase(dataSource, project);
 				

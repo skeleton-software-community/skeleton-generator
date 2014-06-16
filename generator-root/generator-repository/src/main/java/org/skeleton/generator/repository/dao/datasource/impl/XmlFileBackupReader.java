@@ -10,10 +10,10 @@ import org.skeleton.generator.exception.ReadBackupFailureException;
 import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.interfaces.BackupArgumentReader;
-import org.skeleton.generator.repository.dao.datasource.interfaces.InputSourceProvider;
+import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 
 /**
- * Implementation of a {@link BackupArgumentReader} that uses a path to a Xml backup file, a {@link InputSourceProvider} and a {@link Table} for meta-data
+ * Implementation of a {@link BackupArgumentReader} that uses a path to a Xml backup file, a {@link DataSourceProvider} and a {@link Table} for meta-data
  * the processing will use a {@link SourceAndScriptBackupReader} by converting the xml backup file to a {@link SourceAndScript} to extract a {@link DataSource} and a script
  * @author Nicolas Thibault
  *
@@ -23,7 +23,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 	/*
 	 * properties
 	 */
-	private InputSourceProvider inputSourceProvider;
+	private DataSourceProvider inputSourceProvider;
 	private Table table;
 	private XmlFileSourceAndScriptSimpleParser xmlFileSourceAndScriptParser;
 	private SourceAndScriptBackupReader sourceAndScriptBackupReader;
@@ -31,7 +31,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 	/*
 	 * constructor
 	 */
-	public XmlFileBackupReader(InputSourceProvider inputSourceProvider, Table table) {
+	public XmlFileBackupReader(DataSourceProvider inputSourceProvider, Table table) {
 		this.xmlFileSourceAndScriptParser = new XmlFileSourceAndScriptSimpleParser();
 		this.inputSourceProvider = inputSourceProvider;
 		this.table = table;

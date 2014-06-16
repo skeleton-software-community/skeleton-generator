@@ -195,7 +195,6 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 
 		writeLine(");");
 		writeLine("END;");
-		writeLine("/");
 		skipLine();
 	}
 
