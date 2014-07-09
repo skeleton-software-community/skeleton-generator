@@ -29,7 +29,7 @@ public class DatabasePopulatorImpl implements DatabasePopulator {
 	@Autowired
 	private TablePopulator tablePopulator;
 	@Autowired
-	private BackupFileLocator backupLocator = new BackupFileLocator();
+	private BackupFileLocator backupLocator;
 	@Autowired
 	private BackupArgumentReaderFactory readerFactory;
 	
