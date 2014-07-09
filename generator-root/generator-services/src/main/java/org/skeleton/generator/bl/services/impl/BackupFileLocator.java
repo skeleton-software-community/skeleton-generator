@@ -28,6 +28,11 @@ public class BackupFileLocator {
 	public String getBackupFilePath(int step, Table table, PersistenceMode mode) {
 		return getPathPrefix(step, table) + mode.getExtension();
 	}
+	
+	public String getBackupFilePath(int step, Table table) {
+		PersistenceMode mode = resolvePersistenceMode(step, table);
+		return getPathPrefix(step, table) + mode.getExtension();
+	}
 
 	private boolean existsFileForType(PersistenceMode type, int step, Table table) {
 

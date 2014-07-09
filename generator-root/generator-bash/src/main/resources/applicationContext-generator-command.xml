@@ -41,5 +41,11 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 	<constructor-arg name="columnNumber" value="10"/>
 </bean>
 
+<bean id="backupScriptChecker" class="org.skeleton.generator.bl.services.BackupScriptChecker" autowire="constructor">
+	<property name="inputDataSourceProvider" ref="inputDataSourceProvider"/>
+	<property name="productionSourceRef" value="dallas"/>
+
+</bean>
+
 
 </beans>

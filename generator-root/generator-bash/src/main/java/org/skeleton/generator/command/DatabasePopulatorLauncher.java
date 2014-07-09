@@ -2,18 +2,22 @@ package org.skeleton.generator.command;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.skeleton.generator.bl.services.BackupScriptChecker;
 import org.skeleton.generator.bl.services.interfaces.DatabasePopulator;
 import org.skeleton.generator.bl.services.interfaces.ProjectLoader;
 import org.skeleton.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.skeleton.generator.model.backup.SourceAndScript;
+import org.skeleton.generator.model.check.ScriptCheckWarning;
 import org.skeleton.generator.model.metadata.ProjectMetaData;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
 import org.skeleton.generator.repository.dao.metadata.interfaces.ProjectMetaDataDao;
+import org.skeleton.generator.ui.CheckScriptUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -89,6 +93,16 @@ public class DatabasePopulatorLauncher {
 				DataSource dataSource = dataSourceProvider.getDataSource(databaseName);
 				
 				DataSourceProvider inputDataSourceProvider = (DataSourceProvider)appContext.getBean("inputDataSourceProvider");
+				
+				BackupScriptChecker scriptChecker = appContext.getBean(BackupScriptChecker.class);
+				logger.info("Checking scripts...");
+				List<ScriptCheckWarning> warnings = scriptChecker.checkScripts(project);
+				logger.info("Script check finished");
+				
+				CheckScriptUI checkScriptUI = new CheckScriptUI();
+				checkScriptUI.printWarnings(warnings);
+				checkScriptUI.promptForConfirmation();
+				
 				
 				DatabasePopulator databasePopulator = appContext.getBean(DatabasePopulator.class);
 				databasePopulator.populateDatabase(dataSource, inputDataSourceProvider, project, tables);

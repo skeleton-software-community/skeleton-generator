@@ -13,4 +13,5 @@ import org.skeleton.generator.exception.DataSourceNotFoundException;
 public interface DataSourceProvider {
 
 	public DataSource getDataSource(String dataSourceName) throws DataSourceNotFoundException;
+	
 }
