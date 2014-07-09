@@ -1,4 +1,4 @@
-package org.skeleton.generator.bc.check;
+package org.skeleton.generator.bl.services;
 
 import java.io.File;
 import java.util.LinkedList;
