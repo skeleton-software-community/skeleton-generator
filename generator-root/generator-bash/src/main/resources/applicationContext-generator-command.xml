@@ -44,6 +44,7 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 <bean id="backupScriptChecker" class="org.skeleton.generator.bl.services.BackupScriptChecker" autowire="constructor">
 	<property name="inputDataSourceProvider" ref="inputDataSourceProvider"/>
 	<property name="productionSourceRef" value="dallas"/>
+	<property name="dbSchema" value="DALLAS"/>
 
 </bean>
 

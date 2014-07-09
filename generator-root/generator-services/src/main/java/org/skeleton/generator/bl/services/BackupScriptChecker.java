@@ -18,11 +18,8 @@ import org.skeleton.generator.model.om.Package;
 import org.skeleton.generator.model.om.Project;
 import org.skeleton.generator.model.om.Table;
 import org.skeleton.generator.repository.dao.datasource.TableChecker;
-import org.skeleton.generator.repository.dao.datasource.impl.SourceAndScriptBackupReader;
 import org.skeleton.generator.repository.dao.datasource.impl.XmlFileSourceAndScriptSimpleParser;
 import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Checks that the backup scripts are not
@@ -43,13 +40,12 @@ import org.slf4j.LoggerFactory;
  */
 public class BackupScriptChecker {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BackupScriptChecker.class);
-	
 	private DataSourceProvider inputDataSourceProvider;
 	private BackupFileLocator backupLocator;
 	private XmlFileSourceAndScriptSimpleParser xmlFileSourceAndScriptParser;
 	
 	private String productionSourceRef;
+	private String dbSchema;
 
 	public BackupScriptChecker(BackupFileLocator backupLocator) {
 		super();
@@ -106,7 +102,6 @@ public class BackupScriptChecker {
 	}
 
 	private List<ScriptCheckWarning> getWarningForTable(Table table, int step) throws IOException {
-		logger.info("Checking script for " + table.name + "/" + step);
 		String filePath = backupLocator.getBackupFilePath(step, table);
 		SourceAndScript sourceAndScript = xmlFileSourceAndScriptParser.parse(filePath);
 		String sourceRef = sourceAndScript.getSource();
@@ -129,7 +124,7 @@ public class BackupScriptChecker {
 	private boolean isEmptyTableTargeted(SourceAndScript sourceAndScript, Table table) {
 		DataSource inputSource = inputDataSourceProvider.getDataSource(sourceAndScript.getSource());
 		TableChecker checker = new TableChecker(inputSource);
-		return checker.isTableEmpty(table);
+		return checker.isTableEmpty(table, dbSchema);
 	}
 
 	private boolean isNotProdSourceTargeted(String sourceRef) {
@@ -143,6 +138,10 @@ public class BackupScriptChecker {
 
 	public void setProductionSourceRef(String productionSourceRef) {
 		this.productionSourceRef = productionSourceRef;
+	}
+	
+	public void setDbSchema(String dbSchema) {
+		this.dbSchema = dbSchema;
 	}
 
 

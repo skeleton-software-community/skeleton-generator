@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 public class TableChecker {
 
-	private static final String COUNT_QUERY = "SELECT COUNT(*) FROM DALLAS."; //TODO le dallas a mettre en parametre
+	private static final String COUNT_QUERY = "SELECT COUNT(*) FROM ";
 	private static final ResultSetExtractor<Boolean> extractor = new IsEmptyResultSetExtractor();
 	
 	private JdbcTemplate jdbcTemplate;
@@ -21,10 +21,18 @@ public class TableChecker {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
-	public boolean isTableEmpty(Table table){
-		String query = COUNT_QUERY + table.name;
+	public boolean isTableEmpty(Table table, String schema){
+		String query = buildQuery(table, schema);
 		
 		return jdbcTemplate.query(query, extractor);
+	}
+	
+	private String buildQuery(Table table, String schema){
+		if(schema!=null&&!schema.isEmpty()){
+			return COUNT_QUERY + schema + '.' + table.name;
+		}else{
+			return COUNT_QUERY + table.name;
+		}
 	}
 	
 	private static class IsEmptyResultSetExtractor implements ResultSetExtractor<Boolean>{
