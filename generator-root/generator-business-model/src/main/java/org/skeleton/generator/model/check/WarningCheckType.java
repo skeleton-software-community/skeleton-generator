@@ -15,6 +15,11 @@ public enum WarningCheckType {
 	/**
 	 * Indicates that the script will read data from an empty table
 	 */
-	EMPTY_TABLE;
+	EMPTY_TABLE,
+	
+	/**
+	 * Indicates that hardcoded values will be injected
+	 */
+	HARDCODED_VALUES;
 	
 }

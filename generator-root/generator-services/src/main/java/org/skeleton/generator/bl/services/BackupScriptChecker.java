@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 
 import org.skeleton.generator.bc.folder.FolderUtil;
 import org.skeleton.generator.bl.services.impl.BackupFileLocator;
-import org.skeleton.generator.exception.BackupFileNotFoundException;
 import org.skeleton.generator.model.backup.SourceAndScript;
 import org.skeleton.generator.model.check.ScriptCheckWarning;
 import org.skeleton.generator.model.check.WarningCheckType;
@@ -39,11 +38,11 @@ import org.skeleton.generator.repository.dao.datasource.interfaces.DataSourcePro
  * @param productionSourceRef reference of the production databases
  */
 public class BackupScriptChecker {
-	
+
 	private DataSourceProvider inputDataSourceProvider;
 	private BackupFileLocator backupLocator;
 	private XmlFileSourceAndScriptSimpleParser xmlFileSourceAndScriptParser;
-	
+
 	private String productionSourceRef;
 	private String dbSchema;
 
@@ -57,67 +56,63 @@ public class BackupScriptChecker {
 		if(productionSourceRef==null) throw new IllegalStateException("Production source reference not set in backup script checker");
 		DataSource s = inputDataSourceProvider.getDataSource(productionSourceRef);
 		if(s==null) throw new IllegalStateException("Production source reference does not reference any input data source");
-		
+
 	}
 
 	public List<ScriptCheckWarning> checkScripts(Project project) throws IOException{
-		
+
 		validateProdRefNotNullAndInInputProvider();
-		
+
 		int maxSteps = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BACKUP_SCRIPT_FOLDER);
 		List<ScriptCheckWarning> result = new LinkedList<>();
-		
+
 		for(int step=1; step<=maxSteps; step++){
 			List<ScriptCheckWarning> subResult = checkScriptsForStep(project, step);
 			result.addAll(subResult);
 		}
-		
+
 		return result;
 	}
 
 	private List<ScriptCheckWarning> checkScriptsForStep(Project project, int step) throws IOException {
 		List<ScriptCheckWarning> subResult = new LinkedList<>();
-		
+
 		for (Package myPackage:project.model.packages) {
 			for (Table table:myPackage.tables) {
-				
-				if(isPersistenceModeCompatible(table, step)){
-					List<ScriptCheckWarning> tableCheck = getWarningForTable(table, step);
-					subResult.addAll(tableCheck);
+				PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(step, table);
+				if(mode!=null){
+					switch(mode){
+					case XML : subResult.addAll(checkXmlScript(table, step)); break;
+					case CSV : subResult.add(checkCsvScript(table, step)); break;
+					}
 				}
-					
 			}
 		}
-		
+
 		return subResult;
 	}
 
-	private boolean isPersistenceModeCompatible(Table table, int step) {
-		try{
-			PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
-			return mode==PersistenceMode.XML;			
-		}catch(BackupFileNotFoundException e){
-			return false;
-		}
+	private ScriptCheckWarning checkCsvScript(Table table, int step){
+		return new ScriptCheckWarning(WarningCheckType.HARDCODED_VALUES, step, table);
 	}
 
-	private List<ScriptCheckWarning> getWarningForTable(Table table, int step) throws IOException {
+	private List<ScriptCheckWarning> checkXmlScript(Table table, int step) throws IOException {
 		String filePath = backupLocator.getBackupFilePath(step, table);
 		SourceAndScript sourceAndScript = xmlFileSourceAndScriptParser.parse(filePath);
 		String sourceRef = sourceAndScript.getSource();
-		
+
 		List<ScriptCheckWarning> tableResult = new LinkedList<>();
-		
+
 		if(isNotProdSourceTargeted(sourceRef)){
 			tableResult.add(new ScriptCheckWarning(WarningCheckType.NOT_PROD_TARGET, step, table));
-			
+
 		}
-		
+
 		if(isEmptyTableTargeted(sourceAndScript, table)){
 			tableResult.add(new ScriptCheckWarning(WarningCheckType.EMPTY_TABLE, step, table));
-			
+
 		}
-		
+
 		return tableResult;
 	}
 
@@ -139,7 +134,7 @@ public class BackupScriptChecker {
 	public void setProductionSourceRef(String productionSourceRef) {
 		this.productionSourceRef = productionSourceRef;
 	}
-	
+
 	public void setDbSchema(String dbSchema) {
 		this.dbSchema = dbSchema;
 	}
