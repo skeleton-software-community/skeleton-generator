@@ -24,6 +24,16 @@ public class BackupFileLocator {
 			throw new BackupFileNotFoundException("No backup file found for table : " + table.name);
 		}
 	}
+	
+	public PersistenceMode resolvePersistenceModeOrNull(int step, Table table) {
+		if (existsFileForType(PersistenceMode.XML, step, table)) {
+			return PersistenceMode.XML;
+		} else if (existsFileForType(PersistenceMode.CSV, step, table)) {
+			return PersistenceMode.CSV;
+		} else {
+			return null;
+		}
+	}
 
 	public String getBackupFilePath(int step, Table table, PersistenceMode mode) {
 		return getPathPrefix(step, table) + mode.getExtension();
