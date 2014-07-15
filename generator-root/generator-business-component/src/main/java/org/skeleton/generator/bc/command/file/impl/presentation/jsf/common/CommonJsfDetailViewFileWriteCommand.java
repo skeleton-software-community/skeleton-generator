@@ -115,7 +115,7 @@ public class CommonJsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteComman
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
             writeLine("<rich:tab label=" + (char)34 + "#{i18n." + uniqueComponent.referenceBean.objectName + "Detail}" + (char)34 + " rendered=" + (char)34 + "#{!" + this.bean.controllerObjectName + ".creationTag}" + (char)34 + ">");
-            writeLine("<ui:include src=" + (char)34 + "/sections/" + this.bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + uniqueComponent.referenceBean.className + "Details.xhtml" + (char)34 + "/>");
+            writeLine("<ui:include src=" + (char)34 + "/sections/" + uniqueComponent.referenceBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + uniqueComponent.referenceBean.className + "Details.xhtml" + (char)34 + "/>");
             writeLine("</rich:tab>");
             skipLine();
         }
@@ -123,7 +123,7 @@ public class CommonJsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteComman
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             writeLine("<rich:tab label=" + (char)34 + "#{i18n." + oneToManyComponent.referenceBean.objectName + "List}" + (char)34 + " rendered=" + (char)34 + "#{!" + this.bean.controllerObjectName + ".creationTag}" + (char)34 + ">");
-            writeLine("<ui:include src=" + (char)34 + "/sections/" + this.bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "List" + ".xhtml" + (char)34 + "/>");
+            writeLine("<ui:include src=" + (char)34 + "/sections/" + oneToManyComponent.referenceBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "List" + ".xhtml" + (char)34 + "/>");
             writeLine("</rich:tab>");
             skipLine();
         }
@@ -136,7 +136,7 @@ public class CommonJsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteComman
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             writeLine("<rich:modalPanel id=" + (char)34 + oneToManyComponent.referenceBean.objectName + "ModalPanel" + (char)34 + " autosized=" + (char)34 + "true" + (char)34 + " width=" + (char)34 + "800" + (char)34 + " left=" + (char)34 + "100" + (char)34 + ">");
-            writeLine("<ui:include src=" + (char)34 + "/sections/" + this.bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "Details.xhtml" + (char)34 + "/>");
+            writeLine("<ui:include src=" + (char)34 + "/sections/" + oneToManyComponent.referenceBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "Details.xhtml" + (char)34 + "/>");
             writeLine("</rich:modalPanel>");
             
         }
