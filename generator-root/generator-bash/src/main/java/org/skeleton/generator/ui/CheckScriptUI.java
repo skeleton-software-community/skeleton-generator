@@ -35,14 +35,20 @@ public class CheckScriptUI {
 	}
 	
 	private String printSingleWarning(ScriptCheckWarning w){
-		return toString(w.getType()) + w.getTable().originalName + " on step " + w.getStep(); 
+		String firstPart = toString(w.getType()) + w.getTable().originalName;
+		if(w.getStep()==ScriptCheckWarning.NO_STEP){
+			return firstPart;
+		}else{
+			return firstPart + " on step " + w.getStep();
+		}
 	}
 	
 	private String toString(WarningCheckType type){
 		switch (type) {
-		case EMPTY_TABLE: return "Empty Table : ";
+		case EMPTY_TABLE: return "Empty Table from source database : ";
 		case NOT_PROD_TARGET : return "Input source is not production : ";
 		case HARDCODED_VALUES : return "Hardcoded values will be injected : ";
+		case NO_PLAN : return "No population plan for table : ";
 		default : throw new IllegalStateException();
 		}
 	}
