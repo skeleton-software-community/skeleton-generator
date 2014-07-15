@@ -3,7 +3,6 @@ package org.skeleton.generator.bc.strategy.impl.database;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.oracle.OracleMainDefinitionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.oracle.OracleTableDefinitionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.oracle.OracleTableFkDefinitionFileWriteCommand;
-import org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql.PostgresqlBatchFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql.PostgresqlMainDefinitionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql.PostgresqlTableDefinitionFileWriteCommand;
 import org.skeleton.generator.bc.command.file.impl.sql.definition.postgresql.PostgresqlTableFkDefinitionFileWriteCommand;
