@@ -20,6 +20,11 @@ public enum WarningCheckType {
 	/**
 	 * Indicates that hardcoded values will be injected
 	 */
-	HARDCODED_VALUES;
+	HARDCODED_VALUES,
+	
+	/**
+	 * Indicates that there is no plan to populate a table
+	 */
+	NO_PLAN;
 	
 }

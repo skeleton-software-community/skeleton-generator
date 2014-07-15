@@ -29,4 +29,6 @@ public class ScriptCheckWarning {
 	public Table getTable() {
 		return table;
 	}
+	
+	public static final int NO_STEP = -1;
 }

@@ -2,6 +2,7 @@ package org.skeleton.generator.bl.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,7 +61,34 @@ public class BackupScriptChecker {
 	}
 
 	public List<ScriptCheckWarning> checkScripts(Project project) throws IOException{
+		List<ScriptCheckWarning> subResult1 = checkFromProject(project);
+		List<ScriptCheckWarning> subResult2 = checkInDatabase(project);
+		List<ScriptCheckWarning> result = new ArrayList<>(subResult1.size() + subResult2.size());
+		result.addAll(subResult1);
+		result.addAll(subResult2);
+		return result;
+	}
 
+	private List<ScriptCheckWarning> checkFromProject(Project project){
+		int maxSteps = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BACKUP_SCRIPT_FOLDER);
+		
+		List<ScriptCheckWarning> result = new LinkedList<>();
+		for (Package myPackage:project.model.packages) {
+			for (Table table:myPackage.tables) {
+				if(!hasTableAScript(table, maxSteps)){
+					result.add(new ScriptCheckWarning(WarningCheckType.NO_PLAN, ScriptCheckWarning.NO_STEP, table));
+				}
+			}
+		}
+		return result;
+	}
+
+	private boolean hasTableAScript(Table table, int maxSteps) {
+		return backupLocator.existsFileForTable(table, maxSteps);
+	}
+
+	private List<ScriptCheckWarning> checkInDatabase(Project project)
+			throws IOException {
 		validateProdRefNotNullAndInInputProvider();
 
 		int maxSteps = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BACKUP_SCRIPT_FOLDER);
