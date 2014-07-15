@@ -15,7 +15,7 @@
 		<module>generator-business-component</module>
 		<module>generator-services</module>
 		<module>generator-bash</module>
-		<module>generator-gui</module>
+		<!--module>generator-gui</module-->
 	</modules>
 
 	<developers>
@@ -222,5 +222,4 @@
 			
 		</plugins>
 	</build>
-
 </project>

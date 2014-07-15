@@ -43,16 +43,16 @@
 			<artifactId>commons-logging</artifactId>
 		</dependency>
 			
-		<!-- drivers -->	
+		<!-- jdbc drivers : uncomment one if necessary -->	
 		<!-- dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-		</dependency -->
+		</dependency>
 		
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-		 </dependency>
+		 </dependency -->
 		
 	</dependencies>
 	
