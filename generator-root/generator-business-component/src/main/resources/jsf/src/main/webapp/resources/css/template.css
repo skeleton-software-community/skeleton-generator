@@ -15,6 +15,7 @@ div#header-wrapper {
 	margin-right:0px;
 	border-bottom:1px solid rgb(220, 220, 220);
 	background-color: rgb(240, 240, 240);
+	z-index:2;
 }
 
 div#page-wrapper {
@@ -32,6 +33,7 @@ div#footer-wrapper {
 	margin-right:0px;
 	border-top:1px solid rgb(220, 220, 220);
 	background-color: rgb(240, 240, 240);
+	z-index:2;
 }
 
 div#header-wrapper div#header {
@@ -73,6 +75,7 @@ div#page-wrapper div#page div#left div#menu {
 	width:200px;
 	position:fixed;
 	background-color: white;
+	z-index:2;
 }
 
 div#page-wrapper div#page div#right {
