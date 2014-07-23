@@ -9,10 +9,10 @@ set SKLGEN_RUNNABLE_JAR=%SKLGEN_HOME%\boot\generator-bash-%SKLGEN_VERSION%.jar
 set SKLGEN_LIB=%SKLGEN_HOME%\lib
 set SKLGEN_CLASSPATH=%SKLGEN_RUNNABLE_JAR%;%SKLGEN_LIB%\*
 
-set GENERATE_CLASS=org.skeleton.generator.command.CodeGeneratorLauncher
-set INIT_CLASS=org.skeleton.generator.command.ProjectInitializerLauncher
-set BUILDDB_CLASS=org.skeleton.generator.command.DatabaseBuilderLauncher
-set POPULATEDB_CLASS=org.skeleton.generator.command.DatabasePopulatorLauncher
+set GENERATE_CLASS=org.sklsft.generator.command.CodeGeneratorLauncher
+set INIT_CLASS=org.sklsft.generator.command.ProjectInitializerLauncher
+set BUILDDB_CLASS=org.sklsft.generator.command.DatabaseBuilderLauncher
+set POPULATEDB_CLASS=org.sklsft.generator.command.DatabasePopulatorLauncher
 
 echo current directory : %CD%
 echo generator home : %SKLGEN_HOME%

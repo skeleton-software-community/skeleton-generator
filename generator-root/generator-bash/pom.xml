@@ -2,12 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.skeleton</groupId>
+		<groupId>org.sklsft</groupId>
 		<artifactId>generator-root</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.skeleton</groupId>
+	<groupId>org.sklsft</groupId>
 	<artifactId>generator-bash</artifactId>
 	<name>Generator - Bash</name>
 	<description>Module bash du projet Generator</description>
@@ -17,7 +17,7 @@
 	<dependencies>
 		
 		<dependency>
-			<groupId>org.skeleton</groupId>
+			<groupId>org.sklsft</groupId>
 			<artifactId>generator-services</artifactId>
 		</dependency>
 	

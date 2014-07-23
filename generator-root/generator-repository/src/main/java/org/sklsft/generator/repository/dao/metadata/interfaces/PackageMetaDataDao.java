@@ -1,0 +1,14 @@
+package org.sklsft.generator.repository.dao.metadata.interfaces;
+
+import java.util.List;
+
+import org.sklsft.generator.exception.InvalidProjectMetaDataException;
+import org.sklsft.generator.model.metadata.PackageMetaData;
+
+@Deprecated
+public interface PackageMetaDataDao {
+
+	List<PackageMetaData> loadPackageMetaDataList(String folderPath) throws InvalidProjectMetaDataException;
+	
+	void persistPackageMetaDataList(List<PackageMetaData> packageMetaDataList);
+}
