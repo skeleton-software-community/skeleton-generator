@@ -160,23 +160,22 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("private Long id;");
 		skipLine();
 		
-		if (bean.myPackage.model.project.audited) {
-			if (bean.isManyToOneComponent) {
-				
-				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
-				
-				if (bean.table.columns.get(1).annotations != null) {
-					for (String annotation:bean.table.columns.get(1).annotations) {
-						writeLine(annotation);
-					}
+		if (bean.isManyToOneComponent) {
+			
+			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
+			
+			if (bean.table.columns.get(1).annotations != null) {
+				for (String annotation:bean.table.columns.get(1).annotations) {
+					writeLine(annotation);
 				}
-				
-				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
-				writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columns.get(1).name + (char) 34 + ", nullable = false)");				
-				writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
-				skipLine();
 			}
+			
+			writeLine("@ManyToOne(fetch = FetchType.LAZY)");
+			writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columns.get(1).name + (char) 34 + ", nullable = false)");				
+			writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
+			skipLine();
 		}
+
 
 		for (int i = 1; i < this.bean.properties.size(); i++) {
 			Property property = this.bean.properties.get(i);
@@ -229,12 +228,8 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			write("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true");
-			if (bean.myPackage.model.project.audited){
-				writeLine(", mappedBy = " + (char) 34 + oneToManyComponent.parentBean.objectName + (char) 34 + ")");
-			} else {
-				writeLine(")");
-				writeLine("@JoinColumn(name = " + (char) 34 + oneToManyComponent.referenceColumn.name + (char) 34 + ", nullable=false)");
-			}
+			writeLine(", mappedBy = " + (char) 34 + oneToManyComponent.parentBean.objectName + (char) 34 + ")");
+			
 
 			writeLine("private Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
 			skipLine();
@@ -269,20 +264,18 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 		
-		if (bean.myPackage.model.project.audited) {
-			if (bean.isManyToOneComponent) {
-				
-				Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
-				
-				writeLine("public " + parentBean.className + " get" + parentBean.className + "() {");
-				writeLine("return this." + parentBean.objectName + ";");
-				writeLine("}");
-				skipLine();
-				writeLine("public void set" + parentBean.className + "(" + parentBean.className + " " + parentBean.objectName + ") {");
-				writeLine("this." + parentBean.objectName + " = " + parentBean.objectName + ";");
-				writeLine("}");
-				skipLine();
-			}
+		if (bean.isManyToOneComponent) {
+			
+			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
+			
+			writeLine("public " + parentBean.className + " get" + parentBean.className + "() {");
+			writeLine("return this." + parentBean.objectName + ";");
+			writeLine("}");
+			skipLine();
+			writeLine("public void set" + parentBean.className + "(" + parentBean.className + " " + parentBean.objectName + ") {");
+			writeLine("this." + parentBean.objectName + " = " + parentBean.objectName + ";");
+			writeLine("}");
+			skipLine();
 		}
 
 		for (Property property : this.bean.properties) {
