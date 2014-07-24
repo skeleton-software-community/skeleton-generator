@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Skeleton Generator Project by The Skeleton Software
+	Community</title>
+
+<link rel="stylesheet" href="../../stylesheets/styles.css">
+<link rel="stylesheet" href="../../stylesheets/pygment_trac.css">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<h1>Skeleton Generator</h1>
+			<p>By The Skeleton Software Community</p>
+
+			<p class="view">
+				<a href="../index.html">
+				Documentation
+				</a>
+			</p>
+			
+			<p class="view">
+				<a href="../../index.html">
+				Home
+				</a>
+			</p>
+
+			<p class="view">
+				<a href="../../download/index.html">
+				Download
+				</a>
+			</p>
+
+			<p class="view">
+				<a href="https://github.com/skeleton-software-community/skeleton-generator">
+				View the Project on GitHub
+				</a>
+			</p>
+			
+		</header>
+		<section>
+		
+			<h1>User Guide - v1.0.x</h1>
+			
+			<h2>1.	Installation</h2>
+			<h3>1.1.	From a ZIP File</h3>
+			<p>
+			A Zip distribution of the skeleton generator is available on this web site.<br/>
+			To install the generator, you just need to unzip it on the directiory of your choice.<br/>
+			Then you have to set the environment variable SKLGEN_HOME as the location of the unzipped content and declare SKLGEN_HOME\bin in your PATH variable.<br/>
+			You will also need to have your JAVA_HOME variable properly set.<br/>
+			Last, you will need to put a jdbc driver in the lib folder of your installation amongst :
+			</p>
+			<ul>
+			<li>ojdbc 6 for Oracle</li>
+			<li>postgresql for Postgresql</li>
+			</ul>
+			<p>
+			You can check everything is OK by launching in a shell :<br/>
+			<b>Sklgen help</b>
+			</p>
+			
+			<h3>1.2.	From the sources</h3>
+			<p>
+			The sources are available on Github. Once you have configured the maven project on your IDE, you can launch a maven installation of generator-root (mvn install) then assemble generatot-bash (mvn assembly:assembly).<br/>
+			The last command will build the zipped binary in your target folder. You can get it and install it as in the section before.
+			</p>
+			
+			<h2>2.	Quick start</h2>
+			<h3>2.1.	Initialize your project</h3>
+			<p>
+			Once the generator has been properly installed, the first thing you have to do is to initialize your project :<br/>
+			Open a shell on a directory where you will define the root of your project (for example %USERPROFILE%\Workspaces\demo\demo-root). Then type :<br/>	
+			<b>sklgen init</b><br/>
+			You will be prompted to enter :
+			</p>
+			<ul>
+			<li>Your domain which will be used as your groupId in your pom</li>
+			<li>Your project name (demo in our example)</li>
+			<li>Your skeleton (choose 1 preferably)</li>
+			<li>Your database engine (choose 2 for Postgresql preferably !)</li>
+			<li>Your database name (DEMO for example)</li>
+			<li>Your database hostname (localhost if you have your postgresql server locally installed)</li>
+			<li>Your database port (5432 by default for postgresql)</li>
+			<li>Your database username (postgres or any user that have full rights on your database)</li>
+			<li>Your database password</li>
+			<li>Whether you want to use Hibernate envers or not (for traceability, type 0 because envers requires further more configuration that we won't detail here).</li>
+			</ul>
+			<p>
+			If everything is OK, enter Y.<br/>
+			After that, your project is ready to be run, if your database has been properly created.<br/>
+			If you launch your server with a jndi  access to your database (jndi/demo here), open a browser and connect to localhost:8080/demo-webapp, you will have something like :<br/>
+			</p>
+			<img src="images/image001.jpg" width="100%"/>
+			<br/><br/>
+			
+			<h3>2.2.	Edit your metadata</h3>
+			<p>
+			At this stage, your model is empty and the only thing you can do is to check everything is correctly configured.<br/>
+			Once initialized, the root directory of your project will contain a folder called "data-model" with the following tree :
+			data-model
+			</p>
+			<ul>
+			<li>skeleton.xml</li>
+			<li>skeleton-metadata-1.0.xsd</li>
+			<li>CONTEXT
+			<ul>
+				<li>datasource-context.xml</li>
+			</ul>
+			</li>
+			</ul>
+			
+
+			<p>
+			The skeleton.xml file is central and contains the metadata related to your domain model. Let's edit it so as to add a package "location" and a table "country" with only two fields "iso_code" and "description" :
+			</p>
+			<img src="images/image002.jpg" width="100%"/>
+			<br/><br/>
+			
+			<h3>2.3.	Generate the sources</h3>
+			<p>
+			Now we are ready to generate the sources with this very basic meta-model. For that, open a shell in demo-root and type :<br/>
+			<b>sklgen generate</b><br/>
+			Things might have changed in your workspace :<br/>
+			Classes have been added to your project layers.<br/>
+			SQL files have been added to your data-model directory (/SQL/BUILD/).
+			</p>
+			
+			<h3>2.4.	Build your database</h3>
+			<p>
+			Before you can restart your application, you need to build your database. If you have properly configured your Database name, user and password, you will be able to build it. type in your shell :<br/>
+			<b>sklgen builddb demo</b><br/>
+			demo is the reference to the database you have configured when you have initialized your project.<br/>
+			Now you can run again your application... Nothing changed ! You need to edit your left menu in /demo-root/demo-webapp/src/main/webapp/tempaltes/menu.xhtml<br/>
+			you can edit it this way :
+			</p>
+			
+			<img src="images/image003.jpg" width="100%"/>
+			<br/><br/>
+
+			<p>Then you will see something like :</p>
+			
+			<img src="images/image004.jpg" width="100%"/>
+			<br/><br/>
+			
+			<p>And if you click on the left sub menu "Countries", you will see :</p>
+			
+			<img src="images/image005.jpg" width="100%"/>
+			<br/><br/>
+			
+			<p>Of course, there is no data, but you can start create, update and delete countries !</p>
+			
+			<h3>2.5.	Populate your database</h3>
+			<p>
+			The generator will now let you populate your database. We will see later the details of this functionality. Now, just create a txt file : /data-model/BACKUP/1/LOCATION/COUNTRY.txt with inside a list of Iso codes and descriptions separated by a $, for example :<br/>
+			FR$France<br/>
+			GB$Great Britain<br/>
+			US$United States of America<br/>
+			Then run :<br/>
+			<b>sklgen populatedb demo</b><br/>
+			After clicking to the "countries" menu, you will now see :<br/>
+			</p>
+			
+			<img src="images/image006.jpg" width="100%"/>
+			<br/><br/>
+						
+		</section>
+		<footer>
+			<p>
+				This project is maintained by <a href="https://github.com/skeleton-software-community">The
+					Skeleton Software Community</a>
+			</p>
+			<p>
+				<small>Hosted on GitHub Pages</small>
+			</p>
+		</footer>
+	</div>
+	<script src="../../javascripts/scale.fix.js"></script>
+
+</body>
+</html>
