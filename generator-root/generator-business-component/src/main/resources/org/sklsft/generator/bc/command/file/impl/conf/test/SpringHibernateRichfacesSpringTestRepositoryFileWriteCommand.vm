@@ -57,8 +57,10 @@ http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 #end
 	</bean>
 	
+#if ($project.audited)
 	<bean id="enversEventListener" class="org.hibernate.envers.event.AuditEventListener" />
-
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	
+#end
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 </beans>
