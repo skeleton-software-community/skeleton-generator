@@ -6,6 +6,7 @@
 	<version>1.0.0</version>
 	<name>Generator - Root</name>
 	<description>Module racine du projet Generator</description>
+	<url>http://skeleton-software-community.github.io/skeleton-generator</url>
 
 	<packaging>pom</packaging>
 
@@ -17,6 +18,13 @@
 		<module>generator-bash</module>
 		<!--module>generator-gui</module-->
 	</modules>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<developers>
 	
@@ -34,11 +42,21 @@
 		
 	</developers>
 	
+	<scm>
+		<connection>scm:git:git@github.com/skeleton-software-community/skeleton-generator.git</connection>
+		<developerConnection>scm:git:git@github.com/skeleton-software-community/skeleton-generator.git</developerConnection>
+		<url>git@github.com/skeleton-software-community/skeleton-generator.git</url>
+	</scm>
+	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 	
 	<properties>
@@ -213,7 +231,6 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.2</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
