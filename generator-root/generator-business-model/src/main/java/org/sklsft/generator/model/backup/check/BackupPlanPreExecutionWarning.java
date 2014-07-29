@@ -1,26 +1,26 @@
-package org.sklsft.generator.model.check;
+package org.sklsft.generator.model.backup.check;
 
 import org.sklsft.generator.model.om.Table;
 
 /**
- * A warning that occurs after a script check
+ * A warning that can occur when checking a population plan before execution
  * @author Mounir Regragui
  *
  */
-public class ScriptCheckWarning {
+public class BackupPlanPreExecutionWarning {
 	
-	private WarningCheckType type;
+	private BackupPlanWarningType type;
 	private int step;
 	private Table table;
 	
-	public ScriptCheckWarning(WarningCheckType type, int step, Table table) {
+	public BackupPlanPreExecutionWarning(BackupPlanWarningType type, int step, Table table) {
 		super();
 		this.type = type;
 		this.step = step;
 		this.table = table;
 	}
 	
-	public WarningCheckType getType() {
+	public BackupPlanWarningType getType() {
 		return type;
 	}
 	public int getStep() {

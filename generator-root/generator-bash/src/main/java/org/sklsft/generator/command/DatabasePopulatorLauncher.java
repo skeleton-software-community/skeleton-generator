@@ -7,12 +7,14 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.bl.services.impl.BackupScriptChecker;
+import org.sklsft.generator.bl.services.impl.BackupPostExecutionChecker;
+import org.sklsft.generator.bl.services.impl.BackupPreExecutionChecker;
 import org.sklsft.generator.bl.services.interfaces.DatabasePopulator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.backup.SourceAndScript;
-import org.sklsft.generator.model.check.ScriptCheckWarning;
+import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
+import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.model.om.Project;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
@@ -94,19 +96,25 @@ public class DatabasePopulatorLauncher {
 				
 				InputDataSourceProvider inputDataSourceProvider = appContext.getBean(InputDataSourceProvider.class);
 				
-				BackupScriptChecker scriptChecker = appContext.getBean(BackupScriptChecker.class);
-				logger.info("Checking scripts...");
-				List<ScriptCheckWarning> warnings = scriptChecker.checkScripts(project, inputDataSourceProvider);
-				logger.info("Script check finished");
+				BackupPreExecutionChecker preChecker = appContext.getBean(BackupPreExecutionChecker.class);
+				logger.info("Checking backup plan before execution...");
+				List<BackupPlanPreExecutionWarning> preExecutionWarnings = preChecker.checkPlan(inputDataSourceProvider, project, tables);
+				logger.info("plan pre-execution check finished");
 				
-				CheckScriptUI checkScriptUI = new CheckScriptUI();
-				checkScriptUI.printWarnings(warnings);
-				checkScriptUI.promptForConfirmation();
+				BackupCheckPrompter prompter = new BackupCheckPrompter();
+				prompter.printPreExecutionWarnings(preExecutionWarnings);
+				prompter.promptForConfirmation();
 				
 				
 				DatabasePopulator databasePopulator = appContext.getBean(DatabasePopulator.class);
 				databasePopulator.populateDatabase(dataSource, inputDataSourceProvider, project, tables);
 				
+				BackupPostExecutionChecker postChecker = appContext.getBean(BackupPostExecutionChecker.class);
+				logger.info("Checking backup plan after execution...");
+				List<BackupPlanPostExecutionWarning> postExecutionWarnings = postChecker.checkPlan(dataSource, project, tables);
+				logger.info("plan post-execution check finished");
+				
+				prompter.printPostExecutionWarnings(postExecutionWarnings);
 				
 			} catch (Exception e) {
 				logger.error("failed", e);
