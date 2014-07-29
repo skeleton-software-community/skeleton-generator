@@ -1,4 +1,4 @@
-<configuration debug="true">
+<configuration>
 
 	<property resource="generator.properties" />
 
@@ -25,11 +25,12 @@
 	</appender>
 	
 	
-	<logger name="com.skeleton.generator" level="${logLevel}">
+	<logger name="org.sklsft.generator" level="${logLevel}">
 	</logger>
 	
-	<root level="info">
+	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
+	
 </configuration>
