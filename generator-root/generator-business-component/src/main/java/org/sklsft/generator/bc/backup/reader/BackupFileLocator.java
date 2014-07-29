@@ -45,10 +45,12 @@ public class BackupFileLocator {
 		return getPathPrefix(step, table) + mode.getExtension();
 	}
 	
-	public boolean existsFileForTable(Table table, int maxSteps){
-		for(int step=1;step<maxSteps;step++){
+	public boolean existsFileForTable(Table table, int maxStep){
+		for(int step=1;step<=maxStep;step++){
 			for(PersistenceMode mode : PersistenceMode.values()){
-				if(existsFileForType(mode, step, table)) return true;
+				if(existsFileForType(mode, step, table)) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
 @Component(value="projectMetaDataXmlDao")
 public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	
-	private static final String SCHEMA_LOCATION = "skeleton-metadata-1.0.xsd";
+	private static final String SCHEMA_LOCATION = "skeleton-metadata-1.1.xsd";
 
 
 	@Override
@@ -91,7 +91,7 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	        jaxbMarshaller.setSchema(schema);
 			
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,"http://www.sklsft.org/generator/model/metadata skeleton-metadata-1.0.xsd");
+			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,"http://generator.sklsft.org/schema/model/metadata skeleton-metadata-1.1.xsd");
 			 
 			jaxbMarshaller.marshal(projectMetaData, file);
 			

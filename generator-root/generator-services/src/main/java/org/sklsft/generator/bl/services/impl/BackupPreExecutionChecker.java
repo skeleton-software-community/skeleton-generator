@@ -60,7 +60,7 @@ public class BackupPreExecutionChecker {
 		for (Package myPackage:project.model.packages) {
 			for (Table table:myPackage.tables) {
 				if (tables == null || tables.contains(table.originalName)) {
-					logger.info("start post checking table : " + table.name);
+					logger.info("start pre checking table : " + table.name);
 
 					BackupPlanPreExecutionWarning noPlanWarning = checkTableHasPlan(table, maxStep);
 					
