@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://generator.sklsft.org/schema/model/backup" xmlns:tns="http://generator.sklsft.org/schema/model/backup" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:metadata="http://generator.sklsft.org/schema/model/backup">
+
+  <xs:element name="backup" type="tns:backup"/>
+
+  <xs:complexType name="backup">
+    <xs:sequence>
+      <xs:element name="source" type="xs:string"/>
+      <xs:element name="type" type="tns:populateCommandType" default="INSERT" minOccurs="0"/>
+      <xs:element name="script" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="populateCommandType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="INSERT"/>
+      <xs:enumeration value="UPDATE"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
