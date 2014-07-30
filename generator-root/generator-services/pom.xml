@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.sklsft</groupId>
 		<artifactId>generator-root</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<groupId>org.sklsft</groupId>
