@@ -1,5 +1,5 @@
-set /p DOMAIN_NAME=Enter your domain name  (ex:org.skeleton) : 
-set /p PROJECT_NAME=Enter your project name (ex:generator) : 
+set /p DOMAIN_NAME=Enter your domain name  (ex:org.sklsft) : 
+set /p PROJECT_NAME=Enter your project name (ex:demo) : 
 
 :PROMPT_SKL_TYPE
 set /p SKELETON_NUMBER=Enter your skeleton type (1:SPRING_HIBERNATE_RICHFACES, 2:BASIC_SPRING_HIBERNATE_RICHFACES) : 
@@ -15,7 +15,7 @@ if %DATABASE_ENGINE_NUMBER% == 2 (set DATABASE_ENGINE=POSTGRESQL& goto PROMPT_DA
 goto PROMPT_DATABASE_ENGINE
 :PROMPT_DATABASE_ENGINE_OK
 
-set /p DATABASE_NAME=Enter your database name (ex:MYDATABASE) : 
+set /p DATABASE_NAME=Enter your database name (ex:DEMO) : 
 set /p DATABASE_HOSTNAME=Enter your database host name (ex:localhost) : 
 set /p DATABASE_PORT=Enter your database port (ex:5432) : 
 set /p DATABASE_USERNAME=Enter your database username (ex:postgres) : 

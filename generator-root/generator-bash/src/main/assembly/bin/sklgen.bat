@@ -1,10 +1,10 @@
 @REM ----------------------------------------------------------------------------
-@REM bat file to execute classes from generator-bash 1.0.0
+@REM bat file to execute classes from generator-bash 2.0.0
 @REM ----------------------------------------------------------------------------
 
 @echo off
 
-set SKLGEN_VERSION=1.1.0
+set SKLGEN_VERSION=2.0.0-SNAPSHOT
 set SKLGEN_RUNNABLE_JAR=%SKLGEN_HOME%\boot\generator-bash-%SKLGEN_VERSION%.jar
 set SKLGEN_LIB=%SKLGEN_HOME%\lib
 set SKLGEN_CLASSPATH=%SKLGEN_RUNNABLE_JAR%;%SKLGEN_LIB%\*

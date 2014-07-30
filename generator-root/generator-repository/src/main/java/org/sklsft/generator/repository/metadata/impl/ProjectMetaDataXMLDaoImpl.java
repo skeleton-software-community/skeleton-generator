@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
 @Component(value="projectMetaDataXmlDao")
 public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	
-	private static final String SCHEMA_LOCATION = "skeleton-metadata-1.1.xsd";
+	private static final String SCHEMA_LOCATION = "skeleton-metadata-2.0.xsd";
 
 
 	@Override
