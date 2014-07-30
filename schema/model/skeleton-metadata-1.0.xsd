@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://generator.sklsft.org/schema/model/metadata" xmlns:tns="http://generator.sklsft.org/schema/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:metadata="http://generator.sklsft.org/schema/model/metadata">
+
+  <xs:element name="project" type="tns:project"/>
+
+  <xs:complexType name="column">
+    <xs:sequence>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="dataType" type="tns:dataType" use="required"/>
+    <xs:attribute name="nullable" type="xs:boolean" use="required"/>
+    <xs:attribute name="referenceTableName" type="xs:string"/>
+    <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
+    <xs:attribute name="format" type="tns:format"/>
+    <xs:attribute name="editable" type="xs:boolean" use="required"/>
+    <xs:attribute name="visibility" type="tns:visibility"/>
+    <xs:attribute name="rendering" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="package">
+    <xs:sequence>
+      <xs:element name="tables" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" type="tns:table" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="table">
+    <xs:sequence>
+      <xs:element name="interfaces" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="interface" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="columns" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="column" type="tns:column" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="cardinality" type="xs:int" use="required"/>
+    <xs:attribute name="listRendering" type="xs:string"/>
+    <xs:attribute name="detailRendering" type="xs:string"/>
+    <xs:attribute name="comboxable" type="xs:boolean" use="required"/>
+    <xs:attribute name="createEnabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="updateEnabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="deleteEnabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="project">
+    <xs:sequence>
+      <xs:element name="domainName" type="xs:string"/>
+      <xs:element name="projectName" type="xs:string"/>
+      <xs:element name="skeletonType" type="tns:skeletonType"/>
+      <xs:element name="databaseEngine" type="tns:databaseEngine"/>
+      <xs:element name="databaseName" type="xs:string"/>
+      <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
+      <xs:element name="databaseUserName" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePassword" type="xs:string" minOccurs="0"/>
+      <xs:element name="audited" type="xs:boolean" default="false"/>
+      <xs:element name="packages" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="package" type="tns:package" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="dataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TEXT"/>
+      <xs:enumeration value="STRING"/>
+      <xs:enumeration value="LONG"/>
+      <xs:enumeration value="DOUBLE"/>
+      <xs:enumeration value="DATETIME"/>
+      <xs:enumeration value="BOOLEAN"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="relationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MANY_TO_ONE"/>
+      <xs:enumeration value="MANY_TO_ONE_COMPONENT"/>
+      <xs:enumeration value="UNIQUE"/>
+      <xs:enumeration value="UNIQUE_COMPONENT"/>
+      <xs:enumeration value="ONE_TO_ONE"/>
+      <xs:enumeration value="PROPERTY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="format">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DEFAULT"/>
+      <xs:enumeration value="TWO_DECIMALS"/>
+      <xs:enumeration value="FOUR_DECIMALS"/>
+      <xs:enumeration value="DATE"/>
+      <xs:enumeration value="DATE_AND_TIME"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="visibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VISIBLE"/>
+      <xs:enumeration value="NOT_LIST"/>
+      <xs:enumeration value="NOT_VISIBLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="databaseEngine">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="POSTGRESQL"/>
+      <xs:enumeration value="ORACLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="fileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="JAVA"/>
+      <xs:enumeration value="SQL"/>
+      <xs:enumeration value="XML"/>
+      <xs:enumeration value="XHTML"/>
+      <xs:enumeration value="JS"/>
+      <xs:enumeration value="CSS"/>
+      <xs:enumeration value="BAT"/>
+      <xs:enumeration value="PROPERTIES"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="persistenceMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CSV"/>
+      <xs:enumeration value="XML"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="skeletonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SPRING_HIBERNATE_RICHFACES"/>
+      <xs:enumeration value="BASIC_SPRING_HIBERNATE_RICHFACES"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
