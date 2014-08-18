@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.sklsft.generator.bc.file.command.impl.SingleFileWriteCommand;
 import org.sklsft.generator.model.metadata.FileType;
@@ -31,7 +32,7 @@ public abstract class JavaFileWriteCommand extends SingleFileWriteCommand {
 	 */
 	public JavaFileWriteCommand(String folderName, String fileName) {
 		super(folderName, fileName, FileType.JAVA);
-		this.javaImports = new HashSet<>();
+		this.javaImports = new TreeSet<String>();
 	}
 
 	private final void fetchImports() throws IOException {
