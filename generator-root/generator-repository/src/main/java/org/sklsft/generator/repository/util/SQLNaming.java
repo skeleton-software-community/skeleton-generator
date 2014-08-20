@@ -76,6 +76,14 @@ public class SQLNaming {
 		}
 	}
 
+	public static String getPostInsertProcedureName(String tableName, DatabaseEngine databaseEngine) {
+		if (databaseEngine.equals(DatabaseEngine.ORACLE)) {
+			return "pins_" + tableName.toLowerCase();
+		} else {
+			return null;
+		}
+	}
+	
 	public static String getUpdateProcedureName(String tableName, DatabaseEngine databaseEngine) {
 		if (databaseEngine.equals(DatabaseEngine.ORACLE)) {
 			return "upd_" + tableName.toLowerCase() + "_bc";

@@ -107,15 +107,19 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 
 		for (int i = 1; i < this.table.columns.size(); i++) {
 			if (this.table.columns.get(i).referenceTable != null) {
+				write("v" + fieldMap.get(this.table.columns.get(i).name) + " := ");
 				write("find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
 				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
 
 				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name) + ",");
+					if (j > 0) {
+						write(",");
+					}
+					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name));
 				}
 
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
+				writeLine(");");
 			}
 		}
 
@@ -163,27 +167,34 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 		}
 		writeLine("BEGIN");
 		
-		write("find_" + this.table.name.toLowerCase() + " (");
+		write("vID := find_" + this.table.name.toLowerCase() + " (");
 
 		tempColumnList = this.table.getFindColumnList();
 
 		for (int j = 0; j < tempColumnList.size(); j++) {
-			write("v" + fieldMap.get(tempColumnList.get(j).name) + ",");
+			if (j > 0) {
+				write(",");
+			}
+			write("v" + fieldMap.get(tempColumnList.get(j).name));
 		}
 
-		writeLine("vID);");
+		writeLine(");");
 
 		for (int i = 1; i < this.table.columns.size(); i++) {
 			if (this.table.columns.get(i).referenceTable != null) {
+				write("v"+ fieldMap.get(this.table.columns.get(i).name) + " := ");
 				write("find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
 				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
 
 				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name) + ",");
+					if (j > 0) {
+						write(",");
+					}
+					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name));
 				}
 
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
+				writeLine(");");
 			}
 		}
 

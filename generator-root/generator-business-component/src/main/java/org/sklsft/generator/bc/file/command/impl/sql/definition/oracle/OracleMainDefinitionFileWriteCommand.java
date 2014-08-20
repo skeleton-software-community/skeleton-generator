@@ -81,7 +81,23 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				skipLine();
 
 				writeLine("BEGIN");
+				writeLine("EXECUTE IMMEDIATE 'DROP FUNCTION find_" + table.name.toLowerCase() + "';");
+				writeLine("EXCEPTION");
+				writeLine("WHEN OTHERS THEN NULL;");
+				writeLine("END;");
+				writeLine("/");
+				skipLine();
+
+				writeLine("BEGIN");
 				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE ins_" + table.name.toLowerCase() + "';");
+				writeLine("EXCEPTION");
+				writeLine("WHEN OTHERS THEN NULL;");
+				writeLine("END;");
+				writeLine("/");
+				skipLine();
+				
+				writeLine("BEGIN");
+				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE pins_" + table.name.toLowerCase() + "';");
 				writeLine("EXCEPTION");
 				writeLine("WHEN OTHERS THEN NULL;");
 				writeLine("END;");

@@ -238,16 +238,21 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		List<Column> tempColumnList;
 
 		writeLine("-- used to find element from business key --");
-		writeLine("CREATE OR REPLACE PROCEDURE find_" + table.name.toLowerCase());
+		writeLine("CREATE OR REPLACE FUNCTION find_" + table.name.toLowerCase());
 		writeLine("(");
 
 		for (int i = 0; i < findColumnList.size(); i++) {
-			writeLine("v" + fieldMap.get(findColumnList.get(i).name) + " IN " + DataType.getPlOracleType(findColumnList.get(i).dataType) + ",");
+			if (i>0) {
+				write(",");
+			}
+			writeLine("v" + fieldMap.get(findColumnList.get(i).name) + " IN " + DataType.getPlOracleType(findColumnList.get(i).dataType));
 		}
+		writeLine(") RETURN NUMBER");
 
-		writeLine("vID OUT NUMBER");
-		writeLine(") AS");
-
+		writeLine("AS");
+		
+		writeLine("vID NUMBER;");
+		
 		for (int i = 1; i <= this.table.cardinality; i++) {
 			if (this.table.columns.get(i).referenceTable != null) {
 				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + " NUMBER;");
@@ -266,15 +271,19 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		for (int i = 1; i <= this.table.cardinality; i++) {
 			if (this.table.columns.get(i).referenceTable != null) {
+				write("v" + fieldMap.get(this.table.columns.get(i).name) + " := ");
 				write("find_" + this.table.columns.get(i).referenceTable.name.toLowerCase() + " (");
 
 				tempColumnList = this.table.columns.get(i).referenceTable.getFindColumnList();
 
 				for (int j = 0; j < tempColumnList.size(); j++) {
-					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name) + ",");
+					if (j > 0) {
+						write(",");
+					}
+					write("v" + fieldMap.get(this.table.columns.get(i).name.replace("_ID", "_") + tempColumnList.get(j).name));
 				}
 
-				writeLine("v" + fieldMap.get(this.table.columns.get(i).name) + ");");
+				writeLine(");");
 			}
 		}
 
@@ -293,6 +302,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("vID := -1;");
 		writeLine("END IF;");
 		writeLine("END IF;");
+		writeLine("RETURN vID;");
 		writeLine("END;");
 		writeLine("/");
 		skipLine();
@@ -353,6 +363,49 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	
 			writeLine(");");
 			
+		}
+		writeLine("END;");
+		writeLine("/");
+		skipLine();
+		
+		writeLine("-- used in postinsert to update audit --");
+		writeLine("CREATE OR REPLACE PROCEDURE pins_" + table.name.toLowerCase());
+		writeLine(" AS");
+		if (table.myPackage.model.project.audited) {
+			writeLine("vREV NUMBER;");
+			writeLine("CURSOR cs"+table.name.toUpperCase()+" IS");
+			writeLine(" SELECT *");
+			writeLine(" FROM "+ table.name);
+			writeLine(" WHERE NOT EXISTS "); 
+			writeLine("  (SELECT 1");
+			writeLine("   FROM " + table.name + "_AUD");  
+			writeLine("   WHERE "+ table.name + ".ID = " +table.name + "_AUD.ID);");
+			writeLine("BEGIN");
+				
+			writeLine("FOR el in cs" + table.name.toUpperCase());
+			writeLine("LOOP");
+			writeLine("  vREV := hibernate_sequence.NEXTVAL;");
+			
+			writeLine("  INSERT INTO AUDITENTITY (ID, TIMESTAMP, LOGIN) VALUES (vREV, current_millis(), 'sys');");
+			
+			write("  INSERT INTO " + table.name + "_AUD (ID, REV, REVTYPE, " + this.table.columns.get(1).name);
+	
+			for (int i = 2; i < this.table.columns.size(); i++) {
+				write(", " + this.table.columns.get(i).name);
+			}
+	
+			write(") VALUES (el.ID, vREV, 0, el." + this.table.columns.get(1).name);
+	
+			for (int i = 2; i < this.table.columns.size(); i++) {
+				write(", el." + this.table.columns.get(i).name);
+			}
+	
+			writeLine(");");
+			writeLine("END LOOP;");
+		} else {			
+			writeLine("vREV NUMBER;");
+			writeLine("BEGIN");
+			writeLine("  vREV := 0;");
 		}
 		writeLine("END;");
 		writeLine("/");
