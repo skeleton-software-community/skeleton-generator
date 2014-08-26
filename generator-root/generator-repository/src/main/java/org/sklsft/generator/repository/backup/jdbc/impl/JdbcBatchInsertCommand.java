@@ -2,7 +2,6 @@ package org.sklsft.generator.repository.backup.jdbc.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -15,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * Using the command pattern, when populating a database<br/>
@@ -38,6 +41,7 @@ public class JdbcBatchInsertCommand implements JdbcCommand {
 	 */
 	private JdbcTemplate jdbcTemp;
 	private SimpleJdbcCall jdbcCallPostIns;
+	private TransactionTemplate transactionTemplate;
 	private Table table;
 	private List<Object[]> argsList;
 	private String	query;
@@ -55,18 +59,35 @@ public class JdbcBatchInsertCommand implements JdbcCommand {
 		this.table = table;
 		this.argsList = argsList;
 		this.query = sqlQuery;
+		this.transactionTemplate = new TransactionTemplate(new DataSourceTransactionManager(dataSource));
 	}
 	
 	public void execute() {
-		BatchDataJdbcCommand batchData = new BatchDataJdbcCommand(argsList);
+		final BatchDataJdbcCommand batchData = new BatchDataJdbcCommand(argsList,BATCH_SIZE);
 		//while all the data  have not been processed
 		while (batchData.hasNext()) {
+			int batchStartPosition = batchData.getPosition();
 			try {
-				// process the batch insert 
-				//  (max  BATCH_SIZE rows are processed in one execution) 
-				jdbcTemp.batchUpdate(query, batchData);
+				 transactionTemplate.execute(new TransactionCallback<Object>() {
+					@Override
+					public Object doInTransaction(TransactionStatus status) {
+						// process the batch insert 
+						//  (max  BATCH_SIZE rows are processed in one execution) 
+						jdbcTemp.batchUpdate(query, batchData);
+						return null;
+					}
+				});
+				
 			} catch (Exception e) {
-				logger.error("batch insert for table " + table.name +  "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+				if (batchData.getBatchSize() > 1) {
+					// to insert a maximum of data, we retry with a step of one 
+					logger.error("exception found during batch process, restart at data position " + batchStartPosition + " with a step equal to 1");
+					batchData.forceRestartPosition(batchStartPosition);
+					batchData.setBatchSize(1);
+				} else {
+					// the insert is logged, and the insert continue to next value
+					logger.error("batch insert for table " + table.name +  "failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
+				}
 			}
 		}
 		if (jdbcCallPostIns != null) {
@@ -84,24 +105,42 @@ public class JdbcBatchInsertCommand implements JdbcCommand {
 	 * Class used to process data by batch using the limit of BATCH_SIZE.
 	 */
 	private class BatchDataJdbcCommand extends AbstractInterruptibleBatchPreparedStatementSetter {
-		private Iterator<Object[]> argsList;
-		public BatchDataJdbcCommand(List<Object[]> argsList) {
-			this.argsList = argsList.iterator();
+		private List<Object[]> 		argsList;
+		private int					batchSize;
+		private int					position;
+		public BatchDataJdbcCommand(List<Object[]> argsList, int defaultBatchSize) {
+			this.argsList = argsList;
+			this.batchSize = defaultBatchSize;
+			this.position = 0;
 		}
 		
 		public boolean hasNext() {
-			return argsList.hasNext();
+			return position < argsList.size();
 		}
 		
 		@Override
 		public int getBatchSize() {						
-			return BATCH_SIZE;
+			return batchSize;
 		}
+		
+		public void forceRestartPosition(int position) {
+			this.position = position;
+		}
+		
+		public void setBatchSize(int batchSize) {
+			this.batchSize = batchSize;
+		}
+		
+		public int getPosition() {
+			return position;
+		}
+		
 		@Override
 		protected boolean setValuesIfAvailable(PreparedStatement ps, int i)
 				throws SQLException {
-			if (argsList.hasNext()) {
-				Object[] args = argsList.next();
+			if (hasNext()) {
+				Object[] args = argsList.get(position);
+				position++;
 				
 				String message = "prepare insert for table : " + table.name + " - args : ";
 				for (Object arg:args) {
