@@ -59,7 +59,7 @@ public class DatabasePopulatorImpl implements DatabasePopulator {
 							tablePopulator.populateTable(table, dataSource, commandArgs);
 							logger.info("populating table : " + table.name + " completed");
 						} catch (BackupFileNotFoundException e) {
-							logger.error(e.getMessage());
+							logger.warn(e.getMessage());
 						}
 					} else {
 						logger.info("table : " + table.name + " skipped");
