@@ -13,6 +13,8 @@ set GENERATE_CLASS=org.sklsft.generator.command.CodeGeneratorLauncher
 set INIT_CLASS=org.sklsft.generator.command.ProjectInitializerLauncher
 set BUILDDB_CLASS=org.sklsft.generator.command.DatabaseBuilderLauncher
 set POPULATEDB_CLASS=org.sklsft.generator.command.DatabasePopulatorLauncher
+set UPDATEDB_CLASS=org.sklsft.generator.command.DatabaseUpdaterLauncher
+set DUMPDB_CLASS=org.sklsft.generator.command.DatabaseDumpLauncher
 
 echo current directory : %CD%
 echo generator home : %SKLGEN_HOME%
@@ -74,6 +76,8 @@ if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
 if %SKLGEN_CMD_LINE_ARGS%==generate goto GENERATE
 if %SKLGEN_CMD_LINE_ARGS%==builddb goto BUILDDB
 if %SKLGEN_CMD_LINE_ARGS%==populatedb goto POPULATEDB
+if %SKLGEN_CMD_LINE_ARGS%==updatedb goto UPDATEDB
+if %SKLGEN_CMD_LINE_ARGS%==dumpdb goto DUMPDB
 
 goto INVALID_SKLGEN_CMD_LINE_ARGS
 
@@ -86,6 +90,8 @@ echo use one of the following commands :
 echo . init
 echo . generate
 echo . buildbdb
+echo . populatedb
+echo . updatedb
 echo . populatedb
 goto END
 
@@ -116,6 +122,18 @@ goto END
 echo start populating database
 %JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end populating database
+goto END
+
+:UPDATEDB:
+echo start updating database
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %UPDATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
+echo end updating database
+goto END
+
+:DUMPDB:
+echo start dumping database
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %DUMPDB_CLASS% "%CD%" "%DATABASE_NAME%"
+echo end dumping database
 goto END
 
 
