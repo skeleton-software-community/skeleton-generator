@@ -683,7 +683,7 @@ public class OracleSqlGenerator implements SqlGenerator {
 		}
 
 		if (value instanceof String) {
-			return "'" + value.toString() + "'"; 
+			return "'" + value.toString().replaceAll("'","''") + "'"; 
 		} else if (value instanceof Date) {			
 			return "TO_DATE('" + new SimpleDateFormat("yyyy-MM-dd").format((Date)value)+ "', 'YYYY-MM-DD')";			
 		} else if (value instanceof Boolean) {

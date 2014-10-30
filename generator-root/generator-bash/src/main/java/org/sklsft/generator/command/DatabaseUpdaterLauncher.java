@@ -31,7 +31,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * <li>choose the files in /data-model/BACKUP/ necessary to update the data of the database : 
  *   <ul>
  *     <li> data for new tables ( xml (insert or update) or txt)
- *     <li> data to populate a whole existing table (only txt present) => all the dependant tables are also populated
+ *     <li> data to populate a whole existing table (only txt present) => all the dependent tables are also populated
  *     <li> data to update the value of tables (xml update present for an structure updated table)
  *     <li> data to add to existing tables (txt file)
  *   </ul>
