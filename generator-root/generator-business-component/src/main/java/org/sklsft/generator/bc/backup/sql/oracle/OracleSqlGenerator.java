@@ -166,11 +166,21 @@ public class OracleSqlGenerator implements SqlGenerator {
 		List<String> list = new ArrayList<>();
 		
 		for (Column column : tableUpdate.getColumnRemoved()) {
-			list.add("ALTER TABLE " + tableUpdate.getTable().name + " DROP COLUMN " + column.name + ";" + NEW_LINE);
+			list.add("ALTER TABLE " + tableUpdate.getTable().name + " DROP " + column.name + ";" + NEW_LINE);
 		}
 		
 		for (Column column : tableUpdate.getColumnAdded()) {
-			list.add("ALTER TABLE " + tableUpdate.getTable().name + " ADD COLUMN " + column.name + " " + DataType.getOracleType(column.dataType) + ";" + NEW_LINE);			
+			list.add("ALTER TABLE " + tableUpdate.getTable().name + " ADD " + column.name + " " + DataType.getOracleType(column.dataType) + ";" + NEW_LINE);			
+		}
+		
+		if (tableUpdate.getTable().myPackage.model.project.audited) {
+			for (Column column : tableUpdate.getColumnRemoved()) {
+				list.add("ALTER TABLE " + tableUpdate.getTable().name + "_AUD DROP " + column.name + ";" + NEW_LINE);
+			}
+			
+			for (Column column : tableUpdate.getColumnAdded()) {
+				list.add("ALTER TABLE " + tableUpdate.getTable().name + "_AUD ADD " + column.name + " " + DataType.getOracleType(column.dataType) + ";" + NEW_LINE);			
+			}
 		}
 
 		return list;
