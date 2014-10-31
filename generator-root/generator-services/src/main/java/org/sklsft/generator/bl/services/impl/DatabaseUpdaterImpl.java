@@ -6,8 +6,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.bc.file.command.impl.sql.update.UpdateScriptFileWriterCommand;
-import org.sklsft.generator.bc.update.ModelDifferenceAnalyser;
-import org.sklsft.generator.bc.update.PopulationUpdateAnalyser;
+import org.sklsft.generator.bc.update.ModelDifferenceAnalyzer;
+import org.sklsft.generator.bc.update.PopulationUpdateAnalyzer;
 import org.sklsft.generator.bc.update.UpdateReport;
 import org.sklsft.generator.bc.update.UpdateScriptGenerator;
 import org.sklsft.generator.bl.services.interfaces.DatabaseUpdater;
@@ -30,7 +30,7 @@ public class DatabaseUpdaterImpl implements DatabaseUpdater {
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseUpdaterImpl.class);
 
 	@Autowired
-	private PopulationUpdateAnalyser populationAnalyser;
+	private PopulationUpdateAnalyzer populationAnalyzer;
 	@Autowired 
 	private UpdateReport updateReport;
 	@Autowired
@@ -40,16 +40,16 @@ public class DatabaseUpdaterImpl implements DatabaseUpdater {
 	public void generateUpdateScript(DatabaseSchema schema,			
 			DataSource dataSource, String databaseName, 
 			InputDataSourceProvider inputProvider, Project project) {
-		ModelDifferenceAnalyser differenceAnalyser = new ModelDifferenceAnalyser(project.model, schema);		
+		ModelDifferenceAnalyzer differenceAnalyzer = new ModelDifferenceAnalyzer(project.model, schema);		
 		
 		// find difference in the schema
 		logger.info("start analysing difference between schema and skeleton");				
-		DatabaseUpdate update = differenceAnalyser.analyseDifference();
+		DatabaseUpdate update = differenceAnalyzer.analyzeDifference();
 		logger.info("end analysing difference between schema and skeleton");
 		
 		// find tables to populate
 		logger.info("start analysing tables to populate");				
-		populationAnalyser.analysePopulation(project, update);
+		populationAnalyzer.analysePopulation(project, update);
 		logger.info("end analysing tables to populate");
 		
 		// generate script		

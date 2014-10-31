@@ -25,12 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Analyse table population for a given database update.
+ * Analyze table population for a given database update.
  * 
  * @author Michael Fernandez
  */
 @Component
-public class PopulationUpdateAnalyser {
+public class PopulationUpdateAnalyzer {
 	
 	@Autowired
 	private BackupFileLocator backupLocator;
@@ -56,8 +56,8 @@ public class PopulationUpdateAnalyser {
 			}
 		}
 		
-		// create a graph of table depencies to be able to determine 
-		// the dependant tables to populate completely.
+		// create a graph of table dependencies to be able to determine 
+		// the dependent tables to populate completely.
 		if (!databaseUpdate.getCompletePopulateTable().isEmpty()) {
 			GraphModel graph = graphModelFactory.buildGraphModel(project.model);
 			analyseDependantPopulationTable(databaseUpdate, graph);
@@ -114,17 +114,39 @@ public class PopulationUpdateAnalyser {
 			}
 		}		
 	}
+	
+	
+	/**
+	 * Analyze the graph of tables to define all the table to populate completely.
+	 * Depth search is done for all completely tables to populate exept new tables.    
+	 * 
+	 * @param databaseUpdate information about database update
+	 * @param graph the graph model
+	 */
 	private void analyseDependantPopulationTable(DatabaseUpdate databaseUpdate, GraphModel graph) {
-			Set<Table > allTablesToPopulate = new HashSet<Table>();
-			
-			for (Table table : databaseUpdate.getCompletePopulateTable()) {
-				addDependantTable(table, allTablesToPopulate, graph);
+		Set<Table> allTablesToPopulate = new HashSet<Table>();
+		
+		// We first add the new tables to the list of populate tables.
+		// By added them first, the depth search will not take care about there children tables.
+		// For new tables, the population will be done completely, the dependent table population, 
+		//  will be to completely only if the users precise it (by changing the default population plan).
+		allTablesToPopulate.addAll(databaseUpdate.getNewTables());
+		
+		for (Table table : databaseUpdate.getCompletePopulateTable()) {
+			addDependantTable(table, allTablesToPopulate, graph);
 		}
 		
 		databaseUpdate.getCompletePopulateTable().addAll(allTablesToPopulate);
 		
 	}
 	
+	/**
+	 * Add recursively the current table and all the dependent tables in the given Set.
+	 * 
+	 * @param table the starting node
+	 * @param tables the set to fill (contains also table ever added) 
+	 * @param graph the graph model
+	 */
 	private void addDependantTable(Table table, Set<Table> tables, GraphModel graph) {
 		if (!tables.contains(table)) {
 			

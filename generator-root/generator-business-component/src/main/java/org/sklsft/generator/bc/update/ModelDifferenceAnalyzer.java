@@ -14,7 +14,7 @@ import org.sklsft.generator.model.update.DatabaseUpdate;
 import org.sklsft.generator.model.update.TableUpdate;
 
 /**
- * Analyse the difference between a model and a database schema.
+ * Analyze the difference between a model and a database schema.
  * Find : 
  * <li>new tables
  * <li>modification of table : add or remove column
@@ -26,14 +26,14 @@ import org.sklsft.generator.model.update.TableUpdate;
  * 
  * @author Michael Fernandez
  */
-public class ModelDifferenceAnalyser {
+public class ModelDifferenceAnalyzer {
 	private Model				model;
 	private DatabaseSchema 		schema;
 	private List<Table> 		modelTables;
 	private Map<String,Table>	tablesInModel;
 	private Map<String,Table>	tablesInSchema;
 	
-	public ModelDifferenceAnalyser(Model model, DatabaseSchema schema) {
+	public ModelDifferenceAnalyzer(Model model, DatabaseSchema schema) {
 		this.model = model;
 		this.schema = schema;
 		this.modelTables = extractTables(model);
@@ -42,7 +42,7 @@ public class ModelDifferenceAnalyser {
 	}
 	
 	
-	public DatabaseUpdate analyseDifference() {
+	public DatabaseUpdate analyzeDifference() {
 		DatabaseUpdate update = new DatabaseUpdate();
 		List<Table>			newTables = new ArrayList<Table>();
 		List<TableUpdate>	tableUpdates = new ArrayList<TableUpdate>();
@@ -54,7 +54,7 @@ public class ModelDifferenceAnalyser {
 		for (Table table : modelTables) {
 			if (isTableInSchema(table)) {
 				Table tableSchema = getTableInSchema(table);
-				TableUpdate	tableUpdate = analyseTableDifference(table, tableSchema);
+				TableUpdate	tableUpdate = analyzeTableDifference(table, tableSchema);
 				if (tableUpdate != null) {
 					tableUpdates.add(tableUpdate);
 				}				
@@ -82,7 +82,7 @@ public class ModelDifferenceAnalyser {
 	/*
 	 * 
 	 */
-	private TableUpdate	 analyseTableDifference(Table tableModel, Table tableSchema) {
+	private TableUpdate	 analyzeTableDifference(Table tableModel, Table tableSchema) {
 		boolean			modification = false;
 		TableUpdate		tableUpdate = new TableUpdate();
 		List<Column>	columnAdded = new ArrayList<Column>();
