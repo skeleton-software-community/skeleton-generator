@@ -17,6 +17,9 @@ public class FileWriteCommandTreeFactoryBuilder {
 				
 			case BASIC_SPRING_HIBERNATE_RICHFACES:
 				return new BasicSpringHibernateRichFacesCommandTreeFactory();
+
+			case PURE_DATABASE_SKELETON:
+				return new PureDatabaseCommandTreeFactory();
 				
 			default:
 				throw new IllegalArgumentException("Unhandled Skeleton type : " + project.skeletonType.name());

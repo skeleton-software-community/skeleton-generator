@@ -164,6 +164,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="SPRING_HIBERNATE_RICHFACES"/>
       <xs:enumeration value="BASIC_SPRING_HIBERNATE_RICHFACES"/>
+      <xs:enumeration value="PURE_DATABASE_SKELETON"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
