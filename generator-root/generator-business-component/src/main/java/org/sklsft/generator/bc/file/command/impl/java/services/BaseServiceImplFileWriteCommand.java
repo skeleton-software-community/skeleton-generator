@@ -94,9 +94,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
             writeLine("public List<" + this.bean.properties.get(1).beanDataType + "> get" + this.bean.className + this.bean.properties.get(1).capName + "List() {");
-            writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List;");
-            writeLine(this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "List();");
-            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> " + this.bean.objectName + this.bean.properties.get(1).capName + "List = new ArrayList<" + this.bean.properties.get(1).beanDataType + ">();");
+            writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "List();");
+            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> " + this.bean.objectName + this.bean.properties.get(1).capName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
             writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
             writeLine(this.bean.objectName + this.bean.properties.get(1).capName + "List.add(" + this.bean.objectName + ".get" + this.bean.properties.get(1).capName + "());");
             writeLine("}");
@@ -136,7 +135,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
         writeLine("public List<" + this.bean.viewClassName + "> load" + this.bean.className + "List() {");
         writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerly();");
-        writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<" + this.bean.viewClassName + ">();");
+        writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
         writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
         writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
         writeLine("}");
@@ -154,7 +153,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
                 writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
                 writeLine("public List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
                 writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (" + property.name + "IdList);");
-                writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<" + this.bean.viewClassName + ">();");
+                writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
                 writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
                 writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
                 writeLine("}");
@@ -235,7 +234,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
             writeLine("public List<" + currentBean.viewClassName + "> load" + currentBean.className + "List(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("List<" + currentBean.viewClassName + "> " + currentBean.viewObjectName + "List = new ArrayList<" + currentBean.viewClassName + ">();");
+            writeLine("List<" + currentBean.viewClassName + "> " + currentBean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + ".get" + currentBean.className + "Collection().size());");
             writeLine("for (" + currentBean.className + " " + currentBean.objectName + ":" + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
             writeLine(currentBean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + currentBean.viewClassName + "(new " + currentBean.viewClassName + "()," + currentBean.objectName + "));");
             writeLine("}");
