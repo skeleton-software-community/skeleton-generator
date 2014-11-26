@@ -131,9 +131,15 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		writeLine("<h:outputText value=" + (char) 34 + "#{i18n.noDataFound}" + (char) 34);
 		writeLine("rendered=" + (char) 34 + "#{empty " + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34 + "/>");
 		skipLine();
+		
+		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{not empty " + this.bean.controllerObjectName + "." + this.bean.objectName
+				+ "List}" + (char) 34 + ">");
+		skipLine();
+		
+		writeLine("<div style=" + (char) 34 + "overflow-x:scroll" + (char) 34 + ">");
+		skipLine();
 
 		writeLine("<rich:dataTable rows=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".numberOfRows}" + (char) 34);
-		writeLine("rendered=" + (char) 34 + "#{not empty " + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34);
 		writeLine("id=" + (char) 34 + this.bean.objectName + "List" + (char) 34 + " var=" + (char) 34 + this.bean.objectName + (char) 34 + " name=" + (char) 34 + "datatable" + (char) 34);
 		writeLine("value=" + (char) 34 + "#{" + this.bean.controllerObjectName + "." + this.bean.objectName + "List}" + (char) 34);
 		writeLine("rowClasses=" + (char) 34 + "datatableRow, datatableRowLight" + (char) 34 + ">");
@@ -225,6 +231,12 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		skipLine();
 
 		writeLine("</rich:dataTable>");
+		skipLine();
+		
+		writeLine("</div>");
+		skipLine();
+		
+		writeLine("</h:panelGroup>");
 		skipLine();
 
 		writeLine("<rich:datascroller id=" + (char) 34 + bean.objectName + "Scroller" + (char) 34 + " maxPages=" + (char) 34 + "5" + (char) 34 + " renderIfSinglePage=" + (char) 34 + "false"
