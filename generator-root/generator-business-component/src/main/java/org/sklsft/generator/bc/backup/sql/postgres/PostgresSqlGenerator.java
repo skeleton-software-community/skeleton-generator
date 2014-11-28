@@ -9,6 +9,11 @@ import org.sklsft.generator.model.update.TableUpdate;
 public class PostgresSqlGenerator implements SqlGenerator {
 
 	@Override
+	public List<String> generateConfigurationPopulation() {
+		throw new RuntimeException("Not yet implemented for postgres");
+	}
+	
+	@Override
 	public String generateInsertSQL(Table table) {
 		throw new RuntimeException("Not yet implemented for postgres");
 	}

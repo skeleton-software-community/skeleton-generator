@@ -58,7 +58,10 @@ public class UpdateScriptGenerator {
 		
 		// add script to drop table and all associated objects
 		addDropOldTables(result, databaseUpdate, project,generator);
-		
+
+		// special commands used to prepare population script
+		result.addAll(generator.generateConfigurationPopulation());		
+
 		// preparation of population
 		//  remove data from tables completely populate
 		addDeleteDataCompletePopulationTables(result, databaseUpdate, project,generator);

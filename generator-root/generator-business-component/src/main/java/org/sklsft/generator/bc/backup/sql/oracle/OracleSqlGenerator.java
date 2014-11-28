@@ -25,6 +25,15 @@ public class OracleSqlGenerator implements SqlGenerator {
 	private static final String NEW_LINE = "\n";
 	
 	@Override
+	public List<String> generateConfigurationPopulation() {
+		List<String> list = new ArrayList<String>();
+		
+		list.add("SET ESCAPE ON;");
+		
+		return list;
+	}
+
+	@Override
 	public String generateInsertSQL(Table table) {
 		boolean 		first;
 		StringBuffer 	query = new StringBuffer();
@@ -693,7 +702,7 @@ public class OracleSqlGenerator implements SqlGenerator {
 		}
 
 		if (value instanceof String) {
-			return "'" + value.toString().replaceAll("'","''") + "'"; 
+			return "'" + value.toString().replaceAll("'","''").replaceAll("\\&", "\\\\&") + "'"; 
 		} else if (value instanceof Date) {			
 			return "TO_DATE('" + new SimpleDateFormat("yyyy-MM-dd").format((Date)value)+ "', 'YYYY-MM-DD')";			
 		} else if (value instanceof Boolean) {

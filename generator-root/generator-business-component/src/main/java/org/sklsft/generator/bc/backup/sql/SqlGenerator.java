@@ -15,6 +15,8 @@ public interface SqlGenerator {
 	
 	String generateInsertSQL(Table table);
 	
+	List<String> generateConfigurationPopulation();
+	
 	List<String> generateCreationTableSQL(Table table);
 	
 	List<String> generateAlterFKTableSQL(Table table);

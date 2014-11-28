@@ -53,7 +53,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 			return argsList;
 			
 		} catch (IOException | InvalidFileException e) {
-			throw new ReadBackupFailureException("failed to read backup", e);
+			throw new ReadBackupFailureException("failed to read backup " + backupFilePath, e);
 		}
 	}
 
