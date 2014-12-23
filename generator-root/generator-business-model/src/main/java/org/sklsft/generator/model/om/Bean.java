@@ -36,14 +36,10 @@ public class Bean {
 
 	public String baseStateManagerClassName;
 	public String stateManagerClassName;
-	public String baseStateManagerInterfaceName;
-	public String stateManagerInterfaceName;
 	public String stateManagerObjectName;
 
 	public String baseMapperClassName;
 	public String mapperClassName;
-	public String baseMapperInterfaceName;
-	public String mapperInterfaceName;
 	public String mapperObjectName;
 
 	public String baseControllerClassName;

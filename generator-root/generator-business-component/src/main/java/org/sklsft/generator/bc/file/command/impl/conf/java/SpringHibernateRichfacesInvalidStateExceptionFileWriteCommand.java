@@ -9,7 +9,7 @@ import org.sklsft.generator.model.om.Project;
 public class SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-business-model/src/main/java/" + project.model.serviceExceptionPackageName.replace(".", File.separator) + File.separator, "InvalidStateException", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-api/src/main/java/" + project.model.stateExceptionPackageName.replace(".", File.separator) + File.separator, "InvalidStateException", FileType.JAVA, project);
 	}
 
 }

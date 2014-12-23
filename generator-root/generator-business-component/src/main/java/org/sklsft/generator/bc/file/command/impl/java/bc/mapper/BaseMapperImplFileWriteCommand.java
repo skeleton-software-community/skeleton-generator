@@ -36,7 +36,6 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-		javaImports.add("import " + this.bean.myPackage.baseMapperInterfacePackageName + "." + this.bean.baseMapperInterfaceName + ";");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
@@ -137,7 +136,7 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.baseMapperClassName + " implements " + this.bean.baseMapperInterfaceName + " {");
+		writeLine("public class " + this.bean.baseMapperClassName + " {");
 		skipLine();
 
 		writeLine("/*");

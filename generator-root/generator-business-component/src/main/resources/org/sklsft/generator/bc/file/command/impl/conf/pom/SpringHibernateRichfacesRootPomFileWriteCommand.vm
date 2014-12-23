@@ -13,6 +13,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>${project.projectName}-api</module>
 		<module>${project.projectName}-util</module>
 		<module>${project.projectName}-business-model</module>
 		<module>${project.projectName}-repository</module>
@@ -29,6 +30,9 @@
 		
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.13</logback.version>
+		
+		<hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		
 		<hsqldb.version>1.8.0.10</hsqldb.version>
 		
@@ -49,6 +53,12 @@
 	
 	<dependencyManagement>
 		<dependencies>
+		
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
@@ -99,6 +109,20 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4j.version}</version>
+			</dependency>
+			
+		
+			<!-- validation -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation.version}</version>
 			</dependency>
 			
 			

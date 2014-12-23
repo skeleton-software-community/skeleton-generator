@@ -26,20 +26,22 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.Date;");
-        javaImports.add("import java.util.Collection;");
+		javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
         javaImports.add("import java.util.ArrayList;");
         javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+        javaImports.add("import " + this.bean.myPackage.stateManagerImplPackageName + "." + this.bean.stateManagerClassName + ";");
+        
         javaImports.add("import org.springframework.dao.RecoverableDataAccessException;");
         javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");        
+        javaImports.add("import " + this.bean.myPackage.mapperImplPackageName + "." + this.bean.mapperClassName + ";");
+        
         javaImports.add("import " + this.bean.myPackage.baseServiceInterfacePackageName + "." + this.bean.baseServiceInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
@@ -81,9 +83,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Autowired");
         writeLine("protected " + this.bean.daoInterfaceName + " " + this.bean.daoObjectName + ";");
         writeLine("@Autowired");
-        writeLine("protected " + this.bean.mapperInterfaceName + " " + this.bean.mapperObjectName + ";");
+        writeLine("protected " + this.bean.mapperClassName + " " + this.bean.mapperObjectName + ";");
         writeLine("@Autowired");
-        writeLine("protected " + this.bean.stateManagerInterfaceName + " " + this.bean.stateManagerObjectName + ";");
+        writeLine("protected " + this.bean.stateManagerClassName + " " + this.bean.stateManagerObjectName + ";");
         skipLine();
 
 

@@ -74,38 +74,28 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.name = packageMetaData.getName().toLowerCase();
 
 		myPackage.omPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".om";
-		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".ov";
+		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".api.model." + myPackage.name + ".ov";
 
-		myPackage.statusPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".status";
+		myPackage.baseDAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.impl." + myPackage.name + ".base";
+		myPackage.baseDAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.interfaces." + myPackage.name + ".base";
+		myPackage.DAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.impl." + myPackage.name;
+		myPackage.DAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.interfaces." + myPackage.name;
 
-		myPackage.baseDAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.basedao." + myPackage.name + ".impl";
-		myPackage.baseDAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.basedao." + myPackage.name + ".interfaces";
-		myPackage.DAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao." + myPackage.name + ".impl";
-		myPackage.DAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao." + myPackage.name + ".interfaces";
+		myPackage.baseServiceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.impl." + myPackage.name + ".base";
+		myPackage.baseServiceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".api.interfaces." + myPackage.name + ".base";
+		myPackage.serviceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.impl." + myPackage.name;
+		myPackage.serviceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".api.interfaces." + myPackage.name;
 
-		myPackage.baseServiceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".impl";
-		myPackage.baseServiceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".interfaces";
-		myPackage.serviceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".impl";
-		myPackage.serviceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".interfaces";
+		myPackage.baseMapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".base";
+		myPackage.mapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name;
 
-		myPackage.baseMapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basemapper." + myPackage.name + ".impl";
-		myPackage.baseMapperInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basemapper." + myPackage.name + ".interfaces";
-		myPackage.mapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".impl";
-		myPackage.mapperInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".interfaces";
+		myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".base";
+		myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name;
 
-		myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".impl";
-		myPackage.baseStateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".interfaces";
-		myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".impl";
-		myPackage.stateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".interfaces";
+		myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".base";
+		myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name;
 
-
-		myPackage.facadeImplPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".impl";
-		myPackage.facadeInterfacesPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".interfaces";
-
-		myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.basecontroller." + myPackage.name + ".impl";
-		myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".impl";
-
-		myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name + ".impl";
+		myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name;
 
 		myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".builder";
 		myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".command";

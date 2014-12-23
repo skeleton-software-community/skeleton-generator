@@ -48,7 +48,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
-		javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+		javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
 	}
 
 	@Override

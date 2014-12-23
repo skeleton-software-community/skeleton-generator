@@ -27,10 +27,9 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import " + this.bean.myPackage.baseStateManagerInterfacePackageName + "." + this.bean.baseStateManagerInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
@@ -77,7 +76,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseStateManagerClassName + " implements " + bean.baseStateManagerInterfaceName + " {");
+        writeLine("public class " + this.bean.baseStateManagerClassName + " {");
         skipLine();
         
         writeLine("/**");

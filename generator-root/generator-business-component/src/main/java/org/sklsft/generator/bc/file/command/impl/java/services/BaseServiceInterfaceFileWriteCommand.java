@@ -16,7 +16,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 private Bean bean;
 	
 	public BaseServiceInterfaceFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-services\\src\\main\\java\\"
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\"
 				+ bean.myPackage.baseServiceInterfacePackageName.replace(".", "\\"), bean.baseServiceInterfaceName);
 
 		this.bean = bean;
@@ -26,31 +26,20 @@ private Bean bean;
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.Date;");
-        javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
-        javaImports.add("import java.util.ArrayList;");
         javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-        javaImports.add("import org.springframework.dao.RecoverableDataAccessException;");
-        javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-        javaImports.add("import org.springframework.transaction.annotation.Transactional;");
-        javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");        
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");        
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
         }
 
         for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
         }
 		

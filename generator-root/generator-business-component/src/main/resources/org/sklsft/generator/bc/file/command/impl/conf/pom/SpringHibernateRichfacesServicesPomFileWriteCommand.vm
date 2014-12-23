@@ -20,6 +20,11 @@
 	
 		<dependency>
 			<groupId>${project.domainName}.${project.projectName}</groupId>
+			<artifactId>${project.projectName}-api</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>${project.domainName}.${project.projectName}</groupId>
 			<artifactId>${project.projectName}-business-component</artifactId>
 		</dependency>
 		

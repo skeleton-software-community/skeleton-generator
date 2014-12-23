@@ -31,14 +31,10 @@ public class Package {
     public String serviceInterfacePackageName;
     public String serviceImplPackageName;
 
-    public String baseMapperInterfacePackageName;
     public String baseMapperImplPackageName;
-    public String mapperInterfacePackageName;
     public String mapperImplPackageName;
 
-    public String baseStateManagerInterfacePackageName;
     public String baseStateManagerImplPackageName;
-    public String stateManagerInterfacePackageName;
     public String stateManagerImplPackageName;
 
     public String facadeImplPackageName;

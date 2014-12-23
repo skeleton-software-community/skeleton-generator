@@ -24,7 +24,6 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.baseMapperClassName + ";");
 		
 	}
@@ -46,7 +45,7 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Component");
-        writeLine("public class " + this.bean.mapperClassName + " extends " + this.bean.baseMapperClassName + " implements " + bean.mapperInterfaceName + " {");
+        writeLine("public class " + this.bean.mapperClassName + " extends " + this.bean.baseMapperClassName + " {");
         skipLine();
         
         this.writeNotOverridableContent();

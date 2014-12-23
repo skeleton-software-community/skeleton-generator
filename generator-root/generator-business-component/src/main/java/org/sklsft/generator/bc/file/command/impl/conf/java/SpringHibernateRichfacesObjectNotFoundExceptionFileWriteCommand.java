@@ -9,7 +9,7 @@ import org.sklsft.generator.model.om.Project;
 public class SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-business-model/src/main/java/" + project.model.daoExceptionPackageName.replace(".", File.separator) + File.separator, "ObjectNotFoundException", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-api/src/main/java/" + project.model.daoExceptionPackageName.replace(".", File.separator) + File.separator, "ObjectNotFoundException", FileType.JAVA, project);
 	}
 
 }

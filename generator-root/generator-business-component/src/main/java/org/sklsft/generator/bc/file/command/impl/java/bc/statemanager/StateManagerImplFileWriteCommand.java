@@ -24,7 +24,6 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.baseStateManagerImplPackageName + "." + this.bean.baseStateManagerClassName + ";");
 		
 	}
@@ -46,7 +45,7 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Component");
-        writeLine("public class " + this.bean.stateManagerClassName + " extends " + this.bean.baseStateManagerClassName + " implements " + bean.stateManagerInterfaceName + " {");
+        writeLine("public class " + this.bean.stateManagerClassName + " extends " + this.bean.baseStateManagerClassName + " {");
         skipLine();
         
         this.writeNotOverridableContent();

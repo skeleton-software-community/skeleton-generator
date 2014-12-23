@@ -11,23 +11,23 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>${project.projectName}-business-component</artifactId>
-	<name>${project.projectName}-business-component</name>
+	<artifactId>${project.projectName}-api</artifactId>
+	<name>${project.projectName}-api</name>
 
 	<packaging>jar</packaging>
 
 	<dependencies>
 	
+	<!-- validation -->
 		<dependency>
-			<groupId>${project.domainName}.${project.projectName}</groupId>
-			<artifactId>${project.projectName}-repository</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>${project.domainName}.${project.projectName}</groupId>
-			<artifactId>${project.projectName}-api</artifactId>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
 		</dependency>
-		
 	</dependencies>
 
 </project>

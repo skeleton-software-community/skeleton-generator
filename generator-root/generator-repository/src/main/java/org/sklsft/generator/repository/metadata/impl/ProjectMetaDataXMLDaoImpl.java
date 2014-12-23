@@ -91,7 +91,7 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	        jaxbMarshaller.setSchema(schema);
 			
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,"http://generator.sklsft.org/schema/model/metadata skeleton-metadata-1.1.xsd");
+			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,"http://generator.sklsft.org/schema/model/metadata " + SCHEMA_LOCATION);
 			 
 			jaxbMarshaller.marshal(projectMetaData, file);
 			

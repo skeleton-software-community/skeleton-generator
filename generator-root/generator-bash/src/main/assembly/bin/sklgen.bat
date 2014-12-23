@@ -85,7 +85,7 @@ goto INVALID_SKLGEN_CMD_LINE_ARGS
 echo use one of the following commands :
 echo . init
 echo . generate
-echo . buildbdb
+echo . builddb
 echo . populatedb
 goto END
 

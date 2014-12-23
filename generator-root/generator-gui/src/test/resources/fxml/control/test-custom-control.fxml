@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import org.skeleton.generator.ui.control.CustomControl?>
+<?import org.sklsft.generator.ui.control.CustomControl?>
 
 <AnchorPane id="anchorPane" xmlns:fx="http://javafx.com/fxml">
 

@@ -13,6 +13,7 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfa
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesApiPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesBusinessComponentPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesBusinessModelPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesRepositoryPomFileWriteCommand;
@@ -60,6 +61,9 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode rootPomTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesRootPomFileWriteCommand(project));
 		pomTreeNode.add(rootPomTreeNode);
+		
+		FileWriteCommandTreeNode apiPomTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesApiPomFileWriteCommand(project));
+		pomTreeNode.add(apiPomTreeNode);
 		
 		FileWriteCommandTreeNode utilPomTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesUtilPomFileWriteCommand(project));
 		pomTreeNode.add(utilPomTreeNode);

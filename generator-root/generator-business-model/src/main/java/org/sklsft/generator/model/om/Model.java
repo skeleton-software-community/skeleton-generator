@@ -23,7 +23,7 @@ public class Model {
 	
 	public List<Package> packages;
 
-    public String serviceExceptionPackageName;
+    public String stateExceptionPackageName;
     public String daoExceptionPackageName;
     public String testExceptionPackageName;
     public String controllerPackageName;
@@ -46,10 +46,10 @@ public class Model {
 		this.packages = packages;
 	}
 	public String getServiceExceptionPackageName() {
-		return serviceExceptionPackageName;
+		return stateExceptionPackageName;
 	}
 	public void setServiceExceptionPackageName(String serviceExceptionPackageName) {
-		this.serviceExceptionPackageName = serviceExceptionPackageName;
+		this.stateExceptionPackageName = serviceExceptionPackageName;
 	}
 	public String getDaoExceptionPackageName() {
 		return daoExceptionPackageName;
