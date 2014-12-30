@@ -28,6 +28,12 @@
 			<artifactId>${project.projectName}-api</artifactId>
 		</dependency>
 		
+		<!-- mapper -->	
+		<dependency>
+			<groupId>org.sklsft</groupId>
+			<artifactId>mapper</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 </project>

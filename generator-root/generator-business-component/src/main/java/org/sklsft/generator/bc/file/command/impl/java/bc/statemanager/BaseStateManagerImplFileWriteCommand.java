@@ -5,9 +5,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.OneToOne;
 import org.sklsft.generator.model.om.UniqueComponent;
 
 public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
@@ -43,22 +41,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
-        }
-
-        for (OneToMany oneToMany : this.bean.oneToManyList)
-        {
-            Bean currentBean = oneToMany.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
-        }
-
-        for (OneToOne oneToOne : this.bean.oneToOneList)
-        {
-            Bean currentBean = oneToOne.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
-        }
-		
+        }		
 	}
 
 	@Override

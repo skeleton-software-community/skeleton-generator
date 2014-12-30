@@ -28,6 +28,7 @@
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 		<java.version>1.7</java.version>
 		
+		<mapper.version>1.0.0</mapper.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 		
@@ -88,6 +89,14 @@
 				<groupId>${project.domainName}.${project.projectName}</groupId>
 				<artifactId>${project.projectName}-services</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			
+			
+			<!-- mapper -->
+			<dependency>
+				<groupId>org.sklsft</groupId>
+				<artifactId>mapper</artifactId>
+				<version>${mapper.version}</version>
 			</dependency>
 			
 			

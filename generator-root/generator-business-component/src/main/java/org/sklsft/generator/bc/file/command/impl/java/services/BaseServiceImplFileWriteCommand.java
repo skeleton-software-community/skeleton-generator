@@ -29,32 +29,31 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
         javaImports.add("import java.util.ArrayList;");
-        javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-        javaImports.add("import " + this.bean.myPackage.stateManagerImplPackageName + "." + this.bean.stateManagerClassName + ";");
-        
-        javaImports.add("import org.springframework.dao.RecoverableDataAccessException;");
         javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
+        javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.mapperImplPackageName + "." + this.bean.mapperClassName + ";");
         
         javaImports.add("import " + this.bean.myPackage.baseServiceInterfacePackageName + "." + this.bean.baseServiceInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
+        
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.mapperClassName + ";");
         }
 
-        for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList)
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.mapperClassName + ";");
         }
 		
 	}
@@ -84,6 +83,21 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("protected " + this.bean.daoInterfaceName + " " + this.bean.daoObjectName + ";");
         writeLine("@Autowired");
         writeLine("protected " + this.bean.mapperClassName + " " + this.bean.mapperObjectName + ";");
+        
+        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        {
+            Bean currentBean = uniqueComponent.referenceBean;
+            writeLine("@Autowired");
+            writeLine("protected " + currentBean.mapperClassName + " " + currentBean.mapperObjectName + ";");
+        }
+
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
+        {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("@Autowired");
+            writeLine("protected " + currentBean.mapperClassName + " " + currentBean.mapperObjectName + ";");
+        }
+        
         writeLine("@Autowired");
         writeLine("protected " + this.bean.stateManagerClassName + " " + this.bean.stateManagerObjectName + ";");
         skipLine();
@@ -139,7 +153,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerly();");
         writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
         writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-        writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
+        writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".mapFrom(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
         writeLine("}");
         writeLine("return " + this.bean.viewObjectName + "List;");
         writeLine("}");
@@ -157,7 +171,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
                 writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (" + property.name + "IdList);");
                 writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
                 writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-                writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
+                writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".mapFrom(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
                 writeLine("}");
                 writeLine("return " + this.bean.viewObjectName + "List;");
                 writeLine("}");
@@ -175,7 +189,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
         writeLine("public " + this.bean.viewClassName + " load" + this.bean.className + "(Long id) {");
         writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-        writeLine("return this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + ");");
+        writeLine("return this." + bean.mapperObjectName + ".mapFrom(new " + this.bean.viewClassName + "()," + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
 
@@ -194,14 +208,14 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
         }
-        writeLine(") throws ObjectNotFoundException {");
+        writeLine(") {");
         write(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".find" + this.bean.className + "(" + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write(", " + findPropertyList.get(i).name);
         }
         writeLine(");");
-        writeLine("return this." + bean.mapperObjectName + ".map" + this.bean.viewClassName + "(new " + this.bean.viewClassName + "()," + this.bean.objectName + ");");
+        writeLine("return this." + bean.mapperObjectName + ".mapFrom(new " + this.bean.viewClassName + "()," + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
     }
@@ -218,7 +232,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
             writeLine("public " + currentBean.viewClassName + " load" + currentBean.className + "(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("return this." + bean.mapperObjectName + ".map" + currentBean.viewClassName + "(new " + currentBean.viewClassName + "()," + this.bean.objectName + ".get" + currentBean.className + "());");
+            writeLine("return this." + currentBean.mapperObjectName + ".mapFrom(new " + currentBean.viewClassName + "()," + this.bean.objectName + ".get" + currentBean.className + "());");
             writeLine("}");
             skipLine();
         }
@@ -238,7 +252,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine("List<" + currentBean.viewClassName + "> " + currentBean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + ".get" + currentBean.className + "Collection().size());");
             writeLine("for (" + currentBean.className + " " + currentBean.objectName + ":" + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
-            writeLine(currentBean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".map" + currentBean.viewClassName + "(new " + currentBean.viewClassName + "()," + currentBean.objectName + "));");
+            writeLine(currentBean.viewObjectName + "List.add(this." + currentBean.mapperObjectName + ".mapFrom(new " + currentBean.viewClassName + "()," + currentBean.objectName + "));");
             writeLine("}");
             writeLine("return " + currentBean.viewObjectName + "List;");
             writeLine("}");
@@ -260,10 +274,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");            
             writeLine("for (" + currentBean.className + " collection" + currentBean.className + " : " + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
             writeLine("if (collection" + currentBean.className + ".getId().equals(" + currentBean.objectName + "Id)){");
-            writeLine("return this." + bean.mapperObjectName + ".map" + currentBean.viewClassName + "(new " + currentBean.viewClassName + "(),collection" + currentBean.className + ");");
+            writeLine("return this." + currentBean.mapperObjectName + ".mapFrom(new " + currentBean.viewClassName + "(),collection" + currentBean.className + ");");
             writeLine("}");
             writeLine("}");
-            writeLine("throw new RecoverableDataAccessException(" + (char)34 + "Invalid one to many component id" + (char)34 + ");");
+            writeLine("throw new ObjectNotFoundException(" + (char)34 + "Invalid one to many component id" + (char)34 + ");");
             writeLine("}");
             skipLine();
         }
@@ -302,8 +316,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * save object");        
         writeLine(" */");
         writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-        writeLine("public Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws ObjectNotFoundException, InvalidStateException {");
-        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + bean.mapperObjectName + ".map" + this.bean.className + "(new " + this.bean.className + "()," + this.bean.viewObjectName + ");");
+        writeLine("public Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") {");
+        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + bean.mapperObjectName + ".mapTo(" + this.bean.viewObjectName + ", new " + this.bean.className + "());");
         writeLine("this." + this.bean.stateManagerObjectName + ".setDefault(" + this.bean.objectName + ");");
         writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeSave(" + this.bean.objectName + ");");
         writeLine("return " + this.bean.daoObjectName + ".save" + this.bean.className + "(" + this.bean.objectName + ");");
@@ -321,9 +335,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * save one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void save" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException {");
+            writeLine("public void save" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine(currentBean.className + " " + currentBean.objectName + " = this." + bean.mapperObjectName + ".map" + currentBean.className + "(new " + currentBean.className + "()," + currentBean.viewObjectName + ");");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", new " + currentBean.className + "());");
             writeLine("this." + this.bean.stateManagerObjectName + ".setDefault" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.daoObjectName + ".save" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.objectName + ");");
@@ -338,10 +352,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * update object");        
         writeLine(" */");
         writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-        writeLine("public void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws ObjectNotFoundException, InvalidStateException {");
+        writeLine("public void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") {");
         writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(" + this.bean.viewObjectName + ".getId());");
         writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeUpdate(" + this.bean.objectName + ", " + this.bean.viewObjectName + ");");
-        writeLine(this.bean.objectName + " = this." + bean.mapperObjectName + ".map" + this.bean.className + "(" + this.bean.objectName + ", " + this.bean.viewObjectName + ");");
+        writeLine(this.bean.objectName + " = this." + bean.mapperObjectName + ".mapTo(" + this.bean.viewObjectName + ", " + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
     }
@@ -356,10 +370,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * update unique component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException {");
+            writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.viewObjectName + ");");
-            writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + bean.mapperObjectName + ".map" + currentBean.className + "(new " + currentBean.className + "(), " + currentBean.viewObjectName + "));");
+            writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", new " + currentBean.className + "()));");
             writeLine("}");
             skipLine();
         }
@@ -375,12 +389,12 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * update one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException {");
+            writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + "," + currentBean.viewObjectName + ");");
             writeLine("for (" + currentBean.className + " " + currentBean.objectName + " : " + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
             writeLine("if (" + currentBean.objectName + ".getId().equals(" + currentBean.viewObjectName + ".getId())){");
-            writeLine(currentBean.objectName + "  = this." + bean.mapperObjectName + ".map" + currentBean.className + "(" + currentBean.objectName + "," + currentBean.viewObjectName + ");");
+            writeLine(currentBean.objectName + " = this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", new " + currentBean.className + "());");
             writeLine("break;");
             writeLine("}");
             writeLine("}");
@@ -395,7 +409,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * delete object");        
         writeLine(" */");
         writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-        writeLine("public void delete" + this.bean.className + "(Long id) throws InvalidStateException {");
+        writeLine("public void delete" + this.bean.className + "(Long id) {");
         writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
         writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeDelete(" + this.bean.objectName + ");");
         writeLine(this.bean.daoObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ");");
@@ -413,7 +427,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName);            
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) throws InvalidStateException {");
+            writeLine("public void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine("Collection<" + currentBean.className + "> " + currentBean.objectName + "Collection = " + this.bean.objectName + ".get" + currentBean.className + "Collection();");
             writeLine("for (" + currentBean.className + " " + currentBean.objectName + " : " + currentBean.objectName + "Collection){");
@@ -434,7 +448,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * delete object list");        
         writeLine(" */");
         writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-        writeLine("public void delete" + this.bean.className + "List(List<Long> idList) throws InvalidStateException {");
+        writeLine("public void delete" + this.bean.className + "List(List<Long> idList) {");
         writeLine(this.bean.className + " " + this.bean.objectName + ";");
         writeLine("if (idList != null){");
         writeLine("for (Long i:idList){");
@@ -457,7 +471,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName + " list");
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id) throws InvalidStateException {");
+            writeLine("public void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine("Collection<" + currentBean.className + "> " + currentBean.objectName + "Collection = " + this.bean.objectName + ".get" + currentBean.className + "Collection();");
             writeLine("if (" + currentBean.objectName + "IdList != null){");

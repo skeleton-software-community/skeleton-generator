@@ -27,8 +27,6 @@ private Bean bean;
 		
 		javaImports.add("import java.util.Date;");
         javaImports.add("import java.util.List;");
-        javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-        javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");        
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
@@ -141,7 +139,7 @@ private Bean bean;
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
         }
-        writeLine(") throws ObjectNotFoundException;");
+        writeLine(");");
         skipLine();
     }
 
@@ -215,7 +213,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * save object");        
         writeLine(" */");
-        writeLine("Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws ObjectNotFoundException, InvalidStateException;");
+        writeLine("Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ");");
         skipLine();
     }
 
@@ -238,7 +236,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * update object");        
         writeLine(" */");
-        writeLine("void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws ObjectNotFoundException, InvalidStateException;");
+        writeLine("void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ");");
         skipLine();
     }
 
@@ -251,7 +249,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * update unique component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException;");
+            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
             skipLine();
         }
     }
@@ -265,7 +263,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * update one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException;");
+            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
             skipLine();
         }
     }
@@ -275,7 +273,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * delete object");        
         writeLine(" */");
-        writeLine("void delete" + this.bean.className + "(Long id) throws InvalidStateException;");
+        writeLine("void delete" + this.bean.className + "(Long id);");
         skipLine();
     }
 
@@ -288,7 +286,7 @@ private Bean bean;
             writeLine("/**");            
             writeLine(" * delete one to many component " + currentBean.objectName);            
             writeLine(" */");
-            writeLine("void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) throws InvalidStateException;");
+            writeLine("void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");
             skipLine();
         }
     }
