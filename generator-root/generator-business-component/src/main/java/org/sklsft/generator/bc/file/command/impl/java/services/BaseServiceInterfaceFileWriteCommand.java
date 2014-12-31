@@ -226,7 +226,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * save one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void save" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) throws ObjectNotFoundException, InvalidStateException;");
+            writeLine("void save" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
             skipLine();
         }
     }
@@ -296,7 +296,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * delete object list");        
         writeLine(" */");
-        writeLine("void delete" + this.bean.className + "List(List<Long> idList) throws InvalidStateException;");
+        writeLine("void delete" + this.bean.className + "List(List<Long> idList);");
         skipLine();
     }
 
@@ -309,7 +309,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * delete one to many component " + currentBean.objectName + " list");
             writeLine(" */");
-            writeLine("void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id) throws InvalidStateException;");
+            writeLine("void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id);");
             skipLine();
         }
     }

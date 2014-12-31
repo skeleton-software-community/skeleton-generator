@@ -73,8 +73,8 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.model = model;
 		myPackage.name = packageMetaData.getName().toLowerCase();
 
-		myPackage.omPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".om";
-		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".api.model." + myPackage.name + ".ov";
+		myPackage.omPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name;
+		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".api.model." + myPackage.name;
 
 		myPackage.baseDAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.impl." + myPackage.name + ".base";
 		myPackage.baseDAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.interfaces." + myPackage.name + ".base";
@@ -104,28 +104,5 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.beans = new ArrayList<Bean>();
 		return myPackage;
 	}
-
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.bl.factory.interfaces.PackageFactory#buildPackage(com.skeleton.generator.model.metadata.PackageMetaData, com.skeleton.generator.model.om.Model)
-	 */
-	//	public Package buildPackage(PackageMetaData packageMetaData, Model model) {
-	//
-	//
-	//        for (TableMetaData tableMetaData : packageMetaData.getTables())
-	//        {
-	//        	logger.info("adding table : " + tableMetaData.getName());
-	//            Table table = tableFactory.buildTable(tableMetaData, myPackage);
-	//            logger.info("table : " + table.name + " added");
-	//
-	//            logger.info("adding bean from table : " + table.name);
-	//			Bean bean = beanFactory.buildBean(tableMetaData, table);
-	//			logger.info("bean : " + bean.className + " added");
-	//        }
-	//        
-	//        
-	//	}
 
 }
