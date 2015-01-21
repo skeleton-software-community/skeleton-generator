@@ -61,7 +61,8 @@ public class JavaModelFactory implements ModelFactory {
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
         model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".junit.data.command";
-
+        model.mvcAspectPackageName = project.domainName + "." + project.projectName + ".mvc.aspect";
+        
         model.packages = new ArrayList<Package>();
 		return model;
 	}

@@ -29,6 +29,7 @@ public class Model {
     public String controllerPackageName;
     public String commandPackageName;
     public String filterPackageName;
+	public String mvcAspectPackageName;
 
     /*
      * getters and setters

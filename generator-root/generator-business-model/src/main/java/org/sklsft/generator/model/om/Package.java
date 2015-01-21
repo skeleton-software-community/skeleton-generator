@@ -42,6 +42,8 @@ public class Package {
 
     public String baseControllerPackageName;
     public String controllerPackageName;
+    public String listViewPackageName;
+    public String detailViewPackageName;
     public String filterPackageName;
 
     public String builderPackageName;

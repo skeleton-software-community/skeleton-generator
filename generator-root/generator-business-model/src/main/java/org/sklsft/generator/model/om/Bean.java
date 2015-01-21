@@ -42,9 +42,17 @@ public class Bean {
 	public String mapperClassName;
 	public String mapperObjectName;
 
-	public String baseControllerClassName;
-	public String controllerClassName;
-	public String controllerObjectName;
+	public String baseListControllerClassName;
+	public String baseDetailControllerClassName;
+	public String listControllerClassName;
+	public String listControllerObjectName;
+	public String detailControllerClassName;
+	public String detailControllerObjectName;
+	
+	public String detailViewClassName;
+	public String listViewClassName;
+	public String detailViewObjectName;
+	public String listViewObjectName;
 	
 	public String filterClassName;
 	public String filterObjectName;
@@ -66,8 +74,8 @@ public class Bean {
 	public List<UniqueComponent> uniqueComponentList;
 
 	public boolean isComponent = false;
-	public boolean hasStatus = false;
 	public boolean isManyToOneComponent = false;
+	public boolean isUniqueComponent = false;
 
 	/**
 	 * get the list of properties that will be used in bean views to show
@@ -195,14 +203,5 @@ public class Bean {
 		}
 
 		return aliasList;
-	}
-
-	/**
-	 * determines whether the bean has embedded beans or not
-	 * 
-	 * @return
-	 */
-	public boolean isSimple() {
-		return (this.oneToManyComponentList.size() <= 0 && this.uniqueComponentList.size() <= 0);
 	}
 }

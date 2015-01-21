@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.controller.jsf;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.controller;
 
 import java.io.File;
 import java.io.IOException;

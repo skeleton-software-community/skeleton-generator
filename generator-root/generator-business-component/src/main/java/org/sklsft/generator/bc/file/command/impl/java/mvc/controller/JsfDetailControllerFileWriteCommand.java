@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.controller.jsf;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,13 +6,13 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.om.Bean;
 
-public class JsfControllerFileWriteCommand extends JavaFileWriteCommand {
+public class JsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public JsfControllerFileWriteCommand(Bean bean) {
+	public JsfDetailControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
-				+ bean.myPackage.controllerPackageName.replace(".", "\\"), bean.controllerClassName);
+				+ bean.myPackage.controllerPackageName.replace(".", "\\"), bean.detailControllerClassName);
 
 		this.bean = bean;
 	}
@@ -20,12 +20,10 @@ public class JsfControllerFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
-        javaImports.add("import " + this.bean.myPackage.baseControllerPackageName + "." + this.bean.baseControllerClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseControllerPackageName + "." + this.bean.baseDetailControllerClassName + ";");
 	}
 
 	@Override
@@ -38,20 +36,14 @@ public class JsfControllerFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("/**");
-        writeLine(" * auto generated controller class file");
+        writeLine(" * auto generated detail controller class file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
         writeLine("@Component");
-        writeLine("@Scope(value=WebApplicationContext.SCOPE_SESSION)");
-        writeLine("public class " + this.bean.controllerClassName + " extends  " + this.bean.baseControllerClassName + " {");
+        writeLine("@Scope(value=WebApplicationContext.SCOPE_REQUEST)");
+        writeLine("public class " + this.bean.detailControllerClassName + " extends  " + this.bean.baseDetailControllerClassName + " {");
         skipLine();
-        
-        writeLine("/*");
-		writeLine(" * logger");
-		writeLine(" */");
-		writeLine("private static final Logger logger = LoggerFactory.getLogger(" + this.bean.controllerClassName + ".class);");
-		skipLine();
 
         writeNotOverridableContent();
 

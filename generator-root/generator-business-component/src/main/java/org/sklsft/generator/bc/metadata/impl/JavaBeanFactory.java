@@ -64,9 +64,18 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.stateManagerClassName = bean.className + "StateManager";
 		bean.stateManagerObjectName = bean.objectName + "StateManager";
 
-		bean.baseControllerClassName = bean.className + "BaseController";
-		bean.controllerClassName = bean.className + "Controller";
-		bean.controllerObjectName = bean.objectName + "Controller";
+		bean.baseListControllerClassName = bean.className + "BaseListController";
+		bean.listControllerClassName = bean.className + "ListController";
+		bean.listControllerObjectName = bean.objectName + "ListController";
+		
+		bean.baseDetailControllerClassName = bean.className + "BaseDetailController";
+		bean.detailControllerClassName = bean.className + "DetailController";
+		bean.detailControllerObjectName = bean.objectName + "DetailController";
+		
+		bean.detailViewClassName = bean.className + "DetailView";
+		bean.detailViewObjectName = bean.objectName + "DetailView";
+		bean.listViewClassName = bean.className + "ListView";
+		bean.listViewObjectName = bean.objectName + "ListView";
 		
 		bean.filterClassName = bean.className + "DataTableFilter";
 		bean.filterObjectName = bean.objectName + "DataTableFilter";
@@ -85,9 +94,7 @@ public class JavaBeanFactory implements BeanFactory {
 		Bean bean = model.findBean(table.originalName);
 		
 		for (Column column : table.columns) {
-			if (column.name.toLowerCase().equals("status")) {
-				bean.hasStatus = true;
-			}
+			
 			Property property = null;
 
 			if (!RelationType.isComponentLink(column.relation)) {
@@ -157,6 +164,7 @@ public class JavaBeanFactory implements BeanFactory {
 			if (column.relation.equals(RelationType.UNIQUE_COMPONENT)) {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.isComponent = true;
+				targetBean.isUniqueComponent = true;
 				UniqueComponent uniqueComponent = new UniqueComponent();
 				uniqueComponent.parentBean = bean;
 				uniqueComponent.referenceBean = targetBean;

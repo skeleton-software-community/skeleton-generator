@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.controller.jsf;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.controller;
 
 import java.io.IOException;
 
@@ -51,14 +51,17 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("/**");
 		writeLine(" * auto generated common controller class file");
-		writeLine(" * <br/>used for session navigation context");
+		writeLine(" * <br/>used for select items");
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
 		writeLine("@Scope(value=WebApplicationContext.SCOPE_SESSION)");
-		writeLine("public class CommonController {");
-		skipLine();
+		writeLine("public class CommonController implements Serializable {");
+        skipLine();
+
+        writeLine("private static final long serialVersionUID = 1L;");
+        skipLine();
 
 		writeLine("/*");
 		writeLine(" * properties injected by spring");
@@ -74,26 +77,6 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 		skipLine();
 
-		writeLine("/*");
-		writeLine(" * view navigation");
-		writeLine(" */");
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					writeLine("private Long selected" + bean.className + "Id;");
-					writeLine("private List<Long> selected" + bean.className + "IdList;");
-
-					for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList) {
-						Bean currentBean = oneToManyComponent.referenceBean;
-						writeLine("private Long selected" + currentBean.className + "Id;");
-
-						writeLine("private List<Long> selected" + currentBean.className + "IdList;");
-
-					}
-				}
-			}
-		}
-		skipLine();
 
 		writeLine("/*");
 		writeLine(" * select items");
@@ -113,79 +96,12 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					writeLine("public Long getSelected" + bean.className + "Id() {");
-					writeLine("return selected" + bean.className + "Id;");
-					writeLine("}");
-					skipLine();
-
-					writeLine("public void setSelected" + bean.className + "Id(Long selected" + bean.className + "Id) {");
-					writeLine("this.selected" + bean.className + "Id = selected" + bean.className + "Id;");
-					writeLine("}");
-					skipLine();
-
-					writeLine("public List<Long> getSelected" + bean.className + "IdList() {");
-					writeLine("return selected" + bean.className + "IdList;");
-					writeLine("}");
-					skipLine();
-
-					writeLine("public void setSelected" + bean.className + "IdList(List<Long> selected" + bean.className + "IdList) {");
-					writeLine("this.selected" + bean.className + "IdList = selected" + bean.className + "IdList;");
-					writeLine("}");
-					skipLine();
-
-					for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList) {
-						Bean currentBean = oneToManyComponent.referenceBean;
-						writeLine("public Long getSelected" + currentBean.className + "Id() {");
-						writeLine("return selected" + currentBean.className + "Id;");
-						writeLine("}");
-						skipLine();
-
-						writeLine("public void setSelected" + currentBean.className + "Id(Long selected" + currentBean.className + "Id) {");
-						writeLine("this.selected" + currentBean.className + "Id = selected" + currentBean.className + "Id;");
-						writeLine("}");
-						skipLine();
-
-						writeLine("public List<Long> getSelected" + currentBean.className + "IdList() {");
-						writeLine("return selected" + currentBean.className + "IdList;");
-						writeLine("}");
-						skipLine();
-
-						writeLine("public void setSelected" + currentBean.className + "IdList(List<Long> selected" + currentBean.className + "IdList) {");
-						writeLine("this.selected" + currentBean.className + "IdList = selected" + currentBean.className + "IdList;");
-						writeLine("}");
-						skipLine();
-					}
-				}
-			}
-		}
-
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					writeLine("public List<SelectItem> get" + bean.className + bean.properties.get(1).capName + "List() {");
 					writeLine("return " + bean.objectName + bean.properties.get(1).capName + "List;");
 					writeLine("}");
-					skipLine();
-
 					writeLine("public void set" + bean.className + bean.properties.get(1).capName + "List(List<SelectItem> " + bean.objectName + bean.properties.get(1).capName + "List) {");
 					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List = " + bean.objectName + bean.properties.get(1).capName + "List;");
-					writeLine("}");
-					skipLine();
-				}
-			}
-		}
-
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("public " + bean.serviceInterfaceName + " get" + bean.serviceInterfaceName + "() {");
-					writeLine("return " + bean.serviceObjectName + ";");
-					writeLine("}");
-					skipLine();
-
-					writeLine("public void set" + bean.serviceInterfaceName + "(" + bean.serviceInterfaceName + " " + bean.serviceObjectName + ") {");
-					writeLine("this." + bean.serviceObjectName + " = " + bean.serviceObjectName + ";");
 					writeLine("}");
 					skipLine();
 				}
@@ -216,29 +132,6 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		writeLine("/**");
-		writeLine(" * set Default");
-		writeLine(" */");
-		writeLine("public void setDefault(){");
-
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					writeLine("this.selected" + bean.className + "Id = null;");
-					writeLine("this.selected" + bean.className + "IdList = null;");
-
-					for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList) {
-						Bean currentBean = oneToManyComponent.referenceBean;
-						writeLine("this.selected" + currentBean.className + "Id = null;");
-						writeLine("this.selected" + currentBean.className + "IdList = null;");
-
-					}
-				}
-			}
-		}
-
-		writeLine("}");
-		skipLine();
 
 		this.writeNotOverridableContent();
 
