@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.metadata.Visibility;
 import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 import org.sklsft.generator.model.om.UniqueComponent;
@@ -44,6 +45,12 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
 		}
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.serviceInterfacePackageName + "." + currentBean.serviceInterfaceName + ";");
+		}
 	}
 
 	@Override
@@ -68,6 +75,14 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" */");
 		writeLine("@Autowired");
 		writeLine("protected " + this.bean.serviceInterfaceName + " " + this.bean.serviceObjectName + ";");
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			
+			writeLine("@Autowired");
+			writeLine("protected " + currentBean.serviceInterfaceName + " " + currentBean.serviceObjectName + ";");
+		}
+		
 		writeLine("@Autowired");
 		writeLine("protected CommonController commonController;");
 		skipLine();
@@ -78,6 +93,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("@Autowired");
 		writeLine("protected " + this.bean.detailViewClassName + " " + this.bean.detailViewObjectName + ";");
 		skipLine();
+		
+		
 
 		writeLine("/*");
 		writeLine(" * getters and setters");
@@ -94,12 +111,16 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		createLoadObject();
 		createLoadUniqueComponent();
 		createLoadOneToManyComponent();
+		createLoadOneToMany();
 		createUpdateObject();
 		createCreateOneToManyComponent();
+		//createCreateOneToMany();
 		createSaveOneToManyComponent();
+		//createSaveOneToMany();
 		createEditOneToManyComponent();
 		createUpdateOneToManyComponent();
 		createDeleteOneToManyComponent();
+		//createDeleteOneToMany();
 		createUpdateUniqueComponent();
 		
 		createResetFlters();
@@ -176,11 +197,28 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = oneToManyComponent.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * load one to many components " + currentBean.objectName);
+			writeLine(" * load one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + this.bean.serviceObjectName + ".load" + currentBean.className + "List(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
+			
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createLoadOneToMany(){
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * load one to many " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("public void load" + currentBean.className + "List() {");
+
+			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + currentBean.serviceObjectName + ".load" + currentBean.className + "ListFrom" + oneToMany.referenceProperty.capName + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			
 			writeLine("}");
 			skipLine();
@@ -312,7 +350,19 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = oneToManyComponent.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * reset one to many component " + bean.filterClassName + " datatable filter");
+			writeLine(" * reset one to many component " + currentBean.filterClassName + " datatable filter");
+			writeLine(" */");
+			writeLine("public void reset" + currentBean.filterClassName + "() {");
+			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.filterClassName + "(new " + currentBean.filterClassName + "());");
+			writeLine("}");
+			skipLine();
+		}
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * reset one to many " + currentBean.filterClassName + " datatable filter");
 			writeLine(" */");
 			writeLine("public void reset" + currentBean.filterClassName + "() {");
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.filterClassName + "(new " + currentBean.filterClassName + "());");

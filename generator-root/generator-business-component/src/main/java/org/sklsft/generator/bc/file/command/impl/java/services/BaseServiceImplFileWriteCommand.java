@@ -36,6 +36,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.mapperImplPackageName + "." + this.bean.mapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.stateManagerImplPackageName + "." + this.bean.stateManagerClassName + ";");
         
         javaImports.add("import " + this.bean.myPackage.baseServiceInterfacePackageName + "." + this.bean.baseServiceInterfaceName + ";");
         
@@ -161,14 +162,14 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 
         for (Property property : this.bean.properties)
         {
-            if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
+            if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE))
             {
                 writeLine("/**");
-                writeLine(" * load object list from list of " + property.name);
+                writeLine(" * load object list from " + property.name);
                 writeLine(" */");
                 writeLine("@Transactional(readOnly=true, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-                writeLine("public List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
-                writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (" + property.name + "IdList);");
+                writeLine("public List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id) {");
+                writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (" + property.name + "Id);");
                 writeLine("List<" + this.bean.viewClassName + "> " + this.bean.viewObjectName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
                 writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
                 writeLine(this.bean.viewObjectName + "List.add(this." + bean.mapperObjectName + ".mapFrom(new " + this.bean.viewClassName + "()," + this.bean.objectName + "));");
@@ -194,7 +195,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
     }
-
+    
+    
     private void createFindObject()
     {
         List<Property> findPropertyList = this.bean.getFindProperties();
@@ -219,6 +221,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
     }
+    
 
     private void createLoadUniqueComponent()
     {

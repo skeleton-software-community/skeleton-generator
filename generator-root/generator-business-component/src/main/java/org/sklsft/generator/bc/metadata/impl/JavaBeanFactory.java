@@ -133,8 +133,9 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToMany.collectionName = bean.objectName + "Collection";
 				oneToMany.collectionGetterName = "get" + bean.className + "Collection";
 				oneToMany.collectionSetterName = "set" + bean.className + "Collection";
-				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				targetBean.oneToManyList.add(oneToMany);
+				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
+				parentBean.oneToManyList.add(oneToMany);
+				oneToMany.parentBean = parentBean;
 			}
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT)) {

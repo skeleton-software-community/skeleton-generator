@@ -3,25 +3,26 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 
-public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
-	private OneToManyComponent oneToManyComponent;
+	private OneToMany oneToMany;
 
-	public JsfOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
-				oneToManyComponent.referenceBean.className + "List");
-		this.oneToManyComponent = oneToManyComponent;
+	public JsfOneToManyListViewFileWriteCommand(OneToMany oneToMany) {
+		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToMany.referenceBean.myPackage.model.project.projectName
+				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToMany.referenceBean.myPackage.name + "\\" + oneToMany.parentBean.className.toLowerCase(),
+				oneToMany.referenceBean.className + "List");
+		this.oneToMany = oneToMany;
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		Bean currentBean = oneToManyComponent.referenceBean;
-		Bean parentBean = oneToManyComponent.parentBean;
+		Bean currentBean = oneToMany.referenceBean;
+		Bean parentBean = oneToMany.parentBean;
 
 		writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
 		writeLine("xmlns:ui = " + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
@@ -118,11 +119,11 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<h:outputText value=" + CHAR_34 + "Actions" + CHAR_34 + " />");
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".edit" + currentBean.className + "(" + currentBean.objectName + ".id)}" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) Richfaces.showModalPanel('" + currentBean.objectName
-				+ "ModalPanel')" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
-		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}"
-				+ CHAR_34 + "/>");
-		writeLine("</a4j:commandLink>");
+
+		writeLine("<h:outputLink value=" + CHAR_34 + "#{application.contextPath}/sections/" + currentBean.myPackage.name + "/" + currentBean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf" + CHAR_34 + ">");
+		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
+		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".id}" + CHAR_34 + " />");
+		writeLine("</h:outputLink>");
 
 		if (currentBean.deleteEnabled) {
 			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ".id)}" + CHAR_34);

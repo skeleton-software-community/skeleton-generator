@@ -3,6 +3,7 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 import org.sklsft.generator.model.om.UniqueComponent;
@@ -127,21 +128,45 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
             writeLine("</rich:tab>");
             skipLine();
         }
+        
+        for (OneToMany oneToMany : this.bean.oneToManyList) {
+        	
+        	Bean currentBean = oneToMany.referenceBean;
+        	
+            writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "List}" + CHAR_34);
+            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List" + ".xhtml" + CHAR_34 + "/>");
+            writeLine("</rich:tab>");
+            skipLine();
+        }
 
 
         writeLine("</rich:tabPanel>");
         skipLine();
     
 
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
-            writeLine("<rich:modalPanel id=" + CHAR_34 + oneToManyComponent.referenceBean.objectName + "ModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + oneToManyComponent.referenceBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "Details.xhtml" + CHAR_34 + "/>");
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+        	
+        	Bean currentBean = oneToManyComponent.referenceBean;
+        	
+            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
             writeLine("</rich:modalPanel>");
             skipLine();
             
-            writeLine("<rich:modalPanel id=" + CHAR_34 + oneToManyComponent.referenceBean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + oneToManyComponent.referenceBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + oneToManyComponent.referenceBean.className + "Creation.xhtml" + CHAR_34 + "/>");
+            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
+            writeLine("</rich:modalPanel>");
+            skipLine();
+            
+        }
+        
+        for (OneToMany oneToMany : this.bean.oneToManyList) {
+        	
+        	Bean currentBean = oneToMany.referenceBean;
+            
+            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
             writeLine("</rich:modalPanel>");
             skipLine();
             

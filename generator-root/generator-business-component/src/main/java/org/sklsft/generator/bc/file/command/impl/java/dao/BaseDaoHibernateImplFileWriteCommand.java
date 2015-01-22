@@ -71,7 +71,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * resources injected with spring");
 		writeLine(" */");
-		writeLine("@Resource(name=" + (char) 34 + this.bean.myPackage.model.project.projectName + "SessionFactory" + (char) 34 + ")");
+		writeLine("@Resource(name=" + CHAR_34 + this.bean.myPackage.model.project.projectName + "SessionFactory" + CHAR_34 + ")");
 
 		writeLine("protected SessionFactory sessionFactory;");
 		skipLine();
@@ -93,7 +93,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * load object list");
 		writeLine(" */");
-		writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
+		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 		writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "List() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 		writeLine("return criteria.list();");
@@ -103,16 +103,16 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * load object list eagerly");
 		writeLine(" */");
-		writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
+		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 		writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
-				writeLine("criteria.setFetchMode(" + (char) 34 + property.name + (char) 34 + ",FetchMode.JOIN);");
+				writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + CHAR_34 + ",FetchMode.JOIN);");
 
 				for (Alias alias : property.referenceBean.getFindAliases()) {
-					writeLine("criteria.setFetchMode(" + (char) 34 + property.name + "." + alias.propertyName + (char) 34 + ",FetchMode.JOIN);");
+					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 				}
 			}
@@ -124,40 +124,40 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
 				writeLine("/**");
-				writeLine(" * load object list from list of " + property.name);
+				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
-				writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
-				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
+				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-				writeLine("if (" + property.name + "IdList == null || " + property.name + "IdList.isEmpty()){");
-				writeLine("criteria.add(Restrictions.isNull(" + (char) 34 + property.name + ".id" + (char) 34 + "));");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.in(" + (char) 34 + property.name + ".id" + (char) 34 + ", " + property.name + "IdList));");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
 				writeLine("}");
 				writeLine("return criteria.list();");
 				writeLine("}");
 				skipLine();
 
 				writeLine("/**");
-				writeLine(" * load object list eagerly from list of " + property.name);
+				writeLine(" * load object list eagerly from " + property.name);
 				writeLine(" */");
-				writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
-				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
+				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-				writeLine("if (" + property.name + "IdList == null || " + property.name + "IdList.isEmpty()){");
-				writeLine("criteria.add(Restrictions.isNull(" + (char) 34 + property.name + ".id" + (char) 34 + "));");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.in(" + (char) 34 + property.name + ".id" + (char) 34 + ", " + property.name + "IdList));");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
 				writeLine("}");
 
 				for (Property prop : this.bean.properties) {
 					if (prop.referenceBean != null) {
-						writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + (char) 34 + ",FetchMode.JOIN);");
+						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
 
 						for (Alias alias : prop.referenceBean.getFindAliases()) {
-							writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + "." + alias.propertyName + (char) 34 + ",FetchMode.JOIN);");
+							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 						}
 					}
@@ -209,15 +209,15 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.className + ".class)");
 
 		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + (char) 34 + alias.propertyName + (char) 34 + "," + (char) 34 + alias.name + (char) 34 + ")");
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
 		for (Property property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			} else {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.joinedAliasName + "." + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			}
 		}
@@ -239,7 +239,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		for (int i = 1; i < findPropertyList.size(); i++) {
 			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
 		}
-		writeLine(") throws ObjectNotFoundException {");
+		writeLine(") {");
 
 		write("if (" + findPropertyList.get(0).name + " == null");
 		for (int i = 1; i < findPropertyList.size(); i++) {
@@ -253,22 +253,22 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.className + ".class)");
 
 		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + (char) 34 + alias.propertyName + (char) 34 + "," + (char) 34 + alias.name + (char) 34 + ")");
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
 		for (Property property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			} else {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.joinedAliasName + "." + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			}
 		}
 
 		writeLine(".uniqueResult();");
 		writeLine("if (" + this.bean.objectName + " == null) {");
-		writeLine("throw new ObjectNotFoundException(" + (char) 34 + "Invalid Object Reference" + (char) 34 + ");");
+		writeLine("throw new ObjectNotFoundException(" + CHAR_34 + bean.className + ".notFound" + CHAR_34 + ");");
 		writeLine("} else {");
 		writeLine("return " + this.bean.objectName + ";");
 		writeLine("}");

@@ -105,12 +105,12 @@ private Bean bean;
 
         for (Property property : this.bean.properties)
         {
-            if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
+            if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE))
             {
                 writeLine("/**");
-                writeLine(" * load object list from list of " + property.name);
+                writeLine(" * load object list from " + property.name);
                 writeLine(" */");
-                writeLine("List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
             }
         }
@@ -126,7 +126,8 @@ private Bean bean;
         skipLine();
 
     }
-
+    
+    
     private void createFindObject()
     {
         List<Property> findPropertyList = this.bean.getFindProperties();
@@ -142,6 +143,7 @@ private Bean bean;
         writeLine(");");
         skipLine();
     }
+    
 
     private void createLoadUniqueComponent()
     {

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.UniqueComponent;
 
@@ -36,6 +37,12 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+		}
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
 		}
@@ -85,6 +92,15 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("private " + currentBean.filterClassName + " " + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
 			writeLine("private " + currentBean.viewClassName + " new" + currentBean.className + ";");
 			writeLine("private " + currentBean.viewClassName + " selected" + currentBean.className + ";");
+			skipLine();
+		}
+		
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			writeLine("private List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List;");
+			writeLine("private " + currentBean.filterClassName + " " + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
+			writeLine("private " + currentBean.viewClassName + " new" + currentBean.className + ";");
 			skipLine();
 		}
 		
@@ -157,6 +173,37 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this.selected" + currentBean.className + " = selected" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
+		}
+		
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+			writeLine("public List<" + currentBean.viewClassName + "> get" + currentBean.className + "List() {");
+			writeLine("return " + currentBean.objectName + "List;");
+			writeLine("}");
+
+			writeLine("public void set" + currentBean.className + "List(List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List) {");
+			writeLine("this." + currentBean.objectName + "List = " + currentBean.objectName + "List;");
+			writeLine("}");
+			skipLine();
+			
+			writeLine("public " + currentBean.filterClassName + " get" + currentBean.filterClassName + "() {");
+			writeLine("return " + currentBean.filterObjectName + ";");
+			writeLine("}");
+
+			writeLine("public void set" + currentBean.filterClassName + "(" + currentBean.filterClassName + " " + currentBean.filterObjectName + ") {");
+			writeLine("this." + currentBean.filterObjectName + " = " + currentBean.filterObjectName + ";");
+			writeLine("}");
+			skipLine();
+
+			writeLine("public " + currentBean.viewClassName + " getNew" + currentBean.className + "() {");
+			writeLine("return new" + currentBean.className + ";");
+			writeLine("}");
+
+			writeLine("public void setNew" + currentBean.className + "(" + currentBean.viewClassName + " new" + currentBean.className + ") {");
+			writeLine("this.new" + currentBean.className + " = new" + currentBean.className + ";");
+			writeLine("}");
+			skipLine();
+			
 		}
 
 		writeNotOverridableContent();

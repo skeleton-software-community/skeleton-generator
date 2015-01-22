@@ -83,19 +83,19 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
         for (Property property : this.bean.properties)
         {
-            if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
+            if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE))
             {
 
                 writeLine("/**");
-                writeLine(" * load object list from list of " + property.referenceBean.objectName); 
+                writeLine(" * load object list from " + property.referenceBean.objectName); 
                 writeLine(" */");
-                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
 
                 writeLine("/**");
                 writeLine(" * load object list eagerly from list of " + property.referenceBean.objectName);
                 writeLine(" */");
-                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
 
             }
@@ -139,7 +139,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
         }
-        writeLine(") throws ObjectNotFoundException;");
+        writeLine(");");
         skipLine();
     }
 

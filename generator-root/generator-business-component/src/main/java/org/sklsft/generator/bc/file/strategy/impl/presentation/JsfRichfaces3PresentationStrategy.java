@@ -7,10 +7,13 @@ import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.Jsf
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentCreationViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyCreationViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfUniqueComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Package;
 import org.sklsft.generator.model.om.Project;
@@ -67,6 +70,15 @@ public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 						packageTreeNode.add(componentDetailTreeNode);
 						
 						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentCreationViewFileWriteCommand(oneToManyComponent));
+						packageTreeNode.add(componentCreationTreeNode);
+					}
+					
+					for (OneToMany oneToMany:bean.oneToManyList) {
+						
+						FileWriteCommandTreeNode componentListTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyListViewFileWriteCommand(oneToMany));
+						packageTreeNode.add(componentListTreeNode);
+						
+						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyCreationViewFileWriteCommand(oneToMany));
 						packageTreeNode.add(componentCreationTreeNode);
 					}
 					
