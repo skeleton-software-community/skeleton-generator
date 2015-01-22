@@ -70,6 +70,7 @@ goto ERROR
 @REM ==== START COMMAND LINE ARGS ====
 set SKLGEN_CMD_LINE_ARGS=%1
 set DATABASE_NAME=%2
+set TABLE_NAME=%3
 
 if %SKLGEN_CMD_LINE_ARGS%==help goto HELP
 if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
@@ -120,7 +121,7 @@ goto END
 
 :POPULATEDB:
 echo start populating database
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
+%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%" %TABLE_NAME%
 echo end populating database
 goto END
 
