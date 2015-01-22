@@ -1,28 +1,3 @@
-function selectUnselectAll(checkbox) {
-	var elements = checkbox.form.elements;
-	for ( var i = 0; i < elements.length; i++) {
-		var element = elements[i];
-		if (/selected$/.test(element.id)) {
-			element.checked = checkbox.checked;
-		}
-	}
-}
-
-function selectBox(arg) {
-	checkbox = document.getElementById(arg);
-	var elements = checkbox.form.elements;
-	var allSelected = true;
-	for ( var elementIndex = 0; elementIndex < elements.length; elementIndex++) {
-		var element = elements[elementIndex];
-		if (/selected$/.test(element.id)) {
-			if (!element.checked) {
-				allSelected = false;
-			}
-		}
-	}
-	checkbox.checked = allSelected;
-}
-
 function setSelectionRange(input, selectionStart, selectionEnd) {
 	if (input.setSelectionRange) {
 		input.focus();
@@ -45,7 +20,7 @@ function setCaretToEnd(e) {
 
 
 
-function selectUnselectAllComponents(checkbox) {
+function selectUnselectAll(checkbox) {
 	var elements = checkbox.form.elements;
 	for ( var i = 0; i < elements.length; i++) {
 		var element = elements[i];
@@ -60,7 +35,7 @@ function selectUnselectAllComponents(checkbox) {
 	}
 }
 
-function selectComponentBox(arg) {
+function selectUnselect(arg) {
 	checkbox = document
 			.getElementById(arg);
 	var elements = checkbox.form.elements;

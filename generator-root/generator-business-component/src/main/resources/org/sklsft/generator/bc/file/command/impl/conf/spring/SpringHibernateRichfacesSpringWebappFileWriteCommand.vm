@@ -11,7 +11,19 @@ http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 <context:annotation-config/>
 
 <context:component-scan base-package="${project.domainName}.${project.projectName}">
-<context:exclude-filter type="regex" expression="${project.domainName}.${project.projectName}.junit.data.command.*"/>
+<context:exclude-filter type="regex" expression="${project.domainName}.${project.projectName}.junit.*"/>
 </context:component-scan>
+
+<aop:aspectj-autoproxy />
+
+<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+	<property name="scopes">
+		<map>
+			<entry key="view">
+				<bean class="${project.domainName}.${project.projectName}.mvc.scope.ViewScope" />
+			</entry>
+		</map>
+	</property>
+</bean>
 
 </beans>
