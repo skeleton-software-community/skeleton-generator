@@ -16,14 +16,4 @@ http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 <aop:aspectj-autoproxy />
 
-<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-	<property name="scopes">
-		<map>
-			<entry key="view">
-				<bean class="${project.domainName}.${project.projectName}.mvc.scope.ViewScope" />
-			</entry>
-		</map>
-	</property>
-</bean>
-
 </beans>

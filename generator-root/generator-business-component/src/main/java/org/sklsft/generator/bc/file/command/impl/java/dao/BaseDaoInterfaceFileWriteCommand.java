@@ -58,11 +58,12 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
         createLoadObjectList();
         createLoadObject();
+        createLoadOneToManyComponent();
         createExistsObject();
         createFindObject();
         createSaveObject();
-        createUpdateObject();
         createDeleteObject();
+        createDeleteOneToManyComponent();
 
         writeLine("}");
 	}
@@ -110,6 +111,19 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine(this.bean.className + " load" + this.bean.className + "(Long id);");
         skipLine();
     }
+    
+    private void createLoadOneToManyComponent() {
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
+        {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className);
+            writeLine(" */");
+			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id);");
+			skipLine();
+        }
+	}
 
     private void createExistsObject()
     {
@@ -161,14 +175,6 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		}
     }
 
-    private void createUpdateObject()
-    {
-        writeLine("/**"); 
-        writeLine(" * update object");
-        writeLine(" */");
-        writeLine("void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
-        skipLine();
-    }
 
     private void createDeleteObject()
     {
@@ -178,4 +184,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine("void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
     }
+    
+    private void createDeleteOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
+			skipLine();
+		}
+	}
 }

@@ -393,15 +393,11 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
             writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + "," + currentBean.viewObjectName + ");");
-            writeLine("for (" + currentBean.className + " " + currentBean.objectName + " : " + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
-            writeLine("if (" + currentBean.objectName + ".getId().equals(" + currentBean.viewObjectName + ".getId())){");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = this." + this.bean.daoObjectName + ".load" + currentBean.className + "(" + currentBean.viewObjectName + ".getId());");
+            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + currentBean.objectName + ", " + currentBean.viewObjectName + ");");
             writeLine(currentBean.objectName + " = this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", " + currentBean.objectName + ");");
-            writeLine("break;");
             writeLine("}");
-            writeLine("}");
-            writeLine("}");
+            skipLine();
             skipLine();
         }
     }
@@ -430,16 +426,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName);            
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("Collection<" + currentBean.className + "> " + currentBean.objectName + "Collection = " + this.bean.objectName + ".get" + currentBean.className + "Collection();");
-            writeLine("for (" + currentBean.className + " " + currentBean.objectName + " : " + currentBean.objectName + "Collection){");
-            writeLine("if (" + currentBean.objectName + ".getId().equals(" + currentBean.objectName + "Id)){");
-            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
-            writeLine(currentBean.objectName + "Collection.remove(" + currentBean.objectName + ");");
-            writeLine("break;");
-            writeLine("}");
-            writeLine("}");
+            writeLine("public void delete" + currentBean.className + "(Long id) {");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
+            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine(this.bean.daoObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
             skipLine();
         }
@@ -474,18 +464,13 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName + " list");
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + bean.myPackage.model.project.projectName + "TransactionManager" + (char)34 + ")");
-            writeLine("public void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("Collection<" + currentBean.className + "> " + currentBean.objectName + "Collection = " + this.bean.objectName + ".get" + currentBean.className + "Collection();");
-            writeLine("if (" + currentBean.objectName + "IdList != null){");
-            writeLine("for (Long " + currentBean.objectName + "Id:" + currentBean.objectName + "IdList){");
-            writeLine("for (" + currentBean.className + " " + currentBean.objectName + " : " + currentBean.objectName + "Collection){");
-            writeLine("if (" + currentBean.objectName + ".getId().equals(" + currentBean.objectName + "Id)){");
-            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
-            writeLine(currentBean.objectName + "Collection.remove(" + currentBean.objectName + ");");
-            writeLine("break;");
-            writeLine("}");
-            writeLine("}");
+            writeLine("public void delete" + currentBean.className + "List(List<Long> idList) {");
+            writeLine(currentBean.className + " " + currentBean.objectName + ";");
+            writeLine("if (idList != null){");
+            writeLine("for (Long i:idList){");
+            writeLine(currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(i);");
+            writeLine("this." + this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine(this.bean.daoObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
             writeLine("}");
             writeLine("}");

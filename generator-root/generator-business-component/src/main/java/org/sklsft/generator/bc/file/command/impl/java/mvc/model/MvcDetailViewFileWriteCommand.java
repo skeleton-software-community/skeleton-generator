@@ -27,6 +27,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
+        javaImports.add("import org.ajax4jsf.model.KeepAlive;");
 		
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
 		
@@ -63,7 +64,8 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-        writeLine("@Scope(value = " + CHAR_34 + "view" + CHAR_34 + ")");
+		writeLine("@KeepAlive(ajaxOnly=false)");
+		writeLine("@Scope(value=WebApplicationContext.SCOPE_REQUEST)");
 		writeLine("public class " + this.bean.detailViewClassName + " implements Serializable {");
         skipLine();
 

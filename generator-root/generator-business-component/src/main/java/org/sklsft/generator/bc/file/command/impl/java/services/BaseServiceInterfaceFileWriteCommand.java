@@ -288,7 +288,7 @@ private Bean bean;
             writeLine("/**");            
             writeLine(" * delete one to many component " + currentBean.objectName);            
             writeLine(" */");
-            writeLine("void delete" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");
+            writeLine("void delete" + currentBean.className + "(Long id);");
             skipLine();
         }
     }
@@ -311,7 +311,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * delete one to many component " + currentBean.objectName + " list");
             writeLine(" */");
-            writeLine("void delete" + currentBean.className + "List(List<Long> " + currentBean.objectName + "IdList,Long id);");
+            writeLine("void delete" + currentBean.className + "List(List<Long> idList);");
             skipLine();
         }
     }

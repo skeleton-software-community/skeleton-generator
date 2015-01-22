@@ -120,7 +120,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		createEditOneToManyComponent();
 		createUpdateOneToManyComponent();
 		createDeleteOneToManyComponent();
-		//createDeleteOneToMany();
+		createDeleteOneToMany();
 		createUpdateUniqueComponent();
 		
 		createResetFlters();
@@ -336,7 +336,23 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "(Long id) {");
-			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(id, this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(id);");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	private void createDeleteOneToMany() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * delete one to many " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
+			writeLine("public void delete" + currentBean.className + "(Long id) {");
+			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "(id);");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();

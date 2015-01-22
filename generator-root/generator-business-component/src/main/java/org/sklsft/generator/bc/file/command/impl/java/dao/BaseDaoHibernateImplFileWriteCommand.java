@@ -78,11 +78,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		createLoadObjectList();
 		createLoadObject();
+		createLoadOneToManyComponent();
 		createExistsObject();
 		createFindObject();
 		createSaveObject();
-		createUpdateObject();
 		createDeleteObject();
+		createDeleteOneToManyComponent();
 
 		write("}");
 
@@ -179,6 +180,21 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().load(" + this.bean.className + ".class,id);");
 		writeLine("}");
 		skipLine();
+	}
+	
+	private void createLoadOneToManyComponent() {
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
+        {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className);
+            writeLine(" */");
+			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id) {");
+			writeLine("return (" + currentBean.className + ")this.sessionFactory.getCurrentSession().load(" + currentBean.className + ".class,id);");
+			writeLine("}");
+			skipLine();
+        }
 	}
 
 	private void createExistsObject() {
@@ -291,24 +307,13 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * save one to many component " + currentBean.className);
 			writeLine(" */");
 			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ") {");
-			writeLine(this.bean.objectName + ".get" + currentBean.className + "Collection().add(" + currentBean.objectName + ");");
-            
 			writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
+			writeLine("this.sessionFactory.getCurrentSession().save(" + currentBean.objectName + ");");
 			writeLine("}");
 			skipLine();
 		}
 	}
-	
 
-	private void createUpdateObject() {
-		writeLine("/**");
-		writeLine(" * update object");
-		writeLine(" */");
-		writeLine("public void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
-		writeLine("this.sessionFactory.getCurrentSession().update(" + this.bean.objectName + ");");
-		writeLine("}");
-		skipLine();
-	}
 
 	private void createDeleteObject() {
 		writeLine("/**");
@@ -318,5 +323,18 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("this.sessionFactory.getCurrentSession().delete(" + this.bean.objectName + ");");
 		writeLine("}");
 		skipLine();
+	}
+	
+	private void createDeleteOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
+			writeLine("}");
+			skipLine();
+		}
 	}
 }
