@@ -46,7 +46,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<h:outputText value=" + CHAR_34 + "#{i18n.noDataFound}" + CHAR_34 + " rendered=" + CHAR_34 + "#{empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + "/>");
 		skipLine();
 		
-		writeLine("<h:form>");
+		writeLine("<h:form id=" + CHAR_34 + currentBean.objectName + "ListForm" + CHAR_34 + ">");
 		skipLine();
 		
 		writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{not empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
@@ -78,7 +78,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		writeLine("<rich:column>");
 		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".reset" + currentBean.filterClassName + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34 + ">");
+		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.filterClassName + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34 + ">");
 		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
 		writeLine("</a4j:commandLink>");
 		
@@ -90,11 +90,10 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " name=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " forceId=" + CHAR_34 + "true"
-				+ CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAllComponents(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
+		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAll(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
 		writeLine("</f:facet>");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selected" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".selected}" + CHAR_34 + " onclick=" + CHAR_34
-				+ "selectComponentBox(" + currentBean.objectName + "Form:" + currentBean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
+				+ "selectUnselect('" + currentBean.objectName + "ListForm:" + currentBean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
 
@@ -165,13 +164,13 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		
 		writeLine("<div id=" + CHAR_34 + "actions" + CHAR_34 + " style=" + CHAR_34 + "display:none;margin:2px;" + CHAR_34 + ">");
-		writeLine("Actions on selection:");
+		writeLine("#{i18n.actionsOnselection} :");
 		writeLine("<br/>");
 
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "1" + CHAR_34 + ">");
 
 		if (this.oneToManyComponent.referenceBean.deleteEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34
 					+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34);
 			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup"
 					+ CHAR_34 + "/>");

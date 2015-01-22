@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Package;
 import org.sklsft.generator.model.om.Project;
 

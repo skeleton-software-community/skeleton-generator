@@ -19,9 +19,7 @@ public class JsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	@Override
 	protected void fetchSpecificImports() {
-
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
+		
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");

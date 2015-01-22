@@ -2,10 +2,7 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 
 import java.io.IOException;
 
-import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToOne;
 import org.sklsft.generator.model.om.Property;
 
 public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
@@ -64,7 +61,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 				+ "List}" + CHAR_34 + "/>");
 		skipLine();
 		
-		writeLine("<h:form>");
+		writeLine("<h:form id=" + CHAR_34 + bean.objectName + "ListForm" + CHAR_34 + ">");
 		skipLine();
 		
 		writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{not empty " + this.bean.listViewObjectName + "." + this.bean.objectName
@@ -109,11 +106,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " name=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " forceId=" + CHAR_34 + "true"
-				+ CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAll(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
+		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAll(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
 		writeLine("</f:facet>");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selected" + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.objectName + ".selected}" + CHAR_34 + " onclick=" + CHAR_34
-				+ "selectBox('" + bean.objectName + "Form:" + bean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
+				+ "selectUnselect('" + bean.objectName + "ListForm:" + bean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
 
@@ -179,6 +175,31 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 					+ CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
 
 		}
+		
+		writeLine("<br/>");
+		skipLine();
+
+		
+		writeLine("<div id=" + CHAR_34 + "actions" + CHAR_34 + " style=" + CHAR_34 + "display:none;margin:2px;" + CHAR_34 + ">");
+		writeLine("#{i18n.actionsOnselection} :");
+		writeLine("<br/>");
+
+		writeLine("<h:panelGrid columns=" + CHAR_34 + "1" + CHAR_34 + ">");
+
+		if (bean.deleteEnabled) {
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".delete" + bean.className + "List}" + CHAR_34
+					+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "PanelGroup"
+					+ CHAR_34 + "/>");
+		}
+		writeLine("</h:panelGrid>");
+		skipLine();
+
+		this.writeNotOverridableContent();
+		skipLine();
+
+		writeLine("</div>");
+		skipLine();
 
 		writeLine("</h:form>");
 		skipLine();

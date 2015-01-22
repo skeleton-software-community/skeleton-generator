@@ -3,9 +3,7 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
-import org.sklsft.generator.model.om.UniqueComponent;
 
 public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
