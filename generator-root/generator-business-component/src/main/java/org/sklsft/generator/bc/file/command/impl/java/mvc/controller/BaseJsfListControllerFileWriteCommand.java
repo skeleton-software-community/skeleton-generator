@@ -22,12 +22,10 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 
 	@Override
 	protected void fetchSpecificImports() {
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
+
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-		javaImports.add("import javax.faces.event.ActionEvent;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.mvcAspectPackageName + ".AjaxMethod;");
 
@@ -36,9 +34,10 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 		
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
-		javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
 		javaImports.add("import " + this.bean.myPackage.listViewPackageName + "." + this.bean.listViewClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
+		
 	}
 
 	@Override
@@ -90,6 +89,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		createCreateObject();
 		createSaveObject();
 		createDeleteObject();
+		createDeleteObjectList();
 		createResetFlters();
 
 		writeLine("}");
@@ -167,6 +167,25 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "(Long id) {");
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(id);");
+		writeLine("this.refresh();");
+		writeLine("}");
+		skipLine();
+	}
+	
+	
+	private void createDeleteObjectList() {
+		writeLine("/**");
+		writeLine(" * delete object list");
+		writeLine(" */");
+		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
+		writeLine("public void delete" + this.bean.className + "List() {");
+		writeLine("List<Long> ids = new ArrayList<>();");
+		writeLine("for (" + bean.viewClassName + " " + bean.viewObjectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
+		writeLine("if (" + bean.viewObjectName + ".getSelected()) {");
+		writeLine("ids.add(" + bean.viewObjectName + ".getId());");
+		writeLine("}");
+		writeLine("}");
+		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(ids);");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();

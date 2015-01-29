@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 
 
 <head>
@@ -54,5 +56,13 @@
 				skeleton-generator </a> by the Skeleton Software Community
 		</div>
 	</div>
+
+	<a4j:status id="ajaxStatus"
+		onstart="#{rich:component('processingPanel')}.show()"
+		onstop="#{rich:component('processingPanel')}.hide()" />
+
+	<rich:modalPanel id="processingPanel" style="text-align:center;" height="30">
+		<h:outputText value="#{i18n.processing}..."/>
+	</rich:modalPanel>
 </body>
 </html>

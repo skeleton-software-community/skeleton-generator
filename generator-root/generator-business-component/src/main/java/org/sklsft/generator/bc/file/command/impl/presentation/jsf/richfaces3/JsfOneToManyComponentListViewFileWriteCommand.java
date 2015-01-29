@@ -164,7 +164,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		
 		writeLine("<div id=" + CHAR_34 + "actions" + CHAR_34 + " style=" + CHAR_34 + "display:none;margin:2px;" + CHAR_34 + ">");
-		writeLine("#{i18n.actionsOnselection} :");
+		writeLine("#{i18n.actionsOnSelection} :");
 		writeLine("<br/>");
 
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "1" + CHAR_34 + ">");
@@ -172,7 +172,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		if (currentBean.deleteEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34
 					+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup"
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup"
 					+ CHAR_34 + "/>");
 		}
 		writeLine("</h:panelGrid>");
