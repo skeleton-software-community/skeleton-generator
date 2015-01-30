@@ -74,6 +74,23 @@
 		</dependency>
 		
 		
+		<!-- Spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		
+		
 		<!-- WEBAPP -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -117,7 +134,6 @@
 		<dependency>
 			<groupId>org.richfaces.framework</groupId>
 			<artifactId>richfaces-api</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>

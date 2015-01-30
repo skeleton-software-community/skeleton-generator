@@ -217,6 +217,21 @@ private Bean bean;
         writeLine(" */");
         writeLine("Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ");");
         skipLine();
+        
+        for (Property property:bean.properties) {
+        	if (property.referenceBean!=null) {
+        		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
+        			
+        			Bean parentBean = property.referenceBean;
+        			
+        			writeLine("/**");
+        	        writeLine(" * save object from parent " + parentBean.className);        
+        	        writeLine(" */");
+        	        writeLine("Long save" + this.bean.className + "From" + parentBean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ", Long " + parentBean.objectName + "Id);");
+        	        skipLine();
+        		}
+        	}
+        }
     }
 
     private void createSaveOneToManyComponent()
@@ -265,7 +280,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * update one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
+            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ");");
             skipLine();
         }
     }

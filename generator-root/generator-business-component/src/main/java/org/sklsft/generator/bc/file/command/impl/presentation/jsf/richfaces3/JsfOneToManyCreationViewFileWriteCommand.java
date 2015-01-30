@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
 import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 
 public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
@@ -68,7 +67,7 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
 		skipLine();
 
-		for (Property property : currentBean.getVisibleProperties()) {
+		for (Property property : oneToMany.getVisibleProperties()) {
 			if (property.visibility.isDetailVisible()) {
 				writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "} : " + CHAR_34 + "/>");
 				writeDetailComponent(property, currentBean);

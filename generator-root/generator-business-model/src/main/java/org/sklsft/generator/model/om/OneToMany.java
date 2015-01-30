@@ -3,8 +3,6 @@ package org.sklsft.generator.model.om;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sklsft.generator.model.metadata.RelationType;
-
 public class OneToMany {
 
 	public Bean referenceBean;

@@ -24,14 +24,11 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 
 	@Override
 	protected void fetchSpecificImports() {
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
+
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-		javaImports.add("import javax.faces.event.ActionEvent;");
 		javaImports.add("import javax.annotation.PostConstruct;");
-		
 		javaImports.add("import " + this.bean.myPackage.model.mvcAspectPackageName + ".AjaxMethod;");
 
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
@@ -44,12 +41,14 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 		}
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.serviceInterfacePackageName + "." + currentBean.serviceInterfaceName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 		}
 	}
 
@@ -114,13 +113,15 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		createLoadOneToMany();
 		createUpdateObject();
 		createCreateOneToManyComponent();
-		//createCreateOneToMany();
+		createCreateOneToMany();
 		createSaveOneToManyComponent();
-		//createSaveOneToMany();
+		createSaveOneToMany();
 		createEditOneToManyComponent();
 		createUpdateOneToManyComponent();
 		createDeleteOneToManyComponent();
 		createDeleteOneToMany();
+		createDeleteOneToManyComponentList();
+		createDeleteOneToManyList();
 		createUpdateUniqueComponent();
 		
 		createResetFlters();
@@ -276,6 +277,28 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			skipLine();
 		}
 	}
+	
+	
+	private void createCreateOneToMany() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * create one to many " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("public void create" + currentBean.className + "() {");
+
+			for (Property property : oneToMany.getVisibleProperties()) {
+				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+				}
+			}
+
+			writeLine(bean.detailViewObjectName + ".setNew" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create" + currentBean.className + "());");
+			writeLine("}");
+			skipLine();
+		}
+	}
 
 
 	private void createSaveOneToManyComponent() {
@@ -288,6 +311,23 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createSaveOneToMany() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * save one to many " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
+			writeLine("public void save" + currentBean.className + "() {");
+			writeLine(currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -319,7 +359,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -353,6 +393,51 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "(Long id) {");
 			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "(id);");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createDeleteOneToManyComponentList() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+		
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
+			writeLine("public void delete" + currentBean.className + "List() {");
+			writeLine("List<Long> ids = new ArrayList<>();");
+			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");
+			writeLine("if (" + currentBean.viewObjectName + ".getSelected()) {");
+			writeLine("ids.add(" + currentBean.viewObjectName + ".getId());");
+			writeLine("}");
+			writeLine("}");
+			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "List(ids);");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	private void createDeleteOneToManyList() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+		
+			writeLine("/**");
+			writeLine(" * delete one to many " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
+			writeLine("public void delete" + currentBean.className + "List() {");
+			writeLine("List<Long> ids = new ArrayList<>();");
+			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");
+			writeLine("if (" + currentBean.viewObjectName + ".getSelected()) {");
+			writeLine("ids.add(" + currentBean.viewObjectName + ".getId());");
+			writeLine("}");
+			writeLine("}");
+			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "List(ids);");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();

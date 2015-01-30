@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
 import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 
 public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
