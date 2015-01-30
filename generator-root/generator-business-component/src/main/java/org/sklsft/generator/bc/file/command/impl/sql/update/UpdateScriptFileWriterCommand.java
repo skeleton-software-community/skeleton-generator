@@ -11,8 +11,8 @@ import org.sklsft.generator.model.om.Project;
 public class UpdateScriptFileWriterCommand extends SqlFileWriteCommand {
 	private List<String> scriptLines;
 	
-	public UpdateScriptFileWriterCommand(Model model, String databaseName, List<String> scriptLines) {
-		super(model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER, "UPDATE_" + databaseName);
+	public UpdateScriptFileWriterCommand(Model model, String modeName, String databaseName, List<String> scriptLines) {
+		super(model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER, "UPDATE_" + modeName + "_" + databaseName);
 		this.scriptLines = scriptLines;
 	}
 	

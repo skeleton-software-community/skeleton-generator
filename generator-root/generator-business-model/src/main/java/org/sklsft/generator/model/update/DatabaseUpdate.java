@@ -15,13 +15,25 @@ public class DatabaseUpdate {
 	private Set<Table>			updatePopulateTable;
 	private Set<Table>			addPopulateTable;
 	
+	public boolean findTableCreation(Table table) {
+		return newTables != null && newTables.contains(table);
+	}
+	
 	public TableUpdate findTableUpdate(Table table) {
-		for (TableUpdate tableUpdate: modifiedTables) {
-			if (tableUpdate.getTable().equals(table)) {
-				return tableUpdate;
+		if (modifiedTables != null) {
+			for (TableUpdate tableUpdate: modifiedTables) {
+				if (tableUpdate.getTable().equals(table)) {
+					return tableUpdate;
+				}
 			}
 		}
 		return null;
+	}
+	
+	public boolean hasPopulation() {
+		return completePopulateTable != null && !completePopulateTable.isEmpty()
+			|| updatePopulateTable != null && !updatePopulateTable.isEmpty()
+			|| addPopulateTable != null && !addPopulateTable.isEmpty();
 	}
 	
 	

@@ -47,7 +47,7 @@ public class PopulationUpdateAnalyzer {
 		
 		for (Package myPackage : project.model.packages) {
 			for (Table table : myPackage.tables) {
-				if (databaseUpdate.getNewTables().contains(table)) {
+				if (databaseUpdate.findTableCreation(table)) {
 					// the new tables are completely populated
 					databaseUpdate.getCompletePopulateTable().add(table);
 				} else {					
@@ -130,7 +130,9 @@ public class PopulationUpdateAnalyzer {
 		// By added them first, the depth search will not take care about there children tables.
 		// For new tables, the population will be done completely, the dependent table population, 
 		//  will be to completely only if the users precise it (by changing the default population plan).
-		allTablesToPopulate.addAll(databaseUpdate.getNewTables());
+		if (databaseUpdate.getNewTables() != null) {
+			allTablesToPopulate.addAll(databaseUpdate.getNewTables());
+		}
 		
 		for (Table table : databaseUpdate.getCompletePopulateTable()) {
 			addDependantTable(table, allTablesToPopulate, graph);

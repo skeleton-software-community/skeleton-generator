@@ -62,13 +62,15 @@ public class UpdateScriptGenerator {
 		// special commands used to prepare population script
 		result.addAll(generator.generateConfigurationPopulation());		
 
-		// preparation of population
-		//  remove data from tables completely populate
-		addDeleteDataCompletePopulationTables(result, databaseUpdate, project,generator);
-		
-		// generate population (from file or input source)
-		//  the population is done by step and in the model order
-		addTablesPopulation(result, databaseUpdate, inputProvider, project, generator);
+		if (databaseUpdate.hasPopulation()) {
+			// preparation of population
+			//  remove data from tables completely populate
+			addDeleteDataCompletePopulationTables(result, databaseUpdate, project,generator);
+			
+			// generate population (from file or input source)
+			//  the population is done by step and in the model order
+			addTablesPopulation(result, databaseUpdate, inputProvider, project, generator);
+		}
 
 		return result;
 	}
@@ -76,7 +78,7 @@ public class UpdateScriptGenerator {
 	private void addUpdateTableScript(List<String>  result, DatabaseUpdate databaseUpdate, Project project, SqlGenerator generator) {
 		for (Package myPackage : project.model.packages) {
 			for (Table table : myPackage.tables) {
-				if (databaseUpdate.getNewTables().contains(table)) {
+				if (databaseUpdate.findTableCreation(table)) {
 					// generate creation script
 					result.addAll(generator.generateCreationTableSQL(table));
 					result.addAll(generator.generateProceduresTable(table));
@@ -97,7 +99,7 @@ public class UpdateScriptGenerator {
 	private void addProceduresByCode(List<String> result, DatabaseUpdate databaseUpdate, Project project, SqlGenerator generator) {
 		for (Package myPackage : project.model.packages) {
 			for (Table table : myPackage.tables) {
-				if (databaseUpdate.getNewTables().contains(table)
+				if (databaseUpdate.findTableCreation(table)
 						|| databaseUpdate.findTableUpdate(table) != null) {
 					result.addAll(generator.generateAlterFKTableSQL(table));
 					result.addAll(generator.generateProceduresByCodeTable(table));
@@ -106,15 +108,17 @@ public class UpdateScriptGenerator {
 		}
 	}
 
-	private void addDropOldTables(List<String> result, DatabaseUpdate databaseUpdate, Project project, SqlGenerator generator) {		
-		for (Table table : databaseUpdate.getOldTables()) {
-			result.addAll(generator.generateDropProceduresTable(table));
-			result.addAll(generator.generateDropTableSQL(table));
+	private void addDropOldTables(List<String> result, DatabaseUpdate databaseUpdate, Project project, SqlGenerator generator) {
+		if (databaseUpdate.getOldTables() != null) {
+			for (Table table : databaseUpdate.getOldTables()) {
+				result.addAll(generator.generateDropProceduresTable(table));
+				result.addAll(generator.generateDropTableSQL(table));
+			}
 		}
 	}
 
 	private void addDeleteDataCompletePopulationTables(List<String> result, DatabaseUpdate databaseUpdate, Project project, SqlGenerator generator) {
-		if (!databaseUpdate.getCompletePopulateTable().isEmpty()) {
+		if (databaseUpdate.getCompletePopulateTable() != null && !databaseUpdate.getCompletePopulateTable().isEmpty()) {
 			for (int p = project.model.packages.size() -1; p>=0; --p) {
 				Package myPackage = project.model.packages.get(p);			
 				for (int t = myPackage.tables.size() - 1; t>=0 ; --t) {

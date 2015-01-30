@@ -1,6 +1,7 @@
 package org.sklsft.generator.bc.update;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.sklsft.generator.model.om.Table;
 import org.sklsft.generator.model.update.DatabaseUpdate;
@@ -16,27 +17,27 @@ public class UpdateReport {
 	public void printUpdateReport(DatabaseUpdate update) {
 		boolean		hasUpdate = false;
 		
-		if (!update.getNewTables().isEmpty()) {
+		if (isNotEmpty(update.getNewTables())) {
 			hasUpdate = true;
 			logger.info("Table to create : " + listTable(update.getNewTables()));			
 		}
-		if (!update.getModifiedTables().isEmpty()) {
+		if (isNotEmpty(update.getModifiedTables())) {
 			logger.info("Table to modify : " + listTableUpdate(update.getModifiedTables()));	
 			hasUpdate = true;			
 		}
-		if (!update.getOldTables().isEmpty()) {
+		if (isNotEmpty(update.getOldTables())) {
 			logger.info("Table to delete : " + listTable(update.getOldTables()));	
 			hasUpdate = true;			
 		}
-		if (!update.getCompletePopulateTable().isEmpty()) {
+		if (isNotEmpty(update.getCompletePopulateTable())) {
 			logger.info("Population complete : " + listTable(update.getCompletePopulateTable()));	
 			hasUpdate = true;			
 		}
-		if (!update.getAddPopulateTable().isEmpty()) {
+		if (isNotEmpty(update.getAddPopulateTable())) {
 			logger.info("Population add values : " + listTable(update.getAddPopulateTable()));	
 			hasUpdate = true;			
 		}
-		if (!update.getUpdatePopulateTable().isEmpty()) {
+		if (isNotEmpty(update.getUpdatePopulateTable())) {
 			logger.info("Population update value : " + listTable(update.getUpdatePopulateTable()));	
 			hasUpdate = true;			
 		}
@@ -45,8 +46,9 @@ public class UpdateReport {
 		if (!hasUpdate) {
 			logger.info("Nothing to update.");
 		}
-		
-		
+	}
+	private <T> boolean isNotEmpty(Collection<T> table) {
+		return table != null && !table.isEmpty();
 	}
 		
 	private String listTable(Collection<Table> tables) {
@@ -64,6 +66,7 @@ public class UpdateReport {
 		}
 		return result.toString();
 	}
+	
 	private String listTableUpdate(Collection<TableUpdate> tables) {
 		StringBuffer result = new StringBuffer();
 		boolean 	first = true;

@@ -24,9 +24,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseUpdaterImpl implements DatabaseUpdater {
 
-	/*
-	 * logger
-	 */
+	private static final String MODE_ALL = "GLOBAL";
+	private static final String MODE_SCHEMA = "SCHEMA";
+	private static final String MODE_DATA = "DATA";
+	
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseUpdaterImpl.class);
 
 	@Autowired
@@ -37,9 +38,31 @@ public class DatabaseUpdaterImpl implements DatabaseUpdater {
 	private UpdateScriptGenerator generator;
 	
 	@Override
-	public void generateUpdateScript(DatabaseSchema schema,			
-			DataSource dataSource, String databaseName, 
+	public void generateGlobalUpdateScript(DatabaseSchema schema,
+			DataSource dataSource, String databaseName,
 			InputDataSourceProvider inputProvider, Project project) {
+		DatabaseUpdate update = analyseSchemaUpdate(schema,project);
+		analysePopulation(project,update);
+		generateScript(update,dataSource,MODE_ALL,databaseName,inputProvider,project);
+	}
+
+	@Override
+	public void generateSchemaUpdateScript(DatabaseSchema schema,
+			DataSource dataSource, String databaseName,
+			InputDataSourceProvider inputProvider, Project project) {
+		DatabaseUpdate update = analyseSchemaUpdate(schema,project);
+		generateScript(update,dataSource,MODE_SCHEMA,databaseName,inputProvider,project);		
+	}
+
+	@Override
+	public void generatePopulationUpdateScript(DataSource dataSource, String databaseName,
+			InputDataSourceProvider inputProvider, Project project) {
+		DatabaseUpdate update = new DatabaseUpdate();
+		analysePopulation(project,update);
+		generateScript(update,dataSource,MODE_DATA,databaseName,inputProvider,project);
+	}
+	
+	private DatabaseUpdate analyseSchemaUpdate(DatabaseSchema schema, Project project) {
 		ModelDifferenceAnalyzer differenceAnalyzer = new ModelDifferenceAnalyzer(project.model, schema);		
 		
 		// find difference in the schema
@@ -47,15 +70,23 @@ public class DatabaseUpdaterImpl implements DatabaseUpdater {
 		DatabaseUpdate update = differenceAnalyzer.analyzeDifference();
 		logger.info("end analysing difference between schema and skeleton");
 		
+		return update;
+	}
+	
+	private void analysePopulation(Project project, DatabaseUpdate update) {
 		// find tables to populate
 		logger.info("start analysing tables to populate");				
 		populationAnalyzer.analysePopulation(project, update);
 		logger.info("end analysing tables to populate");
-		
+	}
+	
+	private void generateScript(DatabaseUpdate update,			
+			DataSource dataSource, String modeName, String databaseName, 
+			InputDataSourceProvider inputProvider, Project project) {
 		// generate script		
 		logger.info("start script generation");
 		List<String> scriptLines = generator.generateUpdateScript(update, dataSource, inputProvider, project);
-		UpdateScriptFileWriterCommand writer = new UpdateScriptFileWriterCommand(project.model,databaseName,scriptLines);
+		UpdateScriptFileWriterCommand writer = new UpdateScriptFileWriterCommand(project.model,modeName,databaseName,scriptLines);
 		try {
 			writer.execute();
 		} catch (IOException ioe) {
@@ -67,5 +98,7 @@ public class DatabaseUpdaterImpl implements DatabaseUpdater {
 		logger.info("Update Report : ");
 		updateReport.printUpdateReport(update);		
 	}
+
+
 
 }
