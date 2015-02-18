@@ -23,7 +23,8 @@ public class Model {
 	
 	public List<Package> packages;
 
-    public String stateExceptionPackageName;
+    public String businessExceptionPackageName;
+	public String stateExceptionPackageName;
     public String daoExceptionPackageName;
     public String testExceptionPackageName;
     public String controllerPackageName;

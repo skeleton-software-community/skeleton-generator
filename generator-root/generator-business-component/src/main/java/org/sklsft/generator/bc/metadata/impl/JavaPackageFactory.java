@@ -91,6 +91,9 @@ public class JavaPackageFactory implements PackageFactory {
 
 		myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".base";
 		myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name;
+		
+		myPackage.baseProcessorImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.processor." + myPackage.name + ".base";
+		myPackage.processorImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.processor." + myPackage.name;
 
 		myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".base";
 		myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name;

@@ -1,12 +1,13 @@
 package ${project.model.daoExceptionPackageName};
 
-public class ObjectNotFoundException extends RuntimeException {
+import ${project.model.businessExceptionPackageName}.BusinessException;
+
+public class ObjectNotFoundException extends BusinessException {
 
 	private static final long serialVersionUID = 1L;
 
 	public ObjectNotFoundException(String message) {
 		super(message);
-
 	}
 
 	public ObjectNotFoundException(String message, Throwable cause) {

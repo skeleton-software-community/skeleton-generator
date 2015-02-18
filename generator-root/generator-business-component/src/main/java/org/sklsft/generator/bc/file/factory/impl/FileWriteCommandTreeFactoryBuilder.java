@@ -12,7 +12,7 @@ public class FileWriteCommandTreeFactoryBuilder {
 	
 	public static FileWriteCommandTreeFactory getFileWriteCommandTreeFactory(Project project) {
 		switch (project.skeletonType) {
-			case SPRING_HIBERNATE_RICHFACES:
+			case SPRING_HIBERNATE_RICHFACES_3:
 				return new SpringHibernateRichFacesCommandTreeFactory();
 				
 			default:

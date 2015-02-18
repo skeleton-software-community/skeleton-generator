@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java;
+package org.sklsft.generator.bc.file.command.impl.conf.java.junit;
 
 import java.io.File;
 
@@ -6,9 +6,9 @@ import org.sklsft.generator.bc.file.command.impl.templatized.ProjectTemplatizedF
 import org.sklsft.generator.model.metadata.FileType;
 import org.sklsft.generator.model.om.Project;
 
-public class SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
+public class CommandBuilderFactoryFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
-	public SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand(Project project) {
+	public CommandBuilderFactoryFileWriteCommand(Project project) {
 		super(project.workspaceFolder + File.separator + project.projectName + "-services/src/test/java/" + project.model.commandPackageName.replace(".", File.separator) + File.separator, "CommandBuilderFactory", FileType.JAVA, project);
 	}
 

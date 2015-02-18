@@ -1,12 +1,13 @@
-package ${project.model.serviceExceptionPackageName};
+package ${project.model.stateExceptionPackageName};
 
-public class InvalidStateException extends RuntimeException {
+import ${project.model.businessExceptionPackageName}.BusinessException;
+
+public class InvalidStateException extends BusinessException {
 
 	private static final long serialVersionUID = 1L;
 
 	public InvalidStateException(String message) {
 		super(message);
-
 	}
 
 	public InvalidStateException(String message, Throwable cause) {

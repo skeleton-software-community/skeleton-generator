@@ -162,8 +162,7 @@
 
   <xs:simpleType name="skeletonType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="SPRING_HIBERNATE_RICHFACES"/>
-      <xs:enumeration value="BASIC_SPRING_HIBERNATE_RICHFACES"/>
+      <xs:enumeration value="SPRING_HIBERNATE_RICHFACES_3"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

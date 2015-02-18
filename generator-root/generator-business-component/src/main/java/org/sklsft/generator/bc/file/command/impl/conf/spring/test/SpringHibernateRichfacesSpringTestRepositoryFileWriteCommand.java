@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.test;
+package org.sklsft.generator.bc.file.command.impl.conf.spring.test;
 
 import java.io.File;
 

@@ -37,6 +37,10 @@ public class Bean {
 	public String baseStateManagerClassName;
 	public String stateManagerClassName;
 	public String stateManagerObjectName;
+	
+	public String baseProcessorClassName;
+	public String processorClassName;
+	public String processorObjectName;
 
 	public String baseMapperClassName;
 	public String mapperClassName;

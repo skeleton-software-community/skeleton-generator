@@ -2,15 +2,16 @@ package org.sklsft.generator.bc.file.strategy.impl.configuration;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesBaseControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandExecutorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCustomFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.BusinessExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.InvalidStateExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.ObjectNotFoundExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.BuildFailureExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandBuilderFactoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandBuilderFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandExecutorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFailureExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesApiPomFileWriteCommand;
@@ -25,10 +26,10 @@ import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRich
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringServicesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringWebappFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesLogbackTestFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestServicesFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringHibernateRichfacesLogbackTestFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringHibernateRichfacesSpringTestServicesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesFacesConfigFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesLogbackFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesProjectPropertiesFileWriteCommand;
@@ -134,16 +135,19 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
 		configurationTreeNode.add(javaTreeNode);
 		
-		FileWriteCommandTreeNode objectNotFoundExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand(project));
+		FileWriteCommandTreeNode businessExceptionTreeNode = new FileWriteCommandTreeNode(new BusinessExceptionFileWriteCommand(project));
+		javaTreeNode.add(businessExceptionTreeNode);
+		
+		FileWriteCommandTreeNode objectNotFoundExceptionTreeNode = new FileWriteCommandTreeNode(new ObjectNotFoundExceptionFileWriteCommand(project));
 		javaTreeNode.add(objectNotFoundExceptionTreeNode);
 		
-		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand(project));
+		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new InvalidStateExceptionFileWriteCommand(project));
 		javaTreeNode.add(invalidStateExceptionTreeNode);
 		
-		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand(project));
+		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new BuildFailureExceptionFileWriteCommand(project));
 		javaTreeNode.add(buildFailureExceptionTreeNode);
 		
-		FileWriteCommandTreeNode commandFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand(project));
+		FileWriteCommandTreeNode commandFailureExceptionTreeNode = new FileWriteCommandTreeNode(new CommandFailureExceptionFileWriteCommand(project));
 		javaTreeNode.add(commandFailureExceptionTreeNode);
 		
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBaseControllerFileWriteCommand(project));
@@ -152,16 +156,16 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCustomFilterFileWriteCommand(project));
 		javaTreeNode.add(customFilterTreeNode);
 		
-		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFileWriteCommand(project));
+		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new CommandFileWriteCommand(project));
 		javaTreeNode.add(commandTreeNode);
 		
-		FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFileWriteCommand(project));
+		FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFileWriteCommand(project));
 		javaTreeNode.add(commandBuilderTreeNode);
 		
-		FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand(project));
+		FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryFileWriteCommand(project));
 		javaTreeNode.add(commandBuilderFactoryTreeNode);
 		
-		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandExecutorFileWriteCommand(project));
+		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new CommandExecutorFileWriteCommand(project));
 		javaTreeNode.add(commandExecutorTreeNode);
 		
 		

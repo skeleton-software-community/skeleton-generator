@@ -55,6 +55,7 @@ public class JavaModelFactory implements ModelFactory {
 		Model model = new Model();
         model.project = project;
 
+        model.businessExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception";
         model.stateExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception.state";
         model.daoExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception.repository";
         model.testExceptionPackageName = project.domainName + "." + project.projectName + ".junit.data.exception";
