@@ -87,14 +87,18 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			break;
 
 		case TEXT:
-			writeLine("<h:outputText value=" + (char) 34 + ">" + (char) 34
+			writeLine("<h:outputText value=" + (char) 34 + "#{"
+					+ bean.objectName + "." + property.name + ".length() gt 20 ? "
+					+ bean.objectName + "." + property.name + ".substring(0,17).concat('...') : "
+					+ bean.objectName + "." + property.name + "}" + (char) 34
 					+ "/>");
 			writeLine("<rich:toolTip style=" + (char) 34
 					+ "background:white;border:white" + (char) 34 + ">");
 			writeLine("<h:inputTextarea value=" + (char) 34 + "#{"
 					+ bean.objectName + "." + property.name + "}" + (char) 34
-					+ " rows=" + (char) 34 + "10" + (char) 34 + " readonly="
-					+ (char) 34 + "true" + (char) 34 + "/>");
+					+ " rows=" + (char) 34 + "20" + (char) 34
+					+ " cols=" + (char) 34 + "50" + (char) 34
+					+ " readonly="	+ (char) 34 + "true" + (char) 34 + "/>");
 			writeLine("</rich:toolTip>");
 			break;
 		}
