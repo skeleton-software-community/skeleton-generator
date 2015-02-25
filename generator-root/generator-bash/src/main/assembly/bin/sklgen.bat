@@ -31,7 +31,7 @@ echo location of your Java installation
 echo.
 goto ERROR
 
-:OK_JAVA_HOME
+:OK_JAVA_HOME:
 if exist "%JAVA_HOME%\bin\java.exe" goto CHECK_JAVA_HOME
 
 echo.
@@ -42,7 +42,7 @@ echo location of your Java installation
 echo.
 goto ERROR
 
-:CHECK_JAVA_HOME
+:CHECK_JAVA_HOME:
 if not "%SKLGEN_HOME%"=="" goto OK_SKLGEN_HOME
 
 echo.
@@ -52,7 +52,7 @@ echo location of the Skeleton generator installation
 echo.
 goto ERROR
 
-:OK_SKLGEN_HOME
+:OK_SKLGEN_HOME:
 if exist "%SKLGEN_HOME%\bin\sklgen.bat" goto CHECK_SKLGEN_HOME
 
 echo.
@@ -64,10 +64,10 @@ echo.
 goto ERROR
 
 @REM ==== END VALIDATION ====
-:CHECK_SKLGEN_HOME
+:CHECK_SKLGEN_HOME:
 
 
-:GET_SKLGEN_CMD_LINE_ARGS
+:GET_SKLGEN_CMD_LINE_ARGS:
 @REM ==== START COMMAND LINE ARGS ====
 set SKLGEN_CMD_LINE_ARGS=%1
 set DATABASE_NAME=%2
@@ -88,7 +88,7 @@ goto INVALID_SKLGEN_CMD_LINE_ARGS
 
 
 @REM ==== COMMANDS ====
-:HELP
+:HELP:
 echo use one of the following commands :
 echo . init
 echo . generate
@@ -99,24 +99,24 @@ echo . dumpdb
 echo . populatedeltascript
 goto END
 
-:INIT
+:INIT:
 call sklgen-do-init.bat
 if not %INIT_OK%==Y goto INIT_CANCEL
 echo start initializing project
 %JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %INIT_CLASS% %INIT_ARGS%
 echo end initializing project
 goto END
-:INIT_CANCEL
+:INIT_CANCEL:
 echo initialization cancelled
 goto END
 
-:GENERATE
+:GENERATE:
 echo start generating code
 %JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% "%CD%"
 echo end generating code
 goto END
 
-:BUILDDB
+:BUILDDB:
 echo start building database
 %JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end building database
@@ -147,14 +147,14 @@ echo end updating database
 goto END
 
 
-:INVALID_SKLGEN_CMD_LINE_ARGS
+:INVALID_SKLGEN_CMD_LINE_ARGS:
 echo.
 echo ERROR: This command line argument is not valid.
 echo run help to check the list of available commands.
 goto ERROR
 
-:ERROR
+:ERROR:
 echo FAILED
 
-:END
+:END:
 echo END
