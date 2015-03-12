@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java;
+package org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller;
 
 import java.io.File;
 

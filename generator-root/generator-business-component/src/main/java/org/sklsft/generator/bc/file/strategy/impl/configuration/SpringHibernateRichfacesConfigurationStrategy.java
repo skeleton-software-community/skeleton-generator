@@ -1,8 +1,6 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesBaseControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.BusinessExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.InvalidStateExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.ObjectNotFoundExceptionFileWriteCommand;
@@ -12,6 +10,10 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandBuilderF
 import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandExecutorFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFailureExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAnnotationFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.SpringHibernateRichfacesBaseControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.SpringHibernateRichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesApiPomFileWriteCommand;
@@ -155,6 +157,12 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCustomFilterFileWriteCommand(project));
 		javaTreeNode.add(customFilterTreeNode);
+		
+		FileWriteCommandTreeNode ajaxMethodAnnotationTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesAjaxMethodAnnotationFileWriteCommand(project));
+		javaTreeNode.add(ajaxMethodAnnotationTreeNode);
+		
+		FileWriteCommandTreeNode ajaxMethodAspectTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand(project));
+		javaTreeNode.add(ajaxMethodAspectTreeNode);
 		
 		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new CommandFileWriteCommand(project));
 		javaTreeNode.add(commandTreeNode);

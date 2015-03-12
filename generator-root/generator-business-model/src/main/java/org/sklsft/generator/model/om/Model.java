@@ -47,6 +47,24 @@ public class Model {
 	public void setPackages(List<Package> packages) {
 		this.packages = packages;
 	}
+	public String getBusinessExceptionPackageName() {
+		return businessExceptionPackageName;
+	}
+	public void setBusinessExceptionPackageName(String businessExceptionPackageName) {
+		this.businessExceptionPackageName = businessExceptionPackageName;
+	}
+	public String getStateExceptionPackageName() {
+		return stateExceptionPackageName;
+	}
+	public void setStateExceptionPackageName(String stateExceptionPackageName) {
+		this.stateExceptionPackageName = stateExceptionPackageName;
+	}
+	public String getMvcAspectPackageName() {
+		return mvcAspectPackageName;
+	}
+	public void setMvcAspectPackageName(String mvcAspectPackageName) {
+		this.mvcAspectPackageName = mvcAspectPackageName;
+	}
 	public String getServiceExceptionPackageName() {
 		return stateExceptionPackageName;
 	}

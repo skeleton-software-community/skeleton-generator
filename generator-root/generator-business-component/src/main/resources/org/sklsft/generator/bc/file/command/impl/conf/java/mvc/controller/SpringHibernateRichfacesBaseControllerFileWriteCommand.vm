@@ -12,7 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 
-import org.sklsft.fund.api.exception.BusinessException;
+import ${project.model.businessExceptionPackageName}.BusinessException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

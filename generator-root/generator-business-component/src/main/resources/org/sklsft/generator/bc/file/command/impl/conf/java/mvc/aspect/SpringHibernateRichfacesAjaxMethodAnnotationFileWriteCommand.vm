@@ -1,0 +1,22 @@
+package ${project.model.mvcAspectPackageName};
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * This annotation will be used by a mvc aspect for ajax actions that need logs
+ * and notifications
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value = ElementType.METHOD)
+public @interface AjaxMethod {
+
+	/**
+	 * will be used to get messages
+	 * 
+	 * @return
+	 */
+	String identifier();
+}
