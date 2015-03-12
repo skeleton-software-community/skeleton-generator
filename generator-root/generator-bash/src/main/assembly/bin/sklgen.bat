@@ -93,7 +93,7 @@ goto END
 call sklgen-do-init.bat
 if not %INIT_OK%==Y goto INIT_CANCEL
 echo start initializing project
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %INIT_CLASS% %INIT_ARGS%
+"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %INIT_CLASS% %INIT_ARGS%
 echo end initializing project
 goto END
 :INIT_CANCEL
@@ -102,19 +102,19 @@ goto END
 
 :GENERATE
 echo start generating code
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% "%CD%"
+"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% "%CD%"
 echo end generating code
 goto END
 
 :BUILDDB
 echo start building database
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
+"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end building database
 goto END
 
 :POPULATEDB:
 echo start populating database
-%JAVA_HOME%\bin\java -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
+"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end populating database
 goto END
 
