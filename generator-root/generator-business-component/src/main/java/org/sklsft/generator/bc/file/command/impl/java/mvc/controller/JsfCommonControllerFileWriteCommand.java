@@ -21,7 +21,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import java.util.List;");
+		javaImports.add("import java.io.Serializable;");
+		javaImports.add("import java.util.List;");		
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import javax.faces.model.SelectItem;");
 		javaImports.add("import org.springframework.stereotype.Component;");
