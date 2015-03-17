@@ -1,5 +1,9 @@
 package org.sklsft.generator.repository.backup.datasource.impl;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,12 +55,33 @@ public class SourceAndScriptBackupReader{
 
 	        List<Object> objectList = new ArrayList<>();
 	        for (int i=1;i<=table.getInsertColumnList().size();i++) {
-	        	objectList.add(resultSet.getObject(i));
+	        	Object value = resultSet.getObject(i);
+	        	// transform CLOB in string
+	        	if (value instanceof Clob) {
+	        		value = convertClobToString((Clob) value);
+	        	}
+	        	objectList.add(value);
 	        }
 	        
 	        return objectList.toArray();
 	    }
 
+	}
+	
+	private static String convertClobToString(Clob clob) throws SQLException {
+		try {
+			Reader reader = clob.getCharacterStream();
+			StringWriter stringWriter = new StringWriter();
+			char[] buffer = new char[1024];
+			int length;
+			while ((length = reader.read(buffer, 0, buffer.length)) > 0) {
+				stringWriter.write(buffer, 0, length);
+			}
+			
+			return stringWriter.toString();
+		} catch (IOException ioe) {
+			throw new SQLException("error reading CLOB", ioe);
+		}
 	}
 
 }
