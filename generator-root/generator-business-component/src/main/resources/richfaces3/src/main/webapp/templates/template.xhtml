@@ -57,10 +57,6 @@
 		</div>
 	</div>
 
-	<a4j:status id="ajaxStatus"
-		onstart="#{rich:component('processingPanel')}.show()"
-		onstop="#{rich:component('processingPanel')}.hide()" />
-
 	<rich:modalPanel id="processingPanel" style="text-align:center;" height="30">
 		<h:outputText value="#{i18n.processing}..."/>
 	</rich:modalPanel>

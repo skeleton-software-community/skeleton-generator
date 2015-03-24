@@ -123,7 +123,10 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         	Bean currentBean = oneToManyComponent.referenceBean;
         	
             writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "List}" + CHAR_34);
-            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34);
+            writeLine("onclick=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
+            writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
+            writeLine("reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
             writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List" + ".xhtml" + CHAR_34 + "/>");
             writeLine("</rich:tab>");
             skipLine();
@@ -134,7 +137,10 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         	Bean currentBean = oneToMany.referenceBean;
         	
             writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "List}" + CHAR_34);
-            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34);       
+            writeLine("ontabenter=" + CHAR_34 + "$('processingPanel').component.show()" + CHAR_34);
+            writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
+            writeLine("reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
             writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List" + ".xhtml" + CHAR_34 + "/>");
             writeLine("</rich:tab>");
             skipLine();
