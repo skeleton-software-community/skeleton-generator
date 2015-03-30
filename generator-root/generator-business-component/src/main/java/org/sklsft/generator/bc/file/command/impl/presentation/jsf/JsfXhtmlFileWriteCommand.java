@@ -369,8 +369,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						write("required=" + (char) 34 + "true" + (char) 34);
 					}
 					writeLine(">");
-					writeLine("<f:convertNumber integerOnly=" + (char) 34 + "true" + (char) 34 + " pattern=" + (char) 34 + "#,##0"
-							+ (char) 34 + "/>");
+					/*writeLine("<f:convertNumber integerOnly=" + (char) 34 + "true" + (char) 34 + " pattern=" + (char) 34 + "#,##0"
+							+ (char) 34 + "/>");*/
 					writeLine("</h:inputText>");
 					break;
 
