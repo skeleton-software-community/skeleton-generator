@@ -71,7 +71,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * resources injected with spring");
 		writeLine(" */");
-		writeLine("@Resource(name=" + CHAR_34 + this.bean.myPackage.model.project.projectName + "SessionFactory" + CHAR_34 + ")");
+		writeLine("@Resource(name=" + CHAR_34 + "sessionFactory" + CHAR_34 + ")");
 
 		writeLine("protected SessionFactory sessionFactory;");
 		skipLine();

@@ -16,9 +16,9 @@ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
 <tx:annotation-driven/>
 
-<bean id="${project.projectName}TransactionManager"
+<bean id="transactionManager"
 class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-<property name="sessionFactory" ref="${project.projectName}SessionFactory"/>
+<property name="sessionFactory" ref="sessionFactory"/>
 </bean>
 
 </beans>

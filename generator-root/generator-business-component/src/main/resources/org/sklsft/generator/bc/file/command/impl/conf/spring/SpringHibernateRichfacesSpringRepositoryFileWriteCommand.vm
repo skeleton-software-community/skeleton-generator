@@ -11,11 +11,11 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<jee:jndi-lookup id="${project.projectName}DataSource" jndi-name="jdbc/${project.projectName}"
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/${project.databaseName}"
 		expected-type="javax.sql.DataSource" />
 
 
-	<bean id="${project.projectName}SessionFactory"
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="packagesToScan">
 			<list>
@@ -30,7 +30,7 @@
 			</props>
 		</property>
 		<property name="dataSource">
-			<ref bean="${project.projectName}DataSource" />
+			<ref bean="dataSource" />
 		</property>
 		
 #if ($project.audited)

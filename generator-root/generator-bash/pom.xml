@@ -53,12 +53,12 @@
 		<!-- dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-		</dependency>
+		</dependency-->
 		
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-		 </dependency -->
+		 </dependency>
 		
 	</dependencies>
 	
