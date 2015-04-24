@@ -4,16 +4,14 @@ import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextF
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.BusinessExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.InvalidStateExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.ObjectNotFoundExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.BuildFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandBuilderFactoryFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandExecutorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.junit.CommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAnnotationFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.SpringHibernateRichfacesBaseControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.SpringHibernateRichfacesCustomFilterFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.population.BuildFailureExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandExecutorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFailureExceptionFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesApiPomFileWriteCommand;
@@ -166,12 +164,6 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new CommandFileWriteCommand(project));
 		javaTreeNode.add(commandTreeNode);
-		
-		FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFileWriteCommand(project));
-		javaTreeNode.add(commandBuilderTreeNode);
-		
-		FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryFileWriteCommand(project));
-		javaTreeNode.add(commandBuilderFactoryTreeNode);
 		
 		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new CommandExecutorFileWriteCommand(project));
 		javaTreeNode.add(commandExecutorTreeNode);

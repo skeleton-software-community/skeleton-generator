@@ -1,8 +1,0 @@
-package ${project.model.commandPackageName};
-
-import ${project.model.testExceptionPackageName}.BuildFailureException;
-
-public interface CommandBuilder {
-
-	public Command buildCommand(String line) throws BuildFailureException;
-}

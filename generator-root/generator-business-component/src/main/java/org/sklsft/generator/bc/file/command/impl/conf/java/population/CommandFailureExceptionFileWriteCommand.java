@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java.junit;
+package org.sklsft.generator.bc.file.command.impl.conf.java.population;
 
 import java.io.File;
 
@@ -9,7 +9,7 @@ import org.sklsft.generator.model.om.Project;
 public class CommandFailureExceptionFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public CommandFailureExceptionFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-services/src/test/java/" + project.model.testExceptionPackageName.replace(".", File.separator) + File.separator, "CommandFailureException", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/java/" + project.model.populationExceptionPackageName.replace(".", File.separator) + File.separator, "CommandFailureException", FileType.JAVA, project);
 	}
 
 }

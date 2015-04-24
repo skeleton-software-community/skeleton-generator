@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.junit;
+package org.sklsft.generator.bc.file.command.impl.java.population;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class ViewOneToManyComponentCommandFileWriteCommand extends JavaFileWrite
     private Bean parentBean;
 
     public ViewOneToManyComponentCommandFileWriteCommand(OneToManyComponent oneToManyComponent){
-        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-services\\src\\test\\java\\" + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".","\\"),
+        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".","\\"),
         		oneToManyComponent.referenceBean.viewClassName + "Command");
         
         		this.oneToManyComponent = oneToManyComponent;
@@ -31,7 +31,7 @@ public class ViewOneToManyComponentCommandFileWriteCommand extends JavaFileWrite
         javaImports.add("import " + referenceBean.myPackage.model.commandPackageName + ".Command;");
         javaImports.add("import " + referenceBean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
         javaImports.add("import " + referenceBean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-        javaImports.add("import " + referenceBean.myPackage.model.testExceptionPackageName + ".CommandFailureException;");
+        javaImports.add("import " + referenceBean.myPackage.model.populationExceptionPackageName + ".CommandFailureException;");
 	}
 
 	@Override

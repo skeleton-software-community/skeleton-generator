@@ -14,8 +14,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ${project.model.testExceptionPackageName}.BuildFailureException;
-import ${project.model.testExceptionPackageName}.CommandFailureException;
+import ${project.model.populationExceptionPackageName}.BuildFailureException;
+import ${project.model.populationExceptionPackageName}.CommandFailureException;
 
 @Component
 public class CommandExecutor {
@@ -23,7 +23,7 @@ public class CommandExecutor {
 	private static final Charset encoding = StandardCharsets.UTF_8;
 
 	@Autowired
-	private CommandBuilderFactory commandBuilderFactory;
+	private CommandFactory commandFactory;
 
 
 	/**
@@ -48,9 +48,9 @@ public class CommandExecutor {
 
 		for (String line : lines) {
 			if (!StringUtils.isEmpty(line)) {
-				CommandBuilder commandBuilder = commandBuilderFactory
-						.createCommandBuilder(clazz);
-				commandBuilder.buildCommand(line).execute();
+				Command command = commandFactory
+						.createCommand(clazz, line);
+				command.execute();
 			}
 		}
 	}

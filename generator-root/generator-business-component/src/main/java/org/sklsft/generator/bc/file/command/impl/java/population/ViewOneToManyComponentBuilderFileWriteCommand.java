@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.junit;
+package org.sklsft.generator.bc.file.command.impl.java.population;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
     private Bean parentBean;
 
     public ViewOneToManyComponentBuilderFileWriteCommand(OneToManyComponent oneToManyComponent){
-        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-services\\src\\test\\java\\" + oneToManyComponent.referenceBean.myPackage.builderPackageName.replace(".","\\"),
+        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + oneToManyComponent.referenceBean.myPackage.builderPackageName.replace(".","\\"),
         		oneToManyComponent.referenceBean.viewClassName + "Builder");
         
         this.oneToManyComponent = oneToManyComponent;
@@ -28,7 +28,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 		
 		javaImports.add("import java.text.SimpleDateFormat;");
         javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.ovPackageName + "." + oneToManyComponent.referenceBean.viewClassName + ";");
-        javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.model.testExceptionPackageName + ".BuildFailureException;");
+        javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.model.populationExceptionPackageName + ".BuildFailureException;");
 	}
 
 	@Override

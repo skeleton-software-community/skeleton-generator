@@ -1,6 +1,6 @@
 package ${project.model.commandPackageName};
 
-import ${project.model.testExceptionPackageName}.CommandFailureException;
+import ${project.model.populationExceptionPackageName}.CommandFailureException;
 
 /**
  * interface used to create an insert command

@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.junit;
+package org.sklsft.generator.bc.file.command.impl.java.population;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
     public ViewBeanBuilderFileWriteCommand(Bean bean){
-        super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-services\\src\\test\\java\\" + bean.myPackage.builderPackageName.replace(".","\\"),
+        super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + bean.myPackage.builderPackageName.replace(".","\\"),
         		bean.viewClassName + "Builder");
         
         		this.bean = bean;
@@ -23,7 +23,7 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 		
 		javaImports.add("import java.text.SimpleDateFormat;");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.testExceptionPackageName + ".BuildFailureException;");
+        javaImports.add("import " + this.bean.myPackage.model.populationExceptionPackageName + ".BuildFailureException;");
 	}
 
 	@Override

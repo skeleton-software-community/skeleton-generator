@@ -26,7 +26,7 @@ public class Model {
     public String businessExceptionPackageName;
 	public String stateExceptionPackageName;
     public String daoExceptionPackageName;
-    public String testExceptionPackageName;
+    public String populationExceptionPackageName;
     public String controllerPackageName;
     public String commandPackageName;
     public String filterPackageName;
@@ -77,11 +77,12 @@ public class Model {
 	public void setDaoExceptionPackageName(String daoExceptionPackageName) {
 		this.daoExceptionPackageName = daoExceptionPackageName;
 	}
-	public String getTestExceptionPackageName() {
-		return testExceptionPackageName;
+	public String getPopulationExceptionPackageName() {
+		return populationExceptionPackageName;
 	}
-	public void setTestExceptionPackageName(String testExceptionPackageName) {
-		this.testExceptionPackageName = testExceptionPackageName;
+	public void setPopulationExceptionPackageName(
+			String populationExceptionPackageName) {
+		this.populationExceptionPackageName = populationExceptionPackageName;
 	}
 	public String getControllerPackageName() {
 		return controllerPackageName;

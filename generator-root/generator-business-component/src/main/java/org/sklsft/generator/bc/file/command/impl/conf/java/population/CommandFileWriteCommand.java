@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java.junit;
+package org.sklsft.generator.bc.file.command.impl.conf.java.population;
 
 import java.io.File;
 

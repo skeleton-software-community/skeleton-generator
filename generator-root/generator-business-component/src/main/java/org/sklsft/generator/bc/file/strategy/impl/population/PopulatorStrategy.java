@@ -1,12 +1,10 @@
-package org.sklsft.generator.bc.file.strategy.impl.junit;
+package org.sklsft.generator.bc.file.strategy.impl.population;
 
-import org.sklsft.generator.bc.file.command.impl.java.junit.CommandBuilderFactoryImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewBeanBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewBeanCommandBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewBeanCommandFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewOneToManyComponentBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewOneToManyComponentCommandBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.junit.ViewOneToManyComponentCommandFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.CommandFactoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.ViewBeanBuilderFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.ViewBeanCommandFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.ViewOneToManyComponentBuilderFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.ViewOneToManyComponentCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.om.Bean;
@@ -14,15 +12,15 @@ import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Package;
 import org.sklsft.generator.model.om.Project;
 
-public class JUnitStrategy implements LayerStrategy {
+public class PopulatorStrategy implements LayerStrategy {
 
 	@Override
 	public FileWriteCommandTreeNode getLayerNode(Project project) {
 
-		FileWriteCommandTreeNode junitLayerTreeNode = new FileWriteCommandTreeNode("Services JUnit tests");
+		FileWriteCommandTreeNode populatorLayerTreeNode = new FileWriteCommandTreeNode("Populator");
 
 		FileWriteCommandTreeNode builderTreeNode = new FileWriteCommandTreeNode("View Objects Builders");
-        junitLayerTreeNode.add(builderTreeNode);
+        populatorLayerTreeNode.add(builderTreeNode);
 
         for (Package myPackage : project.model.packages)
         {
@@ -47,7 +45,7 @@ public class JUnitStrategy implements LayerStrategy {
         
         
         FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode("View Objects commands");
-        junitLayerTreeNode.add(commandTreeNode);
+        populatorLayerTreeNode.add(commandTreeNode);
 
         for (Package myPackage : project.model.packages)
         {
@@ -71,33 +69,12 @@ public class JUnitStrategy implements LayerStrategy {
         }
         
         FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode("View Objects command builders");
-        junitLayerTreeNode.add(commandBuilderTreeNode);
-
-        for (Package myPackage : project.model.packages)
-        {
-            FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
-            commandBuilderTreeNode.add(packageTreeNode);
-
-            for (Bean bean : myPackage.beans)
-            {
-                if (!bean.isComponent)
-                {
-                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandBuilderFileWriteCommand(bean));
-                    packageTreeNode.add(beanTreeNode);
-
-                    for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
-                    {
-                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandBuilderFileWriteCommand(oneToManyComponent));
-                        packageTreeNode.add(oneToManyComponentTreeNode);
-                    }
-                }
-            }
-        }
+        populatorLayerTreeNode.add(commandBuilderTreeNode);
         
-        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandBuilderFactoryImplFileWriteCommand(project));
-        junitLayerTreeNode.add(commandBuilderFactoryTreeNode);
+        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandFactoryFileWriteCommand(project));
+        populatorLayerTreeNode.add(commandBuilderFactoryTreeNode);
         
         
-        return junitLayerTreeNode;
+        return populatorLayerTreeNode;
 	}
 }

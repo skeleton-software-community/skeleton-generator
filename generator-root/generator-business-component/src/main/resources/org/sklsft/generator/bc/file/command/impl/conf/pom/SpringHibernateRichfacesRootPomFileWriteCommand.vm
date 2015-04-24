@@ -20,6 +20,7 @@
 		<module>${project.projectName}-business-component</module>
 		<module>${project.projectName}-services</module>
 		<module>${project.projectName}-webapp</module>
+		<module>${project.projectName}-populator</module>
 	</modules>
 	
 	<properties>

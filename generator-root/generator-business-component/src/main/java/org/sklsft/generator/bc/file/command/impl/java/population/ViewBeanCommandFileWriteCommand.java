@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.junit;
+package org.sklsft.generator.bc.file.command.impl.java.population;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class ViewBeanCommandFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
     public ViewBeanCommandFileWriteCommand(Bean bean){
-        super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-services\\src\\test\\java\\" + bean.myPackage.commandPackageName.replace(".","\\"),
+        super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + bean.myPackage.commandPackageName.replace(".","\\"),
         		bean.viewClassName + "Command");
         
         		this.bean = bean;
@@ -25,7 +25,7 @@ public class ViewBeanCommandFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.model.commandPackageName + ".Command;");
         javaImports.add("import " + this.bean.myPackage.model.stateExceptionPackageName + ".InvalidStateException;");
         javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-        javaImports.add("import " + this.bean.myPackage.model.testExceptionPackageName + ".CommandFailureException;");
+        javaImports.add("import " + this.bean.myPackage.model.populationExceptionPackageName + ".CommandFailureException;");
 	}
 
 	@Override

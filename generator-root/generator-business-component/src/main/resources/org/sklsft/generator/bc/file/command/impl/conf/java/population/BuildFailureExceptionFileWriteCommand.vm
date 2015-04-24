@@ -1,4 +1,4 @@
-package ${project.model.testExceptionPackageName};
+package ${project.model.populationExceptionPackageName};
 
 public class BuildFailureException extends Exception {
 
