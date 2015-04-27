@@ -8,9 +8,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibe
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.SpringHibernateRichfacesBaseControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.SpringHibernateRichfacesCustomFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.population.BuildFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandExecutorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFailureExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
@@ -144,12 +141,6 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new InvalidStateExceptionFileWriteCommand(project));
 		javaTreeNode.add(invalidStateExceptionTreeNode);
 		
-		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new BuildFailureExceptionFileWriteCommand(project));
-		javaTreeNode.add(buildFailureExceptionTreeNode);
-		
-		FileWriteCommandTreeNode commandFailureExceptionTreeNode = new FileWriteCommandTreeNode(new CommandFailureExceptionFileWriteCommand(project));
-		javaTreeNode.add(commandFailureExceptionTreeNode);
-		
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBaseControllerFileWriteCommand(project));
 		javaTreeNode.add(baseControllerTreeNode);
 		
@@ -165,8 +156,6 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new CommandFileWriteCommand(project));
 		javaTreeNode.add(commandTreeNode);
 		
-		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new CommandExecutorFileWriteCommand(project));
-		javaTreeNode.add(commandExecutorTreeNode);
 		
 		
 		/*

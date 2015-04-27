@@ -50,7 +50,7 @@ public class SourceAndScriptBackupReader{
 	    public Object[] mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
 	        List<Object> objectList = new ArrayList<>();
-	        for (int i=1;i<=table.getInsertColumnList().size();i++) {
+	        for (int i=1;i<=resultSet.getMetaData().getColumnCount();i++) {
 	        	objectList.add(resultSet.getObject(i));
 	        }
 	        

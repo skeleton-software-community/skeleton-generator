@@ -22,7 +22,6 @@ public class CsvFileParserImpl implements CsvFileParser {
 	/*
 	 * properties
 	 */
-	private int columnNumber;
 	private Charset charset;
 	private String separator;
 	
@@ -30,20 +29,17 @@ public class CsvFileParserImpl implements CsvFileParser {
 	/*
 	 * constructor
 	 */
-	public CsvFileParserImpl(int columnNumber) {
-		this.columnNumber = columnNumber;
+	public CsvFileParserImpl() {
 		this.charset = StandardCharsets.ISO_8859_1;
 		this.separator = "\\$";
 	}
 	
-	public CsvFileParserImpl(int columnNumber, Charset charset) {
-		this.columnNumber = columnNumber;
+	public CsvFileParserImpl(Charset charset) {
 		this.charset = charset;
 		this.separator = "\\$";
 	}
 	
-	public CsvFileParserImpl(int columnNumber, Charset charset, String separator) {
-		this.columnNumber = columnNumber;
+	public CsvFileParserImpl(Charset charset, String separator) {
 		this.charset = charset;
 		this.separator = separator;
 	}
@@ -63,11 +59,7 @@ public class CsvFileParserImpl implements CsvFileParser {
 			
 			String line = null;
 			while (!StringUtils.isEmpty(line = reader.readLine())) {
-				String[] tokens = line.split(separator, columnNumber);
-				
-				if (tokens.length != columnNumber) {
-					throw new InvalidFileException("Invalid number of tokens in : " + filePath.toString());
-				}
+				String[] tokens = line.split(separator);
 				
 				tokensList.add(tokens);
 			}
@@ -95,10 +87,6 @@ public class CsvFileParserImpl implements CsvFileParser {
 			
 			int i = 0;
 			for (String[] tokens:content) {
-				
-				if (tokens.length != columnNumber) {
-					throw new InvalidFileException("Invalid number of tokens");
-				}
 				
 				String line = "";
 				int j = 0;

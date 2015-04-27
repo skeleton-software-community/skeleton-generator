@@ -27,7 +27,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 	 * constructor
 	 */
 	public TextDelimitedFileBackupReader(Table table) {
-		this.csvFileParser = new CsvFileParserImpl(table.getInsertColumnList().size(), StandardCharsets.UTF_8);
+		this.csvFileParser = new CsvFileParserImpl(StandardCharsets.UTF_8);
 		this.table = table;
 	}
 	

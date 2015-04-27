@@ -21,9 +21,8 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 		
-		javaImports.add("import java.text.SimpleDateFormat;");
+		javaImports.add("import java.util.Date;");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.populationExceptionPackageName + ".BuildFailureException;");
 	}
 
 	@Override
@@ -42,33 +41,18 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
         writeLine("public class " + bean.viewClassName + "Builder {");
         skipLine();
-    
-        writeLine("private static final String SEPARATOR = " + (char)34 + "\\\\$" + (char)34 + ";");
-        skipLine();
         
-        writeLine("public static " + bean.viewClassName + " build(String line) throws BuildFailureException {");
+        writeLine("public static " + bean.viewClassName + " build(Object[] args) {");
         skipLine();
 	    writeLine(bean.viewClassName + " " + bean.viewObjectName + " = new " + bean.viewClassName + "();");
 	    skipLine();
-        writeLine("try {");
-        writeLine("String[] args = line.split(SEPARATOR, " + bean.getVisibleProperties().size() + ");");
-        skipLine();
-        
+                
         Integer argNumber = 0;
         for (Property property : bean.getVisibleProperties())
-        {
-            writeLine("if (!args[" + argNumber.toString() + "].isEmpty()) {");
-            writeLine(bean.viewObjectName + ".set" + property.capName + "(" + DataType.stringToBuildArg("args[" + argNumber + "]",property.dataType) + ");");
-            writeLine("}");
-            skipLine();
+        {            
+            writeLine(bean.viewObjectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
             argNumber++;
         }
-
-        writeLine("} catch (Exception e) {");
-        
-		writeLine("throw new BuildFailureException (" + (char)34 + "failed to build object" + (char)34 + ",e);");
-        
-        writeLine("}");
         
 	    writeLine("return " + bean.viewObjectName + ";");
         

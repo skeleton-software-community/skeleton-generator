@@ -1,10 +1,9 @@
 package org.sklsft.generator.bc.file.strategy.impl.population;
 
-import org.sklsft.generator.bc.file.command.impl.java.population.CommandFactoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.BeanPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.population.OneToManyComponentPopulatorCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.population.ViewBeanBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.population.ViewBeanCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.population.ViewOneToManyComponentBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.population.ViewOneToManyComponentCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.om.Bean;
@@ -56,24 +55,17 @@ public class PopulatorStrategy implements LayerStrategy {
             {
                 if (!bean.isComponent)
                 {
-                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ViewBeanCommandFileWriteCommand(bean));
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BeanPopulatorCommandFileWriteCommand(bean));
                     packageTreeNode.add(beanTreeNode);
 
                     for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
                     {
-                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new ViewOneToManyComponentCommandFileWriteCommand(oneToManyComponent));
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new OneToManyComponentPopulatorCommandFileWriteCommand(oneToManyComponent));
                         packageTreeNode.add(oneToManyComponentTreeNode);
                     }
                 }
             }
         }
-        
-        FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode("View Objects command builders");
-        populatorLayerTreeNode.add(commandBuilderTreeNode);
-        
-        FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new CommandFactoryFileWriteCommand(project));
-        populatorLayerTreeNode.add(commandBuilderFactoryTreeNode);
-        
         
         return populatorLayerTreeNode;
 	}

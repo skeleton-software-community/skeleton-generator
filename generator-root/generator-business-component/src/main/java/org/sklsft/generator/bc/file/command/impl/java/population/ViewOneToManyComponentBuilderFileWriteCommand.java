@@ -26,9 +26,8 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 	@Override
 	protected void fetchSpecificImports() {
 		
-		javaImports.add("import java.text.SimpleDateFormat;");
+		javaImports.add("import java.util.Date;");
         javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.ovPackageName + "." + oneToManyComponent.referenceBean.viewClassName + ";");
-        javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.model.populationExceptionPackageName + ".BuildFailureException;");
 	}
 
 	@Override
@@ -47,33 +46,19 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 		writeLine(" */");
         writeLine("public class " + referenceBean.viewClassName + "Builder {");
         skipLine();
-    
-        writeLine("private static final String SEPARATOR = " + (char)34 + "\\\\$" + (char)34 + ";");
-        skipLine();
         
-        Integer splitSize = parentBean.getFindProperties().size() + referenceBean.getVisibleProperties().size();
-        
-        writeLine("public static " + referenceBean.viewClassName + " build(String line) throws BuildFailureException {");
+        writeLine("public static " + referenceBean.viewClassName + " build(Object[] args) {");
         skipLine();
 	    writeLine(referenceBean.viewClassName + " " + referenceBean.viewObjectName + " = new " + referenceBean.viewClassName + "();");
 	    skipLine();
-        writeLine("try {");
-        writeLine("String[] args = line.split(SEPARATOR, " + splitSize + ");");
-        skipLine();
         
         Integer argNumber = parentBean.getFindProperties().size();
         for (Property property : referenceBean.getVisibleProperties())
         {
-            writeLine("if (!args[" + argNumber.toString() + "].isEmpty()) {");
-            writeLine(referenceBean.viewObjectName + ".set" + property.capName + "(" + DataType.stringToBuildArg("args[" + argNumber + "]",property.dataType) + ");");
-            writeLine("}");
-            skipLine();
+            writeLine(referenceBean.viewObjectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
             argNumber++;
         }
 
-        writeLine("} catch (Exception e) {");
-		writeLine("throw new BuildFailureException (" + (char)34 + "failed to build object" + (char)34 + ",e);");
-        writeLine("}");
 	    writeLine("return " + referenceBean.viewObjectName + ";");
         writeLine("}");
         writeLine("}");

@@ -1,6 +1,6 @@
 package ${project.model.commandPackageName};
 
-import ${project.model.populationExceptionPackageName}.CommandFailureException;
+import java.util.List;
 
 /**
  * interface used to create an insert command
@@ -8,8 +8,7 @@ import ${project.model.populationExceptionPackageName}.CommandFailureException;
 public interface Command {
 
 	/**
-	 * method that executes an insert in database from view object
-	 * @throws CommandFailureException
+	 * method that executes an service method from view object
 	 */
-	void execute() throws CommandFailureException;
+	void execute(List<Object[]> argsList);
 }
