@@ -1,14 +1,12 @@
 package org.sklsft.generator.bc.backup.command.interfaces;
 
-import java.util.List;
-
 import javax.sql.DataSource;
 
 import org.sklsft.generator.model.om.Table;
-import org.sklsft.generator.repository.backup.jdbc.interfaces.JdbcCommand;
+import org.sklsft.generator.repository.backup.command.interfaces.Command;
 
 public interface JdbcCommandFactory {
 
-	JdbcCommand getCommand(DataSource dataSource, Table table, List<Object[]> argsList);
+	Command getCommand(DataSource dataSource, Table table);
 
 }

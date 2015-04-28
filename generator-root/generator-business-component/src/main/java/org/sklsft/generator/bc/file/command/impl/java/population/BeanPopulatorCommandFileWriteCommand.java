@@ -20,15 +20,18 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.List;");
+		
+		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.Command;");
+		
 		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
+		javaImports.add("import org.slf4j.LoggerFactory;");		
 		
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.commandPackageName + ".Command;");
+        
         javaImports.add("import " + bean.myPackage.builderPackageName + "." + bean.viewClassName + "Builder;");
 	}
 

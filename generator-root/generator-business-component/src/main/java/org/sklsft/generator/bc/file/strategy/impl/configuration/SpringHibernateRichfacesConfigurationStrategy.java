@@ -8,7 +8,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibe
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.SpringHibernateRichfacesBaseControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.SpringHibernateRichfacesCustomFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesApiPomFileWriteCommand;
@@ -152,9 +151,6 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		
 		FileWriteCommandTreeNode ajaxMethodAspectTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand(project));
 		javaTreeNode.add(ajaxMethodAspectTreeNode);
-		
-		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new CommandFileWriteCommand(project));
-		javaTreeNode.add(commandTreeNode);
 		
 		
 		

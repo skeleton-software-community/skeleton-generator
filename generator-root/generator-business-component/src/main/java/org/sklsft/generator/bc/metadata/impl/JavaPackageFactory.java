@@ -102,8 +102,8 @@ public class JavaPackageFactory implements PackageFactory {
 
 		myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name;
 
-		myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".populator." + myPackage.name + ".builder";
-		myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".populator." + myPackage.name + ".command";
+		myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".populator.builder." + myPackage.name;
+		myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".populator.command." + myPackage.name;
 
 		myPackage.tables = new ArrayList<Table>();
 		myPackage.beans = new ArrayList<Bean>();

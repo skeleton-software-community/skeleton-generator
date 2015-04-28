@@ -1,11 +1,11 @@
-package org.sklsft.generator.repository.backup.jdbc.impl;
+package org.sklsft.generator.repository.backup.command.impl;
 
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.sklsft.generator.model.om.Table;
-import org.sklsft.generator.repository.backup.jdbc.interfaces.JdbcCommand;
+import org.sklsft.generator.repository.backup.command.interfaces.Command;
 import org.sklsft.generator.repository.util.SQLNaming;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,33 +18,32 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
  * @author Nicolas Thibault
  *
  */
-public class JdbcUpdateCommand implements JdbcCommand {
+public class JdbcInsertCommand implements Command {
 	
 	/*
 	 * logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(JdbcUpdateCommand.class);
+	private static final Logger logger = LoggerFactory.getLogger(JdbcInsertCommand.class);
 
 	/*
 	 * properties
 	 */
 	private SimpleJdbcCall jdbcCall;
 	private Table table;
-	private List<Object[]> argsList;
+
 	
 	/*
 	 * constructor
 	 */
-	public JdbcUpdateCommand(DataSource dataSource, Table table, List<Object[]> argsList) {
+	public JdbcInsertCommand(DataSource dataSource, Table table) {
 		this.jdbcCall = new SimpleJdbcCall(dataSource);
-		this.jdbcCall.setProcedureName(SQLNaming.getUpdateProcedureName(table.name, table.myPackage.model.project.databaseEngine));
+		this.jdbcCall.setProcedureName(SQLNaming.getInsertProcedureName(table.name, table.myPackage.model.project.databaseEngine));
 		this.table = table;
-		this.argsList = argsList;
 	}
 	
-	public void execute() {
+	public void execute(List<Object[]> argsList) {
 		for (Object[] args:argsList) {
-			String message = "execute update for table : " + table.name + " - args : ";
+			String message = "execute insert for table : " + table.name + " - args : ";
 			for (Object arg:args) {
 				message += "[" + arg + "]";
 			}

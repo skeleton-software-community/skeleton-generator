@@ -29,6 +29,9 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
+		
+		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.Command;");
+		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");
 		
@@ -38,7 +41,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         javaImports.add("import " + referenceBean.myPackage.ovPackageName + "." + referenceBean.viewClassName + ";");
         javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.viewClassName + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
-        javaImports.add("import " + referenceBean.myPackage.model.commandPackageName + ".Command;");
+        
         javaImports.add("import " + referenceBean.myPackage.builderPackageName + "." + referenceBean.viewClassName + "Builder;");
 
 	}
