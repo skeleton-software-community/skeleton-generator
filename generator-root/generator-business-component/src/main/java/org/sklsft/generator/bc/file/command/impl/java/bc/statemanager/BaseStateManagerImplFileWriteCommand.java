@@ -83,7 +83,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * check before update");
         writeLine(" */");
-        writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws InvalidStateException {");
+        writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
         writeLine("}");
         skipLine();
 
@@ -93,7 +93,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before update unique component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
             writeLine("}");
             skipLine();
         }
@@ -104,7 +104,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before update one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
             writeLine("}");
             skipLine();
         }

@@ -408,7 +408,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
         writeLine("public void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ") {");
         writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(" + this.bean.viewObjectName + ".getId());");
-        writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate(" + this.bean.objectName + ", " + this.bean.viewObjectName + ");");
+        writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate(" + this.bean.objectName + ");");
         writeLine(this.bean.objectName + " = this." + bean.mapperObjectName + ".mapTo(" + this.bean.viewObjectName + ", " + this.bean.objectName + ");");
         writeLine(this.bean.processorObjectName + ".update" + "(" + bean.objectName + ");");
         writeLine("}");
@@ -427,7 +427,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.viewObjectName + ");");
+            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + ");");
             writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", " + bean.objectName + ".get" + currentBean.className + "()));");
             writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + bean.objectName + ");");
             writeLine("}");
@@ -447,7 +447,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ") {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + this.bean.daoObjectName + ".load" + currentBean.className + "(" + currentBean.viewObjectName + ".getId());");
-            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + currentBean.objectName + ", " + currentBean.viewObjectName + ");");
+            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(currentBean.objectName + " = this." + currentBean.mapperObjectName + ".mapTo(" + currentBean.viewObjectName + ", " + currentBean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
