@@ -59,7 +59,7 @@ public class CsvFileParserImpl implements CsvFileParser {
 			
 			String line = null;
 			while (!StringUtils.isEmpty(line = reader.readLine())) {
-				String[] tokens = line.split(separator);
+				String[] tokens = line.split(separator, -1);
 				
 				tokensList.add(tokens);
 			}
