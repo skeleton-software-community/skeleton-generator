@@ -1,11 +1,6 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.BusinessExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.InvalidStateExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.exceptions.ObjectNotFoundExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAnnotationFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.aspect.SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.SpringHibernateRichfacesBaseControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.SpringHibernateRichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
@@ -131,28 +126,13 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
 		configurationTreeNode.add(javaTreeNode);
 		
-		FileWriteCommandTreeNode businessExceptionTreeNode = new FileWriteCommandTreeNode(new BusinessExceptionFileWriteCommand(project));
-		javaTreeNode.add(businessExceptionTreeNode);
-		
-		FileWriteCommandTreeNode objectNotFoundExceptionTreeNode = new FileWriteCommandTreeNode(new ObjectNotFoundExceptionFileWriteCommand(project));
-		javaTreeNode.add(objectNotFoundExceptionTreeNode);
-		
-		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new InvalidStateExceptionFileWriteCommand(project));
-		javaTreeNode.add(invalidStateExceptionTreeNode);
-		
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBaseControllerFileWriteCommand(project));
 		javaTreeNode.add(baseControllerTreeNode);
 		
 		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCustomFilterFileWriteCommand(project));
 		javaTreeNode.add(customFilterTreeNode);
 		
-		FileWriteCommandTreeNode ajaxMethodAnnotationTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesAjaxMethodAnnotationFileWriteCommand(project));
-		javaTreeNode.add(ajaxMethodAnnotationTreeNode);
-		
-		FileWriteCommandTreeNode ajaxMethodAspectTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesAjaxMethodAspectFileWriteCommand(project));
-		javaTreeNode.add(ajaxMethodAspectTreeNode);
-		
-		
+				
 		
 		/*
 		 * spring test files
