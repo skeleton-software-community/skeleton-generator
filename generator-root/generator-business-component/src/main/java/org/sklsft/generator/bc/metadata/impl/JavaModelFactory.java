@@ -55,15 +55,11 @@ public class JavaModelFactory implements ModelFactory {
 		Model model = new Model();
         model.project = project;
 
-        model.businessExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception";
-        model.stateExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception.state";
-        model.daoExceptionPackageName = project.domainName + "." + project.projectName + ".api.exception.repository";
         model.populationExceptionPackageName = project.domainName + "." + project.projectName + ".populator.exception";
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
         model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
-        model.mvcAspectPackageName = project.domainName + "." + project.projectName + ".mvc.aspect";
-        
+       
         model.packages = new ArrayList<Package>();
 		return model;
 	}

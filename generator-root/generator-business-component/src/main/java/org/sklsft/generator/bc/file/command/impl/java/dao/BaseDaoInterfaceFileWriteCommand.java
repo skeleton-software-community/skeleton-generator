@@ -31,7 +31,6 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
-		javaImports.add("import " + bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {

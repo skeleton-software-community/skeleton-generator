@@ -29,7 +29,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import javax.annotation.PostConstruct;");
-		javaImports.add("import " + this.bean.myPackage.model.mvcAspectPackageName + ".AjaxMethod;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -231,7 +231,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("/**");
 		writeLine(" * update object");
 		writeLine(" */");
-		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
 		writeLine("public void update" + this.bean.className + "() {");
 		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "());");
 		writeLine("load();");
@@ -247,7 +247,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * update unique component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("load" + currentBean.className + "();");
@@ -308,7 +308,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * save one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("load" + currentBean.className + "List();");
@@ -325,7 +325,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * save one to many " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
 			writeLine(currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("load" + currentBean.className + "List();");
@@ -357,7 +357,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * update one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
 			writeLine("load" + currentBean.className + "List();");
@@ -374,7 +374,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "(Long id) {");
 			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(id);");
 			writeLine("load" + currentBean.className + "List();");
@@ -390,7 +390,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * delete one to many " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "(Long id) {");
 			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "(id);");
 			writeLine("load" + currentBean.className + "List();");
@@ -407,7 +407,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
 			writeLine("List<Long> ids = new ArrayList<>();");
 			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");
@@ -429,7 +429,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * delete one to many " + currentBean.objectName + " list");
 			writeLine(" */");
-			writeLine("@AjaxMethod(identifier=" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
 			writeLine("List<Long> ids = new ArrayList<>();");
 			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");

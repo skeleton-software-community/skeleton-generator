@@ -27,9 +27,8 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		
-		javaImports.add("import " + this.bean.myPackage.model.mvcAspectPackageName + ".AjaxMethod;");
-
-		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
+		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 		
@@ -150,7 +149,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * save object");
 		writeLine(" */");
-		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
 		writeLine("public void save" + this.bean.className + "() {");
 		writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getNew" + this.bean.className + "());");
 		writeLine("this.refresh();");
@@ -164,7 +163,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * delete object");
 		writeLine(" */");
-		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "(Long id) {");
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(id);");
 		writeLine("this.refresh();");
@@ -177,7 +176,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * delete object list");
 		writeLine(" */");
-		writeLine("@AjaxMethod(identifier=" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "List() {");
 		writeLine("List<Long> ids = new ArrayList<>();");
 		writeLine("for (" + bean.viewClassName + " " + bean.viewObjectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
