@@ -55,7 +55,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
 		skipLine();
 
-		writeLine("<rich:dataTable rows=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".numberOfRows}" + CHAR_34);
+		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
 		writeLine("id=" + CHAR_34 + currentBean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + currentBean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
 		writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + " headerClass=" + CHAR_34 + "datatableHeader" + CHAR_34
 				+ " rowClasses=" + CHAR_34 + "datatableRow, datatableRowLight" + CHAR_34 + ">");

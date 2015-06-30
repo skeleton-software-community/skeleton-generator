@@ -75,7 +75,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
 		skipLine();
 
-		writeLine("<rich:dataTable rows=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".numberOfRows}" + CHAR_34);
+		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
 		writeLine("id=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
 		writeLine("value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34
 				+ " rowClasses=" + CHAR_34 + "datatableRow, datatableRowLight" + CHAR_34 + ">");
