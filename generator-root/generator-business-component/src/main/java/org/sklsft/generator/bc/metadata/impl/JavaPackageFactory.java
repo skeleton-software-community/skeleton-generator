@@ -102,10 +102,10 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.facadeImplPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".impl";
 		myPackage.facadeInterfacesPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".interfaces";
 
-		myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.basecontroller." + myPackage.name + ".impl";
-		myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".impl";
+		myPackage.baseControllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name + ".base";
+		myPackage.controllerPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.controller." + myPackage.name;
 
-		myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name + ".impl";
+		myPackage.filterPackageName = model.project.domainName + "." + model.project.projectName + ".mvc.filter." + myPackage.name;
 
 		myPackage.builderPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".builder";
 		myPackage.commandPackageName = model.project.domainName + "." + model.project.projectName + ".junit.data." + myPackage.name + ".command";
