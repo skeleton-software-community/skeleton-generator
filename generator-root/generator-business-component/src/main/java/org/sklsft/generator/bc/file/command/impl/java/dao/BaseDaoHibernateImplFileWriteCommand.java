@@ -39,8 +39,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.Criteria;");
 		javaImports.add("import org.hibernate.FetchMode;");
 		javaImports.add("import org.springframework.stereotype.Repository;");
-		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
-		javaImports.add("import org.springframework.stereotype.Repository;");
+		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
 	

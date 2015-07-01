@@ -29,7 +29,7 @@ private Bean bean;
         javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
         javaImports.add("import java.util.ArrayList;");
-        javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+        javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import org.springframework.dao.RecoverableDataAccessException;");
         javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
@@ -38,7 +38,7 @@ private Bean bean;
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");        
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {

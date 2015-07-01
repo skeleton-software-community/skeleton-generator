@@ -23,8 +23,8 @@ public class ViewBeanCommandFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.model.commandPackageName + ".Command;");
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
-        javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+        javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
+        javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import " + this.bean.myPackage.model.testExceptionPackageName + ".CommandFailureException;");
 	}
 

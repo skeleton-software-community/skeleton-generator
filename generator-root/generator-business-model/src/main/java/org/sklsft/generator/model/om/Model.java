@@ -23,8 +23,6 @@ public class Model {
 	
 	public List<Package> packages;
 
-    public String serviceExceptionPackageName;
-    public String daoExceptionPackageName;
     public String testExceptionPackageName;
     public String controllerPackageName;
     public String commandPackageName;
@@ -44,18 +42,6 @@ public class Model {
 	}
 	public void setPackages(List<Package> packages) {
 		this.packages = packages;
-	}
-	public String getServiceExceptionPackageName() {
-		return serviceExceptionPackageName;
-	}
-	public void setServiceExceptionPackageName(String serviceExceptionPackageName) {
-		this.serviceExceptionPackageName = serviceExceptionPackageName;
-	}
-	public String getDaoExceptionPackageName() {
-		return daoExceptionPackageName;
-	}
-	public void setDaoExceptionPackageName(String daoExceptionPackageName) {
-		this.daoExceptionPackageName = daoExceptionPackageName;
 	}
 	public String getTestExceptionPackageName() {
 		return testExceptionPackageName;

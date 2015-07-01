@@ -24,13 +24,12 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	@Override
 	protected void fetchSpecificImports() {
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import javax.faces.event.ActionEvent;");
-		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
+		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
@@ -48,7 +47,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
-		javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+		javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
 	}
 
 	@Override
@@ -66,12 +65,6 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("public class " + this.bean.baseControllerClassName + " extends BaseController {");
-		skipLine();
-
-		writeLine("/*");
-		writeLine(" * logger");
-		writeLine(" */");
-		writeLine("private static final Logger logger = LoggerFactory.getLogger(" + this.bean.baseControllerClassName + ".class);");
 		skipLine();
 
 		writeLine("/*");
@@ -220,7 +213,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("try {");
 		writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "List();");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("this.displaySuccessfull = false;");
 		writeLine("}");
 		writeLine("return;");
@@ -228,12 +221,12 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-				writeLine("if (this.loadedFrom.equals(" + (char) 34 + property.referenceBean.className + (char) 34 + ")) {");
+				writeLine("if (this.loadedFrom.equals(" + CHAR_34 + property.referenceBean.className + CHAR_34 + ")) {");
 				writeLine("try {");
 				writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "ListFrom" + property.capName
 						+ "List(this.commonController.getSelected" + property.referenceBean.className + "IdList());");
 				writeLine("} catch (Exception e) {");
-				writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+				writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 				writeLine("this.displaySuccessfull = false;");
 				writeLine("}");
 				writeLine("return;");
@@ -282,7 +275,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("this.displaySuccessfull = false;");
 		writeLine("}");
 		writeLine("}");
@@ -314,7 +307,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("if (this.commonController.getSelected" + property.referenceBean.className + "IdList() == null) {");
 				writeLine("return FAILURE;");
 				writeLine("}");
-				writeLine("this.loadedFrom = " + (char) 34 + property.referenceBean.className + (char) 34 + ";");
+				writeLine("this.loadedFrom = " + CHAR_34 + property.referenceBean.className + CHAR_34 + ";");
 				writeLine("this.refresh();");
 				writeLine("return SUCCESS;");
 				writeLine("}");
@@ -381,7 +374,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("this.selected" + this.bean.className + " = this." + this.bean.serviceObjectName + ".create" + this.bean.className + "();");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("this.displaySuccessfull = false;");
 		writeLine("return SUCCESS;");
 		writeLine("}");
@@ -411,7 +404,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 
 			writeLine("this.selected" + currentBean.className + " = this." + this.bean.serviceObjectName + ".create" + currentBean.className + "();");
 			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+			writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 			writeLine("this.displaySuccessfull = false;");
 			writeLine("}");
 			writeLine("this.creationTag = true;");
@@ -425,20 +418,20 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * save object");
 		writeLine(" */");
 		writeLine("public void save" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "saving current " + this.bean.className + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "saving current " + this.bean.className + CHAR_34 + ");");
 		writeLine("try {");
 		writeLine("this.commonController.setSelected" + this.bean.className + "Id(" + this.bean.serviceObjectName + ".save" + this.bean.className + "(this.selected" + this.bean.className + "));");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "completed" + CHAR_34 + ");");
 		writeLine("displayInfo(SAVE_SUCCESSFULL);");
 		writeLine("this.creationTag = false;");
 		writeLine("} catch (ObjectNotFoundException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(SAVE_FAILED);");
 		writeLine("}");
 		writeLine("}");
@@ -464,27 +457,10 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * save one to many component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
-			writeLine("logger.info(" + (char) 34 + "saving current " + currentBean.className + " for " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected"
-					+ this.bean.className + "Id().toString());");
-			writeLine("try {");
 			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(this.selected" + currentBean.className + ",this.commonController.getSelected" + this.bean.className + "Id());");
-			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-			writeLine("displayInfo(SAVE_SUCCESSFULL);");
 			writeLine("this.creationTag = false;");
-			writeLine("} catch (ObjectNotFoundException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
-			writeLine("return;");
-			writeLine("} catch (InvalidStateException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(e.getMessage());");
-			writeLine("return;");
-			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(SAVE_FAILED);");
-			writeLine("return;");
-			writeLine("}");
 			writeLine("this.refresh" + this.bean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -525,7 +501,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("this.selected" + currentBean.className + " = this." + this.bean.serviceObjectName + ".load" + currentBean.className + "(this.commonController.getSelected"
 					+ currentBean.className + "Id(), this.commonController.getSelected" + this.bean.className + "Id());");
 			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
+			writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 			writeLine("this.displaySuccessfull = false;");
 			writeLine("}");
 			writeLine("}");
@@ -539,19 +515,19 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * update object");
 		writeLine(" */");
 		writeLine("public void update" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "updating " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
+		writeLine("logger.info(" + CHAR_34 + "updating " + this.bean.className + " : " + CHAR_34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
 		writeLine("try {");
 		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(this.selected" + this.bean.className + ");");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "completed" + CHAR_34 + ");");
 		writeLine("displayInfo(UPDATE_SUCCESSFULL);");
 		writeLine("} catch (ObjectNotFoundException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
 		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(e.getMessage());");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(UPDATE_FAILED);");
 		writeLine("}");
 		writeLine("}");
@@ -574,27 +550,11 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * update unique component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine("logger.info(" + (char) 34 + "updating unique " + currentBean.className + " for " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected"
-					+ this.bean.className + "Id().toString());");
-			writeLine("try {");
+			
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(this.selected" + currentBean.className + ",this.commonController.getSelected" + this.bean.className
 					+ "Id());");
-			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-			writeLine("displayInfo(UPDATE_SUCCESSFULL);");
-			writeLine("} catch (ObjectNotFoundException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
-			writeLine("return;");
-			writeLine("} catch (InvalidStateException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(e.getMessage());");
-			writeLine("return;");
-			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED);");
-			writeLine("return;");
-			writeLine("}");
 			writeLine("this.refresh" + this.bean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -608,28 +568,11 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * update one to many component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine("logger.info(" + (char) 34 + "updating " + currentBean.className + " : " + (char) 34 + " + this.commonController.getSelected" + currentBean.className + "Id().toString() + "
-					+ (char) 34 + " for " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
-			writeLine("this.setDefault();");
-			writeLine("try {");
+			writeLine("this.setDefault();");			
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(this.selected" + currentBean.className + ",this.commonController.getSelected" + this.bean.className
 					+ "Id());");
-			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-			writeLine("displayInfo(UPDATE_SUCCESSFULL);");
-			writeLine("} catch (ObjectNotFoundException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
-			writeLine("return;");
-			writeLine("} catch (InvalidStateException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(e.getMessage());");
-			writeLine("return;");
-			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(UPDATE_FAILED);");
-			writeLine("return;");
-			writeLine("}");
 			writeLine("this.refresh" + this.bean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -641,16 +584,16 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * delete object");
 		writeLine(" */");
 		writeLine("public void delete" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "deleting " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
+		writeLine("logger.info(" + CHAR_34 + "deleting " + this.bean.className + " : " + CHAR_34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
 		writeLine("try {");
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(this.commonController.getSelected" + this.bean.className + "Id());");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "completed" + CHAR_34 + ");");
 		writeLine("displayInfo(DELETE_SUCCESSFULL);");
 		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(DELETE_FAILED_INVALID_STATE);");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(DELETE_FAILED);");
 		writeLine("}");
 		writeLine("}");
@@ -673,23 +616,10 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "() {");
-			writeLine("logger.info(" + (char) 34 + "deleting " + currentBean.className + " : " + (char) 34 + " + this.commonController.getSelected" + currentBean.className + "Id().toString() + "
-					+ (char) 34 + " for " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
-			writeLine("try {");
 			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(this.commonController.getSelected" + currentBean.className + "Id(),this.commonController.getSelected"
 					+ this.bean.className + "Id());");
-			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-			writeLine("displayInfo(DELETE_SUCCESSFULL);");
-			writeLine("} catch (InvalidStateException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(DELETE_FAILED_INVALID_STATE);");
-			writeLine("return;");
-			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-			writeLine("displayError(DELETE_FAILED);");
-			writeLine("return;");
-			writeLine("}");
 			writeLine("this.refresh" + this.bean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -704,17 +634,17 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList() == null) {");
 		writeLine("return;");
 		writeLine("}");
-		writeLine("logger.info(" + (char) 34 + "deleting selection of " + this.bean.className + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "deleting selection of " + this.bean.className + CHAR_34 + ");");
 		writeLine("try {");
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(this.commonController.getSelected" + this.bean.className + "IdList());");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
+		writeLine("logger.info(" + CHAR_34 + "completed" + CHAR_34 + ");");
 		writeLine("displayInfo(SELECTION_DELETE_SUCCESSFULL);");
 		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(SELECTION_DELETE_FAILED_INVALID_STATE);");
 		writeLine("return;");
 		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+		writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("displayError(SELECTION_DELETE_FAILED);");
 		writeLine("return;");
 		writeLine("}");
@@ -734,19 +664,19 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("if (this.commonController.getSelected" + currentBean.className + "IdList() == null) {");
 			writeLine("return;");
 			writeLine("}");
-			writeLine("logger.info(" + (char) 34 + "deleting selection of " + currentBean.className + " for " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected"
+			writeLine("logger.info(" + CHAR_34 + "deleting selection of " + currentBean.className + " for " + this.bean.className + " : " + CHAR_34 + " + this.commonController.getSelected"
 					+ this.bean.className + "Id().toString());");
 			writeLine("try {");
 			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "List(this.commonController.getSelected" + currentBean.className + "IdList(),this.commonController.getSelected"
 					+ this.bean.className + "Id());");
-			writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
+			writeLine("logger.info(" + CHAR_34 + "completed" + CHAR_34 + ");");
 			writeLine("displayInfo(SELECTION_DELETE_SUCCESSFULL);");
 			writeLine("} catch (InvalidStateException e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+			writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 			writeLine("displayError(SELECTION_DELETE_FAILED_INVALID_STATE);");
 			writeLine("return;");
 			writeLine("} catch (Exception e) {");
-			writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
+			writeLine("logger.error(" + CHAR_34 + "failed : " + CHAR_34 + " + e.getMessage(),e);");
 			writeLine("displayError(SELECTION_DELETE_FAILED);");
 			writeLine("return;");
 			writeLine("}");
@@ -761,7 +691,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * listen selected object id");
 		writeLine(" */");
 		writeLine("public void listenSelected" + this.bean.className + "Id(ActionEvent event) {");
-		writeLine("this.commonController.setSelected" + this.bean.className + "Id((Long) event.getComponent().getAttributes().get(" + (char) 34 + "selected" + this.bean.className + "Id" + (char) 34
+		writeLine("this.commonController.setSelected" + this.bean.className + "Id((Long) event.getComponent().getAttributes().get(" + CHAR_34 + "selected" + this.bean.className + "Id" + CHAR_34
 				+ "));");
 		writeLine("}");
 		skipLine();
@@ -775,8 +705,8 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * listen selected one to many component id " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("public void listenSelected" + currentBean.className + "Id(ActionEvent event) {");
-			writeLine("this.commonController.setSelected" + currentBean.className + "Id((Long) event.getComponent().getAttributes().get(" + (char) 34 + "selected" + currentBean.className + "Id"
-					+ (char) 34 + "));");
+			writeLine("this.commonController.setSelected" + currentBean.className + "Id((Long) event.getComponent().getAttributes().get(" + CHAR_34 + "selected" + currentBean.className + "Id"
+					+ CHAR_34 + "));");
 			writeLine("}");
 			skipLine();
 		}

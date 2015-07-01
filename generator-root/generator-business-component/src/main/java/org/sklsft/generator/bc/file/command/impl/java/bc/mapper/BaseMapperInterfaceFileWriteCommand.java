@@ -33,7 +33,7 @@ public class BaseMapperInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 		this.daoSet = new HashSet<>();
 
-		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import " + this.bean.myPackage.baseMapperInterfacePackageName + "." + this.bean.baseMapperInterfaceName + ";");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");

@@ -30,7 +30,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.baseStateManagerInterfacePackageName + "." + this.bean.baseStateManagerInterfaceName + ";");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+        javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {

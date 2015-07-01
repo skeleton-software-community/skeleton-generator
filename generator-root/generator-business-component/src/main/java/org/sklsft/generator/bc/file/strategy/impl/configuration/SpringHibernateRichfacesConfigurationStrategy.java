@@ -9,8 +9,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfa
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCustomFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.SpringHibernateRichfacesBusinessComponentPomFileWriteCommand;
@@ -129,12 +127,6 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		 */
 		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
 		configurationTreeNode.add(javaTreeNode);
-		
-		FileWriteCommandTreeNode objectNotFoundExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesObjectNotFoundExceptionFileWriteCommand(project));
-		javaTreeNode.add(objectNotFoundExceptionTreeNode);
-		
-		FileWriteCommandTreeNode invalidStateExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesInvalidStateExceptionFileWriteCommand(project));
-		javaTreeNode.add(invalidStateExceptionTreeNode);
 		
 		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand(project));
 		javaTreeNode.add(buildFailureExceptionTreeNode);

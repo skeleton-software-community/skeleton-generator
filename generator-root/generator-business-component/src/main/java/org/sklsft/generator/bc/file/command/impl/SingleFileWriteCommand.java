@@ -24,6 +24,7 @@ public abstract class SingleFileWriteCommand implements FileWriteCommand {
 	/*
 	 * properties
 	 */
+	protected static final char CHAR_34 = (char)34;
 	private static final String SKIP_LINE = "\n";
 	protected FileType fileType;
 	private String qualifiedFileName;

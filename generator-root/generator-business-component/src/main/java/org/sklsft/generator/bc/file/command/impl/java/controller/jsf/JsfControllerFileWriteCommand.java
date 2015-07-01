@@ -20,8 +20,7 @@ public class JsfControllerFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
+		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
@@ -46,12 +45,6 @@ public class JsfControllerFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Scope(value=WebApplicationContext.SCOPE_SESSION)");
         writeLine("public class " + this.bean.controllerClassName + " extends  " + this.bean.baseControllerClassName + " {");
         skipLine();
-        
-        writeLine("/*");
-		writeLine(" * logger");
-		writeLine(" */");
-		writeLine("private static final Logger logger = LoggerFactory.getLogger(" + this.bean.controllerClassName + ".class);");
-		skipLine();
 
         writeNotOverridableContent();
 

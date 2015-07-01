@@ -22,18 +22,16 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 
 	@Override
 	protected void fetchSpecificImports() {
-		javaImports.add("import org.slf4j.Logger;");
-		javaImports.add("import org.slf4j.LoggerFactory;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import javax.faces.event.ActionEvent;");
-		javaImports.add("import " + this.bean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
-		javaImports.add("import " + this.bean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
+		javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
 		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
 	}
 
@@ -52,12 +50,6 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("public class " + this.bean.baseControllerClassName + " extends BaseController {");
-		skipLine();
-
-		writeLine("/*");
-		writeLine(" * logger");
-		writeLine(" */");
-		writeLine("private static final Logger logger = LoggerFactory.getLogger(" + this.bean.baseControllerClassName + ".class);");
 		skipLine();
 
 		writeLine("/*");

@@ -29,8 +29,8 @@ public class ViewOneToManyComponentCommandFileWriteCommand extends JavaFileWrite
         javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.viewClassName + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
         javaImports.add("import " + referenceBean.myPackage.model.commandPackageName + ".Command;");
-        javaImports.add("import " + referenceBean.myPackage.model.serviceExceptionPackageName + ".InvalidStateException;");
-        javaImports.add("import " + referenceBean.myPackage.model.daoExceptionPackageName + ".ObjectNotFoundException;");
+        javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
+        javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import " + referenceBean.myPackage.model.testExceptionPackageName + ".CommandFailureException;");
 	}
 
