@@ -7,3 +7,5 @@ bin/
 .settings/
 .metadata/
 
+.recommenders/
+
