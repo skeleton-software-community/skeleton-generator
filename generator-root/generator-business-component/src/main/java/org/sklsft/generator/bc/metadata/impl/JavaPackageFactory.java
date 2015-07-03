@@ -78,20 +78,19 @@ public class JavaPackageFactory implements PackageFactory {
 
 		myPackage.statusPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".status";
 
-		myPackage.baseDAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.basedao." + myPackage.name + ".impl";
-		myPackage.baseDAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.basedao." + myPackage.name + ".interfaces";
-		myPackage.DAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao." + myPackage.name + ".impl";
-		myPackage.DAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao." + myPackage.name + ".interfaces";
+		
+		myPackage.DAOImplPackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.impl." + myPackage.name;
+		myPackage.DAOInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".repository.dao.interfaces." + myPackage.name;
+		myPackage.baseDAOImplPackageName = myPackage.DAOImplPackageName + ".base";
+		myPackage.baseDAOInterfacePackageName = myPackage.DAOInterfacePackageName + ".base";
 
 		myPackage.baseServiceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".impl";
 		myPackage.baseServiceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".interfaces";
 		myPackage.serviceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".impl";
 		myPackage.serviceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".interfaces";
 
-		myPackage.baseMapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basemapper." + myPackage.name + ".impl";
-		myPackage.baseMapperInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basemapper." + myPackage.name + ".interfaces";
-		myPackage.mapperImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".impl";
-		myPackage.mapperInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name + ".interfaces";
+		myPackage.mapperPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name;
+		myPackage.baseMapperPackageName = myPackage.mapperPackageName + ".base";	
 
 		myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".impl";
 		myPackage.baseStateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".interfaces";

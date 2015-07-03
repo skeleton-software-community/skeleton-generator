@@ -40,10 +40,8 @@ public class Bean {
 	public String stateManagerInterfaceName;
 	public String stateManagerObjectName;
 
-	public String baseMapperClassName;
-	public String mapperClassName;
-	public String baseMapperInterfaceName;
-	public String mapperInterfaceName;
+	public String baseMapperName;
+	public String mapperName;
 	public String mapperObjectName;
 
 	public String baseControllerClassName;

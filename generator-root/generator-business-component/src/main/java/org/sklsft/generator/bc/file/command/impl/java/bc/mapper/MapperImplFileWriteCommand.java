@@ -15,7 +15,7 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public MapperImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.mapperImplPackageName.replace(".", "\\"), bean.mapperClassName);
+				+ bean.myPackage.mapperPackageName.replace(".", "\\"), bean.mapperName);
 
 		this.bean = bean;
 	}
@@ -24,15 +24,14 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.baseMapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseMapperPackageName + "." + this.bean.baseMapperName + ";");
 		
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.mapperImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.mapperPackageName + ";");
         skipLine();
         
         writeImports();
@@ -46,7 +45,7 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Component");
-        writeLine("public class " + this.bean.mapperClassName + " extends " + this.bean.baseMapperClassName + " implements " + bean.mapperInterfaceName + " {");
+        writeLine("public class " + this.bean.mapperName + " extends " + this.bean.baseMapperName + " {");
         skipLine();
         
         this.writeNotOverridableContent();

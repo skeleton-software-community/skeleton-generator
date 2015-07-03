@@ -35,9 +35,6 @@ private Bean bean;
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.mapperInterfacePackageName + "." + this.bean.mapperInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");        
         javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
 
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)

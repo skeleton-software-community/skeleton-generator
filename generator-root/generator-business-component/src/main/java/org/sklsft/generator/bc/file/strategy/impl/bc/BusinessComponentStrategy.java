@@ -1,9 +1,7 @@
 package org.sklsft.generator.bc.file.strategy.impl.bc;
 
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseMapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseMapperInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.MapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.MapperInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerImplFileWriteCommand;
@@ -85,24 +83,11 @@ public class BusinessComponentStrategy implements LayerStrategy {
 		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseMapperTreeNode.add(packageTreeNode);
-
-			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
-			packageTreeNode.add(interfacesTreeNode);
-			
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperInterfaceFileWriteCommand(bean));
-					interfacesTreeNode.add(beanTreeNode);
-				}
-			}
-
-			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
-			packageTreeNode.add(implTreeNode);
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperImplFileWriteCommand(bean));
-					implTreeNode.add(beanTreeNode);
+					packageTreeNode.add(beanTreeNode);
 				}
 			}
 		}
@@ -114,23 +99,10 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseMapperTreeNode.add(packageTreeNode);
 
-			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
-			packageTreeNode.add(interfacesTreeNode);
-
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperInterfaceFileWriteCommand(bean));
-					interfacesTreeNode.add(beanTreeNode);
-				}
-			}
-
-			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
-			packageTreeNode.add(implTreeNode);
-			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperImplFileWriteCommand(bean));
-					implTreeNode.add(beanTreeNode);
+					packageTreeNode.add(beanTreeNode);
 				}
 			}
 		}
