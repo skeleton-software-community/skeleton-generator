@@ -26,6 +26,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import javax.faces.event.ActionEvent;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -263,32 +264,13 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("/**");
 		writeLine(" * save object");
 		writeLine(" */");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
 		writeLine("public void save" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "saving current " + this.bean.className + (char) 34 + ");");
-		writeLine("try {");
+		
 		writeLine("this.commonController.setSelected" + this.bean.className + "Id(" + this.bean.serviceObjectName + ".save" + this.bean.className + "(this.selected" + this.bean.className + "));");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-		writeLine("displayInfo(SAVE_SUCCESSFULL);");
 		writeLine("this.creationTag = false;");
-		writeLine("} catch (ObjectNotFoundException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SAVE_FAILED_INVALID_REFERENCE);");
-		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(e.getMessage());");
-		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SAVE_FAILED);");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-
-		writeLine("/**");
-		writeLine(" * save object and refresh list");
-		writeLine(" */");
-		writeLine("public void save" + this.bean.className + "AndRefresh () {");
-		writeLine("this.save" + this.bean.className + "();");
 		writeLine("this.refresh();");
+		
 		writeLine("}");
 		skipLine();
 
@@ -309,31 +291,12 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("/**");
 		writeLine(" * update object");
 		writeLine(" */");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
 		writeLine("public void update" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "updating " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
-		writeLine("try {");
+		
 		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(this.selected" + this.bean.className + ");");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-		writeLine("displayInfo(UPDATE_SUCCESSFULL);");
-		writeLine("} catch (ObjectNotFoundException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(UPDATE_FAILED_INVALID_REFERENCE);");
-		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(e.getMessage());");
-		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(UPDATE_FAILED);");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-
-		writeLine("/**");
-		writeLine(" * update object and refresh list");
-		writeLine(" */");
-		writeLine("public void update" + this.bean.className + "AndRefresh() {");
-		writeLine("this.update" + this.bean.className + "();");
 		writeLine("this.refresh();");
+		
 		writeLine("}");
 		skipLine();
 
@@ -343,60 +306,35 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("/**");
 		writeLine(" * delete object");
 		writeLine(" */");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "() {");
-		writeLine("logger.info(" + (char) 34 + "deleting " + this.bean.className + " : " + (char) 34 + " + this.commonController.getSelected" + this.bean.className + "Id().toString());");
-		writeLine("this.setDefault();");
-		writeLine("try {");
-		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(this.commonController.getSelected" + this.bean.className + "Id());");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-		writeLine("displayInfo(DELETE_SUCCESSFULL);");
-
-		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(DELETE_FAILED_INVALID_STATE);");
-		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(DELETE_FAILED);");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
 		
-		writeLine("/**");
-		writeLine(" * delete object and refresh");
-		writeLine(" */");
-		writeLine("public void delete" + this.bean.className + "AndRefresh() {");
-		writeLine("this.delete" + this.bean.className + "();");
+		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(this.commonController.getSelected" + this.bean.className + "Id());");
 		writeLine("this.refresh();");
+		
 		writeLine("}");
 		skipLine();
+
 	}
+	
 
 	private void createDeleteObjectList() {
 		writeLine("/**");
 		writeLine(" * delete object list");
 		writeLine(" */");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "List() {");
 		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList() == null) {");
 		writeLine("return;");
 		writeLine("}");
-		writeLine("logger.info(" + (char) 34 + "deleting selection of " + this.bean.className + (char) 34 + ");");
-		writeLine("try {");
+		
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(this.commonController.getSelected" + this.bean.className + "IdList());");
-		writeLine("logger.info(" + (char) 34 + "completed" + (char) 34 + ");");
-		writeLine("displayInfo(SELECTION_DELETE_SUCCESSFULL);");
-		writeLine("} catch (InvalidStateException e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SELECTION_DELETE_FAILED_INVALID_STATE);");
-		writeLine("return;");
-		writeLine("} catch (Exception e) {");
-		writeLine("logger.error(" + (char) 34 + "failed : " + (char) 34 + " + e.getMessage(),e);");
-		writeLine("displayError(SELECTION_DELETE_FAILED);");
-		writeLine("return;");
-		writeLine("}");
 		writeLine("this.refresh();");
+		
 		writeLine("}");
 		skipLine();
 	}
+	
 
 	private void createListenSelectedObject() {
 		writeLine("/**");

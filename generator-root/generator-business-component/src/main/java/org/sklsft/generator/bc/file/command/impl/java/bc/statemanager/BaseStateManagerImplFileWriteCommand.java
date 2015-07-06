@@ -19,7 +19,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BaseStateManagerImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.baseStateManagerImplPackageName.replace(".", "\\"), bean.baseStateManagerClassName);
+				+ bean.myPackage.baseStateManagerPackageName.replace(".", "\\"), bean.baseStateManagerName);
 
 		this.bean = bean;
 	}
@@ -27,7 +27,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import " + this.bean.myPackage.baseStateManagerInterfacePackageName + "." + this.bean.baseStateManagerInterfaceName + ";");
+		javaImports.add("import " + this.bean.myPackage.baseStateManagerPackageName + "." + this.bean.baseStateManagerName + ";");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
@@ -65,7 +65,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.baseStateManagerImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.baseStateManagerPackageName + ";");
         skipLine();
         
         writeImports();
@@ -77,7 +77,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseStateManagerClassName + " implements " + bean.baseStateManagerInterfaceName + " {");
+        writeLine("public class " + this.bean.baseStateManagerName + " {");
         skipLine();
         
         writeLine("/**");

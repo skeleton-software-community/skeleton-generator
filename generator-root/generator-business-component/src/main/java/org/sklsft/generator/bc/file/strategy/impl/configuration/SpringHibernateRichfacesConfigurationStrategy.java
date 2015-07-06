@@ -2,12 +2,6 @@ package org.sklsft.generator.bc.file.strategy.impl.configuration;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesBaseControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandBuilderFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandExecutorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCommandFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.SpringHibernateRichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
@@ -22,10 +16,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRich
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringServicesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringHibernateRichfacesSpringWebappFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesLogbackTestFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.test.SpringHibernateRichfacesSpringTestServicesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesFacesConfigFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesLogbackFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.SpringHibernateRichfacesProjectPropertiesFileWriteCommand;
@@ -128,48 +118,12 @@ public class SpringHibernateRichfacesConfigurationStrategy  implements LayerStra
 		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
 		configurationTreeNode.add(javaTreeNode);
 		
-		FileWriteCommandTreeNode buildFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBuildFailureExceptionFileWriteCommand(project));
-		javaTreeNode.add(buildFailureExceptionTreeNode);
-		
-		FileWriteCommandTreeNode commandFailureExceptionTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFailureExceptionFileWriteCommand(project));
-		javaTreeNode.add(commandFailureExceptionTreeNode);
-		
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesBaseControllerFileWriteCommand(project));
 		javaTreeNode.add(baseControllerTreeNode);
 		
 		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCustomFilterFileWriteCommand(project));
 		javaTreeNode.add(customFilterTreeNode);
 		
-		FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandFileWriteCommand(project));
-		javaTreeNode.add(commandTreeNode);
-		
-		FileWriteCommandTreeNode commandBuilderTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFileWriteCommand(project));
-		javaTreeNode.add(commandBuilderTreeNode);
-		
-		FileWriteCommandTreeNode commandBuilderFactoryTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandBuilderFactoryFileWriteCommand(project));
-		javaTreeNode.add(commandBuilderFactoryTreeNode);
-		
-		FileWriteCommandTreeNode commandExecutorTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesCommandExecutorFileWriteCommand(project));
-		javaTreeNode.add(commandExecutorTreeNode);
-		
-		
-		/*
-		 * spring test files
-		 */
-		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode("spring test configuration files");
-		configurationTreeNode.add(springTestTreeNode);
-		
-		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestRepositoryFileWriteCommand(project));
-		springTestTreeNode.add(springTestRepositoryTreeNode);
-		
-		FileWriteCommandTreeNode springTestBusinessComponentTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestBusinessComponentFileWriteCommand(project));
-		springTestTreeNode.add(springTestBusinessComponentTreeNode);
-		
-		FileWriteCommandTreeNode springTestServicesTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesSpringTestServicesFileWriteCommand(project));
-		springTestTreeNode.add(springTestServicesTreeNode);
-		
-		FileWriteCommandTreeNode logbackTestTreeNode = new FileWriteCommandTreeNode(new SpringHibernateRichfacesLogbackTestFileWriteCommand(project));
-		springTestTreeNode.add(logbackTestTreeNode);
 		
 		return configurationTreeNode;
 	}

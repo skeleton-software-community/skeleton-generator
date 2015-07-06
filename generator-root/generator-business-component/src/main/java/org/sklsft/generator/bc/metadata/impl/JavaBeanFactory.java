@@ -60,10 +60,8 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.mapperName = bean.className + "Mapper";
 		bean.mapperObjectName = bean.objectName + "Mapper";
 
-		bean.baseStateManagerClassName = bean.className + "BaseStateManagerImpl";
-		bean.stateManagerClassName = bean.className + "StateManagerImpl";
-		bean.baseStateManagerInterfaceName = bean.className + "BaseStateManager";
-		bean.stateManagerInterfaceName = bean.className + "StateManager";
+		bean.baseStateManagerName = bean.className + "BaseStateManager";
+		bean.stateManagerName = bean.className + "StateManager";
 		bean.stateManagerObjectName = bean.objectName + "StateManager";
 
 		bean.baseControllerClassName = bean.className + "BaseController";

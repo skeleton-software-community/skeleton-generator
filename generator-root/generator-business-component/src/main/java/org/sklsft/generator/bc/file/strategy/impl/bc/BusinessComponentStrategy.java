@@ -3,9 +3,7 @@ package org.sklsft.generator.bc.file.strategy.impl.bc;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseMapperImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.MapperImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.om.Bean;
@@ -26,23 +24,10 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseStateManagerTreeNode.add(packageTreeNode);
 
-			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
-			packageTreeNode.add(interfacesTreeNode);
-			
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerInterfaceFileWriteCommand(bean));
-					interfacesTreeNode.add(beanTreeNode);
-				}
-			}
-
-			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
-			packageTreeNode.add(implTreeNode);
-			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseStateManagerImplFileWriteCommand(bean));
-					implTreeNode.add(beanTreeNode);
+					packageTreeNode.add(beanTreeNode);
 				}
 			}
 		}
@@ -54,23 +39,10 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
 			baseStateManagerTreeNode.add(packageTreeNode);
 
-			FileWriteCommandTreeNode interfacesTreeNode = new FileWriteCommandTreeNode("interfaces");
-			packageTreeNode.add(interfacesTreeNode);
-
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent) {
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerInterfaceFileWriteCommand(bean));
-					interfacesTreeNode.add(beanTreeNode);
-				}
-			}
-
-			FileWriteCommandTreeNode implTreeNode = new FileWriteCommandTreeNode("impl");
-			packageTreeNode.add(implTreeNode);
-			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new StateManagerImplFileWriteCommand(bean));
-					implTreeNode.add(beanTreeNode);
+					packageTreeNode.add(beanTreeNode);
 				}
 			}
 		}

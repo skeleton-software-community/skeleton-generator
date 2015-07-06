@@ -6,7 +6,6 @@ import org.sklsft.generator.bc.file.strategy.impl.configuration.SpringHibernateR
 import org.sklsft.generator.bc.file.strategy.impl.controller.JsfControllerStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.dao.HibernateDaoStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.database.DefaultDatabaseStrategy;
-import org.sklsft.generator.bc.file.strategy.impl.junit.JUnitStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.model.HibernateBusinessModelStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.presentation.JsfPresentationStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.services.ServiceStrategy;
@@ -27,7 +26,6 @@ public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWrit
 		layerStrategies.add(new HibernateDaoStrategy());
 		layerStrategies.add(new BusinessComponentStrategy());
 		layerStrategies.add(new ServiceStrategy());
-		layerStrategies.add(new JUnitStrategy());
 		layerStrategies.add(new JsfControllerStrategy());
 		layerStrategies.add(new JsfPresentationStrategy());
 	}

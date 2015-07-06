@@ -15,7 +15,7 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public StateManagerImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.stateManagerImplPackageName.replace(".", "\\"), bean.stateManagerClassName);
+				+ bean.myPackage.stateManagerPackageName.replace(".", "\\"), bean.stateManagerName);
 
 		this.bean = bean;
 	}
@@ -24,15 +24,14 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import " + this.bean.myPackage.stateManagerInterfacePackageName + "." + this.bean.stateManagerInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.baseStateManagerImplPackageName + "." + this.bean.baseStateManagerClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseStateManagerPackageName + "." + this.bean.baseStateManagerName + ";");
 		
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.stateManagerImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.stateManagerPackageName + ";");
         skipLine();
         
         writeImports();
@@ -46,7 +45,7 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Component");
-        writeLine("public class " + this.bean.stateManagerClassName + " extends " + this.bean.baseStateManagerClassName + " implements " + bean.stateManagerInterfaceName + " {");
+        writeLine("public class " + this.bean.stateManagerName + " extends " + this.bean.baseStateManagerName + " {");
         skipLine();
         
         this.writeNotOverridableContent();

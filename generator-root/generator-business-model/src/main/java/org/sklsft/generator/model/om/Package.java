@@ -34,10 +34,8 @@ public class Package {
     public String baseMapperPackageName;
     public String mapperPackageName;
 
-    public String baseStateManagerInterfacePackageName;
-    public String baseStateManagerImplPackageName;
-    public String stateManagerInterfacePackageName;
-    public String stateManagerImplPackageName;
+    public String baseStateManagerPackageName;
+    public String stateManagerPackageName;
 
     public String facadeImplPackageName;
     public String facadeInterfacesPackageName;

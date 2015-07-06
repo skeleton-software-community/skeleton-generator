@@ -91,12 +91,9 @@ public class JavaPackageFactory implements PackageFactory {
 
 		myPackage.mapperPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name;
 		myPackage.baseMapperPackageName = myPackage.mapperPackageName + ".base";	
-
-		myPackage.baseStateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".impl";
-		myPackage.baseStateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.basestatemanager." + myPackage.name + ".interfaces";
-		myPackage.stateManagerImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".impl";
-		myPackage.stateManagerInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name + ".interfaces";
-
+		
+		myPackage.stateManagerPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name;
+		myPackage.baseStateManagerPackageName = myPackage.stateManagerPackageName + ".base";
 
 		myPackage.facadeImplPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".impl";
 		myPackage.facadeInterfacesPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".interfaces";

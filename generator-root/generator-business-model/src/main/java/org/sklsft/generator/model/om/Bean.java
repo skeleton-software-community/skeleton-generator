@@ -34,10 +34,8 @@ public class Bean {
 	public String serviceInterfaceName;
 	public String serviceObjectName;
 
-	public String baseStateManagerClassName;
-	public String stateManagerClassName;
-	public String baseStateManagerInterfaceName;
-	public String stateManagerInterfaceName;
+	public String baseStateManagerName;
+	public String stateManagerName;
 	public String stateManagerObjectName;
 
 	public String baseMapperName;

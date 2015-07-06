@@ -217,7 +217,7 @@ public class CommonSimpleJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCo
 		writeLine("</a4j:commandLink>");
 
 		if (this.bean.deleteEnabled) {
-			writeLine("<a4j:commandLink  action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".delete" + this.bean.className + "AndRefresh}" + (char) 34 + " actionListener=" + (char) 34
+			writeLine("<a4j:commandLink  action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".delete" + this.bean.className + "}" + (char) 34 + " actionListener=" + (char) 34
 					+ "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "Id}" + (char) 34);
 			writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18n.confirmDrop}')) return false" + (char) 34 + " reRender=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + ">");
 			writeLine("<f:attribute name=" + (char) 34 + "selected" + this.bean.className + "Id" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".id}" + (char) 34 + "/>");
