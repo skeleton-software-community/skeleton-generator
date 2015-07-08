@@ -28,10 +28,22 @@
 			<artifactId>${project.projectName}-api</artifactId>
 		</dependency>
 		
-		<!-- mapper -->	
+		<!-- skeleton commons -->
 		<dependency>
-			<groupId>org.sklsft</groupId>
-			<artifactId>mapper</artifactId>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-crypto</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-mapper</artifactId>
+		</dependency>
+		
+		
+		<!-- Spring transactions -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
 		</dependency>
 		
 	</dependencies>

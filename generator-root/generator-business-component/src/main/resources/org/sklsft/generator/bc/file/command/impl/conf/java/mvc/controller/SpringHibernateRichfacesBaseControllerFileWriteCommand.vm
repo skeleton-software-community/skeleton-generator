@@ -1,10 +1,7 @@
 package ${project.model.controllerPackageName};
 
 import java.util.Iterator;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -12,40 +9,41 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 
-import ${project.model.businessExceptionPackageName}.BusinessException;
-
+import org.sklsft.commons.mvc.messages.MessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseController {
 	
 	protected static final Logger logger = LoggerFactory
 			.getLogger(BaseController.class);
-	
-	private ResourceBundle globalMessages;
-	
-	public BaseController() {
-		globalMessages = ResourceBundle.getBundle("GlobalMessages");
-	}
 		
 	/*
 	 * properties
 	 */
-	@Value("10")
-	protected int numberOfRows;
+	@Autowired
+	private MessageHandler messageHandler;
 	
 	
-	/*
-	 * getters and setters
-	 */
-	public int getNumberOfRows() {
-		return numberOfRows;
-	}
-	public void setNumberOfRows(int numberOfRows) {
-		this.numberOfRows = numberOfRows;
-	}
+	
+	protected void displayInfo(String message) {
 
+		messageHandler.displayInfo(message);
+	}
+	
+
+	protected void displayWarning(String message) {
+		
+		messageHandler.displayWarning(message);
+	}
+	
+
+	protected void displayError(String message) {
+
+		messageHandler.displayError(message);
+	}
+	
 	
 	public static String getParameter(String parameterName) {
 
@@ -53,51 +51,6 @@ public abstract class BaseController {
 				.getExternalContext().getRequestParameterMap()
 				.get(parameterName);
 		return parameter;
-	}
-	
-	
-	private String getTranslatedMessage(String message) {
-		
-		if (message == null) {
-			message = BusinessException.ERROR_UNKNOWN;
-		}
-		
-		String translatedMessage = "?" + message + "?";
-		
-		try {
-			translatedMessage = globalMessages.getString(message);
-		} catch (MissingResourceException e) {
-			logger.warn("No message found for " + message);
-		}
-		
-		return translatedMessage;
-	}
-	
-	
-	protected void displayInfo(String message) {
-
-		String translatedMessage = getTranslatedMessage(message);
-		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, translatedMessage , null));
-	}
-	
-
-	protected void displayWarning(String message) {
-		
-		String translatedMessage = getTranslatedMessage(message);
-		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN, translatedMessage , null));
-	}
-	
-
-	protected void displayError(String message) {
-
-		String translatedMessage = getTranslatedMessage(message);
-		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, translatedMessage , null));
 	}
 	
 	

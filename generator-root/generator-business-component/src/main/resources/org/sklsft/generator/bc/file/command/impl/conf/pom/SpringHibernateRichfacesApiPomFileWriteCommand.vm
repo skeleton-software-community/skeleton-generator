@@ -18,7 +18,13 @@
 
 	<dependencies>
 	
-	<!-- validation -->
+		<!-- skeleton commons -->
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-api</artifactId>
+		</dependency>
+	
+		<!-- validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>

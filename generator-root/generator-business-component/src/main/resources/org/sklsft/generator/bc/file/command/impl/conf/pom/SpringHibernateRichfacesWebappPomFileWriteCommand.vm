@@ -24,6 +24,13 @@
 		</dependency>
 		
 		
+		<!-- skeleton commons -->
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-mvc</artifactId>
+		</dependency>
+		
+		
 		<!-- logger -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
