@@ -25,6 +25,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
+		javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         

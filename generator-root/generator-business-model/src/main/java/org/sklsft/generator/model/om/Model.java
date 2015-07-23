@@ -26,6 +26,7 @@ public class Model {
     public String populationExceptionPackageName;
     public String controllerPackageName;
     public String commandPackageName;
+    public String commandExecutorPackageName;
     public String filterPackageName;
 	
 
@@ -62,6 +63,12 @@ public class Model {
 	}
 	public void setCommandPackageName(String commandPackageName) {
 		this.commandPackageName = commandPackageName;
+	}
+	public String getCommandExecutorPackageName() {
+		return commandExecutorPackageName;
+	}
+	public void setCommandExecutorPackageName(String commandExecutorPackageName) {
+		this.commandExecutorPackageName = commandExecutorPackageName;
 	}
 	public String getFilterPackageName() {
 		return filterPackageName;
