@@ -75,7 +75,6 @@ public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		
 		this.daoSet = new HashSet<>();
-		this.daoSet.add(this.bean.daoClassName);
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
