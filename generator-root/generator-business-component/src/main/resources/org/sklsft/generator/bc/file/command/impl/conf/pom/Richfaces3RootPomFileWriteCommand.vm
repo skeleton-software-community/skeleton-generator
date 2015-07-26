@@ -121,6 +121,12 @@
 				<groupId>org.sklsft.commons</groupId>
 				<artifactId>commons-mvc</artifactId>
 				<version>${skeleton.commons.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.primefaces</groupId>
+						<artifactId>primefaces</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			
 			

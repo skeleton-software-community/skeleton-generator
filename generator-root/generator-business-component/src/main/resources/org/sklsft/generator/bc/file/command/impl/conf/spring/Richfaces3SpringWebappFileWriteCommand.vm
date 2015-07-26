@@ -12,14 +12,26 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-<context:property-placeholder location="classpath:${project.projectName}.properties"/>
-
-<context:annotation-config/>
-
-<context:component-scan base-package="${project.domainName}.${project.projectName}">
-
-</context:component-scan>
-
-<aop:aspectj-autoproxy />
+	<context:property-placeholder location="classpath:${project.projectName}.properties"/>
+	
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="${project.domainName}.${project.projectName}">
+	
+	</context:component-scan>
+	
+	<aop:aspectj-autoproxy />
+	
+	<bean id="localeManager" class="org.sklsft.commons.mvc.i18n.JsfLocaleManager" scope="session">
+	</bean>
+		
+		
+	<bean id="messageHandler" class="org.sklsft.commons.mvc.messages.JsfMessageHandler">
+	</bean>
+		
+		
+	<bean id="ajaxMethodAspect" class="org.sklsft.commons.mvc.aspects.AjaxMethodAspect">
+		<property name="messageHandler" ref="messageHandler"/>
+	</bean>
 
 </beans>
