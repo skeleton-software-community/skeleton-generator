@@ -12,9 +12,9 @@ import org.sklsft.generator.bc.file.strategy.impl.presentation.JsfRichfaces3Pres
 import org.sklsft.generator.bc.file.strategy.impl.services.ServiceStrategy;
 
 
-public class SpringHibernateRichFacesCommandTreeFactory extends AbstractFileWriteCommandTreeFactory {
+public class SpringHibernateRichFaces3CommandTreeFactory extends AbstractFileWriteCommandTreeFactory {
 
-	public SpringHibernateRichFacesCommandTreeFactory() {
+	public SpringHibernateRichFaces3CommandTreeFactory() {
 		super();
 		
 		fileImportStrategy = new Richfaces3ResourcesStrategy();

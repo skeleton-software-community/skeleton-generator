@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum(String.class)
 public enum SkeletonType {
-    SPRING_HIBERNATE_RICHFACES_3;
+    SPRING_HIBERNATE_RICHFACES_3,
+    SPRING_HIBERNATE_RICHFACES_4;
 }
 
