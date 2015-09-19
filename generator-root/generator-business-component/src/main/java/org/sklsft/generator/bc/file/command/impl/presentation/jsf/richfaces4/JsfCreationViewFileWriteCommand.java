@@ -34,6 +34,8 @@ public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<!-- -->");
         skipLine();
 
+        writeLine("<div class=" + CHAR_34 + "modal-body" + CHAR_34 + ">");
+        
         writeLine("<br/>");
         writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34 + "/>");
         writeLine("<br/>");
@@ -42,56 +44,50 @@ public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "CreationPanelGroup" + CHAR_34 + ">");
         
-        writeLine("<h:form>");
+        writeLine("<a4j:region>");
         skipLine();
 
-        writeLine("<c:set var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".new" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".new" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
         skipLine();
         
-        writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
-        skipLine();
+        writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
         for (Property property : this.bean.getVisibleProperties())
         {
             if (property.visibility.isDetailVisible())
-            {
-                writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "} : " + CHAR_34 + "/>");
-                
-                writeDetailComponent(property, bean);
-
-                writeLine("<h:message for=" + CHAR_34 + this.bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
-                skipLine();
+            {                
+                writeInput(property, bean);
             }
         }
+        
+        writeLine("</div>");
 
-        writeLine("</h:panelGrid>");
-        skipLine();
         
         writeLine("<br/>");
         writeLine("<br/>");
         skipLine();
         
-        writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
         
         writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".save" + this.bean.className + "}"
-				+ CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "PanelGroup, " + bean.objectName
-				+ "CreationPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) Richfaces.hideModalPanel('" + bean.objectName + "CreationModalPanel')"
+				+ CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup, " + bean.objectName
+				+ "CreationPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + bean.objectName + "CreationModalPanel').modal('hide');"
 				+ CHAR_34 + "/>");
 		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".resetForm}" + CHAR_34
-				+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName
-				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.hideModalPanel('" + bean.objectName + "CreationModalPanel')" + CHAR_34 + "/>");
+				+ " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 
+				+ " immediate=" + CHAR_34 + "true" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 
+				+ " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "CreationModalPanel').modal('hide')" + CHAR_34 + "/>");
 
-        writeLine("</h:panelGrid>");
-        skipLine();
 
         this.writeNotOverridableContent();
         skipLine();
 
-        writeLine("</h:form>");
+        writeLine("</a4j:region>");
         skipLine();
         
         writeLine("</h:panelGroup>");
-
+        skipLine();
+        
+        writeLine("</div>");
         skipLine();
         
         writeLine("</ui:composition>");

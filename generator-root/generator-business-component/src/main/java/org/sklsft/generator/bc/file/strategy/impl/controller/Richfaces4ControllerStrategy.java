@@ -1,20 +1,20 @@
 package org.sklsft.generator.bc.file.strategy.impl.controller;
 
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.BaseJsfDetailControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.BaseJsfListControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.DataTableFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.JsfCommonControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.JsfDetailControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.JsfListControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.model.MvcDetailViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.model.MvcListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.BaseJsfDetailControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.BaseJsfListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.DataTableFilterFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.JsfCommonControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.JsfDetailControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces4.JsfListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces4.MvcDetailViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces4.MvcListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.om.Bean;
 import org.sklsft.generator.model.om.Package;
 import org.sklsft.generator.model.om.Project;
 
-public class JsfControllerStrategy implements LayerStrategy {
+public class Richfaces4ControllerStrategy implements LayerStrategy {
 
 	@Override
 	public FileWriteCommandTreeNode getLayerNode(Project project) {

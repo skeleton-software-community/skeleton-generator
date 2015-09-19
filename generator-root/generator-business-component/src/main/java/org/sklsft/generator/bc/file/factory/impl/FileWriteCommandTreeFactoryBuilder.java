@@ -16,7 +16,7 @@ public class FileWriteCommandTreeFactoryBuilder {
 				return new SpringHibernateRichFaces3CommandTreeFactory();
 			
 			case SPRING_HIBERNATE_RICHFACES_4:
-				return new SpringHibernateRichFaces3CommandTreeFactory();
+				return new SpringHibernateRichFaces4CommandTreeFactory();
 				
 			default:
 				throw new IllegalArgumentException("Unhandled Skeleton type : " + project.skeletonType.name());

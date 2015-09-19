@@ -46,9 +46,6 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<h:outputText value=" + CHAR_34 + "#{i18n.noDataFound}" + CHAR_34 + " rendered=" + CHAR_34 + "#{empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + "/>");
 		skipLine();
 		
-		writeLine("<h:form id=" + CHAR_34 + currentBean.objectName + "ListForm" + CHAR_34 + ">");
-		skipLine();
-		
 		writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{not empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
 		skipLine();
 		
@@ -140,7 +137,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</div>");
 		skipLine();
 
-		writeLine("<rich:datascroller id=" + CHAR_34 + currentBean.objectName + "Scroller" + CHAR_34 + " maxPages=" + CHAR_34 + "5" + CHAR_34 + " renderIfSinglePage=" + CHAR_34 + "false" + CHAR_34 + " for=" + CHAR_34 + currentBean.objectName + "List"
+		writeLine("<rich:dataScroller id=" + CHAR_34 + currentBean.objectName + "Scroller" + CHAR_34 + " maxPages=" + CHAR_34 + "5" + CHAR_34 + " renderIfSinglePage=" + CHAR_34 + "false" + CHAR_34 + " for=" + CHAR_34 + currentBean.objectName + "List"
 				+ CHAR_34 + "/>");
 		skipLine();
 		
@@ -154,8 +151,8 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 			writeLine("<br/>");
 			writeLine("<br/>");
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className
-					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + currentBean.objectName + "CreationModalPanel')"
-					+ CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
+					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "CreationModalPanel').modal('show')"
+					+ CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}
 
@@ -171,7 +168,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		if (currentBean.deleteEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34
-					+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34);
+					+ " styleClass=" + CHAR_34 + "btn btn-warning" + CHAR_34);
 			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup"
 					+ CHAR_34 + "/>");
 		}
