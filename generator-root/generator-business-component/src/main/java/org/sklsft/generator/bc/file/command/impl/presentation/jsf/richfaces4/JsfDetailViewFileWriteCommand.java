@@ -37,6 +37,11 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<!-- processed by skeleton-generator -->");
         writeLine("<!-- -->");
         skipLine();
+        
+        writeLine("<f:metadata>");
+		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
+		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + bean.detailControllerObjectName + ".load}" + CHAR_34 + " />");
+		writeLine("</f:metadata>");
 
         writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
         skipLine();
@@ -49,10 +54,7 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<br/>");
         skipLine();
         
-        writeLine("<rich:tabPanel id=" + CHAR_34 + this.bean.objectName + "TabPanel" + CHAR_34 + " switchType=" + CHAR_34 + "ajax" + CHAR_34 + ">");
-        
-        writeLine("<rich:tab id=" + CHAR_34 + this.bean.objectName + "Tab" + CHAR_34 + " label=" + CHAR_34 + "#{i18n." + this.bean.objectName + "Detail}" + CHAR_34);
-        writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load}" + CHAR_34 + " reRender=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
@@ -61,7 +63,7 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<a4j:region>");
         skipLine();
 
-        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + "." +  this.bean.detailViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.detailViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
@@ -95,103 +97,9 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("</h:panelGroup>");
         skipLine();
         
-        writeLine("</rich:tab>");
-        skipLine();
-        
-
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
-        {
-        	Bean currentBean = uniqueComponent.referenceBean;
-        	
-            writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "Detail}" + CHAR_34);
-            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
-            writeLine("</rich:tab>");
-            skipLine();
-        }
-
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
-        	Bean currentBean = oneToManyComponent.referenceBean;
-        	
-            writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "List}" + CHAR_34);
-            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34);
-            writeLine("onclick=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
-            writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
-            writeLine("reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List" + ".xhtml" + CHAR_34 + "/>");
-            writeLine("</rich:tab>");
-            skipLine();
-        }
-        
-        for (OneToMany oneToMany : this.bean.oneToManyList) {
-        	
-        	Bean currentBean = oneToMany.referenceBean;
-        	
-            writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "List}" + CHAR_34);
-            writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34);       
-            writeLine("ontabenter=" + CHAR_34 + "$('processingPanel').component.show()" + CHAR_34);
-            writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').component.hide()" + CHAR_34);
-            writeLine("reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List" + ".xhtml" + CHAR_34 + "/>");
-            writeLine("</rich:tab>");
-            skipLine();
-        }
-
-
-        writeLine("</rich:tabPanel>");
-        skipLine();
-    
-
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-        	
-        	Bean currentBean = oneToManyComponent.referenceBean;
-            
-            writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
-            writeLine("</div>");
-            writeLine("</div>");
-            writeLine("</div>");
-            skipLine();
-            
-            writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
-            writeLine("</div>");
-            writeLine("</div>");
-            writeLine("</div>");
-            skipLine();
-            
-        }
-        
-        for (OneToMany oneToMany : this.bean.oneToManyList) {
-        	
-        	Bean currentBean = oneToMany.referenceBean;
-            
-//        	writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-//            writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-//            writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-//            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
-//            writeLine("</div>");
-//            writeLine("</div>");
-//            writeLine("</div>");
-//            skipLine();
-            
-            writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-            writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
-            writeLine("</div>");
-            writeLine("</div>");
-            writeLine("</div>");
-            skipLine();
-            
-        }
-        
         writeLine("</h:form>");
+        
+        writeLine("<script>$('#" + bean.objectName + "DetailsMenu').addClass('active');</script>");
         
         writeLine("</ui:define>");
         writeLine("</ui:composition>");

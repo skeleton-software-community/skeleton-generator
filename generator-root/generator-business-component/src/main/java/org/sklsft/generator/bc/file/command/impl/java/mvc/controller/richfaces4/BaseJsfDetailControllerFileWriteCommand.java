@@ -28,7 +28,6 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-		javaImports.add("import javax.annotation.PostConstruct;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
@@ -94,19 +93,6 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		skipLine();
 		
 		
-
-		writeLine("/*");
-		writeLine(" * getters and setters");
-		writeLine(" */");
-		writeLine("public " + this.bean.detailViewClassName + " get" + this.bean.detailViewClassName + "() {");
-		writeLine("return " + this.bean.detailViewObjectName + ";");
-		writeLine("}");
-		writeLine("public void set" + this.bean.detailViewClassName + "(" + this.bean.detailViewClassName + " " + this.bean.detailViewObjectName + ") {");
-		writeLine("this." + this.bean.detailViewObjectName + " = " + this.bean.detailViewObjectName + ";");
-		writeLine("}");
-		skipLine();
-
-		
 		createLoadObject();
 		createLoadUniqueComponent();
 		createLoadOneToManyComponent();
@@ -132,25 +118,6 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 
 
 	private void createLoadObject() {
-		
-		writeLine("/**");
-		writeLine(" * init");
-		writeLine(" */");
-		writeLine("@PostConstruct");
-		writeLine("public void init() {");
-		writeLine("String id = getParameter(" + CHAR_34 + "id" + CHAR_34 + ");");
-		writeLine("if (id != null) {");
-		writeLine(bean.detailViewObjectName + ".setSelected" + bean.className + "Id(Long.valueOf(id));");
-		
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			Bean currentBean = oneToManyComponent.referenceBean;
-
-			writeLine("this.reset" + currentBean.filterClassName + "();");
-		}
-		
-		writeLine("load();");
-		writeLine("}");
-		writeLine("}");
 		
 		writeLine("/**");
 		writeLine(" * load object");
@@ -202,6 +169,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
+			writeLine("this.reset" + currentBean.filterClassName + "();");
+			
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + this.bean.serviceObjectName + ".load" + currentBean.className + "List(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			
 			writeLine("}");
@@ -219,6 +188,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
+			writeLine("this.reset" + currentBean.filterClassName + "();");
+			
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + currentBean.serviceObjectName + ".load" + currentBean.className + "ListFrom" + oneToMany.referenceProperty.capName + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			
 			writeLine("}");

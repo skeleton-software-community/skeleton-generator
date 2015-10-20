@@ -2,6 +2,7 @@ package org.sklsft.generator.bc.file.strategy.impl.presentation;
 
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.I18nFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfCreationViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfDetailMenuFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentCreationViewFileWriteCommand;
@@ -60,6 +61,9 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 					
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfDetailViewFileWriteCommand(bean));
 					packageTreeNode.add(beanTreeNode);
+					
+					FileWriteCommandTreeNode menuTreeNode = new FileWriteCommandTreeNode(new JsfDetailMenuFileWriteCommand(bean));
+					packageTreeNode.add(menuTreeNode);
 					
 					for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 						

@@ -30,15 +30,34 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		writeLine("xmlns:rich = " + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
 		writeLine("xmlns:a4j = " + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
 		writeLine("xmlns:fn=" + CHAR_34 + "http://java.sun.com/jsp/jstl/functions" + CHAR_34);
-		writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34 + ">");
-		skipLine();
+		writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
+        skipLine();
 
-		writeLine("<!-- -->");
-		writeLine("<!-- auto generated jsf file -->");
-		writeLine("<!-- write modifications between specific code marks -->");
-		writeLine("<!-- processed by skeleton generator -->");
-		writeLine("<!-- -->");
-		skipLine();
+        writeLine("<!-- -->");
+        writeLine("<!-- auto generated jsf file -->");
+        writeLine("<!-- write modifications between specific code marks -->");
+        writeLine("<!-- processed by skeleton-generator -->");
+        writeLine("<!-- -->");
+        skipLine();
+        
+        writeLine("<f:metadata>");
+		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + "Id}" + CHAR_34 + " />");
+		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " />");
+		writeLine("</f:metadata>");
+
+        writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
+        skipLine();
+        
+        writeLine("<h:form>");
+        skipLine();
+
+        writeLine("<br/>");
+        writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34 + "/>");
+        writeLine("<br/>");
+        skipLine();
+        
+        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
+        skipLine();
 
 		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
 		skipLine();
@@ -189,7 +208,24 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 
 		writeLine("</h:panelGroup>");
 		skipLine();
+		
+		
+		 writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
+         writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
+         writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
+         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
+         writeLine("</div>");
+         writeLine("</div>");
+         writeLine("</div>");
+         skipLine();
+         
+		
+		writeLine("</h:form>");
+        
+        writeLine("<script>$('#" + currentBean.objectName + "ListMenu').addClass('active');</script>");
+        
 
+		writeLine("</ui:define>");
 		writeLine("</ui:composition>");
 	}
 }
