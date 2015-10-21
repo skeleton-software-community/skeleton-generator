@@ -123,6 +123,22 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * load object");
 		writeLine(" */");
 		writeLine("public void load() {");
+	
+		writeLine("refresh();");
+		
+		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
+			Bean currentBean = uniqueComponent.referenceBean;
+			
+			writeLine("refresh" + currentBean.className + "();");
+		}
+
+		writeLine("}");
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * refresh object");
+		writeLine(" */");
+		writeLine("public void refresh() {");
 		
 		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
@@ -142,9 +158,9 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = uniqueComponent.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * load unique component " + currentBean.objectName);
+			writeLine(" * refresh unique component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public void load" + currentBean.className + "() {");
+			writeLine("public void refresh" + currentBean.className + "() {");
 			
 			for (Property property : currentBean.getVisibleProperties()) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
@@ -205,7 +221,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
 		writeLine("public void update" + this.bean.className + "() {");
 		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "());");
-		writeLine("load();");
+		writeLine("refresh();");
 		writeLine("}");
 		skipLine();
 	}
@@ -221,7 +237,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
-			writeLine("load" + currentBean.className + "();");
+			writeLine("refresh" + currentBean.className + "();");
 			writeLine("}");
 			skipLine();
 		}

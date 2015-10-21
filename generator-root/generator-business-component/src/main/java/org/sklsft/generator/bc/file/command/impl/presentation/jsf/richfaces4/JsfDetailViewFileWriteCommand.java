@@ -3,8 +3,6 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4;
 import java.io.IOException;
 
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
 import org.sklsft.generator.model.om.Property;
 import org.sklsft.generator.model.om.UniqueComponent;
 
@@ -57,6 +55,8 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
         skipLine();
         
+        writeLine("<h2>#{i18n." + bean.objectName + "Detail}</h2>");
+        
         writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
         skipLine();
         
@@ -78,8 +78,6 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
         writeLine("</div>");
         
-        writeLine("<br/>");
-        writeLine("<br/>");
         skipLine();
         
        
@@ -96,6 +94,15 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("</h:panelGroup>");
         skipLine();
+        
+        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        {
+        	Bean currentBean = uniqueComponent.referenceBean;
+			writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
+		    skipLine();
+			
+        }
+       
         
         writeLine("</h:form>");
         

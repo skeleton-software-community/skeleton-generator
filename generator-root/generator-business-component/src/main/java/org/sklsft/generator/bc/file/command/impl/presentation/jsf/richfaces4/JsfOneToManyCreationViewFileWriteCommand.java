@@ -12,7 +12,7 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 
 	public JsfOneToManyCreationViewFileWriteCommand(OneToMany oneToMany) {
 		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToMany.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToMany.referenceBean.myPackage.name + "\\" + oneToMany.parentBean.className.toLowerCase(),
+				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToMany.parentBean.myPackage.name + "\\" + oneToMany.parentBean.className.toLowerCase(),
 				oneToMany.referenceBean.className + "Creation");
 
 		this.oneToMany = oneToMany;

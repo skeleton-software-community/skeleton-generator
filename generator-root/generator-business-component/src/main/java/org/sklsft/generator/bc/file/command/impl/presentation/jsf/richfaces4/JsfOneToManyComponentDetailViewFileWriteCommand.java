@@ -12,7 +12,7 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 
 	public JsfOneToManyComponentDetailViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
+				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.parentBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
 				oneToManyComponent.referenceBean.className + "Details");
 
 		this.oneToManyComponent = oneToManyComponent;

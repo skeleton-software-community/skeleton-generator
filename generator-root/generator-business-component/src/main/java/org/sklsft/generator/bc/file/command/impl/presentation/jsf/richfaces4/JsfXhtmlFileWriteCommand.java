@@ -117,7 +117,6 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			switch (property.dataType) {
 				case BOOLEAN:
 					writeBooleanInput(property, bean);
-					writeLine("<label>#{i18n." + bean.objectName + property.capName + "}</label>");
 					break;
 				case DATETIME:
 					writeDateInput(property, bean);
@@ -257,14 +256,26 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 	}
 	
 	private void writeBooleanInput(Property property, Bean bean){
+		writeLine("<div class=" + CHAR_34 + "checkbox" + CHAR_34 + ">");
+		writeLine("<label>");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34
 				+ bean.objectName + property.capName
 				+ CHAR_34 + " value=" + CHAR_34 + "#{"
 				+ bean.objectName + "." + property.name + "}"
 				+ CHAR_34);
-		writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
-				+ " disabled=" + CHAR_34 + "false"
-				+ CHAR_34 + "/>");
+		if (property.editable) {
+			writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
+					+ " disabled=" + CHAR_34 + "false"
+					+ CHAR_34 + "/>");
+			
+		} else {
+			writeLine("readonly=" + CHAR_34 + "true" + CHAR_34
+					+ " disabled=" + CHAR_34 + "true"
+					+ CHAR_34 + "/>");
+		}
+		writeLine("#{i18n." + bean.objectName + property.capName + "}");
+		writeLine("</label>");
+		writeLine("</div>");
 	}
 	
 	private void writeDoubleInput(Property property, Bean bean){
@@ -327,7 +338,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 	private void writeDateInput(Property property, Bean bean){
 		writeLine("<rich:calendar id=" + CHAR_34
 				+ bean.objectName + property.capName + CHAR_34
-				+ " inputStyle=" + CHAR_34 + "form-control"
+				+ " inputClass=" + CHAR_34 + "form-control"
 				+ CHAR_34 + " value=" + CHAR_34 + "#{"
 				+ bean.objectName + "." + property.name + "}"
 				+ CHAR_34);

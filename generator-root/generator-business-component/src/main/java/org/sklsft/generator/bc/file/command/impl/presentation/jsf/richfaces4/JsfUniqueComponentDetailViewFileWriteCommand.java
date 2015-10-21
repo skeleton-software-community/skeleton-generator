@@ -39,6 +39,8 @@ public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWr
         writeLine("<!-- processed by skeleton-generator -->");
         writeLine("<!-- -->");
         skipLine();
+        
+        writeLine("<h2>#{i18n." + currentBean.objectName + "Detail}</h2>");
 
         writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
         skipLine();
@@ -60,14 +62,12 @@ public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWr
         }
 
         writeLine("</div>");
-       
-        writeLine("<br/>");
-        writeLine("<br/>");
+
         skipLine();
         
         if (this.uniqueComponent.referenceBean.updateEnabled)
         {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + "/>");
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + "/>");
         }
     
         skipLine();

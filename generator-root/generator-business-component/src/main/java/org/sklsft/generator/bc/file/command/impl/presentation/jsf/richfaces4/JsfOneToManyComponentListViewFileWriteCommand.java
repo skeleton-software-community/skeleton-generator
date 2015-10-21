@@ -12,7 +12,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 	public JsfOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
+				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.parentBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
 				oneToManyComponent.referenceBean.className + "List");
 		this.oneToManyComponent = oneToManyComponent;
 	}
@@ -60,13 +60,17 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
         skipLine();
 
-		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+        writeLine("<h2>");
+		writeLine("#{i18n." + currentBean.objectName + "List}");
+		writeLine("</h2>");
+        
+        writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
 		skipLine();
 
 		writeLine("<h:outputText value=" + CHAR_34 + "#{i18n.noDataFound}" + CHAR_34 + " rendered=" + CHAR_34 + "#{empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + "/>");
 		skipLine();
 		
-		writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{not empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{not empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
 		skipLine();
 		
 		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
@@ -83,6 +87,22 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		
 		writeLine("<rich:column>");
+		
+		writeLine("<div id=" + CHAR_34 + "dropList" + CHAR_34 + " class=" + CHAR_34 + "dropList" + CHAR_34 + ">");
+		
+		if (currentBean.deleteEnabled) {
+			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + currentBean.objectName + "PanelGroup"
+					+ CHAR_34 + ">");
+			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
+		
+			writeLine("</a4j:commandLink>");
+		}
+
+
+		writeLine("</div>");
+		skipLine();
+		
 		writeLine("</rich:column>");
 
 		for (Property property : currentBean.getVisibleProperties()) {
@@ -157,11 +177,13 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</div>");
 		skipLine();
 
+		writeLine("<div class=" + CHAR_34 + "scroller" + CHAR_34 + ">");
 		writeLine("<rich:dataScroller id=" + CHAR_34 + currentBean.objectName + "Scroller" + CHAR_34 + " maxPages=" + CHAR_34 + "5" + CHAR_34 + " renderIfSinglePage=" + CHAR_34 + "false" + CHAR_34 + " for=" + CHAR_34 + currentBean.objectName + "List"
 				+ CHAR_34 + "/>");
+		writeLine("</div>");
 		skipLine();
 		
-		writeLine("</h:panelGroup>");
+		writeLine("</ui:fragment>");
 		skipLine();
 
 		
@@ -178,28 +200,9 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		writeLine("<br/>");
 		skipLine();
-
 		
-		writeLine("<div id=" + CHAR_34 + "actions" + CHAR_34 + " style=" + CHAR_34 + "display:none;margin:2px;" + CHAR_34 + ">");
-		writeLine("#{i18n.actionsOnSelection} :");
-		writeLine("<br/>");
-
-		writeLine("<h:panelGrid columns=" + CHAR_34 + "1" + CHAR_34 + ">");
-
-		if (currentBean.deleteEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34
-					+ " styleClass=" + CHAR_34 + "btn btn-warning" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup"
-					+ CHAR_34 + "/>");
-		}
-		writeLine("</h:panelGrid>");
-		skipLine();
-
 		this.writeNotOverridableContent();
 		skipLine();
-
-		writeLine("</div>");
-		skipLine();		
 
 		writeLine("</h:panelGroup>");
 		skipLine();
@@ -208,7 +211,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		 writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
          writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
          writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
+         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
          writeLine("</div>");
          writeLine("</div>");
          writeLine("</div>");
@@ -217,7 +220,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
          writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
          writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
          writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
+         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
          writeLine("</div>");
          writeLine("</div>");
          writeLine("</div>");

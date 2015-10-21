@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.sklsft.generator.model.om.Bean;
 import org.sklsft.generator.model.om.OneToMany;
 import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.UniqueComponent;
 
 public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -45,18 +44,7 @@ public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("</h:link>");
 		writeLine("</li>");
         
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
-        {
-        	Bean currentBean = uniqueComponent.referenceBean;
-    		writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "DetailsMenu" + CHAR_34 + ">");
-			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
-			writeLine("#{i18n." + currentBean.objectName + "Detail}");
-			writeLine("</h:link>");
-			writeLine("</li>");
-			
-        }
-        
+                
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
         	Bean currentBean = oneToManyComponent.referenceBean;

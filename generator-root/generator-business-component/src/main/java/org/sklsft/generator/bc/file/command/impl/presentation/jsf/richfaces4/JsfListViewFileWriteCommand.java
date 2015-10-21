@@ -56,7 +56,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		
 		writeLine("<h2>");
 		writeLine("#{i18n." + bean.objectName + "List}");
-		writeLine("</h2>");	
+		writeLine("</h2>");
 			
 		writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
 		
@@ -85,6 +85,22 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 		
 		writeLine("<rich:column>");
+		
+		writeLine("<div id=" + CHAR_34 + "dropList" + CHAR_34 + " class=" + CHAR_34 + "dropList" + CHAR_34 + ">");
+		
+		if (bean.deleteEnabled) {
+			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".delete" + bean.className + "List}" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + bean.objectName + "PanelGroup"
+					+ CHAR_34 + ">");
+			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
+		
+			writeLine("</a4j:commandLink>");
+		}
+
+
+		writeLine("</div>");
+		skipLine();
+		
 		writeLine("</rich:column>");
 
 		for (Property property : this.bean.getVisibleProperties()) {
@@ -160,9 +176,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		
 		writeLine("</div>");
 		skipLine();
-		
+		writeLine("<div class=" + CHAR_34 + "scroller" + CHAR_34 + ">");
 		writeLine("<rich:dataScroller id=" + CHAR_34 + bean.objectName + "Scroller" + CHAR_34 + " maxPages=" + CHAR_34 + "5" + CHAR_34 + " renderIfSinglePage=" + CHAR_34 + "false"
 				+ CHAR_34 + " for=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + "/>");
+		writeLine("</div>");
 		skipLine();
 		
 		writeLine("</h:panelGroup>");
@@ -183,26 +200,8 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		skipLine();
 
 		
-		writeLine("<div id=" + CHAR_34 + "actions" + CHAR_34 + " style=" + CHAR_34 + "display:none;margin:2px;" + CHAR_34 + ">");
-		writeLine("#{i18n.actionsOnSelection} :");
-		writeLine("<br/>");
-
-		
-
-		if (bean.deleteEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".delete" + bean.className + "List}" + CHAR_34
-					+ " styleClass=" + CHAR_34 + "btn btn-warning" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + bean.objectName + "PanelGroup"
-					+ CHAR_34 + "/>");
-		}
-
-		skipLine();
-
+			
 		this.writeNotOverridableContent();
-		skipLine();
-
-		writeLine("</div>");
-		skipLine();
 
 		writeLine("</a4j:region>");
 		skipLine();
