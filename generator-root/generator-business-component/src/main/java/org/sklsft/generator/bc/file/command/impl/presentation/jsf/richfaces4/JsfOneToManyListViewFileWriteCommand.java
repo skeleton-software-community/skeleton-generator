@@ -50,11 +50,6 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
         
         writeLine("<h:form>");
         skipLine();
-
-        writeLine("<br/>");
-        writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34 + "/>");
-        writeLine("<br/>");
-        skipLine();
         
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
         skipLine();
@@ -65,11 +60,13 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
         
         writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
 		skipLine();
-
-		writeLine("<h:outputText value=" + CHAR_34 + "#{i18n.noDataFound}" + CHAR_34 + " rendered=" + CHAR_34 + "#{empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + "/>");
-		skipLine();
 		
 		writeLine("<a4j:region>");
+		skipLine();
+
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
+		writeLine("#{i18n.noDataFound}<br/>");		
+		writeLine("</ui:fragment>");
 		skipLine();
 		
 		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{not empty " + parentBean.detailViewObjectName + "." + currentBean.objectName + "List}" + CHAR_34 + ">");
@@ -188,24 +185,17 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		writeLine("</ui:fragment>");
 		skipLine();
 
-		
-		skipLine();
-
 		if (currentBean.createEnabled) {
-			writeLine("<br/>");
-			writeLine("<br/>");
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className
 					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "CreationModalPanel').modal('show')"
 					+ CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}
 
-		writeLine("<br/>");
-		skipLine();
 		
 		this.writeNotOverridableContent();
 		skipLine();
-
+		
 		writeLine("</a4j:region>");
 		skipLine();
 

@@ -47,11 +47,6 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<h:form>");
         skipLine();
 
-        writeLine("<br/>");
-        writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34 + "/>");
-        writeLine("<br/>");
-        skipLine();
-        
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
         skipLine();
         

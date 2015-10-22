@@ -48,11 +48,6 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').modal('hide')" + CHAR_34 + "/>");
 		
 	    writeLine("<script>window.onload = function(){$('processingPanel').modal('show');load();}</script>");
-
-		writeLine("<br/>");
-		writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34
-				+ "/>");
-		writeLine("<br/>");
 		
 		writeLine("<h2>");
 		writeLine("#{i18n." + bean.objectName + "List}");
@@ -60,16 +55,15 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 			
 		writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
 		
-		writeLine("<h:outputText value=" + CHAR_34 + "#{i18n.noDataFound}" + CHAR_34 + " rendered=" + CHAR_34 + "#{empty " + this.bean.listViewObjectName + "." + this.bean.objectName
-				+ "List}" + CHAR_34 + "/>");
-		skipLine();
-		
 		writeLine("<a4j:region>");
+		skipLine();		
+		
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{empty " + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34 + ">");
+		writeLine("#{i18n.noDataFound}<br/>");
+		writeLine("</ui:fragment>");
 		skipLine();
 		
-		writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{not empty " + this.bean.listViewObjectName + "." + this.bean.objectName
-				+ "List}" + CHAR_34 + ">");
-		skipLine();
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{not empty " + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34 + ">");
 		
 		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
 		skipLine();
@@ -182,13 +176,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("</div>");
 		skipLine();
 		
-		writeLine("</h:panelGroup>");
+		writeLine("</ui:fragment>");
 		skipLine();
 
 		if (this.bean.createEnabled) {
-			writeLine("<br/>");
-			writeLine("<br/>");
-			skipLine();
 
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}"
 					+ CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "CreationModalPanel').modal('show')"
@@ -196,7 +187,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 		}
 		
-		writeLine("<br/>");
+
 		skipLine();
 
 		

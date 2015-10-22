@@ -40,21 +40,14 @@ public class JsfOneToManyComponentCreationViewFileWriteCommand extends JsfXhtmlF
 		writeLine("<!-- -->");
 		skipLine();
 		
-		 writeLine("<div class=" + CHAR_34 + "modal-body" + CHAR_34 + ">");
-
-		writeLine("<br/>");
-		writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34
-				+ "/>");
-		writeLine("<br/>");
-		skipLine();
-
+		writeLine("<div class=" + CHAR_34 + "modal-header" + CHAR_34 + ">");
 		writeLine("<h2>");
 		writeLine("#{i18n." + currentBean.objectName + "Detail}");
 		writeLine("</h2>");
+		writeLine("</div>");
 		skipLine();
-
-		writeLine("<br/>");
-		skipLine();
+		
+		writeLine("<div class=" + CHAR_34 + "modal-body" + CHAR_34 + ">");
 
 		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + ">");
 		skipLine();
@@ -76,10 +69,6 @@ public class JsfOneToManyComponentCreationViewFileWriteCommand extends JsfXhtmlF
 		}
 
 		writeLine("</div>");
-		skipLine();
-
-		writeLine("<br/>");
-		writeLine("<br/>");
 		skipLine();
 
 		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
