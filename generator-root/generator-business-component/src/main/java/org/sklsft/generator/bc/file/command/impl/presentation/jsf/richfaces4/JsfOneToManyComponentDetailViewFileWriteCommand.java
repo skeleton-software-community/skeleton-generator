@@ -67,7 +67,7 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 			}
 		}
 
-		writeLine("</h:div>");
+		writeLine("</div>");
 		skipLine();
 		
 		if (this.oneToManyComponent.referenceBean.updateEnabled) {
