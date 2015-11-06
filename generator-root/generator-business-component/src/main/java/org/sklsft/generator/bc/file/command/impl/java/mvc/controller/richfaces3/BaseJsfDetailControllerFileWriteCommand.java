@@ -343,6 +343,13 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" * edit one to many component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
+			
+			for (Property property : currentBean.getVisibleProperties()) {
+				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+				}
+			}
+			
 			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + this.bean.serviceObjectName + ".load" + currentBean.className + "(id, this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			writeLine("}");
 			skipLine();
