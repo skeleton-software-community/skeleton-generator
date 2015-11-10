@@ -2,7 +2,7 @@ package org.sklsft.generator.bc.backup.check;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;

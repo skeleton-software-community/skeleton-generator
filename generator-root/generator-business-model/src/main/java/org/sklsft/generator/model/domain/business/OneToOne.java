@@ -1,4 +1,5 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.business;
+
 
 public class OneToOne {
 

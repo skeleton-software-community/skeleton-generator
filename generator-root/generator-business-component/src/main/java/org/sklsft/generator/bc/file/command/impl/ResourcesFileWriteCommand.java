@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
 import org.sklsft.generator.bc.file.command.interfaces.FileWriteCommand;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 
 /**
  * An implementation of the abstract file write command based on the copy of a resources

@@ -1,8 +1,9 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.business;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.Format;
 import org.sklsft.generator.model.metadata.RelationType;

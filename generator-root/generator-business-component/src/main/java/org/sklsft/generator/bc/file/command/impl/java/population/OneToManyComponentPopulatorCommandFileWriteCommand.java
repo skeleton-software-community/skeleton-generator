@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DataType;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.Property;
 
 public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 

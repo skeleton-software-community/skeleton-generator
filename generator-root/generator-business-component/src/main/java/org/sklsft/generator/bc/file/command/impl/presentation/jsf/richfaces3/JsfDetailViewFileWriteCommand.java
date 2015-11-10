@@ -2,11 +2,11 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 
 import java.io.IOException;
 
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.Property;
-import org.sklsft.generator.model.om.UniqueComponent;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 

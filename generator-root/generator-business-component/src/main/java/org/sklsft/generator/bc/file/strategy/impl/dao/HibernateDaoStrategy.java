@@ -6,9 +6,9 @@ import org.sklsft.generator.bc.file.command.impl.java.dao.DaoImplFileWriteComman
 import org.sklsft.generator.bc.file.command.impl.java.dao.DaoInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
 
 public class HibernateDaoStrategy implements LayerStrategy {
 

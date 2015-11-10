@@ -3,7 +3,7 @@ package org.sklsft.generator.bc.backup.command.impl;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.bc.backup.command.interfaces.JdbcCommandFactory;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.command.impl.JdbcUpdateCommand;
 import org.sklsft.generator.repository.backup.command.interfaces.Command;
 

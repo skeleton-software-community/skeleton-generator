@@ -8,7 +8,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.exception.ReadBackupFailureException;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

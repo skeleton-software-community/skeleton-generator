@@ -6,8 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.sklsft.generator.exception.BackupFileNotFoundException;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
-import org.sklsft.generator.model.om.Table;
 import org.springframework.stereotype.Component;
 
 @Component

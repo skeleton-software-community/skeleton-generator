@@ -15,7 +15,7 @@ import org.sklsft.generator.command.BackupCheckPrompter;
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;

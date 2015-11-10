@@ -2,7 +2,7 @@ package org.sklsft.generator.bl.services.interfaces;
 
 import org.sklsft.generator.bc.file.command.interfaces.FileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 
 /**
  * When writing a skeleton, we need to :

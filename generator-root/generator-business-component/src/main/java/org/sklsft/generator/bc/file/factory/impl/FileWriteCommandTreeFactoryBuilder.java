@@ -1,7 +1,7 @@
 package org.sklsft.generator.bc.file.factory.impl;
 
 import org.sklsft.generator.bc.file.factory.interfaces.FileWriteCommandTreeFactory;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 
 /**
  * a static builder to get the {@link FileWriteCommandTreeFactory} o use depending on the project's skeleton

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
-import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.domain.business.Bean;
 
 public class ServiceImplFileWriteCommand extends JavaFileWriteCommand {
 

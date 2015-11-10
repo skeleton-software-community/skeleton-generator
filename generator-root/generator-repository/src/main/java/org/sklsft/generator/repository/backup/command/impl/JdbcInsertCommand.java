@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.command.interfaces.Command;
 import org.sklsft.generator.repository.util.SQLNaming;
 import org.slf4j.Logger;

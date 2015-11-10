@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.Property;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.Property;
 
 public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
 
 public interface DatabasePopulator {

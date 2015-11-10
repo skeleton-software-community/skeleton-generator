@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.UniqueComponent;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 

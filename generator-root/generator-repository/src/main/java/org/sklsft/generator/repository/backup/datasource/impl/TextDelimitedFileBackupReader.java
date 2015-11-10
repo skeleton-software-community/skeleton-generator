@@ -8,7 +8,7 @@ import java.util.List;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.exception.ReadBackupFailureException;
 import org.sklsft.generator.model.backup.PopulateCommandType;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.file.impl.CsvFileParserImpl;
 import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;

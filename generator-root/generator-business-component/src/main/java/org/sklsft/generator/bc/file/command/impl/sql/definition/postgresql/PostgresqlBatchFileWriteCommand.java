@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.batch.BatchFileWriteCommand;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Project;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Table;
 
 public class PostgresqlBatchFileWriteCommand extends BatchFileWriteCommand {
 

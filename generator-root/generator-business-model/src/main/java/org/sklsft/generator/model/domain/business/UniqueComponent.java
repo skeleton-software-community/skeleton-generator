@@ -1,4 +1,6 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.business;
+
+import org.sklsft.generator.model.domain.database.Column;
 
 public class UniqueComponent {
 

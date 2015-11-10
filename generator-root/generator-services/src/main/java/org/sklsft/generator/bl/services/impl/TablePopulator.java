@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import org.sklsft.generator.bc.backup.command.impl.JdbcCommandAbstractFactory;
 import org.sklsft.generator.bc.backup.command.interfaces.JdbcCommandFactory;
 import org.sklsft.generator.exception.PopulateTableFailureException;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.command.interfaces.Command;
 import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;
 import org.springframework.beans.factory.annotation.Autowired;

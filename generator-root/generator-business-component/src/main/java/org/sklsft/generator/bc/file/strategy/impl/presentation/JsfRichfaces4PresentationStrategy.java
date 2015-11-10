@@ -13,12 +13,12 @@ import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.Jsf
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfUniqueComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Project;
-import org.sklsft.generator.model.om.UniqueComponent;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 

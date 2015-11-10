@@ -10,9 +10,9 @@ import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.Postg
 import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlTableFkDefinitionFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Project;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Table;
 
 public class DefaultDatabaseStrategy implements LayerStrategy {
 

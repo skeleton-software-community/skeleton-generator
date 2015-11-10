@@ -4,8 +4,8 @@ import javax.annotation.Resource;
 
 import org.sklsft.generator.bc.metadata.interfaces.ModelFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.om.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

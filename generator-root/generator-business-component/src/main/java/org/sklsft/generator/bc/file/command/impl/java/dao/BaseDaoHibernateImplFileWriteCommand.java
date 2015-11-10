@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
+import org.sklsft.generator.model.domain.business.Alias;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.RelationType;
-import org.sklsft.generator.model.om.Alias;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.Property;
 import org.springframework.util.StringUtils;
 
 public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {

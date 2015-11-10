@@ -3,7 +3,7 @@ package org.sklsft.generator.bc.file.command.impl.java.population;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
-import org.sklsft.generator.model.om.Bean;
+import org.sklsft.generator.model.domain.business.Bean;
 
 public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 

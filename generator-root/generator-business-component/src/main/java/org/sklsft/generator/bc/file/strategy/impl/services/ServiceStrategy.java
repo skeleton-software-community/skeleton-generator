@@ -6,9 +6,9 @@ import org.sklsft.generator.bc.file.command.impl.java.services.ServiceImplFileWr
 import org.sklsft.generator.bc.file.command.impl.java.services.ServiceInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
 
 public class ServiceStrategy implements LayerStrategy {
 

@@ -1,7 +1,13 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.business;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.ui.BasicViewBean;
+import org.sklsft.generator.model.domain.ui.FullViewBean;
+import org.sklsft.generator.model.domain.ui.OptionBean;
 
 /**
  * representation of a bean<br/>
@@ -19,8 +25,10 @@ public class Bean {
 	public Package myPackage;
 	public String className;
 	public String objectName;
-	public String viewClassName;
-	public String viewObjectName;
+	
+	public BasicViewBean basicViewBean;
+	public FullViewBean fullViewBean;
+	public OptionBean optionBean;
 
 	public String baseDaoClassName;
 	public String daoClassName;
@@ -42,10 +50,6 @@ public class Bean {
 	public String processorClassName;
 	public String processorObjectName;
 
-	public String baseMapperClassName;
-	public String mapperClassName;
-	public String mapperObjectName;
-
 	public String baseListControllerClassName;
 	public String baseDetailControllerClassName;
 	public String listControllerClassName;
@@ -58,9 +62,6 @@ public class Bean {
 	public String detailViewObjectName;
 	public String listViewObjectName;
 	
-	public String filterClassName;
-	public String filterObjectName;
-
 	public int cardinality;
 	public String listRendering;
 	public String detailRendering;

@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.Visibility;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToManyComponent;
-import org.sklsft.generator.model.om.Property;
-import org.sklsft.generator.model.om.UniqueComponent;
 
 public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
 

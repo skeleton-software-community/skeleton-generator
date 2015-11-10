@@ -8,8 +8,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.sklsft.generator.bc.file.command.impl.SingleFileWriteCommand;
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.FileType;
-import org.sklsft.generator.model.om.Project;
 
 
 /**

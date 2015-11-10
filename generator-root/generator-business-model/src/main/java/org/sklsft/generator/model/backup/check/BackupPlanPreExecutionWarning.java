@@ -1,6 +1,6 @@
 package org.sklsft.generator.model.backup.check;
 
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 
 /**
  * A warning that can occur when checking a population plan before execution

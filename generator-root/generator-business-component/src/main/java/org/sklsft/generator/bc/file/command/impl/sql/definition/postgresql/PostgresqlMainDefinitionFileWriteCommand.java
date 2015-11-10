@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.sql.SqlFileWriteCommand;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 
 public class PostgresqlMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 

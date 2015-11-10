@@ -1,4 +1,4 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.business;
 
 import java.util.ArrayList;
 import java.util.List;

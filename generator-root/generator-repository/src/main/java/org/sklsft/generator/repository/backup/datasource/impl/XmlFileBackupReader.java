@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import org.sklsft.generator.exception.DataSourceNotFoundException;
 import org.sklsft.generator.exception.ReadBackupFailureException;
 import org.sklsft.generator.model.backup.SourceAndScript;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
 

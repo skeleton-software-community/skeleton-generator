@@ -1,8 +1,8 @@
 package org.sklsft.generator.bc.backup.reader;
 
 import org.sklsft.generator.exception.UnhandledPersistenceModeException;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
-import org.sklsft.generator.model.om.Table;
 import org.sklsft.generator.repository.backup.datasource.impl.TextDelimitedFileBackupReader;
 import org.sklsft.generator.repository.backup.datasource.impl.XmlFileBackupReader;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;

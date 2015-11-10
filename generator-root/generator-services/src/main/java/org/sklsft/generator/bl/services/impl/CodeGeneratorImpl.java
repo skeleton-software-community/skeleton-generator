@@ -4,7 +4,7 @@ import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
 import org.sklsft.generator.bc.file.factory.impl.FileWriteCommandTreeFactoryBuilder;
 import org.sklsft.generator.bc.file.factory.interfaces.FileWriteCommandTreeFactory;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 import org.springframework.stereotype.Component;
 
 /**

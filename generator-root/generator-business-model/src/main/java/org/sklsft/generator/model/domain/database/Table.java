@@ -1,9 +1,11 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.database;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.sklsft.generator.model.domain.Package;
 
 /**
  * representation of a table<br/>

@@ -1,7 +1,7 @@
 package org.sklsft.generator.bc.metadata.interfaces;
 
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.om.Project;
 
 
 /**

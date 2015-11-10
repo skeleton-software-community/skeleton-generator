@@ -1,7 +1,7 @@
 package org.sklsft.generator.bc.file.factory.interfaces;
 
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
-import org.sklsft.generator.model.om.Project;
+import org.sklsft.generator.model.domain.Project;
 
 /**
  * 

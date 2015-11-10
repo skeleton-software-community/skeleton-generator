@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
-import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.Property;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.Property;
 
 public class BaseMapperImplFileWriteCommand extends JavaFileWriteCommand {
 

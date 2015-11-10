@@ -3,15 +3,15 @@ package org.sklsft.generator.bc.metadata.impl;
 import java.util.ArrayList;
 
 import org.sklsft.generator.bc.metadata.interfaces.TableFactory;
+import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.database.Column;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.Format;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
-import org.sklsft.generator.model.om.Column;
-import org.sklsft.generator.model.om.Package;
-import org.sklsft.generator.model.om.Table;
 import org.sklsft.generator.repository.util.SQLNaming;
 import org.springframework.stereotype.Component;
 

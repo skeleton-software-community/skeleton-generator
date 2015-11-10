@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.sklsft.generator.bc.file.command.impl.sql.SqlFileWriteCommand;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Column;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
-import org.sklsft.generator.model.om.Column;
-import org.sklsft.generator.model.om.Project;
-import org.sklsft.generator.model.om.Table;
 
 public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
 

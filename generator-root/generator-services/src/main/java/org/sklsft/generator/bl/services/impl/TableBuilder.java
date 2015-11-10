@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.exception.InvalidFileException;
-import org.sklsft.generator.model.om.Project;
-import org.sklsft.generator.model.om.Table;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.command.impl.JdbcRawCommand;
 import org.sklsft.generator.repository.backup.file.impl.SimpleScriptFileReaderImpl;
 import org.sklsft.generator.repository.backup.file.interfaces.SimpleScriptFileReader;

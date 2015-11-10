@@ -1,4 +1,4 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain.database;
 
 import java.util.List;
 

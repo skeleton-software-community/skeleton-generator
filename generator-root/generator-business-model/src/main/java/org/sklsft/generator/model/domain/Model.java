@@ -1,10 +1,12 @@
-package org.sklsft.generator.model.om;
+package org.sklsft.generator.model.domain;
 
 import java.util.List;
 
 import org.sklsft.generator.exception.BeanNotFoundException;
 import org.sklsft.generator.exception.PackageNotFoundException;
 import org.sklsft.generator.exception.TableNotFoundException;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.database.Table;
 
 
 /**
