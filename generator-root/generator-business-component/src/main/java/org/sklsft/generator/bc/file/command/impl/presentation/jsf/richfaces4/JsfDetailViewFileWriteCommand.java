@@ -63,12 +63,9 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-        for (Property property : this.bean.getVisibleProperties())
+        for (Property property : this.bean.fullViewBean.properties)
         {
-            if (property.visibility.isDetailVisible())
-            {
-            	writeInput(property, bean);
-            }
+            writeInput(property, bean);
         }
 
         writeLine("</div>");

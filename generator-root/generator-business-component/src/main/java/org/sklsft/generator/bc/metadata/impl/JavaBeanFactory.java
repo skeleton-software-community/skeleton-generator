@@ -2,7 +2,12 @@ package org.sklsft.generator.bc.metadata.impl;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
+import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
 import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.business.Bean;
@@ -20,7 +25,19 @@ import org.springframework.stereotype.Component;
 
 @Component(value = "javaBeanFactory")
 public class JavaBeanFactory implements BeanFactory {
-
+	
+	@Resource(name="javaBasicViewBeanFactory")
+	private BasicViewBeanFactory basicViewBeanFactory;
+	
+	@Resource(name="javaFullViewBeanFactory")
+	private FullViewBeanFactory fullViewBeanFactory;
+	
+	@Resource(name="javaOptionBeanFactory")
+	private OptionBeanFactory optionBeanFactory;
+	
+	
+	
+	
 	@Override
 	public Bean scanBean(TableMetaData tableMetaData, Table table) {
 		Bean bean = new Bean();
@@ -40,8 +57,6 @@ public class JavaBeanFactory implements BeanFactory {
 
 		bean.className = JavaClassNaming.getClassName(table.originalName);
 		bean.objectName = JavaClassNaming.getObjectName(table.originalName);
-		bean.viewClassName = bean.className + "View";
-		bean.viewObjectName = bean.objectName + "View";
 
 		bean.baseDaoClassName = bean.className + "BaseDaoImpl";
 		bean.daoClassName = bean.className + "DaoImpl";
@@ -55,11 +70,7 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.baseServiceInterfaceName = bean.className + "BaseService";
 		bean.serviceInterfaceName = bean.className + "Service";
 		bean.serviceObjectName = bean.objectName + "Service";
-
-		bean.baseMapperClassName = bean.viewClassName + "BaseMapper";
-		bean.mapperClassName = bean.viewClassName + "Mapper";
-		bean.mapperObjectName = bean.viewObjectName + "Mapper";
-
+		
 		bean.baseStateManagerClassName = bean.className + "BaseStateManager";
 		bean.stateManagerClassName = bean.className + "StateManager";
 		bean.stateManagerObjectName = bean.objectName + "StateManager";
@@ -80,15 +91,15 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.detailViewObjectName = bean.objectName + "DetailView";
 		bean.listViewClassName = bean.className + "ListView";
 		bean.listViewObjectName = bean.objectName + "ListView";
-		
-		bean.filterClassName = bean.className + "DataTableFilter";
-		bean.filterObjectName = bean.objectName + "DataTableFilter";
 
 		bean.properties = new ArrayList<Property>();
 		bean.oneToManyComponentList = new ArrayList<OneToManyComponent>();
 		bean.oneToManyList = new ArrayList<OneToMany>();
 		bean.oneToOneList = new ArrayList<OneToOne>();
 		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
+		
+		bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
+		bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
 		
 		return bean;
 	}
@@ -140,6 +151,9 @@ public class JavaBeanFactory implements BeanFactory {
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				parentBean.oneToManyList.add(oneToMany);
 				oneToMany.parentBean = parentBean;
+				
+				oneToMany.basicViewBean = basicViewBeanFactory.getBasicViewBean(oneToMany);
+				oneToMany.fullViewBean = fullViewBeanFactory.getFullViewBean(oneToMany);
 			}
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT)) {
@@ -179,6 +193,8 @@ public class JavaBeanFactory implements BeanFactory {
 				bean.uniqueComponentList.add(uniqueComponent);
 			}
 		}
+		
+		
 
 		return bean;
 	}

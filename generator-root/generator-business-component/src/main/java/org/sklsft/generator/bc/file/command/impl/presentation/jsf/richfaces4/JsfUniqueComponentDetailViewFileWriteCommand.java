@@ -53,13 +53,11 @@ public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWr
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-        for (Property property : currentBean.getVisibleProperties())
-        {
-            if (property.visibility.isDetailVisible())
-            {
-                writeInput(property, currentBean);
-            }
-        }
+		for (Property property : currentBean.fullViewBean.properties) {
+			if (property.visibility.isDetailVisible()) {
+				writeInput(property, currentBean);
+			}
+		}
 
         writeLine("</div>");
 

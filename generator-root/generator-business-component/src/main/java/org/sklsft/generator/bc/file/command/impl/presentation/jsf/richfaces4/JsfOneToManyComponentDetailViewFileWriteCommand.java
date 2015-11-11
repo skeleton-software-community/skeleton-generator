@@ -61,10 +61,8 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 
 		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-		for (Property property : currentBean.getVisibleProperties()) {
-			if (property.visibility.isDetailVisible()) {
-				writeInput(property, currentBean);
-			}
+		for (Property property : currentBean.fullViewBean.properties) {
+			writeInput(property, currentBean);
 		}
 
 		writeLine("</div>");

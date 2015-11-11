@@ -27,21 +27,18 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
         }
 
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
         }		
 	}
 

@@ -25,10 +25,6 @@ public class Bean {
 	public Package myPackage;
 	public String className;
 	public String objectName;
-	
-	public BasicViewBean basicViewBean;
-	public FullViewBean fullViewBean;
-	public OptionBean optionBean;
 
 	public String baseDaoClassName;
 	public String daoClassName;
@@ -81,6 +77,10 @@ public class Bean {
 	public boolean isComponent = false;
 	public boolean isManyToOneComponent = false;
 	public boolean isUniqueComponent = false;
+	
+	public BasicViewBean basicViewBean;
+	public FullViewBean fullViewBean;
+	public OptionBean optionBean;
 
 	/**
 	 * get the list of properties that will be used in bean views to show
@@ -140,11 +140,11 @@ public class Bean {
 	}
 
 	/**
-	 * get the list of properties that will be available in a basic view bean
+	 * get the list of properties that will be available in a view bean
 	 * 
 	 * @return
 	 */
-	public List<Property> getVisibleProperties() {
+	private List<Property> getVisibleProperties() {
 		List<Property> visiblePropertyList = new ArrayList<Property>();
 		List<Property> tempPropertyList = new ArrayList<Property>();
 
@@ -214,5 +214,29 @@ public class Bean {
 		}
 
 		return aliasList;
+	}
+
+	public List<Property> getBasicViewProperties() {
+		List<Property> result = new ArrayList<>();
+		
+		for (Property property:getVisibleProperties()) {
+			if (property.visibility.isListVisible()) {
+				result.add(property);
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Property> getFullViewProperties() {
+		List<Property> result = new ArrayList<>();
+		
+		for (Property property:getVisibleProperties()) {
+			if (property.visibility.isDetailVisible()) {
+				result.add(property);
+			}
+		}
+		
+		return result;
 	}
 }

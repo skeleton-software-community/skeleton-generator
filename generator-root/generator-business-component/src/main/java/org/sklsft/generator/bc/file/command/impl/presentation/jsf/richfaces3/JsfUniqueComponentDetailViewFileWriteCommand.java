@@ -52,16 +52,14 @@ public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWr
         writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
         skipLine();
 
-        for (Property property : currentBean.getVisibleProperties())
-        {
-            if (property.visibility.isDetailVisible())
-            {
-                writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "} : " + CHAR_34 + "/>");
-                writeDetailComponent(property, currentBean);
-                writeLine("<h:message for=" + CHAR_34 + currentBean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
-                skipLine();
-            }
-        }
+		for (Property property : currentBean.fullViewBean.properties) {
+			if (property.visibility.isDetailVisible()) {
+				writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "} : " + CHAR_34 + "/>");
+				writeDetailComponent(property, currentBean);
+				writeLine("<h:message for=" + CHAR_34 + currentBean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
+				skipLine();
+			}
+		}
 
         writeLine("</h:panelGrid>");
         skipLine();

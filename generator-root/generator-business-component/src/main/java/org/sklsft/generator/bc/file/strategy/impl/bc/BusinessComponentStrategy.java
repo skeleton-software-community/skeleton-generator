@@ -1,7 +1,7 @@
 package org.sklsft.generator.bc.file.strategy.impl.bc;
 
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseMapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.MapperImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseFullViewMapperImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FullViewMapperImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.BaseProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
@@ -90,7 +90,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			baseMapperTreeNode.add(packageTreeNode);
 			
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseMapperImplFileWriteCommand(bean));
+				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseFullViewMapperImplFileWriteCommand(bean));
 				packageTreeNode.add(beanTreeNode);
 			}
 		}
@@ -103,7 +103,7 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			mapperTreeNode.add(packageTreeNode);
 			
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperImplFileWriteCommand(bean));
+				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new FullViewMapperImplFileWriteCommand(bean));
 				packageTreeNode.add(beanTreeNode);
 			}
 		}

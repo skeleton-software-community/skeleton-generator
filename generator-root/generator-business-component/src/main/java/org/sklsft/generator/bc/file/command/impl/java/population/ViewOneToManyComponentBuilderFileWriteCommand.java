@@ -16,7 +16,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 
     public ViewOneToManyComponentBuilderFileWriteCommand(OneToManyComponent oneToManyComponent){
         super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + oneToManyComponent.referenceBean.myPackage.builderPackageName.replace(".","\\"),
-        		oneToManyComponent.referenceBean.viewClassName + "Builder");
+        		oneToManyComponent.referenceBean.fullViewBean.className + "Builder");
         
         this.oneToManyComponent = oneToManyComponent;
         referenceBean = oneToManyComponent.referenceBean;
@@ -27,7 +27,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.Date;");
-        javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.ovPackageName + "." + oneToManyComponent.referenceBean.viewClassName + ";");
+        javaImports.add("import " + oneToManyComponent.referenceBean.myPackage.ovPackageName + "." + oneToManyComponent.referenceBean.fullViewBean.className + ";");
 	}
 
 	@Override
@@ -44,22 +44,21 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
         writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-        writeLine("public class " + referenceBean.viewClassName + "Builder {");
+        writeLine("public class " + referenceBean.fullViewBean.className + "Builder {");
         skipLine();
         
-        writeLine("public static " + referenceBean.viewClassName + " build(Object[] args) {");
+        writeLine("public static " + referenceBean.fullViewBean.className + " build(Object[] args) {");
         skipLine();
-	    writeLine(referenceBean.viewClassName + " " + referenceBean.viewObjectName + " = new " + referenceBean.viewClassName + "();");
+	    writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = new " + referenceBean.fullViewBean.className + "();");
 	    skipLine();
         
         Integer argNumber = parentBean.getFindProperties().size();
-        for (Property property : referenceBean.getVisibleProperties())
-        {
-            writeLine(referenceBean.viewObjectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
+        for (Property property : referenceBean.fullViewBean.properties) {
+            writeLine(referenceBean.fullViewBean.objectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
             argNumber++;
         }
 
-	    writeLine("return " + referenceBean.viewObjectName + ";");
+	    writeLine("return " + referenceBean.fullViewBean.objectName + ";");
         writeLine("}");
         writeLine("}");
 		

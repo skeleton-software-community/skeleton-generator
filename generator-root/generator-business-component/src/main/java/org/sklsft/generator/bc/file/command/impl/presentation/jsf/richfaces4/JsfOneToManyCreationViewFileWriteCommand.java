@@ -62,10 +62,8 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 		skipLine();
 
-		for (Property property : oneToMany.getVisibleProperties()) {
-			if (property.visibility.isDetailVisible()) {
-				writeInput(property, currentBean);
-			}
+		for (Property property : oneToMany.fullViewBean.properties) {
+			writeInput(property, currentBean);
 		}
 
 		writeLine("</div>");

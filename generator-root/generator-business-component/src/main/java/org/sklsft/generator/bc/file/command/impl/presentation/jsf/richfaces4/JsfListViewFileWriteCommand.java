@@ -97,17 +97,15 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		
 		writeLine("</rich:column>");
 
-		for (Property property : this.bean.getVisibleProperties()) {
-			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column>");
-				writeFilter(property, this.bean);
-				writeLine("</rich:column>");
-			}
+		for (Property property : this.bean.basicViewBean.properties) {
+			writeLine("<rich:column>");
+			writeFilter(property, this.bean);
+			writeLine("</rich:column>");
 		}
 
 		writeLine("<rich:column>");
 		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".reset" + bean.filterClassName + "}" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34 + ">");
+		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".reset" + bean.basicViewBean.filterClassName + "}" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34 + ">");
 		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
 		writeLine("</a4j:commandLink>");
 		
@@ -127,19 +125,17 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		skipLine();
 
 
-		for (Property property : this.bean.getVisibleProperties()) {
-			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + this.bean.objectName + "." + property.name + "}" + CHAR_34);
-				writeFilterExpression(property, bean);
-				writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-				writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34 + " />");
-				writeLine("</f:facet>");
+		for (Property property : this.bean.basicViewBean.properties) {
+			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + this.bean.objectName + "." + property.name + "}" + CHAR_34);
+			writeFilterExpression(property, bean);
+			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
+			writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34 + " />");
+			writeLine("</f:facet>");
 
-				writeListComponent(property, this.bean);
+			writeListComponent(property, this.bean);
 
-				writeLine("</rich:column>");
-				skipLine();
-			}
+			writeLine("</rich:column>");
+			skipLine();
 		}
 
 		writeLine("<rich:column>");

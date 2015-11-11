@@ -64,17 +64,14 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
         skipLine();
 
-        for (Property property : this.bean.getVisibleProperties())
+        for (Property property : this.bean.fullViewBean.properties)
         {
-            if (property.visibility.isDetailVisible())
-            {
-                writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "} : " + CHAR_34 + "/>");
-                
-                writeDetailComponent(property, bean);
+            writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "} : " + CHAR_34 + "/>");
+            
+            writeDetailComponent(property, bean);
 
-                writeLine("<h:message for=" + CHAR_34 + this.bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
-                skipLine();
-            }
+            writeLine("<h:message for=" + CHAR_34 + this.bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
+            skipLine();
         }
 
         writeLine("</h:panelGrid>");

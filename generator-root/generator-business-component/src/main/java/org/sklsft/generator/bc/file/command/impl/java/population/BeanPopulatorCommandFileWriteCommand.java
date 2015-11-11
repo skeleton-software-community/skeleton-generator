@@ -29,10 +29,10 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
         
-        javaImports.add("import " + bean.myPackage.builderPackageName + "." + bean.viewClassName + "Builder;");
+        javaImports.add("import " + bean.myPackage.builderPackageName + "." + bean.fullViewBean.className + "Builder;");
 	}
 
 	@Override
@@ -75,10 +75,10 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
                 
         writeLine("try {");
-        writeLine(bean.viewClassName + " " + bean.viewObjectName + " = " + bean.viewClassName + "Builder.build(args);");
+        writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = " + bean.fullViewBean.className + "Builder.build(args);");
         skipLine();
         
-        writeLine("this." + bean.serviceObjectName + ".save" + bean.className + "(" + this.bean.viewObjectName + ");");
+        writeLine("this." + bean.serviceObjectName + ".save" + bean.className + "(" + this.bean.fullViewBean.objectName + ");");
         writeLine("} catch (Exception e) {");
         writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage());");
         writeLine("}");

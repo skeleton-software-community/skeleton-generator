@@ -104,17 +104,15 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		
 		writeLine("</rich:column>");
 
-		for (Property property : oneToMany.getVisibleProperties()) {
-			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column>");
-				writeFilter(property, currentBean, parentBean);
-				writeLine("</rich:column>");
-			}
+		for (Property property : oneToMany.basicViewBean.properties) {
+			writeLine("<rich:column>");
+			writeFilter(property, currentBean, parentBean);
+			writeLine("</rich:column>");
 		}
 
 		writeLine("<rich:column>");
 		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.filterClassName + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34 + ">");
+		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.basicViewBean.filterClassName + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34 + ">");
 		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
 		writeLine("</a4j:commandLink>");
 		
@@ -134,19 +132,17 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		skipLine();
 
 
-		for (Property property : oneToMany.getVisibleProperties()) {
-			if (property.visibility.isListVisible()) {
-				writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + currentBean.objectName + "." + property.name + "}" + CHAR_34);
-				writeFilterExpression(property, currentBean, parentBean);
-				writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-				writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "}" + CHAR_34 + " />");
-				writeLine("</f:facet>");
+		for (Property property : oneToMany.basicViewBean.properties) {
+			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + currentBean.objectName + "." + property.name + "}" + CHAR_34);
+			writeFilterExpression(property, currentBean, parentBean);
+			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
+			writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "}" + CHAR_34 + " />");
+			writeLine("</f:facet>");
 
-				writeListComponent(property, currentBean);
+			writeListComponent(property, currentBean);
 
-				writeLine("</rich:column>");
-				skipLine();
-			}
+			writeLine("</rich:column>");
+			skipLine();
 		}
 
 		writeLine("<rich:column>");

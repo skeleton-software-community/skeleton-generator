@@ -38,11 +38,11 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
-        javaImports.add("import " + referenceBean.myPackage.ovPackageName + "." + referenceBean.viewClassName + ";");
-        javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.viewClassName + ";");
+        javaImports.add("import " + referenceBean.myPackage.ovPackageName + "." + referenceBean.fullViewBean.className + ";");
+        javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.fullViewBean.className + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
         
-        javaImports.add("import " + referenceBean.myPackage.builderPackageName + "." + referenceBean.viewClassName + "Builder;");
+        javaImports.add("import " + referenceBean.myPackage.builderPackageName + "." + referenceBean.fullViewBean.className + "Builder;");
 
 	}
 
@@ -88,11 +88,11 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         
         writeLine("try {");
         
-        writeLine(referenceBean.viewClassName + " " + referenceBean.viewObjectName + " = " + referenceBean.viewClassName + "Builder.build(args);");
+        writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = " + referenceBean.fullViewBean.className + "Builder.build(args);");
         skipLine();
         
         List<Property> findPropertyList = parentBean.getFindProperties();
-        write(parentBean.viewClassName + " " + parentBean.viewObjectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "((" + DataType.getJavaType(findPropertyList.get(0).dataType) + ")args[0]");
+        write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "((" + DataType.getJavaType(findPropertyList.get(0).dataType) + ")args[0]");
         for (int i=1;i<findPropertyList.size();i++)
         {
             write(", (" + DataType.getJavaType(findPropertyList.get(i).dataType) + ")args[" + i + "]");
@@ -100,7 +100,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine(");");
         skipLine();
         
-        writeLine("this." + parentBean.serviceObjectName + ".save" + referenceBean.className + "(" + referenceBean.viewObjectName + ", " + parentBean.viewObjectName + ".getId());");
+        writeLine("this." + parentBean.serviceObjectName + ".save" + referenceBean.className + "(" + referenceBean.fullViewBean.objectName + ", " + parentBean.fullViewBean.objectName + ".getId());");
         writeLine("} catch (Exception e) {");
         writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage());");
         writeLine("}");

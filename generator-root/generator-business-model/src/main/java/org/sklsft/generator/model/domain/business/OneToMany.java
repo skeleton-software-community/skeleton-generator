@@ -3,6 +3,9 @@ package org.sklsft.generator.model.domain.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sklsft.generator.model.domain.ui.BasicViewBean;
+import org.sklsft.generator.model.domain.ui.FullViewBean;
+
 public class OneToMany {
 
 	public Bean referenceBean;
@@ -12,13 +15,16 @@ public class OneToMany {
     public String collectionGetterName;
     public String collectionSetterName;
     
+    public BasicViewBean basicViewBean;
+    public FullViewBean fullViewBean;
+    
     
 	/**
 	 * get the list of properties that will be available in a basic view bean
 	 * 
 	 * @return
 	 */
-	public List<Property> getVisibleProperties() {
+	private List<Property> getVisibleProperties() {
 		List<Property> visiblePropertyList = new ArrayList<Property>();
 		List<Property> tempPropertyList = new ArrayList<Property>();
 
@@ -59,5 +65,29 @@ public class OneToMany {
 		}
 
 		return visiblePropertyList;
+	}
+	
+	public List<Property> getBasicViewProperties() {
+		List<Property> result = new ArrayList<>();
+		
+		for (Property property:getVisibleProperties()) {
+			if (property.visibility.isListVisible()) {
+				result.add(property);
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Property> getFullViewProperties() {
+		List<Property> result = new ArrayList<>();
+		
+		for (Property property:getVisibleProperties()) {
+			if (property.visibility.isDetailVisible()) {
+				result.add(property);
+			}
+		}
+		
+		return result;
 	}
 }

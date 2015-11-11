@@ -9,15 +9,15 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 
 
-public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
+public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 	/*
 	 * constructor
 	 */
-	public ViewBeanFileWriteCommand(Bean bean) {
+	public BasicViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\" + bean.myPackage.ovPackageName.replace(".","\\"), bean.viewClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\" + bean.myPackage.ovPackageName.replace(".","\\"), bean.basicViewBean.className);
 		
 		this.bean = bean;
 		
@@ -45,7 +45,7 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("public class " + this.bean.viewClassName + " implements Serializable {");
+        writeLine("public class " + this.bean.basicViewBean.className + " implements Serializable {");
         skipLine();
 
         writeLine("private static final long serialVersionUID = 1L;");
@@ -67,11 +67,10 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private Long id;");
         writeLine("private boolean selected;");
 
-        List<Property> visiblePropertyList = this.bean.getVisibleProperties();
+        List<Property> visiblePropertyList = this.bean.basicViewBean.properties;
 
-        for (int i=0;i<visiblePropertyList.size();i++)
-        {
-            writeLine("private " + visiblePropertyList.get(i).beanDataType + " " + visiblePropertyList.get(i).name + ";");
+        for (Property property:visiblePropertyList) {
+            writeLine("private " + property.beanDataType + " " + property.name + ";");
         }
         skipLine();
 
@@ -102,17 +101,16 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        List<Property> visiblePropertyList = this.bean.getVisibleProperties();
+        List<Property> visiblePropertyList = this.bean.basicViewBean.properties;
 
-        for (int i=0;i<visiblePropertyList.size();i++)
-        {
-            writeLine("public " + visiblePropertyList.get(i).beanDataType + " get" + visiblePropertyList.get(i).capName + "() {");
-            writeLine("return this." + visiblePropertyList.get(i).name + ";");
+        for (Property property:visiblePropertyList) {
+            writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
+            writeLine("return this." + property.name + ";");
             writeLine("}");
             skipLine();
             
-            writeLine("public void set" + visiblePropertyList.get(i).capName + "(" + visiblePropertyList.get(i).beanDataType + " " + visiblePropertyList.get(i).name + ") {");
-            writeLine("this." + visiblePropertyList.get(i).name + " = " + visiblePropertyList.get(i).name + ";");
+            writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
+            writeLine("this." + property.name + " = " + property.name + ";");
             writeLine("}");
             skipLine();
         }

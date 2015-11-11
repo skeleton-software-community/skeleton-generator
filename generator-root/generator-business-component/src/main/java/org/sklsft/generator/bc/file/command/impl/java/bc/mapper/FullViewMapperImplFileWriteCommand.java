@@ -6,16 +6,16 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 
-public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
+public class FullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
 	/*
 	 * constructor
 	 */
-	public MapperImplFileWriteCommand(Bean bean) {
+	public FullViewMapperImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.mapperImplPackageName.replace(".", "\\"), bean.mapperClassName);
+				+ bean.myPackage.mapperImplPackageName.replace(".", "\\"), bean.fullViewBean.mapperClassName);
 
 		this.bean = bean;
 	}
@@ -24,7 +24,7 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-        javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.baseMapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.fullViewBean.baseMapperClassName + ";");
 		
 	}
 
@@ -45,7 +45,7 @@ public class MapperImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Component");
-        writeLine("public class " + this.bean.mapperClassName + " extends " + this.bean.baseMapperClassName + " {");
+        writeLine("public class " + this.bean.fullViewBean.mapperClassName + " extends " + this.bean.fullViewBean.baseMapperClassName + " {");
         skipLine();
         
         this.writeNotOverridableContent();

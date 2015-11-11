@@ -13,7 +13,7 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 
     public ViewBeanBuilderFileWriteCommand(Bean bean){
         super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + bean.myPackage.builderPackageName.replace(".","\\"),
-        		bean.viewClassName + "Builder");
+        		bean.fullViewBean.className + "Builder");
         
         		this.bean = bean;
     }
@@ -22,7 +22,7 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.Date;");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 	}
 
 	@Override
@@ -39,22 +39,21 @@ public class ViewBeanBuilderFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-        writeLine("public class " + bean.viewClassName + "Builder {");
+        writeLine("public class " + bean.fullViewBean.className + "Builder {");
         skipLine();
         
-        writeLine("public static " + bean.viewClassName + " build(Object[] args) {");
+        writeLine("public static " + bean.fullViewBean.className + " build(Object[] args) {");
         skipLine();
-	    writeLine(bean.viewClassName + " " + bean.viewObjectName + " = new " + bean.viewClassName + "();");
+	    writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = new " + bean.fullViewBean.className + "();");
 	    skipLine();
                 
         Integer argNumber = 0;
-        for (Property property : bean.getVisibleProperties())
-        {            
-            writeLine(bean.viewObjectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
+        for (Property property : bean.fullViewBean.properties) {            
+            writeLine(bean.fullViewBean.objectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
             argNumber++;
         }
         
-	    writeLine("return " + bean.viewObjectName + ";");
+	    writeLine("return " + bean.fullViewBean.objectName + ";");
         
         writeLine("}");
         
