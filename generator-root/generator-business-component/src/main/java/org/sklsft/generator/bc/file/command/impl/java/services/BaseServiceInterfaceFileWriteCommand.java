@@ -27,18 +27,20 @@ private Bean bean;
 		
 		javaImports.add("import java.util.Date;");
         javaImports.add("import java.util.List;");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");        
-
+        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+        
         for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 
         for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 		
 	}
@@ -100,7 +102,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * load object list");
         writeLine(" */");
-        writeLine("List<" + this.bean.viewClassName + "> load" + this.bean.className + "List();");
+        writeLine("List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "List();");
         skipLine();
 
         for (Property property : this.bean.properties)
@@ -110,7 +112,7 @@ private Bean bean;
                 writeLine("/**");
                 writeLine(" * load object list from " + property.name);
                 writeLine(" */");
-                writeLine("List<" + this.bean.viewClassName + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
+                writeLine("List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
             }
         }
@@ -122,7 +124,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * load object");
         writeLine(" */");
-        writeLine(this.bean.viewClassName + " load" + this.bean.className + "(Long id);");
+        writeLine(this.bean.fullViewBean.className + " load" + this.bean.className + "(Long id);");
         skipLine();
 
     }
@@ -135,7 +137,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * find object");
         writeLine(" */");
-        write(this.bean.viewClassName + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
+        write(this.bean.fullViewBean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -154,7 +156,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * load unique component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.viewClassName + " load" + currentBean.className + "(Long id);");
+            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
             skipLine();
         }
     }
@@ -168,7 +170,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * load one to many component " + currentBean.objectName + " list");
             writeLine(" */");
-            writeLine("List<" + currentBean.viewClassName + "> load" + currentBean.className + "List(Long id);");
+            writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id);");
             skipLine();
         }
     }
@@ -182,7 +184,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * load one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.viewClassName + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");            
+            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");            
             skipLine();
         }
     }
@@ -192,7 +194,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * create object");
         writeLine(" */");
-        writeLine(this.bean.viewClassName + " create" + this.bean.className + "();");
+        writeLine(this.bean.fullViewBean.className + " create" + this.bean.className + "();");
         skipLine();
     }
 
@@ -205,7 +207,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * create one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.viewClassName + " create" + currentBean.className + "();");
+            writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "();");
             skipLine();
         }
     }
@@ -215,7 +217,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * save object");        
         writeLine(" */");
-        writeLine("Long save" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ");");
+        writeLine("Long save" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
         skipLine();
         
         for (Property property:bean.properties) {
@@ -227,7 +229,7 @@ private Bean bean;
         			writeLine("/**");
         	        writeLine(" * save object from parent " + parentBean.className);        
         	        writeLine(" */");
-        	        writeLine("Long save" + this.bean.className + "From" + parentBean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ", Long " + parentBean.objectName + "Id);");
+        	        writeLine("Long save" + this.bean.className + "From" + parentBean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ", Long " + parentBean.objectName + "Id);");
         	        skipLine();
         		}
         	}
@@ -243,7 +245,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * save one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void save" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
+            writeLine("void save" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id);");
             skipLine();
         }
     }
@@ -253,7 +255,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * update object");        
         writeLine(" */");
-        writeLine("void update" + this.bean.className + "(" + this.bean.viewClassName + " " + this.bean.viewObjectName + ");");
+        writeLine("void update" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
         skipLine();
     }
 
@@ -266,7 +268,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * update unique component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ", Long id);");
+            writeLine("void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id);");
             skipLine();
         }
     }
@@ -280,7 +282,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * update one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("void update" + currentBean.className + "(" + currentBean.viewClassName + " " + currentBean.viewObjectName + ");");
+            writeLine("void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ");");
             skipLine();
         }
     }
