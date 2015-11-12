@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces4;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,16 +9,20 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.UniqueComponent;
 
-public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
+public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public MvcDetailViewFileWriteCommand(Bean bean) {
+	public CommonMvcDetailViewFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
 				+ bean.myPackage.detailViewPackageName.replace(".", "\\"), bean.detailViewClassName);
 
 		this.bean = bean;
 	}
+	
+	protected abstract void writeViewScope();
+	
+	protected abstract void writeViewScopeImport();
 
 	@Override
 	protected void fetchSpecificImports() {
@@ -28,23 +32,25 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 		
-		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 		
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 		}
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 		}
 	}
 
@@ -63,7 +69,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-		writeLine("@Scope(" + CHAR_34 + "view" + CHAR_34 + ")");
+		writeViewScope();
 		writeLine("public class " + this.bean.detailViewClassName + " implements Serializable {");
         skipLine();
 
@@ -75,12 +81,12 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("private Long selected" + this.bean.className + "Id;");
 		skipLine();
-		writeLine("private " + this.bean.viewClassName + " selected" + this.bean.className + ";");
+		writeLine("private " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
 		skipLine();
 		
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
-			writeLine("private " + currentBean.viewClassName + " selected" + uniqueComponent.referenceBean.className + ";");
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + uniqueComponent.referenceBean.className + ";");
 			skipLine();
 		}
 		
@@ -88,19 +94,19 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			writeLine("private List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List;");
-			writeLine("private " + currentBean.filterClassName + " " + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
-			writeLine("private " + currentBean.viewClassName + " new" + currentBean.className + ";");
-			writeLine("private " + currentBean.viewClassName + " selected" + currentBean.className + ";");
+			writeLine("private List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List;");
+			writeLine("private " + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + " = new " + currentBean.basicViewBean.filterClassName + "();");
+			writeLine("private " + currentBean.fullViewBean.className + " new" + currentBean.className + ";");
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + ";");
 			skipLine();
 		}
 		
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			writeLine("private List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List;");
-			writeLine("private " + currentBean.filterClassName + " " + currentBean.filterObjectName + " = new " + currentBean.filterClassName + "();");
-			writeLine("private " + currentBean.viewClassName + " new" + currentBean.className + ";");
+			writeLine("private List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List;");
+			writeLine("private " + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + " = new " + currentBean.basicViewBean.filterClassName + "();");
+			writeLine("private " + currentBean.fullViewBean.className + " new" + currentBean.className + ";");
 			skipLine();
 		}
 		
@@ -116,21 +122,21 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		skipLine();
 		
-		writeLine("public " + this.bean.viewClassName + " getSelected" + this.bean.className + "() {");
+		writeLine("public " + this.bean.fullViewBean.className + " getSelected" + this.bean.className + "() {");
 		writeLine("return selected" + this.bean.className + ";");
 		writeLine("}");
-		writeLine("public void setSelected" + this.bean.className + "(" + this.bean.viewClassName + " selected" + this.bean.className + ") {");
+		writeLine("public void setSelected" + this.bean.className + "(" + this.bean.fullViewBean.className + " selected" + this.bean.className + ") {");
 		writeLine("this.selected" + this.bean.className + " = selected" + this.bean.className + ";");
 		writeLine("}");
 		skipLine();
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
-			writeLine("public " + currentBean.viewClassName + " getSelected" + currentBean.className + "() {");
+			writeLine("public " + currentBean.fullViewBean.className + " getSelected" + currentBean.className + "() {");
 			writeLine("return selected" + currentBean.className + ";");
 			writeLine("}");
 
-			writeLine("public void setSelected" + currentBean.className + "(" + currentBean.viewClassName + " selected" + currentBean.className + ") {");
+			writeLine("public void setSelected" + currentBean.className + "(" + currentBean.fullViewBean.className + " selected" + currentBean.className + ") {");
 			writeLine("this.selected" + currentBean.className + " = selected" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
@@ -138,38 +144,38 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			writeLine("public List<" + currentBean.viewClassName + "> get" + currentBean.className + "List() {");
+			writeLine("public List<" + currentBean.basicViewBean.className + "> get" + currentBean.className + "List() {");
 			writeLine("return " + currentBean.objectName + "List;");
 			writeLine("}");
 
-			writeLine("public void set" + currentBean.className + "List(List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List) {");
+			writeLine("public void set" + currentBean.className + "List(List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List) {");
 			writeLine("this." + currentBean.objectName + "List = " + currentBean.objectName + "List;");
 			writeLine("}");
 			skipLine();
 			
-			writeLine("public " + currentBean.filterClassName + " get" + currentBean.filterClassName + "() {");
-			writeLine("return " + currentBean.filterObjectName + ";");
+			writeLine("public " + currentBean.basicViewBean.filterClassName + " get" + currentBean.basicViewBean.filterClassName + "() {");
+			writeLine("return " + currentBean.basicViewBean.filterObjectName + ";");
 			writeLine("}");
 
-			writeLine("public void set" + currentBean.filterClassName + "(" + currentBean.filterClassName + " " + currentBean.filterObjectName + ") {");
-			writeLine("this." + currentBean.filterObjectName + " = " + currentBean.filterObjectName + ";");
+			writeLine("public void set" + currentBean.basicViewBean.filterClassName + "(" + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + ") {");
+			writeLine("this." + currentBean.basicViewBean.filterObjectName + " = " + currentBean.basicViewBean.filterObjectName + ";");
 			writeLine("}");
 			skipLine();
 
-			writeLine("public " + currentBean.viewClassName + " getNew" + currentBean.className + "() {");
+			writeLine("public " + currentBean.fullViewBean.className + " getNew" + currentBean.className + "() {");
 			writeLine("return new" + currentBean.className + ";");
 			writeLine("}");
 
-			writeLine("public void setNew" + currentBean.className + "(" + currentBean.viewClassName + " new" + currentBean.className + ") {");
+			writeLine("public void setNew" + currentBean.className + "(" + currentBean.fullViewBean.className + " new" + currentBean.className + ") {");
 			writeLine("this.new" + currentBean.className + " = new" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
 			
-			writeLine("public " + currentBean.viewClassName + " getSelected" + currentBean.className + "() {");
+			writeLine("public " + currentBean.fullViewBean.className + " getSelected" + currentBean.className + "() {");
 			writeLine("return selected" + currentBean.className + ";");
 			writeLine("}");
 
-			writeLine("public void setSelected" + currentBean.className + "(" + currentBean.viewClassName + " selected" + currentBean.className + ") {");
+			writeLine("public void setSelected" + currentBean.className + "(" + currentBean.fullViewBean.className + " selected" + currentBean.className + ") {");
 			writeLine("this.selected" + currentBean.className + " = selected" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
@@ -177,29 +183,29 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			writeLine("public List<" + currentBean.viewClassName + "> get" + currentBean.className + "List() {");
+			writeLine("public List<" + currentBean.basicViewBean.className + "> get" + currentBean.className + "List() {");
 			writeLine("return " + currentBean.objectName + "List;");
 			writeLine("}");
 
-			writeLine("public void set" + currentBean.className + "List(List<" + currentBean.viewClassName + "> " + currentBean.objectName + "List) {");
+			writeLine("public void set" + currentBean.className + "List(List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List) {");
 			writeLine("this." + currentBean.objectName + "List = " + currentBean.objectName + "List;");
 			writeLine("}");
 			skipLine();
 			
-			writeLine("public " + currentBean.filterClassName + " get" + currentBean.filterClassName + "() {");
-			writeLine("return " + currentBean.filterObjectName + ";");
+			writeLine("public " + currentBean.basicViewBean.filterClassName + " get" + currentBean.basicViewBean.filterClassName + "() {");
+			writeLine("return " + currentBean.basicViewBean.filterObjectName + ";");
 			writeLine("}");
 
-			writeLine("public void set" + currentBean.filterClassName + "(" + currentBean.filterClassName + " " + currentBean.filterObjectName + ") {");
-			writeLine("this." + currentBean.filterObjectName + " = " + currentBean.filterObjectName + ";");
+			writeLine("public void set" + currentBean.basicViewBean.filterClassName + "(" + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + ") {");
+			writeLine("this." + currentBean.basicViewBean.filterObjectName + " = " + currentBean.basicViewBean.filterObjectName + ";");
 			writeLine("}");
 			skipLine();
 
-			writeLine("public " + currentBean.viewClassName + " getNew" + currentBean.className + "() {");
+			writeLine("public " + currentBean.fullViewBean.className + " getNew" + currentBean.className + "() {");
 			writeLine("return new" + currentBean.className + ";");
 			writeLine("}");
 
-			writeLine("public void setNew" + currentBean.className + "(" + currentBean.viewClassName + " new" + currentBean.className + ") {");
+			writeLine("public void setNew" + currentBean.className + "(" + currentBean.fullViewBean.className + " new" + currentBean.className + ") {");
 			writeLine("this.new" + currentBean.className + " = new" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();

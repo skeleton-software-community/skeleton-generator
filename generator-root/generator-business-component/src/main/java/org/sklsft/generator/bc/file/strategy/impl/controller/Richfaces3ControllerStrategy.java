@@ -1,13 +1,13 @@
 package org.sklsft.generator.bc.file.strategy.impl.controller;
 
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.BaseJsfDetailControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.BaseJsfListControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.DataTableFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.JsfCommonControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.JsfDetailControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3.JsfListControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces3.MvcDetailViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces3.MvcListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.DataTableFilterFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfDetailControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfDetailControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces.MvcListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces.richfaces3.MvcDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Package;

@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces3;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 
 	public DataTableFilterFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
-				+ bean.myPackage.filterPackageName.replace(".", "\\"), bean.filterClassName);
+				+ bean.myPackage.filterPackageName.replace(".", "\\"), bean.basicViewBean.filterClassName);
 
 		this.bean = bean;
 	}
@@ -39,7 +39,7 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.filterClassName + " implements Serializable {");
+		writeLine("public class " + this.bean.basicViewBean.filterClassName + " implements Serializable {");
 		skipLine();
 
 		writeLine("private static final long serialVersionUID = 1L;");
@@ -58,10 +58,8 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * properties");
 		writeLine(" */");
 		
-		List<Property> visiblePropertyList = this.bean.getVisibleProperties();
-
-		for (int i = 0; i < visiblePropertyList.size(); i++) {
-			writeLine("private String " + visiblePropertyList.get(i).name + ";");
+		for (Property property:this.bean.basicViewBean.properties) {
+			writeLine("private String " + property.name + ";");
 		}
 		skipLine();
 
@@ -72,16 +70,14 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 
-		List<Property> visiblePropertyList = this.bean.getVisibleProperties();
-
-		for (int i = 0; i < visiblePropertyList.size(); i++) {
-			writeLine("public String get" + visiblePropertyList.get(i).capName + "() {");
-			writeLine("return this." + visiblePropertyList.get(i).name + ";");
+		for (Property property:this.bean.basicViewBean.properties) {
+			writeLine("public String get" + property.capName + "() {");
+			writeLine("return this." + property.name + ";");
 			writeLine("}");
 			skipLine();
 
-			writeLine("public void set" + visiblePropertyList.get(i).capName + "(String " + visiblePropertyList.get(i).name + ") {");
-			writeLine("this." + visiblePropertyList.get(i).name + " = " + visiblePropertyList.get(i).name + ";");
+			writeLine("public void set" + property.capName + "(String " + property.name + ") {");
+			writeLine("this." + property.name + " = " + property.name + ";");
 			writeLine("}");
 			skipLine();
 		}

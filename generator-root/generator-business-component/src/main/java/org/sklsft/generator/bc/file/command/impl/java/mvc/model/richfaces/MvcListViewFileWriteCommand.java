@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces4;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +26,9 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 		
-		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 	}
 
 	@Override
@@ -55,35 +56,35 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * properties");
 		writeLine(" */");
-		writeLine("protected List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List;");
-		writeLine("protected " + this.bean.filterClassName + " " + this.bean.filterObjectName + " = new " + this.bean.filterClassName + "();");
-		writeLine("protected " + this.bean.viewClassName + " new" + this.bean.className + ";");
+		writeLine("protected List<" + this.bean.basicViewBean.className + "> " + this.bean.objectName + "List;");
+		writeLine("protected " + this.bean.basicViewBean.filterClassName + " " + this.bean.basicViewBean.filterObjectName + " = new " + this.bean.basicViewBean.filterClassName + "();");
+		writeLine("protected " + this.bean.fullViewBean.className + " new" + this.bean.className + ";");
 		skipLine();
 
 		writeLine("/*");
 		writeLine(" * getters and setters");
 		writeLine(" */");
-		writeLine("public List<" + this.bean.viewClassName + "> get" + this.bean.className + "List() {");
+		writeLine("public List<" + this.bean.basicViewBean.className + "> get" + this.bean.className + "List() {");
 		writeLine("return " + this.bean.objectName + "List;");
 		writeLine("}");
-		writeLine("public void set" + this.bean.className + "List(List<" + this.bean.viewClassName + "> " + this.bean.objectName + "List) {");
+		writeLine("public void set" + this.bean.className + "List(List<" + this.bean.basicViewBean.className + "> " + this.bean.objectName + "List) {");
 		writeLine("this." + this.bean.objectName + "List = " + this.bean.objectName + "List;");
 		writeLine("}");
 		skipLine();
 		
-		writeLine("public " + this.bean.filterClassName + " get" + this.bean.filterClassName + "() {");
-		writeLine("return " + this.bean.filterObjectName + ";");
+		writeLine("public " + this.bean.basicViewBean.filterClassName + " get" + this.bean.basicViewBean.filterClassName + "() {");
+		writeLine("return " + this.bean.basicViewBean.filterObjectName + ";");
 		writeLine("}");
-		writeLine("public void set" + this.bean.filterClassName + "(" + this.bean.filterClassName + " " + this.bean.filterObjectName + ") {");
-		writeLine("this." + this.bean.filterObjectName + " = " + this.bean.filterObjectName + ";");
+		writeLine("public void set" + this.bean.basicViewBean.filterClassName + "(" + this.bean.basicViewBean.filterClassName + " " + this.bean.basicViewBean.filterObjectName + ") {");
+		writeLine("this." + this.bean.basicViewBean.filterObjectName + " = " + this.bean.basicViewBean.filterObjectName + ";");
 		writeLine("}");
 		skipLine();
 		
-		writeLine("public " + this.bean.viewClassName + " getNew" + this.bean.className + "() {");
+		writeLine("public " + this.bean.fullViewBean.className + " getNew" + this.bean.className + "() {");
 		writeLine("return new" + this.bean.className + ";");
 		writeLine("}");
 
-		writeLine("public void setNew" + this.bean.className + "(" + this.bean.viewClassName + " new" + this.bean.className + ") {");
+		writeLine("public void setNew" + this.bean.className + "(" + this.bean.fullViewBean.className + " new" + this.bean.className + ") {");
 		writeLine("this.new" + this.bean.className + " = new" + this.bean.className + ";");
 		writeLine("}");
 		skipLine();
