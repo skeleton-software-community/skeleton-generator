@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.strategy.impl.model;
 
+import org.sklsft.generator.bc.file.command.impl.java.model.BasicViewBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.model.EntityBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.model.FullViewBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
@@ -29,8 +30,11 @@ public class HibernateBusinessModelStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode ovTreeNode = new FileWriteCommandTreeNode("View beans");
 			packageTreeNode.add(ovTreeNode);
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new FullViewBeanFileWriteCommand(bean));
-				ovTreeNode.add(beanTreeNode);
+				FileWriteCommandTreeNode basicViewTreeNode = new FileWriteCommandTreeNode(new BasicViewBeanFileWriteCommand(bean));
+				ovTreeNode.add(basicViewTreeNode);
+				
+				FileWriteCommandTreeNode fullViewTreeNode = new FileWriteCommandTreeNode(new FullViewBeanFileWriteCommand(bean));
+				ovTreeNode.add(fullViewTreeNode);
 			}
 		}
 

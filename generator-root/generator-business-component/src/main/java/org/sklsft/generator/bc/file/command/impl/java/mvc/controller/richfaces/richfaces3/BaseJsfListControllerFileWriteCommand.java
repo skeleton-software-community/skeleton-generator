@@ -7,7 +7,6 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.business.UniqueComponent;
-import org.sklsft.generator.model.metadata.Visibility;
 
 public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
@@ -34,9 +33,9 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
 		javaImports.add("import " + this.bean.myPackage.listViewPackageName + "." + this.bean.listViewClassName + ";");
-		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.filterClassName + ";");
-		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.viewClassName + ";");
-		
+		javaImports.add("import " + this.bean.myPackage.filterPackageName + "." + this.bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * load object list");
 		writeLine(" */");
 		writeLine("public void load() {");
-		writeLine("this.reset" + bean.filterClassName + "();");
+		writeLine("this.reset" + bean.basicViewBean.filterClassName + "();");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();
@@ -122,8 +121,8 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" */");
 		writeLine("public void create" + this.bean.className + "() {");
 
-		for (Property property : this.bean.getVisibleProperties()) {
-			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+		for (Property property : this.bean.fullViewBean.properties) {
+			if (property.comboBoxBean != null && property.editable) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 			}
 		}
@@ -131,8 +130,8 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
 			Bean currentBean = uniqueComponent.referenceBean;
 
-			for (Property property : currentBean.getVisibleProperties()) {
-				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+			for (Property property : currentBean.fullViewBean.properties) {
+				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
@@ -179,9 +178,9 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
 		writeLine("public void delete" + this.bean.className + "List() {");
 		writeLine("List<Long> ids = new ArrayList<>();");
-		writeLine("for (" + bean.viewClassName + " " + bean.viewObjectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
-		writeLine("if (" + bean.viewObjectName + ".getSelected()) {");
-		writeLine("ids.add(" + bean.viewObjectName + ".getId());");
+		writeLine("for (" + bean.basicViewBean.className + " " + bean.objectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
+		writeLine("if (" + bean.objectName + ".getSelected()) {");
+		writeLine("ids.add(" + bean.objectName + ".getId());");
 		writeLine("}");
 		writeLine("}");
 		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(ids);");
@@ -196,8 +195,8 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * reset object datatable filter");
 		writeLine(" */");
-		writeLine("public void reset" + bean.filterClassName + "() {");
-		writeLine("this." + this.bean.listViewObjectName + ".set" + bean.filterClassName + "(new " + bean.filterClassName + "());");
+		writeLine("public void reset" + bean.basicViewBean.filterClassName + "() {");
+		writeLine("this." + this.bean.listViewObjectName + ".set" + bean.basicViewBean.filterClassName + "(new " + bean.basicViewBean.filterClassName + "());");
 		writeLine("}");
 		skipLine();
 	}

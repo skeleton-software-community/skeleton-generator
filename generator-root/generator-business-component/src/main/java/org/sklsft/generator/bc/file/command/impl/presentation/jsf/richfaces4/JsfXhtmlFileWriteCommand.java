@@ -88,21 +88,23 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			break;
 
 		case TEXT:
-			writeLine("<h:outputText value=" + CHAR_34 + ">" + CHAR_34
-					+ "/>");
-			writeLine("<rich:toolTip style=" + CHAR_34
-					+ "background:white;border:white" + CHAR_34 + ">");
-			writeLine("<h:inputTextarea value=" + CHAR_34 + "#{"
+			writeLine("<h:outputText styleClass=" + CHAR_34 + "truncated-text" + CHAR_34 + " value=" + CHAR_34 + "#{"
 					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ " rows=" + CHAR_34 + "10" + CHAR_34 + " readonly="
-					+ CHAR_34 + "true" + CHAR_34 + "/>");
-			writeLine("</rich:toolTip>");
+					+ "/>");
+			writeLine("<rich:tooltip>");
+			writeLine("<h:outputText value=" + CHAR_34 + "#{"
+					+ bean.objectName + "." + property.name + "}" + CHAR_34 + "/>");
+			writeLine("</rich:tooltip>");
 			break;
 		}
 	}
-
+	
 	
 	protected void writeInput(Property property, Bean bean){
+		writeInput("", property, bean);
+	}
+	
+	protected void writeInput(String prefix, Property property, Bean bean){
 		
 		writeLine("<div class=" + CHAR_34 + "col-xs-12" + CHAR_34 + ">");
 		
@@ -111,42 +113,42 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		}
 		
 		if (property.comboBoxBean != null) {
-			writeCombobox(property, bean);
+			writeCombobox(prefix, property, bean);
 		} else {
 		
 			switch (property.dataType) {
 				case BOOLEAN:
-					writeBooleanInput(property, bean);
+					writeBooleanInput(prefix, property, bean);
 					break;
 				case DATETIME:
-					writeDateInput(property, bean);
+					writeDateInput(prefix, property, bean);
 					break;
 				case DOUBLE:
-					writeDoubleInput(property, bean);
+					writeDoubleInput(prefix, property, bean);
 					break;
 				case LONG:
-					writeLongInput(property, bean);
+					writeLongInput(prefix, property, bean);
 					break;
 				case STRING:
-					writeStringInput(property, bean);
+					writeStringInput(prefix, property, bean);
 					break;
 				case TEXT:
-					writeTextInput(property, bean);
+					writeTextInput(prefix, property, bean);
 					break;
 			}
 		}
 		
 		if (!property.dataType.equals(DataType.BOOLEAN)) {
-			writeLine("<h:message for=" + CHAR_34 + bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
+			writeLine("<h:message for=" + CHAR_34 + prefix + bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
 		}
 		
 		writeLine("</div>");
         skipLine();
 	}
 	
-	private void writeCombobox(Property property, Bean bean){
+	private void writeCombobox(String prefix, Property property, Bean bean){
 		
-		write("<h:selectOneMenu id=" + CHAR_34 + bean.objectName
+		write("<h:selectOneMenu id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass=" + CHAR_34
 				+ "form-control" + CHAR_34 + " value=" + CHAR_34
 				+ "#{" + bean.objectName + "." + property.name + "}"
@@ -218,8 +220,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 	}
 	
 	
-	private void writeStringInput(Property property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + bean.objectName
+	private void writeStringInput(String prefix, Property property, Bean bean){
+		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
@@ -236,8 +238,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("/>");
 	}
 	
-	private void writeTextInput(Property property, Bean bean){
-		write("<h:inputTextarea id=" + CHAR_34 + bean.objectName
+	private void writeTextInput(String prefix, Property property, Bean bean){
+		write("<h:inputTextarea id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " rows="
 				+ CHAR_34 + "10" + CHAR_34 + " value="
@@ -255,10 +257,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("/>");
 	}
 	
-	private void writeBooleanInput(Property property, Bean bean){
+	private void writeBooleanInput(String prefix, Property property, Bean bean){
 		writeLine("<div class=" + CHAR_34 + "checkbox" + CHAR_34 + ">");
 		writeLine("<label>");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34
+		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + prefix 
 				+ bean.objectName + property.capName
 				+ CHAR_34 + " value=" + CHAR_34 + "#{"
 				+ bean.objectName + "." + property.name + "}"
@@ -278,8 +280,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("</div>");
 	}
 	
-	private void writeDoubleInput(Property property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + bean.objectName
+	private void writeDoubleInput(String prefix, Property property, Bean bean){
+		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
@@ -313,8 +315,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("</h:inputText>");
 	}
 	
-	private void writeLongInput(Property property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + bean.objectName
+	private void writeLongInput(String prefix, Property property, Bean bean){
+		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
@@ -335,8 +337,8 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("</h:inputText>");
 	}
 	
-	private void writeDateInput(Property property, Bean bean){
-		writeLine("<rich:calendar id=" + CHAR_34
+	private void writeDateInput(String prefix, Property property, Bean bean){
+		writeLine("<rich:calendar id=" + CHAR_34 + prefix 
 				+ bean.objectName + property.capName + CHAR_34
 				+ " inputClass=" + CHAR_34 + "form-control"
 				+ CHAR_34 + " value=" + CHAR_34 + "#{"

@@ -4,7 +4,9 @@ import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
+import org.springframework.stereotype.Component;
 
+@Component("javaFullViewBeanFactory")
 public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 
 	@Override

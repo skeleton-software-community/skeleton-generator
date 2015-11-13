@@ -37,7 +37,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null) {
+			if (property.referenceBean != null && property.visibility.isListVisible()) {
 				boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 				if (test) {
 					javaImports.add("import " + property.referenceBean.myPackage.DAOInterfacePackageName + "." + property.referenceBean.daoInterfaceName + ";");
@@ -106,9 +106,9 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		writeLine(this.bean.basicViewBean.objectName + " = super.mapFrom(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
 		writeLine(this.bean.basicViewBean.objectName + ".setSelected(false);");
 
-		for (Property property : this.bean.properties) {
-			if (property.visibility.isListVisible()) {
-				if (property.referenceBean != null) {
+		for (Property property : this.bean.properties) {			
+			if (property.referenceBean != null) {
+				if (property.visibility.isListVisible()) {
 					List<Property> findPropertyList = property.referenceBean.getFindProperties();
 					if (property.nullable) {
 						writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
@@ -143,19 +143,15 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		writeLine(this.bean.objectName + " = super.mapTo(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
 
 		for (Property property : this.bean.properties) {
-			if (property.visibility.isListVisible()) {
-				if (property.referenceBean == null) {
-					writeLine(this.bean.objectName + "." + property.setterName + "(" + this.bean.basicViewBean.objectName + "." + property.fetchName + ");");
-				} else {
-					List<Property> findPropertyList = property.referenceBean.getFindProperties();
-					writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
-					writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
-					for (int j = 1; j < findPropertyList.size(); j++) {
-						writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(j).capName + "()");
-					}
-	
-					writeLine("));");
+			if (property.referenceBean != null && property.visibility.isListVisible()) {
+				List<Property> findPropertyList = property.referenceBean.getFindProperties();
+				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
+				writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
+				for (int j = 1; j < findPropertyList.size(); j++) {
+					writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(j).capName + "()");
 				}
+
+				writeLine("));");
 			}
 		}
 

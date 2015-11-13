@@ -2,15 +2,9 @@ package org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.sklsft.generator.bc.file.command.impl.sql.SqlFileWriteCommand;
 import org.sklsft.generator.model.domain.Project;
-import org.sklsft.generator.model.domain.database.Column;
-import org.sklsft.generator.model.domain.database.QualifiedColumn;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
 
@@ -72,13 +66,15 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("/");
 		skipLine();
 		
-		write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(1).name);
-		for (int i = 2; i <= this.table.cardinality; i++) {
-			write("," + this.table.columns.get(i).name);
+		if (table.cardinality > 0) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(1).name);
+			for (int i = 2; i <= this.table.cardinality; i++) {
+				write("," + this.table.columns.get(i).name);
+			}
+			writeLine(");");
+			writeLine("/");
+			skipLine();
 		}
-		writeLine(");");
-		writeLine("/");
-		skipLine();
 
 		writeLine("ALTER TABLE " + table.name + " ADD CONSTRAINT PK_" + table.name + " PRIMARY KEY (" + this.table.columns.get(0).name + ");");
 		writeLine("/");

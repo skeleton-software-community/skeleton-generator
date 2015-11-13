@@ -2,7 +2,6 @@ package org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.Map;
 import org.sklsft.generator.bc.file.command.impl.sql.SqlFileWriteCommand;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Column;
-import org.sklsft.generator.model.domain.database.QualifiedColumn;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
 
@@ -24,7 +22,7 @@ public class PostgresqlStoredProceduresBcFileWriteCommand extends SqlFileWriteCo
 	 */
 	public PostgresqlStoredProceduresBcFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "3" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
+		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "4" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
 
 		this.table = table;
 

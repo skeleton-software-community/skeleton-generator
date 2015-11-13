@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
+import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ModelFactory;
+import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.PackageFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.slf4j.Logger;
@@ -37,6 +42,17 @@ public class JavaModelFactory implements ModelFactory {
 	@Resource(name="javaPackageFactory")
 	private PackageFactory packageFactory;
 	
+	@Resource(name="javaBasicViewBeanFactory")
+	private BasicViewBeanFactory basicViewBeanFactory;
+	
+	@Resource(name="javaFullViewBeanFactory")
+	private FullViewBeanFactory fullViewBeanFactory;
+	
+	@Resource(name="javaOptionBeanFactory")
+	private OptionBeanFactory optionBeanFactory;
+	
+	
+	
 	
 	public Model buildModel(ProjectMetaData projectMetaData, Project project)
     {
@@ -45,6 +61,7 @@ public class JavaModelFactory implements ModelFactory {
         if (projectMetaData.getPackages() != null) {
 	        scanPackages(projectMetaData, model);
 	        fillPackages(projectMetaData, model);
+	        buildViews(model);
         }
 
         return model;
@@ -82,5 +99,21 @@ public class JavaModelFactory implements ModelFactory {
 			Package myPackage = packageFactory.scanPackage(packageMetaData, model);
 			model.packages.add(myPackage);
 		}
+	}
+	
+	
+	private void buildViews(Model model) {
+		for (Package pack:model.getPackages()) {
+			for (Bean bean:pack.beans) {
+				bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
+				bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
+				
+				for (OneToMany oneToMany:bean.oneToManyList) {
+					oneToMany.basicViewBean = basicViewBeanFactory.getBasicViewBean(oneToMany);
+					oneToMany.fullViewBean = fullViewBeanFactory.getFullViewBean(oneToMany);
+				}
+			}
+		}
+		
 	}
 }

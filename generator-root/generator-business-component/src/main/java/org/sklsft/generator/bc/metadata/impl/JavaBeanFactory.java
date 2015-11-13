@@ -2,12 +2,7 @@ package org.sklsft.generator.bc.metadata.impl;
 
 import java.util.ArrayList;
 
-import javax.annotation.Resource;
-
-import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
 import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.business.Bean;
@@ -23,21 +18,10 @@ import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.springframework.stereotype.Component;
 
-@Component(value = "javaBeanFactory")
+@Component("javaBeanFactory")
 public class JavaBeanFactory implements BeanFactory {
 	
-	@Resource(name="javaBasicViewBeanFactory")
-	private BasicViewBeanFactory basicViewBeanFactory;
-	
-	@Resource(name="javaFullViewBeanFactory")
-	private FullViewBeanFactory fullViewBeanFactory;
-	
-	@Resource(name="javaOptionBeanFactory")
-	private OptionBeanFactory optionBeanFactory;
-	
-	
-	
-	
+		
 	@Override
 	public Bean scanBean(TableMetaData tableMetaData, Table table) {
 		Bean bean = new Bean();
@@ -98,9 +82,6 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.oneToOneList = new ArrayList<OneToOne>();
 		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
 		
-		bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
-		bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
-		
 		return bean;
 	}
 
@@ -151,9 +132,6 @@ public class JavaBeanFactory implements BeanFactory {
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				parentBean.oneToManyList.add(oneToMany);
 				oneToMany.parentBean = parentBean;
-				
-				oneToMany.basicViewBean = basicViewBeanFactory.getBasicViewBean(oneToMany);
-				oneToMany.fullViewBean = fullViewBeanFactory.getFullViewBean(oneToMany);
 			}
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT)) {
@@ -193,8 +171,6 @@ public class JavaBeanFactory implements BeanFactory {
 				bean.uniqueComponentList.add(uniqueComponent);
 			}
 		}
-		
-		
 
 		return bean;
 	}

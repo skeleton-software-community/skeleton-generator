@@ -4,16 +4,14 @@ import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
+import org.springframework.stereotype.Component;
 
+@Component("javaBasicViewBeanFactory")
 public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 
 	@Override
 	public BasicViewBean getBasicViewBean(Bean bean) {
-		
-		if (bean.isComponent) {
-			return null;
-		}
-		
+				
 		BasicViewBean basicViewBean = new BasicViewBean();
 		
 		basicViewBean.className = bean.className + "BasicView";

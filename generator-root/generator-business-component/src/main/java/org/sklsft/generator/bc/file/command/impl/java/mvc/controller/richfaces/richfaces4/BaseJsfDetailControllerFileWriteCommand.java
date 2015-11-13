@@ -39,15 +39,17 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 	
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
 		}
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");			
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.serviceInterfacePackageName + "." + currentBean.serviceInterfaceName + ";");
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.viewClassName + ";");
 		}
 	}
 
@@ -140,8 +142,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" */");
 		writeLine("public void refresh() {");
 		
-		for (Property property : this.bean.getVisibleProperties()) {
-			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+		for (Property property : this.bean.fullViewBean.properties) {
+			if (property.comboBoxBean != null && property.editable) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 			}
 		}
@@ -162,8 +164,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void refresh" + currentBean.className + "() {");
 			
-			for (Property property : currentBean.getVisibleProperties()) {
-				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+			for (Property property : currentBean.fullViewBean.properties) {
+				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
@@ -185,7 +187,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
-			writeLine("this.reset" + currentBean.filterClassName + "();");
+			writeLine("this.reset" + currentBean.basicViewBean.filterClassName + "();");
 			
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + this.bean.serviceObjectName + ".load" + currentBean.className + "List(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			
@@ -204,7 +206,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
-			writeLine("this.reset" + currentBean.filterClassName + "();");
+			writeLine("this.reset" + currentBean.basicViewBean.filterClassName + "();");
 			
 			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + currentBean.serviceObjectName + ".load" + currentBean.className + "ListFrom" + oneToMany.referenceProperty.capName + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id()));");
 			
@@ -253,8 +255,8 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : currentBean.getVisibleProperties()) {
-				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+			for (Property property : currentBean.fullViewBean.properties) {
+				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
 			}
@@ -275,7 +277,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : oneToMany.getVisibleProperties()) {
+			for (Property property : oneToMany.fullViewBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
@@ -331,7 +333,7 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
 			
-			for (Property property : currentBean.getVisibleProperties()) {
+			for (Property property : currentBean.fullViewBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
 				}
@@ -404,9 +406,9 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
 			writeLine("List<Long> ids = new ArrayList<>();");
-			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");
-			writeLine("if (" + currentBean.viewObjectName + ".getSelected()) {");
-			writeLine("ids.add(" + currentBean.viewObjectName + ".getId());");
+			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "List()) {");
+			writeLine("if (" + currentBean.objectName + ".getSelected()) {");
+			writeLine("ids.add(" + currentBean.objectName + ".getId());");
 			writeLine("}");
 			writeLine("}");
 			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "List(ids);");
@@ -426,9 +428,9 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
 			writeLine("List<Long> ids = new ArrayList<>();");
-			writeLine("for (" + currentBean.viewClassName + " " + currentBean.viewObjectName + ":" + bean.objectName + "DetailView.get" + currentBean.className + "List()) {");
-			writeLine("if (" + currentBean.viewObjectName + ".getSelected()) {");
-			writeLine("ids.add(" + currentBean.viewObjectName + ".getId());");
+			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "List()) {");
+			writeLine("if (" + currentBean.objectName + ".getSelected()) {");
+			writeLine("ids.add(" + currentBean.objectName + ".getId());");
 			writeLine("}");
 			writeLine("}");
 			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "List(ids);");
@@ -445,10 +447,10 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = oneToManyComponent.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * reset one to many component " + currentBean.filterClassName + " datatable filter");
+			writeLine(" * reset one to many component " + currentBean.basicViewBean.filterClassName + " datatable filter");
 			writeLine(" */");
-			writeLine("public void reset" + currentBean.filterClassName + "() {");
-			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.filterClassName + "(new " + currentBean.filterClassName + "());");
+			writeLine("public void reset" + currentBean.basicViewBean.filterClassName + "() {");
+			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.basicViewBean.filterClassName + "(new " + currentBean.basicViewBean.filterClassName + "());");
 			writeLine("}");
 			skipLine();
 		}
@@ -457,10 +459,10 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			Bean currentBean = oneToMany.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * reset one to many " + currentBean.filterClassName + " datatable filter");
+			writeLine(" * reset one to many " + currentBean.basicViewBean.filterClassName + " datatable filter");
 			writeLine(" */");
-			writeLine("public void reset" + currentBean.filterClassName + "() {");
-			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.filterClassName + "(new " + currentBean.filterClassName + "());");
+			writeLine("public void reset" + currentBean.basicViewBean.filterClassName + "() {");
+			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.basicViewBean.filterClassName + "(new " + currentBean.basicViewBean.filterClassName + "());");
 			writeLine("}");
 			skipLine();
 		}

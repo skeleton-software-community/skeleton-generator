@@ -3,14 +3,11 @@ package org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.sklsft.generator.bc.file.command.impl.sql.SqlFileWriteCommand;
 import org.sklsft.generator.model.domain.Project;
-import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.model.metadata.DataType;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
 

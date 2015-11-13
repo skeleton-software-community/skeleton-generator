@@ -3,7 +3,9 @@ package org.sklsft.generator.bc.metadata.impl;
 import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.OptionBean;
+import org.springframework.stereotype.Component;
 
+@Component("javaOptionBeanFactory")
 public class JavaOptionBeanFactory implements OptionBeanFactory {
 
 	@Override

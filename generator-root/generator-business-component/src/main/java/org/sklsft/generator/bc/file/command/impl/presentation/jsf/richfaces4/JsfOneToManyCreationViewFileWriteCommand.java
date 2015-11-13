@@ -63,7 +63,7 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 		skipLine();
 
 		for (Property property : oneToMany.fullViewBean.properties) {
-			writeInput(property, currentBean);
+			writeInput("new", property, currentBean);
 		}
 
 		writeLine("</div>");

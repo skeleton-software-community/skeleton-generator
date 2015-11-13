@@ -2,7 +2,6 @@ package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;

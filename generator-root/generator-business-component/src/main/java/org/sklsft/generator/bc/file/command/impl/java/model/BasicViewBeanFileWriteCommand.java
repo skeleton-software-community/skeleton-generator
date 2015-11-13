@@ -2,7 +2,6 @@ package org.sklsft.generator.bc.file.command.impl.java.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
@@ -67,9 +66,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private Long id;");
         writeLine("private boolean selected;");
 
-        List<Property> visiblePropertyList = this.bean.basicViewBean.properties;
-
-        for (Property property:visiblePropertyList) {
+        for (Property property:this.bean.basicViewBean.properties) {
             writeLine("private " + property.beanDataType + " " + property.name + ";");
         }
         skipLine();
@@ -101,9 +98,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        List<Property> visiblePropertyList = this.bean.basicViewBean.properties;
-
-        for (Property property:visiblePropertyList) {
+        for (Property property:this.bean.basicViewBean.properties) {
             writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
             writeLine("return this." + property.name + ";");
             writeLine("}");

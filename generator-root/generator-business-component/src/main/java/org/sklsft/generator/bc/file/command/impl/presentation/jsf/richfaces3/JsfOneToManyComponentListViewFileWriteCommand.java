@@ -6,8 +6,6 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
 
-import com.sun.swing.internal.plaf.basic.resources.basic;
-
 public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private OneToManyComponent oneToManyComponent;
