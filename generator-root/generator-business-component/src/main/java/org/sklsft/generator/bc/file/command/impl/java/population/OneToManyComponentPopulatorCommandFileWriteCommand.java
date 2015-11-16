@@ -91,7 +91,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = " + referenceBean.fullViewBean.className + "Builder.build(args);");
         skipLine();
         
-        List<Property> findPropertyList = parentBean.getFindProperties();
+        List<Property> findPropertyList = parentBean.getReferenceProperties();
         write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "((" + DataType.getJavaType(findPropertyList.get(0).dataType) + ")args[0]");
         for (int i=1;i<findPropertyList.size();i++)
         {

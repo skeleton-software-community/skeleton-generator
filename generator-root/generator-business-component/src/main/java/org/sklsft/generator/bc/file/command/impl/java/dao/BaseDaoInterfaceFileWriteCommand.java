@@ -126,7 +126,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
     private void createExistsObject()
     {
-        List<Property> findPropertyList = this.bean.getFindProperties();
+        List<Property> findPropertyList = this.bean.getReferenceProperties();
 
         writeLine("/**");
         writeLine(" * exists object");
@@ -142,7 +142,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
     
     private void createFindObject()
     {
-        List<Property> findPropertyList = this.bean.getFindProperties();
+        List<Property> findPropertyList = this.bean.getReferenceProperties();
 
         writeLine("/**");
         writeLine(" * find object");  

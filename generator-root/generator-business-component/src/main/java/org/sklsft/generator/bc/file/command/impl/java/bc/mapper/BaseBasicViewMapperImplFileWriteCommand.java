@@ -109,7 +109,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		for (Property property : this.bean.properties) {			
 			if (property.referenceBean != null) {
 				if (property.visibility.isListVisible()) {
-					List<Property> findPropertyList = property.referenceBean.getFindProperties();
+					List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
 					if (property.nullable) {
 						writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
 						for (Property findProperty : findPropertyList) {
@@ -144,7 +144,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isListVisible()) {
-				List<Property> findPropertyList = property.referenceBean.getFindProperties();
+				List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
 				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
 				writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
 				for (int j = 1; j < findPropertyList.size(); j++) {

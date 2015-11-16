@@ -108,7 +108,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				if (property.visibility.isDetailVisible()) {				
-					List<Property> findPropertyList = property.referenceBean.getFindProperties();
+					List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
 					if (property.nullable) {
 						writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
 						for (Property findProperty : findPropertyList) {
@@ -143,7 +143,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
-				List<Property> findPropertyList = property.referenceBean.getFindProperties();
+				List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
 				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
 				writeLine(this.bean.fullViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
 				for (int j = 1; j < findPropertyList.size(); j++) {

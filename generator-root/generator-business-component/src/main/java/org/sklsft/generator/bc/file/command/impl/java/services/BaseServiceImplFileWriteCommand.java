@@ -237,7 +237,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
     
     private void createFindObject()
     {
-        List<Property> findPropertyList = this.bean.getFindProperties();
+        List<Property> findPropertyList = this.bean.getReferenceProperties();
 
         writeLine("/**");
         writeLine(" * find object");

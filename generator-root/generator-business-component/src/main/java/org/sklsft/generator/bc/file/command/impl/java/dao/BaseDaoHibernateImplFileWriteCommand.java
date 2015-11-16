@@ -112,7 +112,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			if (property.referenceBean != null) {
 				writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + CHAR_34 + ",FetchMode.JOIN);");
 
-				for (Alias alias : property.referenceBean.getFindAliases()) {
+				for (Alias alias : property.referenceBean.getReferenceAliases()) {
 					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 				}
@@ -157,7 +157,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 					if (prop.referenceBean != null) {
 						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
 
-						for (Alias alias : prop.referenceBean.getFindAliases()) {
+						for (Alias alias : prop.referenceBean.getReferenceAliases()) {
 							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 						}
@@ -198,8 +198,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createExistsObject() {
-		List<Property> findPropertyList = this.bean.getFindProperties();
-		List<Alias> findAliasList = this.bean.getFindAliases();
+		List<Property> findPropertyList = this.bean.getReferenceProperties();
+		List<Alias> findAliasList = this.bean.getReferenceAliases();
 
 		writeLine("/**");
 		writeLine(" * exists object");
@@ -245,8 +245,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createFindObject() {
-		List<Property> findPropertyList = this.bean.getFindProperties();
-		List<Alias> findAliasList = this.bean.getFindAliases();
+		List<Property> findPropertyList = this.bean.getReferenceProperties();
+		List<Alias> findAliasList = this.bean.getReferenceAliases();
 
 		writeLine("/**");
 		writeLine(" * find object");

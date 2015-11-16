@@ -32,7 +32,7 @@ public class OneToMany {
 			Property currentProperty = referenceBean.properties.get(i);
 			if (currentProperty.referenceBean != null) {
 				if (!currentProperty.name.equals(referenceProperty.name)) {
-					tempPropertyList = currentProperty.referenceBean.getFindProperties();
+					tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
 					for (int j = 0; j < tempPropertyList.size(); j++) {
 						Property tempProperty = tempPropertyList.get(j);
 						Property property = new Property();

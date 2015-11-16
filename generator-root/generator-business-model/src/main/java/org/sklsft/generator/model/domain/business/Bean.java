@@ -88,14 +88,21 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	public List<Property> getFindProperties() {
+	public List<Property> getReferenceProperties() {
 		List<Property> findPropertyList = new ArrayList<Property>();
 		List<Property> tempPropertyList = new ArrayList<Property>();
+		
+		int propertiesMaxIndex;
+		if (this.cardinality > 0) {
+			propertiesMaxIndex = this.cardinality;
+		} else {
+			propertiesMaxIndex = this.properties.size() - 1;
+		}
 
-		for (int i = 1; i <= this.cardinality; i++) {
+		for (int i = 1; i <= propertiesMaxIndex; i++) {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
-				tempPropertyList = currentProperty.referenceBean.getFindProperties();
+				tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
 				for (int j = 0; j < tempPropertyList.size(); j++) {
 					Property tempProperty = tempPropertyList.get(j);
 					Property property = new Property();
@@ -151,7 +158,7 @@ public class Bean {
 		for (int i = 1; i < this.properties.size(); i++) {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
-				tempPropertyList = currentProperty.referenceBean.getFindProperties();
+				tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
 				for (int j = 0; j < tempPropertyList.size(); j++) {
 					Property tempProperty = tempPropertyList.get(j);
 					Property property = new Property();
@@ -190,7 +197,7 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	public List<Alias> getFindAliases() {
+	public List<Alias> getReferenceAliases() {
 		List<Alias> aliasList = new ArrayList<Alias>();
 		List<Alias> tempAliasList = new ArrayList<Alias>();
 
@@ -202,7 +209,7 @@ public class Bean {
 				alias.name = currentProperty.capName;
 				aliasList.add(alias);
 
-				tempAliasList = currentProperty.referenceBean.getFindAliases();
+				tempAliasList = currentProperty.referenceBean.getReferenceAliases();
 				for (int j = 0; j < tempAliasList.size(); j++) {
 					Alias currentAlias = tempAliasList.get(j);
 					Alias tempAlias = new Alias();

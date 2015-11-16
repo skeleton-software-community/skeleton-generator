@@ -52,7 +52,7 @@ public class ViewOneToManyComponentBuilderFileWriteCommand extends JavaFileWrite
 	    writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = new " + referenceBean.fullViewBean.className + "();");
 	    skipLine();
         
-        Integer argNumber = parentBean.getFindProperties().size();
+        Integer argNumber = parentBean.getReferenceProperties().size();
         for (Property property : referenceBean.fullViewBean.properties) {
             writeLine(referenceBean.fullViewBean.objectName + ".set" + property.capName + "((" + DataType.getJavaType(property.dataType) + ")args[" + argNumber + "]);");
             argNumber++;
