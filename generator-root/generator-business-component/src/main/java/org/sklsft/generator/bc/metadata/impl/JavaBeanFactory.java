@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.domain.database.Column;
@@ -76,12 +77,6 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.listViewClassName = bean.className + "ListView";
 		bean.listViewObjectName = bean.objectName + "ListView";
 
-		bean.properties = new ArrayList<Property>();
-		bean.oneToManyComponentList = new ArrayList<OneToManyComponent>();
-		bean.oneToManyList = new ArrayList<OneToMany>();
-		bean.oneToOneList = new ArrayList<OneToOne>();
-		bean.uniqueComponentList = new ArrayList<UniqueComponent>();
-		
 		return bean;
 	}
 
@@ -156,6 +151,17 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToOne.setterName = "set" + bean.className;
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.oneToOneList.add(oneToOne);
+			}
+			
+			if (column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT)) {
+				bean.isComponent = true;
+				OneToOneComponent oneToOne = new OneToOneComponent();
+				oneToOne.referenceBean = bean;
+				oneToOne.referenceProperty = property;
+				oneToOne.getterName = "get" + bean.className;
+				oneToOne.setterName = "set" + bean.className;
+				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
+				targetBean.oneToOneComponentList.add(oneToOne);
 			}
 
 			if (column.relation.equals(RelationType.UNIQUE_COMPONENT)) {

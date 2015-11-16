@@ -12,6 +12,7 @@ import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.DatabaseEngine;
+import org.sklsft.generator.model.metadata.RelationType;
 
 
 
@@ -64,10 +65,10 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-		}
+//		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
+//			Bean currentBean = uniqueComponent.referenceBean;
+//			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+//		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -186,7 +187,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 
-			if (property.referenceBean != null) {
+			if (property.referenceBean != null && !RelationType.isUniqueComponent(property.relation)) {
 				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
 				if (bean.isComponent) {
 					writeLine("@Fetch(FetchMode.JOIN)");

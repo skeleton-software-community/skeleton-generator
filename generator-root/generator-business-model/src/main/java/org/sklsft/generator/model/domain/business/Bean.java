@@ -68,11 +68,12 @@ public class Bean {
 	public List<String> interfaces;
 	public List<String> annotations;
 
-	public List<Property> properties;
-	public List<OneToMany> oneToManyList;
-	public List<OneToManyComponent> oneToManyComponentList;
-	public List<OneToOne> oneToOneList;
-	public List<UniqueComponent> uniqueComponentList;
+	public List<Property> properties = new ArrayList<>();
+	public List<OneToMany> oneToManyList = new ArrayList<>();
+	public List<OneToManyComponent> oneToManyComponentList = new ArrayList<>();
+	public List<OneToOne> oneToOneList = new ArrayList<>();
+	public List<OneToOneComponent> oneToOneComponentList = new ArrayList<>();
+	public List<UniqueComponent> uniqueComponentList = new ArrayList<>();
 
 	public boolean isComponent = false;
 	public boolean isManyToOneComponent = false;

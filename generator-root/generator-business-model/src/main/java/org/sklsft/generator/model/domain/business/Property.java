@@ -34,15 +34,22 @@ public class Property {
 
 	public Bean comboBoxBean;
 
-	public List<Property> getFindPropertyList() {
-		List<Property> findPropertyList = new ArrayList<Property>();
+	public List<Property> getReferencePropertyList() {
+		List<Property> referencePropertyList = new ArrayList<Property>();
 
 		if (this.referenceBean != null) {
 			List<Property> tempPropertyList = new ArrayList<Property>();
+			
+			int propertiesMaxIndex;
+			if (referenceBean.cardinality > 0) {
+				propertiesMaxIndex = referenceBean.cardinality;
+			} else {
+				propertiesMaxIndex = referenceBean.properties.size() - 1;
+			}
 
-			for (int i = 1; i <= this.referenceBean.cardinality; i++) {
+			for (int i = 1; i <= propertiesMaxIndex; i++) {
 				if (this.referenceBean.properties.get(i).referenceBean != null) {
-					tempPropertyList = this.referenceBean.properties.get(i).getFindPropertyList();
+					tempPropertyList = this.referenceBean.properties.get(i).getReferencePropertyList();
 					for (int j = 0; j < tempPropertyList.size(); j++) {
 						Property property = new Property();
 						property.name = this.referenceBean.properties.get(i).name + tempPropertyList.get(j).capName;
@@ -58,7 +65,7 @@ public class Property {
 						property.joinedAliasName = this.referenceBean.properties.get(i).capName + tempPropertyList.get(j).joinedAliasName;
 						property.comboBoxBean = tempPropertyList.get(j).comboBoxBean;
 						property.rendering = tempPropertyList.get(j).rendering;
-						findPropertyList.add(property);
+						referencePropertyList.add(property);
 					}
 				} else {
 					Property property = new Property();
@@ -82,12 +89,12 @@ public class Property {
 					if (this.referenceBean.hasComboBox) {
 						property.comboBoxBean = this.referenceBean;
 					}
-					findPropertyList.add(property);
+					referencePropertyList.add(property);
 				}
 			}
 		}
 
-		return findPropertyList;
+		return referencePropertyList;
 
 	}
 }

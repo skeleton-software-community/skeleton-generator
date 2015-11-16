@@ -9,6 +9,7 @@ import java.util.Set;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.RelationType;
 
 public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
@@ -37,7 +38,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && !RelationType.isUniqueComponent(property.relation) && property.visibility.isListVisible()) {
 				boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 				if (test) {
 					javaImports.add("import " + property.referenceBean.myPackage.DAOInterfacePackageName + "." + property.referenceBean.daoInterfaceName + ";");
@@ -77,7 +78,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		this.daoSet = new HashSet<>();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && !RelationType.isUniqueComponent(property.relation) && property.visibility.isListVisible()) {
 				boolean test = this.daoSet.add(property.referenceBean.daoClassName);
 				if (test) {
 					writeLine("@Autowired");
@@ -144,11 +145,15 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isListVisible()) {
-				List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
-				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
-				writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
-				for (int j = 1; j < findPropertyList.size(); j++) {
-					writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(j).capName + "()");
+				if (RelationType.isUniqueComponent(property.relation)) {
+					
+				} else {
+					List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
+					writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
+					writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
+					for (int j = 1; j < findPropertyList.size(); j++) {
+						writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + findPropertyList.get(j).capName + "()");
+					}
 				}
 
 				writeLine("));");

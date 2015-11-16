@@ -7,11 +7,12 @@ import javax.xml.bind.annotation.XmlEnum;
  * Relations are therefore indicated in a reverse way i.e from the point of view of a child from its parent excepted for unique component which is the classical way to represent a hibernate one-to-one component<br/>
  * In the current release, the following relations are supported :
  * <li>MANY_TO_ONE : the referenced bean will have a bidirectional one-to-many collection
- * <li>MANY_TO_ONE_COMPONENT : the referenced bean will have a unidirectional (not really if envers auditing is activated) one-to-many collection<br/>
+ * <li>MANY_TO_ONE_COMPONENT : the referenced bean will have a unidirectional (not really for hibernate envers) one-to-many collection<br/>
  * the collection will be managed by the referenced bean
  * <li>UNIQUE : simple unique property, not really a relation
  * <li>UNIQUE_COMPONENT : a one-to-one relation where the referenced bean is managed by the current bean
  * <li>ONE_TO_ONE : a bi-directional one-to-one relation
+ * <li>ONE_TO_ONE_COMPONENT : a unidirectional one-to-one relation (not really for hibernate envers)
  * <li>PROPERTY : default behavior of a referenced bean
  * 
  * @author Nicolas Thibault
@@ -24,6 +25,7 @@ public enum RelationType {
     UNIQUE,
     UNIQUE_COMPONENT,
     ONE_TO_ONE,
+    ONE_TO_ONE_COMPONENT,
     PROPERTY;
 	
 	
@@ -36,10 +38,25 @@ public enum RelationType {
 
             case ONE_TO_ONE:
                 return true;
+                
+            case ONE_TO_ONE_COMPONENT:
+                return true;
 
             default:
                 return false;
 
+        }
+    }
+	
+	public static Boolean isUniqueComponent(RelationType relationType)
+    {
+        switch (relationType)
+        {
+            case UNIQUE_COMPONENT:
+                return true;
+
+            default:
+                return false;
         }
     }
 
@@ -47,7 +64,7 @@ public enum RelationType {
     {
         switch (relationType)
         {
-            case UNIQUE_COMPONENT:
+            case ONE_TO_ONE_COMPONENT:
                 return true;
 
             case MANY_TO_ONE_COMPONENT:
