@@ -155,13 +155,13 @@ public class JavaBeanFactory implements BeanFactory {
 			
 			if (column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT)) {
 				bean.isComponent = true;
-				OneToOneComponent oneToOne = new OneToOneComponent();
-				oneToOne.referenceBean = bean;
-				oneToOne.referenceProperty = property;
-				oneToOne.getterName = "get" + bean.className;
-				oneToOne.setterName = "set" + bean.className;
+				OneToOneComponent oneToOneComponent = new OneToOneComponent();
+				oneToOneComponent.referenceBean = bean;
+				oneToOneComponent.referenceProperty = property;
+				oneToOneComponent.getterName = "get" + bean.className;
+				oneToOneComponent.setterName = "set" + bean.className;
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				targetBean.oneToOneComponentList.add(oneToOne);
+				targetBean.oneToOneComponentList.add(oneToOneComponent);
 			}
 
 			if (column.relation.equals(RelationType.UNIQUE_COMPONENT)) {

@@ -9,6 +9,7 @@ import java.util.Set;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.RelationType;
 
 public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 
@@ -38,9 +39,13 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
-				boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
-				if (test) {
-					javaImports.add("import " + property.referenceBean.myPackage.DAOInterfacePackageName + "." + property.referenceBean.daoInterfaceName + ";");
+				if (!RelationType.isUniqueComponent(property.relation)) {
+					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
+					if (test) {
+						javaImports.add("import " + property.referenceBean.myPackage.DAOInterfacePackageName + "." + property.referenceBean.daoInterfaceName + ";");
+					}
+				} else {
+					javaImports.add("import " + property.referenceBean.myPackage.omPackageName + "." + property.referenceBean.className + ";");
 				}
 			}
 		}
@@ -77,7 +82,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 		this.daoSet = new HashSet<>();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
+			if (property.referenceBean != null && !RelationType.isUniqueComponent(property.relation)  && property.visibility.isDetailVisible()) {
 				boolean test = this.daoSet.add(property.referenceBean.daoClassName);
 				if (test) {
 					writeLine("@Autowired");
@@ -108,17 +113,17 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
 				if (property.visibility.isDetailVisible()) {				
-					List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
+					List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
 					if (property.nullable) {
 						writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
-						for (Property findProperty : findPropertyList) {
+						for (Property findProperty : referencePropertyList) {
 							writeLine(this.bean.fullViewBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + findProperty.fetchName
 									+ ");");
 						}
 						writeLine("}");
 	
 					} else {
-						for (Property findProperty : findPropertyList) {
+						for (Property findProperty : referencePropertyList) {
 							writeLine(this.bean.fullViewBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + findProperty.fetchName
 									+ ");");
 						}
@@ -143,19 +148,39 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
-				List<Property> findPropertyList = property.referenceBean.getReferenceProperties();
-				writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
-				writeLine(this.bean.fullViewBean.objectName + "." + property.getterName + findPropertyList.get(0).capName + "()");
-				for (int j = 1; j < findPropertyList.size(); j++) {
-					writeLine("," + this.bean.fullViewBean.objectName + "." + property.getterName + findPropertyList.get(j).capName + "()");
+				if (RelationType.isUniqueComponent(property.relation)) {
+					writeMapUniqueComponentToObject(property);
+				} else {
+					writeMapReferenceToObject(property);
 				}
-
-				writeLine("));");
 			}
 		}
 
 		writeLine("return " + this.bean.objectName + ";");
 		writeLine("}");
 		skipLine();
+	}
+	
+	
+	private void writeMapReferenceToObject(Property property) {
+		List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
+		writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
+		writeLine(this.bean.fullViewBean.objectName + "." + property.getterName + referencePropertyList.get(0).capName + "()");
+		for (int j = 1; j < referencePropertyList.size(); j++) {
+			writeLine("," + this.bean.fullViewBean.objectName + "." + property.getterName + referencePropertyList.get(j).capName + "()");
+		}
+		writeLine("));");		
+	}
+
+	private void writeMapUniqueComponentToObject(Property property) {
+		
+		writeLine(property.referenceBean.className + " " + property.referenceBean.objectName + " = " + bean.objectName + "." + property.getterName + "();");
+		writeLine("if (" + property.referenceBean.objectName + " == null) {");
+		writeLine(property.referenceBean.objectName + " = new " + property.referenceBean.className + "();");
+		writeLine(bean.objectName + "." + property.setterName + "(" + property.referenceBean.objectName + ");");
+		writeLine("}");
+		
+		
+		
 	}
 }

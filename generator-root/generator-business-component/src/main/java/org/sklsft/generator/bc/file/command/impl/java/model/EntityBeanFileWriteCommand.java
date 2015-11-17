@@ -187,20 +187,32 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 
-			if (property.referenceBean != null && !RelationType.isUniqueComponent(property.relation)) {
-				writeLine("@ManyToOne(fetch = FetchType.LAZY)");
-				if (bean.isComponent) {
-					writeLine("@Fetch(FetchMode.JOIN)");
-				}
-
-				write("@JoinColumn(name = " + (char) 34 + property.column.name + (char) 34);
-				if (!property.nullable) {
+			if (property.referenceBean != null) {
+				if (!RelationType.isUniqueComponent(property.relation)) {
+					writeLine("@ManyToOne(fetch = FetchType.LAZY)");
+					if (bean.isComponent) {
+						writeLine("@Fetch(FetchMode.JOIN)");
+					}
+	
+					write("@JoinColumn(name = " + (char) 34 + property.column.name + (char) 34);
+					if (!property.nullable) {
+						write(", nullable = false");
+					}
+					if (property.unique) {
+						write(", unique = true");
+					}
+					writeLine(")");
+					
+					writeLine("private " + property.beanDataType + " " + property.name + ";");
+					skipLine();
+				} else {
+					writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
+					write("@JoinColumn(name = " + (char) 34 + property.column.name + (char) 34 + ", unique = true");
 					write(", nullable = false");
+					writeLine(")");
+					writeLine("private " + property.referenceBean.className + " " + property.name + ";");
+					skipLine();
 				}
-				if (property.unique) {
-					write(", unique = true");
-				}
-				writeLine(")");
 			} else {
 				if (property.dataType.equals(DataType.DATETIME)) {
 					writeLine("@Temporal(TemporalType.TIMESTAMP)");
@@ -216,9 +228,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					write(", unique = true");
 				}
 				writeLine(")");
+				
+				writeLine("private " + property.beanDataType + " " + property.name + ";");
+				skipLine();
 			}
-			writeLine("private " + property.beanDataType + " " + property.name + ";");
-			skipLine();
+			
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
@@ -243,14 +257,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
-			write("@JoinColumn(name = " + (char) 34 + uniqueComponent.referenceColumn.name + (char) 34 + ", unique = true");
-			if (!uniqueComponent.referenceColumn.nullable) {
-				write(", nullable = false");
-			}
-			writeLine(")");
-			writeLine("private " + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ";");
-			skipLine();
+//			writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
+//			write("@JoinColumn(name = " + (char) 34 + uniqueComponent.referenceColumn.name + (char) 34 + ", unique = true");
+//			if (!uniqueComponent.referenceColumn.nullable) {
+//				write(", nullable = false");
+//			}
+//			writeLine(")");
+//			writeLine("private " + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ";");
+//			skipLine();
 		}
 
 		skipLine();
@@ -324,14 +338,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			writeLine("public " + uniqueComponent.referenceBean.className + " " + uniqueComponent.getterName + "() {");
-			writeLine("return this." + uniqueComponent.referenceBean.objectName + ";");
-			writeLine("}");
-			skipLine();
-			writeLine("public void " + uniqueComponent.setterName + "(" + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ") {");
-			writeLine("this." + uniqueComponent.referenceBean.objectName + " = " + uniqueComponent.referenceBean.objectName + ";");
-			writeLine("}");
-			skipLine();
+//			writeLine("public " + uniqueComponent.referenceBean.className + " " + uniqueComponent.getterName + "() {");
+//			writeLine("return this." + uniqueComponent.referenceBean.objectName + ";");
+//			writeLine("}");
+//			skipLine();
+//			writeLine("public void " + uniqueComponent.setterName + "(" + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ") {");
+//			writeLine("this." + uniqueComponent.referenceBean.objectName + " = " + uniqueComponent.referenceBean.objectName + ";");
+//			writeLine("}");
+//			skipLine();
 		}
 		skipLine();
 	}
