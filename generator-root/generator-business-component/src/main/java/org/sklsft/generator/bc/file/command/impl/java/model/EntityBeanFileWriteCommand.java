@@ -9,7 +9,6 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.DatabaseEngine;
 import org.sklsft.generator.model.metadata.RelationType;
@@ -256,17 +255,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 		}
 
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-//			writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
-//			write("@JoinColumn(name = " + (char) 34 + uniqueComponent.referenceColumn.name + (char) 34 + ", unique = true");
-//			if (!uniqueComponent.referenceColumn.nullable) {
-//				write(", nullable = false");
-//			}
-//			writeLine(")");
-//			writeLine("private " + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ";");
-//			skipLine();
-		}
-
 		skipLine();
 
 	}
@@ -337,16 +325,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 		}
 
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-//			writeLine("public " + uniqueComponent.referenceBean.className + " " + uniqueComponent.getterName + "() {");
-//			writeLine("return this." + uniqueComponent.referenceBean.objectName + ";");
-//			writeLine("}");
-//			skipLine();
-//			writeLine("public void " + uniqueComponent.setterName + "(" + uniqueComponent.referenceBean.className + " " + uniqueComponent.referenceBean.objectName + ") {");
-//			writeLine("this." + uniqueComponent.referenceBean.objectName + " = " + uniqueComponent.referenceBean.objectName + ";");
-//			writeLine("}");
-//			skipLine();
-		}
 		skipLine();
 	}
 }

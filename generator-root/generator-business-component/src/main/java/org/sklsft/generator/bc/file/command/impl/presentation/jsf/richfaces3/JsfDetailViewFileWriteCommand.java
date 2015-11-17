@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -104,9 +104,9 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         skipLine();
         
 
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-        	Bean currentBean = uniqueComponent.referenceBean;
+        	Bean currentBean = oneToOneComponent.referenceBean;
         	
             writeLine("<rich:tab label=" + CHAR_34 + "#{i18n." + currentBean.objectName + "Detail}" + CHAR_34);
             writeLine("action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".load" + currentBean.className + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");

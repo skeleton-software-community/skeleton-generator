@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -86,15 +85,6 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("</h:panelGroup>");
         skipLine();
-        
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
-        {
-        	Bean currentBean = uniqueComponent.referenceBean;
-			writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
-		    skipLine();
-			
-        }
-       
         
         writeLine("</h:form>");
         

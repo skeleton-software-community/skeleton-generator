@@ -9,7 +9,7 @@ import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.Jsf
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyCreationViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfUniqueComponentDetailViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToOneComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Package;
@@ -17,7 +17,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
 public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 
@@ -82,8 +82,8 @@ public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 						packageTreeNode.add(componentCreationTreeNode);
 					}
 					
-					for (UniqueComponent uniqueComponent:bean.uniqueComponentList) {
-						FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfUniqueComponentDetailViewFileWriteCommand(uniqueComponent));
+					for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+						FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToOneComponentDetailViewFileWriteCommand(oneToOneComponent));
 						packageTreeNode.add(componentTreeNode);
 					}
 				}

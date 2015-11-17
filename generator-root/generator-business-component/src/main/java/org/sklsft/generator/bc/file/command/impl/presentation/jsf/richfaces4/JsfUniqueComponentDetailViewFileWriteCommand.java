@@ -3,26 +3,26 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
-	private UniqueComponent uniqueComponent;
+	private OneToOneComponent oneToOneComponent;
 
-	public JsfUniqueComponentDetailViewFileWriteCommand(UniqueComponent uniqueComponent) {
-		super(uniqueComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + uniqueComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + uniqueComponent.referenceBean.myPackage.name + "\\" + uniqueComponent.parentBean.className.toLowerCase(),
-				uniqueComponent.referenceBean.className + "Details");
+	public JsfUniqueComponentDetailViewFileWriteCommand(OneToOneComponent oneToOneComponent) {
+		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToOneComponent.referenceBean.myPackage.model.project.projectName
+				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToOneComponent.referenceBean.myPackage.name + "\\" + oneToOneComponent.parentBean.className.toLowerCase(),
+				oneToOneComponent.referenceBean.className + "Details");
 
-		this.uniqueComponent = uniqueComponent;
+		this.oneToOneComponent = oneToOneComponent;
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 		
-		Bean currentBean = uniqueComponent.referenceBean;
-        Bean parentBean = uniqueComponent.parentBean;
+		Bean currentBean = oneToOneComponent.referenceBean;
+        Bean parentBean = oneToOneComponent.parentBean;
 
         writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
         writeLine("xmlns:ui=" + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
@@ -63,7 +63,7 @@ public class JsfUniqueComponentDetailViewFileWriteCommand extends JsfXhtmlFileWr
 
         skipLine();
         
-        if (this.uniqueComponent.referenceBean.updateEnabled)
+        if (this.oneToOneComponent.referenceBean.updateEnabled)
         {
             writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + "/>");
         }

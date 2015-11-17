@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
 public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 
@@ -28,9 +28,9 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
         }
 
@@ -66,6 +66,17 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
+        for (OneToOneComponent oneToManyComponent : this.bean.oneToOneComponentList)
+        {
+        	Bean currentBean = oneToManyComponent.referenceBean;
+        	writeLine("/**");
+            writeLine(" * check before save one to one compoennt " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("}");
+            skipLine();
+        }
+        
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
         	Bean currentBean = oneToManyComponent.referenceBean;
@@ -84,13 +95,13 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * check before update unique component " + currentBean.className);
+            writeLine(" * check before update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
             writeLine("}");
             skipLine();
         }
@@ -113,6 +124,17 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * check before delete one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("}");
+            skipLine();
+        }
+        
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = oneToManyComponent.referenceBean;
@@ -123,26 +145,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("}");
             skipLine();
         }
-
-        writeLine("/**");
-        writeLine(" * set default");
-        writeLine(" */");
-        writeLine("public void setDefault(" + this.bean.className + " " + this.bean.objectName + ") {");
+        
         writeLine("}");
-        skipLine();
-
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
-            Bean currentBean = oneToManyComponent.referenceBean;
-            writeLine("/**");
-            writeLine(" * set default on to many component " + currentBean.className);
-            writeLine(" */");
-            writeLine("public void setDefault" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("}");
-            skipLine();
-        }        
-
-        writeLine("}");
-
     }
 }

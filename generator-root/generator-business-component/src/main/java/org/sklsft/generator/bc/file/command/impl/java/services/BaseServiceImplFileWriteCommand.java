@@ -7,8 +7,8 @@ import java.util.List;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.RelationType;
 
 public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
@@ -57,9 +57,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.baseServiceInterfacePackageName + "." + this.bean.baseServiceInterfaceName + ";");
         
 
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
@@ -117,9 +117,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Autowired");
         writeLine("protected " + this.bean.basicViewBean.mapperClassName + " " + this.bean.basicViewBean.mapperObjectName + ";");
         
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("@Autowired");
             writeLine("protected " + currentBean.fullViewBean.mapperClassName + " " + currentBean.fullViewBean.mapperObjectName + ";");
         }
@@ -263,12 +263,12 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 
     private void createLoadUniqueComponent()
     {
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
 
             writeLine("/**");
-            writeLine(" * load unique component " + currentBean.objectName);
+            writeLine(" * load one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id) {");
@@ -425,9 +425,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 
     private void createUpdateUniqueComponent()
     {
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
 
             writeLine("/**");
             writeLine(" * update unique component " + currentBean.objectName);

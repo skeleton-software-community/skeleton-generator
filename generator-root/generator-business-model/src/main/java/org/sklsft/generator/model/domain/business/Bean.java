@@ -73,11 +73,10 @@ public class Bean {
 	public List<OneToManyComponent> oneToManyComponentList = new ArrayList<>();
 	public List<OneToOne> oneToOneList = new ArrayList<>();
 	public List<OneToOneComponent> oneToOneComponentList = new ArrayList<>();
-	public List<UniqueComponent> uniqueComponentList = new ArrayList<>();
 
 	public boolean isComponent = false;
 	public boolean isManyToOneComponent = false;
-	public boolean isUniqueComponent = false;
+	public boolean isEmbedded = false;
 	
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;

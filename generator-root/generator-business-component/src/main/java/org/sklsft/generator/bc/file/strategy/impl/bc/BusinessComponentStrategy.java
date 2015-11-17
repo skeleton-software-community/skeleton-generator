@@ -92,11 +92,13 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			baseMapperTreeNode.add(packageTreeNode);
 			
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BaseBasicViewMapperImplFileWriteCommand(bean));
-				packageTreeNode.add(basicMapperTreeNode);
-				
-				FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new BaseFullViewMapperImplFileWriteCommand(bean));
-				packageTreeNode.add(fullMapperTreeNode);
+				if (!bean.isEmbedded) {
+					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BaseBasicViewMapperImplFileWriteCommand(bean));
+					packageTreeNode.add(basicMapperTreeNode);
+					
+					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new BaseFullViewMapperImplFileWriteCommand(bean));
+					packageTreeNode.add(fullMapperTreeNode);
+				}
 			}
 		}
 
@@ -108,11 +110,13 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			mapperTreeNode.add(packageTreeNode);
 			
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BasicViewMapperImplFileWriteCommand(bean));
-				packageTreeNode.add(basicMapperTreeNode);
-				
-				FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new FullViewMapperImplFileWriteCommand(bean));
-				packageTreeNode.add(fullMapperTreeNode);
+				if (!bean.isEmbedded) {
+					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BasicViewMapperImplFileWriteCommand(bean));
+					packageTreeNode.add(basicMapperTreeNode);
+					
+					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new FullViewMapperImplFileWriteCommand(bean));
+					packageTreeNode.add(fullMapperTreeNode);
+				}
 			}
 		}
 		

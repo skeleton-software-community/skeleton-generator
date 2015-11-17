@@ -7,8 +7,8 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.Visibility;
 
 public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
@@ -96,21 +96,27 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		
 		
 		createLoadObject();
-		createLoadUniqueComponent();
+		createLoadOneToOneComponent();
 		createLoadOneToManyComponent();
-		createLoadOneToMany();
-		createUpdateObject();
+		createLoadOneToMany();		
+		
+		createSaveOneToOneComponent();
 		createCreateOneToManyComponent();
 		createCreateOneToMany();
 		createSaveOneToManyComponent();
 		createSaveOneToMany();
+		
+		createUpdateObject();
+		createUpdateOneToOneComponent();
 		createEditOneToManyComponent();
+		createUpdateOneToOneComponent();
 		createUpdateOneToManyComponent();
-		createDeleteOneToManyComponent();
+		
+		createDeleteOneToOneComponent();
+		createDeleteOneToManyComponent();		
 		createDeleteOneToMany();
 		createDeleteOneToManyComponentList();
 		createDeleteOneToManyList();
-		createUpdateUniqueComponent();
 		
 		createResetFlters();
 
@@ -127,12 +133,6 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("public void load() {");
 	
 		writeLine("refresh();");
-		
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
-			
-			writeLine("refresh" + currentBean.className + "();");
-		}
 
 		writeLine("}");
 		skipLine();
@@ -155,12 +155,12 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 	}
 	
 	
-	private void createLoadUniqueComponent(){
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
+	private void createLoadOneToOneComponent(){
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 			
 			writeLine("/**");
-			writeLine(" * refresh unique component " + currentBean.objectName);
+			writeLine(" * refresh one to one component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("public void refresh" + currentBean.className + "() {");
 			
@@ -229,17 +229,34 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 	}
 	
 	
-	private void createUpdateUniqueComponent() {
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
+	private void createUpdateOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 
 			writeLine("/**");
-			writeLine(" * update unique component " + currentBean.objectName);
+			writeLine(" * update one to one component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("refresh" + currentBean.className + "();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createSaveOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * save one to one component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
+			writeLine("public void save" + currentBean.className + "() {");
+			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
 		}
@@ -356,6 +373,23 @@ public class BaseJsfDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
 			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createDeleteOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * delete one to one component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
+			writeLine("public void delete" + currentBean.className + "() {");
+			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "();");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();

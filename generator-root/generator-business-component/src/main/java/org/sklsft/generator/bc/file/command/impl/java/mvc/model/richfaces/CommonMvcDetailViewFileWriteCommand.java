@@ -7,7 +7,7 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
 public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
@@ -34,8 +34,8 @@ public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteC
 		
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 		
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
 		}
 
@@ -84,9 +84,9 @@ public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteC
 		writeLine("private " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
 		skipLine();
 		
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
-			writeLine("private " + currentBean.fullViewBean.className + " selected" + uniqueComponent.referenceBean.className + ";");
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + oneToOneComponent.referenceBean.className + ";");
 			skipLine();
 		}
 		
@@ -130,8 +130,8 @@ public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteC
 		writeLine("}");
 		skipLine();
 
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 			writeLine("public " + currentBean.fullViewBean.className + " getSelected" + currentBean.className + "() {");
 			writeLine("return selected" + currentBean.className + ";");
 			writeLine("}");

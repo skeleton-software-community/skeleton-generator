@@ -23,7 +23,7 @@ public enum RelationType {
 	MANY_TO_ONE,
     MANY_TO_ONE_COMPONENT,
     UNIQUE,
-    UNIQUE_COMPONENT,
+    EMBEDDED,
     ONE_TO_ONE,
     ONE_TO_ONE_COMPONENT,
     PROPERTY;
@@ -52,7 +52,7 @@ public enum RelationType {
     {
         switch (relationType)
         {
-            case UNIQUE_COMPONENT:
+            case EMBEDDED:
                 return true;
 
             default:

@@ -1,7 +1,5 @@
 package org.sklsft.generator.bc.metadata.impl;
 
-import java.util.ArrayList;
-
 import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
 import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.model.domain.Model;
@@ -11,7 +9,6 @@ import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
@@ -160,21 +157,15 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToOneComponent.referenceProperty = property;
 				oneToOneComponent.getterName = "get" + bean.className;
 				oneToOneComponent.setterName = "set" + bean.className;
-				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				targetBean.oneToOneComponentList.add(oneToOneComponent);
+				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
+				oneToOneComponent.parentBean = parentBean;				
+				parentBean.oneToOneComponentList.add(oneToOneComponent);
 			}
 
-			if (column.relation.equals(RelationType.UNIQUE_COMPONENT)) {
+			if (column.relation.equals(RelationType.EMBEDDED)) {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.isComponent = true;
-				targetBean.isUniqueComponent = true;
-				UniqueComponent uniqueComponent = new UniqueComponent();
-				uniqueComponent.parentBean = bean;
-				uniqueComponent.referenceBean = targetBean;
-				uniqueComponent.referenceColumn = column;
-				uniqueComponent.getterName = "get" + targetBean.className;
-				uniqueComponent.setterName = "set" + targetBean.className;
-				bean.uniqueComponentList.add(uniqueComponent);
+				targetBean.isEmbedded = true;
 			}
 		}
 

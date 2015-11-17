@@ -30,11 +30,13 @@ public class HibernateBusinessModelStrategy implements LayerStrategy {
 			FileWriteCommandTreeNode ovTreeNode = new FileWriteCommandTreeNode("View beans");
 			packageTreeNode.add(ovTreeNode);
 			for (Bean bean : myPackage.beans) {
-				FileWriteCommandTreeNode basicViewTreeNode = new FileWriteCommandTreeNode(new BasicViewBeanFileWriteCommand(bean));
-				ovTreeNode.add(basicViewTreeNode);
-				
-				FileWriteCommandTreeNode fullViewTreeNode = new FileWriteCommandTreeNode(new FullViewBeanFileWriteCommand(bean));
-				ovTreeNode.add(fullViewTreeNode);
+				if (!bean.isEmbedded) {
+					FileWriteCommandTreeNode basicViewTreeNode = new FileWriteCommandTreeNode(new BasicViewBeanFileWriteCommand(bean));
+					ovTreeNode.add(basicViewTreeNode);
+					
+					FileWriteCommandTreeNode fullViewTreeNode = new FileWriteCommandTreeNode(new FullViewBeanFileWriteCommand(bean));
+					ovTreeNode.add(fullViewTreeNode);
+				}
 			}
 		}
 

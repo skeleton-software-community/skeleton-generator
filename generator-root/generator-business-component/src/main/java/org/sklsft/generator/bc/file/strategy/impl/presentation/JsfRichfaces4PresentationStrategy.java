@@ -18,7 +18,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
 public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 
@@ -86,7 +86,7 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 						packageTreeNode.add(componentCreationTreeNode);
 					}
 					
-					for (UniqueComponent uniqueComponent:bean.uniqueComponentList) {
+					for (OneToOneComponent uniqueComponent:bean.oneToOneComponentList) {
 						FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfUniqueComponentDetailViewFileWriteCommand(uniqueComponent));
 						packageTreeNode.add(componentTreeNode);
 					}

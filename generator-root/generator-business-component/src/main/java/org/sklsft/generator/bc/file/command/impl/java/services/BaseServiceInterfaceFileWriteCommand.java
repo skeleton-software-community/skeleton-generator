@@ -7,8 +7,8 @@ import java.util.List;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 import org.sklsft.generator.model.metadata.RelationType;
 
 public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
@@ -30,9 +30,9 @@ private Bean bean;
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
         
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = OneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 
@@ -149,14 +149,14 @@ private Bean bean;
 
     private void createLoadUniqueComponent()
     {
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
 
             writeLine("/**");
-            writeLine(" * load unique component " + currentBean.objectName);
+            writeLine(" * load one to one component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
+            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "();");
             skipLine();
         }
     }
@@ -261,12 +261,12 @@ private Bean bean;
 
     private void createUpdateUniqueComponent()
     {
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
 
             writeLine("/**");
-            writeLine(" * update unique component " + currentBean.objectName);
+            writeLine(" * update one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id);");
             skipLine();

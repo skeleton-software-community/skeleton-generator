@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
 public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 
@@ -29,9 +29,9 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
         }
 
@@ -75,6 +75,18 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("return " + this.bean.daoObjectName + ".save" + this.bean.className + "(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
+        
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * process save one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine(this.bean.daoObjectName + ".save" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.objectName + ");");
+            writeLine("}");
+            skipLine();
+        }
 
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
@@ -95,11 +107,11 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-            Bean currentBean = uniqueComponent.referenceBean;
+            Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * process update unique component " + currentBean.className);
+            writeLine(" * process update one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public void update" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("}");
@@ -125,6 +137,18 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * process delete one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine(this.bean.daoObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine("}");
+            skipLine();
+        }
+        
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = oneToManyComponent.referenceBean;

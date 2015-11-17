@@ -109,8 +109,9 @@
       <xs:enumeration value="MANY_TO_ONE"/>
       <xs:enumeration value="MANY_TO_ONE_COMPONENT"/>
       <xs:enumeration value="UNIQUE"/>
-      <xs:enumeration value="UNIQUE_COMPONENT"/>
+      <xs:enumeration value="EMBEDDED"/>
       <xs:enumeration value="ONE_TO_ONE"/>
+      <xs:enumeration value="ONE_TO_ONE_COMPONENT"/>
       <xs:enumeration value="PROPERTY"/>
     </xs:restriction>
   </xs:simpleType>

@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.domain.business.UniqueComponent;
 
 public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
@@ -124,16 +123,6 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		for (Property property : this.bean.fullViewBean.properties) {
 			if (property.comboBoxBean != null && property.editable) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
-			}
-		}
-
-		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
-
-			for (Property property : currentBean.fullViewBean.properties) {
-				if (property.comboBoxBean != null && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
-				}
 			}
 		}
 
