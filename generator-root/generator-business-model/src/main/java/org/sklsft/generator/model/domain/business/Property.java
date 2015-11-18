@@ -23,6 +23,7 @@ public class Property {
 	public boolean unique;
 	public Bean referenceBean;
 	public RelationType relation;
+	public boolean embedded;
 	public Format format;
 	public boolean editable;
 	public Visibility visibility;
@@ -48,43 +49,50 @@ public class Property {
 			}
 
 			for (int i = 1; i <= propertiesMaxIndex; i++) {
-				if (this.referenceBean.properties.get(i).referenceBean != null) {
-					tempPropertyList = this.referenceBean.properties.get(i).getReferencePropertyList();
-					for (int j = 0; j < tempPropertyList.size(); j++) {
+				
+				Property currentProperty = this.referenceBean.properties.get(i);
+				
+				if (currentProperty.referenceBean != null) {
+					tempPropertyList = currentProperty.getReferencePropertyList();
+					for (Property tempProperty:tempPropertyList) {
 						Property property = new Property();
-						property.name = this.referenceBean.properties.get(i).name + tempPropertyList.get(j).capName;
-						property.capName = this.referenceBean.properties.get(i).capName + tempPropertyList.get(j).capName;
-						property.fetchName = this.referenceBean.properties.get(i).fetchName + "." + tempPropertyList.get(j).fetchName;
-						property.beanDataType = tempPropertyList.get(j).beanDataType;
-						property.dataType = tempPropertyList.get(j).dataType;
-						property.format = tempPropertyList.get(j).format;
-						property.nullable = this.referenceBean.properties.get(i).nullable;
-						property.visibility = this.referenceBean.properties.get(i).visibility;
-						property.editable = this.referenceBean.properties.get(i).editable;
-						property.lastPropertyName = tempPropertyList.get(j).lastPropertyName;
-						property.joinedAliasName = this.referenceBean.properties.get(i).capName + tempPropertyList.get(j).joinedAliasName;
-						property.comboBoxBean = tempPropertyList.get(j).comboBoxBean;
-						property.rendering = tempPropertyList.get(j).rendering;
+						property.name = currentProperty.name + tempProperty.capName;
+						property.capName = currentProperty.capName + tempProperty.capName;
+						property.fetchName = currentProperty.fetchName + "." + tempProperty.fetchName;
+						property.beanDataType = tempProperty.beanDataType;
+						property.dataType = tempProperty.dataType;
+						property.format = tempProperty.format;
+						property.nullable = currentProperty.nullable;
+						property.visibility = currentProperty.visibility;
+						property.editable = currentProperty.editable;
+						property.lastPropertyName = tempProperty.lastPropertyName;
+						property.joinedAliasName = currentProperty.capName + tempProperty.joinedAliasName;
+						property.comboBoxBean = tempProperty.comboBoxBean;
+						property.rendering = tempProperty.rendering;
 						referencePropertyList.add(property);
 					}
 				} else {
 					Property property = new Property();
-					property.name = this.referenceBean.properties.get(i).name;
-					property.capName = this.referenceBean.properties.get(i).capName;
-					property.fetchName = this.referenceBean.properties.get(i).fetchName;
-					property.beanDataType = this.referenceBean.properties.get(i).beanDataType;
-					property.dataType = this.referenceBean.properties.get(i).dataType;
-					property.format = this.referenceBean.properties.get(i).format;
-					property.nullable = this.referenceBean.properties.get(i).nullable;
-					property.visibility = this.referenceBean.properties.get(i).visibility;
-					property.editable = this.referenceBean.properties.get(i).editable;
-					property.lastPropertyName = this.referenceBean.properties.get(i).name;
+					property.name = currentProperty.name;
+					property.capName = currentProperty.capName;
+					property.fetchName = currentProperty.fetchName;
+					property.beanDataType = currentProperty.beanDataType;
+					property.dataType = currentProperty.dataType;
+					property.format = currentProperty.format;
+					property.nullable = currentProperty.nullable;
+					property.visibility = currentProperty.visibility;
+					property.editable = currentProperty.editable;
+					property.lastPropertyName = currentProperty.name;
 					property.joinedAliasName = "";
 
 					if (this.referenceBean.cardinality == 1) {
 						property.rendering = this.rendering;
 					} else {
-						property.rendering = this.rendering + "(" + this.referenceBean.properties.get(i).rendering + ")";
+						if (this.referenceBean.isEmbedded) {
+							property.rendering = currentProperty.rendering;
+						} else {
+							property.rendering = this.rendering + "(" + currentProperty.rendering + ")";
+						}
 					}
 					if (this.referenceBean.hasComboBox) {
 						property.comboBoxBean = this.referenceBean;

@@ -8,6 +8,7 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
 import org.sklsft.generator.model.domain.ui.OptionBean;
+import org.sklsft.generator.model.metadata.Visibility;
 
 /**
  * representation of a bean<br/>
@@ -103,8 +104,7 @@ public class Bean {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
 				tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
-				for (int j = 0; j < tempPropertyList.size(); j++) {
-					Property tempProperty = tempPropertyList.get(j);
+				for (Property tempProperty:tempPropertyList) {
 					Property property = new Property();
 					property.name = currentProperty.name + tempProperty.capName;
 					property.capName = currentProperty.capName + tempProperty.capName;
@@ -153,26 +153,14 @@ public class Bean {
 	 */
 	private List<Property> getVisibleProperties() {
 		List<Property> visiblePropertyList = new ArrayList<Property>();
-		List<Property> tempPropertyList = new ArrayList<Property>();
-
+		
 		for (int i = 1; i < this.properties.size(); i++) {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
-				tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
-				for (int j = 0; j < tempPropertyList.size(); j++) {
-					Property tempProperty = tempPropertyList.get(j);
-					Property property = new Property();
-					property.name = currentProperty.name + tempProperty.capName;
-					property.capName = currentProperty.capName + tempProperty.capName;
-					property.beanDataType = tempProperty.beanDataType;
-					property.dataType = tempProperty.dataType;
-					property.format = tempProperty.format;
-					property.nullable = currentProperty.nullable;
-					property.visibility = currentProperty.visibility;
-					property.editable = currentProperty.editable;
-					property.comboBoxBean = tempProperty.comboBoxBean;
-					property.rendering = tempProperty.rendering;
-					visiblePropertyList.add(property);
+				if (currentProperty.referenceBean.isEmbedded) {
+					addEmbeddedProperties(currentProperty, visiblePropertyList);
+				} else {
+					addReferenceProperties(currentProperty, visiblePropertyList);
 				}
 			} else {
 				Property property = new Property();
@@ -190,6 +178,42 @@ public class Bean {
 		}
 
 		return visiblePropertyList;
+	}
+
+	private void addReferenceProperties(Property currentProperty, List<Property> visiblePropertyList) {
+		List<Property> tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
+		for (Property tempProperty:tempPropertyList) {
+			Property property = new Property();
+			property.name = currentProperty.name + tempProperty.capName;
+			property.capName = currentProperty.capName + tempProperty.capName;
+			property.beanDataType = tempProperty.beanDataType;
+			property.dataType = tempProperty.dataType;
+			property.format = tempProperty.format;
+			property.nullable = currentProperty.nullable;
+			property.visibility = currentProperty.visibility;
+			property.editable = currentProperty.editable;
+			property.comboBoxBean = tempProperty.comboBoxBean;
+			property.rendering = tempProperty.rendering;
+			visiblePropertyList.add(property);
+		}		
+	}
+	
+	private void addEmbeddedProperties(Property currentProperty, List<Property> visiblePropertyList) {
+		List<Property> tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
+		for (Property tempProperty:tempPropertyList) {
+			Property property = new Property();
+			property.name = tempProperty.name;
+			property.capName = tempProperty.capName;
+			property.beanDataType = tempProperty.beanDataType;
+			property.dataType = tempProperty.dataType;
+			property.format = tempProperty.format;
+			property.nullable = tempProperty.nullable;
+			property.visibility = Visibility.min(currentProperty.visibility, tempProperty.visibility);
+			property.editable = tempProperty.editable;
+			property.comboBoxBean = tempProperty.comboBoxBean;
+			property.rendering = tempProperty.rendering;
+			visiblePropertyList.add(property);
+		}		
 	}
 
 	/**

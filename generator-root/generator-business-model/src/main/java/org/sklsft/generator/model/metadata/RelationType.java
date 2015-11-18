@@ -48,7 +48,7 @@ public enum RelationType {
         }
     }
 	
-	public static Boolean isUniqueComponent(RelationType relationType)
+	public static Boolean isEmbedded(RelationType relationType)
     {
         switch (relationType)
         {

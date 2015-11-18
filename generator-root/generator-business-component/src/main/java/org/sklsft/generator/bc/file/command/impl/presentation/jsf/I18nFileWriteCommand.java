@@ -37,9 +37,13 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 				for (int i = 1; i< bean.properties.size();i++) {
 					Property property = bean.properties.get(i);
 					if (property.referenceBean != null) {
-						List<Property> findPropertyList = property.getReferencePropertyList();
-						for (Property findProperty : findPropertyList) {
-							writeLine(bean.objectName + property.capName + findProperty.capName + "=" + findProperty.rendering);
+						List<Property> referencePropertyList = property.getReferencePropertyList();
+						for (Property findProperty : referencePropertyList) {
+							if (property.referenceBean.isEmbedded) {
+								writeLine(bean.objectName + findProperty.capName + "=" + findProperty.rendering);
+							} else {
+								writeLine(bean.objectName + property.capName + findProperty.capName + "=" + findProperty.rendering);
+							}
 						}
 					} else {
 						writeLine(bean.objectName + property.capName + "=" + property.rendering);

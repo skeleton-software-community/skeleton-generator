@@ -88,6 +88,7 @@ public class JavaBeanFactory implements BeanFactory {
 			if (!RelationType.isComponentLink(column.relation)) {
 				property = new Property();
 				property.column = column;
+				
 				if (column.referenceTable != null) {
 					property.name = JavaClassNaming.getObjectName(column.originalName.replace("_ID", "").replace("_id", ""));
 					property.capName = JavaClassNaming.getClassName(column.originalName.replace("_ID", "").replace("_id", ""));
@@ -105,6 +106,7 @@ public class JavaBeanFactory implements BeanFactory {
 				property.dataType = column.dataType;
 				property.nullable = column.nullable;
 				property.relation = column.relation;
+				property.embedded = RelationType.isEmbedded(property.relation);
 				property.unique = column.unique;
 				property.format = column.format;
 				property.visibility = column.visibility;

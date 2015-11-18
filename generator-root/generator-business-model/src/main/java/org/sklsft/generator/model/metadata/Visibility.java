@@ -12,16 +12,18 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum(String.class)
 public enum Visibility {
-	VISIBLE (true, true),
-    NOT_LIST (false, true),
-    NOT_VISIBLE (false, false);
+	VISIBLE (true, true, 3),
+    NOT_LIST (false, true, 2),
+    NOT_VISIBLE (false, false, 1);
 	
 	private boolean listVisible;
 	private boolean detailVisible;
+	private int weight;
 	
-	private Visibility(boolean listVisible, boolean detailVisible){
+	private Visibility(boolean listVisible, boolean detailVisible, int weight){
 		this.listVisible = listVisible;
 		this.detailVisible = detailVisible;
+		this.weight = weight;
 	}
 	
 	public boolean isListVisible() {
@@ -30,5 +32,13 @@ public enum Visibility {
 
 	public boolean isDetailVisible() {
 		return detailVisible;
+	}
+
+	public static Visibility min(Visibility visibility, Visibility visibility2) {
+		if (visibility.weight < visibility2.weight) {
+			return visibility;
+		} else {
+			return visibility2;
+		}
 	}
 }

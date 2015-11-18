@@ -11,7 +11,6 @@ import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.DatabaseEngine;
-import org.sklsft.generator.model.metadata.RelationType;
 
 
 
@@ -187,7 +186,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 
 			if (property.referenceBean != null) {
-				if (!RelationType.isUniqueComponent(property.relation)) {
+				if (!property.embedded) {
 					writeLine("@ManyToOne(fetch = FetchType.LAZY)");
 					if (bean.isComponent) {
 						writeLine("@Fetch(FetchMode.JOIN)");
