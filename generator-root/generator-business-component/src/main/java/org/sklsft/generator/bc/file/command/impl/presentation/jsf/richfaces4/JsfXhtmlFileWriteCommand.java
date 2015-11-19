@@ -88,12 +88,13 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			break;
 
 		case TEXT:
-			writeLine("<h:outputText styleClass=" + CHAR_34 + "truncated-text" + CHAR_34 + " value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ "/>");
+			writeLine("<pre class=" + CHAR_34 + "truncated-text" + CHAR_34 + ">");
+			writeLine("#{" + bean.objectName + "." + property.name + "}");
+			writeLine("</pre>");
 			writeLine("<rich:tooltip>");
-			writeLine("<h:outputText value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34 + "/>");
+			writeLine("<pre>");
+			writeLine("#{" + bean.objectName + "." + property.name + "}");
+			writeLine("</pre>");
 			writeLine("</rich:tooltip>");
 			break;
 		}
