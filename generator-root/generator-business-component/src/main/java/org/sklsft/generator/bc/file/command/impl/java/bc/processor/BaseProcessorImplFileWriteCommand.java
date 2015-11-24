@@ -82,7 +82,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * process save one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("public void save" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine(this.bean.daoObjectName + ".save" + currentBean.className + "(" + this.bean.objectName + ", " + currentBean.objectName + ");");
             writeLine("}");
             skipLine();
@@ -99,6 +99,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("}");
             skipLine();
         }
+        
 
         writeLine("/**");
         writeLine(" * process update");
@@ -113,7 +114,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * process update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void update" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("public void update" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("}");
             skipLine();
         }

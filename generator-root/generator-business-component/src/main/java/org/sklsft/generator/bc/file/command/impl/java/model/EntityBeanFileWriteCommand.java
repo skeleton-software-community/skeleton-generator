@@ -8,6 +8,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.DatabaseEngine;
@@ -63,11 +64,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-//		for (UniqueComponent uniqueComponent : this.bean.uniqueComponentList) {
-//			Bean currentBean = uniqueComponent.referenceBean;
-//			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-//		}
-
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
@@ -80,6 +76,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToOne oneToOne : this.bean.oneToOneList) {
 			Bean currentBean = oneToOne.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+		}
+		
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 		}
 	}
@@ -159,7 +160,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("private Long id;");
 		skipLine();
 		
-		if (bean.isManyToOneComponent) {
+		if (bean.isComponent && !bean.isEmbedded) {
 			
 			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
 			
@@ -248,9 +249,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 		}
 
-		for (OneToOne oneToOne : this.bean.oneToOneList) {
-			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToOne.referenceProperty.name + (char) 34 + ")");
-			writeLine("private " + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ";");
+				
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToOneComponent.parentBean.objectName + (char) 34 + ")");
+			writeLine("@Fetch(FetchMode.JOIN)");
+			writeLine("private " + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ";");
 			skipLine();
 		}
 
@@ -266,7 +269,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 		
-		if (bean.isManyToOneComponent) {
+		if (bean.isComponent && !bean.isEmbedded) {
 			
 			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
 			
@@ -313,13 +316,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 		}
 
-		for (OneToOne oneToOne : this.bean.oneToOneList) {
-			writeLine("public " + oneToOne.referenceBean.className + " " + oneToOne.getterName + " () {");
-			writeLine("return this." + oneToOne.referenceBean.objectName + ";");
+		
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			writeLine("public " + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.getterName + " () {");
+			writeLine("return this." + oneToOneComponent.referenceBean.objectName + ";");
 			writeLine("}");
 			skipLine();
-			writeLine("public void " + oneToOne.setterName + " (" + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ") {");
-			writeLine("this." + oneToOne.referenceBean.objectName + " = " + oneToOne.referenceBean.objectName + ";");
+			writeLine("public void " + oneToOneComponent.setterName + " (" + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ") {");
+			writeLine("this." + oneToOneComponent.referenceBean.objectName + " = " + oneToOneComponent.referenceBean.objectName + ";");
 			writeLine("}");
 			skipLine();
 		}

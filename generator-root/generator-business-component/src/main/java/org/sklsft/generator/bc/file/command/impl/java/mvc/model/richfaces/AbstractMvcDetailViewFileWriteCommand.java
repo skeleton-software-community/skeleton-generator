@@ -9,11 +9,11 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 
-public abstract class CommonMvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
+public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public CommonMvcDetailViewFileWriteCommand(Bean bean) {
+	public AbstractMvcDetailViewFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
 				+ bean.myPackage.detailViewPackageName.replace(".", "\\"), bean.detailViewClassName);
 

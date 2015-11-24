@@ -40,7 +40,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         writeLine("<!-- -->");
         skipLine();
 
-        writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+        writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
         skipLine();
         
         writeLine("<h:form>");
@@ -70,7 +70,26 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         
         if (this.oneToOneComponent.referenceBean.updateEnabled)
         {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + "/>");
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + 
+            		" rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + 
+            		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+        }
+        
+        if (this.oneToOneComponent.referenceBean.createEnabled)
+        {
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + 
+            		" rendered=" + CHAR_34 + "#{empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 + 
+            		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+        }
+        
+        if (this.oneToOneComponent.referenceBean.deleteEnabled)
+        {
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.drop}" + CHAR_34 + 
+            		" rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}" + CHAR_34 + 
+            		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
         }
     
         skipLine();

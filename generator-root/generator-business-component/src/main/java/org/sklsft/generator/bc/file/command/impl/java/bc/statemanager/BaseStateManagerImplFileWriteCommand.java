@@ -66,9 +66,9 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToManyComponent : this.bean.oneToOneComponentList)
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
-        	Bean currentBean = oneToManyComponent.referenceBean;
+        	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * check before save one to one compoennt " + currentBean.className);
             writeLine(" */");
@@ -101,7 +101,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
             writeLine("}");
             skipLine();
         }
@@ -130,7 +130,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before delete one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
             writeLine("}");
             skipLine();
         }

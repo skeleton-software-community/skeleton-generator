@@ -163,17 +163,19 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         createLoadObjectList();
         createLoadObject();
         createFindObject();
-        createLoadUniqueComponent();
+        createLoadOneToOneComponent();
         createLoadOneToManyComponentList();
         createLoadOneToManyComponent();
         createCreateObject();
         createCreateOneToManyComponent();
         createSaveObject();
+        createSaveOneToOneComponent();
         createSaveOneToManyComponent();
         createUpdateObject();
-        createUpdateUniqueComponent();
+        createUpdateOneTOneComponent();
         createUpdateOneToManyComponent();
         createDeleteObject();
+        createDeleteOneToOneComponent();
         createDeleteOneToManyComponent();
         createDeleteObjectList();
         createDeleteOneToManyComponentList();
@@ -261,7 +263,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
     }
     
 
-    private void createLoadUniqueComponent()
+    private void createLoadOneToOneComponent()
     {
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -273,7 +275,12 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "()," + this.bean.objectName + ".get" + currentBean.className + "());");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
+            writeLine("if (" + currentBean.objectName + "==null) {");
+            writeLine("return new " + currentBean.fullViewBean.className + "();");
+            writeLine("} else {");
+            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "()," + currentBean.objectName + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
@@ -387,6 +394,26 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         	}
         }
     }
+    
+    private void createSaveOneToOneComponent()
+    {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * save one to one component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("public void save" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id) {");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.fullViewBean.mapperObjectName + ".mapTo(" + currentBean.fullViewBean.objectName + ", new " + currentBean.className + "());");
+            writeLine(this.bean.stateManagerObjectName + ".checkBeforeSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
+            writeLine(this.bean.processorObjectName + ".save" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
+            writeLine("}");
+            skipLine();
+        }
+    }
 
     private void createSaveOneToManyComponent()
     {
@@ -423,21 +450,22 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
     }
 
-    private void createUpdateUniqueComponent()
+    private void createUpdateOneTOneComponent()
     {
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
             Bean currentBean = oneToOneComponent.referenceBean;
 
             writeLine("/**");
-            writeLine(" * update unique component " + currentBean.objectName);
+            writeLine(" * update one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
-            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + this.bean.objectName + ");");
-            writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.fullViewBean.mapperObjectName + ".mapTo(" + currentBean.fullViewBean.objectName + ", " + bean.objectName + ".get" + currentBean.className + "()));");
-            writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + bean.objectName + ");");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
+            writeLine(this.bean.stateManagerObjectName + ".checkBeforeUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.fullViewBean.mapperObjectName + ".mapTo(" + currentBean.fullViewBean.objectName + ", " + currentBean.objectName + "));");
+            writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
             skipLine();
         }
@@ -490,6 +518,26 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
             writeLine("public void delete" + currentBean.className + "(Long id) {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
+            writeLine(this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
+            writeLine("}");
+            skipLine();
+        }
+    }
+    
+    private void createDeleteOneToOneComponent()
+    {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");            
+            writeLine(" * delete one to one component " + currentBean.objectName);            
+            writeLine(" */");
+            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("public void delete" + currentBean.className + "(Long id) {");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
             writeLine(this.bean.stateManagerObjectName + ".checkBeforeDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");

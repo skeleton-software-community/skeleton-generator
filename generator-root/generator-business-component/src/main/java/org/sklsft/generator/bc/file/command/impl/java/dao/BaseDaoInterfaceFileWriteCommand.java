@@ -7,6 +7,7 @@ import java.util.List;
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.RelationType;
 
@@ -37,6 +38,11 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 		}
+		
+		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+		}
 	}
 
 	@Override
@@ -62,7 +68,6 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         createFindObject();
         createSaveObject();
         createDeleteObject();
-        createDeleteOneToManyComponent();
 
         writeLine("}");
 	}
@@ -172,6 +177,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();
 		}
+        
+        for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList){
+			Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * save one to one component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
+			skipLine();
+		}
     }
 
 
@@ -182,13 +196,20 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         writeLine("void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
-    }
     
-    private void createDeleteOneToManyComponent() {
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
+			skipLine();
+		}
+		
+		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList){
+			Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * delete one to one component " + currentBean.className);
 			writeLine(" */");
 			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();

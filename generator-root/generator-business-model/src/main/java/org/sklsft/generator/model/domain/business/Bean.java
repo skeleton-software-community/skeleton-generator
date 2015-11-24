@@ -76,7 +76,6 @@ public class Bean {
 	public List<OneToOneComponent> oneToOneComponentList = new ArrayList<>();
 
 	public boolean isComponent = false;
-	public boolean isManyToOneComponent = false;
 	public boolean isEmbedded = false;
 	
 	public BasicViewBean basicViewBean;

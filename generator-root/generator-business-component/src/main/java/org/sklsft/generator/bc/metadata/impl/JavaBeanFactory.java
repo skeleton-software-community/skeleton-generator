@@ -130,7 +130,6 @@ public class JavaBeanFactory implements BeanFactory {
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT)) {
 				bean.isComponent = true;
-				bean.isManyToOneComponent = true;
 				OneToManyComponent oneToManyComponent = new OneToManyComponent();
 				oneToManyComponent.referenceBean = bean;
 				oneToManyComponent.referenceColumn = column;

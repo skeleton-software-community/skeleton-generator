@@ -10,7 +10,7 @@ import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.Jsf
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyCreationViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfUniqueComponentDetailViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToOneComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Package;
@@ -87,7 +87,7 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 					}
 					
 					for (OneToOneComponent uniqueComponent:bean.oneToOneComponentList) {
-						FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfUniqueComponentDetailViewFileWriteCommand(uniqueComponent));
+						FileWriteCommandTreeNode componentTreeNode = new FileWriteCommandTreeNode(new JsfOneToOneComponentDetailViewFileWriteCommand(uniqueComponent));
 						packageTreeNode.add(componentTreeNode);
 					}
 				}

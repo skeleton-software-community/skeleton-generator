@@ -78,17 +78,19 @@ private Bean bean;
         createLoadObjectList();
         createLoadObject();
         createFindObject();
-        createLoadUniqueComponent();
+        createLoadOneToOneComponent();
         createLoadOneToManyComponentList();
         createLoadOneToManyComponent();
         createCreateObject();
         createCreateOneToManyComponent();
         createSaveObject();
+        createSaveOneToOneComponent();
         createSaveOneToManyComponent();
         createUpdateObject();
         createUpdateUniqueComponent();
         createUpdateOneToManyComponent();
         createDeleteObject();
+        createDeleteOneToOneComponent();
         createDeleteOneToManyComponent();
         createDeleteObjectList();
         createDeleteOneToManyComponentList();
@@ -147,7 +149,7 @@ private Bean bean;
     }
     
 
-    private void createLoadUniqueComponent()
+    private void createLoadOneToOneComponent()
     {
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -156,7 +158,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * load one to one component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "();");
+            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
             skipLine();
         }
     }
@@ -235,6 +237,20 @@ private Bean bean;
         	}
         }
     }
+    
+    private void createSaveOneToOneComponent()
+    {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * save one to one component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public void save" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id);");
+            skipLine();
+        }
+    }
 
     private void createSaveOneToManyComponent()
     {
@@ -294,6 +310,20 @@ private Bean bean;
         writeLine(" */");
         writeLine("void delete" + this.bean.className + "(Long id);");
         skipLine();
+    }
+    
+    private void createDeleteOneToOneComponent()
+    {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
+        {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");            
+            writeLine(" * delete one to one component " + currentBean.objectName);            
+            writeLine(" */");
+            writeLine("public void delete" + currentBean.className + "(Long id);");            
+            skipLine();
+        }
     }
 
     private void createDeleteOneToManyComponent()
