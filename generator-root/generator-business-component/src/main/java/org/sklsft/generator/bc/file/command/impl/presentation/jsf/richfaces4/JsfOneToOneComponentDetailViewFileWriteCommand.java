@@ -57,7 +57,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         skipLine();
 
         writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "List}");
+		writeLine("#{i18n." + currentBean.objectName + "Detail}");
 		writeLine("</h2>");
         
         writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
@@ -117,7 +117,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         
         writeLine("</h:form>");
         
-        writeLine("<script>$('#" + currentBean.objectName + "DetailMenu').addClass('active');</script>");
+        writeLine("<script>$('#" + currentBean.objectName + "DetailsMenu').addClass('active');</script>");
         
 
 		writeLine("</ui:define>");
