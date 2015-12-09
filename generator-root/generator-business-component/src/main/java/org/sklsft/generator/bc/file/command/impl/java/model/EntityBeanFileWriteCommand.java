@@ -251,7 +251,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 				
 		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToOneComponent.parentBean.objectName + (char) 34 + ")");
+			writeLine("@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = " + (char) 34 + oneToOneComponent.parentBean.objectName + (char) 34 + ")");
 			writeLine("@Fetch(FetchMode.JOIN)");
 			writeLine("private " + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ";");
 			skipLine();

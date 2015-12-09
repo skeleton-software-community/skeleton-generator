@@ -77,10 +77,12 @@ public class Bean {
 
 	public boolean isComponent = false;
 	public boolean isEmbedded = false;
+	public boolean isOneToOneComponent = false;
 	
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;
 	public OptionBean optionBean;
+	
 
 	/**
 	 * get the list of properties that will be used in bean views to show
@@ -150,17 +152,30 @@ public class Bean {
 	 * 
 	 * @return
 	 */
-	private List<Property> getVisibleProperties() {
+	public List<Property> getVisibleProperties() {
+		
+		return getVisiblePropertiesExcludingField(null);
+	}
+	
+	
+	/**
+	 * get the list of properties that will be available in a view bean<br>
+	 * Excludes a field name. Usefull for handling one to many views where we want to exclude reference to parent bean in a view
+	 */
+	public List<Property> getVisiblePropertiesExcludingField(String excludedFieldName) {
 		List<Property> visiblePropertyList = new ArrayList<Property>();
 		
 		for (int i = 1; i < this.properties.size(); i++) {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
-				if (currentProperty.referenceBean.isEmbedded) {
-					addEmbeddedProperties(currentProperty, visiblePropertyList);
-				} else {
-					addReferenceProperties(currentProperty, visiblePropertyList);
+				if (!currentProperty.name.equals(excludedFieldName)) {
+					if (currentProperty.referenceBean.isEmbedded) {
+						addEmbeddedProperties(currentProperty, visiblePropertyList);
+					} else {
+						addReferenceProperties(currentProperty, visiblePropertyList);
+					}
 				}
+				
 			} else {
 				Property property = new Property();
 				property.name = currentProperty.name;

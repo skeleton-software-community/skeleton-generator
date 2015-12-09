@@ -99,9 +99,11 @@ public class Richfaces4ControllerStrategy implements LayerStrategy {
 
 			for (Bean bean : myPackage.beans) {
 				
-				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DataTableFilterFileWriteCommand(bean));
-				filterTreeNode.add(beanTreeNode);
-
+				if (!bean.isEmbedded && !bean.isOneToOneComponent) {
+				
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DataTableFilterFileWriteCommand(bean));
+					filterTreeNode.add(beanTreeNode);
+				}
 			}
 		}
 		

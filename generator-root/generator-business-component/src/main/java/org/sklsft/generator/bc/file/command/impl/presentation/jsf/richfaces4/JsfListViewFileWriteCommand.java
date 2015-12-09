@@ -45,9 +45,9 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<a4j:jsFunction name=" + CHAR_34 + "load" + CHAR_34);
 		writeLine("action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".load}" + CHAR_34);
 		writeLine("render=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34);
-		writeLine("oncomplete=" + CHAR_34 + "$('processingPanel').modal('hide')" + CHAR_34 + "/>");
+		writeLine("oncomplete=" + CHAR_34 + "$('#processingPanel').modal('hide')" + CHAR_34 + "/>");
 		
-	    writeLine("<script>window.onload = function(){$('processingPanel').modal('show');load();}</script>");
+	    writeLine("<script>window.onload = function(){$('#processingPanel').modal('show');load();}</script>");
 		
 		writeLine("<h2>");
 		writeLine("#{i18n." + bean.objectName + "List}");
