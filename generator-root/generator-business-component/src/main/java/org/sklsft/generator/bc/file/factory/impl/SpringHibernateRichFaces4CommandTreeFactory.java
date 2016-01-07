@@ -1,8 +1,8 @@
 package org.sklsft.generator.bc.file.factory.impl;
 
 import org.sklsft.generator.bc.file.strategy.impl.bc.BusinessComponentStrategy;
-import org.sklsft.generator.bc.file.strategy.impl.configuration.Richfaces3ConfigurationStrategy;
-import org.sklsft.generator.bc.file.strategy.impl.configuration.Richfaces3ResourcesStrategy;
+import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4.Richfaces4ConfigurationStrategy;
+import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4.Richfaces4ResourcesStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.controller.Richfaces4ControllerStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.dao.HibernateDaoStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.database.DefaultDatabaseStrategy;
@@ -17,9 +17,9 @@ public class SpringHibernateRichFaces4CommandTreeFactory extends AbstractFileWri
 	public SpringHibernateRichFaces4CommandTreeFactory() {
 		super();
 		
-		fileImportStrategy = new Richfaces3ResourcesStrategy();
+		fileImportStrategy = new Richfaces4ResourcesStrategy();
 		
-		configurationStrategy = new Richfaces3ConfigurationStrategy();
+		configurationStrategy = new Richfaces4ConfigurationStrategy();
 			
 		
 		layerStrategies.add(new DefaultDatabaseStrategy());

@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.strategy.impl.configuration;
+package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces3;
 
 import org.sklsft.generator.bc.file.command.impl.ResourcesFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;

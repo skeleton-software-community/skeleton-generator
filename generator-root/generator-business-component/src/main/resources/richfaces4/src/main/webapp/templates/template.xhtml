@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+
+<h:head>
+	<title>${i18n.appName}</title>
+</h:head>
+
+<h:body>
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar-menu"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" title="#{i18n.appName}"
+					href="#{application.contextPath}">
+					<h:graphicImage alt="#{i18n.appName}"
+						value="/resources/images/header/logo.png" height="50" />
+					#{i18n.appName}
+				</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="navbar-menu">
+				<ui:include src="/templates/header-menu.xhtml" />
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<rich:notifyStack id="globalStack" position="topRight"
+			styleClass="global-stack" direction="vertical">
+			<rich:notifyMessages globalOnly="true"
+				stayTime="5000" stack="globalStack" sticky="false" />
+		</rich:notifyStack>
+
+		<ui:insert name="content" />
+
+	</div>
+
+	<div class="footer">
+		Done with
+		<a
+			href="http://skeleton-software-community.github.io/skeleton-generator">
+			skeleton-generator </a>
+		by the Skeleton Software Community
+	</div>
+
+
+	<div class="modal modal-default" id="processingPanel" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h:outputText value="#{i18n.processing}..." />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<link rel="stylesheet" type="text/css"
+		href="#{application.contextPath}/resources/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{application.contextPath}/resources/css/styles.css" />
+
+	<h:outputScript library="org.richfaces" name="jquery.js" />
+	<script type="text/javascript"
+		src="#{application.contextPath}/resources/js/bootstrap.min.js" />
+	<script type="text/javascript"
+		src="#{application.contextPath}/resources/js/util.js" />
+
+</h:body>
+</html>

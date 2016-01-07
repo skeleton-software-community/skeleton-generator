@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.strategy.impl.configuration;
+package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces3;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.Richfaces3BaseControllerFileWriteCommand;
@@ -9,7 +9,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.java.population.PopulatorL
 import org.sklsft.generator.bc.file.command.impl.conf.pom.ApiPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.BusinessComponentPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.BusinessModelPomFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenEclipseBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.MavenInstallBatchFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.PopulatorPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.RepositoryPomFileWriteCommand;
@@ -28,7 +27,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringTestRepo
 import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringTestServicesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.LogbackFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.ProjectPropertiesFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces3FacesConfigFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces3WebXmlFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
@@ -83,9 +81,6 @@ public class Richfaces3ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode populatorPomTreeNode = new FileWriteCommandTreeNode(new PopulatorPomFileWriteCommand(project));
 		pomTreeNode.add(populatorPomTreeNode);
 		
-		FileWriteCommandTreeNode mavenEclipsePomTreeNode = new FileWriteCommandTreeNode(new MavenEclipseBatchFileWriteCommand(project));
-		pomTreeNode.add(mavenEclipsePomTreeNode);
-		
 		FileWriteCommandTreeNode mavenInstallPomTreeNode = new FileWriteCommandTreeNode(new MavenInstallBatchFileWriteCommand(project));
 		pomTreeNode.add(mavenInstallPomTreeNode);
 		
@@ -95,9 +90,6 @@ public class Richfaces3ConfigurationStrategy  implements LayerStrategy {
 		 */
 		FileWriteCommandTreeNode webappTreeNode = new FileWriteCommandTreeNode("webapp files");
 		configurationTreeNode.add(webappTreeNode);
-		
-		FileWriteCommandTreeNode facesConfigPomTreeNode = new FileWriteCommandTreeNode(new Richfaces3FacesConfigFileWriteCommand(project));
-		webappTreeNode.add(facesConfigPomTreeNode);
 		
 		FileWriteCommandTreeNode webXmlPomTreeNode = new FileWriteCommandTreeNode(new Richfaces3WebXmlFileWriteCommand(project));
 		webappTreeNode.add(webXmlPomTreeNode);

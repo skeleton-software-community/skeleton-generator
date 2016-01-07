@@ -1,0 +1,251 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url("#{resource['/fonts/glyphicons-halflings-regular.eot']}");
+  src: url("#{resource['/fonts/glyphicons-halflings-regular.eot']}?#iefix") format('embedded-opentype'),
+  url("#{resource['/fonts/glyphicons-halflings-regular.woff']}") format('woff'),
+  url("#{resource['/fonts/glyphicons-halflings-regular.ttf']}") format('truetype'),
+  url("#{resource['/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');
+}
+
+
+body {
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+h2 {
+	font-size:26px;
+}
+
+@media (min-width: 768px) {
+	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+	    margin-left: 0px;
+	}
+}
+
+
+.navbar-brand {
+	padding:0px;
+}
+
+
+.navbar-brand>img {
+    display: inline;
+}
+
+
+.footer {
+	position:fixed;
+	bottom:0;
+	width:100%;
+	background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+	z-index:1030;		
+	min-height: 50px;
+    margin-top: 20px;
+    padding:15px;
+}
+
+
+.not-visible {
+	visibility:hidden;
+	height:0px;
+}
+
+
+/**
+* nav pills
+*/
+ul.nav.nav-pills {
+	margin-top:8px;
+}
+
+.nav-pills>li>a {
+    border-radius: 4px;
+    border:1px solid #337ab7;
+}
+
+
+/**
+* tables definitions
+*/
+
+.scroller {
+	text-align:center;
+	padding-top:8px;
+	padding-bottom:8px;
+}
+
+.dropList {
+	font-size:14px;
+	display:none;
+}
+
+.rf-dt {
+	width:100%;
+}
+
+.dataTableFilter {
+	width:80%;
+}
+
+.datatableRow {
+	color: #000000;
+	background-color: #FFFFFF;
+
+}
+
+.datatableRowLight {
+	color: #000000;
+	background-color: #E8F5FC;
+	max-height:50px;
+}
+
+.rf-dt-c {
+	font-size:12px;
+	padding:6px;
+	
+}
+
+.rf-dt-shdr-c {
+	font-size:12px;
+}
+
+pre {
+    display: block;
+    padding: 0px;
+    margin: 0 0 0px;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    font-family:inherit;
+}
+
+pre.truncated-text {
+	max-width:300px;
+	max-height: 50px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rf-tt {
+	width:500px;
+	text-overflow: ellipsis;
+}
+
+.rf-tt-cnt {
+	width:500px;
+	text-overflow: ellipsis;
+}
+
+.rf-tt-cntr {
+	width:500px;
+	text-overflow: ellipsis;
+}
+
+
+/**
+* forms
+*/
+
+.form-control {
+	margin-bottom:8px;	
+}
+
+/**
+* calendar
+*/
+.form-control.rf-cal-inp {
+	width:100%;
+}
+
+.rf-cal-btn {
+	width:38px;
+	height:38px;
+	position:absolute;
+	right:13px;
+	top:23px;
+}
+
+.rf-au.form-control {
+	padding:0px;
+}
+
+input.rf-au-inp {
+    background:none;
+    width: 100%;
+    height: 100%;
+    padding:6px 12px;
+}
+
+.rf-au-fnt {
+    color: #000000;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+/**
+* commands
+*/
+.imageIcon {
+	width: 19px;
+	height: 19px;
+	border: 0px;
+}
+
+
+
+/**
+* faces messages
+*/
+.rf-ntf-pos-tr {
+	top:60px;
+}
+
+
+.rf-msg-sum, .rf-msgs-sum {
+    display: inline;
+    font-size: inherit;
+}
+
+.rf-msg-inf, .rf-msgs-inf {
+	background-image: none;
+}
+
+.rf-msg-err, .rf-msgs-err {
+	background-image: none;
+}
+
+.error-message {
+	color:red;
+	text-align:center;
+	padding-top:4px;
+	padding-bottom:4px;
+	border-width:1px;
+	border-style:solid;
+	border-color:red;
+	background-color:#FFCCCC;
+	width:100%;
+}
+
+.info-message {
+	color:green;
+	text-align:center;
+	padding-top:4px;
+	padding-bottom:4px;
+	border-width:1px;
+	border-style:solid;
+	border-color:green;
+	background-color:palegreen;
+	width:100%;
+}
+
+.detail-error-message {
+	color: darkred;
+}
