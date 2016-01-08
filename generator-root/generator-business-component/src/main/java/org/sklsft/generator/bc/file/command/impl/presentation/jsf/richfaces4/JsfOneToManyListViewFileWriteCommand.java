@@ -99,15 +99,15 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		}
 
 
-		writeLine("</div>");
-		skipLine();
-		
+		writeLine("</div>");	
 		writeLine("</rich:column>");
+		skipLine();
 
 		for (Property property : oneToMany.basicViewBean.properties) {
 			writeLine("<rich:column>");
 			writeFilter(property, currentBean, parentBean);
 			writeLine("</rich:column>");
+			skipLine();
 		}
 
 		writeLine("<rich:column>");

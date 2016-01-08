@@ -93,14 +93,15 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 
 		writeLine("</div>");
-		skipLine();
 		
 		writeLine("</rich:column>");
+		skipLine();
 
 		for (Property property : this.bean.basicViewBean.properties) {
 			writeLine("<rich:column>");
 			writeFilter(property, this.bean);
 			writeLine("</rich:column>");
+			skipLine();
 		}
 
 		writeLine("<rich:column>");

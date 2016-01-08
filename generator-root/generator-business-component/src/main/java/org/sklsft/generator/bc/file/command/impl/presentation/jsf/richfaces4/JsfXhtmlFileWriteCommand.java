@@ -381,7 +381,9 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " />");
+			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
+			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
+			writeLine("</a4j:ajax>");
 			writeLine("</h:inputText>");
 			break;
 			
@@ -393,7 +395,9 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " />");
+			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
+			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
+			writeLine("</a4j:ajax>");
 			writeLine("</h:inputText>");
 			break;
 			
@@ -410,7 +414,9 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " />");
+			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
+			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
+			writeLine("</a4j:ajax>");			
 			writeLine("</h:inputText>");
 			break;
 			
@@ -422,7 +428,9 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " />");
+			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
+			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
+			writeLine("</a4j:ajax>");
 			writeLine("</h:inputText>");
 			break;
 			
