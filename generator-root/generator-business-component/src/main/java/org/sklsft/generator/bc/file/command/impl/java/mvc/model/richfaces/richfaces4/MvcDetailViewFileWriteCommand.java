@@ -11,12 +11,12 @@ public class MvcDetailViewFileWriteCommand extends AbstractMvcDetailViewFileWrit
 
 	@Override
 	protected void writeViewScope() {
-		writeLine("@Scope(" + CHAR_34 + "view" + CHAR_34 + ")");		
+		writeLine("@Scope(ViewScope.NAME)");		
 	}
 
 	@Override
 	protected void writeViewScopeImport() {
 		
-		//nothing to add
+		javaImports.add("import org.sklsft.commons.mvc.scopes.ViewScope;");
 	}
 }

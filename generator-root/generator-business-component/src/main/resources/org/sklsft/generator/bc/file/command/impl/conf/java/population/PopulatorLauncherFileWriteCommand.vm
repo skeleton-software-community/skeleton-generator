@@ -47,10 +47,10 @@ public class PopulatorLauncher {
 		
 		Set<String> tables = extractTables(args);
 		
-		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-opale-populator.xml",
-																								"classpath:applicationContext-opale-services.xml",
-																								"classpath:applicationContext-opale-business-component.xml",
-																								"classpath:applicationContext-opale-repository.xml",
+		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-${project.projectName}-populator.xml",
+																								"classpath:applicationContext-${project.projectName}-services.xml",
+																								"classpath:applicationContext-${project.projectName}-business-component.xml",
+																								"classpath:applicationContext-${project.projectName}-repository.xml",
 																								sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			

@@ -30,7 +30,8 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 		javaImports.add("import java.util.List;");
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
-        javaImports.add("import org.springframework.web.context.WebApplicationContext;");
+        
+        writeViewScopeImport();
 		
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
 		

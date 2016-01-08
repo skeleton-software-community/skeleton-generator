@@ -1,8 +1,8 @@
 package org.sklsft.generator.bc.file.factory.impl;
 
 import org.sklsft.generator.bc.file.strategy.impl.bc.BusinessComponentStrategy;
-import org.sklsft.generator.bc.file.strategy.impl.configuration.Richfaces3ConfigurationStrategy;
-import org.sklsft.generator.bc.file.strategy.impl.configuration.Richfaces3ResourcesStrategy;
+import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces3.Richfaces3ConfigurationStrategy;
+import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces3.Richfaces3ResourcesStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.controller.Richfaces3ControllerStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.dao.HibernateDaoStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.database.DefaultDatabaseStrategy;
