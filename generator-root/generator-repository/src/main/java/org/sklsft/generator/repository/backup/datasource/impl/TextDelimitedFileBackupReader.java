@@ -9,9 +9,11 @@ import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.exception.ReadBackupFailureException;
 import org.sklsft.generator.model.backup.PopulateCommandType;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.file.impl.CsvFileParserImpl;
 import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
+import org.sklsft.generator.repository.backup.file.model.CsvFile;
 import org.sklsft.generator.repository.util.JdbcUtil;
 
 
@@ -44,11 +46,11 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 
 	private List<Object[]> readArgs(String backupFilePath){
 		try {
-			List<String[]> stringArgsList = csvFileParser.readData(backupFilePath);
+			CsvFile csvFile = csvFileParser.readData(backupFilePath);
 			List<Object[]> argsList = new ArrayList<>();
 			
-			for (String[] stringArgs:stringArgsList) {
-				argsList.add(getInsertAgrs(table, stringArgs));
+			for (String[] stringArgs:csvFile.getData()) {
+				argsList.add(getInsertArgs(csvFile.getTypes(), stringArgs));
 			}
 			return argsList;
 			
@@ -57,11 +59,11 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 		}
 	}
 
-	private Object[] getInsertAgrs(Table table, String[] args) {
+	private Object[] getInsertArgs(DataType[] dataTypes, String[] args) {
 		List<Object> result = new ArrayList<Object>();
 		
-		for (int i=0;i<table.getInsertColumnList().size();i++) {
-			result.add(JdbcUtil.getObjectFromString(table.getInsertColumnList().get(i).dataType, args[i]));
+		for (int i=0;i<dataTypes.length;i++) {
+			result.add(JdbcUtil.getObjectFromString(dataTypes[i], args[i]));
 		}
 		return result.toArray();
 	}

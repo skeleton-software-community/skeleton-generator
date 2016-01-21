@@ -1,8 +1,6 @@
 package org.sklsft.generator.repository.backup.file.impl;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +12,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.sklsft.generator.exception.InvalidFileException;
+import org.sklsft.generator.exception.ReadBackupFailureException;
+import org.sklsft.generator.model.backup.PopulateCommandType;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
+import org.sklsft.generator.repository.backup.file.model.CsvFile;
 
 
 public class CsvFileParserImpl implements CsvFileParser {
@@ -50,7 +52,7 @@ public class CsvFileParserImpl implements CsvFileParser {
 	 * @see com.skeleton.generator.repository.dao.interfaces.MetaDataFileManager#readMataDataFile(java.lang.String)
 	 */
 	@Override
-	public List<String[]> readData(String filePath) throws IOException, InvalidFileException {
+	public CsvFile readData(String filePath) throws IOException, InvalidFileException {
 
 		Path path = Paths.get(filePath);
 		List<String[]> tokensList = new ArrayList<String[]>();
@@ -63,49 +65,30 @@ public class CsvFileParserImpl implements CsvFileParser {
 				
 				tokensList.add(tokens);
 			}
-			
-			return tokensList;
-		}
-	}
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.repository.dao.interfaces.MetaDataFileManager#writeMetaDataFile(java.lang.String, java.lang.String, java.util.List)
-	 */
-	@Override
-	public void writeData(String folderPath, String fileName, List<String[]> content) throws IOException {
-		
-		Path path  = Paths.get(folderPath);
-		if (!Files.exists(path)) {
-			Files.createDirectories(path);
 		}
 		
-		path = Paths.get(folderPath + File.separator + fileName);
+		CsvFile result = new CsvFile();
+		result.setPopulateCommandType(PopulateCommandType.INSERT); //TODO handle other types
 		
-		try (BufferedWriter writer = Files.newBufferedWriter(path, charset);) {
+		try {
+			String[] firstTokens = tokensList.get(0);
 			
-			int i = 0;
-			for (String[] tokens:content) {
-				
-				String line = "";
-				int j = 0;
-				while (j < tokens.length - 1) {
-					line += tokens[j];
-					line += separator;
-					j++;
-				}
-				line += tokens[j];
-				
-				writer.append(line);
-				
-				if (i < content.size() -1) {
-					writer.newLine();
-				}
-				i++;
+			result.setTypes(new DataType[firstTokens.length]);
+			
+			for (int i=0;i<firstTokens.length;i++) {
+				result.getTypes()[i] = DataType.valueOf(firstTokens[i]);
 			}
-			writer.flush();
+			
+			result.setData(new ArrayList<String[]>());
+			
+			for (int i=1;i<tokensList.size();i++) {
+				result.getData().add(tokensList.get(i));
+			}
+			
+		} catch (Exception e) {
+			throw new ReadBackupFailureException("failed to parse backup csv file " + filePath, e);
 		}
+		
+		return result;
 	}
-
 }

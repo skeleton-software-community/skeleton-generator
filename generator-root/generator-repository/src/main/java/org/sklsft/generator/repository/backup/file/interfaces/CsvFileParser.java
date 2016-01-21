@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.sklsft.generator.exception.InvalidFileException;
+import org.sklsft.generator.repository.backup.file.model.CsvFile;
 
 /**
  * provides two methodes to :
@@ -14,7 +15,6 @@ import org.sklsft.generator.exception.InvalidFileException;
  */
 public interface CsvFileParser {
 
-	List<String[]> readData(String filePath) throws IOException, InvalidFileException;
+	CsvFile readData(String filePath) throws IOException, InvalidFileException;
 	
-	void writeData (String folderPath, String fileName, List<String[]> content) throws IOException;
 }
