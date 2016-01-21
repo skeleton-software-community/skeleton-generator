@@ -256,6 +256,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("private " + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ";");
 			skipLine();
 		}
+		
+		
+		for (OneToOne oneToOne : this.bean.oneToOneList) {
+			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + bean.objectName + (char) 34 + ")");
+			writeLine("@Fetch(FetchMode.JOIN)");
+			writeLine("private " + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ";");
+			skipLine();
+		}
 
 		skipLine();
 
@@ -324,6 +332,18 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 			writeLine("public void " + oneToOneComponent.setterName + " (" + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ") {");
 			writeLine("this." + oneToOneComponent.referenceBean.objectName + " = " + oneToOneComponent.referenceBean.objectName + ";");
+			writeLine("}");
+			skipLine();
+		}
+		
+		
+		for (OneToOne oneToOne : this.bean.oneToOneList) {
+			writeLine("public " + oneToOne.referenceBean.className + " " + oneToOne.getterName + " () {");
+			writeLine("return this." + oneToOne.referenceBean.objectName + ";");
+			writeLine("}");
+			skipLine();
+			writeLine("public void " + oneToOne.setterName + " (" + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ") {");
+			writeLine("this." + oneToOne.referenceBean.objectName + " = " + oneToOne.referenceBean.objectName + ";");
 			writeLine("}");
 			skipLine();
 		}
