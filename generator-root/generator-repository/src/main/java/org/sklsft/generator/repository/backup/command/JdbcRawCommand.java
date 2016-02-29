@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.backup.command.impl;
+package org.sklsft.generator.repository.backup.command;
 
 import java.sql.Connection;
 import java.sql.SQLException;

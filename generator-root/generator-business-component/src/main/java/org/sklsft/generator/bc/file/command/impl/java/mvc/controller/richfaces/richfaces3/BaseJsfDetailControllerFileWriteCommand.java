@@ -1,15 +1,7 @@
 package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.AbstractBaseJsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.OneToMany;
-import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.OneToOneComponent;
-import org.sklsft.generator.model.domain.business.Property;
 
 public class BaseJsfDetailControllerFileWriteCommand extends AbstractBaseJsfDetailControllerFileWriteCommand {
 

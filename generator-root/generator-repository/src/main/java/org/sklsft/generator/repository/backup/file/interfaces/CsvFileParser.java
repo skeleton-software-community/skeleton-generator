@@ -1,7 +1,6 @@
 package org.sklsft.generator.repository.backup.file.interfaces;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.repository.backup.file.model.CsvFile;

@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.backup.command.interfaces;
+package org.sklsft.generator.repository.backup.command;
 
 import java.util.List;
 

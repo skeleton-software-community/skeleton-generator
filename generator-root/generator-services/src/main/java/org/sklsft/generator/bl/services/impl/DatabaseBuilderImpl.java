@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseBuilderImpl implements DatabaseBuilder {
 	
-	private static final Logger logger = LoggerFactory.getLogger(DatabasePopulatorImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(DatabaseBuilderImpl.class);
 	
 	@Autowired
 	DatabaseCleaner databaseCleaner;
