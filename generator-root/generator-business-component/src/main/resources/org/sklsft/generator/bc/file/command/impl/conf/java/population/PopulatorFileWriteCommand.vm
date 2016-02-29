@@ -11,7 +11,7 @@ import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.repository.backup.command.interfaces.Command;
+import org.sklsft.generator.repository.backup.command.Command;
 import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
@@ -58,7 +58,7 @@ public class Populator {
 							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(backupLocator.getBackupFilePath(step, table, mode));
 							
 							Command command = commandFactory.getCommand(table);
-							command.execute(commandArgs.getArguments());
+							command.execute(commandArgs);
 							
 							logger.info("populating table : " + table.name + " completed");
 						} catch (BackupFileNotFoundException e) {

@@ -2,7 +2,7 @@ package ${project.model.commandPackageName};
 
 import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.repository.backup.command.interfaces.Command;
+import org.sklsft.generator.repository.backup.command.Command;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
