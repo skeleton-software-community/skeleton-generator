@@ -4,8 +4,6 @@ import org.sklsft.generator.bc.file.command.impl.sql.definition.oracle.OracleMai
 import org.sklsft.generator.bc.file.command.impl.sql.definition.oracle.OracleTableDefinitionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.sql.definition.oracle.OracleTableFkDefinitionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlMainDefinitionFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlStoredProceduresBcFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlStoredProceduresFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlTableDefinitionFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.sql.definition.postgresql.PostgresqlTableFkDefinitionFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
@@ -37,23 +35,6 @@ public class DefaultDatabaseStrategy implements LayerStrategy {
 			throw new IllegalArgumentException("unhandled database");
 		}
 		definitionFilesTreeNode.add(mainFileTreeNode);
-		
-		
-		/*FileWriteCommandTreeNode batchFileTreeNode;
-		switch (project.databaseEngine) {
-		case ORACLE:
-			batchFileTreeNode = new FileWriteCommandTreeNode("No batch File");
-			break;
-			
-		case POSTGRESQL:
-			batchFileTreeNode = new FileWriteCommandTreeNode(new PostgresqlBatchFileWriteCommand(project));
-			break;
-
-		default:
-			throw new IllegalArgumentException("unhandled database");
-		}
-		definitionFilesTreeNode.add(batchFileTreeNode);*/
-		
 
 		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
@@ -69,8 +50,6 @@ public class DefaultDatabaseStrategy implements LayerStrategy {
 				case POSTGRESQL:
 					packageTreeNode.add(new FileWriteCommandTreeNode(new PostgresqlTableDefinitionFileWriteCommand(table)));
 					packageTreeNode.add(new FileWriteCommandTreeNode(new PostgresqlTableFkDefinitionFileWriteCommand(table)));
-					packageTreeNode.add(new FileWriteCommandTreeNode(new PostgresqlStoredProceduresFileWriteCommand(table)));
-					packageTreeNode.add(new FileWriteCommandTreeNode(new PostgresqlStoredProceduresBcFileWriteCommand(table)));
 					break;
 
 				default:

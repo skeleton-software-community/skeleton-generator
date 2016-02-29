@@ -21,7 +21,8 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		
 		javaImports.add("import java.util.List;");
 		
-		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.Command;");
+		javaImports.add("import org.sklsft.generator.repository.backup.command.Command;");
+		javaImports.add("import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");		
@@ -32,7 +33,9 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
         
-        javaImports.add("import " + bean.myPackage.builderPackageName + "." + bean.fullViewBean.className + "Builder;");
+        javaImports.add("import org.sklsft.commons.mapper.impl.ObjectArrayToBeanMapperImpl;");
+		javaImports.add("import org.sklsft.commons.mapper.impl.StringArrayToBeanMapperImpl;");
+		javaImports.add("import org.sklsft.commons.mapper.interfaces.ObjectArrayToBeanMapper;");
 	}
 
 	@Override
@@ -64,9 +67,17 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Override");
-        writeLine("public void execute(List<Object[]> argsList) {");
+        writeLine("public void execute(BackupCommandArguments arguments) {");
+                
+        writeLine("ObjectArrayToBeanMapper<" + bean.fullViewBean.className + "> mapper;");
+		
+        writeLine("if (arguments.isArgumentsTyped()) {");
+        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + bean.fullViewBean.className + ">(" + bean.fullViewBean.className + ".class);");
+        writeLine("} else {");
+        writeLine("mapper = new StringArrayToBeanMapperImpl<" + bean.fullViewBean.className + ">(" + bean.fullViewBean.className + ".class);");
+        writeLine("}");
         
-        writeLine("for (Object[] args:argsList) {");
+        writeLine("for (Object[] args : arguments.getArguments()) {");
         writeLine("String message = " + CHAR_34 + "execute " + bean.serviceObjectName + ".save" + bean.className + " - args : " + CHAR_34 + ";");
         writeLine("for (Object arg:args) {");
         writeLine("message += " + CHAR_34 + "[" + CHAR_34 + " + arg + " + CHAR_34 + "]" + CHAR_34 + ";");
@@ -75,7 +86,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
                 
         writeLine("try {");
-        writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = " + bean.fullViewBean.className + "Builder.build(args);");
+        writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = mapper.mapFrom(new " + bean.fullViewBean.className + "(), args, 1);");
         skipLine();
         
         writeLine("this." + bean.serviceObjectName + ".save" + bean.className + "(" + this.bean.fullViewBean.objectName + ");");

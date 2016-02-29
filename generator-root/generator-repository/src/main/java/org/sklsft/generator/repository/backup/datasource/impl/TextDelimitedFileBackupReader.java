@@ -34,6 +34,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 		BackupCommandArguments result = new BackupCommandArguments();
 		result.setArguments(readArgs(backupFilePath));
 		result.setType(readType());
+		result.setArgumentsTyped(false);
 		return result;
 	}
 	

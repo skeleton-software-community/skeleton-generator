@@ -51,6 +51,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 		BackupCommandArguments result = new BackupCommandArguments();
 		result.setArguments(readArguments(sourceAndScript));
 		result.setType(sourceAndScript.getType());
+		result.setArgumentsTyped(true);
 		return result;
 
 	}
@@ -66,7 +67,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 			throw new ReadBackupFailureException("Invalid backup source for table : " + table.name, e);			
 		}
 		
-		sourceAndScriptBackupReader = new SourceAndScriptBackupReader(inputSource, table);
+		sourceAndScriptBackupReader = new SourceAndScriptBackupReader(inputSource);
 		
 		return sourceAndScriptBackupReader.readBackupArgs(sourceAndScript.getScript());
 	}

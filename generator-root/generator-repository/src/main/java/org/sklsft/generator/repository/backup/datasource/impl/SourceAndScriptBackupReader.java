@@ -25,14 +25,12 @@ public class SourceAndScriptBackupReader{
 	 * properties
 	 */
 	private JdbcTemplate jdbcTemplate;
-	private Table table;
 	
 	/*
 	 * constructor
 	 */
-	public SourceAndScriptBackupReader(DataSource dataSource, Table table) {
+	public SourceAndScriptBackupReader(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.table = table;
 	}
 	
 	

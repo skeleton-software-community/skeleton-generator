@@ -27,10 +27,11 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 	@Override
 	protected void fetchSpecificImports() {
 		
+		javaImports.add("import java.util.Arrays;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
 		
-		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.Command;");
+		javaImports.add("import org.sklsft.generator.repository.backup.command.Command;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");
@@ -42,8 +43,11 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.fullViewBean.className + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
         
-        javaImports.add("import " + referenceBean.myPackage.builderPackageName + "." + referenceBean.fullViewBean.className + "Builder;");
-
+        javaImports.add("import org.sklsft.commons.mapper.impl.ObjectArrayToBeanMapperImpl;");
+		javaImports.add("import org.sklsft.commons.mapper.impl.StringArrayToBeanMapperImpl;");
+		javaImports.add("import org.sklsft.commons.mapper.interfaces.ObjectArrayToBeanMapper;");
+		javaImports.add("import org.sklsft.commons.mapper.impl.StringToObjectConverter;");
+		
 	}
 
 	@Override
@@ -75,9 +79,17 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         skipLine();
         
         writeLine("@Override");
-        writeLine("public void execute(List<Object[]> argsList) {");
+        writeLine("public void execute(BackupCommandArguments arguments) {");
         
-        writeLine("for (Object[] args:argsList) {");
+        writeLine("ObjectArrayToBeanMapper<" + referenceBean.fullViewBean.className + "> mapper;");
+		
+        writeLine("if (arguments.isArgumentsTyped()) {");
+        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + referenceBean.fullViewBean.className + ">(" + referenceBean.fullViewBean.className + ".class);");
+        writeLine("} else {");
+        writeLine("mapper = new StringArrayToBeanMapperImpl<" + referenceBean.fullViewBean.className + ">(" + referenceBean.fullViewBean.className + ".class);");
+        writeLine("}");
+        
+        writeLine("for (Object[] args:arguments.getArguments()) {");
         writeLine("String message = " + CHAR_34 + "execute " + parentBean.serviceObjectName + ".save" + referenceBean.className + " - args : " + CHAR_34 + ";");
                 
         writeLine("for (Object arg:args) {");
@@ -86,16 +98,24 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine("logger.info(message);");
         skipLine();
         
+        List<Property> findPropertyList = parentBean.getReferenceProperties();
+                
         writeLine("try {");
         
-        writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = " + referenceBean.fullViewBean.className + "Builder.build(args);");
-        skipLine();
+        writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = mapper.mapFrom(new " + referenceBean.fullViewBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length),1);");
+        skipLine();               
         
-        List<Property> findPropertyList = parentBean.getReferenceProperties();
-        write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "((" + DataType.getJavaType(findPropertyList.get(0).dataType) + ")args[0]");
+        for (int i=0;i<findPropertyList.size();i++)
+        {
+        	String type = DataType.getJavaType(findPropertyList.get(i).dataType);
+        	
+        	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")args[" + i + "]:(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
+        }
+        
+        write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "(arg0");
         for (int i=1;i<findPropertyList.size();i++)
         {
-            write(", (" + DataType.getJavaType(findPropertyList.get(i).dataType) + ")args[" + i + "]");
+            write(", arg" + i);
         }
         writeLine(");");
         skipLine();

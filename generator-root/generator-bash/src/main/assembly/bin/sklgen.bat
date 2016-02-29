@@ -12,7 +12,6 @@ set SKLGEN_CLASSPATH=%SKLGEN_RUNNABLE_JAR%;%SKLGEN_LIB%\*
 set GENERATE_CLASS=org.sklsft.generator.command.CodeGeneratorLauncher
 set INIT_CLASS=org.sklsft.generator.command.ProjectInitializerLauncher
 set BUILDDB_CLASS=org.sklsft.generator.command.DatabaseBuilderLauncher
-set POPULATEDB_CLASS=org.sklsft.generator.command.DatabasePopulatorLauncher
 
 echo current directory : %CD%
 echo generator home : %SKLGEN_HOME%
@@ -73,7 +72,6 @@ if %SKLGEN_CMD_LINE_ARGS%==help goto HELP
 if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
 if %SKLGEN_CMD_LINE_ARGS%==generate goto GENERATE
 if %SKLGEN_CMD_LINE_ARGS%==builddb goto BUILDDB
-if %SKLGEN_CMD_LINE_ARGS%==populatedb goto POPULATEDB
 
 goto INVALID_SKLGEN_CMD_LINE_ARGS
 
@@ -86,7 +84,6 @@ echo use one of the following commands :
 echo . init
 echo . generate
 echo . builddb
-echo . populatedb
 goto END
 
 :INIT
@@ -110,12 +107,6 @@ goto END
 echo start building database
 "%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
 echo end building database
-goto END
-
-:POPULATEDB:
-echo start populating database
-"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %POPULATEDB_CLASS% "%CD%" "%DATABASE_NAME%"
-echo end populating database
 goto END
 
 

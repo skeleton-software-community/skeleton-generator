@@ -1,8 +1,8 @@
 package org.sklsft.generator.repository.backup.command;
 
-import java.util.List;
+import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;
 
 public interface Command {
 
-	void execute(List<Object[]> argsList);
+	void execute(BackupCommandArguments arguments);
 }
