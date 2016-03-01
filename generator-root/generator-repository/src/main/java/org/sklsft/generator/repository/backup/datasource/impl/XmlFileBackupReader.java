@@ -24,17 +24,15 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 	 * properties
 	 */
 	private InputDataSourceProvider inputSourceProvider;
-	private Table table;
 	private XmlFileSourceAndScriptSimpleParser xmlFileSourceAndScriptParser;
 	private SourceAndScriptBackupReader sourceAndScriptBackupReader;
 	
 	/*
 	 * constructor
 	 */
-	public XmlFileBackupReader(InputDataSourceProvider inputSourceProvider, Table table) {
+	public XmlFileBackupReader(InputDataSourceProvider inputSourceProvider) {
 		this.xmlFileSourceAndScriptParser = new XmlFileSourceAndScriptSimpleParser();
 		this.inputSourceProvider = inputSourceProvider;
-		this.table = table;
 		
 	}
 
@@ -45,7 +43,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 		try {
 			sourceAndScript = xmlFileSourceAndScriptParser.parse(backupFilePath);
 		} catch (IOException e) {
-			throw new ReadBackupFailureException("Failed to read source and script for table : " + table.name,e);
+			throw new ReadBackupFailureException("Failed to read source and script",e);
 		}
 		
 		BackupCommandArguments result = new BackupCommandArguments();
@@ -64,7 +62,7 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 		try {
 			inputSource = inputSourceProvider.getDataSource(sourceAndScript.getSource());
 		} catch (DataSourceNotFoundException e) {
-			throw new ReadBackupFailureException("Invalid backup source for table : " + table.name, e);			
+			throw new ReadBackupFailureException("Invalid backup source", e);			
 		}
 		
 		sourceAndScriptBackupReader = new SourceAndScriptBackupReader(inputSource);

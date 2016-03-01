@@ -6,6 +6,7 @@ import java.util.Set;
 import org.sklsft.generator.bc.backup.reader.BackupArgumentReaderFactory;
 import org.sklsft.generator.bc.backup.reader.BackupFileLocator;
 import org.sklsft.generator.bc.util.folder.FolderUtil;
+import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.model.domain.Package;
@@ -54,10 +55,10 @@ public class Populator {
 
 						try {
 							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
-							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputDataSourceProvider, table);
+							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputDataSourceProvider);
 							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(backupLocator.getBackupFilePath(step, table, mode));
 							
-							Command command = commandFactory.getCommand(table);
+							Command command = commandFactory.getCommand(JavaClassNaming.getObjectName(table.originalName) + "Command");
 							command.execute(commandArgs);
 							
 							logger.info("populating table : " + table.name + " completed");

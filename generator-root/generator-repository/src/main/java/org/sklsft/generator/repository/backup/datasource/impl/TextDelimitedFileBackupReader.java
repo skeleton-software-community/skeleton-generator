@@ -7,7 +7,6 @@ import java.util.List;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.exception.ReadBackupFailureException;
 import org.sklsft.generator.model.backup.PopulateCommandType;
-import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.file.impl.CsvFileParserImpl;
 import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
@@ -20,14 +19,12 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 	 * properties
 	 */
 	private CsvFileParser csvFileParser;
-	private Table table;
 	
 	/*
 	 * constructor
 	 */
-	public TextDelimitedFileBackupReader(Table table) {
+	public TextDelimitedFileBackupReader() {
 		this.csvFileParser = new CsvFileParserImpl(StandardCharsets.UTF_8);
-		this.table = table;
 	}
 	
 	public BackupCommandArguments readBackupArgs(String backupFilePath)  {
@@ -49,7 +46,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 			return csvFile.getData();
 			
 		} catch (IOException | InvalidFileException e) {
-			throw new ReadBackupFailureException("failed to read backup for table : " + table.name, e);
+			throw new ReadBackupFailureException("failed to read backup", e);
 		}
 	}
 }

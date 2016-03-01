@@ -1,7 +1,5 @@
 package ${project.model.commandPackageName};
 
-import org.sklsft.generator.bc.util.naming.JavaClassNaming;
-import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.command.Command;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -27,8 +25,13 @@ public class CommandFactory implements ApplicationContextAware {
 	 * create the appropriate command depending on what table is used for
 	 * population.
 	 */
-	public Command getCommand(Table table) {
+	public Command getCommand(String classSimpleName) {
 
-		return (Command) applicationContext.getBean(JavaClassNaming.getObjectName(table.originalName) + "Command");
+		return (Command) applicationContext.getBean(classSimpleName);
+	}
+	
+	public Command getCommand(Class<?> commandClass) {
+
+		return (Command) applicationContext.getBean(commandClass);
 	}
 }
