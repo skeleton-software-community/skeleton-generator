@@ -268,10 +268,9 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				}
 
 				writeLine("<f:selectItems value=" + CHAR_34
-						+ "#{commonController."
+						+ "#{commonView."
 						+ property.comboBoxBean.objectName
-						+ property.comboBoxBean.properties.get(1).capName
-						+ "List}" + CHAR_34 + "/>");
+						+ "Options}" + CHAR_34 + "/>");
 				writeLine("</h:selectOneMenu>");
 
 			} else {

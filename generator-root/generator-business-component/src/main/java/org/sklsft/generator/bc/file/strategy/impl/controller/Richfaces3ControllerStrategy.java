@@ -2,6 +2,7 @@ package org.sklsft.generator.bc.file.strategy.impl.controller;
 
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.DataTableFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfListControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfDetailControllerFileWriteCommand;
@@ -23,6 +24,9 @@ public class Richfaces3ControllerStrategy implements LayerStrategy {
 
 		FileWriteCommandTreeNode commonControllerTreeNode = new FileWriteCommandTreeNode(new JsfCommonControllerFileWriteCommand(project));
 		mvcLayerTreeNode.add(commonControllerTreeNode);
+		
+		FileWriteCommandTreeNode commonViewTreeNode = new FileWriteCommandTreeNode(new JsfCommonViewFileWriteCommand(project));
+		mvcLayerTreeNode.add(commonViewTreeNode);
 		
 		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode("Base Controllers");
 		mvcLayerTreeNode.add(baseControllerTreeNode);

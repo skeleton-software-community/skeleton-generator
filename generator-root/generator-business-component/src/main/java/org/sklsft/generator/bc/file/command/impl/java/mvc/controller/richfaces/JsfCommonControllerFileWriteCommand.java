@@ -21,7 +21,6 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import java.util.List;");		
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import javax.faces.model.SelectItem;");
@@ -29,6 +28,8 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.context.annotation.Scope;");
 		javaImports.add("import org.springframework.web.context.WebApplicationContext;");
+		
+		javaImports.add("import " + project.model.mvcModelPackageName + ".CommonView;");
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
@@ -51,20 +52,23 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("/**");
 		writeLine(" * auto generated common controller class file");
-		writeLine(" * <br/>used for select items");
+		writeLine(" * <br/>used for loading select items");
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-		writeLine("@Scope(value=WebApplicationContext.SCOPE_SESSION)");
-		writeLine("public class CommonController implements Serializable {");
-        skipLine();
-
-        writeLine("private static final long serialVersionUID = 1L;");
-        skipLine();
+		writeLine("@Scope(value=WebApplicationContext.SCOPE_REQUEST)");
+		writeLine("public class CommonController {");
+        skipLine();        
+        writeLine("/*");
+		writeLine(" * the view handled by the controller");
+		writeLine(" */");
+		writeLine("@Autowired");
+		writeLine("private CommonView commonView;");
+		skipLine();
 
 		writeLine("/*");
-		writeLine(" * properties injected by spring");
+		writeLine(" * the services used by the controller");
 		writeLine(" */");
 
 		for (Package myPackage : this.project.model.packages) {
@@ -78,54 +82,24 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 
-		writeLine("/*");
-		writeLine(" * select items");
-		writeLine(" */");
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("private List<SelectItem>" + bean.objectName + bean.properties.get(1).capName + "List;");
-				}
-			}
-		}
-		skipLine();
-
-		writeLine("/*");
-		writeLine(" * getters and setters");
-		writeLine(" */");
-
-		for (Package myPackage : this.project.model.packages) {
-			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("public List<SelectItem> get" + bean.className + bean.properties.get(1).capName + "List() {");
-					writeLine("return " + bean.objectName + bean.properties.get(1).capName + "List;");
-					writeLine("}");
-					writeLine("public void set" + bean.className + bean.properties.get(1).capName + "List(List<SelectItem> " + bean.objectName + bean.properties.get(1).capName + "List) {");
-					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List = " + bean.objectName + bean.properties.get(1).capName + "List;");
-					writeLine("}");
-					skipLine();
-				}
-			}
-		}
-
-
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
 					writeLine("/**");
 					writeLine(" * load combobox items for " + bean.className);
 					writeLine(" */");
-					writeLine("public void load" + bean.className + bean.properties.get(1).capName + "List() {");
-					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List = new ArrayList<SelectItem>();");
-					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List.add(new SelectItem(null," + (char) 34 + (char) 34 + "));");
+					writeLine("public void load" + bean.className + "Options() {");
+					writeLine("List<SelectItem> options = new ArrayList<SelectItem>();");
+					writeLine("options.add(new SelectItem(null," + (char) 34 + (char) 34 + "));");
 					writeLine("List<" + bean.properties.get(1).beanDataType + "> " + bean.objectName + bean.properties.get(1).capName + "List = this." + bean.serviceObjectName + ".get"
 							+ bean.className + bean.properties.get(1).capName + "List ();");
 					writeLine("if (" + bean.objectName + bean.properties.get(1).capName + "List != null){");
 					writeLine("for (" + bean.properties.get(1).beanDataType + " " + bean.objectName + bean.properties.get(1).capName + ":" + bean.objectName + bean.properties.get(1).capName
 							+ "List){");
-					writeLine("this." + bean.objectName + bean.properties.get(1).capName + "List.add(new SelectItem(" + bean.objectName + bean.properties.get(1).capName + "));");
+					writeLine("options.add(new SelectItem(" + bean.objectName + bean.properties.get(1).capName + "));");
 					writeLine("}");
 					writeLine("}");
+					writeLine("this.commonView.set" + bean.className + "Options(options);");
 					writeLine("}");
 					skipLine();
 				}

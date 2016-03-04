@@ -74,6 +74,7 @@ public class JavaModelFactory implements ModelFactory {
 
         model.populationExceptionPackageName = project.domainName + "." + project.projectName + ".populator.exception";
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
+        model.mvcModelPackageName = project.domainName + "." + project.projectName + ".mvc.model";
         model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
         model.commandExecutorPackageName = project.domainName + "." + project.projectName + ".populator.executor";

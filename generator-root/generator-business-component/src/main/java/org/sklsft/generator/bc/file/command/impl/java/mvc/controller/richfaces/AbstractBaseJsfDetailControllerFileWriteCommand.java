@@ -137,7 +137,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 	
 		for (Property property : this.bean.fullViewBean.properties) {
 			if (property.comboBoxBean != null && property.editable) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
 		
@@ -160,7 +160,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			
 			for (Property property : currentBean.fullViewBean.properties) {
 				if (property.comboBoxBean != null && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
 
@@ -268,7 +268,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 
 			for (Property property : currentBean.fullViewBean.properties) {
 				if (property.comboBoxBean != null && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
 
@@ -290,7 +290,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 
 			for (Property property : oneToMany.fullViewBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
 
@@ -346,7 +346,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			
 			for (Property property : currentBean.fullViewBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
-					writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
 			

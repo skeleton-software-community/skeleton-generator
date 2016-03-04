@@ -27,6 +27,7 @@ public class Model {
 
     public String populationExceptionPackageName;
     public String controllerPackageName;
+    public String mvcModelPackageName;
     public String commandPackageName;
     public String commandExecutorPackageName;
     public String filterPackageName;
@@ -59,6 +60,12 @@ public class Model {
 	}
 	public void setControllerPackageName(String controllerPackageName) {
 		this.controllerPackageName = controllerPackageName;
+	}
+	public String getMvcModelPackageName() {
+		return mvcModelPackageName;
+	}
+	public void setMvcModelPackageName(String mvcModelPackageName) {
+		this.mvcModelPackageName = mvcModelPackageName;
 	}
 	public String getCommandPackageName() {
 		return commandPackageName;

@@ -122,7 +122,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 
 		for (Property property : this.bean.fullViewBean.properties) {
 			if (property.comboBoxBean != null && property.editable) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + property.comboBoxBean.properties.get(1).capName + "List();");
+				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
 
