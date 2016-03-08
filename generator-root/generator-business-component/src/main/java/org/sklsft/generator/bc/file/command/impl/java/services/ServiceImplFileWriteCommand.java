@@ -39,7 +39,7 @@ public class ServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("@Service");
+        writeLine("@Service(" + CHAR_34 + bean.myPackage.model.project.projectName.toLowerCase() + this.bean.serviceClassName + CHAR_34 + ")");
         writeLine("public class " + this.bean.serviceClassName + " extends " + this.bean.baseServiceClassName + " implements " + this.bean.serviceInterfaceName + "{");
         skipLine();
         

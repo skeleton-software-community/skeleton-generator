@@ -44,7 +44,7 @@ public class BasicViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         skipLine();
 
-        writeLine("@Component");
+        writeLine("@Component(" + CHAR_34 + bean.myPackage.model.project.projectName.toLowerCase() + this.bean.basicViewBean.mapperClassName + CHAR_34 + ")");
         writeLine("public class " + this.bean.basicViewBean.mapperClassName + " extends " + this.bean.basicViewBean.baseMapperClassName + " {");
         skipLine();
         

@@ -44,7 +44,7 @@ public class FullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         skipLine();
 
-        writeLine("@Component");
+        writeLine("@Component(" + CHAR_34 + bean.myPackage.model.project.projectName.toLowerCase() + this.bean.fullViewBean.mapperClassName + CHAR_34 + ")");
         writeLine("public class " + this.bean.fullViewBean.mapperClassName + " extends " + this.bean.fullViewBean.baseMapperClassName + " {");
         skipLine();
         
