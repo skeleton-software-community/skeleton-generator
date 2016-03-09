@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces;
 
 import java.io.IOException;
 

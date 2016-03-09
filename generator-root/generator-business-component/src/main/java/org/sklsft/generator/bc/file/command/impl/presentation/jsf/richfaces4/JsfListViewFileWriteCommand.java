@@ -145,10 +145,18 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 		
-		writeLine("<h:outputLink value=" + CHAR_34 + "#{application.contextPath}/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
-		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
-		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");
-		writeLine("</h:outputLink>");
+		if (bean.hasTabsInDetailView()) {
+			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
+			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
+			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");
+			writeLine("</h:link>");
+		} else {
+			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".edit" + this.bean.className + "(" + bean.objectName + ".id)"+ "}"
+					+ CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "Modal').modal('show')"
+					+ CHAR_34 + " render=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
+			writeLine("</a4j:commandLink>");
+		}
 		
 		if (this.bean.deleteEnabled) {
 			writeLine("<a4j:commandLink  action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ".id)}" + CHAR_34);
@@ -179,12 +187,11 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		if (this.bean.createEnabled) {
 
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}"
-					+ CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "CreationModalPanel').modal('show')"
-					+ CHAR_34 + " render=" + CHAR_34 + bean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
+					+ CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "Modal').modal('show')"
+					+ CHAR_34 + " render=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 
 		}
 		
-
 		skipLine();
 
 		
@@ -197,10 +204,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		skipLine();
 		
         
-        writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + bean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
+        writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + bean.objectName + "Modal" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
         writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
         writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Creation.xhtml" + CHAR_34 + "/>");
+        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Modal.xhtml" + CHAR_34 + "/>");
         writeLine("</div>");
         writeLine("</div>");
         writeLine("</div>");

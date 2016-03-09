@@ -97,8 +97,8 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("private List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List;");
 			writeLine("private " + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + " = new " + currentBean.basicViewBean.filterClassName + "();");
-			writeLine("private " + currentBean.fullViewBean.className + " new" + currentBean.className + ";");
 			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + ";");
+			
 			skipLine();
 		}
 		
@@ -107,7 +107,7 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 			Bean currentBean = oneToMany.referenceBean;
 			writeLine("private List<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "List;");
 			writeLine("private " + currentBean.basicViewBean.filterClassName + " " + currentBean.basicViewBean.filterObjectName + " = new " + currentBean.basicViewBean.filterClassName + "();");
-			writeLine("private " + currentBean.fullViewBean.className + " new" + currentBean.className + ";");
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + ";");
 			skipLine();
 		}
 		
@@ -163,15 +163,6 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 			writeLine("}");
 			skipLine();
 
-			writeLine("public " + currentBean.fullViewBean.className + " getNew" + currentBean.className + "() {");
-			writeLine("return new" + currentBean.className + ";");
-			writeLine("}");
-
-			writeLine("public void setNew" + currentBean.className + "(" + currentBean.fullViewBean.className + " new" + currentBean.className + ") {");
-			writeLine("this.new" + currentBean.className + " = new" + currentBean.className + ";");
-			writeLine("}");
-			skipLine();
-			
 			writeLine("public " + currentBean.fullViewBean.className + " getSelected" + currentBean.className + "() {");
 			writeLine("return selected" + currentBean.className + ";");
 			writeLine("}");
@@ -180,6 +171,7 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 			writeLine("this.selected" + currentBean.className + " = selected" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
+			
 		}
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
@@ -202,12 +194,12 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 			writeLine("}");
 			skipLine();
 
-			writeLine("public " + currentBean.fullViewBean.className + " getNew" + currentBean.className + "() {");
-			writeLine("return new" + currentBean.className + ";");
+			writeLine("public " + currentBean.fullViewBean.className + " getSelected" + currentBean.className + "() {");
+			writeLine("return selected" + currentBean.className + ";");
 			writeLine("}");
 
-			writeLine("public void setNew" + currentBean.className + "(" + currentBean.fullViewBean.className + " new" + currentBean.className + ") {");
-			writeLine("this.new" + currentBean.className + " = new" + currentBean.className + ";");
+			writeLine("public void setSelected" + currentBean.className + "(" + currentBean.fullViewBean.className + " selected" + currentBean.className + ") {");
+			writeLine("this.selected" + currentBean.className + " = selected" + currentBean.className + ";");
 			writeLine("}");
 			skipLine();
 			

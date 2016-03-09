@@ -1,15 +1,14 @@
 package org.sklsft.generator.bc.file.strategy.impl.presentation;
 
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.I18nFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfCreationViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfDetailMenuFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentCreationViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentDetailViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyCreationViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyComponentModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToManyModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4.JsfOneToOneComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
@@ -43,7 +42,7 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfListViewFileWriteCommand(bean));
 					packageTreeNode.add(beanTreeNode);
 					
-					FileWriteCommandTreeNode beanCreationTreeNode = new FileWriteCommandTreeNode(new JsfCreationViewFileWriteCommand(bean));
+					FileWriteCommandTreeNode beanCreationTreeNode = new FileWriteCommandTreeNode(new JsfModalViewFileWriteCommand(bean));
 					packageTreeNode.add(beanCreationTreeNode);
 				}
 			}
@@ -69,12 +68,9 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 						
 						FileWriteCommandTreeNode componentListTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentListViewFileWriteCommand(oneToManyComponent));
 						packageTreeNode.add(componentListTreeNode);
-						
-						FileWriteCommandTreeNode componentDetailTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentDetailViewFileWriteCommand(oneToManyComponent));
-						packageTreeNode.add(componentDetailTreeNode);
-						
-						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentCreationViewFileWriteCommand(oneToManyComponent));
-						packageTreeNode.add(componentCreationTreeNode);
+																		
+						FileWriteCommandTreeNode componentModalTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentModalViewFileWriteCommand(oneToManyComponent));
+						packageTreeNode.add(componentModalTreeNode);
 					}
 					
 					for (OneToMany oneToMany:bean.oneToManyList) {
@@ -82,7 +78,7 @@ public class JsfRichfaces4PresentationStrategy implements LayerStrategy {
 						FileWriteCommandTreeNode componentListTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyListViewFileWriteCommand(oneToMany));
 						packageTreeNode.add(componentListTreeNode);
 						
-						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyCreationViewFileWriteCommand(oneToMany));
+						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyModalViewFileWriteCommand(oneToMany));
 						packageTreeNode.add(componentCreationTreeNode);
 					}
 					

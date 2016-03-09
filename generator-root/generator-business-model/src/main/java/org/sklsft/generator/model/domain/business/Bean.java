@@ -8,6 +8,7 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
 import org.sklsft.generator.model.domain.ui.OptionBean;
+import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.Visibility;
 
 /**
@@ -66,6 +67,8 @@ public class Bean {
 	public boolean createEnabled;
 	public boolean updateEnabled;
 	public boolean deleteEnabled;
+	public DetailMode detailMode;
+	
 	public List<String> interfaces;
 	public List<String> annotations;
 
@@ -82,6 +85,16 @@ public class Bean {
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;
 	public OptionBean optionBean;
+	
+	
+	/**
+	 * determines whether the bean will have several tabs in the detail view (Mode Page)
+	 * 
+	 * @return
+	 */
+	public boolean hasTabsInDetailView() {
+		return (this.oneToManyComponentList.size() > 0 || this.oneToManyList.size() > 0 || this.oneToOneComponentList.size() > 0 || this.oneToOneList.size() > 0);
+	}
 	
 
 	/**

@@ -58,7 +58,7 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("protected List<" + this.bean.basicViewBean.className + "> " + this.bean.objectName + "List;");
 		writeLine("protected " + this.bean.basicViewBean.filterClassName + " " + this.bean.basicViewBean.filterObjectName + " = new " + this.bean.basicViewBean.filterClassName + "();");
-		writeLine("protected " + this.bean.fullViewBean.className + " new" + this.bean.className + ";");
+		writeLine("protected " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
 		skipLine();
 
 		writeLine("/*");
@@ -80,12 +80,12 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		skipLine();
 		
-		writeLine("public " + this.bean.fullViewBean.className + " getNew" + this.bean.className + "() {");
-		writeLine("return new" + this.bean.className + ";");
+		writeLine("public " + this.bean.fullViewBean.className + " getSelected" + this.bean.className + "() {");
+		writeLine("return selected" + this.bean.className + ";");
 		writeLine("}");
 
-		writeLine("public void setNew" + this.bean.className + "(" + this.bean.fullViewBean.className + " new" + this.bean.className + ") {");
-		writeLine("this.new" + this.bean.className + " = new" + this.bean.className + ";");
+		writeLine("public void setSelected" + this.bean.className + "(" + this.bean.fullViewBean.className + " selected" + this.bean.className + ") {");
+		writeLine("this.selected" + this.bean.className + " = selected" + this.bean.className + ";");
 		writeLine("}");
 		skipLine();
 

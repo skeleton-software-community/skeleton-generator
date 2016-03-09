@@ -1,17 +1,19 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3;
+package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.Visibility;
 
-public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
+public abstract class AbstractBaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public BaseJsfListControllerFileWriteCommand(Bean bean) {
+	public AbstractBaseJsfListControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
 				+ bean.myPackage.baseControllerPackageName.replace(".", "\\"), bean.baseListControllerClassName);
 
@@ -85,6 +87,8 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		createLoad();
 		createCreateObject();
 		createSaveObject();
+		createEditObject();
+		createUpdateObject();
 		createDeleteObject();
 		createDeleteObjectList();
 		createResetFlters();
@@ -126,7 +130,7 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 			}
 		}
 
-		writeLine("this." + this.bean.listViewObjectName + ".setNew" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create" + this.bean.className + "());");
+		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create" + this.bean.className + "());");
 		writeLine("}");
 		skipLine();
 
@@ -139,11 +143,43 @@ public class BaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
 		writeLine("public void save" + this.bean.className + "() {");
-		writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getNew" + this.bean.className + "());");
+		writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();
 
+	}
+	
+	
+	private void createEditObject() {		
+
+		writeLine("/**");
+		writeLine(" * edit object");
+		writeLine(" */");
+		writeLine("public void edit" + bean.className + "(Long id) {");
+		
+		for (Property property : bean.fullViewBean.properties) {
+			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
+			}
+		}
+		
+		writeLine(bean.listViewObjectName + ".setSelected" + bean.className + "(" + this.bean.serviceObjectName + ".load" + bean.className + "(id));");
+		writeLine("}");
+		skipLine();
+	}
+	
+	
+	private void createUpdateObject() {
+		writeLine("/**");
+		writeLine(" * update object");
+		writeLine(" */");
+		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
+		writeLine("public void update" + this.bean.className + "() {");
+		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+		writeLine("this.refresh();");
+		writeLine("}");
+		skipLine();
 	}
 	
 	

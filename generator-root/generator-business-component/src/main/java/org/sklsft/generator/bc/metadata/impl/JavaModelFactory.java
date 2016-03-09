@@ -15,6 +15,7 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.slf4j.Logger;
@@ -106,6 +107,15 @@ public class JavaModelFactory implements ModelFactory {
 	private void buildViews(Model model) {
 		for (Package pack:model.getPackages()) {
 			for (Bean bean:pack.beans) {
+				
+				if (bean.detailMode == null) {
+					if (bean.hasTabsInDetailView()) {
+						bean.detailMode = DetailMode.PAGE;
+					} else {
+						bean.detailMode = DetailMode.MODAL;
+					}
+				}
+				
 				bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
 				bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
 				

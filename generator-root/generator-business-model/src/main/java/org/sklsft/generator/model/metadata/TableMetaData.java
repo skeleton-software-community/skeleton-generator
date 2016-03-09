@@ -32,6 +32,8 @@ public class TableMetaData {
 	private boolean updateEnabled = true;
 	@XmlAttribute
 	private boolean deleteEnabled = true;
+	@XmlElement
+	private DetailMode detailMode;
 	
 	@XmlElementWrapper(name="interfaces")
 	@XmlElement(name="interface")
@@ -96,6 +98,12 @@ public class TableMetaData {
 	}
 	public void setDeleteEnabled(boolean deleteEnabled) {
 		this.deleteEnabled = deleteEnabled;
+	}
+	public DetailMode getDetailMode() {
+		return detailMode;
+	}
+	public void setDetailMode(DetailMode detailMode) {
+		this.detailMode = detailMode;
 	}
 	public List<String> getInterfaces() {
 		return interfaces;

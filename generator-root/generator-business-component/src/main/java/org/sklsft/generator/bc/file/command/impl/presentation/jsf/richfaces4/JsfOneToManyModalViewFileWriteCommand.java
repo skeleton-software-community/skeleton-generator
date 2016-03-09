@@ -6,14 +6,14 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.Property;
 
-public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class JsfOneToManyModalViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private OneToMany oneToMany;
 
-	public JsfOneToManyCreationViewFileWriteCommand(OneToMany oneToMany) {
+	public JsfOneToManyModalViewFileWriteCommand(OneToMany oneToMany) {
 		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToMany.referenceBean.myPackage.model.project.projectName
 				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToMany.parentBean.myPackage.name + "\\" + oneToMany.parentBean.className.toLowerCase(),
-				oneToMany.referenceBean.className + "Creation");
+				oneToMany.referenceBean.className + "Modal");
 
 		this.oneToMany = oneToMany;
 	}
@@ -49,13 +49,13 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 		
 		writeLine("<div class=" + CHAR_34 + "modal-body" + CHAR_34 + ">");
 
-		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + ">");
+		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
 		skipLine();
 
 		writeLine("<a4j:region>");
 		skipLine();
 
-		writeLine("<ui:param name=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".new" + currentBean.className + "}"
+		writeLine("<ui:param name=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}"
 				+ CHAR_34 + "/>");
 		skipLine();
 
@@ -69,12 +69,24 @@ public class JsfOneToManyCreationViewFileWriteCommand extends JsfXhtmlFileWriteC
 		writeLine("</div>");
 		skipLine();
 
-		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
-				+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
-				+ "CreationPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "CreationModalPanel').modal('hide')"
-				+ CHAR_34 + "/>");
+		if (this.oneToMany.referenceBean.createEnabled) {
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
+					+ " rendered=" + CHAR_34 + "#{empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
+					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
+					+ CHAR_34 + "/>");
+		}
+		
+		if (this.oneToMany.referenceBean.updateEnabled) {
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 
+					+ " rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
+					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
+					+ CHAR_34 + "/>");
+		}
+		
 		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".resetForm}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName
-				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "CreationModalPanel').modal('hide')" + CHAR_34 + "/>");
+				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('hide')" + CHAR_34 + "/>");
 
 		skipLine();
 

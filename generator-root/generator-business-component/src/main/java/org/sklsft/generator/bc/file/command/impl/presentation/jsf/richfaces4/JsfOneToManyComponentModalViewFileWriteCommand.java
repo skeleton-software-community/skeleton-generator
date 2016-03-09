@@ -6,14 +6,14 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
 
-public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class JsfOneToManyComponentModalViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private OneToManyComponent oneToManyComponent;
 
-	public JsfOneToManyComponentDetailViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
+	public JsfOneToManyComponentModalViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
 				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.parentBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
-				oneToManyComponent.referenceBean.className + "Details");
+				oneToManyComponent.referenceBean.className + "Modal");
 
 		this.oneToManyComponent = oneToManyComponent;
 	}
@@ -39,7 +39,7 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 		writeLine("<!-- processed by skeleton-generator -->");
 		writeLine("<!-- -->");
 		skipLine();
-
+		
 		writeLine("<div class=" + CHAR_34 + "modal-header" + CHAR_34 + ">");
 		writeLine("<h2>");
 		writeLine("#{i18n." + currentBean.objectName + "Detail}");
@@ -60,6 +60,7 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 		skipLine();
 
 		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
+		skipLine();
 
 		for (Property property : currentBean.fullViewBean.properties) {
 			writeInput(property, currentBean);
@@ -68,20 +69,28 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 		writeLine("</div>");
 		skipLine();
 		
-		if (this.oneToManyComponent.referenceBean.updateEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className
-					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34
-					+ " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34
-					+ "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal==0}) $('#" + currentBean.objectName + "ModalPanel').modal('hide')" + CHAR_34 + "/>");
+		
+		if (this.oneToManyComponent.referenceBean.createEnabled) {
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
+					+ " rendered=" + CHAR_34 + "#{empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
+					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
+					+ CHAR_34 + "/>");
 		}
 		
-		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".resetForm}" + CHAR_34
-				+ " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName
-				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "ModalPanel').modal('hide')" + CHAR_34 + "/>");
-
+		if (this.oneToManyComponent.referenceBean.updateEnabled) {
+			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className+ "}"+ CHAR_34 
+					+ " rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34
+					+ " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34
+					+ "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal==0}) $('#" + currentBean.objectName + "Modal').modal('hide')" + CHAR_34 + "/>");
+		}
 		
+		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".resetForm}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " update=" + CHAR_34 + currentBean.objectName
+				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('hide')" + CHAR_34 + "/>");
 
 		skipLine();
+
 		this.writeNotOverridableContent();
 		skipLine();
 
@@ -90,10 +99,10 @@ public class JsfOneToManyComponentDetailViewFileWriteCommand extends JsfXhtmlFil
 
 		writeLine("</h:panelGroup>");
 		skipLine();
-
+		
 		writeLine("</div>");
 		skipLine();
-		
+
 		writeLine("</ui:composition>");
 
 	}

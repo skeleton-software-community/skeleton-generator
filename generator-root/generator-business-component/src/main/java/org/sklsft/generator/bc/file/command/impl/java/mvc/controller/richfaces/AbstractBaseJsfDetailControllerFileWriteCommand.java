@@ -108,6 +108,8 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		createSaveOneToMany();
 		
 		createUpdateObject();
+		createEditOneToMany();
+		createUpdateOneToMany();
 		createEditOneToManyComponent();
 		createUpdateOneToOneComponent();
 		createUpdateOneToManyComponent();
@@ -272,7 +274,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				}
 			}
 
-			writeLine(bean.detailViewObjectName + ".setNew" + currentBean.className + "(this." + this.bean.serviceObjectName + ".create" + currentBean.className + "());");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + this.bean.serviceObjectName + ".create" + currentBean.className + "());");
 			writeLine("}");
 			skipLine();
 		}
@@ -294,7 +296,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				}
 			}
 
-			writeLine(bean.detailViewObjectName + ".setNew" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create" + currentBean.className + "());");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create" + currentBean.className + "());");
 			writeLine("}");
 			skipLine();
 		}
@@ -310,7 +312,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -327,7 +329,46 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
-			writeLine(currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getNew" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine(currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "Id());");
+			writeLine("load" + currentBean.className + "List();");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createEditOneToMany() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * edit one to many " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("public void edit" + currentBean.className + "(Long id) {");
+			
+			for (Property property : oneToMany.fullViewBean.properties) {
+				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
+				}
+			}
+			
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + currentBean.serviceObjectName + ".load" + currentBean.className + "(id));");
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createUpdateOneToMany() {
+		for (OneToMany oneToMany : this.bean.oneToManyList) {
+			Bean currentBean = oneToMany.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * update one to many " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
+			writeLine("public void update" + currentBean.className + "() {");
+			writeLine(currentBean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();

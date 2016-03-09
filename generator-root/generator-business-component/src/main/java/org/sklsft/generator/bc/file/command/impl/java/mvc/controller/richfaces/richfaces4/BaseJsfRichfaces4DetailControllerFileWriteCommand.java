@@ -3,9 +3,9 @@ package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.AbstractBaseJsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 
-public class BaseJsfDetailControllerFileWriteCommand extends AbstractBaseJsfDetailControllerFileWriteCommand {
+public class BaseJsfRichfaces4DetailControllerFileWriteCommand extends AbstractBaseJsfDetailControllerFileWriteCommand {
 
-	public BaseJsfDetailControllerFileWriteCommand(Bean bean) {
+	public BaseJsfRichfaces4DetailControllerFileWriteCommand(Bean bean) {
 		super(bean);
 	}
 

@@ -152,7 +152,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".edit" + currentBean.className + "(" + currentBean.objectName + ".id)}" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName
-				+ "ModalPanel').modal('show');" + CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+				+ "Modal').modal('show');" + CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
 		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}"
 				+ CHAR_34 + "/>");
 		writeLine("</a4j:commandLink>");
@@ -187,8 +187,8 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		if (currentBean.createEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className
-					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "CreationModalPanel').modal('show')"
-					+ CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
+					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('show')"
+					+ CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}
 		
@@ -202,24 +202,15 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		skipLine();
 		
 		
-		 writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-         writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-         writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
-         writeLine("</div>");
-         writeLine("</div>");
-         writeLine("</div>");
-         skipLine();
+		writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "Modal" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
+		writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
+		writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
+		writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Modal.xhtml" + CHAR_34 + "/>");
+		writeLine("</div>");
+		writeLine("</div>");
+		writeLine("</div>");
+		skipLine();
          
-         writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-         writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-         writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
-         writeLine("</div>");
-         writeLine("</div>");
-         writeLine("</div>");
-         skipLine();
-		
 		
 		writeLine("</h:form>");
         

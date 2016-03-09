@@ -2,11 +2,11 @@ package org.sklsft.generator.bc.file.strategy.impl.controller;
 
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.DataTableFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfListControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfDetailControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfRichfaces3DetailControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.richfaces3.BaseJsfRichfaces3ListControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces.JsfCommonViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces.MvcListViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.model.richfaces.richfaces3.MvcDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
@@ -37,10 +37,10 @@ public class Richfaces3ControllerStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode listBeanTreeNode = new FileWriteCommandTreeNode(new BaseJsfListControllerFileWriteCommand(bean));
+					FileWriteCommandTreeNode listBeanTreeNode = new FileWriteCommandTreeNode(new BaseJsfRichfaces3ListControllerFileWriteCommand(bean));
 					packageTreeNode.add(listBeanTreeNode);
 					
-					FileWriteCommandTreeNode detailBeanTreeNode = new FileWriteCommandTreeNode(new BaseJsfDetailControllerFileWriteCommand(bean));
+					FileWriteCommandTreeNode detailBeanTreeNode = new FileWriteCommandTreeNode(new BaseJsfRichfaces3DetailControllerFileWriteCommand(bean));
 					packageTreeNode.add(detailBeanTreeNode);
 				}
 			}
