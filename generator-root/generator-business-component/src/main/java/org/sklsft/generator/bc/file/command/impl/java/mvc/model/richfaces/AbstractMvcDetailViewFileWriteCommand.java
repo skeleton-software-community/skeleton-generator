@@ -80,9 +80,7 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 		writeLine("/*");
 		writeLine(" * properties");
 		writeLine(" */");
-		writeLine("private Long selected" + this.bean.className + "Id;");
-		skipLine();
-		writeLine("private " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
+		writeLine("private " + this.bean.fullViewBean.className + " selected" + this.bean.className + " = new " + bean.fullViewBean.className + "();");
 		skipLine();
 		
 		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
@@ -114,15 +112,7 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
 
 		writeLine("/*");
 		writeLine(" * getters and setters");
-		writeLine(" */");
-		writeLine("public Long getSelected" + this.bean.className + "Id() {");
-		writeLine("return selected" + this.bean.className + "Id;");
-		writeLine("}");
-		writeLine("public void setSelected" + this.bean.className + "Id(Long selected" + this.bean.className + "Id) {");
-		writeLine("this.selected" + this.bean.className + "Id = selected" + this.bean.className + "Id;");
-		writeLine("}");
-		skipLine();
-		
+		writeLine(" */");		
 		writeLine("public " + this.bean.fullViewBean.className + " getSelected" + this.bean.className + "() {");
 		writeLine("return selected" + this.bean.className + ";");
 		writeLine("}");

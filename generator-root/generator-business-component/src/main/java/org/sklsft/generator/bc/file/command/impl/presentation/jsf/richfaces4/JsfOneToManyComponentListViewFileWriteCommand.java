@@ -42,7 +42,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
         skipLine();
         
         writeLine("<f:metadata>");
-		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + "Id}" + CHAR_34 + " />");
+		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + ".id}" + CHAR_34 + " />");
 		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " />");
 		writeLine("</f:metadata>");
 

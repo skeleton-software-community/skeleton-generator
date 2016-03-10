@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.DetailMode;
 
 public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -145,7 +146,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 		
-		if (bean.hasTabsInDetailView()) {
+		if (bean.detailMode.equals(DetailMode.PAGE)) {
 			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
 			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");

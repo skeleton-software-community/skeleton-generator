@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.DetailMode;
 
 public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -41,7 +42,7 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
         skipLine();
         
         writeLine("<f:metadata>");
-		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + "Id}" + CHAR_34 + " />");
+		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + ".id}" + CHAR_34 + " />");
 		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".load" + currentBean.className + "List}" + CHAR_34 + " />");
 		writeLine("</f:metadata>");
 
@@ -151,7 +152,7 @@ public class JsfOneToManyListViewFileWriteCommand extends JsfXhtmlFileWriteComma
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 
-		if (currentBean.hasTabsInDetailView()) {
+		if (currentBean.detailMode.equals(DetailMode.PAGE)) {
 			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + currentBean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
 			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".id}" + CHAR_34 + " />");

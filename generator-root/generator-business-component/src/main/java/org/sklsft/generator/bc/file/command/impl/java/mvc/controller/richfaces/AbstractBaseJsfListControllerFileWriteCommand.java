@@ -7,6 +7,7 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.Visibility;
 
 public abstract class AbstractBaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
@@ -26,7 +27,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
-		
+		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
@@ -141,13 +142,27 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine("/**");
 		writeLine(" * save object");
 		writeLine(" */");
-		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
-		writeLine("public void save" + this.bean.className + "() {");
-		writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
-		writeLine("this.refresh();");
-		writeLine("}");
-		skipLine();
-
+		if (bean.detailMode.equals(DetailMode.MODAL)) {
+			writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
+			writeLine("public void save" + this.bean.className + "() {");
+			writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine("this.refresh();");
+			writeLine("}");
+			skipLine();
+		} else {
+			writeLine("public void save" + this.bean.className + "() {");
+			writeLine("executeAjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
+			writeLine("@Override");
+			writeLine("public Object execute() {");
+			writeLine("return " + this.bean.serviceObjectName + ".save" + this.bean.className + "(" + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine("}");
+			writeLine("@Override");
+			writeLine("public void redirectOnComplete(Object result) {");
+			writeLine("redirect(" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf?id=" + CHAR_34 + " + result);");
+			writeLine("}");
+			writeLine("});");
+			writeLine("}");
+		}
 	}
 	
 	

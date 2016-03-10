@@ -40,7 +40,7 @@ public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + bean.objectName + "DetailsMenu" + CHAR_34 + ">");
 		writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
-		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
+		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
 		writeLine("#{i18n." + bean.objectName + "Detail}");
 		writeLine("</h:link>");
 		writeLine("</li>");
@@ -51,7 +51,7 @@ public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "DetailsMenu" + CHAR_34 + ">");
 			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
+			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
 			writeLine("#{i18n." + currentBean.objectName + "Detail}");
 			writeLine("</h:link>");
 			writeLine("</li>");
@@ -63,7 +63,7 @@ public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ListMenu" + CHAR_34 + ">");
 			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
+			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");
 			writeLine("</li>");
@@ -75,7 +75,7 @@ public class JsfDetailMenuFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ListMenu" + CHAR_34 + ">");
 			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + "Id}" + CHAR_34 + " />");
+			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");
 			writeLine("</li>");
