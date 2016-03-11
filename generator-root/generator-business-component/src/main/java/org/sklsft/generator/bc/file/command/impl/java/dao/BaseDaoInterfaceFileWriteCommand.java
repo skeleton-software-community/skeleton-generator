@@ -114,6 +114,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         writeLine(this.bean.className + " load" + this.bean.className + "(Long id);");
         skipLine();
+        skipLine();
+        
+        writeLine("/**");
+        writeLine(" * get object");
+        writeLine(" */");
+        writeLine(this.bean.className + " get" + this.bean.className + "(Long id);");
+        skipLine();
     }
     
     private void createLoadOneToManyComponent() {

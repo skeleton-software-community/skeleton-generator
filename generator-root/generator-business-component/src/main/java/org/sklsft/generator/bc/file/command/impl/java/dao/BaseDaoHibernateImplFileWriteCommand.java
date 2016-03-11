@@ -185,6 +185,16 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().load(" + this.bean.className + ".class,id);");
 		writeLine("}");
 		skipLine();
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * get object");
+		writeLine(" */");
+		writeLine("public " + this.bean.className + " get" + this.bean.className + "(Long id) {");
+		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
+		writeLine("}");
+		skipLine();
+		skipLine();
 	}
 	
 	private void createLoadOneToManyComponent() {
