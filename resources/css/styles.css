@@ -5,7 +5,7 @@ body {
 
 h2 {
 	font-size:24px;
-	color:#655FAF;
+	color:#363636;
 	margin-bottom:1.5em;
 }
 
@@ -36,20 +36,16 @@ ul.list-unstyled {
 
 
 .navbar-default .navbar-brand {
-	padding:0px;
 	font-size:24px;
 	color: white;
-	height:60px;
 }
-
-
 .navbar-default .navbar-brand>img {
     display: inline;
-    height:55px;
+    height:50px;
 }
 
+
 .navbar-default .navbar-brand {
-    margin-top:10px;
     font-size:28px;
 }
 
@@ -119,7 +115,8 @@ ul.list-unstyled {
 fieldset {
     padding: 1em 1em 1em 1em;
     margin: 0 2px;
-    border: 1px solid #83ADD8;
+    border: 1px solid #5a8dc0;
+    border-radius: 4px;
     margin-bottom: 30px;
 }
 
@@ -128,7 +125,7 @@ legend {
     padding:0 10px;
     border-bottom:none;
     font-size: 18px;
-    color:#83ADD8;
+    color:#5a8dc0;
 }
 
 fieldset ul>li.divider {
@@ -164,3 +161,12 @@ img.small-icon {
 	.md-center {
 	text-align: center;}
 }
+
+@media (min-width: 992px){
+	.download-panel {
+		position: fixed;
+		max-width: 290px;
+		width: inherit;
+	}
+}
+
