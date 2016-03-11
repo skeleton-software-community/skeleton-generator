@@ -1,0 +1,166 @@
+body {
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+h2 {
+	font-size:24px;
+	color:#655FAF;
+	margin-bottom:1.5em;
+}
+
+h3 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+ul.list-unstyled {
+	
+}
+
+.navbar-default {
+    background-color: #555;
+    color: white;
+    min-height:70px;
+    border:none;
+}
+
+.navbar-toggle {
+	margin-top:18px;
+	margin-bottom:18px;
+}
+
+
+.navbar-default .navbar-brand {
+	padding:0px;
+	font-size:24px;
+	color: white;
+	height:60px;
+}
+
+
+.navbar-default .navbar-brand>img {
+    display: inline;
+    height:55px;
+}
+
+.navbar-default .navbar-brand {
+    margin-top:10px;
+    font-size:28px;
+}
+
+.navbar-default .navbar-brand:hover {
+    color:white;
+}
+
+.navbar-nav>li>a {
+    line-height: 45px;
+    font-size:18px;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover .navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: white;
+    background-color: #83ADD8;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: #83ADD8;
+}
+
+.page {
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+
+.footer {
+	position:fixed;
+	bottom:0;
+	width:100%;
+	background-color: #555;
+	color:white;
+	z-index:1030;		
+	min-height: 70px;
+    margin-top: 20px;
+    padding:15px;
+}
+
+.footer a {
+	color:white;
+	text-decoration:none;
+	font-style:italic;	
+}
+
+.footer a:hover {
+	color:white;	
+}
+
+
+.not-visible {
+	visibility:hidden;
+	height:0px;
+}
+
+
+
+/**
+* fieldsets
+*/
+
+fieldset {
+    padding: 1em 1em 1em 1em;
+    margin: 0 2px;
+    border: 1px solid #83ADD8;
+    margin-bottom: 30px;
+}
+
+legend {
+    width:inherit;
+    padding:0 10px;
+    border-bottom:none;
+    font-size: 18px;
+    color:#83ADD8;
+}
+
+fieldset ul>li.divider {
+	height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #C0C0C0;
+}
+
+fieldset .media img.media-object {
+	width:64px;
+}
+
+fieldset hr {
+	border-top: none;
+}
+
+fieldset img.picto {
+	width:92px;
+	margin-top: 20px;
+}
+
+img.small-icon {
+	width:32px;
+}
+
+.media-heading {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 991px) {
+	.md-center {
+	text-align: center;}
+}

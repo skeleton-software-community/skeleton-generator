@@ -1,160 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Skeleton Generator Project by The Skeleton Software
-	Community</title>
-
-<link rel="stylesheet" href="stylesheets/styles.css">
-<link rel="stylesheet" href="stylesheets/pygment_trac.css">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no">
-<!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<title>Skeleton Generator</title>
+<link rel="stylesheet" type="text/css"
+	href="resources/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/styles.css" />
 </head>
+
 <body>
-	<div class="wrapper">
-		<header>
-			<h1>Skeleton Generator</h1>
-			<p>By The Skeleton Software Community</p>
 
-			<p class="view">
-				<a href="download/index.html">
-				Download
+	<h1 class="hidden">Skeleton Generator</h1>
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar-menu"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" title="Skeleton Generator" href="index.html">
+					<img alt="Skeleton Generator"
+						src="resources/images/header/logo.png" />
+					Skeleton Generator
 				</a>
-			</p>
-			
-			<p class="view">
-				<a href="documentation/index.html">
-				Documentation
-				</a>
-			</p>
+			</div>
 
-			<p class="view">
-				<a href="https://github.com/skeleton-software-community/skeleton-generator">
-				View the Project on GitHub
-				</a>
-			</p>
-			
-		</header>
-		<section>
-			<h2>
-				<a name="about-model-driven-development" class="anchor"
-					href="#about-model-driven-development"><span
-					class="octicon octicon-link"></span></a>About model driven development
-			</h2>
+			<div class="collapse navbar-collapse" id="navbar-menu">
 
-			<p>
-				Much has been written about the MDD. It would be useless and tedious
-				to give you a comprehensive list of its benefits and pitfalls.<br />
-				The skeleton-generator project uses an original approach : whereas
-				most of MDD tools are based on a UML representation of the domain
-				model, we use a XML representation of a Database schema with
-				additional metadata.
-			</p>
+				<ul class="nav navbar-nav pull-right">
+					<li class="active">
+						<a href="index.html">Project</a>
+					</li>
+					<li>
+						<a href="documentation.html">Documentation</a>
+					</li>
+					<li>
+						<a href="references.html">References</a>
+					</li>
+				</ul>
 
-			<h2>
-				<a name="our-domain-model-representation" class="anchor"
-					href="#our-domain-model-representation"><span
-					class="octicon octicon-link"></span></a>Our domain model representation
-			</h2>
+			</div>
+		</div>
+	</nav>
 
-			<p>In our different application skeletons, the domain model comes
-				in three different ways :
-			</p>
-			<ul>
-				<li>In the database</li>
-				<li>In the business objects that are handled by services</li>
-				<li>In the presentation layer where we use the MVC pattern with
-					"easy to bind" objects.</li>
-			</ul>
-			<p>
-			Each of these layers use a different projection of the domain model
-			and need additional metadata to manage it properly. We have chosen to
-			fully represent them the way we would represent a database in a
-			single XML file. We systematically use a "one business object - one
-			table" pattern. the additional metadata we add should allow to
-			describe :
-			</p>
-			<ul>
-				<li>The relationships between objects</li>
-				<li>The behaviour of objects with respect to other related
-					objects</li>
-				<li>The way objects will be handled in the UI (if there is
-					one).</li>
-			</ul>
-			<p>
-			This XML file will take its place in your SCM the most natural way !
-			</p>
+	<div class="page">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
 
-			<h2>
-				<a name="raise-productivity" class="anchor"
-					href="#raise-productivity"> <span class="octicon octicon-link"></span>
-				</a> Raise productivity...
-			</h2>
+					<h2>Skeleton Generator Project</h2>
 
-			<p>
-				Code generation is one of the main axes high productivity
-				frameworks are based on. We don't have the ambition to provide such a
-				framework. We simply use popular open source Java frameworks such as
-				Hibernate, Spring,... and put them together so as to build a
-				coherent skeleton that developers can rely on.<br />
-				This way, we can help you save time when setting up your project, produce and
-				assemble your different layers and expose basic services.
-			</p>
+					<fieldset>
+						<legend> Features </legend>
 
-			<h2>
-				<a name="improve-quality" class="anchor" href="#improve-quality">
-					<span class="octicon octicon-link"></span>
-				</a> Improve quality...
-			</h2>
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto" src="resources/images/icons/setup.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Setup your project in a minute</h3>
+								<p>Configuring your project can be a pain, especially for
+									complex architectures. Skeleton Generator enables you to setup
+									and configure a modular project. The result is a ready to use
+									web application.</p>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto" src="resources/images/icons/code.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Generate a flexible skeleton code</h3>
+								<p>From a XML representation of your model, Skeleton
+									Generator will generate robust, flexible and scalable code.
+									Best practices are deeply studied to bring you the best from
+									the most popular java frameworks.</p>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto" src="resources/images/icons/database.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Populate your database easily</h3>
+								<p>Skeleton Generator can help you creating a project from
+									scratch or migrating an existing project. With its population
+									plan feature, you can feed your database with data from various
+									datasources. You can also mount an "in memory database" for
+									unit/integration tests.</p>
+							</div>
+						</div>
+					</fieldset>
 
-			<p>We have the ambition to help you produce high quality and
-				maintainable code. The skeletons we generate rely on design patterns
-				with accordance to Java standards. We have spent a lot of time (and
-				we will keep spending a lot of time) studying the official
-				documentations of the frameworks we use to meet best practices.</p>
+					<fieldset>
+						<legend> Why use Skeleton Generator </legend>
 
-			<h2>
-				<a name="keep-flexibility-" class="anchor" href="#keep-flexibility-">
-					<span class="octicon octicon-link"></span>
-				</a> ...keep flexibility !
-			</h2>
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto" src="resources/images/icons/clock.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Save time</h3>
+								<p>
+									With Skeleton Generator, you will save much time while
+									configuring many files such as Maven pom files, Spring and
+									Hibernate configuration files, Loggers, Transactions, Aspects
+									handling, Internationalization, ...
+									<br />
+									You will also get rid of very repetitive tasks such as writing
+									your SQL definitions, your model with Hibernate mappings, your
+									DAO, Services, MVC for CRUD operations, ...
+								</p>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto" src="resources/images/icons/building.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Improve your application quality and maintainability</h3>
+								<p>With a Model Driven Development approach, Skeleton
+									Generator produces robust design patterns that enables you to
+									make your model change many times without breaking what you
+									have written by yourself. During the whole life cycle of your
+									application, you will keep a very high level of quality by
+									avoiding frequent errors due to manual changes.</p>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<div class="col-md-3 text-center">
+								<img class="picto"
+									src="resources/images/icons/database-check.png" />
+							</div>
+							<div class="col-md-9 md-center">
+								<h3>Control your data</h3>
+								<p>With its population feature, you use your own services to
+									populate your database. This will ensure you that business
+									rules are observed. It also encourages Test Driven Development
+									by providing simple tools to setup a testing environment with
+									an "in memory database" and control the datas you inject in.</p>
+							</div>
+						</div>
 
-			<p>One of the major advantages of our approach is that you can
-				still use those popular, widespread and well documented Java
-				frameworks without needing to spend a lot of time learning one or
-				another. But more important, you will keep the flexibility of those
-				frameworks : even if some high productivity frameworks are based on the same
-				frameworks (such as Grails), it can be a pain when you really need
-				to disturb the piping. In our case, you have a full access to the
-				pipe !<br/>
-				The point is : how to evolve our domain model without
-				breaking what we have rewritten ? We simply have a commentary header
-				that tells you whether you can edit or not a file. When you can edit
-				a file, we use tags to tell the generator not to overwrite what is
-				inside as well as it will take care of your added java imports... The
-				design patterns we use enable you to specialize your code by
-				overriding some functions, or simply by enriching the classes and
-				interfaces behavior. We also strongly recommend aspect oriented
-				programming to make things even more maintainable. Sure you will be
-				astonished to see how generated and non-generated code can live
-				together in harmony !</p>
+					</fieldset>
+				</div>
 
-		</section>
-		<footer>
-			<p>
-				This project is maintained by <a href="https://github.com/skeleton-software-community">The
-					Skeleton Software Community</a>
-			</p>
-			<p>
-				<small>Hosted on GitHub Pages</small>
-			</p>
-		</footer>
+				<div class="col-md-3">
+
+					<div class="download-panel">
+
+						<h2>Download</h2>
+
+						<fieldset>
+							<legend>Development</legend>
+
+							<ul class="list-unstyled">
+								<li>
+									2.0.0-M2 |
+									<a
+										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator-bash/2.0.0-M2/generator-bash-2.0.0-M2-bin.zip">Binary</a>
+
+								</li>
+							</ul>
+
+
+						</fieldset>
+
+						<fieldset>
+							<legend>Releases</legend>
+
+							<ul class="list-unstyled">
+								<li>
+									1.1.0 |
+									<a
+										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator-bash/1.1.0/generator-bash-1.1.0-bin.zip">
+										Binary </a>
+
+								</li>
+								<li class="divider" />
+								<li>
+									1.0.1 |
+									<a
+										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator-bash/1.0.1/generator-bash-1.0.1-bin.zip">
+										Binary </a>
+								</li>
+							</ul>
+						</fieldset>
+
+						<a
+							href="https://github.com/skeleton-software-community/skeleton-generator">
+							<img src="resources/images/logos/GitHub.png" class="small-icon" />
+							View the Project on GitHub
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<script src="javascripts/scale.fix.js"></script>
 
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9">
+					@2016
+					<a href="https://github.com/skeleton-software-community">Skeleton
+						Software Community </a>
+				</div>
+				<div class="col-sm-3">Hosted on GitHub Pages</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 </body>
 </html>
