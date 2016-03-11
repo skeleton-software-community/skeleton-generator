@@ -6,9 +6,9 @@ import org.sklsft.generator.bc.file.command.impl.templatized.ProjectTemplatizedF
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.FileType;
 
-public class Richfaces3BaseControllerFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
+public class RichfacesBaseControllerFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
-	public Richfaces3BaseControllerFileWriteCommand(Project project) {
+	public RichfacesBaseControllerFileWriteCommand(Project project) {
 		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/java/" + project.model.controllerPackageName.replace(".", File.separator) + File.separator, "BaseController", FileType.JAVA, project);
 	}
 

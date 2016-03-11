@@ -152,27 +152,20 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         	
         	Bean currentBean = oneToManyComponent.referenceBean;
         	
-            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "ModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.xhtml" + CHAR_34 + "/>");
+            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "Modal" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Modal.xhtml" + CHAR_34 + "/>");
             writeLine("</rich:modalPanel>");
             skipLine();
-            
-            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
-            writeLine("</rich:modalPanel>");
-            skipLine();
-            
         }
         
         for (OneToMany oneToMany : this.bean.oneToManyList) {
         	
         	Bean currentBean = oneToMany.referenceBean;
             
-            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Creation.xhtml" + CHAR_34 + "/>");
+            writeLine("<rich:modalPanel id=" + CHAR_34 + currentBean.objectName + "Modal" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+            writeLine("<ui:include src=" + CHAR_34 + "/sections/" + currentBean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Modal.xhtml" + CHAR_34 + "/>");
             writeLine("</rich:modalPanel>");
             skipLine();
-            
         }
         
         writeLine("</ui:define>");

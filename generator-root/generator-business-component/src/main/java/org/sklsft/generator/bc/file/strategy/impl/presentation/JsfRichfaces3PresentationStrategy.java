@@ -1,14 +1,13 @@
 package org.sklsft.generator.bc.file.strategy.impl.presentation;
 
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.I18nFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfCreationViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentCreationViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentDetailViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentListViewFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyCreationViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyComponentModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyListViewFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToManyModalViewFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3.JsfOneToOneComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
@@ -42,7 +41,7 @@ public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new JsfListViewFileWriteCommand(bean));
 					packageTreeNode.add(beanTreeNode);
 					
-					FileWriteCommandTreeNode beanCreationTreeNode = new FileWriteCommandTreeNode(new JsfCreationViewFileWriteCommand(bean));
+					FileWriteCommandTreeNode beanCreationTreeNode = new FileWriteCommandTreeNode(new JsfModalViewFileWriteCommand(bean));
 					packageTreeNode.add(beanCreationTreeNode);
 				}
 			}
@@ -66,11 +65,8 @@ public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 						FileWriteCommandTreeNode componentListTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentListViewFileWriteCommand(oneToManyComponent));
 						packageTreeNode.add(componentListTreeNode);
 						
-						FileWriteCommandTreeNode componentDetailTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentDetailViewFileWriteCommand(oneToManyComponent));
-						packageTreeNode.add(componentDetailTreeNode);
-						
-						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentCreationViewFileWriteCommand(oneToManyComponent));
-						packageTreeNode.add(componentCreationTreeNode);
+						FileWriteCommandTreeNode componentModalTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyComponentModalViewFileWriteCommand(oneToManyComponent));
+						packageTreeNode.add(componentModalTreeNode);
 					}
 					
 					for (OneToMany oneToMany:bean.oneToManyList) {
@@ -78,8 +74,8 @@ public class JsfRichfaces3PresentationStrategy implements LayerStrategy {
 						FileWriteCommandTreeNode componentListTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyListViewFileWriteCommand(oneToMany));
 						packageTreeNode.add(componentListTreeNode);
 						
-						FileWriteCommandTreeNode componentCreationTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyCreationViewFileWriteCommand(oneToMany));
-						packageTreeNode.add(componentCreationTreeNode);
+						FileWriteCommandTreeNode componentModalTreeNode = new FileWriteCommandTreeNode(new JsfOneToManyModalViewFileWriteCommand(oneToMany));
+						packageTreeNode.add(componentModalTreeNode);
 					}
 					
 					for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {

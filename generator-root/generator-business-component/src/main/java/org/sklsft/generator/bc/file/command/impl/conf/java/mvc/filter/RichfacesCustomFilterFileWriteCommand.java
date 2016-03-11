@@ -6,9 +6,9 @@ import org.sklsft.generator.bc.file.command.impl.templatized.ProjectTemplatizedF
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.FileType;
 
-public class Richfaces3CustomFilterFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
+public class RichfacesCustomFilterFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
-	public Richfaces3CustomFilterFileWriteCommand(Project project) {
+	public RichfacesCustomFilterFileWriteCommand(Project project) {
 		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/java/" + project.model.filterPackageName.replace(".", File.separator) + File.separator, "CustomFilter", FileType.JAVA, project);
 	}
 

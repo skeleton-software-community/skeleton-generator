@@ -1,8 +1,8 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.Richfaces3BaseControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.Richfaces3CustomFilterFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.RichfacesBaseControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.RichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.population.CommandFactoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.population.PopulatorFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.population.PopulatorLauncherFileWriteCommand;
@@ -129,10 +129,10 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
 		configurationTreeNode.add(javaTreeNode);
 		
-		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new Richfaces3BaseControllerFileWriteCommand(project));
+		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new RichfacesBaseControllerFileWriteCommand(project));
 		javaTreeNode.add(baseControllerTreeNode);
 		
-		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new Richfaces3CustomFilterFileWriteCommand(project));
+		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new RichfacesCustomFilterFileWriteCommand(project));
 		javaTreeNode.add(customFilterTreeNode);
 		
 		

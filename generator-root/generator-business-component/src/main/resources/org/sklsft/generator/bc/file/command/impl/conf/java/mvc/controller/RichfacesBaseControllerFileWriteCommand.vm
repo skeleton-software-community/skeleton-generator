@@ -25,6 +25,36 @@ public abstract class BaseController {
 	@Autowired
 	private MessageHandler messageHandler;
 	
+	@Autowired
+	private RedirectionHandler redirectionHandler;
+	
+	@Autowired
+	private AjaxMethodExecutor ajaxMethodExecutor;
+	
+	
+	
+	protected void redirect(String relativeUrl, boolean keepMessages) {
+		
+		redirectionHandler.redirect(relativeUrl, keepMessages);
+	}
+	
+	
+	protected void redirect(String relativeUrl) {
+		
+		redirectionHandler.redirect(relativeUrl);
+	}
+	
+	
+	protected void redirectToExterior(String url, boolean keepMessages) {
+
+		redirectionHandler.redirectToExterior(url, keepMessages);
+	}
+	
+	
+	protected void redirectToExterior(String url) {
+
+		redirectionHandler.redirectToExterior(url);
+	}
 	
 	
 	protected void displayInfo(String message) {

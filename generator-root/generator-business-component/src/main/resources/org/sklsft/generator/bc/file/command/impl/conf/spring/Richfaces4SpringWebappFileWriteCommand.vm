@@ -32,16 +32,25 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 		</property>
 	</bean>
 	
-	<bean id="localeManager" class="org.sklsft.commons.mvc.i18n.JsfLocaleManager" scope="session">
+	<bean id="localeManager" class="org.sklsft.commons.mvc.i18n.JsfLocaleManager"
+		scope="session">
 	</bean>
-		
-		
+
+
 	<bean id="messageHandler" class="org.sklsft.commons.mvc.messages.JsfMessageHandler">
 	</bean>
-		
-		
-	<bean id="ajaxMethodAspect" class="org.sklsft.commons.mvc.aspects.AjaxMethodAspect">
-		<property name="messageHandler" ref="messageHandler"/>
+	
+	
+	<bean id="redirectionHandler" class="org.sklsft.commons.mvc.redirection.JsfRedirectionHandler">
+	</bean>
+
+
+	<bean id="ajaxMethodAspect" class="org.sklsft.commons.mvc.ajax.AjaxMethodAspect">
+		<property name="messageHandler" ref="messageHandler" />
+	</bean>
+	
+	<bean id="ajaxMethodExecutor" class="org.sklsft.commons.mvc.ajax.AjaxMethodExecutor">
+		<property name="messageHandler" ref="messageHandler" />
 	</bean>
 
 </beans>

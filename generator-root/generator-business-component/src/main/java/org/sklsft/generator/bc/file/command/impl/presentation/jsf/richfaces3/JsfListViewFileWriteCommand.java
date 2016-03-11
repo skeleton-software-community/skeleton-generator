@@ -209,8 +209,8 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		skipLine();
 		
 		
-		writeLine("<rich:modalPanel id=" + CHAR_34 + bean.objectName + "CreationModalPanel" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
-        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Creation.xhtml" + CHAR_34 + "/>");
+		writeLine("<rich:modalPanel id=" + CHAR_34 + bean.objectName + "Modal" + CHAR_34 + " autosized=" + CHAR_34 + "true" + CHAR_34 + " width=" + CHAR_34 + "800" + CHAR_34 + " left=" + CHAR_34 + "100" + CHAR_34 + ">");
+        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Modal.xhtml" + CHAR_34 + "/>");
         writeLine("</rich:modalPanel>");
         skipLine();
 

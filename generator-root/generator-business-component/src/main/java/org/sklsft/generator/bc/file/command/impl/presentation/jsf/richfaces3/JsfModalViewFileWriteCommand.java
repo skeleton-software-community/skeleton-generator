@@ -5,12 +5,12 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 
-public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
+public class JsfModalViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private Bean bean;
 	
-	public JsfCreationViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\webapp\\sections\\"  + bean.myPackage.name + "\\" + bean.className.toLowerCase(), bean.className + "Creation");
+	public JsfModalViewFileWriteCommand(Bean bean) {
+		super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\webapp\\sections\\"  + bean.myPackage.name + "\\" + bean.className.toLowerCase(), bean.className + "Modal");
 
 		this.bean = bean;
 	}
@@ -40,12 +40,12 @@ public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         skipLine();
         
         
-        writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "CreationPanelGroup" + CHAR_34 + ">");
+        writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
         
         writeLine("<h:form>");
         skipLine();
 
-        writeLine("<c:set var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".new" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<c:set var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
@@ -70,14 +70,27 @@ public class JsfCreationViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
         
-        writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".save" + this.bean.className + "}"
-				+ CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "PanelGroup, " + bean.objectName
-				+ "CreationPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) Richfaces.hideModalPanel('" + bean.objectName + "CreationModalPanel')"
-				+ CHAR_34 + "/>");
-		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".resetForm}" + CHAR_34
+        if (bean.createEnabled) {
+	        writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".save" + this.bean.className + "}"+ CHAR_34
+	        		+ " rendered=" + CHAR_34 + "#{empty " + bean.objectName + ".id}" + CHAR_34
+	        		+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "PanelGroup, " + bean.objectName
+					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) Richfaces.hideModalPanel('" + bean.objectName + "Modal')"
+					+ CHAR_34 + "/>");
+        }
+        
+        if (bean.updateEnabled) {        
+        	writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".update" + this.bean.className + "}" + CHAR_34 
+        			+ " rendered=" + CHAR_34 + "#{empty " + bean.objectName + ".id}" + CHAR_34
+        			+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "PanelGroup, " + bean.objectName
+					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) Richfaces.hideModalPanel('" + bean.objectName + "Modal')"
+					+ CHAR_34 + "/>");
+        }
+        
+        writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".resetForm}" + CHAR_34
 				+ " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " reRender=" + CHAR_34 + bean.objectName
-				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.hideModalPanel('" + bean.objectName + "CreationModalPanel')" + CHAR_34 + "/>");
+				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.hideModalPanel('" + bean.objectName + "Modal')" + CHAR_34 + "/>");
 
+        
         writeLine("</h:panelGrid>");
         skipLine();
 
