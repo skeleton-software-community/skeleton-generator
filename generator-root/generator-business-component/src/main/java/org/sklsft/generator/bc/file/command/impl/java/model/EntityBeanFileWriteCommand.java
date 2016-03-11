@@ -36,7 +36,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			javaImports.add("import org.hibernate.envers.Audited;");
 		}
-		javaImports.add("import java.util.Collection;");
+		javaImports.add("import java.util.Set;");
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import javax.persistence.CascadeType;");
@@ -236,7 +236,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			writeLine("@OneToMany(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToMany.referenceProperty.name + (char) 34 + ")");
-			writeLine("private Collection <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ";");
+			writeLine("private Set <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ";");
 			skipLine();
 		}
 
@@ -245,7 +245,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(", mappedBy = " + (char) 34 + oneToManyComponent.parentBean.objectName + (char) 34 + ")");
 			
 
-			writeLine("private Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
+			writeLine("private Set <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
 			skipLine();
 		}
 
@@ -303,22 +303,22 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
-			writeLine("public Collection <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionGetterName + " () {");
+			writeLine("public Set <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionGetterName + " () {");
 			writeLine("return this." + oneToMany.collectionName + ";");
 			writeLine("}");
 			skipLine();
-			writeLine("public void " + oneToMany.collectionSetterName + "(Collection <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ") {");
+			writeLine("public void " + oneToMany.collectionSetterName + "(Set <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ") {");
 			writeLine("this." + oneToMany.collectionName + " = " + oneToMany.collectionName + ";");
 			writeLine("}");
 			skipLine();
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			writeLine("public Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionGetterName + " () {");
+			writeLine("public Set <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionGetterName + " () {");
 			writeLine("return this." + oneToManyComponent.collectionName + ";");
 			writeLine("}");
 			skipLine();
-			writeLine("public void " + oneToManyComponent.collectionSetterName + "(Collection <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ") {");
+			writeLine("public void " + oneToManyComponent.collectionSetterName + "(Set <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ") {");
 			writeLine("this." + oneToManyComponent.collectionName + " = " + oneToManyComponent.collectionName + ";");
 			writeLine("}");
 			skipLine();
