@@ -173,8 +173,8 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 			skipLine();
 
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}"
-					+ CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + bean.objectName + "CreationModalPanel')"
-					+ CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
+					+ CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + bean.objectName + "Modal')"
+					+ CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 
 		}
 		

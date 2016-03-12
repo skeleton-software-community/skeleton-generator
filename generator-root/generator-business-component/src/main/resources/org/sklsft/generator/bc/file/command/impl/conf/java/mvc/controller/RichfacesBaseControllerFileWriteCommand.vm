@@ -9,7 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 
+import org.sklsft.commons.mvc.ajax.AjaxMethodExecutor;
+import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;
 import org.sklsft.commons.mvc.messages.MessageHandler;
+import org.sklsft.commons.mvc.redirection.RedirectionHandler;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +76,10 @@ public abstract class BaseController {
 	protected void displayError(String message) {
 
 		messageHandler.displayError(message);
+	}
+	
+	protected void executeAjaxMethod(String value, AjaxMethodTemplate template) {
+		ajaxMethodExecutor.executeAjaxMethod(value, template);
 	}
 	
 	

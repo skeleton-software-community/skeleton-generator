@@ -30,7 +30,7 @@ public class BaseJsfRichfaces3DetailControllerFileWriteCommand extends AbstractB
 		writeLine("public void init() {");
 		writeLine("String id = getParameter(" + CHAR_34 + "id" + CHAR_34 + ");");
 		writeLine("if (id != null) {");
-		writeLine(bean.detailViewObjectName + ".setSelected" + bean.className + "Id(Long.valueOf(id));");
+		writeLine(bean.detailViewObjectName + ".getSelected" + bean.className + "().setId(Long.valueOf(id));");
 		
 		writeLine("load();");
 		writeLine("}");

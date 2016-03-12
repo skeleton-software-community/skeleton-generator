@@ -28,6 +28,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
+		javaImports.add("import javax.annotation.PostConstruct;");
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");

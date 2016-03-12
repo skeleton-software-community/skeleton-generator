@@ -32,6 +32,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import java.util.Date;");
 		
 		javaImports.add("import org.sklsft.generator.repository.backup.command.Command;");
+		javaImports.add("import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");

@@ -150,8 +150,8 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 			writeLine("<br/>");
 			writeLine("<br/>");
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className
-					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + currentBean.objectName + "CreationModalPanel')"
-					+ CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "CreationPanelGroup" + CHAR_34 + "/>");
+					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + currentBean.objectName + "Modal')"
+					+ CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}
 
