@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.metadata.DetailMode;
 
 public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
@@ -45,10 +46,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<a4j:jsFunction name=" + CHAR_34 + "load" + CHAR_34);
 		writeLine("action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".load}" + CHAR_34);
 		writeLine("reRender=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34);
-		writeLine("oncomplete=" + CHAR_34 + "$('#processingPanel').component.hide()" + CHAR_34 + "/>");
+		writeLine("oncomplete=" + CHAR_34 + "Richfaces.hideModalPanel('processingPanel')" + CHAR_34 + "/>");
 		
 		writeLine("</h:form>");
-	    writeLine("<script>window.onload = function(){$('#processingPanel').component.show();load();}</script>");
+	    writeLine("<script>window.onload = function(){Richfaces.showModalPanel('processingPanel');load();}</script>");
 
 		writeLine("<br/>");
 		writeLine("<rich:messages infoClass=" + CHAR_34 + "infoMessage" + CHAR_34 + " errorClass=" + CHAR_34 + "errorMessage" + CHAR_34 + " globalOnly=" + CHAR_34 + "true" + CHAR_34
@@ -137,10 +138,18 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 		
-		writeLine("<h:outputLink value=" + CHAR_34 + "#{application.contextPath}/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
-		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
-		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");
-		writeLine("</h:outputLink>");
+		if (bean.detailMode.equals(DetailMode.PAGE)) {
+			writeLine("<h:outputLink value=" + CHAR_34 + "#{application.contextPath}/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
+			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
+			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");
+			writeLine("</h:outputLink>");
+		} else {
+			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".edit" + this.bean.className + "(" + bean.objectName + ".id)"+ "}"
+					+ CHAR_34 + " oncomplete=" + CHAR_34 + "Richfaces.showModalPanel('" + bean.objectName + "Modal')"
+					+ CHAR_34 + " reRender=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
+			writeLine("</a4j:commandLink>");
+		}
 		
 		if (this.bean.deleteEnabled) {
 			writeLine("<a4j:commandLink  action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ".id)}" + CHAR_34);
