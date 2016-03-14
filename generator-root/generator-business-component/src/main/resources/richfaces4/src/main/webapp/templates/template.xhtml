@@ -13,8 +13,13 @@
 
 <h:body>
 
+	<link rel="stylesheet" type="text/css"
+		href="#{application.contextPath}/resources/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{application.contextPath}/resources/css/styles.css" />
+
 	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#navbar-menu"
@@ -27,7 +32,7 @@
 				<a class="navbar-brand" title="#{i18n.appName}"
 					href="#{application.contextPath}">
 					<h:graphicImage alt="#{i18n.appName}"
-						value="/resources/images/header/logo.png" height="50" />
+						value="/resources/images/header/logo.png" />
 					#{i18n.appName}
 				</a>
 			</div>
@@ -46,22 +51,26 @@
 				stayTime="5000" stack="globalStack" sticky="false" />
 		</rich:notifyStack>
 
-		<ui:insert name="content" />
+		<div class="page">
+			<ui:insert name="content" />
+		</div>
 
 	</div>
 
 	<div class="footer">
-		Done with
-		<a
-			href="http://skeleton-software-community.github.io/skeleton-generator">
-			skeleton-generator </a>
-		by the Skeleton Software Community
+		<div class="container">
+			Done with
+			<a
+				href="http://skeleton-software-community.github.io/skeleton-generator" target="_blank">
+				Skeleton Generator </a>
+			by the Skeleton Software Community
+		</div>
 	</div>
 
 
 	<div class="modal modal-default" id="processingPanel" tabindex="-1"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				<div class="modal-body">
 					<h:outputText value="#{i18n.processing}..." />
@@ -69,11 +78,6 @@
 			</div>
 		</div>
 	</div>
-
-	<link rel="stylesheet" type="text/css"
-		href="#{application.contextPath}/resources/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css"
-		href="#{application.contextPath}/resources/css/styles.css" />
 
 	<h:outputScript library="org.richfaces" name="jquery.js" />
 	<script type="text/javascript"

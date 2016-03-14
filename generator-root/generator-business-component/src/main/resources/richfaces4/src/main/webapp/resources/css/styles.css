@@ -15,23 +15,115 @@ body {
 }
 
 h2 {
-	font-size:26px;
+	font-size:24px;
+	color:#363636;
+	margin-bottom:1em;
 }
 
-@media (min-width: 768px) {
-	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-	    margin-left: 0px;
+h3 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.navbar-default {
+    background-color: #555;
+    color: white;
+    min-height:70px;
+    border:none;
+}
+
+.navbar-toggle {
+	margin-top:18px;
+	margin-bottom:18px;
+}
+
+
+.navbar-default .navbar-brand {
+	font-size:24px;
+	color: white;
+}
+.navbar-default .navbar-brand>img {
+    display: inline;
+    height:50px;
+}
+
+
+.navbar-default .navbar-brand {
+    font-size:28px;
+}
+
+.navbar-default .navbar-brand:hover {
+    color:white;
+}
+
+.navbar-nav>li>a {
+    line-height: 45px;
+    font-size:18px;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover .navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: white;
+    background-color: #83ADD8;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: white;
+    background-color: #83ADD8;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: #83ADD8;
+}
+
+
+.navbar-nav>li>.dropdown-menu {
+	background-color:#555;
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+.dropdown-menu>li>a {
+    display: block;
+    padding: 8px 20px;
+    line-height: 1.42857143;
+    color: white;
+    white-space: nowrap;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+    color: white;
+    text-decoration: none;
+    background-color: #83ADD8;
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+	    color: white;
+	    background-color: #83ADD8;
+	}
+	
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+	    color: white;
 	}
 }
 
-
-.navbar-brand {
-	padding:0px;
+.page {
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
-
-.navbar-brand>img {
-    display: inline;
+.page .centered-content {
+	text-align:center;
+	margin-top:80px;
 }
 
 
@@ -39,12 +131,26 @@ h2 {
 	position:fixed;
 	bottom:0;
 	width:100%;
-	background-color: #f8f8f8;
-    border-top: 1px solid #e7e7e7;
+	background-color: #555;
+	color:white;
 	z-index:1030;		
-	min-height: 50px;
+	min-height: 70px;
     margin-top: 20px;
     padding:15px;
+}
+
+.footer .small {
+	font-size: 9px;
+}
+
+.footer a {
+	color:white;
+	text-decoration:none;
+	font-style:italic;	
+}
+
+.footer a:hover {
+	color:white;	
 }
 
 
@@ -52,6 +158,7 @@ h2 {
 	visibility:hidden;
 	height:0px;
 }
+
 
 
 /**
