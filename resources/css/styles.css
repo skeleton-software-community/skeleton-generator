@@ -90,6 +90,10 @@ ul.list-unstyled {
     padding:15px;
 }
 
+.footer .small {
+	font-size: 9px;
+}
+
 .footer a {
 	color:white;
 	text-decoration:none;
@@ -124,8 +128,9 @@ legend {
     width:inherit;
     padding:0 10px;
     border-bottom:none;
-    font-size: 18px;
+    font-size: 22px;
     color:#5a8dc0;
+    margin-bottom: 0px;
 }
 
 fieldset ul>li.divider {
@@ -169,4 +174,14 @@ img.small-icon {
 		width: inherit;
 	}
 }
+
+.dependencies {
+	text-align:center;
+}
+
+.dependencies img {
+	height:48px;
+	margin-bottom:48px;
+}
+
 
