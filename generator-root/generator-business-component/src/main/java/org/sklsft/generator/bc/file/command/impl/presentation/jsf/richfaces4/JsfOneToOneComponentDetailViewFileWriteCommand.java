@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces4;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
@@ -11,8 +12,8 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
 	private OneToOneComponent oneToOneComponent;
 
 	public JsfOneToOneComponentDetailViewFileWriteCommand(OneToOneComponent oneToOneComponent) {
-		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToOneComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToOneComponent.referenceBean.myPackage.name + "\\" + oneToOneComponent.parentBean.className.toLowerCase(),
+		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.project.projectName
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.name + File.separator + oneToOneComponent.parentBean.className.toLowerCase(),
 				oneToOneComponent.referenceBean.className + "Details");
 
 		this.oneToOneComponent = oneToOneComponent;

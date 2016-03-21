@@ -22,8 +22,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BaseDaoHibernateImplFileWriteCommand(Bean bean) {
 
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository\\src\\main\\java\\"
-				+ bean.myPackage.baseDAOImplPackageName.replace(".", "\\"), bean.baseDaoClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseDAOImplPackageName.replace(".", File.separator), bean.baseDaoClassName);
 
 		this.bean = bean;
 

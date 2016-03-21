@@ -15,8 +15,8 @@ public class DaoImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public DaoImplFileWriteCommand(Bean bean) {
 
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository\\src\\main\\java\\"
-				+ bean.myPackage.DAOImplPackageName.replace(".", "\\"), bean.daoClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.DAOImplPackageName.replace(".", File.separator), bean.daoClassName);
 
 		this.bean = bean;
 

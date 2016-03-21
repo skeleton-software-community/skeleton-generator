@@ -17,8 +17,8 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 	protected Bean bean;
 
 	public AbstractBaseJsfDetailControllerFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
-				+ bean.myPackage.baseControllerPackageName.replace(".", "\\"), bean.baseDetailControllerClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseControllerPackageName.replace(".", File.separator), bean.baseDetailControllerClassName);
 
 		this.bean = bean;
 	}

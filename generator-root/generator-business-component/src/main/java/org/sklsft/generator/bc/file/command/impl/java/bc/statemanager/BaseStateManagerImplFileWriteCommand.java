@@ -16,8 +16,8 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	 * constructor
 	 */
 	public BaseStateManagerImplFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.baseStateManagerImplPackageName.replace(".", "\\"), bean.baseStateManagerClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseStateManagerImplPackageName.replace(".", File.separator), bean.baseStateManagerClassName);
 
 		this.bean = bean;
 	}

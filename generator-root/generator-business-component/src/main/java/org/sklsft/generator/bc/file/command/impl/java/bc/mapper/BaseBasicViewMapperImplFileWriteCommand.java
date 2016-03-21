@@ -19,8 +19,8 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 	 * constructor
 	 */
 	public BaseBasicViewMapperImplFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.baseMapperImplPackageName.replace(".", "\\"), bean.basicViewBean.baseMapperClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseMapperImplPackageName.replace(".", File.separator), bean.basicViewBean.baseMapperClassName);
 
 		this.bean = bean;
 	}

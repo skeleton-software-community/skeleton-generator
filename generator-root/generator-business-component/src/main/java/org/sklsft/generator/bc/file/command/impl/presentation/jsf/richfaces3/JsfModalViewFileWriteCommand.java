@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
@@ -10,7 +11,7 @@ public class JsfModalViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 	private Bean bean;
 	
 	public JsfModalViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\webapp\\sections\\"  + bean.myPackage.name + "\\" + bean.className.toLowerCase(), bean.className + "Modal");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.name + File.separator + bean.className.toLowerCase(), bean.className + "Modal");
 
 		this.bean = bean;
 	}

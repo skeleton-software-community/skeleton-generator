@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.presentation.jsf;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 	private Project project;
 
 	public I18nFileWriteCommand(Project project) {
-		super(project.workspaceFolder + "\\" + project.projectName + "-webapp\\src\\main\\resources", "i18n");
+		super(project.workspaceFolder + File.separator + project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "resources", "i18n");
 		this.project = project;
 	}
 

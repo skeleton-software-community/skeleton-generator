@@ -20,8 +20,8 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BaseDaoInterfaceFileWriteCommand(Bean bean) {
 
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository\\src\\main\\java\\"
-				+ bean.myPackage.baseDAOInterfacePackageName.replace(".", "\\"), bean.baseDaoInterfaceName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-repository" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseDAOInterfacePackageName.replace(".", File.separator), bean.baseDaoInterfaceName);
 
 		this.bean = bean;
 
