@@ -141,7 +141,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine("public void load() {");
 	
 		for (Property property : this.bean.fullViewBean.properties) {
-			if (property.comboBoxBean != null && property.editable) {
+			if (property.comboBoxBean != null) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
