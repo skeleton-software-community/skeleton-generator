@@ -16,8 +16,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 	
 	public BaseServiceImplFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-services\\src\\main\\java\\"
-				+ bean.myPackage.baseServiceImplPackageName.replace(".", "\\"), bean.baseServiceClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-services" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.baseServiceImplPackageName.replace(".", File.separator), bean.baseServiceClassName);
 
 		this.bean = bean;
 	}

@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
@@ -12,7 +13,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 	private Project project;
 
 	public JsfCommonControllerFileWriteCommand(Project project) {
-		super(project.workspaceFolder + "\\" + project.projectName + "-webapp\\src\\main\\java\\" + project.model.controllerPackageName.replace(".", "\\"),
+		super(project.workspaceFolder + File.separator + project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + project.model.controllerPackageName.replace(".", File.separator),
 				"CommonController");
 
 		this.project = project;

@@ -14,8 +14,8 @@ public class FullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 	 * constructor
 	 */
 	public FullViewMapperImplFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.mapperImplPackageName.replace(".", "\\"), bean.fullViewBean.mapperClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.mapperImplPackageName.replace(".", File.separator), bean.fullViewBean.mapperClassName);
 
 		this.bean = bean;
 	}

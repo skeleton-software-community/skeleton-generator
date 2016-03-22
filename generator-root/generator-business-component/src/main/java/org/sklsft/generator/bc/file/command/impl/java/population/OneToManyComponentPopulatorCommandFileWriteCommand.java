@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.java.population;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
     private Bean parentBean;
 
     public OneToManyComponentPopulatorCommandFileWriteCommand(OneToManyComponent oneToManyComponent){
-        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".","\\"),
+        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".",File.separator),
         		oneToManyComponent.referenceBean.className + "Command");
         
         		this.oneToManyComponent = oneToManyComponent;

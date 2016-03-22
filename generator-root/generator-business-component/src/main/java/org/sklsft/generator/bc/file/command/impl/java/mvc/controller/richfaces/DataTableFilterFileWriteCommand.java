@@ -12,8 +12,8 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
 	public DataTableFilterFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
-				+ bean.myPackage.filterPackageName.replace(".", "\\"), bean.basicViewBean.filterClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.filterPackageName.replace(".", File.separator), bean.basicViewBean.filterClassName);
 
 		this.bean = bean;
 	}

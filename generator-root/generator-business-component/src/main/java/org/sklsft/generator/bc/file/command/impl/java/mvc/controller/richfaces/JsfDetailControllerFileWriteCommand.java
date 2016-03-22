@@ -11,8 +11,8 @@ public class JsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
 	public JsfDetailControllerFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\java\\"
-				+ bean.myPackage.controllerPackageName.replace(".", "\\"), bean.detailControllerClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.controllerPackageName.replace(".", File.separator), bean.detailControllerClassName);
 
 		this.bean = bean;
 	}

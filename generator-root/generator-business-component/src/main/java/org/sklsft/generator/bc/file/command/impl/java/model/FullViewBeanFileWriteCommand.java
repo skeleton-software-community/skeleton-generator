@@ -16,7 +16,7 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public FullViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\" + bean.myPackage.ovPackageName.replace(".","\\"), bean.fullViewBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.ovPackageName.replace(".",File.separator), bean.fullViewBean.className);
 		
 		this.bean = bean;
 		

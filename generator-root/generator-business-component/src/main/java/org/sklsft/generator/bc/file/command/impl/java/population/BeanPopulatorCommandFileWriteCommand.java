@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.java.population;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
@@ -10,7 +11,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
     public BeanPopulatorCommandFileWriteCommand(Bean bean){
-        super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-populator\\src\\main\\java\\" + bean.myPackage.commandPackageName.replace(".","\\"),
+        super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-populator" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.commandPackageName.replace(".",File.separator),
         		bean.className + "Command");
         
         		this.bean = bean;

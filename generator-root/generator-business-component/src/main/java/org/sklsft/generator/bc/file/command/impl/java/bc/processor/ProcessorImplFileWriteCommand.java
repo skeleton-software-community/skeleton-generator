@@ -14,8 +14,8 @@ public class ProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 	 * constructor
 	 */
 	public ProcessorImplFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component\\src\\main\\java\\"
-				+ bean.myPackage.processorImplPackageName.replace(".", "\\"), bean.processorClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.processorImplPackageName.replace(".", File.separator), bean.processorClassName);
 
 		this.bean = bean;
 	}

@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.command.impl.presentation.jsf.richfaces3;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
@@ -11,8 +12,8 @@ public class JsfOneToManyComponentModalViewFileWriteCommand extends JsfXhtmlFile
 	private OneToManyComponent oneToManyComponent;
 
 	public JsfOneToManyComponentModalViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + "\\" + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp\\src\\main\\webapp\\sections\\" + oneToManyComponent.referenceBean.myPackage.name + "\\" + oneToManyComponent.parentBean.className.toLowerCase(),
+		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.referenceBean.myPackage.name + File.separator + oneToManyComponent.parentBean.className.toLowerCase(),
 				oneToManyComponent.referenceBean.className + "Modal");
 
 		this.oneToManyComponent = oneToManyComponent;
