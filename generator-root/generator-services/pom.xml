@@ -2,12 +2,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.sklsft</groupId>
+		<groupId>org.sklsft.generator</groupId>
 		<artifactId>generator-root</artifactId>
-		<version>2.0.0-M2</version>
+		<version>2.0.0-M2-1</version>
 	</parent>
 
-	<groupId>org.sklsft</groupId>
 	<artifactId>generator-services</artifactId>
 	<name>Generator - Services</name>
 	<description>Module Services du projet Generator</description>
@@ -17,17 +16,17 @@
 	<dependencies>
 		
 		<dependency>
-			<groupId>org.sklsft</groupId>
+			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-business-model</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.sklsft</groupId>
+			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-repository</artifactId>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.sklsft</groupId>
+			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-business-component</artifactId>
 		</dependency>
 		

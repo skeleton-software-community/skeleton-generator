@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.sklsft</groupId>
+	<groupId>org.sklsft.generator</groupId>
 	<artifactId>generator-root</artifactId>
-	<version>2.0.0-M2</version>
+	<version>2.0.0-M2-1</version>
 	<name>Generator - Root</name>
 	<description>Module racine du projet Generator</description>
-	<url>http://skeleton-software-community.github.io/skeleton-generator</url>
+	<url>http://generator.sklsft.org</url>
 
 	<packaging>pom</packaging>
 
@@ -82,25 +82,25 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>org.sklsft</groupId>
+				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-business-model</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sklsft</groupId>
+				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-repository</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
-				<groupId>org.sklsft</groupId>
+				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-business-component</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.sklsft</groupId>
+				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-services</artifactId>
 				<version>${project.version}</version>
 			</dependency>

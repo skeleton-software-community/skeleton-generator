@@ -52,7 +52,6 @@
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 				
 		
@@ -60,13 +59,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<scope>runtime</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -125,7 +122,6 @@
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		
 		
@@ -138,7 +134,6 @@
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 
@@ -146,7 +141,6 @@
 		<dependency>
 			<groupId>org.richfaces</groupId>
 			<artifactId>richfaces</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		
 		
@@ -154,13 +148,11 @@
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		
 	</dependencies>

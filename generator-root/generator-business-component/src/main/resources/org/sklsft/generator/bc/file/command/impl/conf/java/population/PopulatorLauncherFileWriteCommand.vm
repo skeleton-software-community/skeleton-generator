@@ -14,13 +14,15 @@ import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.command.BackupCheckPrompter;
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
-import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
+import org.sklsft.generator.repository.backup.datasource.interfaces.OutputDataSourceProvider;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 
 public class PopulatorLauncher {
 
@@ -38,19 +40,20 @@ public class PopulatorLauncher {
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 1) {
+		if (args.length < 2) {
 			throw new IllegalArgumentException("Path and datasource are Mandatory");
 		}
 		String workspacePath = args[0];
+		String databaseName = args[1];
 		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
 		Set<String> tables = extractTables(args);
 		
-		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-${project.projectName}-populator.xml",
-																								"classpath:applicationContext-${project.projectName}-services.xml",
-																								"classpath:applicationContext-${project.projectName}-business-component.xml",
-																								"classpath:applicationContext-${project.projectName}-repository.xml",
+		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-demo-populator.xml",
+																								"classpath:applicationContext-demo-services.xml",
+																								"classpath:applicationContext-demo-business-component.xml",
+																								"classpath:applicationContext-demo-repository.xml",
 																								sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			
@@ -74,7 +77,11 @@ public class PopulatorLauncher {
 			
 			try {
 				
-				DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+				OutputDataSourceProvider outputDataSourceProvider = appContext.getBean(OutputDataSourceProvider.class);
+				DataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
+				
+				AnnotationSessionFactoryBean sessionFactory = appContext.getBean(AnnotationSessionFactoryBean.class);
+				sessionFactory.setDataSource(dataSource);
 				
 				InputDataSourceProvider inputDataSourceProvider = appContext.getBean(InputDataSourceProvider.class);
 				
@@ -109,8 +116,8 @@ public class PopulatorLauncher {
 		
 		Set<String> tables = null;
 		
-		if (args.length > 1) {
-			String tablesArg = args[1];
+		if (args.length > 2) {
+			String tablesArg = args[2];
 			String[] tableTokens = tablesArg.split(";");
 			tables = new HashSet<String>();
 			for (String table:tableTokens) {

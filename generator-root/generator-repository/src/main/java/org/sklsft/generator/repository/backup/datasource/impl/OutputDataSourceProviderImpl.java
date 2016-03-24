@@ -35,7 +35,7 @@ public class OutputDataSourceProviderImpl implements OutputDataSourceProvider {
 		DataSource result = dataSources.get(dataSourceName);
 		
 		if (result == null) {
-			throw new DataSourceNotFoundException("Unable to find input DataSource : " + dataSourceName);
+			throw new DataSourceNotFoundException("Unable to find output DataSource : " + dataSourceName);
 		}
 		
 		return result;
