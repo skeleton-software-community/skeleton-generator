@@ -14,7 +14,13 @@ import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.DatabaseEngine;
 
 
-
+/**
+ * 
+ * template for Entity file with Hibernate mapping
+ * <br>Takes account of unique constraints defined by cardinality
+ * @author Nicolas Thibault
+ *
+ */
 public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
@@ -57,6 +63,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import javax.persistence.Lob;");
 		javaImports.add("import org.hibernate.annotations.Fetch;");
 		javaImports.add("import org.hibernate.annotations.FetchMode;");
+		javaImports.add("import javax.persistence.UniqueConstraint;");
+		
+		
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null) {
@@ -105,7 +114,21 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			writeLine("@Audited");
 		}
-		writeLine("@Table(name=" + (char) 34 + this.bean.table.name + (char) 34 + ")");
+		write("@Table(name=" + CHAR_34 + this.bean.table.name + CHAR_34 );
+		
+		if (this.bean.table.cardinality > 0) {
+			skipLine();
+			write(", uniqueConstraints = {@UniqueConstraint(columnNames = {");
+			write(CHAR_34 + this.bean.table.columns.get(1).name + CHAR_34);
+			for (int i = 2; i <= this.bean.table.cardinality; i++) {
+				write(", " + CHAR_34 + this.bean.table.columns.get(i).name + CHAR_34);
+			}
+			
+			writeLine("})})");
+		}
+		else{
+			writeLine(")");
+		}
 		if (bean.annotations != null) {
 			for (String annotation:bean.annotations) {
 				writeLine(annotation);
@@ -154,9 +177,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 
 		writeLine("@Id");
-		writeLine("@Column(name = " + (char) 34 + "id" + (char) 34 + ", nullable = false)");
-		writeLine("@SequenceGenerator(name = " + (char) 34 + "generator" + (char) 34 + ", sequenceName = " + (char) 34 + this.bean.table.name + "_id_seq" + (char) 34 + ", allocationSize=1)");
-		writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + (char) 34 + "generator" + (char) 34 + ")");
+		writeLine("@Column(name = " + CHAR_34 + "id" + CHAR_34 + ", nullable = false)");
+		writeLine("@SequenceGenerator(name = " + CHAR_34 + "generator" + CHAR_34 + ", sequenceName = " + CHAR_34 + this.bean.table.name + "_id_seq" + CHAR_34 + ", allocationSize=1)");
+		writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + CHAR_34 + "generator" + CHAR_34 + ")");
 		writeLine("private Long id;");
 		skipLine();
 		
@@ -171,7 +194,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 			
 			writeLine("@ManyToOne(fetch = FetchType.LAZY)");
-			writeLine("@JoinColumn(name = " + (char) 34 + bean.table.columns.get(1).name + (char) 34 + ", nullable = false)");				
+			writeLine("@JoinColumn(name = " + CHAR_34 + bean.table.columns.get(1).name + CHAR_34 + ", nullable = false)");				
 			writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
 			skipLine();
 		}
@@ -193,7 +216,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 						writeLine("@Fetch(FetchMode.JOIN)");
 					}
 	
-					write("@JoinColumn(name = " + (char) 34 + property.column.name + (char) 34);
+					write("@JoinColumn(name = " + CHAR_34 + property.column.name + CHAR_34);
 					if (!property.nullable) {
 						write(", nullable = false");
 					}
@@ -206,7 +229,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					skipLine();
 				} else {
 					writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
-					write("@JoinColumn(name = " + (char) 34 + property.column.name + (char) 34 + ", unique = true");
+					write("@JoinColumn(name = " + CHAR_34 + property.column.name + CHAR_34 + ", unique = true");
 					write(", nullable = false");
 					writeLine(")");
 					writeLine("private " + property.referenceBean.className + " " + property.name + ";");
@@ -219,7 +242,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				if (property.dataType.equals(DataType.TEXT) && bean.myPackage.model.project.databaseEngine.equals(DatabaseEngine.ORACLE)) {
 					writeLine("@Lob");
 				}
-				write("@Column(name = " + (char) 34 + property.column.name + (char) 34);
+				write("@Column(name = " + CHAR_34 + property.column.name + CHAR_34);
 				if (!property.nullable) {
 					write(", nullable = false");
 				}
@@ -235,14 +258,14 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
-			writeLine("@OneToMany(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + oneToMany.referenceProperty.name + (char) 34 + ")");
+			writeLine("@OneToMany(fetch = FetchType.LAZY, mappedBy = " + CHAR_34 + oneToMany.referenceProperty.name + CHAR_34 + ")");
 			writeLine("private Set <" + oneToMany.referenceBean.className + "> " + oneToMany.collectionName + ";");
 			skipLine();
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			write("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true");
-			writeLine(", mappedBy = " + (char) 34 + oneToManyComponent.parentBean.objectName + (char) 34 + ")");
+			writeLine(", mappedBy = " + CHAR_34 + oneToManyComponent.parentBean.objectName + CHAR_34 + ")");
 			
 
 			writeLine("private Set <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
@@ -251,7 +274,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 				
 		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-			writeLine("@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = " + (char) 34 + oneToOneComponent.parentBean.objectName + (char) 34 + ")");
+			writeLine("@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = " + CHAR_34 + oneToOneComponent.parentBean.objectName + CHAR_34 + ")");
 			writeLine("@Fetch(FetchMode.JOIN)");
 			writeLine("private " + oneToOneComponent.referenceBean.className + " " + oneToOneComponent.referenceBean.objectName + ";");
 			skipLine();
@@ -259,7 +282,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		
 		
 		for (OneToOne oneToOne : this.bean.oneToOneList) {
-			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + (char) 34 + bean.objectName + (char) 34 + ")");
+			writeLine("@OneToOne(fetch = FetchType.LAZY, mappedBy = " + CHAR_34 + bean.objectName + CHAR_34 + ")");
 			writeLine("@Fetch(FetchMode.JOIN)");
 			writeLine("private " + oneToOne.referenceBean.className + " " + oneToOne.referenceBean.objectName + ";");
 			skipLine();
