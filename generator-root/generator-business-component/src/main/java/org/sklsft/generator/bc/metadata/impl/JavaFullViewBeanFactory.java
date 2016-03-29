@@ -41,7 +41,7 @@ public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
 		
-		fullViewBean.properties = oneToMany.getBasicViewProperties();
+		fullViewBean.properties = oneToMany.getFullViewProperties();
 		
 		return fullViewBean;
 	}
