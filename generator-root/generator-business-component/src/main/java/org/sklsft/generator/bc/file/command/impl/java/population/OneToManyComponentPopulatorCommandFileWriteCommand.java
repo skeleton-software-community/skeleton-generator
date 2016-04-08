@@ -124,7 +124,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         
         writeLine("this." + parentBean.serviceObjectName + ".save" + referenceBean.className + "(" + referenceBean.fullViewBean.objectName + ", " + parentBean.fullViewBean.objectName + ".getId());");
         writeLine("} catch (Exception e) {");
-        writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage());");
+        writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage(), e);");
         writeLine("}");
         writeLine("}");
         writeLine("}");

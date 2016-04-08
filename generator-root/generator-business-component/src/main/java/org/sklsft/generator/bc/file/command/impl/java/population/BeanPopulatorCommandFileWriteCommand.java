@@ -92,7 +92,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         
         writeLine("this." + bean.serviceObjectName + ".save" + bean.className + "(" + this.bean.fullViewBean.objectName + ");");
         writeLine("} catch (Exception e) {");
-        writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage());");
+        writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage(), e);");
         writeLine("}");
         writeLine("}");
         writeLine("}");

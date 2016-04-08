@@ -182,7 +182,13 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * load object");
 		writeLine(" */");
 		writeLine("public " + this.bean.className + " load" + this.bean.className + "(Long id) {");
-		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().load(" + this.bean.className + ".class,id);");
+		writeLine(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
+		
+		writeLine("if (" + this.bean.objectName + " == null) {");
+		writeLine("throw new ObjectNotFoundException(" + CHAR_34 + bean.className + ".notFound" + CHAR_34 + ");");
+		writeLine("} else {");
+		writeLine("return " + this.bean.objectName + ";");
+		writeLine("}");
 		writeLine("}");
 		skipLine();
 		skipLine();

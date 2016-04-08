@@ -44,7 +44,7 @@ public class StateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         skipLine();
 
-        writeLine("@Component");
+        writeLine("@Component(" + CHAR_34 + bean.myPackage.model.project.projectName.toLowerCase() + this.bean.stateManagerClassName + CHAR_34 + ")");
         writeLine("public class " + this.bean.stateManagerClassName + " extends " + this.bean.baseStateManagerClassName + " {");
         skipLine();
         
