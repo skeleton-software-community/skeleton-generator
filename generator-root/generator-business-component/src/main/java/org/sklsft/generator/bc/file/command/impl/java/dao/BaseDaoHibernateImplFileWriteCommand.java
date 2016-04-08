@@ -99,6 +99,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * load object list");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 		writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "List() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -109,6 +110,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * load object list eagerly");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 		writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerly() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -134,6 +136,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
+				writeLine("@Override");
 				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -149,6 +152,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * load object list eagerly from " + property.name);
 				writeLine(" */");
+				writeLine("@Override");
 				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -181,6 +185,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * load object");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("public " + this.bean.className + " load" + this.bean.className + "(Long id) {");
 		writeLine(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
 		
@@ -196,6 +201,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * get object");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("public " + this.bean.className + " get" + this.bean.className + "(Long id) {");
 		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
 		writeLine("}");
@@ -211,9 +217,16 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * load one to many component " + currentBean.className);
             writeLine(" */");
+            writeLine("@Override");
 			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id) {");
-			writeLine("return (" + currentBean.className + ")this.sessionFactory.getCurrentSession().load(" + currentBean.className + ".class,id);");
+			writeLine(currentBean.className + " " + currentBean.objectName + " = (" + currentBean.className + ")this.sessionFactory.getCurrentSession().get(" + currentBean.className + ".class,id);");
+			writeLine("if (" + currentBean.objectName + " == null) {");
+			writeLine("throw new ObjectNotFoundException(" + CHAR_34 + currentBean.className + ".notFound" + CHAR_34 + ");");
+			writeLine("} else {");
+			writeLine("return " + currentBean.objectName + ";");
 			writeLine("}");
+			writeLine("}");
+			skipLine();
 			skipLine();
         }
 	}
@@ -225,7 +238,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * exists object");
 		writeLine(" */");
-
+		writeLine("@Override");
 		write("public boolean exists" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
 		for (int i = 1; i < findPropertyList.size(); i++) {
 			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -272,6 +285,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * find object");
 		writeLine(" */");
+		writeLine("@Override");
 		write("public " + this.bean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
 		for (int i = 1; i < findPropertyList.size(); i++) {
 			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -317,6 +331,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * save object");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("public Long save" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
 		writeLine("return (Long)this.sessionFactory.getCurrentSession().save(" + this.bean.objectName + ");");
 		writeLine("}");
@@ -327,6 +342,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * save one to many component " + currentBean.className);
 			writeLine(" */");
+			writeLine("@Override");
 			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ") {");
 			writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
 			writeLine("this.sessionFactory.getCurrentSession().save(" + currentBean.objectName + ");");
@@ -339,6 +355,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * save one to one component " + currentBean.className);
 			writeLine(" */");
+			writeLine("@Override");
 			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ") {");
 			writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
 			writeLine("this.sessionFactory.getCurrentSession().save(" + currentBean.objectName + ");");
@@ -352,6 +369,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * delete object");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("public void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
 		writeLine("this.sessionFactory.getCurrentSession().delete(" + this.bean.objectName + ");");
 		writeLine("}");
@@ -363,6 +381,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.className);
 			writeLine(" */");
+			writeLine("@Override");
 			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
 			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
 			writeLine("}");
@@ -374,6 +393,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * delete one to one component " + currentBean.className);
 			writeLine(" */");
+			writeLine("@Override");
 			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
 			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
 			writeLine("}");
