@@ -63,6 +63,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * check before save");
         writeLine(" */");
         writeLine("public void checkBeforeSave(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+        writeLine("// Empty by default. Can be overridden");        
         writeLine("}");
         skipLine();
 
@@ -73,6 +74,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before save one to one compoennt " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -84,6 +86,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before save one to many compoennt " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -92,6 +95,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * check before update");
         writeLine(" */");
         writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+        writeLine("// Empty by default. Can be overridden");
         writeLine("}");
         skipLine();
 
@@ -102,6 +106,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before update one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -113,6 +118,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before update one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -121,6 +127,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * check before delete");
         writeLine(" */");
         writeLine("public void checkBeforeDelete(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+        writeLine("// Empty by default. Can be overridden");
         writeLine("}");
         skipLine();
 
@@ -131,6 +138,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before delete one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -142,6 +150,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * check before delete one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }

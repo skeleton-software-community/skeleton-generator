@@ -105,6 +105,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * process update");
         writeLine(" */");
         writeLine("public void update(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("// Empty by default. Can be overridden");
         writeLine("}");
         skipLine();
 
@@ -115,6 +116,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * process update one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public void update" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
@@ -126,6 +128,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * process update one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public void update" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("// Empty by default. Can be overridden");
             writeLine("}");
             skipLine();
         }
