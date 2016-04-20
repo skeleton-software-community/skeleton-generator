@@ -16,18 +16,20 @@ public class BackupFileLocator {
 	private static final String BACKUP_FOLDER = "BACKUP";
 
 	public PersistenceMode resolvePersistenceMode(int step, Table table) {
-		
+
 		PersistenceMode mode = resolvePersistenceModeOrNull(step, table);
-		
-		if (mode == null) {				
+
+		if (mode == null) {
 			throw new BackupFileNotFoundException("No backup file found for table : " + table.name);
 		} else {
 			return mode;
 		}
 	}
-	
+
 	public PersistenceMode resolvePersistenceModeOrNull(int step, Table table) {
-		if (existsFileForType(PersistenceMode.XML, step, table)) {
+		if (existsFileForType(PersistenceMode.CMD, step, table)) {
+			return PersistenceMode.CMD;
+		} else if (existsFileForType(PersistenceMode.XML, step, table)) {
 			return PersistenceMode.XML;
 		} else if (existsFileForType(PersistenceMode.CSV, step, table)) {
 			return PersistenceMode.CSV;
@@ -39,16 +41,16 @@ public class BackupFileLocator {
 	public String getBackupFilePath(int step, Table table, PersistenceMode mode) {
 		return getPathPrefix(step, table) + mode.getExtension();
 	}
-	
+
 	public String getBackupFilePath(int step, Table table) {
 		PersistenceMode mode = resolvePersistenceMode(step, table);
 		return getPathPrefix(step, table) + mode.getExtension();
 	}
-	
-	public boolean existsFileForTable(Table table, int maxStep){
-		for(int step=1;step<=maxStep;step++){
-			for(PersistenceMode mode : PersistenceMode.values()){
-				if(existsFileForType(mode, step, table)) {
+
+	public boolean existsFileForTable(Table table, int maxStep) {
+		for (int step = 1; step <= maxStep; step++) {
+			for (PersistenceMode mode : PersistenceMode.values()) {
+				if (existsFileForType(mode, step, table)) {
 					return true;
 				}
 			}
@@ -65,6 +67,7 @@ public class BackupFileLocator {
 	}
 
 	private String getPathPrefix(int step, Table table) {
-		return table.myPackage.model.project.sourceFolder + File.separator + BACKUP_FOLDER + File.separator + step + File.separator + table.myPackage.name + File.separator + table.originalName;
+		return table.myPackage.model.project.sourceFolder + File.separator + BACKUP_FOLDER + File.separator + step + File.separator
+				+ table.myPackage.name + File.separator + table.originalName;
 	}
 }
