@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.bc.util.folder.FolderUtil;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.util.folder.FolderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

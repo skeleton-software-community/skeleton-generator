@@ -1,10 +1,10 @@
-package org.sklsft.generator.repository.backup.datasource.impl;
+package org.sklsft.generator.repository.backup.reader.model;
 
 import java.util.List;
 
 import org.sklsft.generator.model.backup.PopulateCommandType;
 
-public class BackupCommandArguments {
+public class BackupArguments {
 
 	private List<Object[]> arguments;
 	private boolean argumentsTyped;

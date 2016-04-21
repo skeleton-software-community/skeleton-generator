@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.backup.datasource.impl;
+package org.sklsft.generator.repository.backup.reader.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 import org.sklsft.generator.exception.ReadBackupFailureException;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
+import org.sklsft.generator.repository.backup.reader.interfaces.BackupArgumentReader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 

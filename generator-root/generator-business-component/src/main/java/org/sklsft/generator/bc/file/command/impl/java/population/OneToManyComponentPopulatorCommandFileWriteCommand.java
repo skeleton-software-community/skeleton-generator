@@ -32,8 +32,8 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
 		
-		javaImports.add("import org.sklsft.generator.repository.backup.command.Command;");
-		javaImports.add("import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;");
+		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;");
+		javaImports.add("import org.sklsft.generator.repository.backup.reader.model.BackupArguments;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");
@@ -67,7 +67,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-        writeLine("public class " + oneToManyComponent.referenceBean.className + "Command implements Command {");
+        writeLine("public class " + oneToManyComponent.referenceBean.className + "Command implements BackupArgumentsCommand {");
         skipLine();
         
         writeLine("/*");
@@ -81,7 +81,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         skipLine();
         
         writeLine("@Override");
-        writeLine("public void execute(BackupCommandArguments arguments) {");
+        writeLine("public void execute(BackupArguments arguments) {");
         
         writeLine("ObjectArrayToBeanMapper<" + referenceBean.fullViewBean.className + "> mapper;");
 		

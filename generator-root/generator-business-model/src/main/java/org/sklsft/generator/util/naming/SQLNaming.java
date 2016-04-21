@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.util;
+package org.sklsft.generator.util.naming;
 
 import org.sklsft.generator.model.metadata.DatabaseEngine;
 

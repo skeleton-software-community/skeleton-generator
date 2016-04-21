@@ -12,7 +12,7 @@ import org.sklsft.generator.model.metadata.Format;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
-import org.sklsft.generator.repository.util.SQLNaming;
+import org.sklsft.generator.util.naming.SQLNaming;
 import org.springframework.stereotype.Component;
 
 

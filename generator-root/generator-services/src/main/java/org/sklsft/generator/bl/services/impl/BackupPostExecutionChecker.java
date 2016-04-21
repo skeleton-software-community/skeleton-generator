@@ -6,12 +6,12 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.bc.backup.check.TableNotEmptyChecker;
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanWarningType;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.repository.backup.check.TableNotEmptyChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

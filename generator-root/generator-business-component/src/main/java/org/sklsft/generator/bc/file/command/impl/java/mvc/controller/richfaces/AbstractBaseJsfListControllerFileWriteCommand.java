@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.Visibility;

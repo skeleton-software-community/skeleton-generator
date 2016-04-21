@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.backup.reader;
+package org.sklsft.generator.repository.backup.file.impl;
 
 import java.io.File;
 import java.nio.file.Files;

@@ -1,41 +1,35 @@
-package ${project.model.commandExecutorPackageName};
+package org.sklsft.generator.bl.services.impl;
 
 import java.io.File;
 import java.util.Set;
 
-import org.sklsft.generator.repository.backup.reader.impl.BackupArgumentReaderFactory;
-import org.sklsft.generator.repository.backup.file.impl.BackupFileLocator;
-import org.sklsft.generator.util.folder.FolderUtil;
-import org.sklsft.generator.util.naming.JavaClassNaming;
 import org.sklsft.generator.exception.BackupFileNotFoundException;
-import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;
-import org.sklsft.generator.repository.backup.reader.model.BackupArguments;
-import org.sklsft.generator.repository.backup.reader.interfaces.BackupArgumentReader;
+import org.sklsft.generator.model.metadata.PersistenceMode;
+import org.sklsft.generator.repository.backup.command.impl.BackupCommandFactory;
+import org.sklsft.generator.repository.backup.command.interfaces.BackupCommand;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
+import org.sklsft.generator.repository.backup.file.impl.BackupFileLocator;
+import org.sklsft.generator.util.folder.FolderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ${project.model.commandPackageName}.CommandFactory;
-
 @Component
 public class Populator {
 
 	private static final Logger logger = LoggerFactory.getLogger(Populator.class);
-
+	
 	@Autowired
-	private CommandFactory commandFactory;
+	private BackupCommandFactory commandFactory;
+	
 	@Autowired
 	private BackupFileLocator backupLocator;
-	@Autowired
-	private BackupArgumentReaderFactory readerFactory;
 	
-
+	
 	public void populate(InputDataSourceProvider inputDataSourceProvider, Project project, Set<String> tables) {
 
 		logger.info("start populating database");
@@ -54,12 +48,14 @@ public class Populator {
 						logger.info("start populating table : " + table.name);
 
 						try {
-							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
-							BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputDataSourceProvider);
-							BackupCommandArguments commandArgs = argumentReader.readBackupArgs(backupLocator.getBackupFilePath(step, table, mode));
 							
-							Command command = commandFactory.getCommand(JavaClassNaming.getObjectName(table.originalName) + "Command");
-							command.execute(commandArgs);
+							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
+							
+							BackupCommand command = commandFactory.getBackupCommand(step, table, mode, inputDataSourceProvider);
+							
+							String path = backupLocator.getBackupFilePath(step, table, mode);
+									
+							command.execute(path);
 							
 							logger.info("populating table : " + table.name + " completed");
 						} catch (BackupFileNotFoundException e) {

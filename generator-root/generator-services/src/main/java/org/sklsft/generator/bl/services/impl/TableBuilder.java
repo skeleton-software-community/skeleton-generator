@@ -9,9 +9,9 @@ import javax.sql.DataSource;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.repository.backup.command.JdbcRawCommand;
 import org.sklsft.generator.repository.backup.file.impl.SimpleScriptFileReaderImpl;
 import org.sklsft.generator.repository.backup.file.interfaces.SimpleScriptFileReader;
+import org.sklsft.generator.repository.build.JdbcRawCommand;
 
 
 public class TableBuilder {

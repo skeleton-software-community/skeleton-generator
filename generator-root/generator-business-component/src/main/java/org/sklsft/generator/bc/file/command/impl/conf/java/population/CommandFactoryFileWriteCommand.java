@@ -9,7 +9,7 @@ import org.sklsft.generator.model.metadata.FileType;
 public class CommandFactoryFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public CommandFactoryFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/java/" + project.model.commandPackageName.replace(".", File.separator) + File.separator, "CommandFactory", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/java/" + project.model.commandPackageName.replace(".", File.separator) + File.separator, "BackupArgumentsCommandFactory", FileType.JAVA, project);
 	}
 
 }

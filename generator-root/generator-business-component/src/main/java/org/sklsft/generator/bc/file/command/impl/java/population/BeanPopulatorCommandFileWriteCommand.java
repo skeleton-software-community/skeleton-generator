@@ -22,8 +22,8 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		
 		javaImports.add("import java.util.List;");
 		
-		javaImports.add("import org.sklsft.generator.repository.backup.command.Command;");
-		javaImports.add("import org.sklsft.generator.repository.backup.datasource.impl.BackupCommandArguments;");
+		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;");
+		javaImports.add("import org.sklsft.generator.repository.backup.reader.model.BackupArguments;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");		
@@ -54,7 +54,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
 		writeLine("@Component");
-        writeLine("public class " + bean.className + "Command implements Command {");
+        writeLine("public class " + bean.className + "Command implements BackupArgumentsCommand {");
         skipLine();
         
         writeLine("/*");
@@ -68,7 +68,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
 
         writeLine("@Override");
-        writeLine("public void execute(BackupCommandArguments arguments) {");
+        writeLine("public void execute(BackupArguments arguments) {");
                 
         writeLine("ObjectArrayToBeanMapper<" + bean.fullViewBean.className + "> mapper;");
 		

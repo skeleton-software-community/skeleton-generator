@@ -9,8 +9,6 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.sklsft.generator.bc.backup.reader.BackupFileLocator;
-import org.sklsft.generator.bc.util.folder.FolderUtil;
 import org.sklsft.generator.model.backup.SourceAndScript;
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanWarningType;
@@ -18,8 +16,10 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
-import org.sklsft.generator.repository.backup.datasource.impl.XmlFileSourceAndScriptSimpleParser;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
+import org.sklsft.generator.repository.backup.file.impl.BackupFileLocator;
+import org.sklsft.generator.repository.backup.reader.impl.XmlFileSourceAndScriptSimpleParser;
+import org.sklsft.generator.util.folder.FolderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +128,8 @@ public class BackupPreExecutionChecker {
 					break;
 				case CSV : 
 					result.add(new BackupPlanPreExecutionWarning(BackupPlanWarningType.HARDCODED_VALUES, step, table));
+					break;
+				default:
 					break;
 					
 			}

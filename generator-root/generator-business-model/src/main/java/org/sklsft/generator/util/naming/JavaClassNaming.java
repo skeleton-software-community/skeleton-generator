@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.util.naming;
+package org.sklsft.generator.util.naming;
 
 public class JavaClassNaming {
 	

@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.backup.command;
+package org.sklsft.generator.repository.build;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Nicolas Thibault
  *
  */
-public class JdbcRawCommand {
+public class JdbcRawCommand implements Command {
 	
 	/*
 	 * logger
@@ -36,24 +36,21 @@ public class JdbcRawCommand {
 		this.script = script;
 	}
 	
-	public void execute() throws SQLException {
+	public void execute() {
 		
-		try (Connection connection = dataSource.getConnection();) {
+		try (Connection connection = dataSource.getConnection();				
+			Statement statement = connection.createStatement();) {			
 			
 			connection.setAutoCommit(true);
-			Statement statement = connection.createStatement();
 			
 			String[] tokens = script.split("/");
 			
-			for (String token:tokens) {
-				
-				try {
-					logger.info("executing statement : " + token);
-					statement.executeUpdate(token);
-				} catch (SQLException e) {
-					logger.error("statement failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
-				}
+			for (String token:tokens) {				
+				logger.info("executing statement : " + token);
+				statement.executeUpdate(token);
 			}
+		} catch (SQLException e) {
+			logger.error("statement failed : " + e.getClass().getSimpleName() + " - " + e.getMessage());
 		}
 	}
 }

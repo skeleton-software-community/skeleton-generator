@@ -1,4 +1,4 @@
-package org.sklsft.generator.repository.backup.datasource.impl;
+package org.sklsft.generator.repository.backup.reader.impl;
 
 import java.io.IOException;
 import java.nio.file.Paths;

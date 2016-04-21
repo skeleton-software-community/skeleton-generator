@@ -1,7 +1,6 @@
 package org.sklsft.generator.bc.metadata.impl;
 
 import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
-import org.sklsft.generator.bc.util.naming.JavaClassNaming;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
@@ -14,6 +13,7 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
+import org.sklsft.generator.util.naming.JavaClassNaming;
 import org.springframework.stereotype.Component;
 
 @Component("javaBeanFactory")

@@ -1,14 +1,19 @@
-package org.sklsft.generator.bc.backup.reader;
+package org.sklsft.generator.repository.backup.reader.impl;
 
 import org.sklsft.generator.exception.UnhandledPersistenceModeException;
 import org.sklsft.generator.model.metadata.PersistenceMode;
-import org.sklsft.generator.repository.backup.datasource.impl.PlainTextFileReader;
-import org.sklsft.generator.repository.backup.datasource.impl.TextDelimitedFileBackupReader;
-import org.sklsft.generator.repository.backup.datasource.impl.XmlFileBackupReader;
-import org.sklsft.generator.repository.backup.datasource.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
+import org.sklsft.generator.repository.backup.reader.interfaces.BackupArgumentReader;
 import org.springframework.stereotype.Component;
 
+/**
+ * get a {@link BackupArgumentReader} dependeing on the {@link PersistenceMode}
+ * <li>CSV : {@link TextDelimitedFileBackupReader}
+ * <li>XML : {@link XmlFileBackupReader}
+ * 
+ * @author Nicolas Thibault
+ *
+ */
 @Component
 public class BackupArgumentReaderFactory {
 
@@ -18,8 +23,6 @@ public class BackupArgumentReaderFactory {
 			return new TextDelimitedFileBackupReader();
 		case XML:
 			return new XmlFileBackupReader(inputSourceProvider);
-		case CMD:
-			return new PlainTextFileReader();
 		default:
 			throw new UnhandledPersistenceModeException("Unhandled persistenceMode " + type + " for reading backup arguments");
 		}

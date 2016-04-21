@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.backup.check;
+package org.sklsft.generator.repository.backup.check;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

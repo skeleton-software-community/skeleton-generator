@@ -6,7 +6,7 @@ import java.util.Map;
 public enum PersistenceMode {
 	CSV(".txt"),
     XML(".xml"),
-    CMD(".comd");
+    CMD(".raw");
 	
 	private static final Map<String, PersistenceMode> reverseMap = new HashMap<String, PersistenceMode>();
 	static{
