@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.sklsft.generator.bl.services.impl.BackupPostExecutionChecker;
 import org.sklsft.generator.bl.services.impl.BackupPreExecutionChecker;
+import org.sklsft.generator.bl.services.impl.Populator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.command.BackupCheckPrompter;
