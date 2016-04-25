@@ -154,11 +154,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ "form-control" + CHAR_34 + " value=" + CHAR_34
 				+ "#{" + bean.objectName + "." + property.name + "}"
 				+ CHAR_34);
-		if (!property.nullable) {
-			skipLine();
-			write(" required=" + CHAR_34 + "true" + CHAR_34);
-		}
-		
+				
 		if (!property.editable) {
 			skipLine();
 			write(" disabled=" + CHAR_34 + "true" + CHAR_34);
@@ -226,10 +222,6 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
 				+ property.name + "}" + CHAR_34);
-		if (!property.nullable) {
-			skipLine();
-			write("required=" + CHAR_34 + "true" + CHAR_34);
-		}
 		
 		if (!property.editable) {
 			skipLine();
@@ -245,10 +237,6 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ CHAR_34 + "10" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
 				+ property.name + "}" + CHAR_34);
-		if (!property.nullable) {
-			skipLine();
-			write("required=" + CHAR_34 + "true" + CHAR_34);
-		}
 		
 		if (!property.editable) {
 			skipLine();
@@ -286,10 +274,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
 				+ property.name + "}" + CHAR_34);
-		if (!property.nullable) {
-			skipLine();
-			write("required=" + CHAR_34 + "true" + CHAR_34);
-		}
+		
 		if (!property.editable) {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
@@ -321,11 +306,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
 				+ CHAR_34 + "#{" + bean.objectName + "."
 				+ property.name + "}" + CHAR_34);
-		if (!property.nullable) {
-			skipLine();
-			write("required=" + CHAR_34 + "true" + CHAR_34);
-		}
-		
+				
 		if (!property.editable) {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
@@ -356,12 +337,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					+ "dd MMMM yyyy HH:mm" + CHAR_34);
 			break;
 		}
-
-		if (!property.nullable) {
-			skipLine();
-			write("required=" + CHAR_34 + "true" + CHAR_34);
-		}
-		
+				
 		if (!property.editable) {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);

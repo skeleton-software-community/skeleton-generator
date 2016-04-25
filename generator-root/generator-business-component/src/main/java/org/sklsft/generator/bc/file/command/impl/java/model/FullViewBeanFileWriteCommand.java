@@ -26,6 +26,7 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 		javaImports.add("import java.util.Date;");
         javaImports.add("import java.io.Serializable;");
+        javaImports.add("import javax.validation.constraints.NotNull;");
 	}
 	
 	
@@ -66,7 +67,13 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private Long id;");
 
         for (Property property:this.bean.fullViewBean.properties) {
-            writeLine("private " + property.beanDataType + " " + property.name + ";");
+        	if (!property.nullable) {
+        		writeLine("@NotNull");
+//        		if (property.dataType.equals(DataType.STRING) || property.dataType.equals(DataType.TEXT)) {
+//        			writeLine("@NotEmpty");
+//        		}
+        	}
+        	writeLine("private " + property.beanDataType + " " + property.name + ";");
         }
         skipLine();
 

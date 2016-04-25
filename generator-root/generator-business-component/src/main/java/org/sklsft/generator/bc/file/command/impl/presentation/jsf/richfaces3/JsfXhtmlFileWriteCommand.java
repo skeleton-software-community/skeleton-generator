@@ -215,10 +215,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						+ "width:300px" + CHAR_34 + " value=" + CHAR_34
 						+ "#{" + bean.objectName + "." + property.name + "}"
 						+ CHAR_34);
-				if (!property.nullable) {
-					skipLine();
-					write(" required=" + CHAR_34 + "true" + CHAR_34);
-				}
+				
 				writeLine(">");
 
 				switch (property.dataType) {
@@ -315,10 +312,6 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						break;
 					}
 
-					if (!property.nullable) {
-						skipLine();
-						write("required=" + CHAR_34 + "true" + CHAR_34);
-					}
 					writeLine("/>");
 					break;
 
@@ -328,10 +321,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
 							+ CHAR_34 + "#{" + bean.objectName + "."
 							+ property.name + "}" + CHAR_34);
-					if (!property.nullable) {
-						skipLine();
-						write("required=" + CHAR_34 + "true" + CHAR_34);
-					}
+					
 					writeLine(">");
 
 					switch (property.format) {
@@ -359,10 +349,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
 							+ CHAR_34 + "#{" + bean.objectName + "."
 							+ property.name + "}" + CHAR_34);
-					if (!property.nullable) {
-						skipLine();
-						write("required=" + CHAR_34 + "true" + CHAR_34);
-					}
+					
 					writeLine(">");
 					writeLine("<f:convertNumber integerOnly=" + CHAR_34 + "true" + CHAR_34 + " pattern=" + CHAR_34 + "#,##0"
 							+ CHAR_34 + "/>");
@@ -375,10 +362,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
 							+ CHAR_34 + "#{" + bean.objectName + "."
 							+ property.name + "}" + CHAR_34);
-					if (!property.nullable) {
-						skipLine();
-						write("required=" + CHAR_34 + "true" + CHAR_34);
-					}
+					
 					writeLine("/>");
 					break;
 
@@ -389,10 +373,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ CHAR_34 + "10" + CHAR_34 + " value="
 							+ CHAR_34 + "#{" + bean.objectName + "."
 							+ property.name + "}" + CHAR_34);
-					if (!property.nullable) {
-						skipLine();
-						write("required=" + CHAR_34 + "true" + CHAR_34);
-					}
+					
 					writeLine("/>");
 					break;
 				}

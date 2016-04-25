@@ -59,11 +59,21 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("public class " + this.bean.baseStateManagerClassName + " {");
         skipLine();
         
+        
+        writeLine("/**");
+        writeLine(" * can save");
+        writeLine(" */");
+        writeLine("public boolean canSave(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("return true;");        
+        writeLine("}");
+        skipLine();
         writeLine("/**");
         writeLine(" * check before save");
         writeLine(" */");
-        writeLine("public void checkBeforeSave(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
-        writeLine("// Empty by default. Can be overridden");        
+        writeLine("public void checkCanSave(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("if (!canSave(" + this.bean.objectName + ")) {");        
+        writeLine("throw new InvalidStateException(" + CHAR_34 + this.bean.className + ".save.invalidState" + CHAR_34 + ");");
+        writeLine("}");
         writeLine("}");
         skipLine();
 
@@ -71,10 +81,19 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
         	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
-            writeLine(" * check before save one to one compoennt " + currentBean.className);
+            writeLine(" * can save one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+        	writeLine("/**");
+            writeLine(" * check can save one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".save.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
@@ -83,19 +102,37 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
         	Bean currentBean = oneToManyComponent.referenceBean;
         	writeLine("/**");
-            writeLine(" * check before save one to many compoennt " + currentBean.className);
+            writeLine(" * can save one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+        	writeLine("/**");
+            writeLine(" * check can save one to many component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".save.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
 
         writeLine("/**");
-        writeLine(" * check before update");
+        writeLine(" * can update");
         writeLine(" */");
-        writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
-        writeLine("// Empty by default. Can be overridden");
+        writeLine("public boolean canUpdate(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("return true;");        
+        writeLine("}");
+        skipLine();
+        writeLine("/**");
+        writeLine(" * check can update");
+        writeLine(" */");
+        writeLine("public void checkCanUpdate(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("if (!canUpdate(" + this.bean.objectName + ")) {");        
+        writeLine("throw new InvalidStateException(" + CHAR_34 + this.bean.className + ".update.invalidState" + CHAR_34 + ");");
+        writeLine("}");
         writeLine("}");
         skipLine();
 
@@ -103,10 +140,19 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * check before update one to one component " + currentBean.className);
+            writeLine(" * can update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+            writeLine("/**");
+            writeLine(" * check can update one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".update.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
@@ -115,19 +161,37 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * check before update one to many component " + currentBean.className);
+            writeLine(" * can update one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+            writeLine("/**");
+            writeLine(" * check can update one to many component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".update.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
 
         writeLine("/**");
-        writeLine(" * check before delete");
+        writeLine(" * can delete");
         writeLine(" */");
-        writeLine("public void checkBeforeDelete(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
-        writeLine("// Empty by default. Can be overridden");
+        writeLine("public boolean canDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("return true;");
+        writeLine("}");
+        skipLine();
+        writeLine("/**");
+        writeLine(" * check can delete");
+        writeLine(" */");
+        writeLine("public void checkCanDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("if (!canDelete(" + bean.objectName + ")) {");        
+        writeLine("throw new InvalidStateException(" + CHAR_34 + bean.className + ".delete.invalidState" + CHAR_34 + ");");
+        writeLine("}");
         writeLine("}");
         skipLine();
 
@@ -135,10 +199,19 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * check before delete one to one component " + currentBean.className);
+            writeLine(" * can delete one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+            writeLine("/**");
+            writeLine(" * check can delete one to one component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".delete.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
@@ -147,10 +220,19 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
-            writeLine(" * check before delete one to many component " + currentBean.className);
+            writeLine(" * can delete one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") throws InvalidStateException {");
-            writeLine("// Empty by default. Can be overridden");
+            writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return true;");
+            writeLine("}");
+            skipLine();
+            writeLine("/**");
+            writeLine(" * check can delete one to many component " + currentBean.className);
+            writeLine(" */");
+            writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
+            writeLine("throw new InvalidStateException(" + CHAR_34 + currentBean.className + ".delete.invalidState" + CHAR_34 + ");");
+            writeLine("}");
             writeLine("}");
             skipLine();
         }
