@@ -68,7 +68,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
         writeLine("/**");
-        writeLine(" * check before save");
+        writeLine(" * check can save");
         writeLine(" */");
         writeLine("public void checkCanSave(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canSave(" + this.bean.objectName + ")) {");        

@@ -24,6 +24,8 @@ public class ColumnMetaData {
 	@XmlAttribute
 	private boolean nullable = true;
 	@XmlAttribute
+	private boolean unique = false;
+	@XmlAttribute
 	private String referenceTableName;
 	@XmlAttribute
 	private RelationType referenceTableRelation;
@@ -60,6 +62,12 @@ public class ColumnMetaData {
 	}
 	public void setNullable(boolean nullable) {
 		this.nullable = nullable;
+	}
+	public boolean isUnique() {
+		return unique;
+	}
+	public void setUnique(boolean unique) {
+		this.unique = unique;
 	}
 	public String getReferenceTableName() {
 		return referenceTableName;

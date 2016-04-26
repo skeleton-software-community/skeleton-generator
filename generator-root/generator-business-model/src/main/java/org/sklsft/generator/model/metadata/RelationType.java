@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlEnum;
 public enum RelationType {
 	MANY_TO_ONE,
     MANY_TO_ONE_COMPONENT,
-    UNIQUE,
     EMBEDDED,
     ONE_TO_ONE,
     ONE_TO_ONE_COMPONENT,
@@ -33,9 +32,6 @@ public enum RelationType {
     {
         switch (relationType)
         {
-            case UNIQUE:
-                return true;
-
             case ONE_TO_ONE:
                 return true;
                 

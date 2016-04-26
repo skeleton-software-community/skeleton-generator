@@ -61,7 +61,7 @@ public class TableFactoryImpl implements TableFactory {
             
             column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT));
             column.referenceTable = myPackage.model.findTable(columnMetaData.getReferenceTableName());
-            column.unique = (RelationType.isUnique(column.relation));
+            column.unique = columnMetaData.isUnique() || RelationType.isUnique(column.relation);
             if (columnMetaData.getFormat()!=null) {
             	column.format = columnMetaData.getFormat();
             } else {
