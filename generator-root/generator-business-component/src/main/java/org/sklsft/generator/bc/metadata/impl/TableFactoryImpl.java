@@ -52,7 +52,7 @@ public class TableFactoryImpl implements TableFactory {
             column.originalName = columnMetaData.getName();
             column.name = SQLNaming.rename(column.originalName, table.myPackage.model.project.databaseEngine);
             column.dataType = columnMetaData.getDataType();
-            column.nullable = (columnMetaData.isNullable());
+            column.nullable = (columnMetaData.getNullable());
             if (columnMetaData.getReferenceTableRelation() != null) {
             	column.relation = columnMetaData.getReferenceTableRelation();
             } else {
@@ -61,13 +61,13 @@ public class TableFactoryImpl implements TableFactory {
             
             column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT));
             column.referenceTable = myPackage.model.findTable(columnMetaData.getReferenceTableName());
-            column.unique = columnMetaData.isUnique() || RelationType.isUnique(column.relation);
+            column.unique = columnMetaData.getUnique() || RelationType.isUnique(column.relation);
             if (columnMetaData.getFormat()!=null) {
             	column.format = columnMetaData.getFormat();
             } else {
             	column.format = Format.DEFAULT;
             }
-            column.editable = columnMetaData.isEditable();
+            column.editable = columnMetaData.getEditable();
             if (columnMetaData.getVisibility()!=null) {
             	column.visibility = columnMetaData.getVisibility();
             } else {

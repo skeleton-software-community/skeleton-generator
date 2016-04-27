@@ -15,11 +15,12 @@
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="dataType" type="tns:dataType" use="required"/>
-    <xs:attribute name="nullable" type="xs:boolean" use="required"/>
+    <xs:attribute name="nullable" type="xs:boolean"/>
+    <xs:attribute name="unique" type="xs:boolean"/>
     <xs:attribute name="referenceTableName" type="xs:string"/>
     <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
     <xs:attribute name="format" type="tns:format"/>
-    <xs:attribute name="editable" type="xs:boolean" use="required"/>
+    <xs:attribute name="editable" type="xs:boolean"/>
     <xs:attribute name="visibility" type="tns:visibility"/>
     <xs:attribute name="rendering" type="xs:string"/>
   </xs:complexType>
@@ -66,10 +67,10 @@
     <xs:attribute name="cardinality" type="xs:int" use="required"/>
     <xs:attribute name="listRendering" type="xs:string"/>
     <xs:attribute name="detailRendering" type="xs:string"/>
-    <xs:attribute name="comboxable" type="xs:boolean" use="required"/>
-    <xs:attribute name="createEnabled" type="xs:boolean" use="required"/>
-    <xs:attribute name="updateEnabled" type="xs:boolean" use="required"/>
-    <xs:attribute name="deleteEnabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="comboxable" type="xs:boolean"/>
+    <xs:attribute name="createEnabled" type="xs:boolean"/>
+    <xs:attribute name="updateEnabled" type="xs:boolean"/>
+    <xs:attribute name="deleteEnabled" type="xs:boolean"/>
   </xs:complexType>
 
   <xs:complexType name="project">
@@ -109,7 +110,6 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="MANY_TO_ONE"/>
       <xs:enumeration value="MANY_TO_ONE_COMPONENT"/>
-      <xs:enumeration value="UNIQUE"/>
       <xs:enumeration value="EMBEDDED"/>
       <xs:enumeration value="ONE_TO_ONE"/>
       <xs:enumeration value="ONE_TO_ONE_COMPONENT"/>

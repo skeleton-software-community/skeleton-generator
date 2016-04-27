@@ -30,24 +30,13 @@ public class PackageMetaData {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
-	}
-	
+	}	
 	public List<TableMetaData> getTables() {
 		return tables;
-	}	
-
+	}
 	public void setTables(List<TableMetaData> tables) {
 		this.tables = tables;
 	}
-
-	@Override
-	public String toString() {
-		return "PackageMetaData [name=" + name + ", tables="
-				+ tables + "]";
-	}
-	
-	
 }

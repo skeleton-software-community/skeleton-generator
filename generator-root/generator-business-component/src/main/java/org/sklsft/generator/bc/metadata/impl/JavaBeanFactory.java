@@ -31,10 +31,10 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.detailMode = tableMetaData.getDetailMode();
 		bean.interfaces = tableMetaData.getInterfaces();
 		bean.annotations = tableMetaData.getAnnotations();
-		bean.createEnabled = tableMetaData.isCreateEnabled();
-		bean.updateEnabled = tableMetaData.isUpdateEnabled();
-		bean.deleteEnabled = tableMetaData.isDeleteEnabled();
-		bean.hasComboBox = tableMetaData.isComboxable();
+		bean.createEnabled = tableMetaData.getCreateEnabled();
+		bean.updateEnabled = tableMetaData.getUpdateEnabled();
+		bean.deleteEnabled = tableMetaData.getDeleteEnabled();
+		bean.hasComboBox = tableMetaData.getComboxable();
 		bean.detailRendering = tableMetaData.getDetailRendering();
 		bean.listRendering = tableMetaData.getListRendering();
 

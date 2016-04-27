@@ -22,9 +22,9 @@ public class ColumnMetaData {
 	@XmlAttribute(required=true)
 	private DataType dataType;
 	@XmlAttribute
-	private boolean nullable = true;
+	private Boolean nullable = true;
 	@XmlAttribute
-	private boolean unique = false;
+	private Boolean unique = false;
 	@XmlAttribute
 	private String referenceTableName;
 	@XmlAttribute
@@ -32,7 +32,7 @@ public class ColumnMetaData {
 	@XmlAttribute
 	private Format format;
 	@XmlAttribute
-	private boolean editable = true;
+	private Boolean editable = true;
 	@XmlAttribute
 	private Visibility visibility;
 	@XmlAttribute
@@ -50,23 +50,23 @@ public class ColumnMetaData {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
+	}	
 	public DataType getDataType() {
 		return dataType;
 	}
 	public void setDataType(DataType dataType) {
 		this.dataType = dataType;
 	}
-	public boolean isNullable() {
+	public Boolean getNullable() {
 		return nullable;
 	}
-	public void setNullable(boolean nullable) {
+	public void setNullable(Boolean nullable) {
 		this.nullable = nullable;
 	}
-	public boolean isUnique() {
+	public Boolean getUnique() {
 		return unique;
 	}
-	public void setUnique(boolean unique) {
+	public void setUnique(Boolean unique) {
 		this.unique = unique;
 	}
 	public String getReferenceTableName() {
@@ -87,10 +87,10 @@ public class ColumnMetaData {
 	public void setFormat(Format format) {
 		this.format = format;
 	}
-	public boolean isEditable() {
+	public Boolean getEditable() {
 		return editable;
 	}
-	public void setEditable(boolean editable) {
+	public void setEditable(Boolean editable) {
 		this.editable = editable;
 	}
 	public Visibility getVisibility() {
@@ -111,14 +111,4 @@ public class ColumnMetaData {
 	public void setAnnotations(List<String> annotations) {
 		this.annotations = annotations;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "ColumnMetaData [name=" + name + ", dataType=" + dataType + ", nullable=" + nullable + ", referenceTableName=" + referenceTableName + ", referenceTableRelation="
-				+ referenceTableRelation + ", format=" + format + ", editable=" + editable + ", visibility=" + visibility + ", rendering=" + rendering + ", annotations=" + annotations + "]";
-	}	
 }

@@ -18,20 +18,20 @@ public class TableMetaData {
 	 */
 	@XmlAttribute(required=true)
 	private String name;
-	@XmlAttribute
+	@XmlAttribute(required=true)
 	private int cardinality;
 	@XmlAttribute
 	private String listRendering;
 	@XmlAttribute
 	private String detailRendering;
 	@XmlAttribute
-	private boolean comboxable;
+	private Boolean comboxable = false;
 	@XmlAttribute
-	private boolean createEnabled = true;
+	private Boolean createEnabled = true;
 	@XmlAttribute
-	private boolean updateEnabled = true;
+	private Boolean updateEnabled = true;
 	@XmlAttribute
-	private boolean deleteEnabled = true;
+	private Boolean deleteEnabled = true;
 	@XmlElement
 	private DetailMode detailMode;
 	
@@ -56,7 +56,7 @@ public class TableMetaData {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
+	}	
 	public int getCardinality() {
 		return cardinality;
 	}
@@ -75,28 +75,28 @@ public class TableMetaData {
 	public void setDetailRendering(String detailRendering) {
 		this.detailRendering = detailRendering;
 	}
-	public boolean isComboxable() {
+	public Boolean getComboxable() {
 		return comboxable;
 	}
-	public void setComboxable(boolean comboxable) {
+	public void setComboxable(Boolean comboxable) {
 		this.comboxable = comboxable;
 	}
-	public boolean isCreateEnabled() {
+	public Boolean getCreateEnabled() {
 		return createEnabled;
 	}
-	public void setCreateEnabled(boolean createEnabled) {
+	public void setCreateEnabled(Boolean createEnabled) {
 		this.createEnabled = createEnabled;
 	}
-	public boolean isUpdateEnabled() {
+	public Boolean getUpdateEnabled() {
 		return updateEnabled;
 	}
-	public void setUpdateEnabled(boolean updateEnabled) {
+	public void setUpdateEnabled(Boolean updateEnabled) {
 		this.updateEnabled = updateEnabled;
 	}
-	public boolean isDeleteEnabled() {
+	public Boolean getDeleteEnabled() {
 		return deleteEnabled;
 	}
-	public void setDeleteEnabled(boolean deleteEnabled) {
+	public void setDeleteEnabled(Boolean deleteEnabled) {
 		this.deleteEnabled = deleteEnabled;
 	}
 	public DetailMode getDetailMode() {
@@ -122,17 +122,5 @@ public class TableMetaData {
 	}
 	public void setColumns(List<ColumnMetaData> columns) {
 		this.columns = columns;
-	}
-	
-	@Override
-	public String toString() {
-		return "TableMetaData [name=" + name + ", cardinality=" + cardinality
-				+ ", listRendering=" + listRendering + ", detailRendering="
-				+ detailRendering + ", comboxable=" + comboxable
-				+ ", createEnabled=" + createEnabled + ", updateEnabled="
-				+ updateEnabled + ", deleteEnabled=" + deleteEnabled
-				+ ", interfaces=" + interfaces + ", annotations="
-				+ annotations + ", columns=" + columns
-				+ "]";
 	}
 }
