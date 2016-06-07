@@ -1,4 +1,4 @@
 # skeleton-generator
-Git Repository for skeleton-generator project, a high productivity tool that enables to build robust and scalable java applications.
+Open source, high productivity tool for scaffolding based on code generation
 
-Visit our <a href="http://generator.sklsft.org">website<a> fo more information.
+Visit our <a href="http://generator.sklsft.org">website<a> for more information.
