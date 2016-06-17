@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.sklsft.generator.exception.InvalidFileException;
-import org.sklsft.generator.model.backup.PopulateCommandType;
 import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
 import org.sklsft.generator.repository.backup.file.model.CsvFile;
 
@@ -66,7 +65,6 @@ public class CsvFileParserImpl implements CsvFileParser {
 		}
 		
 		CsvFile result = new CsvFile();
-		result.setPopulateCommandType(PopulateCommandType.INSERT); //TODO handle other types
 		result.setData(tokensList);			
 		
 		return result;

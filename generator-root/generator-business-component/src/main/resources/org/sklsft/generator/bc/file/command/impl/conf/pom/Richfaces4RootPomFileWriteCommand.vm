@@ -29,14 +29,14 @@
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 		<java.version>1.7</java.version>
 		
-		<skeleton.commons.version>1.0.0-M2-1</skeleton.commons.version>
+		<skeleton.commons.version>1.0.0</skeleton.commons.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 		
 		<hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		
-		<hsqldb.version>1.8.0.10</hsqldb.version>
+		<hsqldb.version>2.3.3</hsqldb.version>
 		
 		<hibernate.version>3.6.10.Final</hibernate.version>
 		<javassist.version>3.9.0.GA</javassist.version>
@@ -47,7 +47,7 @@
 		
 		<servlet.version>3.1.0</servlet.version>
 		<jstl.version>1.2</jstl.version>
-		<jsf.version>2.2.8-02</jsf.version>
+		<jsf.version>2.2.13</jsf.version>
 		<richfaces.version>4.5.8.Final</richfaces.version>
 
 		<junit.version>4.11</junit.version>

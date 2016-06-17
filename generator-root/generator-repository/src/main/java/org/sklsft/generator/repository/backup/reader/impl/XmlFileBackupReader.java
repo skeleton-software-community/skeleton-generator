@@ -49,7 +49,6 @@ public class XmlFileBackupReader implements BackupArgumentReader {
 		
 		BackupArguments result = new BackupArguments();
 		result.setArguments(readArguments(sourceAndScript));
-		result.setType(sourceAndScript.getType());
 		result.setArgumentsTyped(true);
 		return result;
 

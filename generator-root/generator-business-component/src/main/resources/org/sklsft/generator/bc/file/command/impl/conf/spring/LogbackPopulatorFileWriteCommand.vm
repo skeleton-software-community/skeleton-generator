@@ -16,7 +16,7 @@
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>/temp/${project.projectName}-webapp.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-webapp.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-populator.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<maxHistory>5</maxHistory>
 			<maxFileSize>10MB</maxFileSize>

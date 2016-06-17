@@ -22,8 +22,6 @@ public class SourceAndScript {
 	 */
 	@XmlElement(required=true)
 	private String source;
-	@XmlElement(defaultValue="INSERT")
-	private PopulateCommandType type;	
 	@XmlElement(required=true)
 	private String script;
 	
@@ -36,12 +34,6 @@ public class SourceAndScript {
 	}
 	public void setSource(String source) {
 		this.source = source;
-	}
-	public PopulateCommandType getType() {
-		return (type!=null) ? type : PopulateCommandType.INSERT;
-	}
-	public void setType(PopulateCommandType type) {
-		this.type = type;
 	}
 	public String getScript() {
 		return script;

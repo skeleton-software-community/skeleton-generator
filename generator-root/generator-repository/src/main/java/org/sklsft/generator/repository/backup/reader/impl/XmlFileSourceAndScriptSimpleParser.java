@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.sklsft.generator.model.backup.PopulateCommandType;
 import org.sklsft.generator.model.backup.SourceAndScript;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -26,7 +25,6 @@ public class XmlFileSourceAndScriptSimpleParser {
 
 		String source = null;
 		String script = null;
-		PopulateCommandType type = PopulateCommandType.INSERT;
 		Document document = null;
 		
 		try {
@@ -40,11 +38,6 @@ public class XmlFileSourceAndScriptSimpleParser {
 			script = element.getElementsByTagName("script").item(0).getTextContent();
 			Node typeElem = element.getElementsByTagName("type").item(0);
 			
-			if (typeElem != null) {
-				type = PopulateCommandType.valueOf(typeElem.getTextContent());
-			}
-
-		
 		} catch (Exception e) {
 			throw new IOException("failed to read xml file : " + scriptFilePath,e);
 		}
@@ -52,7 +45,6 @@ public class XmlFileSourceAndScriptSimpleParser {
 		SourceAndScript sourceAndScript = new SourceAndScript();
 		sourceAndScript.setScript(script);
 		sourceAndScript.setSource(source);
-		sourceAndScript.setType(type);
 		
 		return sourceAndScript;
 	}
