@@ -31,6 +31,7 @@ public class Model {
     public String commandPackageName;
     public String commandExecutorPackageName;
     public String filterPackageName;
+    public String enversPackageName;
 	
 
     /*
@@ -84,9 +85,15 @@ public class Model {
 	}
 	public void setFilterPackageName(String filterPackageName) {
 		this.filterPackageName = filterPackageName;
+	}    
+    public String getEnversPackageName() {
+		return enversPackageName;
 	}
-    
-    /**
+	public void setEnversPackageName(String enversPackageName) {
+		this.enversPackageName = enversPackageName;
+	}
+	
+	/**
      * run through all the tables until it is found
      * @param tableName
      * @return

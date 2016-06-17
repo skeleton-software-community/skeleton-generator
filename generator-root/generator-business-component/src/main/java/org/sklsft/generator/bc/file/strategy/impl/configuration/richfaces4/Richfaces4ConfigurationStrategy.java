@@ -1,6 +1,8 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditEntityFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditListenerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.RichfacesBaseControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.RichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.population.PopulatorLauncherFileWriteCommand;
@@ -146,7 +148,21 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode populatorLauncherTreeNode = new FileWriteCommandTreeNode(new PopulatorLauncherFileWriteCommand(project));
 		javaTreeNode.add(populatorLauncherTreeNode);
 		
-				
+		
+		/*
+		 * envers
+		 */
+		if (project.audited) {
+			FileWriteCommandTreeNode enversTreeNode = new FileWriteCommandTreeNode("envers files");
+			configurationTreeNode.add(enversTreeNode);
+			
+			FileWriteCommandTreeNode auditEntityTreeNode = new FileWriteCommandTreeNode(new AuditEntityFileWriteCommand(project));
+			enversTreeNode.add(auditEntityTreeNode);
+		
+			FileWriteCommandTreeNode auditListenerTreeNode = new FileWriteCommandTreeNode(new AuditListenerFileWriteCommand(project));
+			enversTreeNode.add(auditListenerTreeNode);
+		}
+		
 		
 		/*
 		 * spring test files

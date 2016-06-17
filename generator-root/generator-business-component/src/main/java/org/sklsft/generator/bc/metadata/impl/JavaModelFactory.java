@@ -79,6 +79,7 @@ public class JavaModelFactory implements ModelFactory {
         model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
         model.commandExecutorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
+        model.enversPackageName = project.domainName + "." + project.projectName + ".model.envers";
        
         model.packages = new ArrayList<Package>();
 		return model;
