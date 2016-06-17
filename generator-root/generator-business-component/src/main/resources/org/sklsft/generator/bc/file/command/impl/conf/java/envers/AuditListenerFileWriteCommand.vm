@@ -1,0 +1,18 @@
+package ${project.model.enversPackageName};
+
+import org.hibernate.envers.RevisionListener;
+
+
+public class AuditListener implements RevisionListener {
+    
+    public void newRevision(Object revisionEntity) {
+        AuditEntity auditEntity = (AuditEntity) revisionEntity;
+        
+        auditEntity.setLogin(getLogin());
+    }
+    
+    public static String getLogin() {
+    	//TODO ask your Security Context
+		return "sys";
+    }
+}
