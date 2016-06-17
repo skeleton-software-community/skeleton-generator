@@ -6,16 +6,8 @@
   <xs:complexType name="backup">
     <xs:sequence>
       <xs:element name="source" type="xs:string"/>
-      <xs:element name="type" type="tns:populateCommandType" default="INSERT" minOccurs="0"/>
       <xs:element name="script" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-
-  <xs:simpleType name="populateCommandType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="INSERT"/>
-      <xs:enumeration value="UPDATE"/>
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>
 

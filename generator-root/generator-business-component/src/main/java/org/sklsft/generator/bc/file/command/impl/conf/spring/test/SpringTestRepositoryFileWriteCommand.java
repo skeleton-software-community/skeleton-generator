@@ -9,7 +9,7 @@ import org.sklsft.generator.model.metadata.FileType;
 public class SpringTestRepositoryFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringTestRepositoryFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-repository/src/test/resources", "applicationContext-" + project.projectName + "-repository-test", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-test/src/test/resources", "applicationContext-" + project.projectName + "-repository", FileType.XML, project);
 	}
 
 }

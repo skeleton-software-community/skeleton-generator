@@ -104,14 +104,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</div>");		
 		writeLine("</rich:column>");
 		skipLine();
-
-		for (Property property : currentBean.basicViewBean.properties) {
-			writeLine("<rich:column>");
-			writeFilter(property, currentBean, parentBean);
-			writeLine("</rich:column>");
-			skipLine();
-		}
-
+		
 		writeLine("<rich:column>");
 		
 		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.basicViewBean.filterClassName + "}" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34 + ">");
@@ -119,6 +112,14 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</a4j:commandLink>");
 		
 		writeLine("</rich:column>");
+		skipLine();
+
+		for (Property property : currentBean.basicViewBean.properties) {
+			writeLine("<rich:column>");
+			writeFilter(property, currentBean, parentBean);
+			writeLine("</rich:column>");
+			skipLine();
+		}		
 
 		writeLine("</rich:columnGroup>");
 		writeLine("</f:facet>");
@@ -132,21 +133,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 				+ "selectUnselect('" + currentBean.objectName + "ListForm:" + currentBean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
-
-
-		for (Property property : currentBean.basicViewBean.properties) {
-			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + currentBean.objectName + "." + property.name + "}" + CHAR_34);
-			writeFilterExpression(property, currentBean, parentBean);
-			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-			writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "}" + CHAR_34 + " />");
-			writeLine("</f:facet>");
-
-			writeListComponent(property, currentBean);
-
-			writeLine("</rich:column>");
-			skipLine();
-		}
-
+		
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
 		writeLine("<h:outputText value=" + CHAR_34 + "Actions" + CHAR_34 + " />");
@@ -168,6 +155,21 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("</h:panelGrid>");
 		writeLine("</rich:column>");
 		skipLine();
+
+
+		for (Property property : currentBean.basicViewBean.properties) {
+			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + currentBean.objectName + "." + property.name + "}" + CHAR_34);
+			writeFilterExpression(property, currentBean, parentBean);
+			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
+			writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "}" + CHAR_34 + " />");
+			writeLine("</f:facet>");
+
+			writeListComponent(property, currentBean);
+
+			writeLine("</rich:column>");
+			skipLine();
+		}
+		
 		writeLine("</rich:dataTable>");
 		skipLine();
 		

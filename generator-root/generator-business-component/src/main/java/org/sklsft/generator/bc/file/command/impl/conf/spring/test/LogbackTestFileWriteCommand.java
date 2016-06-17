@@ -9,7 +9,7 @@ import org.sklsft.generator.model.metadata.FileType;
 public class LogbackTestFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public LogbackTestFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/test/resources", "logback-test", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-test/src/test/resources", "logback", FileType.XML, project);
 	}
 
 }
