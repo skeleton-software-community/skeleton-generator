@@ -188,49 +188,6 @@
 
 					<div class="download-panel">
 
-						<h2>Download</h2>
-
-						<fieldset>
-							<legend>Development</legend>
-
-							<ul class="list-unstyled">
-								<li>
-									2.0.0-M2 |
-									<a
-										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator/generator-bash/2.0.0-M2-1/generator-bash-2.0.0-M2-1-bin.zip">Binary</a>
-
-								</li>
-							</ul>
-
-
-						</fieldset>
-
-						<fieldset>
-							<legend>Releases</legend>
-
-							<ul class="list-unstyled">
-								<li>
-									1.1.0 |
-									<a
-										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator-bash/1.1.0/generator-bash-1.1.0-bin.zip">
-										Binary </a>
-
-								</li>
-								<li class="divider" />
-								<li>
-									1.0.1 |
-									<a
-										href="https://oss.sonatype.org/content/groups/public/org/sklsft/generator-bash/1.0.1/generator-bash-1.0.1-bin.zip">
-										Binary </a>
-								</li>
-							</ul>
-						</fieldset>
-
-						<a
-							href="https://github.com/skeleton-software-community/skeleton-generator">
-							<img src="resources/images/logos/hosting/GitHub.png" class="small-icon" />
-							View the Project on GitHub
-						</a>
 
 					</div>
 				</div>
@@ -261,5 +218,21 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+	
+	<script> 
+		var url = "http://generator.sklsft.org/download.html";
+		
+		$.ajax({
+		    type: "GET",
+		    url: url,
+		    dataType: 'html',
+		    success: function(data){
+		       $(".download-panel").append(data); 
+		    },
+		    error: function(xhr, textStatus, errorThrown){
+		    	console.log("error : " + textStatus);
+		    }
+		});
+	</script>
 </body>
 </html>
