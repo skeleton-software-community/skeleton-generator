@@ -1,4 +1,4 @@
-package org.sklsft.generator.command;
+package org.sklsft.generator.bash.launcher;
 
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
@@ -42,7 +42,7 @@ public class CodeGeneratorLauncher {
 		}
 		String folderPath = args[0];
 
-		try (FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-command.xml");) {
+		try (FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-bash.xml");) {
 			logger.info("Context loaded");
 
 			Project project;

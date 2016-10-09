@@ -1,17 +1,15 @@
 @REM ----------------------------------------------------------------------------
-@REM bat file to execute classes from generator-bash 2.0.0
+@REM bat file to execute generator-bash
 @REM ----------------------------------------------------------------------------
 
 @echo off
 
-set SKLGEN_VERSION=2.0.0
+set SKLGEN_VERSION=2.1.0-SNAPSHOT
 set SKLGEN_RUNNABLE_JAR=%SKLGEN_HOME%\boot\generator-bash-%SKLGEN_VERSION%.jar
 set SKLGEN_LIB=%SKLGEN_HOME%\lib
 set SKLGEN_CLASSPATH=%SKLGEN_RUNNABLE_JAR%;%SKLGEN_LIB%\*
 
-set GENERATE_CLASS=org.sklsft.generator.command.CodeGeneratorLauncher
-set INIT_CLASS=org.sklsft.generator.command.ProjectInitializerLauncher
-set BUILDDB_CLASS=org.sklsft.generator.command.DatabaseBuilderLauncher
+set RUNNABLE_CLASS=org.sklsft.generator.bash.launcher.MainLauncher
 
 echo current directory : %CD%
 echo generator home : %SKLGEN_HOME%
@@ -66,55 +64,18 @@ goto ERROR
 :GET_SKLGEN_CMD_LINE_ARGS
 @REM ==== START COMMAND LINE ARGS ====
 set SKLGEN_CMD_LINE_ARGS=%1
-set DATABASE_NAME=%2
-
-if %SKLGEN_CMD_LINE_ARGS%==help goto HELP
-if %SKLGEN_CMD_LINE_ARGS%==init goto INIT
-if %SKLGEN_CMD_LINE_ARGS%==generate goto GENERATE
-if %SKLGEN_CMD_LINE_ARGS%==builddb goto BUILDDB
-
-goto INVALID_SKLGEN_CMD_LINE_ARGS
+set DATABASE=%2
 
 @REM ==== END COMMAND LINE ARGS ====
 
 
-@REM ==== COMMANDS ====
-:HELP
-echo use one of the following commands :
-echo . init
-echo . generate
-echo . builddb
-goto END
-
-:INIT
-call sklgen-do-init.bat
-if not %INIT_OK%==Y goto INIT_CANCEL
-echo start initializing project
-"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %INIT_CLASS% %INIT_ARGS%
-echo end initializing project
-goto END
-:INIT_CANCEL
-echo initialization cancelled
-goto END
-
-:GENERATE
-echo start generating code
-"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %GENERATE_CLASS% "%CD%"
-echo end generating code
-goto END
-
-:BUILDDB
-echo start building database
-"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %BUILDDB_CLASS% "%CD%" "%DATABASE_NAME%"
-echo end building database
+:RUN
+echo start sklgen
+"%JAVA_HOME%\bin\java" -classpath %SKLGEN_CLASSPATH% %RUNNABLE_CLASS% "%SKLGEN_CMD_LINE_ARGS%" "%CD%" "%DATABASE%"
+echo end sklgen
 goto END
 
 
-:INVALID_SKLGEN_CMD_LINE_ARGS
-echo.
-echo ERROR: This command line argument is not valid.
-echo run help to check the list of available commands.
-goto ERROR
 
 :ERROR
 echo FAILED

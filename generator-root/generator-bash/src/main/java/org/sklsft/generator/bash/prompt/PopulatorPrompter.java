@@ -1,4 +1,4 @@
-package org.sklsft.generator.command;
+package org.sklsft.generator.bash.prompt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,9 +10,9 @@ import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BackupCheckPrompter {
+public class PopulatorPrompter {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BackupCheckPrompter.class);
+	private static final Logger logger = LoggerFactory.getLogger(PopulatorPrompter.class);
 	
 	public void printPreExecutionWarnings(List<BackupPlanPreExecutionWarning> warnings){
 		logger.warn(warnings.size() + " warnings have been generated");

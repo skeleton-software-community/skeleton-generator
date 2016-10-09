@@ -1,35 +1,38 @@
-<configuration debug="true">
+<configuration>
+
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
 
 	<property resource="generator.properties" />
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%d{dd/MM HH:mm:ss.SSS}|%-4level|%msg%n
 			</pattern>
-		</layout>
+		</encoder>
 	</appender>
 	
 	<!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		 <File>/temp/log/generator.log</File>
+		<File>/temp/log/generator.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>/temp/log/generator.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			 <maxHistory>5</maxHistory>
 			 <maxFileSize>10MB</maxFileSize>
 		</rollingPolicy>
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%d{dd/MM HH:mm:ss.SSS}|%-4level|%msg%n
 			</pattern>
-		</layout>
+		</encoder>
 	</appender>
 	
 	
 	<logger name="org.sklsft.generator" level="${logLevel}">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
 	</logger>
 	
 	<root level="ERROR">
-		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
 </configuration>
