@@ -1,0 +1,34 @@
+package ${project.model.stateManagerPackageName};
+
+public interface StateManager<T> {
+
+	/**
+	 * can save
+	 */
+	public boolean canSave(T obj);
+	
+	/**
+	 * check can save
+	 */
+	public void checkCanSave(T obj);
+
+	/**
+	 * can update
+	 */
+	public boolean canUpdate(T obj);
+
+	/**
+	 * check can update
+	 */
+	public void checkCanUpdate(T obj);
+
+	/**
+	 * can delete
+	 */
+	public boolean canDelete(T obj);
+
+	/**
+	 * check can delete
+	 */
+	public void checkCanDelete(T obj);
+}

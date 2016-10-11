@@ -29,6 +29,8 @@ import org.sklsft.generator.bc.file.command.impl.conf.webapp.LogbackFileWriteCom
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.PopulatorProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.ProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces4WebXmlFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Project;
@@ -148,6 +150,11 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode populatorLauncherTreeNode = new FileWriteCommandTreeNode(new PopulatorLauncherFileWriteCommand(project));
 		javaTreeNode.add(populatorLauncherTreeNode);
 		
+		FileWriteCommandTreeNode stateManagerTreeNode = new FileWriteCommandTreeNode(new StateManagerFileWriteCommand(project));
+		javaTreeNode.add(stateManagerTreeNode);
+		
+		FileWriteCommandTreeNode processorTreeNode = new FileWriteCommandTreeNode(new ProcessorFileWriteCommand(project));
+		javaTreeNode.add(processorTreeNode);
 		
 		/*
 		 * envers
