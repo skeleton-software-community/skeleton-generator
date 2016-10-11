@@ -32,9 +32,10 @@ public class Model {
     public String commandExecutorPackageName;
     public String filterPackageName;
     public String enversPackageName;
-	
+    public String stateManagerPackageName;
+	public String processorPackageName;
 
-    /*
+	/*
      * getters and setters
      */
     public Project getProject() {
@@ -91,7 +92,20 @@ public class Model {
 	}
 	public void setEnversPackageName(String enversPackageName) {
 		this.enversPackageName = enversPackageName;
+	}	
+	public String getStateManagerPackageName() {
+		return stateManagerPackageName;
 	}
+	public void setStateManagerPackageName(String stateManagerPackageName) {
+		this.stateManagerPackageName = stateManagerPackageName;
+	}
+    public String getProcessorPackageName() {
+		return processorPackageName;
+	}
+	public void setProcessorPackageName(String processorPackageName) {
+		this.processorPackageName = processorPackageName;
+	}
+
 	
 	/**
      * run through all the tables until it is found
