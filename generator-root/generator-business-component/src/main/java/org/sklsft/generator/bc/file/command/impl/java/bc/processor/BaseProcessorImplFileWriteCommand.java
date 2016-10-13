@@ -73,7 +73,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * process save");
         writeLine(" */");
         writeLine("public Long save(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("return " + this.bean.daoObjectName + ".save" + this.bean.className + "(" + this.bean.objectName + ");");
+        writeLine("return " + this.bean.daoObjectName + ".save(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
         
@@ -138,7 +138,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * process delete");
         writeLine(" */");
         writeLine("public void delete(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine(this.bean.daoObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ");");
+        writeLine(this.bean.daoObjectName + ".delete(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
 

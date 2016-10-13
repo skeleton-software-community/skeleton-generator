@@ -68,9 +68,9 @@ private Bean bean;
         if (this.bean.hasComboBox)
         {
             writeLine("/**");
-            writeLine(" * get key list");
+            writeLine(" * get options");
             writeLine(" */");
-            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> get" + this.bean.className + this.bean.properties.get(1).capName + "List();");
+            writeLine("List<" + this.bean.properties.get(1).beanDataType + "> getOptions();");
             skipLine();
 
         }
@@ -104,7 +104,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * load object list");
         writeLine(" */");
-        writeLine("List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "List();");
+        writeLine("List<" + this.bean.basicViewBean.className + "> loadList();");
         skipLine();
 
         for (Property property : this.bean.properties)
@@ -114,7 +114,7 @@ private Bean bean;
                 writeLine("/**");
                 writeLine(" * load object list from " + property.name);
                 writeLine(" */");
-                writeLine("List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
+                writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
             }
         }
@@ -126,7 +126,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * load object");
         writeLine(" */");
-        writeLine(this.bean.fullViewBean.className + " load" + this.bean.className + "(Long id);");
+        writeLine(this.bean.fullViewBean.className + " load(Long id);");
         skipLine();
 
     }
@@ -139,7 +139,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * find object");
         writeLine(" */");
-        write(this.bean.fullViewBean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
+        write(this.bean.fullViewBean.className + " find(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -196,7 +196,7 @@ private Bean bean;
         writeLine("/**");
         writeLine(" * create object");
         writeLine(" */");
-        writeLine(this.bean.fullViewBean.className + " create" + this.bean.className + "();");
+        writeLine(this.bean.fullViewBean.className + " create();");
         skipLine();
     }
 
@@ -216,13 +216,13 @@ private Bean bean;
 
     private void createSaveObject()
     {
-        writeLine("/**");
+    	writeLine("/**");
         writeLine(" * save object");        
         writeLine(" */");
-        writeLine("Long save" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
+        writeLine("Long save(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
         skipLine();
-        
-        for (Property property:bean.properties) {
+    	
+    	for (Property property:bean.properties) {
         	if (property.referenceBean!=null) {
         		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
         			
@@ -231,7 +231,7 @@ private Bean bean;
         			writeLine("/**");
         	        writeLine(" * save object from parent " + parentBean.className);        
         	        writeLine(" */");
-        	        writeLine("Long save" + this.bean.className + "From" + parentBean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ", Long " + parentBean.objectName + "Id);");
+        	        writeLine("Long saveFrom" + parentBean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ", Long " + parentBean.objectName + "Id);");
         	        skipLine();
         		}
         	}
@@ -271,7 +271,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * update object");        
         writeLine(" */");
-        writeLine("void update" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
+        writeLine("void update(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ");");
         skipLine();
     }
 
@@ -308,7 +308,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * delete object");        
         writeLine(" */");
-        writeLine("void delete" + this.bean.className + "(Long id);");
+        writeLine("void delete(Long id);");
         skipLine();
     }
     
@@ -345,7 +345,7 @@ private Bean bean;
         writeLine("/**");        
         writeLine(" * delete object list");        
         writeLine(" */");
-        writeLine("void delete" + this.bean.className + "List(List<Long> idList);");
+        writeLine("void deleteList(List<Long> idList);");
         skipLine();
     }
 

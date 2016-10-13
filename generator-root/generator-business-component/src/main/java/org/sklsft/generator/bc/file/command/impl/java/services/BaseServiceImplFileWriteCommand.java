@@ -145,12 +145,12 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         if (this.bean.hasComboBox)
         {
             writeLine("/**");
-            writeLine(" * get key list");
+            writeLine(" * get options");
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-            writeLine("public List<" + this.bean.properties.get(1).beanDataType + "> get" + this.bean.className + this.bean.properties.get(1).capName + "List() {");
-            writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "List();");
+            writeLine("@Transactional(readOnly=true)");
+            writeLine("public List<" + this.bean.properties.get(1).beanDataType + "> getOptions() {");
+            writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadList();");
             writeLine("List<" + this.bean.properties.get(1).beanDataType + "> " + this.bean.objectName + this.bean.properties.get(1).capName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
             writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
             writeLine(this.bean.objectName + this.bean.properties.get(1).capName + "List.add(" + this.bean.objectName + ".get" + this.bean.properties.get(1).capName + "());");
@@ -191,9 +191,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * load object list");
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "List() {");
-        writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerly();");
+        writeLine("@Transactional(readOnly=true)");
+        writeLine("public List<" + this.bean.basicViewBean.className + "> loadList() {");
+        writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadListEagerly();");
         writeLine("List<" + this.bean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
         writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
         writeLine("result.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
@@ -210,9 +210,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
                 writeLine(" * load object list from " + property.name);
                 writeLine(" */");
                 writeLine("@Override");
-                writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-                writeLine("public List<" + this.bean.basicViewBean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id) {");
-                writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (" + property.name + "Id);");
+                writeLine("@Transactional(readOnly=true)");
+                writeLine("public List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id) {");
+                writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadListEagerlyFrom" + property.capName + " (" + property.name + "Id);");
                 writeLine("List<" + this.bean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
                 writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
                 writeLine("result.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
@@ -231,9 +231,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * load object");
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public " + this.bean.fullViewBean.className + " load" + this.bean.className + "(Long id) {");
-        writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+        writeLine("@Transactional(readOnly=true)");
+        writeLine("public " + this.bean.fullViewBean.className + " load(Long id) {");
+        writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
         writeLine("return this." + bean.fullViewBean.mapperObjectName + ".mapFrom(new " + this.bean.fullViewBean.className + "()," + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
@@ -249,20 +249,20 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * find object");
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        write("public " + this.bean.fullViewBean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
+        writeLine("@Transactional(readOnly=true)");
+        write("public " + this.bean.fullViewBean.className + " find(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
         }
         writeLine(") {");
-        write(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".find" + this.bean.className + "(" + findPropertyList.get(0).name);
+        write(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".find(" + findPropertyList.get(0).name);
         for (int i=1;i<findPropertyList.size();i++)
         {
             write(", " + findPropertyList.get(i).name);
         }
         writeLine(");");
-        writeLine("return this." + bean.fullViewBean.mapperObjectName + ".mapFrom(new " + this.bean.fullViewBean.className + "()," + this.bean.objectName + ");");
+        writeLine("return this." + bean.fullViewBean.mapperObjectName + ".mapFrom(new " + this.bean.fullViewBean.className + "(), " + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
     }
@@ -278,14 +278,14 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(readOnly=true)");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
             writeLine("if (" + currentBean.objectName + "==null) {");
             writeLine("return new " + currentBean.fullViewBean.className + "();");
             writeLine("} else {");
-            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "()," + currentBean.objectName + ");");
+            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "(), " + currentBean.objectName + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -302,9 +302,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to many component " + currentBean.objectName + " list");
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(readOnly=true)");
             writeLine("public List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
             writeLine("List<" + currentBean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + ".get" + currentBean.className + "Collection().size());");
             writeLine("for (" + currentBean.className + " " + currentBean.objectName + ":" + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
             writeLine("result.add(this." + currentBean.basicViewBean.mapperObjectName + ".mapFrom(new " + currentBean.basicViewBean.className + "()," + currentBean.objectName + "));");
@@ -325,15 +325,15 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(readOnly=true, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(readOnly=true)");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) {");            
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");            
+            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");            
             writeLine("for (" + currentBean.className + " collection" + currentBean.className + " : " + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
             writeLine("if (collection" + currentBean.className + ".getId().equals(" + currentBean.objectName + "Id)){");
             writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "(),collection" + currentBean.className + ");");
             writeLine("}");
             writeLine("}");
-            writeLine("throw new ObjectNotFoundException(" + (char)34 + "Invalid one to many component id" + (char)34 + ");");
+            writeLine("throw new ObjectNotFoundException(" + CHAR_34 + "Invalid one to many component id" + CHAR_34 + ");");
             writeLine("}");
             skipLine();
         }
@@ -345,7 +345,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * create object");
         writeLine(" */");
         writeLine("@Override");
-        writeLine("public " + this.bean.fullViewBean.className + " create" + this.bean.className + "() {");
+        writeLine("public " + this.bean.fullViewBean.className + " create() {");
         writeLine("return new " + this.bean.fullViewBean.className + "();");
         writeLine("}");
         skipLine();
@@ -374,8 +374,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * save object");        
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public Long save" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ") {");
+        writeLine("@Transactional(rollbackFor=Exception.class)");
+        writeLine("public Long save(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ") {");
         writeLine(this.bean.className + " " + this.bean.objectName + " = this." + bean.fullViewBean.mapperObjectName + ".mapTo(" + this.bean.fullViewBean.objectName + ", new " + this.bean.className + "());");
         writeLine(this.bean.stateManagerObjectName + ".checkCanSave(" + this.bean.objectName + ");");
         writeLine("return " + this.bean.processorObjectName + ".save(" + this.bean.objectName + ");");
@@ -393,10 +393,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         	        writeLine(" * save object from parent " + parentBean.className);        
         	        writeLine(" */");
         	        writeLine("@Override");
-        	        writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        	        writeLine("public Long save" + this.bean.className + "From" + parentBean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ", Long " + parentBean.objectName + "Id) {");
+        	        writeLine("@Transactional(rollbackFor=Exception.class)");
+        	        writeLine("public Long saveFrom" + parentBean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ", Long " + parentBean.objectName + "Id) {");
         	        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + bean.fullViewBean.mapperObjectName + ".mapTo(" + this.bean.fullViewBean.objectName + ", new " + this.bean.className + "());");
-        	        writeLine(parentBean.className + " " + parentBean.objectName + " = this." + parentBean.daoObjectName + ".load" + parentBean.className + "(" + parentBean.objectName + "Id);");
+        	        writeLine(parentBean.className + " " + parentBean.objectName + " = this." + parentBean.daoObjectName + ".load(" + parentBean.objectName + "Id);");
         	        writeLine(this.bean.objectName + "." + property.setterName + "(" + parentBean.objectName + ");");
         	        writeLine(this.bean.stateManagerObjectName + ".checkCanSave(" + this.bean.objectName + ");");
         	        writeLine("return " + this.bean.processorObjectName + ".save(" + this.bean.objectName + ");");
@@ -417,9 +417,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * save one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void save" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.fullViewBean.mapperObjectName + ".mapTo(" + currentBean.fullViewBean.objectName + ", new " + currentBean.className + "());");
             writeLine(this.bean.stateManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".save" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
@@ -438,9 +438,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * save one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void save" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.fullViewBean.mapperObjectName + ".mapTo(" + currentBean.fullViewBean.objectName + ", new " + currentBean.className + "());");
             writeLine(this.bean.stateManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".save" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
@@ -455,9 +455,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * update object");        
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public void update" + this.bean.className + "(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ") {");
-        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(" + this.bean.fullViewBean.objectName + ".getId());");
+        writeLine("@Transactional(rollbackFor=Exception.class)");
+        writeLine("public void update(" + this.bean.fullViewBean.className + " " + this.bean.fullViewBean.objectName + ") {");
+        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(" + this.bean.fullViewBean.objectName + ".getId());");
         writeLine(this.bean.stateManagerObjectName + ".checkCanUpdate(" + this.bean.objectName + ");");
         writeLine(this.bean.objectName + " = this." + bean.fullViewBean.mapperObjectName + ".mapTo(" + this.bean.fullViewBean.objectName + ", " + this.bean.objectName + ");");
         writeLine(this.bean.processorObjectName + ".update" + "(" + bean.objectName + ");");
@@ -475,7 +475,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * update one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ", Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
@@ -497,7 +497,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * update one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void update" + currentBean.className + "(" + currentBean.fullViewBean.className + " " + currentBean.fullViewBean.objectName + ") {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + this.bean.daoObjectName + ".load" + currentBean.className + "(" + currentBean.fullViewBean.objectName + ".getId());");
             writeLine(this.bean.stateManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
@@ -515,9 +515,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * delete object");        
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public void delete" + this.bean.className + "(Long id) {");
-        writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+        writeLine("@Transactional(rollbackFor=Exception.class)");
+        writeLine("public void delete(Long id) {");
+        writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
         writeLine(this.bean.stateManagerObjectName + ".checkCanDelete(" + this.bean.objectName + ");");
         writeLine(this.bean.processorObjectName + ".delete" + "(" + bean.objectName + ");");
         writeLine("}");
@@ -534,7 +534,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName);            
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void delete" + currentBean.className + "(Long id) {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
             writeLine(this.bean.stateManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
@@ -554,7 +554,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to one component " + currentBean.objectName);            
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void delete" + currentBean.className + "(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
@@ -571,12 +571,12 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * delete object list");        
         writeLine(" */");
         writeLine("@Override");
-        writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
-        writeLine("public void delete" + this.bean.className + "List(List<Long> idList) {");
+        writeLine("@Transactional(rollbackFor=Exception.class)");
+        writeLine("public void deleteList(List<Long> idList) {");
         writeLine(this.bean.className + " " + this.bean.objectName + ";");
         writeLine("if (idList != null){");
-        writeLine("for (Long i:idList){");
-        writeLine(this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(i);");
+        writeLine("for (Long id:idList){");
+        writeLine(this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
         writeLine(this.bean.stateManagerObjectName + ".checkCanDelete(" + this.bean.objectName + ");");
         writeLine(this.bean.processorObjectName + ".delete" + "(" + bean.objectName + ");");
         writeLine("}");
@@ -595,7 +595,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * delete one to many component " + currentBean.objectName + " list");
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@Transactional(rollbackFor=Exception.class, value=" + (char)34 + "transactionManager" + (char)34 + ")");
+            writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void delete" + currentBean.className + "List(List<Long> idList) {");
             writeLine(currentBean.className + " " + currentBean.objectName + ";");
             writeLine("if (idList != null){");

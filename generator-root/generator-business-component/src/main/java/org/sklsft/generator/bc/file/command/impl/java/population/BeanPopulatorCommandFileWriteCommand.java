@@ -79,7 +79,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         
         writeLine("for (Object[] args : arguments.getArguments()) {");
-        writeLine("String message = " + CHAR_34 + "execute " + bean.serviceObjectName + ".save" + bean.className + " - args : " + CHAR_34 + ";");
+        writeLine("String message = " + CHAR_34 + "execute " + bean.serviceObjectName + ".save - args : " + CHAR_34 + ";");
         writeLine("for (Object arg:args) {");
         writeLine("message += " + CHAR_34 + "[" + CHAR_34 + " + arg + " + CHAR_34 + "]" + CHAR_34 + ";");
         writeLine("}");
@@ -90,7 +90,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = mapper.mapFrom(new " + bean.fullViewBean.className + "(), args, 1);");
         skipLine();
         
-        writeLine("this." + bean.serviceObjectName + ".save" + bean.className + "(" + this.bean.fullViewBean.objectName + ");");
+        writeLine("this." + bean.serviceObjectName + ".save(" + this.bean.fullViewBean.objectName + ");");
         writeLine("} catch (Exception e) {");
         writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage(), e);");
         writeLine("}");

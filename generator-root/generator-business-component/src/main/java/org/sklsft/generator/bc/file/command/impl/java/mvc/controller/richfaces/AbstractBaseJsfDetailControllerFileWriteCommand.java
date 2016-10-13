@@ -146,7 +146,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			}
 		}
 		
-		writeLine(this.bean.detailViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".load" + this.bean.className + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
+		writeLine(this.bean.detailViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".load(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
 
 		writeLine("}");
 		skipLine();
@@ -207,7 +207,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 
 			writeLine("this.reset" + currentBean.basicViewBean.filterClassName + "();");
 			
-			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + currentBean.serviceObjectName + ".load" + currentBean.className + "ListFrom" + oneToMany.referenceProperty.capName + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
+			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + currentBean.serviceObjectName + ".loadListFrom" + oneToMany.referenceProperty.capName + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
 			
 			writeLine("}");
 			skipLine();
@@ -220,8 +220,8 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine(" * update object");
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
-		writeLine("public void update" + this.bean.className + "() {");
-		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "());");
+		writeLine("public void update() {");
+		writeLine(this.bean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "());");
 		writeLine("load();");
 		writeLine("}");
 		skipLine();
@@ -299,7 +299,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				}
 			}
 
-			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create" + currentBean.className + "());");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create());");
 			writeLine("}");
 			skipLine();
 		}
@@ -333,7 +333,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			if (currentBean.detailMode.equals(DetailMode.MODAL)) {
 				writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 				writeLine("public void save" + currentBean.className + "() {");
-				writeLine(currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+				writeLine(currentBean.serviceObjectName + ".saveFrom" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
 				writeLine("load" + currentBean.className + "List();");
 				writeLine("}");
 				skipLine();
@@ -342,7 +342,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				writeLine("executeAjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 				writeLine("@Override");
 				writeLine("public Object execute() {");
-				writeLine("return " + currentBean.serviceObjectName + ".save" + currentBean.className + "From" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+				writeLine("return " + currentBean.serviceObjectName + ".saveFrom" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
 				writeLine("}");
 				writeLine("@Override");
 				writeLine("public void redirectOnComplete(Object result) {");
@@ -370,7 +370,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				}
 			}
 			
-			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + currentBean.serviceObjectName + ".load" + currentBean.className + "(id));");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + currentBean.serviceObjectName + ".load(id));");
 			writeLine("}");
 			skipLine();
 		}
@@ -386,7 +386,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine(currentBean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
+			writeLine(currentBean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -475,7 +475,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "(Long id) {");
-			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "(id);");
+			writeLine(currentBean.serviceObjectName + ".delete(id);");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -520,7 +520,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine("ids.add(" + currentBean.objectName + ".getId());");
 			writeLine("}");
 			writeLine("}");
-			writeLine(currentBean.serviceObjectName + ".delete" + currentBean.className + "List(ids);");
+			writeLine(currentBean.serviceObjectName + ".deleteList(ids);");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();

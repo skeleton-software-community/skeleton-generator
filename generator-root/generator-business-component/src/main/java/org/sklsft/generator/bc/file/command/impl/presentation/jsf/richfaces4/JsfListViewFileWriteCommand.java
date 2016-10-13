@@ -85,8 +85,8 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		writeLine("<div id=" + CHAR_34 + "dropList" + CHAR_34 + " class=" + CHAR_34 + "dropList" + CHAR_34 + ">");
 		
 		if (bean.deleteEnabled) {
-			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.dropSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".delete" + bean.className + "List}" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + bean.objectName + "PanelGroup"
+			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.deleteSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".deleteList}" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDeleteSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + bean.objectName + "PanelGroup"
 					+ CHAR_34 + ">");
 			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
 		
@@ -148,10 +148,10 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		}
 		
 		if (this.bean.deleteEnabled) {
-			writeLine("<a4j:commandLink  action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ".id)}" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDrop}')) return false" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
+			writeLine("<a4j:commandLink  action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete(" + this.bean.objectName + ".id)}" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDelete}')) return false" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/delete.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34
-					+ "#{i18n.drop}" + CHAR_34 + "/>");
+					+ "#{i18n.delete}" + CHAR_34 + "/>");
 			writeLine("</a4j:commandLink>");
 
 		}

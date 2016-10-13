@@ -92,7 +92,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine("}");
         
         writeLine("for (Object[] args:arguments.getArguments()) {");
-        writeLine("String message = " + CHAR_34 + "execute " + parentBean.serviceObjectName + ".save" + referenceBean.className + " - args : " + CHAR_34 + ";");
+        writeLine("String message = " + CHAR_34 + "execute " + parentBean.serviceObjectName + ".save - args : " + CHAR_34 + ";");
                 
         writeLine("for (Object arg:args) {");
         writeLine("message += " + CHAR_34 + "[" + CHAR_34 + " + arg + " + CHAR_34 + "]" + CHAR_34 + ";");
@@ -114,7 +114,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")args[" + i + "]:(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
         }
         
-        write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find" + parentBean.className + "(arg0");
+        write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find(arg0");
         for (int i=1;i<findPropertyList.size();i++)
         {
             write(", arg" + i);

@@ -87,7 +87,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         
         if (this.oneToOneComponent.referenceBean.deleteEnabled)
         {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.drop}" + CHAR_34 + 
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.delete}" + CHAR_34 + 
             		" rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34 +
             		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}" + CHAR_34 + 
             		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
