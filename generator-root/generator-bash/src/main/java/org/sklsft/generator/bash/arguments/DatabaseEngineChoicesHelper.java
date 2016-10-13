@@ -3,7 +3,6 @@ package org.sklsft.generator.bash.arguments;
 import java.util.TreeMap;
 
 import org.sklsft.generator.model.metadata.DatabaseEngine;
-import org.sklsft.generator.model.metadata.SkeletonType;
 
 /**
  * The choices of the database engine are available in an enumeration
