@@ -5,15 +5,15 @@ public interface Processor<T> {
 	/**
 	 * process save
 	 */
-	public Long save(T obj);
+	Long save(T obj);
 
 	/**
 	 * process update
 	 */
-	public void update(T obj);
+	void update(T obj);
 
 	/**
 	 * process delete
 	 */
-	public void delete(T obj);
+	void delete(T obj);
 }
