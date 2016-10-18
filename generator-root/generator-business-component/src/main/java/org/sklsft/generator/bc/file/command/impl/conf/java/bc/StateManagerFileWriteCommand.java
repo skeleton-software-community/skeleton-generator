@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.bc.statemanager;
+package org.sklsft.generator.bc.file.command.impl.conf.java.bc;
 
 import java.io.File;
 
