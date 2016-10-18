@@ -73,14 +73,23 @@ public class JavaModelFactory implements ModelFactory {
 		Model model = new Model();
         model.project = project;
 
-        model.populationExceptionPackageName = project.domainName + "." + project.projectName + ".populator.exception";
         model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
         model.mvcModelPackageName = project.domainName + "." + project.projectName + ".mvc.model";
+        model.apiModelPackageName = project.domainName + "." + project.projectName + ".api.model";
+        model.modelPackageName = project.domainName + "." + project.projectName + ".model";
         model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
-        model.commandExecutorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
+        model.builderPackageName = project.domainName + "." + project.projectName + ".populator.builder";
+        model.executorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
         model.enversPackageName = project.domainName + "." + project.projectName + ".model.envers";
-       
+        model.mapperPackageName = project.domainName + "." + project.projectName + ".bc.mapper";
+        model.stateManagerPackageName = project.domainName + "." + project.projectName + ".bc.statemanager";
+        model.processorPackageName = project.domainName + "." + project.projectName + ".bc.processor";
+        model.daoImplPackageName = project.domainName + "." + project.projectName + ".repository.dao.impl";
+        model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
+        model.serviceImplPackageName = project.domainName + "." + project.projectName + ".bl.impl";
+        model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";
+        
         model.packages = new ArrayList<Package>();
 		return model;
 	}

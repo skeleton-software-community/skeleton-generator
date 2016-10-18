@@ -226,7 +226,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 
 	private void writeMapReferenceToObject(Property property) {
 		List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
-		writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find" + property.referenceBean.className + "(");
+		writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find(");
 		writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + referencePropertyList.get(0).capName + "()");
 		for (int j = 1; j < referencePropertyList.size(); j++) {
 			writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + referencePropertyList.get(j).capName + "()");
@@ -250,7 +250,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 				if (embeddedProperty.referenceBean != null) {
 					
 					List<Property> referencePropertyList = embeddedProperty.referenceBean.getReferenceProperties();
-					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + embeddedProperty.referenceBean.daoObjectName + ".find" + embeddedProperty.referenceBean.className + "(");
+					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + embeddedProperty.referenceBean.daoObjectName + ".find(");
 					writeLine(this.bean.basicViewBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(0).capName + "()");
 					for (int j = 1; j < referencePropertyList.size(); j++) {
 						writeLine("," + this.bean.basicViewBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(j).capName + "()");

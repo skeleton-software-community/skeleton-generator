@@ -1,0 +1,19 @@
+package ${project.model.processorPackageName};
+
+public interface Processor<T> {
+
+	/**
+	 * process save
+	 */
+	public Long save(T obj);
+
+	/**
+	 * process update
+	 */
+	public void update(T obj);
+
+	/**
+	 * process delete
+	 */
+	public void delete(T obj);
+}
