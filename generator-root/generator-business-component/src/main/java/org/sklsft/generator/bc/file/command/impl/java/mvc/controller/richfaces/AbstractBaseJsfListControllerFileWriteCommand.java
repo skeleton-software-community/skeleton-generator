@@ -112,7 +112,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" * refresh object list");
 		writeLine(" */");
 		writeLine("public void refresh() {");
-		writeLine("this." + this.bean.listViewObjectName + ".set" + this.bean.className + "List(this." + this.bean.serviceObjectName + ".load" + this.bean.className + "List());");
+		writeLine("this." + this.bean.listViewObjectName + ".set" + this.bean.className + "List(this." + this.bean.serviceObjectName + ".loadList());");
 		writeLine("}");
 		skipLine();
 	}
@@ -130,7 +130,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 			}
 		}
 
-		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create" + this.bean.className + "());");
+		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create());");
 		writeLine("}");
 		skipLine();
 
@@ -143,17 +143,17 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" */");
 		if (bean.detailMode.equals(DetailMode.MODAL)) {
 			writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
-			writeLine("public void save" + this.bean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".save" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine("public void save() {");
+			writeLine(this.bean.serviceObjectName + ".save(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
 			writeLine("this.refresh();");
 			writeLine("}");
 			skipLine();
 		} else {
-			writeLine("public void save" + this.bean.className + "() {");
+			writeLine("public void save() {");
 			writeLine("executeAjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 			writeLine("@Override");
 			writeLine("public Object execute() {");
-			writeLine("return " + this.bean.serviceObjectName + ".save" + this.bean.className + "(" + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine("return " + this.bean.serviceObjectName + ".save(" + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
 			writeLine("}");
 			writeLine("@Override");
 			writeLine("public void redirectOnComplete(Object result) {");
@@ -178,7 +178,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 			}
 		}
 		
-		writeLine(bean.listViewObjectName + ".setSelected" + bean.className + "(" + this.bean.serviceObjectName + ".load" + bean.className + "(id));");
+		writeLine(bean.listViewObjectName + ".setSelected" + bean.className + "(" + this.bean.serviceObjectName + ".load(id));");
 		writeLine("}");
 		skipLine();
 	}
@@ -189,8 +189,8 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" * update object");
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
-		writeLine("public void update" + this.bean.className + "() {");
-		writeLine(this.bean.serviceObjectName + ".update" + this.bean.className + "(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+		writeLine("public void update() {");
+		writeLine(this.bean.serviceObjectName + ".update(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();
@@ -202,8 +202,8 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" * delete object");
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
-		writeLine("public void delete" + this.bean.className + "(Long id) {");
-		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "(id);");
+		writeLine("public void delete(Long id) {");
+		writeLine(this.bean.serviceObjectName + ".delete(id);");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();
@@ -215,14 +215,14 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" * delete object list");
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
-		writeLine("public void delete" + this.bean.className + "List() {");
+		writeLine("public void deleteList() {");
 		writeLine("List<Long> ids = new ArrayList<>();");
 		writeLine("for (" + bean.basicViewBean.className + " " + bean.objectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
 		writeLine("if (" + bean.objectName + ".getSelected()) {");
 		writeLine("ids.add(" + bean.objectName + ".getId());");
 		writeLine("}");
 		writeLine("}");
-		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(ids);");
+		writeLine(this.bean.serviceObjectName + ".deleteList(ids);");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();

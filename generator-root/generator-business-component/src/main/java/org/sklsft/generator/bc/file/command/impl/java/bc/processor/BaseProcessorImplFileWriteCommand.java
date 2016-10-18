@@ -28,6 +28,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
+        javaImports.add("import " + this.bean.myPackage.model.processorPackageName + ".Processor;");      
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -57,7 +58,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseProcessorClassName + " {");
+        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + "> {");
         skipLine();
 
         writeLine("/*"); 
@@ -72,7 +73,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * process save");
         writeLine(" */");
         writeLine("public Long save(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("return " + this.bean.daoObjectName + ".save" + this.bean.className + "(" + this.bean.objectName + ");");
+        writeLine("return " + this.bean.daoObjectName + ".save(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
         
@@ -137,7 +138,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * process delete");
         writeLine(" */");
         writeLine("public void delete(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine(this.bean.daoObjectName + ".delete" + this.bean.className + "(" + this.bean.objectName + ");");
+        writeLine(this.bean.daoObjectName + ".delete(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
 

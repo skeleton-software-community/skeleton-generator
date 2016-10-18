@@ -47,6 +47,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- Junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 			
 		<!-- jdbc drivers : uncomment one if necessary -->	
 		<!-- dependency>

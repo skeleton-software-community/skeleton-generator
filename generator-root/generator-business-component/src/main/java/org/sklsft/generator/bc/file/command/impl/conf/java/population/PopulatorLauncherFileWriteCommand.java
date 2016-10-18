@@ -9,7 +9,7 @@ import org.sklsft.generator.model.metadata.FileType;
 public class PopulatorLauncherFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PopulatorLauncherFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/java/" + project.model.commandExecutorPackageName.replace(".", File.separator) + File.separator, "PopulatorLauncher", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/java/" + project.model.executorPackageName.replace(".", File.separator) + File.separator, "PopulatorLauncher", FileType.JAVA, project);
 	}
 
 }
