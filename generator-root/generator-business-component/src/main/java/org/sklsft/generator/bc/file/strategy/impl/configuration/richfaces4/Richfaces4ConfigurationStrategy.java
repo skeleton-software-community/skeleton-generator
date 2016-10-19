@@ -1,6 +1,10 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.bc.ProcessorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.bc.StateManagerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.dao.BaseDaoFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.java.dao.BaseDaoImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditEntityFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditListenerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.RichfacesBaseControllerFileWriteCommand;
@@ -29,8 +33,6 @@ import org.sklsft.generator.bc.file.command.impl.conf.webapp.LogbackFileWriteCom
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.PopulatorProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.ProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces4WebXmlFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Project;
@@ -155,6 +157,12 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		
 		FileWriteCommandTreeNode processorTreeNode = new FileWriteCommandTreeNode(new ProcessorFileWriteCommand(project));
 		javaTreeNode.add(processorTreeNode);
+		
+		FileWriteCommandTreeNode baseDaoTreeNode = new FileWriteCommandTreeNode(new BaseDaoFileWriteCommand(project));
+		javaTreeNode.add(baseDaoTreeNode);
+		
+		FileWriteCommandTreeNode baseDaoImplTreeNode = new FileWriteCommandTreeNode(new BaseDaoImplFileWriteCommand(project));
+		javaTreeNode.add(baseDaoImplTreeNode);
 		
 		/*
 		 * envers
