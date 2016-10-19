@@ -1,7 +1,7 @@
 package org.sklsft.generator.bc.file.strategy.impl.model;
 
-import org.sklsft.generator.bc.file.command.impl.java.api.BasicViewBeanFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.api.FullViewBeanFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.api.model.BasicViewBeanFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.api.model.FullViewBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.model.EntityBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
