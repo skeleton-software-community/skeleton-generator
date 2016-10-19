@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.services;
+package org.sklsft.generator.bc.file.command.impl.java.api.interfaces;
 
 import java.io.File;
 import java.io.IOException;
