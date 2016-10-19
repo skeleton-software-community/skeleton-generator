@@ -1,9 +1,9 @@
 package org.sklsft.generator.bc.file.strategy.impl.services;
 
+import org.sklsft.generator.bc.file.command.impl.java.api.interfaces.BaseServiceInterfaceFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.api.interfaces.ServiceInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.services.BaseServiceImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.services.BaseServiceInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.services.ServiceImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.services.ServiceInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Package;
