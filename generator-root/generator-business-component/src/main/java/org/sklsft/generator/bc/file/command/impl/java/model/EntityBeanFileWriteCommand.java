@@ -135,7 +135,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		write("public class " + bean.className + " implements Serializable");
+		write("public class " + bean.className + " implements org.sklsft.commons.model.interfaces.Entity<Long>");
 		if (bean.interfaces != null) {
 			for (String interfaceElem:bean.interfaces) {
 				write(", " + interfaceElem);
