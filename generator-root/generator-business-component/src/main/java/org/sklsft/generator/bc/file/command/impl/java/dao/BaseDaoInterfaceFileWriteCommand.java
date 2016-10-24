@@ -32,7 +32,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
-		javaImports.add("import " + bean.myPackage.model.daoInterfacePackageName + ".BaseDao;");
+		javaImports.add("import org.sklsft.commons.model.patterns.BaseDao;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
@@ -59,7 +59,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-        writeLine("public interface " + this.bean.baseDaoInterfaceName + " extends BaseDao<" + this.bean.className + "> {");
+        writeLine("public interface " + this.bean.baseDaoInterfaceName + " extends BaseDao<" + this.bean.className + ", Long> {");
         skipLine();
 
         createLoadObjectList();

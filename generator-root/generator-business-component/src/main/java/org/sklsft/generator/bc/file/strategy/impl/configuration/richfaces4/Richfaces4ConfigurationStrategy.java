@@ -1,10 +1,6 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.bc.ProcessorFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.bc.StateManagerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.dao.BaseDaoFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.dao.BaseDaoImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditEntityFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditListenerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.RichfacesBaseControllerFileWriteCommand;
@@ -152,17 +148,6 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode populatorLauncherTreeNode = new FileWriteCommandTreeNode(new PopulatorLauncherFileWriteCommand(project));
 		javaTreeNode.add(populatorLauncherTreeNode);
 		
-		FileWriteCommandTreeNode stateManagerTreeNode = new FileWriteCommandTreeNode(new StateManagerFileWriteCommand(project));
-		javaTreeNode.add(stateManagerTreeNode);
-		
-		FileWriteCommandTreeNode processorTreeNode = new FileWriteCommandTreeNode(new ProcessorFileWriteCommand(project));
-		javaTreeNode.add(processorTreeNode);
-		
-		FileWriteCommandTreeNode baseDaoTreeNode = new FileWriteCommandTreeNode(new BaseDaoFileWriteCommand(project));
-		javaTreeNode.add(baseDaoTreeNode);
-		
-		FileWriteCommandTreeNode baseDaoImplTreeNode = new FileWriteCommandTreeNode(new BaseDaoImplFileWriteCommand(project));
-		javaTreeNode.add(baseDaoImplTreeNode);
 		
 		/*
 		 * envers
