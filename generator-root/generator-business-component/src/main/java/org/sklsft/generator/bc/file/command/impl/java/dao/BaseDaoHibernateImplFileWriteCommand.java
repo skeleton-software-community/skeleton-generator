@@ -39,7 +39,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.FetchMode;");
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import org.springframework.stereotype.Repository;");
-		javaImports.add("import " + bean.myPackage.model.daoImplPackageName + ".BaseDaoImpl;");
+		javaImports.add("import org.sklsft.commons.model.patterns.BaseDaoImpl;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
 	
@@ -68,7 +68,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.baseDaoClassName  + " extends BaseDaoImpl<" + this.bean.className + "> implements " + this.bean.baseDaoInterfaceName + " {");
+		writeLine("public class " + this.bean.baseDaoClassName  + " extends BaseDaoImpl<" + this.bean.className + ", Long> implements " + this.bean.baseDaoInterfaceName + " {");
 		skipLine();
 		
 		writeLine("/**");

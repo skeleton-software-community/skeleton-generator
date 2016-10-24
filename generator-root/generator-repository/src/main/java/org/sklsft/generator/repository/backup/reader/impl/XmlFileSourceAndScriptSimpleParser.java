@@ -36,7 +36,6 @@ public class XmlFileSourceAndScriptSimpleParser {
 			Element element = document.getDocumentElement();
 			source = element.getElementsByTagName("source").item(0).getTextContent();
 			script = element.getElementsByTagName("script").item(0).getTextContent();
-			Node typeElem = element.getElementsByTagName("type").item(0);
 			
 		} catch (Exception e) {
 			throw new IOException("failed to read xml file : " + scriptFilePath,e);

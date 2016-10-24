@@ -1,4 +1,4 @@
-package ${project.model.commandExecutorPackageName};
+package ${project.model.executorPackageName};
 
 import java.io.File;
 import java.util.HashSet;
@@ -7,12 +7,12 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.sklsft.generator.bash.prompt.PopulatorPrompter;
 import org.sklsft.generator.bl.services.impl.BackupPostExecutionChecker;
 import org.sklsft.generator.bl.services.impl.BackupPreExecutionChecker;
 import org.sklsft.generator.bl.services.impl.Populator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.sklsft.generator.command.BackupCheckPrompter;
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.domain.Project;
@@ -91,7 +91,7 @@ public class PopulatorLauncher {
 				List<BackupPlanPreExecutionWarning> preExecutionWarnings = preChecker.checkPlan(inputDataSourceProvider, project, tables);
 				logger.info("plan pre-execution check finished");
 				
-				BackupCheckPrompter prompter = new BackupCheckPrompter();
+				PopulatorPrompter prompter = new PopulatorPrompter();
 				prompter.printPreExecutionWarnings(preExecutionWarnings);
 				prompter.promptForConfirmation();
 				
