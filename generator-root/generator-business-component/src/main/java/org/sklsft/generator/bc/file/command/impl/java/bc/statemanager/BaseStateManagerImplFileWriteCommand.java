@@ -27,7 +27,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 	
 		javaImports.add("import org.sklsft.commons.api.exception.state.InvalidStateException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.model.stateManagerPackageName + ".StateManager;");
+        javaImports.add("import org.sklsft.commons.model.patterns.StateManager;");
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -57,7 +57,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseStateManagerClassName + " implements StateManager<" + this.bean.className + "> {");
+        writeLine("public class " + this.bean.baseStateManagerClassName + " implements StateManager<" + this.bean.className + ", Long> {");
         skipLine();
         
         

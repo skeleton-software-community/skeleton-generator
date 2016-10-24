@@ -28,7 +28,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
-        javaImports.add("import " + this.bean.myPackage.model.processorPackageName + ".Processor;");      
+        javaImports.add("import org.sklsft.commons.model.patterns.Processor;");      
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -58,7 +58,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + "> {");
+        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + ", Long> {");
         skipLine();
 
         writeLine("/*"); 

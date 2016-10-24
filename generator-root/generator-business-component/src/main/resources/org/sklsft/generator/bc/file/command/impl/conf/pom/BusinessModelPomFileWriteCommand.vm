@@ -28,6 +28,15 @@
 			<artifactId>${project.projectName}-util</artifactId>
 		</dependency>
 		
+		
+		<!-- skeleton commons -->
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-entities</artifactId>
+		</dependency>
+		
+		
+		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
