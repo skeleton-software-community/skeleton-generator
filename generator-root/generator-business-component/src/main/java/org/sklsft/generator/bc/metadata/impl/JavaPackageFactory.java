@@ -3,6 +3,7 @@ package org.sklsft.generator.bc.metadata.impl;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.PackageFactory;
@@ -16,7 +17,6 @@ import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -32,7 +32,7 @@ public class JavaPackageFactory implements PackageFactory {
 	/*
 	 * properties
 	 */
-	@Autowired
+	@Inject
 	private TableFactory tableFactory;
 	@Resource(name="javaBeanFactory")
 	private BeanFactory beanFactory;

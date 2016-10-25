@@ -1,5 +1,7 @@
 package org.sklsft.generator.bl.services.impl;
 
+import javax.inject.Inject;
+
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
@@ -9,7 +11,6 @@ import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,7 +24,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	/*
 	 * properties injected by spring
 	 */
-	@Autowired
+	@Inject
 	ProjectMetaDataDao projectMetaDataDao;
 	
 	

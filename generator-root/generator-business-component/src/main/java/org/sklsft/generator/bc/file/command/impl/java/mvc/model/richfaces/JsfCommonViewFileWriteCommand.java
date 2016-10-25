@@ -27,7 +27,7 @@ public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import javax.faces.model.SelectItem;");
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.context.annotation.Scope;");
 		javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 	}

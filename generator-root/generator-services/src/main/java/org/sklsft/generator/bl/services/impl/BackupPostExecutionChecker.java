@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
@@ -14,7 +15,6 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.repository.backup.check.TableNotEmptyChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +26,7 @@ public class BackupPostExecutionChecker {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BackupPostExecutionChecker.class);
 	
-	@Autowired
+	@Inject
 	TableNotEmptyChecker tableNotEmptyChecker;
 
 	public List<BackupPlanPostExecutionWarning> checkPlan(DataSource dataSource, Project project, Set<String> tables) {
