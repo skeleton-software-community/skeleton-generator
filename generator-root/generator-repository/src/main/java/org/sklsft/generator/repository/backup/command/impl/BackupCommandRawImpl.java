@@ -2,12 +2,13 @@ package org.sklsft.generator.repository.backup.command.impl;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.repository.backup.command.interfaces.BackupCommand;
 import org.sklsft.generator.repository.backup.file.interfaces.SimpleScriptFileReader;
 import org.sklsft.generator.repository.build.Command;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackupCommandRawImpl implements BackupCommand, ApplicationContextAware {
 	
-	@Autowired
+	@Inject
 	private SimpleScriptFileReader reader;
 	
 	private ApplicationContext applicationContext;

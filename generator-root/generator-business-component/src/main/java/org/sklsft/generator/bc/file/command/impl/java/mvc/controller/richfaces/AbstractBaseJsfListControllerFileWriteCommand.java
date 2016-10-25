@@ -25,7 +25,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		
@@ -59,16 +59,16 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine("/*");
 		writeLine(" * services injected by spring");
 		writeLine(" */");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected " + this.bean.serviceInterfaceName + " " + this.bean.serviceObjectName + ";");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected CommonController commonController;");
 		skipLine();
 
 		writeLine("/*");
 		writeLine(" * view");
 		writeLine(" */");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected " + this.bean.listViewClassName + " " + this.bean.listViewObjectName + ";");
 		skipLine();
 

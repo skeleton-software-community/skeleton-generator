@@ -29,7 +29,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import javax.annotation.PostConstruct;");
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 
@@ -76,24 +76,24 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine("/*");
 		writeLine(" * services injected by spring");
 		writeLine(" */");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected " + this.bean.serviceInterfaceName + " " + this.bean.serviceObjectName + ";");
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
 			
-			writeLine("@Autowired");
+			writeLine("@Inject");
 			writeLine("protected " + currentBean.serviceInterfaceName + " " + currentBean.serviceObjectName + ";");
 		}
 		
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected CommonController commonController;");
 		skipLine();
 
 		writeLine("/*");
 		writeLine(" * view");
 		writeLine(" */");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("protected " + this.bean.detailViewClassName + " " + this.bean.detailViewObjectName + ";");
 		skipLine();
 		
