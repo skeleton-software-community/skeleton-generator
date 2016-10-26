@@ -29,7 +29,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
         javaImports.add("import java.util.ArrayList;");
-        javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+        javaImports.add("import javax.inject.Inject;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
         javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
@@ -98,7 +98,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * properties injected by spring");
         writeLine(" */");
 
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.daoInterfaceName + " " + this.bean.daoObjectName + ";");
         
         for (Property property:bean.properties) {
@@ -106,38 +106,38 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
         			
         			Bean parentBean = property.referenceBean;
-        			writeLine("@Autowired");
+        			writeLine("@Inject");
         	        writeLine("protected " + parentBean.daoInterfaceName + " " + parentBean.daoObjectName + ";");
         		}
         	}
         }
         
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.fullViewBean.mapperClassName + " " + this.bean.fullViewBean.mapperObjectName + ";");
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.basicViewBean.mapperClassName + " " + this.bean.basicViewBean.mapperObjectName + ";");
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
             Bean currentBean = oneToOneComponent.referenceBean;
-            writeLine("@Autowired");
+            writeLine("@Inject");
             writeLine("protected " + currentBean.fullViewBean.mapperClassName + " " + currentBean.fullViewBean.mapperObjectName + ";");
         }
 
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = oneToManyComponent.referenceBean;
-            writeLine("@Autowired");
+            writeLine("@Inject");
             writeLine("protected " + currentBean.fullViewBean.mapperClassName + " " + currentBean.fullViewBean.mapperObjectName + ";");
-            writeLine("@Autowired");
+            writeLine("@Inject");
             writeLine("protected " + currentBean.basicViewBean.mapperClassName + " " + currentBean.basicViewBean.mapperObjectName + ";");
         }
         
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.stateManagerClassName + " " + this.bean.stateManagerObjectName + ";");
         skipLine();
         
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.processorClassName + " " + this.bean.processorObjectName + ";");
         skipLine();
 

@@ -26,6 +26,13 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
+		
+		<!-- Inject annotation -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		
 		<!-- annotations spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

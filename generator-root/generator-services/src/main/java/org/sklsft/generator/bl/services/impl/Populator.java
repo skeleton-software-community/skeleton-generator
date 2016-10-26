@@ -3,6 +3,8 @@ package org.sklsft.generator.bl.services.impl;
 import java.io.File;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.sklsft.generator.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
@@ -15,7 +17,6 @@ import org.sklsft.generator.repository.backup.file.impl.BackupFileLocator;
 import org.sklsft.generator.util.folder.FolderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,10 +24,10 @@ public class Populator {
 
 	private static final Logger logger = LoggerFactory.getLogger(Populator.class);
 	
-	@Autowired
+	@Inject
 	private BackupCommandFactory commandFactory;
 	
-	@Autowired
+	@Inject
 	private BackupFileLocator backupLocator;
 	
 	

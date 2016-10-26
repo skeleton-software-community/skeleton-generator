@@ -10,7 +10,6 @@ import org.sklsft.generator.model.backup.SourceAndScript;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * This class is used to convert a xml file to a {@link SourceAndScript}<br/>

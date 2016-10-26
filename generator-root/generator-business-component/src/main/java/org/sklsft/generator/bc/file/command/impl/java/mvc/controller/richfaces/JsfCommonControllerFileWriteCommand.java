@@ -26,7 +26,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.ArrayList;");
 		javaImports.add("import javax.faces.model.SelectItem;");
 		javaImports.add("import org.springframework.stereotype.Component;");
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.context.annotation.Scope;");
 		javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 		
@@ -64,7 +64,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/*");
 		writeLine(" * the view handled by the controller");
 		writeLine(" */");
-		writeLine("@Autowired");
+		writeLine("@Inject");
 		writeLine("private CommonView commonView;");
 		skipLine();
 
@@ -75,7 +75,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("@Autowired");
+					writeLine("@Inject");
 					writeLine("private " + bean.serviceInterfaceName + " " + bean.serviceObjectName + ";");
 				}
 			}
