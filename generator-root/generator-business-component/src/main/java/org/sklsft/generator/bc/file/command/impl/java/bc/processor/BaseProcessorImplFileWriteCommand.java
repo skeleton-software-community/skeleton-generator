@@ -25,7 +25,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         javaImports.add("import org.sklsft.commons.model.patterns.Processor;");      
@@ -65,7 +65,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * properties injected by spring");
         writeLine(" */");
         
-        writeLine("@Autowired");
+        writeLine("@Inject");
         writeLine("protected " + this.bean.daoInterfaceName + " " + this.bean.daoObjectName + ";");
         skipLine();
         

@@ -68,6 +68,7 @@
 		<compileSource>1.7</compileSource>
 				
 		<spring.version>3.2.2.RELEASE</spring.version>
+		<javax.inject.version>1</javax.inject.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<logback.version>1.0.13</logback.version>
@@ -142,6 +143,14 @@
 				<artifactId>postgresql</artifactId>
 				<version>${postgresql.version}</version>
 			 </dependency>
+			 
+			 
+			<!-- Inject annotation -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
 			 
 			 
 			<!-- Spring -->

@@ -32,7 +32,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 
 		javaImports.add("import org.sklsft.commons.mapper.impl.BasicMapperImpl;");
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
-		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
 
@@ -94,7 +94,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
-						writeLine("@Autowired");
+						writeLine("@Inject");
 						writeLine("protected " + property.referenceBean.daoInterfaceName + " " + property.referenceBean.daoObjectName + ";");
 					}
 				} else {
@@ -102,7 +102,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 						if (embeddedProperty.referenceBean != null && embeddedProperty.visibility.isListVisible()) {
 							boolean test = this.daoSet.add(embeddedProperty.referenceBean.daoObjectName);
 							if (test) {
-								writeLine("@Autowired");
+								writeLine("@Inject");
 								writeLine("protected " + embeddedProperty.referenceBean.daoInterfaceName + " " + embeddedProperty.referenceBean.daoObjectName + ";");
 							}
 						}

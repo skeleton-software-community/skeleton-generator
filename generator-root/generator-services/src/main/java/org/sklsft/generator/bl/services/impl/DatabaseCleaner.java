@@ -4,19 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.repository.backup.file.interfaces.SimpleScriptFileReader;
 import org.sklsft.generator.repository.build.JdbcRawCommand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseCleaner {
 	
-	@Autowired
+	@Inject
 	private SimpleScriptFileReader scriptFileReader;	
 
 	public void cleanDatabase(DataSource dataSource, Project project) throws IOException, InvalidFileException, SQLException {
