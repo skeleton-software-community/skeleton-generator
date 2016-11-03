@@ -77,7 +77,7 @@ public class JavaModelFactory implements ModelFactory {
         model.mvcModelPackageName = project.domainName + "." + project.projectName + ".mvc.model";
         model.apiModelPackageName = project.domainName + "." + project.projectName + ".api.model";
         model.modelPackageName = project.domainName + "." + project.projectName + ".model";
-        model.filterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
+        model.mvcFilterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
         model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
         model.builderPackageName = project.domainName + "." + project.projectName + ".populator.builder";
         model.executorPackageName = project.domainName + "." + project.projectName + ".populator.executor";

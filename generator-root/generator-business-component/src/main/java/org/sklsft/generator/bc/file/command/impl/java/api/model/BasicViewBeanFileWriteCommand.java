@@ -16,7 +16,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BasicViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.ovPackageName.replace(".",File.separator), bean.basicViewBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.basicViewsPackageName.replace(".",File.separator), bean.basicViewBean.className);
 		
 		this.bean = bean;
 		
@@ -32,7 +32,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + bean.myPackage.ovPackageName + ";");
+		writeLine("package " + bean.myPackage.basicViewsPackageName + ";");
         skipLine();
 
         writeImports();

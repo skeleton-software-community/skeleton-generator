@@ -22,18 +22,18 @@ public class Model {
 	 * properties
 	 */
 	public Project project;
-	
+
 	public List<Package> packages;
 
-    public String controllerPackageName;
-    public String mvcModelPackageName;
-    public String apiModelPackageName;
-    public String modelPackageName;
-    public String commandPackageName;
-    public String builderPackageName;
-    public String executorPackageName;
-    public String filterPackageName;
-    public String enversPackageName;    
+	public String controllerPackageName;
+	public String mvcModelPackageName;
+	public String apiModelPackageName;
+	public String modelPackageName;
+	public String commandPackageName;
+	public String builderPackageName;
+	public String executorPackageName;
+	public String mvcFilterPackageName;
+	public String enversPackageName;
 	public String daoInterfacePackageName;
 	public String daoImplPackageName;
 	public String mapperPackageName;
@@ -43,117 +43,151 @@ public class Model {
 	public String serviceInterfacePackageName;
 
 	/*
-     * getters and setters
-     */
-    public Project getProject() {
+	 * getters and setters
+	 */
+	public Project getProject() {
 		return project;
 	}
+
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
 	public List<Package> getPackages() {
 		return packages;
 	}
+
 	public void setPackages(List<Package> packages) {
 		this.packages = packages;
-	}	
+	}
+
 	public String getControllerPackageName() {
 		return controllerPackageName;
 	}
+
 	public void setControllerPackageName(String controllerPackageName) {
 		this.controllerPackageName = controllerPackageName;
 	}
+
 	public String getMvcModelPackageName() {
 		return mvcModelPackageName;
 	}
+
 	public void setMvcModelPackageName(String mvcModelPackageName) {
 		this.mvcModelPackageName = mvcModelPackageName;
 	}
+
 	public String getApiModelPackageName() {
 		return apiModelPackageName;
 	}
+
 	public void setApiModelPackageName(String apiModelPackageName) {
 		this.apiModelPackageName = apiModelPackageName;
 	}
+
 	public String getModelPackageName() {
 		return modelPackageName;
 	}
+
 	public void setModelPackageName(String modelPackageName) {
 		this.modelPackageName = modelPackageName;
 	}
+
 	public String getCommandPackageName() {
 		return commandPackageName;
 	}
+
 	public void setCommandPackageName(String commandPackageName) {
 		this.commandPackageName = commandPackageName;
 	}
+
 	public String getBuilderPackageName() {
 		return builderPackageName;
 	}
+
 	public void setBuilderPackageName(String builderPackageName) {
 		this.builderPackageName = builderPackageName;
 	}
+
 	public String getExecutorPackageName() {
 		return executorPackageName;
 	}
+
 	public void setExecutorPackageName(String executorPackageName) {
 		this.executorPackageName = executorPackageName;
 	}
+
 	public String getFilterPackageName() {
-		return filterPackageName;
+		return mvcFilterPackageName;
 	}
+
 	public void setFilterPackageName(String filterPackageName) {
-		this.filterPackageName = filterPackageName;
+		this.mvcFilterPackageName = filterPackageName;
 	}
+
 	public String getEnversPackageName() {
 		return enversPackageName;
 	}
+
 	public void setEnversPackageName(String enversPackageName) {
 		this.enversPackageName = enversPackageName;
 	}
+
 	public String getDaoInterfacePackageName() {
 		return daoInterfacePackageName;
 	}
+
 	public void setDaoInterfacePackageName(String daoInterfacePackageName) {
 		this.daoInterfacePackageName = daoInterfacePackageName;
 	}
+
 	public String getDaoImplPackageName() {
 		return daoImplPackageName;
 	}
+
 	public void setDaoImplPackageName(String daoImplPackageName) {
 		this.daoImplPackageName = daoImplPackageName;
 	}
+
 	public String getMapperPackageName() {
 		return mapperPackageName;
 	}
+
 	public void setMapperPackageName(String mapperPackageName) {
 		this.mapperPackageName = mapperPackageName;
 	}
+
 	public String getStateManagerPackageName() {
 		return stateManagerPackageName;
 	}
+
 	public void setStateManagerPackageName(String stateManagerPackageName) {
 		this.stateManagerPackageName = stateManagerPackageName;
 	}
+
 	public String getProcessorPackageName() {
 		return processorPackageName;
 	}
+
 	public void setProcessorPackageName(String processorPackageName) {
 		this.processorPackageName = processorPackageName;
 	}
+
 	public String getServiceImplPackageName() {
 		return serviceImplPackageName;
 	}
+
 	public void setServiceImplPackageName(String serviceImplPackageName) {
 		this.serviceImplPackageName = serviceImplPackageName;
 	}
+
 	public String getServiceInterfacePackageName() {
 		return serviceInterfacePackageName;
 	}
+
 	public void setServiceInterfacePackageName(String serviceInterfacePackageName) {
 		this.serviceInterfacePackageName = serviceInterfacePackageName;
 	}
-	
 	
 	
 	/**

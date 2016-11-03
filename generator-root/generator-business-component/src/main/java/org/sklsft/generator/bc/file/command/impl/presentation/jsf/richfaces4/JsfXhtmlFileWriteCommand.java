@@ -352,7 +352,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		case STRING:
 	
 			writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
-					+ property.capName + "DataTableFilter" + CHAR_34);
+					+ property.capName + "Filter" + CHAR_34);
 			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
@@ -366,7 +366,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		default:
 			
 			writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
-					+ property.capName + "DataTableFilter" + CHAR_34);
+					+ property.capName + "Filter" + CHAR_34);
 			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
@@ -385,7 +385,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		case STRING:
 	
 			writeLine("<h:inputText id=" + CHAR_34 + currentBean.objectName
-					+ property.capName + "DataTableFilter" + CHAR_34);
+					+ property.capName + "Filter" + CHAR_34);
 			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);
@@ -399,7 +399,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		default:
 			
 			writeLine("<h:inputText id=" + CHAR_34 + currentBean.objectName
-					+ property.capName + "DataTableFilter" + CHAR_34);
+					+ property.capName + "Filter" + CHAR_34);
 			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
 			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
 			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);

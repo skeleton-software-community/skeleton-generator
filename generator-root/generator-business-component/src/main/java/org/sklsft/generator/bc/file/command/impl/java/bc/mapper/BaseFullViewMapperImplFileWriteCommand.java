@@ -34,7 +34,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isDetailVisible()) {

@@ -34,25 +34,25 @@ public abstract class AbstractMvcDetailViewFileWriteCommand extends JavaFileWrit
         
         writeViewScopeImport();
 		
-		javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		
 		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
 			Bean currentBean = oneToOneComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 		}
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 		}
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filterPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 		}
 	}
 
