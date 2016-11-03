@@ -21,8 +21,8 @@ public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 		basicViewBean.mapperClassName = basicViewBean.className + "Mapper";
 		basicViewBean.mapperObjectName = basicViewBean.objectName + "Mapper";
 		
-		basicViewBean.filterClassName = bean.className + "DataTableFilter";
-		basicViewBean.filterObjectName = bean.objectName + "DataTableFilter";
+		basicViewBean.filterClassName = bean.className + "Filter";
+		basicViewBean.filterObjectName = bean.objectName + "Filter";
 		
 		basicViewBean.properties = bean.getBasicViewProperties();
 		
@@ -43,8 +43,8 @@ public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 		basicViewBean.mapperClassName = basicViewBean.className + "Mapper";
 		basicViewBean.mapperObjectName = basicViewBean.objectName + "Mapper";
 		
-		basicViewBean.filterClassName = bean.className + "DataTableFilter";
-		basicViewBean.filterObjectName = bean.objectName + "DataTableFilter";
+		basicViewBean.filterClassName = bean.className + "Filter";
+		basicViewBean.filterObjectName = bean.objectName + "Filter";
 		
 		basicViewBean.properties = oneToMany.getBasicViewProperties();
 		

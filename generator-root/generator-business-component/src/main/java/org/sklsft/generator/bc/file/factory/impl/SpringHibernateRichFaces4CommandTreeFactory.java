@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.file.factory.impl;
 
+import org.sklsft.generator.bc.file.strategy.impl.api.ApiStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.bc.BusinessComponentStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4.Richfaces4ConfigurationStrategy;
 import org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4.Richfaces4ResourcesStrategy;
@@ -23,6 +24,7 @@ public class SpringHibernateRichFaces4CommandTreeFactory extends AbstractFileWri
 			
 		
 		layerStrategies.add(new DefaultDatabaseStrategy());
+		layerStrategies.add(new ApiStrategy());
 		layerStrategies.add(new HibernateBusinessModelStrategy());
 		layerStrategies.add(new HibernateDaoStrategy());
 		layerStrategies.add(new BusinessComponentStrategy());

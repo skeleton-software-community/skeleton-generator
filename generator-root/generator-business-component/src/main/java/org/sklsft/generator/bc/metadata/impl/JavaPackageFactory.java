@@ -40,7 +40,7 @@ public class JavaPackageFactory implements PackageFactory {
 	@Override
 	public Package scanPackage(PackageMetaData packageMetaData, Model model){
 		Package myPackage = setUpPackage(packageMetaData, model);
-
+		
 		for (TableMetaData tableMetaData : packageMetaData.getTables()){
 			logger.info("Scanning table " + tableMetaData.getName());
 			
@@ -50,7 +50,7 @@ public class JavaPackageFactory implements PackageFactory {
 			Bean bean = beanFactory.scanBean(tableMetaData, table);
 			myPackage.beans.add(bean);
 		}
-
+		
 		return myPackage;
 	}
 
@@ -72,39 +72,40 @@ public class JavaPackageFactory implements PackageFactory {
 		Package myPackage = new Package();
 		myPackage.model = model;
 		myPackage.name = packageMetaData.getName().toLowerCase();
-
+		
 		myPackage.omPackageName = model.modelPackageName + "." + myPackage.name;
-		myPackage.ovPackageName = model.apiModelPackageName + "." + myPackage.name;
-
+		
+		myPackage.fullViewsPackageName = model.apiModelPackageName + "." + myPackage.name + ".views.full";
+		myPackage.basicViewsPackageName = model.apiModelPackageName + "." + myPackage.name + ".views.basic";
+		myPackage.formsPackageName = model.apiModelPackageName + "." + myPackage.name + ".forms";
+		myPackage.filtersPackageName = model.apiModelPackageName + "." + myPackage.name + ".filters";
+		
 		myPackage.baseDAOImplPackageName = model.daoImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseDAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name + ".base";
 		myPackage.DAOImplPackageName = model.daoImplPackageName + "." + myPackage.name;
 		myPackage.DAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name;
-
+		
 		myPackage.baseServiceImplPackageName = model.serviceImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseServiceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name + ".base";
 		myPackage.serviceImplPackageName = model.serviceImplPackageName + "." + myPackage.name;
 		myPackage.serviceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name;
-
+		
 		myPackage.baseMapperImplPackageName = model.mapperPackageName + "." + myPackage.name + ".base";
 		myPackage.mapperImplPackageName = model.mapperPackageName + "." + myPackage.name;
-
+		
 		myPackage.baseStateManagerImplPackageName = model.stateManagerPackageName + "." + myPackage.name + ".base";
 		myPackage.stateManagerImplPackageName = model.stateManagerPackageName + "." + myPackage.name;
 		
 		myPackage.baseProcessorImplPackageName = model.processorPackageName + "." + myPackage.name + ".base";
 		myPackage.processorImplPackageName = model.processorPackageName + "." + myPackage.name;
-
+		
 		myPackage.baseControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".base";
 		myPackage.controllerPackageName = model.controllerPackageName + "." + myPackage.name;
 		myPackage.listViewPackageName = model.mvcModelPackageName + "." + myPackage.name;
 		myPackage.detailViewPackageName = model.mvcModelPackageName + "." + myPackage.name;
-
-		myPackage.filterPackageName = model.filterPackageName + "." + myPackage.name;
-
-		myPackage.builderPackageName = model.builderPackageName + "." + myPackage.name;
+		
 		myPackage.commandPackageName = model.commandPackageName + "." + myPackage.name;
-
+		
 		myPackage.tables = new ArrayList<Table>();
 		myPackage.beans = new ArrayList<Bean>();
 		return myPackage;

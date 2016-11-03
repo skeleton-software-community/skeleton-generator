@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces;
+package org.sklsft.generator.bc.file.command.impl.java.api.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,13 +7,13 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 
-public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
+public class FilterFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public DataTableFilterFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.filterPackageName.replace(".", File.separator), bean.basicViewBean.filterClassName);
+	public FilterFileWriteCommand(Bean bean) {
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+				+ bean.myPackage.filtersPackageName.replace(".", File.separator), bean.basicViewBean.filterClassName);
 
 		this.bean = bean;
 	}
@@ -26,7 +26,7 @@ public class DataTableFilterFileWriteCommand extends JavaFileWriteCommand {
 
 	@Override
 	protected void writeContent() throws IOException {
-		writeLine("package " + bean.myPackage.filterPackageName + ";");
+		writeLine("package " + bean.myPackage.filtersPackageName + ";");
 		skipLine();
 
 		writeImports();

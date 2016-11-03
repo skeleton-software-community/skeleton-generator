@@ -1,6 +1,5 @@
 package org.sklsft.generator.bc.file.strategy.impl.controller;
 
-import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.DataTableFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfCommonControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.mvc.controller.richfaces.JsfListControllerFileWriteCommand;
@@ -91,24 +90,6 @@ public class Richfaces3ControllerStrategy implements LayerStrategy {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MvcDetailViewFileWriteCommand(bean));
 					detailViewTreeNode.add(beanTreeNode);
 				}
-			}
-		}
-		
-		FileWriteCommandTreeNode filterTreeNode = new FileWriteCommandTreeNode("DataTable filters");
-		mvcLayerTreeNode.add(filterTreeNode);
-
-		for (Package myPackage : project.model.packages) {
-			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
-			filterTreeNode.add(packageTreeNode);
-
-			for (Bean bean : myPackage.beans) {
-				
-				if (!bean.isEmbedded && !bean.isOneToOneComponent) {
-				
-					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new DataTableFilterFileWriteCommand(bean));
-					filterTreeNode.add(beanTreeNode);
-				}
-
 			}
 		}
 		
