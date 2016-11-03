@@ -16,7 +16,7 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public FullViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.ovPackageName.replace(".",File.separator), bean.fullViewBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.fullViewsPackageName.replace(".",File.separator), bean.fullViewBean.className);
 		
 		this.bean = bean;
 		
@@ -33,7 +33,7 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + bean.myPackage.ovPackageName + ";");
+		writeLine("package " + bean.myPackage.fullViewsPackageName + ";");
         skipLine();
 
         writeImports();

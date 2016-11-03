@@ -27,20 +27,20 @@ private Bean bean;
 		
 		javaImports.add("import java.util.Date;");
         javaImports.add("import java.util.List;");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         
         for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList)
         {
             Bean currentBean = OneToOneComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 
         for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.basicViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 		
 	}
