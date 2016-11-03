@@ -49,8 +49,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         	}
         }
         
-        javaImports.add("import " + this.bean.myPackage.mapperImplPackageName + "." + this.bean.basicViewBean.mapperClassName + ";");
-        javaImports.add("import " + this.bean.myPackage.mapperImplPackageName + "." + this.bean.fullViewBean.mapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.basicViewMapperPackageName + "." + this.bean.basicViewBean.mapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.fullViewMapperPackageName + "." + this.bean.fullViewBean.mapperClassName + ";");
         javaImports.add("import " + this.bean.myPackage.processorImplPackageName + "." + this.bean.processorClassName + ";");
         javaImports.add("import " + this.bean.myPackage.stateManagerImplPackageName + "." + this.bean.stateManagerClassName + ";");
         
@@ -62,7 +62,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewMapperPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
         }
 
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
@@ -70,9 +70,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.basicViewBean.mapperClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.basicViewMapperPackageName + "." + currentBean.basicViewBean.mapperClassName + ";");
             javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewMapperPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
         }
 		
 	}

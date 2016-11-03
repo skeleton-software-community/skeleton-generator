@@ -15,7 +15,7 @@ public class BasicViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BasicViewMapperImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.mapperImplPackageName.replace(".", File.separator), bean.basicViewBean.mapperClassName);
+				+ bean.myPackage.basicViewMapperPackageName.replace(".", File.separator), bean.basicViewBean.mapperClassName);
 
 		this.bean = bean;
 	}
@@ -24,14 +24,14 @@ public class BasicViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-        javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.basicViewBean.baseMapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseBasicViewMapperPackageName + "." + this.bean.basicViewBean.baseMapperClassName + ";");
 		
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.mapperImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.basicViewMapperPackageName + ";");
         skipLine();
         
         writeImports();

@@ -20,7 +20,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 	 */
 	public BaseFullViewMapperImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.baseMapperImplPackageName.replace(".", File.separator), bean.fullViewBean.baseMapperClassName);
+				+ bean.myPackage.baseFullViewMapperPackageName.replace(".", File.separator), bean.fullViewBean.baseMapperClassName);
 
 		this.bean = bean;
 	}
@@ -63,7 +63,7 @@ public class BaseFullViewMapperImplFileWriteCommand extends JavaFileWriteCommand
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.baseMapperImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.baseFullViewMapperPackageName + ";");
 		skipLine();
 		
 		writeImports();

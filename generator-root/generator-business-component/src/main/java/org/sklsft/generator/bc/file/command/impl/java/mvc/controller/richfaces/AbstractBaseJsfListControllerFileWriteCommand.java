@@ -15,7 +15,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 
 	public AbstractBaseJsfListControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.baseControllerPackageName.replace(".", File.separator), bean.baseListControllerClassName);
+				+ bean.myPackage.baseListControllerPackageName.replace(".", File.separator), bean.baseListControllerClassName);
 
 		this.bean = bean;
 	}
@@ -42,7 +42,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.baseControllerPackageName + ";");
+		writeLine("package " + this.bean.myPackage.baseListControllerPackageName + ";");
 		skipLine();
 
 		writeImports();

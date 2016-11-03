@@ -37,8 +37,10 @@ public class Package {
 	public String serviceInterfacePackageName;
 	public String serviceImplPackageName;
 
-	public String baseMapperImplPackageName;
-	public String mapperImplPackageName;
+	public String baseFullViewMapperPackageName;
+	public String fullViewMapperPackageName;
+	public String baseBasicViewMapperPackageName;
+	public String basicViewMapperPackageName;
 
 	public String baseStateManagerImplPackageName;
 	public String stateManagerImplPackageName;
@@ -49,8 +51,11 @@ public class Package {
 	public String facadeImplPackageName;
 	public String facadeInterfacesPackageName;
 
-	public String baseControllerPackageName;
-	public String controllerPackageName;
+	public String baseListControllerPackageName;
+	public String listControllerPackageName;	
+	public String baseDetailControllerPackageName;
+	public String detailControllerPackageName;
+	
 	public String listViewPackageName;
 	public String detailViewPackageName;
 
