@@ -31,7 +31,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
         
         javaImports.add("import org.sklsft.commons.mapper.impl.ObjectArrayToBeanMapperImpl;");

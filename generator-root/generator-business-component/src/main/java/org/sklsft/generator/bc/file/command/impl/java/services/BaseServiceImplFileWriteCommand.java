@@ -33,8 +33,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
         javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.basicViewBean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.ovPackageName + "." + this.bean.fullViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
         for (Property property:bean.properties) {
@@ -61,7 +61,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
         }
 
@@ -69,9 +69,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.basicViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.basicViewBean.mapperClassName + ";");
-            javaImports.add("import " + currentBean.myPackage.ovPackageName + "." + currentBean.fullViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.mapperImplPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
         }
 		

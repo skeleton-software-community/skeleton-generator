@@ -41,8 +41,8 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
-        javaImports.add("import " + referenceBean.myPackage.ovPackageName + "." + referenceBean.fullViewBean.className + ";");
-        javaImports.add("import " + parentBean.myPackage.ovPackageName + "." + parentBean.fullViewBean.className + ";");
+        javaImports.add("import " + referenceBean.myPackage.fullViewsPackageName + "." + referenceBean.fullViewBean.className + ";");
+        javaImports.add("import " + parentBean.myPackage.fullViewsPackageName + "." + parentBean.fullViewBean.className + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
         
         javaImports.add("import org.sklsft.commons.mapper.impl.ObjectArrayToBeanMapperImpl;");
