@@ -18,7 +18,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 
 	public AbstractBaseJsfDetailControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.baseControllerPackageName.replace(".", File.separator), bean.baseDetailControllerClassName);
+				+ bean.myPackage.baseDetailControllerPackageName.replace(".", File.separator), bean.baseDetailControllerClassName);
 
 		this.bean = bean;
 	}
@@ -59,7 +59,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.baseControllerPackageName + ";");
+		writeLine("package " + this.bean.myPackage.baseDetailControllerPackageName + ";");
 		skipLine();
 
 		writeImports();

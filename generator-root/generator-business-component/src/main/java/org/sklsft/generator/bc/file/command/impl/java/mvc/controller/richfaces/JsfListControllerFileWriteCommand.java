@@ -12,7 +12,7 @@ public class JsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	public JsfListControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.controllerPackageName.replace(".", File.separator), bean.listControllerClassName);
+				+ bean.myPackage.listControllerPackageName.replace(".", File.separator), bean.listControllerClassName);
 
 		this.bean = bean;
 	}
@@ -23,13 +23,13 @@ public class JsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
-        javaImports.add("import " + this.bean.myPackage.baseControllerPackageName + "." + this.bean.baseListControllerClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseListControllerPackageName + "." + this.bean.baseListControllerClassName + ";");
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.controllerPackageName + ";");
+		writeLine("package " + this.bean.myPackage.listControllerPackageName + ";");
 		skipLine();
         
         writeImports();
