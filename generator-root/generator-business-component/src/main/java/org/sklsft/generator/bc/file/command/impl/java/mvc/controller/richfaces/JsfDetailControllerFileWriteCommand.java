@@ -12,7 +12,7 @@ public class JsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
 
 	public JsfDetailControllerFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.controllerPackageName.replace(".", File.separator), bean.detailControllerClassName);
+				+ bean.myPackage.detailControllerPackageName.replace(".", File.separator), bean.detailControllerClassName);
 
 		this.bean = bean;
 	}
@@ -23,13 +23,13 @@ public class JsfDetailControllerFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
-        javaImports.add("import " + this.bean.myPackage.baseControllerPackageName + "." + this.bean.baseDetailControllerClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseDetailControllerPackageName + "." + this.bean.baseDetailControllerClassName + ";");
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.controllerPackageName + ";");
+		writeLine("package " + this.bean.myPackage.detailControllerPackageName + ";");
 		skipLine();
         
         writeImports();

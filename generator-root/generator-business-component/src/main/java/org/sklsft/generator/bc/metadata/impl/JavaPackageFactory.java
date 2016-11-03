@@ -90,8 +90,10 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.serviceImplPackageName = model.serviceImplPackageName + "." + myPackage.name;
 		myPackage.serviceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name;
 		
-		myPackage.baseMapperImplPackageName = model.mapperPackageName + "." + myPackage.name + ".base";
-		myPackage.mapperImplPackageName = model.mapperPackageName + "." + myPackage.name;
+		myPackage.baseFullViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.full.base";
+		myPackage.fullViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.full";
+		myPackage.baseBasicViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.basic.base";
+		myPackage.basicViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.basic";
 		
 		myPackage.baseStateManagerImplPackageName = model.stateManagerPackageName + "." + myPackage.name + ".base";
 		myPackage.stateManagerImplPackageName = model.stateManagerPackageName + "." + myPackage.name;
@@ -99,10 +101,14 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.baseProcessorImplPackageName = model.processorPackageName + "." + myPackage.name + ".base";
 		myPackage.processorImplPackageName = model.processorPackageName + "." + myPackage.name;
 		
-		myPackage.baseControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".base";
-		myPackage.controllerPackageName = model.controllerPackageName + "." + myPackage.name;
-		myPackage.listViewPackageName = model.mvcModelPackageName + "." + myPackage.name;
-		myPackage.detailViewPackageName = model.mvcModelPackageName + "." + myPackage.name;
+		myPackage.baseListControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".list.base";
+		myPackage.listControllerPackageName = model.controllerPackageName + "." + myPackage.name+ ".list";
+		myPackage.baseDetailControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".detail.base";
+		myPackage.detailControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".detail";
+		
+		
+		myPackage.listViewPackageName = model.mvcModelPackageName + "." + myPackage.name + ".list";
+		myPackage.detailViewPackageName = model.mvcModelPackageName + "." + myPackage.name + ".detail";
 		
 		myPackage.commandPackageName = model.commandPackageName + "." + myPackage.name;
 		

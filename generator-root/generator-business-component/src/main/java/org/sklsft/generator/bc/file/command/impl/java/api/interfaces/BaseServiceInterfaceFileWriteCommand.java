@@ -39,7 +39,7 @@ private Bean bean;
         for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList)
         {
             Bean currentBean = uniqueComponent.referenceBean;
-            javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.basicViewBean.className + ";");
+            javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
             javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
         }
 		
