@@ -15,7 +15,7 @@ public class FullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public FullViewMapperImplFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.mapperImplPackageName.replace(".", File.separator), bean.fullViewBean.mapperClassName);
+				+ bean.myPackage.fullViewMapperPackageName.replace(".", File.separator), bean.fullViewBean.mapperClassName);
 
 		this.bean = bean;
 	}
@@ -24,14 +24,14 @@ public class FullViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
 	protected void fetchSpecificImports() {
 
 		javaImports.add("import org.springframework.stereotype.Component;");
-        javaImports.add("import " + this.bean.myPackage.baseMapperImplPackageName + "." + this.bean.fullViewBean.baseMapperClassName + ";");
+        javaImports.add("import " + this.bean.myPackage.baseFullViewMapperPackageName + "." + this.bean.fullViewBean.baseMapperClassName + ";");
 		
 	}
 
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.mapperImplPackageName + ";");
+		writeLine("package " + this.bean.myPackage.fullViewMapperPackageName + ";");
         skipLine();
         
         writeImports();
