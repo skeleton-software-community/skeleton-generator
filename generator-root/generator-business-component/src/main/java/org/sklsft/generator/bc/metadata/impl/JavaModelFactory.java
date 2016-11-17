@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.FormBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ModelFactory;
 import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
@@ -48,6 +49,9 @@ public class JavaModelFactory implements ModelFactory {
 	
 	@Resource(name="javaFullViewBeanFactory")
 	private FullViewBeanFactory fullViewBeanFactory;
+	
+	@Resource(name="javaFormBeanFactory")
+	private FormBeanFactory formBeanFactory;
 	
 	@Resource(name="javaOptionBeanFactory")
 	private OptionBeanFactory optionBeanFactory;
@@ -128,10 +132,11 @@ public class JavaModelFactory implements ModelFactory {
 				
 				bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
 				bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
+				bean.formBean = formBeanFactory.getFormBean(bean);
 				
 				for (OneToMany oneToMany:bean.oneToManyList) {
 					oneToMany.basicViewBean = basicViewBeanFactory.getBasicViewBean(oneToMany);
-					oneToMany.fullViewBean = fullViewBeanFactory.getFullViewBean(oneToMany);
+					oneToMany.formBean = formBeanFactory.getFormBean(oneToMany);
 				}
 			}
 		}

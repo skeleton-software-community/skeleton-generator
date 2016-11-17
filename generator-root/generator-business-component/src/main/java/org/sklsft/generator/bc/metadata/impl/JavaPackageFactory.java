@@ -90,7 +90,8 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.serviceImplPackageName = model.serviceImplPackageName + "." + myPackage.name;
 		myPackage.serviceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name;
 		
-		myPackage.baseFullViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.full.base";
+		myPackage.baseFormMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".forms.base";
+		myPackage.formMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".forms";
 		myPackage.fullViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.full";
 		myPackage.baseBasicViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.basic.base";
 		myPackage.basicViewMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".views.basic";

@@ -42,6 +42,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
         javaImports.add("import " + referenceBean.myPackage.fullViewsPackageName + "." + referenceBean.fullViewBean.className + ";");
+        javaImports.add("import " + referenceBean.myPackage.formsPackageName + "." + referenceBean.formBean.className + ";");
         javaImports.add("import " + parentBean.myPackage.fullViewsPackageName + "." + parentBean.fullViewBean.className + ";");
         javaImports.add("import " + parentBean.myPackage.serviceInterfacePackageName + "." + parentBean.serviceInterfaceName + ";");
         
@@ -83,12 +84,12 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine("@Override");
         writeLine("public void execute(BackupArguments arguments) {");
         
-        writeLine("ObjectArrayToBeanMapper<" + referenceBean.fullViewBean.className + "> mapper;");
+        writeLine("ObjectArrayToBeanMapper<" + referenceBean.formBean.className + "> mapper;");
 		
         writeLine("if (arguments.isArgumentsTyped()) {");
-        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + referenceBean.fullViewBean.className + ">(" + referenceBean.fullViewBean.className + ".class);");
+        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + referenceBean.formBean.className + ">(" + referenceBean.formBean.className + ".class);");
         writeLine("} else {");
-        writeLine("mapper = new StringArrayToBeanMapperImpl<" + referenceBean.fullViewBean.className + ">(" + referenceBean.fullViewBean.className + ".class);");
+        writeLine("mapper = new StringArrayToBeanMapperImpl<" + referenceBean.formBean.className + ">(" + referenceBean.formBean.className + ".class);");
         writeLine("}");
         
         writeLine("for (Object[] args:arguments.getArguments()) {");
@@ -104,7 +105,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
                 
         writeLine("try {");
         
-        writeLine(referenceBean.fullViewBean.className + " " + referenceBean.fullViewBean.objectName + " = mapper.mapFrom(new " + referenceBean.fullViewBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length),1);");
+        writeLine(referenceBean.formBean.className + " " + referenceBean.formBean.objectName + " = mapper.mapFrom(new " + referenceBean.formBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length),1);");
         skipLine();               
         
         for (int i=0;i<findPropertyList.size();i++)
@@ -122,7 +123,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine(");");
         skipLine();
         
-        writeLine("this." + parentBean.serviceObjectName + ".save" + referenceBean.className + "(" + referenceBean.fullViewBean.objectName + ", " + parentBean.fullViewBean.objectName + ".getId());");
+        writeLine("this." + parentBean.serviceObjectName + ".save" + referenceBean.className + "(" + parentBean.fullViewBean.objectName + ".getId(), " + referenceBean.formBean.objectName + ");");
         writeLine("} catch (Exception e) {");
         writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage(), e);");
         writeLine("}");

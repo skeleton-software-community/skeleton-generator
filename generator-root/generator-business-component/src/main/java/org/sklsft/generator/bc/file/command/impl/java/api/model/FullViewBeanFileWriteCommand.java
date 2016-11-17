@@ -25,8 +25,10 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 		javaImports.add("import java.util.Date;");
-        javaImports.add("import java.io.Serializable;");
-        javaImports.add("import javax.validation.constraints.NotNull;");
+		javaImports.add("import java.io.Serializable;");
+		javaImports.add("import javax.validation.constraints.NotNull;");
+		javaImports.add("import org.sklsft.commons.api.model.FullView;");
+		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
 	}
 	
 	
@@ -34,77 +36,26 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	protected void writeContent() throws IOException {
 
 		writeLine("package " + bean.myPackage.fullViewsPackageName + ";");
-        skipLine();
+		skipLine();
 
-        writeImports();
-        skipLine();
+		writeImports();
+		skipLine();
 
-        writeLine("/**");
-        writeLine(" * auto generated view bean class file");
-        writeLine(" * <br/>basic representation of what is going to be considered as model in MVC patterns");
-        writeLine(" * <br/>write modifications between specific code marks");
-        writeLine(" * <br/>processed by skeleton-generator");
-        writeLine(" */");
-        writeLine("public class " + this.bean.fullViewBean.className + " implements Serializable {");
-        skipLine();
+		writeLine("/**");
+		writeLine(" * auto generated view bean class file");
+		writeLine(" * <br/>basic representation of what is going to be considered as model in MVC patterns");
+		writeLine(" * <br/>write modifications between specific code marks");
+		writeLine(" * <br/>processed by skeleton-generator");
+		writeLine(" */");
+		writeLine("public class " + this.bean.fullViewBean.className + " extends FullView<Long, " + bean.formBean.className + "> {");
+		skipLine();
 
-        writeLine("private static final long serialVersionUID = 1L;");
-        skipLine();
-
-        createProperties();
-        createGettersAndSetters();
-        writeNotOverridableContent();
-        
-        writeLine("}");
+		writeLine("private static final long serialVersionUID = 1L;");
+		skipLine();
+		
+		writeNotOverridableContent();
+		
+		writeLine("}");
 
     }
-
-    private void createProperties()
-    {
-        writeLine("/*");
-        writeLine(" * properties");
-        writeLine(" */");
-        writeLine("private Long id;");
-
-        for (Property property:this.bean.fullViewBean.properties) {
-        	if (!property.nullable) {
-        		writeLine("@NotNull");
-//        		if (property.dataType.equals(DataType.STRING) || property.dataType.equals(DataType.TEXT)) {
-//        			writeLine("@NotEmpty");
-//        		}
-        	}
-        	writeLine("private " + property.beanDataType + " " + property.name + ";");
-        }
-        skipLine();
-
-    }
-
-    private void createGettersAndSetters()
-    {
-        writeLine("/*");
-        writeLine(" * getters and setters");
-        writeLine(" */");
-        writeLine("public Long getId() {");
-        writeLine("return this.id;");
-        writeLine("}");
-        skipLine();
-        
-        writeLine("public void setId(Long id) {");
-        writeLine("this.id = id;");
-        writeLine("}");
-        skipLine();
-
-        for (Property property:this.bean.fullViewBean.properties) {
-            writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
-            writeLine("return this." + property.name + ";");
-            writeLine("}");
-            skipLine();
-            
-            writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
-            writeLine("this." + property.name + " = " + property.name + ";");
-            writeLine("}");
-            skipLine();
-        }
-        skipLine();
-	}
 }

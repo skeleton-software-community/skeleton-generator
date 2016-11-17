@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
-import org.sklsft.generator.model.domain.ui.FullViewBean;
+import org.sklsft.generator.model.domain.ui.FormBean;
 
 public class OneToMany {
 
@@ -16,7 +16,7 @@ public class OneToMany {
     public String collectionSetterName;
     
     public BasicViewBean basicViewBean;
-    public FullViewBean fullViewBean;
+    public FormBean formBean;
     
     
 	/**
@@ -41,7 +41,7 @@ public class OneToMany {
 		return result;
 	}
 	
-	public List<Property> getFullViewProperties() {
+	public List<Property> getFormProperties() {
 		List<Property> result = new ArrayList<>();
 		
 		for (Property property:getVisibleProperties()) {

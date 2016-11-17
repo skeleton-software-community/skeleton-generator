@@ -124,7 +124,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" */");
 		writeLine("public void create" + this.bean.className + "() {");
 
-		for (Property property : this.bean.fullViewBean.properties) {
+		for (Property property : this.bean.formBean.properties) {
 			if (property.comboBoxBean != null && property.editable) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
@@ -144,7 +144,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		if (bean.detailMode.equals(DetailMode.MODAL)) {
 			writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save() {");
-			writeLine(this.bean.serviceObjectName + ".save(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine(this.bean.serviceObjectName + ".save(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "().getForm());");
 			writeLine("this.refresh();");
 			writeLine("}");
 			skipLine();
@@ -153,7 +153,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 			writeLine("executeAjaxMethod(" + CHAR_34 + bean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 			writeLine("@Override");
 			writeLine("public Object execute() {");
-			writeLine("return " + this.bean.serviceObjectName + ".save(" + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+			writeLine("return " + this.bean.serviceObjectName + ".save(" + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "().getForm());");
 			writeLine("}");
 			writeLine("@Override");
 			writeLine("public void redirectOnComplete(Object result) {");
@@ -172,7 +172,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" */");
 		writeLine("public void edit" + bean.className + "(Long id) {");
 		
-		for (Property property : bean.fullViewBean.properties) {
+		for (Property property : bean.formBean.properties) {
 			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
@@ -190,7 +190,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
 		writeLine("public void update() {");
-		writeLine(this.bean.serviceObjectName + ".update(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "());");
+		writeLine(this.bean.serviceObjectName + ".update(this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "().getId(), this." + this.bean.listViewObjectName + ".getSelected" + this.bean.className + "().getForm());");
 		writeLine("this.refresh();");
 		writeLine("}");
 		skipLine();

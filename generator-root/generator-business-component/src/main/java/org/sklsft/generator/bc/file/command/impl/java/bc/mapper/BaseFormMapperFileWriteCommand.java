@@ -10,7 +10,7 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 
-public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteCommand {
+public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 	private Set<String> daoSet;
@@ -18,9 +18,9 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 	/*
 	 * constructor
 	 */
-	public BaseBasicViewMapperImplFileWriteCommand(Bean bean) {
+	public BaseFormMapperFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-component" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ bean.myPackage.baseBasicViewMapperPackageName.replace(".", File.separator), bean.basicViewBean.baseMapperClassName);
+				+ bean.myPackage.baseFormMapperPackageName.replace(".", File.separator), bean.formBean.baseMapperClassName);
 
 		this.bean = bean;
 	}
@@ -34,10 +34,10 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -47,7 +47,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 					javaImports.add("import " + property.referenceBean.myPackage.omPackageName + "." + property.referenceBean.className + ";");
 					
 					for (Property embeddedProperty:property.referenceBean.properties) {
-						if (embeddedProperty.referenceBean != null && embeddedProperty.visibility.isListVisible()) {
+						if (embeddedProperty.referenceBean != null && embeddedProperty.visibility.isDetailVisible()) {
 							boolean test = this.daoSet.add(embeddedProperty.referenceBean.daoObjectName);
 							if (test) {
 								javaImports.add("import " + embeddedProperty.referenceBean.myPackage.DAOInterfacePackageName + "." + embeddedProperty.referenceBean.daoInterfaceName + ";");
@@ -63,7 +63,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("package " + this.bean.myPackage.baseBasicViewMapperPackageName + ";");
+		writeLine("package " + this.bean.myPackage.baseFormMapperPackageName + ";");
 		skipLine();
 		
 		writeImports();
@@ -74,12 +74,12 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		write("public class " + this.bean.basicViewBean.baseMapperClassName);	
-		writeLine(" extends BasicMapperImpl<" + bean.basicViewBean.className + ", " + bean.className + "> {");
+		write("public class " + this.bean.formBean.baseMapperClassName);	
+		writeLine(" extends BasicMapperImpl<" + bean.formBean.className + ", " + bean.className + "> {");
 		skipLine();
 		
-		writeLine("public " + this.bean.basicViewBean.baseMapperClassName + "() {");
-		writeLine("super(" + this.bean.basicViewBean.className + ".class, " + this.bean.className + ".class);");
+		writeLine("public " + this.bean.formBean.baseMapperClassName + "() {");
+		writeLine("super(" + this.bean.formBean.className + ".class, " + this.bean.className + ".class);");
 		writeLine("}");
 		skipLine();
 
@@ -90,7 +90,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		this.daoSet = new HashSet<>();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -99,7 +99,7 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 					}
 				} else {
 					for (Property embeddedProperty:property.referenceBean.properties) {
-						if (embeddedProperty.referenceBean != null && embeddedProperty.visibility.isListVisible()) {
+						if (embeddedProperty.referenceBean != null && embeddedProperty.visibility.isDetailVisible()) {
 							boolean test = this.daoSet.add(embeddedProperty.referenceBean.daoObjectName);
 							if (test) {
 								writeLine("@Inject");
@@ -122,18 +122,17 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 
 	private void createMappingFrom() {
 		writeLine("/**");
-		writeLine(" * mapping view from object");
+		writeLine(" * mapping form from object");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("public " + this.bean.basicViewBean.className + " mapFrom(" + this.bean.basicViewBean.className + " " + this.bean.basicViewBean.objectName + ", " + this.bean.className + " "
+		writeLine("public " + this.bean.formBean.className + " mapFrom(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ", " + this.bean.className + " "
 				+ this.bean.objectName + ") {");
 		
-		writeLine(this.bean.basicViewBean.objectName + " = super.mapFrom(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
-		writeLine(this.bean.basicViewBean.objectName + ".setSelected(false);");
-
+		writeLine(this.bean.formBean.objectName + " = super.mapFrom(" + this.bean.formBean.objectName + ", " + this.bean.objectName + ");");
+		
 		for (Property property : this.bean.properties) {			
 			if (property.referenceBean != null) {
-				if (property.visibility.isListVisible()) {
+				if (property.visibility.isDetailVisible()) {
 					if (property.embedded) {
 						writeMapEmbeddedToView(property);
 					} else {
@@ -143,10 +142,11 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 			}
 		}
 
-		writeLine("return " + this.bean.basicViewBean.objectName + ";");
+		writeLine("return " + this.bean.formBean.objectName + ";");
 
 		writeLine("}");
 		skipLine();
+		
 	}
 	
 	private void writeMapReferenceToView(Property property) {
@@ -155,43 +155,45 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		if (property.nullable) {
 			writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
 			for (Property referenceProperty : referencePropertyList) {
-				writeLine(this.bean.basicViewBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + referenceProperty.fetchName
+				writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + referenceProperty.fetchName
 						+ ");");
 			}
 			writeLine("}");
 
 		} else {
 			for (Property findProperty : referencePropertyList) {
-				writeLine(this.bean.basicViewBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + findProperty.fetchName
+				writeLine(this.bean.formBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + findProperty.fetchName
 						+ ");");
 			}
 		}
 	}
 	
-	private void writeMapEmbeddedToView(Property property) {
+	private void writeMapEmbeddedToView(Property currentProperty) {
 		
-		Bean embeddedBean = property.referenceBean;
+		Bean referenceBean = currentProperty.referenceBean;
 		
-		for (int i = 1; i < embeddedBean.properties.size();i++) {
-			Property embeddedProperty = embeddedBean.properties.get(i);			
-			if (embeddedProperty.referenceBean != null) {
-				List<Property> referencePropertyList = embeddedProperty.referenceBean.getReferenceProperties();
-				if (embeddedProperty.nullable) {
-					writeLine("if (" + this.bean.objectName + "." + property.getterName + "()." + embeddedProperty.getterName + "() != null) {");
-					for (Property referenceProperty : referencePropertyList) {
-						writeLine(this.bean.basicViewBean.objectName + "." + embeddedProperty.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + embeddedProperty.fetchName + "." + referenceProperty.fetchName
-								+ ");");
+		for (int i = 1; i < referenceBean.properties.size();i++) {
+			Property property = referenceBean.properties.get(i);
+			if (property.visibility.isDetailVisible()) {
+				if (property.referenceBean != null) {
+					List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
+					if (property.nullable) {
+						writeLine("if (" + this.bean.objectName + "." + currentProperty.getterName + "()." + property.getterName + "() != null) {");
+						for (Property referenceProperty : referencePropertyList) {
+							writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + "." + referenceProperty.fetchName
+									+ ");");
+						}
+						writeLine("}");
+	
+					} else {
+						for (Property referenceProperty : referencePropertyList) {
+							writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + "." + referenceProperty.fetchName
+									+ ");");
+						}
 					}
-					writeLine("}");
-
 				} else {
-					for (Property referenceProperty : referencePropertyList) {
-						writeLine(this.bean.basicViewBean.objectName + "." + embeddedProperty.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + embeddedProperty.fetchName + "." + referenceProperty.fetchName
-								+ ");");
-					}
+					writeLine(this.bean.formBean.objectName + "." + property.setterName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + ");");
 				}
-			} else {
-				writeLine(this.bean.basicViewBean.objectName + "." + embeddedProperty.setterName + "(" + this.bean.objectName + "." + property.fetchName + "." + embeddedProperty.fetchName + ");");
 			}
 		}
 	}
@@ -202,13 +204,13 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * mapping view to object");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("public " + this.bean.className + " mapTo(" + this.bean.basicViewBean.className + " " + this.bean.basicViewBean.objectName + ", " + this.bean.className + " "
+		writeLine("public " + this.bean.className + " mapTo(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ", " + this.bean.className + " "
 				+ this.bean.objectName + ") {");
 		
-		writeLine(this.bean.objectName + " = super.mapTo(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
+		writeLine(this.bean.objectName + " = super.mapTo(" + this.bean.formBean.objectName + ", " + this.bean.objectName + ");");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
 				if (property.embedded) {
 					writeMapEmbeddedToObject(property);
 				} else {
@@ -227,14 +229,14 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 	private void writeMapReferenceToObject(Property property) {
 		List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
 		writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find(");
-		writeLine(this.bean.basicViewBean.objectName + "." + property.getterName + referencePropertyList.get(0).capName + "()");
+		writeLine(this.bean.formBean.objectName + "." + property.getterName + referencePropertyList.get(0).capName + "()");
 		for (int j = 1; j < referencePropertyList.size(); j++) {
-			writeLine("," + this.bean.basicViewBean.objectName + "." + property.getterName + referencePropertyList.get(j).capName + "()");
+			writeLine("," + this.bean.formBean.objectName + "." + property.getterName + referencePropertyList.get(j).capName + "()");
 		}
-		writeLine("));");
+		writeLine("));");		
 	}
 
-	private void writeMapEmbeddedToObject(Property property) {
+private void writeMapEmbeddedToObject(Property property) {
 		
 		Bean embeddedBean = property.referenceBean;
 		
@@ -246,19 +248,19 @@ public class BaseBasicViewMapperImplFileWriteCommand extends JavaFileWriteComman
 		
 		for (int i = 1; i < embeddedBean.properties.size(); i++) {
 			Property embeddedProperty = embeddedBean.properties.get(i);
-			if (embeddedProperty.visibility.isListVisible()) {
+			if (embeddedProperty.visibility.isDetailVisible()) {
 				if (embeddedProperty.referenceBean != null) {
 					
 					List<Property> referencePropertyList = embeddedProperty.referenceBean.getReferenceProperties();
 					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + embeddedProperty.referenceBean.daoObjectName + ".find(");
-					writeLine(this.bean.basicViewBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(0).capName + "()");
+					writeLine(this.bean.formBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(0).capName + "()");
 					for (int j = 1; j < referencePropertyList.size(); j++) {
-						writeLine("," + this.bean.basicViewBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(j).capName + "()");
+						writeLine("," + this.bean.formBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(j).capName + "()");
 					}
 					writeLine("));");
 					
 				} else {
-					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + bean.basicViewBean.objectName + "." + embeddedProperty.getterName + "());");
+					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + bean.formBean.objectName + "." + embeddedProperty.getterName + "());");
 				}
 			}
 		}

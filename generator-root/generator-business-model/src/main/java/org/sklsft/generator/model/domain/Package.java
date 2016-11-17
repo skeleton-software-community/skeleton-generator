@@ -37,7 +37,8 @@ public class Package {
 	public String serviceInterfacePackageName;
 	public String serviceImplPackageName;
 
-	public String baseFullViewMapperPackageName;
+	public String baseFormMapperPackageName;
+	public String formMapperPackageName;
 	public String fullViewMapperPackageName;
 	public String baseBasicViewMapperPackageName;
 	public String basicViewMapperPackageName;

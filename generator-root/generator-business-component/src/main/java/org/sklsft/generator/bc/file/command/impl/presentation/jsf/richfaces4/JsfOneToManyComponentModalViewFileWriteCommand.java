@@ -56,14 +56,14 @@ public class JsfOneToManyComponentModalViewFileWriteCommand extends JsfXhtmlFile
 		writeLine("<a4j:region>");
 		skipLine();
 
-		writeLine("<ui:param name=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}"
+		writeLine("<ui:param name=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + ".form}"
 				+ CHAR_34 + "/>");
 		skipLine();
 
 		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 		skipLine();
 
-		for (Property property : currentBean.fullViewBean.properties) {
+		for (Property property : currentBean.formBean.properties) {
 			writeInput(property, currentBean);
 		}
 

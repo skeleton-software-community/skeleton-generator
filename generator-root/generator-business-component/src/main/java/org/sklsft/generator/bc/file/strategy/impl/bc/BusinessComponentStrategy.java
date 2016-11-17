@@ -1,9 +1,10 @@
 package org.sklsft.generator.bc.file.strategy.impl.bc;
 
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseBasicViewMapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseFullViewMapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BasicViewMapperImplFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FullViewMapperImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseBasicViewMapperFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseFormMapperFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BasicViewMapperFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FormMapperFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FullViewMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.BaseProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
@@ -93,11 +94,11 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isEmbedded) {
-					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BaseBasicViewMapperImplFileWriteCommand(bean));
+					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BaseBasicViewMapperFileWriteCommand(bean));
 					packageTreeNode.add(basicMapperTreeNode);
 					
-					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new BaseFullViewMapperImplFileWriteCommand(bean));
-					packageTreeNode.add(fullMapperTreeNode);
+					FileWriteCommandTreeNode formMapperTreeNode = new FileWriteCommandTreeNode(new BaseFormMapperFileWriteCommand(bean));
+					packageTreeNode.add(formMapperTreeNode);
 				}
 			}
 		}
@@ -111,10 +112,13 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isEmbedded) {
-					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BasicViewMapperImplFileWriteCommand(bean));
+					FileWriteCommandTreeNode basicMapperTreeNode = new FileWriteCommandTreeNode(new BasicViewMapperFileWriteCommand(bean));
 					packageTreeNode.add(basicMapperTreeNode);
 					
-					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new FullViewMapperImplFileWriteCommand(bean));
+					FileWriteCommandTreeNode formMapperTreeNode = new FileWriteCommandTreeNode(new FormMapperFileWriteCommand(bean));
+					packageTreeNode.add(formMapperTreeNode);
+					
+					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new FullViewMapperFileWriteCommand(bean));
 					packageTreeNode.add(fullMapperTreeNode);
 				}
 			}

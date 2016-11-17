@@ -47,13 +47,13 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         writeLine("<h:form>");
         skipLine();
         
-        writeLine("<c:set var=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<c:set var=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + ".form}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
         skipLine();
 
-		for (Property property : currentBean.fullViewBean.properties) {
+		for (Property property : currentBean.formBean.properties) {
 			if (property.visibility.isDetailVisible()) {
 				writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + currentBean.objectName + property.capName + "} : " + CHAR_34 + "/>");
 				writeDetailComponent(property, currentBean);
