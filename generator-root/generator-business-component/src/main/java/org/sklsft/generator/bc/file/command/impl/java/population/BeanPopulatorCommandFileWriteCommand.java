@@ -31,7 +31,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
-        javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
+        javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
         
         javaImports.add("import org.sklsft.commons.mapper.impl.ObjectArrayToBeanMapperImpl;");
@@ -70,12 +70,12 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Override");
         writeLine("public void execute(BackupArguments arguments) {");
                 
-        writeLine("ObjectArrayToBeanMapper<" + bean.fullViewBean.className + "> mapper;");
+        writeLine("ObjectArrayToBeanMapper<" + bean.formBean.className + "> mapper;");
 		
         writeLine("if (arguments.isArgumentsTyped()) {");
-        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + bean.fullViewBean.className + ">(" + bean.fullViewBean.className + ".class);");
+        writeLine("mapper = new ObjectArrayToBeanMapperImpl<" + bean.formBean.className + ">(" + bean.formBean.className + ".class);");
         writeLine("} else {");
-        writeLine("mapper = new StringArrayToBeanMapperImpl<" + bean.fullViewBean.className + ">(" + bean.fullViewBean.className + ".class);");
+        writeLine("mapper = new StringArrayToBeanMapperImpl<" + bean.formBean.className + ">(" + bean.formBean.className + ".class);");
         writeLine("}");
         
         writeLine("for (Object[] args : arguments.getArguments()) {");
@@ -87,10 +87,10 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
                 
         writeLine("try {");
-        writeLine(bean.fullViewBean.className + " " + bean.fullViewBean.objectName + " = mapper.mapFrom(new " + bean.fullViewBean.className + "(), args, 1);");
+        writeLine(bean.formBean.className + " " + bean.formBean.objectName + " = mapper.mapFrom(new " + bean.formBean.className + "(), args);");
         skipLine();
         
-        writeLine("this." + bean.serviceObjectName + ".save(" + this.bean.fullViewBean.objectName + ");");
+        writeLine("this." + bean.serviceObjectName + ".save(" + this.bean.formBean.objectName + ");");
         writeLine("} catch (Exception e) {");
         writeLine("logger.error(message + " + CHAR_34 + "failed : " + CHAR_34 + " + e.getClass().getSimpleName() + " + CHAR_34 + " - " + CHAR_34 + " + e.getMessage(), e);");
         writeLine("}");

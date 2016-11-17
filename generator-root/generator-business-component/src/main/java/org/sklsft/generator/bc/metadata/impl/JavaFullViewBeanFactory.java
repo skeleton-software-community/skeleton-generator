@@ -17,11 +17,8 @@ public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 		fullViewBean.className = bean.className + "FullView";
 		fullViewBean.objectName = bean.objectName + "FullView";
 		
-		fullViewBean.baseMapperClassName = fullViewBean.className + "BaseMapper";
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
-		
-		fullViewBean.properties = bean.getFullViewProperties();
 		
 		return fullViewBean;
 	}
@@ -34,14 +31,11 @@ public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 		
 		Bean bean = oneToMany.referenceBean;
 		
-		fullViewBean.className = bean.className + "BasicView";
-		fullViewBean.objectName = bean.objectName + "BasicView";
+		fullViewBean.className = bean.className + "FullView";
+		fullViewBean.objectName = bean.objectName + "FullView";
 		
-		fullViewBean.baseMapperClassName = fullViewBean.className + "BaseMapper";
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
-		
-		fullViewBean.properties = oneToMany.getFullViewProperties();
 		
 		return fullViewBean;
 	}

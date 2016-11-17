@@ -4,6 +4,7 @@ import org.sklsft.generator.bc.file.command.impl.java.api.interfaces.BaseService
 import org.sklsft.generator.bc.file.command.impl.java.api.interfaces.ServiceInterfaceFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.api.model.BasicViewBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.api.model.FilterFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.api.model.FormBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.api.model.FullViewBeanFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
@@ -53,6 +54,9 @@ public class ApiStrategy implements LayerStrategy {
 					
 					FileWriteCommandTreeNode fullViewTreeNode = new FileWriteCommandTreeNode(new FullViewBeanFileWriteCommand(bean));
 					ovTreeNode.add(fullViewTreeNode);
+					
+					FileWriteCommandTreeNode formTreeNode = new FileWriteCommandTreeNode(new FormBeanFileWriteCommand(bean));
+					ovTreeNode.add(formTreeNode);
 				}
 			}
 			

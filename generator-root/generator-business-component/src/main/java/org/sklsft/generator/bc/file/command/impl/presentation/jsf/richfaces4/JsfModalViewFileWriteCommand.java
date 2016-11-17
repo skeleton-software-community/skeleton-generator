@@ -50,12 +50,12 @@ public class JsfModalViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<a4j:region>");
         skipLine();
 
-        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".selected" + this.bean.className + ".form}" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-        for (Property property : this.bean.fullViewBean.properties) {
+        for (Property property : this.bean.formBean.properties) {
         	writeInput(property, bean);
         }
         

@@ -6,6 +6,7 @@ import java.util.List;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
+import org.sklsft.generator.model.domain.ui.FormBean;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
 import org.sklsft.generator.model.domain.ui.OptionBean;
 import org.sklsft.generator.model.metadata.DetailMode;
@@ -84,6 +85,7 @@ public class Bean {
 	
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;
+	public FormBean formBean;
 	public OptionBean optionBean;
 	
 	
@@ -286,7 +288,7 @@ public class Bean {
 		return result;
 	}
 	
-	public List<Property> getFullViewProperties() {
+	public List<Property> getFormProperties() {
 		List<Property> result = new ArrayList<>();
 		
 		for (Property property:getVisibleProperties()) {

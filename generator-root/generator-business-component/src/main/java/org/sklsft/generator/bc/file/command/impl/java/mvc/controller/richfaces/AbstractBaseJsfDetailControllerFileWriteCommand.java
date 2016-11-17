@@ -140,7 +140,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine(" */");
 		writeLine("public void load() {");
 	
-		for (Property property : this.bean.fullViewBean.properties) {
+		for (Property property : this.bean.formBean.properties) {
 			if (property.comboBoxBean != null) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
@@ -163,7 +163,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "() {");
 			
-			for (Property property : currentBean.fullViewBean.properties) {
+			for (Property property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -221,7 +221,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".update" + CHAR_34 + ")");
 		writeLine("public void update() {");
-		writeLine(this.bean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "());");
+		writeLine(this.bean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getForm());");
 		writeLine("load();");
 		writeLine("}");
 		skipLine();
@@ -237,7 +237,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 			writeLine("load" + currentBean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -254,7 +254,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 			writeLine("load" + currentBean.className + "();");
 			writeLine("}");
 			skipLine();
@@ -271,7 +271,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : currentBean.fullViewBean.properties) {
+			for (Property property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -293,7 +293,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : oneToMany.fullViewBean.properties) {
+			for (Property property : oneToMany.formBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -315,7 +315,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");			
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 			writeLine("public void save" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+			writeLine(this.bean.serviceObjectName + ".save" + currentBean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();			
@@ -333,7 +333,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			if (currentBean.detailMode.equals(DetailMode.MODAL)) {
 				writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 				writeLine("public void save" + currentBean.className + "() {");
-				writeLine(currentBean.serviceObjectName + ".saveFrom" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+				writeLine(currentBean.serviceObjectName + ".saveFrom" + bean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 				writeLine("load" + currentBean.className + "List();");
 				writeLine("}");
 				skipLine();
@@ -342,7 +342,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				writeLine("executeAjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 				writeLine("@Override");
 				writeLine("public Object execute() {");
-				writeLine("return " + currentBean.serviceObjectName + ".saveFrom" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "(), " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId());");
+				writeLine("return " + currentBean.serviceObjectName + ".saveFrom" + bean.className + "( " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 				writeLine("}");
 				writeLine("@Override");
 				writeLine("public void redirectOnComplete(Object result) {");
@@ -364,7 +364,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
 			
-			for (Property property : oneToMany.fullViewBean.properties) {
+			for (Property property : oneToMany.formBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -386,7 +386,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine(currentBean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
+			writeLine(currentBean.serviceObjectName + ".update(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
@@ -403,7 +403,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
 			
-			for (Property property : currentBean.fullViewBean.properties) {
+			for (Property property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -425,7 +425,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".update" + CHAR_34 + ")");
 			writeLine("public void update" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "());");
+			writeLine(this.bean.serviceObjectName + ".update" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
