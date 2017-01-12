@@ -53,6 +53,14 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("private static final long serialVersionUID = 1L;");
 		skipLine();
 		
+		writeLine("/*");
+		writeLine(" * no argument constructor");
+		writeLine(" */");
+		writeLine("public " + this.bean.fullViewBean.className + "(){");
+		writeLine("this.form = new " + this.bean.formBean.className + "();");
+		writeLine("}");
+		skipLine();
+		
 		writeNotOverridableContent();
 		
 		writeLine("}");

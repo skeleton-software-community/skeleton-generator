@@ -140,7 +140,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		}
 		
 		if (!property.dataType.equals(DataType.BOOLEAN)) {
-			writeLine("<h:message for=" + CHAR_34 + prefix + bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detailErrorMessage" + CHAR_34 + "/>");
+			writeLine("<h:message for=" + CHAR_34 + prefix + bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detail-error-message" + CHAR_34 + "/>");
 		}
 		
 		writeLine("</div>");
@@ -152,7 +152,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		write("<h:selectOneMenu id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass=" + CHAR_34
 				+ "form-control" + CHAR_34 + " value=" + CHAR_34
-				+ "#{" + bean.objectName + "." + property.name + "}"
+				+ "#{form." + property.name + "}"
 				+ CHAR_34);
 				
 		if (!property.editable) {
@@ -220,7 +220,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{" + bean.objectName + "."
+				+ CHAR_34 + "#{form."
 				+ property.name + "}" + CHAR_34);
 		
 		if (!property.editable) {
@@ -235,7 +235,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " rows="
 				+ CHAR_34 + "10" + CHAR_34 + " value="
-				+ CHAR_34 + "#{" + bean.objectName + "."
+				+ CHAR_34 + "#{form."
 				+ property.name + "}" + CHAR_34);
 		
 		if (!property.editable) {
@@ -250,8 +250,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("<label>");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + prefix 
 				+ bean.objectName + property.capName
-				+ CHAR_34 + " value=" + CHAR_34 + "#{"
-				+ bean.objectName + "." + property.name + "}"
+				+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
 				+ CHAR_34);
 		if (property.editable) {
 			writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
@@ -272,7 +271,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{" + bean.objectName + "."
+				+ CHAR_34 + "#{form."
 				+ property.name + "}" + CHAR_34);
 		
 		if (!property.editable) {
@@ -304,7 +303,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{" + bean.objectName + "."
+				+ CHAR_34 + "#{form."
 				+ property.name + "}" + CHAR_34);
 				
 		if (!property.editable) {
@@ -322,8 +321,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		writeLine("<rich:calendar id=" + CHAR_34 + prefix 
 				+ bean.objectName + property.capName + CHAR_34
 				+ " inputClass=" + CHAR_34 + "form-control"
-				+ CHAR_34 + " value=" + CHAR_34 + "#{"
-				+ bean.objectName + "." + property.name + "}"
+				+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
 				+ CHAR_34);
 
 		switch (property.format) {
