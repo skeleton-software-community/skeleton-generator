@@ -41,8 +41,8 @@
 		<hibernate.version>3.6.10.Final</hibernate.version>
 		<javassist.version>3.9.0.GA</javassist.version>
 		
-		<spring.version>3.2.2.RELEASE</spring.version>
-		<spring.security.version>3.2.4.RELEASE</spring.security.version>
+		<spring.version>4.2.4.RELEASE</spring.version>
+		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<aspectj.version>1.7.3</aspectj.version>
 		<javax.inject.version>1</javax.inject.version>
 		

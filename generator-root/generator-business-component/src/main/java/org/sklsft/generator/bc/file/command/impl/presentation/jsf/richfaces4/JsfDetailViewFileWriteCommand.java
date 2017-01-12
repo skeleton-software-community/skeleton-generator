@@ -58,7 +58,8 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         writeLine("<a4j:region>");
         skipLine();
 
-        writeLine("<ui:param name=" + CHAR_34 + this.bean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.detailViewObjectName + ".selected" + this.bean.className + ".form}" + CHAR_34 + "/>");
+        writeLine("<ui:param name=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.detailViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + "/>");
+        writeLine("<ui:param name=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");

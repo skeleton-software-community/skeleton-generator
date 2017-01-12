@@ -56,7 +56,9 @@ public class JsfOneToManyModalViewFileWriteCommand extends JsfXhtmlFileWriteComm
 		writeLine("<a4j:region>");
 		skipLine();
 
-		writeLine("<ui:param name=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + ".form}"
+		writeLine("<ui:param name=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}"
+				+ CHAR_34 + "/>");
+		writeLine("<ui:param name=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}"
 				+ CHAR_34 + "/>");
 		skipLine();
 
@@ -72,7 +74,7 @@ public class JsfOneToManyModalViewFileWriteCommand extends JsfXhtmlFileWriteComm
 
 		if (this.oneToMany.referenceBean.createEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
-					+ " rendered=" + CHAR_34 + "#{empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " rendered=" + CHAR_34 + "#{empty view.id}" + CHAR_34
 					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
 					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
 					+ CHAR_34 + "/>");
@@ -80,7 +82,7 @@ public class JsfOneToManyModalViewFileWriteCommand extends JsfXhtmlFileWriteComm
 		
 		if (this.oneToMany.referenceBean.updateEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 
-					+ " rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34
+					+ " rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34
 					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
 					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
 					+ CHAR_34 + "/>");
