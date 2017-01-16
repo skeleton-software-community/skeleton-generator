@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackupFileLocator {
 
-	public PersistenceMode resolvePersistenceMode(int step, Table table, String backupPath) {
+	public PersistenceMode resolvePersistenceMode(String backupPath, int step, Table table) {
 
-		PersistenceMode mode = resolvePersistenceModeOrNull(step, table, backupPath);
+		PersistenceMode mode = resolvePersistenceModeOrNull(backupPath, step, table);
 
 		if (mode == null) {
 			throw new BackupFileNotFoundException("No backup file found for table : " + table.name);
@@ -24,31 +24,31 @@ public class BackupFileLocator {
 		}
 	}
 
-	public PersistenceMode resolvePersistenceModeOrNull(int step, Table table, String backupPath) {
-		if (existsFileForType(PersistenceMode.CMD, step, table, backupPath)) {
+	public PersistenceMode resolvePersistenceModeOrNull(String backupPath, int step, Table table) {
+		if (existsFileForType(backupPath, step, table, PersistenceMode.CMD)) {
 			return PersistenceMode.CMD;
-		} else if (existsFileForType(PersistenceMode.XML, step, table, backupPath)) {
+		} else if (existsFileForType(backupPath, step, table, PersistenceMode.XML)) {
 			return PersistenceMode.XML;
-		} else if (existsFileForType(PersistenceMode.CSV, step, table, backupPath)) {
+		} else if (existsFileForType(backupPath, step, table, PersistenceMode.CSV)) {
 			return PersistenceMode.CSV;
 		} else {
 			return null;
 		}
 	}
 
-	public String getBackupFilePath(int step, Table table, PersistenceMode mode, String backupPath) {
-		return getPathPrefix(step, table, backupPath) + mode.getExtension();
+	public String getBackupFilePath(String backupPath, int step, Table table, PersistenceMode mode) {
+		return getPathPrefix(backupPath, step, table) + mode.getExtension();
 	}
 
-	public String getBackupFilePath(int step, Table table, String backupPath) {
-		PersistenceMode mode = resolvePersistenceMode(step, table, backupPath);
-		return getPathPrefix(step, table, backupPath) + mode.getExtension();
+	public String getBackupFilePath(String backupPath, int step, Table table) {
+		PersistenceMode mode = resolvePersistenceMode(backupPath, step, table);
+		return getPathPrefix(backupPath, step, table) + mode.getExtension();
 	}
 
-	public boolean existsFileForTable(Table table, int maxStep, String backupPath) {
+	public boolean existsFileForTable(String backupPath, int maxStep, Table table) {
 		for (int step = 1; step <= maxStep; step++) {
 			for (PersistenceMode mode : PersistenceMode.values()) {
-				if (existsFileForType(mode, step, table, backupPath)) {
+				if (existsFileForType(backupPath, step, table, mode)) {
 					return true;
 				}
 			}
@@ -56,15 +56,15 @@ public class BackupFileLocator {
 		return false;
 	}
 
-	private boolean existsFileForType(PersistenceMode type, int step, Table table, String backupPath) {
+	private boolean existsFileForType(String backupPath, int step, Table table, PersistenceMode type) {
 
-		String backupFilePath = getBackupFilePath(step, table, type, backupPath);
+		String backupFilePath = getBackupFilePath(backupPath, step, table, type);
 		Path path = Paths.get(backupFilePath);
 
 		return Files.exists(path);
 	}
 
-	private String getPathPrefix(int step, Table table, String backupPath) {
+	private String getPathPrefix(String backupPath, int step, Table table) {
 		return backupPath + File.separator + step + File.separator
 				+ table.myPackage.name + File.separator + table.originalName;
 	}

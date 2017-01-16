@@ -62,12 +62,12 @@ public class BackupPreExecutionChecker {
 				if (tables == null || tables.contains(table.originalName)) {
 					logger.info("start pre checking table : " + table.name);
 
-					BackupPlanPreExecutionWarning noPlanWarning = checkTableHasPlan(table, maxStep, backupPath);
+					BackupPlanPreExecutionWarning noPlanWarning = checkTableHasPlan(backupPath, maxStep, table);
 					
 					if (noPlanWarning != null) {
 						result.add(noPlanWarning);
 					} else {
-						result.addAll(checkTableIsPopulatedFromProductionSource(table, maxStep, inputDataSourceProvider, backupPath));
+						result.addAll(checkTableIsPopulatedFromProductionSource(backupPath, maxStep, table, inputDataSourceProvider));
 					}
 				} else {
 					logger.info("table : " + table.name + " skipped");
@@ -91,40 +91,40 @@ public class BackupPreExecutionChecker {
 	}
 
 
-	private BackupPlanPreExecutionWarning checkTableHasPlan(Table table, int maxStep, String backupPath){
+	private BackupPlanPreExecutionWarning checkTableHasPlan(String backupPath, int maxStep, Table table){
 				
-		if(!tableHasPlan(table, maxStep, backupPath)){
+		if(!tableHasPlan(backupPath, maxStep, table)){
 			return new BackupPlanPreExecutionWarning(BackupPlanWarningType.NO_PLAN, BackupPlanPreExecutionWarning.NO_STEP, table);
 		}
 		return null;
 	}
 	
 	
-	private boolean tableHasPlan(Table table, int maxSteps, String backupPath) {
-		return backupLocator.existsFileForTable(table, maxSteps, backupPath);
+	private boolean tableHasPlan(String backupPath, int maxSteps, Table table) {
+		return backupLocator.existsFileForTable(backupPath, maxSteps, table);
 	}
 	
 	
-	private List<BackupPlanPreExecutionWarning> checkTableIsPopulatedFromProductionSource(Table table, int maxStep, InputDataSourceProvider inputDataSourceProvider, String backupPath) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkTableIsPopulatedFromProductionSource(String backupPath, int maxStep, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 		
 		for(int step=1; step<=maxStep; step++){
-			result.addAll(checkScriptsForStep(table, step, inputDataSourceProvider, backupPath));
+			result.addAll(checkScriptsForStep(backupPath, step, table, inputDataSourceProvider));
 		}
 		
 		return result;
 	}
 	
 
-	private List<BackupPlanPreExecutionWarning> checkScriptsForStep(Table table, int step, InputDataSourceProvider inputDataSourceProvider, String backupPath) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkScriptsForStep(String backupPath, int step, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 
-		PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(step, table, backupPath);
+		PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(backupPath, step, table);
 		if(mode!=null){
 			switch(mode){
 				case XML : 
-					result.addAll(checkXmlScript(table, step, inputDataSourceProvider, backupPath));
+					result.addAll(checkXmlScript(backupPath, step, table, inputDataSourceProvider));
 					break;
 				case CSV : 
 					result.add(new BackupPlanPreExecutionWarning(BackupPlanWarningType.HARDCODED_VALUES, step, table));
@@ -138,11 +138,11 @@ public class BackupPreExecutionChecker {
 	}
 	
 
-	private List<BackupPlanPreExecutionWarning> checkXmlScript(Table table, int step, InputDataSourceProvider inputDataSourceProvider, String backupPath) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkXmlScript(String backupPath, int step, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 		
-		String filePath = backupLocator.getBackupFilePath(step, table, backupPath);
+		String filePath = backupLocator.getBackupFilePath(backupPath, step, table);
 		SourceAndScript sourceAndScript = xmlFileSourceAndScriptParser.parse(filePath);
 		String sourceRef = sourceAndScript.getSource();
 
