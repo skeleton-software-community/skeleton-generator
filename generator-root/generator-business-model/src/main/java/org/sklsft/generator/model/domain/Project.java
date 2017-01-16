@@ -17,8 +17,6 @@ public class Project {
 	
 	public static final String BUILD_SCRIPT_FOLDER = "SQL" + File.separator + "BUILD";
 
-	public static final String BACKUP_SCRIPT_FOLDER = "BACKUP";
-
 	/*
 	 * properties
 	 */
