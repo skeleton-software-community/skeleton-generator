@@ -49,11 +49,11 @@ public class Populator {
 
 						try {
 							
-							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table, backupPath);
+							PersistenceMode mode = backupLocator.resolvePersistenceMode(backupPath, step, table);
 							
 							BackupCommand command = commandFactory.getBackupCommand(table, mode, inputDataSourceProvider);
 							
-							String path = backupLocator.getBackupFilePath(step, table, mode, backupPath);
+							String path = backupLocator.getBackupFilePath(backupPath, step, table, mode);
 									
 							command.execute(path);
 							
