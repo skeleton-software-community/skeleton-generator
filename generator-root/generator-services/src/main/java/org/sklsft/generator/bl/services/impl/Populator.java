@@ -1,6 +1,5 @@
 package org.sklsft.generator.bl.services.impl;
 
-import java.io.File;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -31,11 +30,11 @@ public class Populator {
 	private BackupFileLocator backupLocator;
 	
 	
-	public void populate(InputDataSourceProvider inputDataSourceProvider, Project project, Set<String> tables) {
+	public void populate(InputDataSourceProvider inputDataSourceProvider, Project project, Set<String> tables, String backupPath) {
 
 		logger.info("start populating database");
 
-		int maxSteps = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BACKUP_SCRIPT_FOLDER);
+		int maxSteps = FolderUtil.resolveMaxStep(backupPath);
 
 		for(int step=1; step<=maxSteps; step++){
 			logger.info("start bulding step " + step);
@@ -50,11 +49,11 @@ public class Populator {
 
 						try {
 							
-							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table);
+							PersistenceMode mode = backupLocator.resolvePersistenceMode(step, table, backupPath);
 							
-							BackupCommand command = commandFactory.getBackupCommand(step, table, mode, inputDataSourceProvider);
+							BackupCommand command = commandFactory.getBackupCommand(table, mode, inputDataSourceProvider);
 							
-							String path = backupLocator.getBackupFilePath(step, table, mode);
+							String path = backupLocator.getBackupFilePath(step, table, mode, backupPath);
 									
 							command.execute(path);
 							

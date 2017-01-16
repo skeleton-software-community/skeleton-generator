@@ -18,7 +18,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * For that, arguments are required to populate a {@link ProjectMetaData}<br/>
  * In your workspace folder, a data-model folder will be created with :
  * <li>your skeleton.xml file that contains your project meta-data
- * <li>a folder /data-model/BACKUP/ where to put your scripts to populate your database
+ * <li>a folder /data-model/CONTEXT/ with a template of your datasource-context.xml file for init and population
  * <li>your project configuration depending on the skeleton that you want
  * 
  * @author Nicolas Thibault

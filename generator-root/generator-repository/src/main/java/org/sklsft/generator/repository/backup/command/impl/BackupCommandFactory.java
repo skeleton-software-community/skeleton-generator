@@ -37,7 +37,7 @@ public class BackupCommandFactory {
 
 
 	
-	public BackupCommand getBackupCommand(int step, Table table, PersistenceMode mode, InputDataSourceProvider inputDataSourceProvider) {
+	public BackupCommand getBackupCommand(Table table, PersistenceMode mode, InputDataSourceProvider inputDataSourceProvider) {
 		
 		switch (mode) {
 			case CMD:
