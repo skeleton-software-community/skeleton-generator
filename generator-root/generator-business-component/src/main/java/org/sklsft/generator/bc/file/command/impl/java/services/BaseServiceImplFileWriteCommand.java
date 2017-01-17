@@ -280,7 +280,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("@Transactional(readOnly=true)");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
             writeLine("if (" + currentBean.objectName + "==null) {");
             writeLine("return new " + currentBean.fullViewBean.className + "();");
@@ -462,7 +462,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
             writeLine(this.bean.stateManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.formBean.mapperObjectName + ".mapTo(" + currentBean.formBean.objectName + ", " + currentBean.objectName + "));");
@@ -534,7 +534,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void delete" + currentBean.className + "(Long id) {");
-            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load" + this.bean.className + "(id);");
+            writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
             writeLine(this.bean.stateManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");

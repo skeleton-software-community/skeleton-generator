@@ -47,7 +47,8 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         writeLine("<h:form>");
         skipLine();
         
-        writeLine("<c:set var=" + CHAR_34 + currentBean.objectName + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + ".form}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<c:set var=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
+        writeLine("<c:set var=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}" + CHAR_34 + " scope=" + CHAR_34 + "request" + CHAR_34 + "/>");
         skipLine();
         
         writeLine("<h:panelGrid columns=" + CHAR_34 + "3" + CHAR_34 + ">");
@@ -72,7 +73,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         if (this.oneToOneComponent.referenceBean.updateEnabled)
         {
             writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 +
             		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + 
             		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
         }
@@ -80,7 +81,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         if (this.oneToOneComponent.referenceBean.createEnabled)
         {
             writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" rendered=" + CHAR_34 + "#{empty view.id}" + CHAR_34 +
             		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 + 
             		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
         }
@@ -88,7 +89,7 @@ public class JsfOneToOneComponentDetailViewFileWriteCommand extends JsfXhtmlFile
         if (this.oneToOneComponent.referenceBean.deleteEnabled)
         {
             writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.delete}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{not empty " + currentBean.objectName + ".id}" + CHAR_34 +
+            		" rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 +
             		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}" + CHAR_34 + 
             		" styleClass=" + CHAR_34 + "simpleButton" + CHAR_34 + " reRender=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
         }

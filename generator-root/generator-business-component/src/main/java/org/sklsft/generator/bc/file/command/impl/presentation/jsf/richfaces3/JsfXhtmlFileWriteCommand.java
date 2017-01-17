@@ -108,15 +108,14 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
 							+ property.capName + CHAR_34 + " style="
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
-							+ CHAR_34 + "#{" + bean.objectName + "."
+							+ CHAR_34 + "#{form."
 							+ property.name + "}" + CHAR_34);
 					writeLine("readonly=" + CHAR_34 + "true" + CHAR_34
 							+ "/>");
 				} else {
 					writeLine("<h:selectBooleanCheckbox id=" + CHAR_34
 							+ bean.objectName + property.capName + CHAR_34
-							+ " value=" + CHAR_34 + "#{" + bean.objectName
-							+ "." + property.name + "}" + CHAR_34);
+							+ " value=" + CHAR_34 + "#{form." + property.name + "}" + CHAR_34);
 					writeLine("readonly=" + CHAR_34 + "true" + CHAR_34
 							+ " disabled=" + CHAR_34 + "true" + CHAR_34
 							+ "/>");
@@ -127,7 +126,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:300px;background:lightgrey" + CHAR_34
-						+ " value=" + CHAR_34 + "#{" + bean.objectName + "."
+						+ " value=" + CHAR_34 + "#{form."
 						+ property.name + "}" + CHAR_34);
 				writeLine("readonly=" + CHAR_34 + "true" + CHAR_34 + ">");
 
@@ -151,7 +150,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:300px;background:lightgrey" + CHAR_34
-						+ " value=" + CHAR_34 + "#{" + bean.objectName + "."
+						+ " value=" + CHAR_34 + "#{form."
 						+ property.name + "}" + CHAR_34);
 				writeLine("readonly=" + CHAR_34 + "true" + CHAR_34 + ">");
 
@@ -179,7 +178,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:300px;background:lightgrey" + CHAR_34
-						+ " value=" + CHAR_34 + "#{" + bean.objectName + "."
+						+ " value=" + CHAR_34 + "#{form."
 						+ property.name + "}" + CHAR_34);
 				writeLine("readonly=" + CHAR_34 + "true" + CHAR_34 + ">");
 				writeLine("<f:convertNumber integerOnly=" + CHAR_34 + "true" + CHAR_34 + " pattern=" + CHAR_34 + "#,##0"
@@ -191,7 +190,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:300px;background:lightgrey" + CHAR_34
-						+ " value=" + CHAR_34 + "#{" + bean.objectName + "."
+						+ " value=" + CHAR_34 + "#{form."
 						+ property.name + "}" + CHAR_34);
 				writeLine("readonly=" + CHAR_34 + "true" + CHAR_34 + ">");
 				writeLine("</h:inputText>");
@@ -202,7 +201,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:600px;background:lightgrey" + CHAR_34
 						+ " rows=" + CHAR_34 + "10" + CHAR_34 + " value="
-						+ CHAR_34 + "#{" + bean.objectName + "."
+						+ CHAR_34 + "#{form."
 						+ property.name + "}" + CHAR_34);
 				writeLine("readonly=" + CHAR_34 + "true" + CHAR_34 + ">");
 				writeLine("</h:inputTextarea>");
@@ -213,7 +212,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				write("<h:selectOneMenu id=" + CHAR_34 + bean.objectName
 						+ property.capName + CHAR_34 + " style=" + CHAR_34
 						+ "width:300px" + CHAR_34 + " value=" + CHAR_34
-						+ "#{" + bean.objectName + "." + property.name + "}"
+						+ "#{form." + property.name + "}"
 						+ CHAR_34);
 				
 				writeLine(">");
@@ -278,13 +277,12 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 								+ bean.objectName + property.capName
 								+ CHAR_34 + " style=" + CHAR_34
 								+ "width:300px" + CHAR_34 + " value="
-								+ CHAR_34 + "#{" + bean.objectName + "."
+								+ CHAR_34 + "#{form."
 								+ property.name + "}" + CHAR_34 + "/>");
 					} else {
 						writeLine("<h:selectBooleanCheckbox id=" + CHAR_34
 								+ bean.objectName + property.capName
-								+ CHAR_34 + " value=" + CHAR_34 + "#{"
-								+ bean.objectName + "." + property.name + "}"
+								+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
 								+ CHAR_34);
 						writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
 								+ " disabled=" + CHAR_34 + "false"
@@ -296,8 +294,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					writeLine("<rich:calendar id=" + CHAR_34
 							+ bean.objectName + property.capName + CHAR_34
 							+ " inputStyle=" + CHAR_34 + "width:280px"
-							+ CHAR_34 + " value=" + CHAR_34 + "#{"
-							+ bean.objectName + "." + property.name + "}"
+							+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
 							+ CHAR_34);
 
 					switch (property.format) {
@@ -319,7 +316,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					write("<h:inputText id=" + CHAR_34 + bean.objectName
 							+ property.capName + CHAR_34 + " style="
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
-							+ CHAR_34 + "#{" + bean.objectName + "."
+							+ CHAR_34 + "#{form."
 							+ property.name + "}" + CHAR_34);
 					
 					writeLine(">");
@@ -347,7 +344,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					write("<h:inputText id=" + CHAR_34 + bean.objectName
 							+ property.capName + CHAR_34 + " style="
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
-							+ CHAR_34 + "#{" + bean.objectName + "."
+							+ CHAR_34 + "#{form."
 							+ property.name + "}" + CHAR_34);
 					
 					writeLine(">");
@@ -360,7 +357,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 					write("<h:inputText id=" + CHAR_34 + bean.objectName
 							+ property.capName + CHAR_34 + " style="
 							+ CHAR_34 + "width:300px" + CHAR_34 + " value="
-							+ CHAR_34 + "#{" + bean.objectName + "."
+							+ CHAR_34 + "#{form."
 							+ property.name + "}" + CHAR_34);
 					
 					writeLine("/>");
@@ -371,7 +368,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 							+ property.capName + CHAR_34 + " style="
 							+ CHAR_34 + "width:600px" + CHAR_34 + " rows="
 							+ CHAR_34 + "10" + CHAR_34 + " value="
-							+ CHAR_34 + "#{" + bean.objectName + "."
+							+ CHAR_34 + "#{form."
 							+ property.name + "}" + CHAR_34);
 					
 					writeLine("/>");
