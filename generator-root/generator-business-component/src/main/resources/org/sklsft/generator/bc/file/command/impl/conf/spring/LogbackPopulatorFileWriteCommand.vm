@@ -14,7 +14,7 @@
 
 	<!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>/temp/${project.projectName}-webapp.log</File>
+		<File>/var/log/${project.projectName}-populator.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-populator.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
