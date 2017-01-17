@@ -49,11 +49,11 @@ public class BackupPreExecutionChecker {
 	private XmlFileSourceAndScriptSimpleParser xmlFileSourceAndScriptParser;
 	
 	
-	public List<BackupPlanPreExecutionWarning> checkPlan(InputDataSourceProvider inputDataSourceProvider, Project project, Set<String> tables) throws IOException{
+	public List<BackupPlanPreExecutionWarning> checkPlan(InputDataSourceProvider inputDataSourceProvider, Project project, Set<String> tables, String backupPath) throws IOException{
 		
 		List<BackupPlanPreExecutionWarning> result = new ArrayList<>();
 		
-		int maxStep = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BACKUP_SCRIPT_FOLDER);
+		int maxStep = FolderUtil.resolveMaxStep(backupPath);
 		
 		validateProductionReference(inputDataSourceProvider);
 		
@@ -62,12 +62,12 @@ public class BackupPreExecutionChecker {
 				if (tables == null || tables.contains(table.originalName)) {
 					logger.info("start pre checking table : " + table.name);
 
-					BackupPlanPreExecutionWarning noPlanWarning = checkTableHasPlan(table, maxStep);
+					BackupPlanPreExecutionWarning noPlanWarning = checkTableHasPlan(backupPath, maxStep, table);
 					
 					if (noPlanWarning != null) {
 						result.add(noPlanWarning);
 					} else {
-						result.addAll(checkTableIsPopulatedFromProductionSource(table, maxStep, inputDataSourceProvider));
+						result.addAll(checkTableIsPopulatedFromProductionSource(backupPath, maxStep, table, inputDataSourceProvider));
 					}
 				} else {
 					logger.info("table : " + table.name + " skipped");
@@ -91,40 +91,40 @@ public class BackupPreExecutionChecker {
 	}
 
 
-	private BackupPlanPreExecutionWarning checkTableHasPlan(Table table, int maxStep){
+	private BackupPlanPreExecutionWarning checkTableHasPlan(String backupPath, int maxStep, Table table){
 				
-		if(!tableHasPlan(table, maxStep)){
+		if(!tableHasPlan(backupPath, maxStep, table)){
 			return new BackupPlanPreExecutionWarning(BackupPlanWarningType.NO_PLAN, BackupPlanPreExecutionWarning.NO_STEP, table);
 		}
 		return null;
 	}
 	
 	
-	private boolean tableHasPlan(Table table, int maxSteps) {
-		return backupLocator.existsFileForTable(table, maxSteps);
+	private boolean tableHasPlan(String backupPath, int maxSteps, Table table) {
+		return backupLocator.existsFileForTable(backupPath, maxSteps, table);
 	}
 	
 	
-	private List<BackupPlanPreExecutionWarning> checkTableIsPopulatedFromProductionSource(Table table, int maxStep, InputDataSourceProvider inputDataSourceProvider) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkTableIsPopulatedFromProductionSource(String backupPath, int maxStep, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 		
 		for(int step=1; step<=maxStep; step++){
-			result.addAll(checkScriptsForStep(table, step, inputDataSourceProvider));
+			result.addAll(checkScriptsForStep(backupPath, step, table, inputDataSourceProvider));
 		}
 		
 		return result;
 	}
 	
 
-	private List<BackupPlanPreExecutionWarning> checkScriptsForStep(Table table, int step, InputDataSourceProvider inputDataSourceProvider) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkScriptsForStep(String backupPath, int step, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 
-		PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(step, table);
+		PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(backupPath, step, table);
 		if(mode!=null){
 			switch(mode){
 				case XML : 
-					result.addAll(checkXmlScript(table, step, inputDataSourceProvider));
+					result.addAll(checkXmlScript(backupPath, step, table, inputDataSourceProvider));
 					break;
 				case CSV : 
 					result.add(new BackupPlanPreExecutionWarning(BackupPlanWarningType.HARDCODED_VALUES, step, table));
@@ -138,11 +138,11 @@ public class BackupPreExecutionChecker {
 	}
 	
 
-	private List<BackupPlanPreExecutionWarning> checkXmlScript(Table table, int step, InputDataSourceProvider inputDataSourceProvider) throws IOException {
+	private List<BackupPlanPreExecutionWarning> checkXmlScript(String backupPath, int step, Table table, InputDataSourceProvider inputDataSourceProvider) throws IOException {
 		
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 		
-		String filePath = backupLocator.getBackupFilePath(step, table);
+		String filePath = backupLocator.getBackupFilePath(backupPath, step, table);
 		SourceAndScript sourceAndScript = xmlFileSourceAndScriptParser.parse(filePath);
 		String sourceRef = sourceAndScript.getSource();
 

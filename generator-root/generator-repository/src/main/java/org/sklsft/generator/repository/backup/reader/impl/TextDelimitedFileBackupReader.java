@@ -42,7 +42,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 			return csvFile.getData();
 			
 		} catch (IOException | InvalidFileException e) {
-			throw new ReadBackupFailureException("failed to read backup", e);
+			throw new ReadBackupFailureException("failed to read backup at " + backupFilePath + " : " + e.getClass().getName() + " - " + e.getMessage(), e);
 		}
 	}
 }
