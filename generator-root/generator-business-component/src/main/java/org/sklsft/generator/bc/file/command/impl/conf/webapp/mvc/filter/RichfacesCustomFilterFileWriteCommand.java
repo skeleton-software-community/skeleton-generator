@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter;
+package org.sklsft.generator.bc.file.command.impl.conf.webapp.mvc.filter;
 
 import java.io.File;
 

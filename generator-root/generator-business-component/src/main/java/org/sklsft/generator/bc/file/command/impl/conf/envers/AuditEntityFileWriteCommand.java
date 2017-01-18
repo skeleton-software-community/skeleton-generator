@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.file.command.impl.conf.java.envers;
+package org.sklsft.generator.bc.file.command.impl.conf.envers;
 
 import java.io.File;
 
