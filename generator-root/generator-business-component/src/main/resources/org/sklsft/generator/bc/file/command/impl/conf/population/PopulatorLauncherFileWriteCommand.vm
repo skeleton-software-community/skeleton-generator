@@ -84,7 +84,7 @@ public class PopulatorLauncher {
 				OutputDataSourceProvider outputDataSourceProvider = appContext.getBean(OutputDataSourceProvider.class);
 				DataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
 				
-				LocalSessionFactoryBean sessionFactory = appContext.getBean(LocalSessionFactoryBean.class);
+				AnnotationSessionFactoryBean sessionFactory = appContext.getBean(AnnotationSessionFactoryBean.class);
 				sessionFactory.setDataSource(dataSource);
 				
 				InputDataSourceProvider inputDataSourceProvider = appContext.getBean(InputDataSourceProvider.class);

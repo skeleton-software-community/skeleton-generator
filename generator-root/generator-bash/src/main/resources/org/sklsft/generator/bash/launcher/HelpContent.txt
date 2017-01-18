@@ -1,4 +1,8 @@
-use one of the following commands :
-. init
-. generate
-. builddb
+You are using skeleton generator version 2.1.0-SNAPSHOT.
+
+Use one of the following commands :
+. init : to setup a project from scratch.
+. generate : to write lines of code once your skeleton.xml file has been edited.
+. builddb : to create your database scheme once your code has been generated.
+
+Visit our web site : generator.sklsft.org for more information.
