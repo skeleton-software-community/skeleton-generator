@@ -1,11 +1,8 @@
 package org.sklsft.generator.bc.file.strategy.impl.configuration.richfaces4;
 
 import org.sklsft.generator.bc.file.command.impl.conf.context.DataSourceContextFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditEntityFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.envers.AuditListenerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.controller.RichfacesBaseControllerFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.mvc.filter.RichfacesCustomFilterFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.java.population.PopulatorLauncherFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.envers.AuditEntityFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.envers.AuditListenerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.ApiPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.BusinessComponentPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.BusinessModelPomFileWriteCommand;
@@ -16,19 +13,22 @@ import org.sklsft.generator.bc.file.command.impl.conf.pom.Richfaces4RootPomFileW
 import org.sklsft.generator.bc.file.command.impl.conf.pom.Richfaces4WebappPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.ServicesPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.UtilPomFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.spring.LogbackPopulatorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.population.LogbackPopulatorFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.population.PopulatorLauncherFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.population.PopulatorProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.Richfaces4SpringWebappFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringBusinessComponentFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringPopulatorFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringPopulatorRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringServicesFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.spring.test.LogbackTestFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.spring.test.SpringTestRepositoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringTestRepositoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.test.LogbackTestFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.LogbackFileWriteCommand;
-import org.sklsft.generator.bc.file.command.impl.conf.webapp.PopulatorProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.ProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces4WebXmlFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.webapp.mvc.controller.RichfacesBaseControllerFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.webapp.mvc.filter.RichfacesCustomFilterFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
 import org.sklsft.generator.bc.file.strategy.interfaces.LayerStrategy;
 import org.sklsft.generator.model.domain.Project;
@@ -98,11 +98,14 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new ProjectPropertiesFileWriteCommand(project));
 		webappTreeNode.add(propertiesTreeNode);
 		
-		FileWriteCommandTreeNode populatorPropertiesTreeNode = new FileWriteCommandTreeNode(new PopulatorProjectPropertiesFileWriteCommand(project));
-		webappTreeNode.add(populatorPropertiesTreeNode);
-		
 		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new LogbackFileWriteCommand(project));
 		webappTreeNode.add(logbackTreeNode);
+		
+		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new RichfacesBaseControllerFileWriteCommand(project));
+		webappTreeNode.add(baseControllerTreeNode);
+		
+		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new RichfacesCustomFilterFileWriteCommand(project));
+		webappTreeNode.add(customFilterTreeNode);
 		
 		
 		/*
@@ -117,9 +120,6 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode springPopulatorRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringPopulatorRepositoryFileWriteCommand(project));
 		springTreeNode.add(springPopulatorRepositoryTreeNode);
 		
-		FileWriteCommandTreeNode logbackPopulatorTreeNode = new FileWriteCommandTreeNode(new LogbackPopulatorFileWriteCommand(project));
-		springTreeNode.add(logbackPopulatorTreeNode);
-		
 		FileWriteCommandTreeNode springBusinessComponentTreeNode = new FileWriteCommandTreeNode(new SpringBusinessComponentFileWriteCommand(project));
 		springTreeNode.add(springBusinessComponentTreeNode);
 		
@@ -132,21 +132,24 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode springPopulatorTreeNode = new FileWriteCommandTreeNode(new SpringPopulatorFileWriteCommand(project));
 		springTreeNode.add(springPopulatorTreeNode);
 		
+		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringTestRepositoryFileWriteCommand(project));
+		springTreeNode.add(springTestRepositoryTreeNode);
+		
 		
 		/*
-		 * java files
+		 * population
 		 */
-		FileWriteCommandTreeNode javaTreeNode = new FileWriteCommandTreeNode("java files");
-		configurationTreeNode.add(javaTreeNode);
+		FileWriteCommandTreeNode populationTreeNode = new FileWriteCommandTreeNode("Population");
+		configurationTreeNode.add(populationTreeNode);
 		
-		FileWriteCommandTreeNode baseControllerTreeNode = new FileWriteCommandTreeNode(new RichfacesBaseControllerFileWriteCommand(project));
-		javaTreeNode.add(baseControllerTreeNode);
-		
-		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new RichfacesCustomFilterFileWriteCommand(project));
-		javaTreeNode.add(customFilterTreeNode);
+		FileWriteCommandTreeNode populatorPropertiesTreeNode = new FileWriteCommandTreeNode(new PopulatorProjectPropertiesFileWriteCommand(project));
+		populationTreeNode.add(populatorPropertiesTreeNode);
 		
 		FileWriteCommandTreeNode populatorLauncherTreeNode = new FileWriteCommandTreeNode(new PopulatorLauncherFileWriteCommand(project));
-		javaTreeNode.add(populatorLauncherTreeNode);
+		populationTreeNode.add(populatorLauncherTreeNode);
+		
+		FileWriteCommandTreeNode logbackPopulatorTreeNode = new FileWriteCommandTreeNode(new LogbackPopulatorFileWriteCommand(project));
+		populationTreeNode.add(logbackPopulatorTreeNode);
 		
 		
 		/*
@@ -165,13 +168,10 @@ public class Richfaces4ConfigurationStrategy  implements LayerStrategy {
 		
 		
 		/*
-		 * spring test files
+		 * test files
 		 */
-		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode("spring test configuration files");
-		configurationTreeNode.add(springTestTreeNode);
-		
-		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringTestRepositoryFileWriteCommand(project));
-		springTestTreeNode.add(springTestRepositoryTreeNode);
+		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode("test configuration files");
+		configurationTreeNode.add(springTestTreeNode);		
 		
 		FileWriteCommandTreeNode logbackTestTreeNode = new FileWriteCommandTreeNode(new LogbackTestFileWriteCommand(project));
 		springTestTreeNode.add(logbackTestTreeNode);

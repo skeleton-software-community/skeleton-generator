@@ -37,24 +37,27 @@ public class PopulatorLauncher {
 	/**
 	 * 
 	 * @param args 0->the workspace folder where the "data-model" folder will be detected
-	 * @param args 1(optional)->a list of semicolon separated table names if you want to restrict the population with this list
+	 * @param args 1->the target datasource to be populated
+	 * @param args 2->the folder where the backup plan will be read
+	 * @param args 3(optional)->a list of semicolon separated table names if you want to restrict the population with this list
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 2) {
-			throw new IllegalArgumentException("Path and datasource are Mandatory");
+		if (args.length < 3) {
+			throw new IllegalArgumentException("workspace path, datasource and backup plan folder are Mandatory");
 		}
 		String workspacePath = args[0];
 		String databaseName = args[1];
+		String backupPath = args[2];
 		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
 		Set<String> tables = extractTables(args);
 		
-		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-demo-populator.xml",
-																								"classpath:applicationContext-demo-services.xml",
-																								"classpath:applicationContext-demo-business-component.xml",
-																								"classpath:applicationContext-demo-repository.xml",
+		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-${project.projectName}-populator.xml",
+																								"classpath:applicationContext-${project.projectName}-services.xml",
+																								"classpath:applicationContext-${project.projectName}-business-component.xml",
+																								"classpath:applicationContext-${project.projectName}-repository.xml",
 																								sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			
@@ -81,14 +84,14 @@ public class PopulatorLauncher {
 				OutputDataSourceProvider outputDataSourceProvider = appContext.getBean(OutputDataSourceProvider.class);
 				DataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
 				
-				AnnotationSessionFactoryBean sessionFactory = appContext.getBean(AnnotationSessionFactoryBean.class);
+				LocalSessionFactoryBean sessionFactory = appContext.getBean(LocalSessionFactoryBean.class);
 				sessionFactory.setDataSource(dataSource);
 				
 				InputDataSourceProvider inputDataSourceProvider = appContext.getBean(InputDataSourceProvider.class);
 				
 				BackupPreExecutionChecker preChecker = appContext.getBean(BackupPreExecutionChecker.class);
 				logger.info("Checking backup plan before execution...");
-				List<BackupPlanPreExecutionWarning> preExecutionWarnings = preChecker.checkPlan(inputDataSourceProvider, project, tables);
+				List<BackupPlanPreExecutionWarning> preExecutionWarnings = preChecker.checkPlan(inputDataSourceProvider, project, tables, backupPath);
 				logger.info("plan pre-execution check finished");
 				
 				PopulatorPrompter prompter = new PopulatorPrompter();
@@ -97,7 +100,7 @@ public class PopulatorLauncher {
 				
 				
 				Populator populator = appContext.getBean(Populator.class);
-				populator.populate(inputDataSourceProvider, project, tables);
+				populator.populate(inputDataSourceProvider, project, tables, backupPath);
 				
 				BackupPostExecutionChecker postChecker = appContext.getBean(BackupPostExecutionChecker.class);
 				logger.info("Checking backup plan after execution...");
@@ -117,8 +120,8 @@ public class PopulatorLauncher {
 		
 		Set<String> tables = null;
 		
-		if (args.length > 2) {
-			String tablesArg = args[2];
+		if (args.length > 3) {
+			String tablesArg = args[3];
 			String[] tableTokens = tablesArg.split(";");
 			tables = new HashSet<String>();
 			for (String table:tableTokens) {
@@ -129,3 +132,5 @@ public class PopulatorLauncher {
 		return tables;
 	}
 }
+
+
