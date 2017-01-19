@@ -12,6 +12,7 @@ import org.sklsft.generator.bc.file.command.impl.conf.pom.RepositoryPomFileWrite
 import org.sklsft.generator.bc.file.command.impl.conf.pom.Richfaces3RootPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.Richfaces3WebappPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.ServicesPomFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.pom.TestPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.pom.UtilPomFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.population.LogbackPopulatorFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.population.PopulatorLauncherFileWriteCommand;
@@ -81,6 +82,9 @@ public class Richfaces3ConfigurationStrategy  implements LayerStrategy {
 		
 		FileWriteCommandTreeNode populatorPomTreeNode = new FileWriteCommandTreeNode(new PopulatorPomFileWriteCommand(project));
 		pomTreeNode.add(populatorPomTreeNode);
+		
+		FileWriteCommandTreeNode testPomTreeNode = new FileWriteCommandTreeNode(new TestPomFileWriteCommand(project));
+		pomTreeNode.add(testPomTreeNode);
 		
 		FileWriteCommandTreeNode mavenInstallPomTreeNode = new FileWriteCommandTreeNode(new MavenInstallBatchFileWriteCommand(project));
 		pomTreeNode.add(mavenInstallPomTreeNode);
