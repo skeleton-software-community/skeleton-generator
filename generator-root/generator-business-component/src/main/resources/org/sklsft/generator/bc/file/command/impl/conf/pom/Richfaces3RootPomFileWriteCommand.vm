@@ -21,6 +21,7 @@
 		<module>${project.projectName}-services</module>
 		<module>${project.projectName}-webapp</module>
 		<module>${project.projectName}-populator</module>
+		<module>${project.projectName}-test</module>
 	</modules>
 	
 	<properties>
@@ -92,6 +93,12 @@
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
 				<artifactId>${project.projectName}-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-populator</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
@@ -170,7 +177,7 @@
 			
 			<!-- hsqldb Driver -->
 			<dependency>
-				<groupId>hsqldb</groupId>
+				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
 			</dependency>
