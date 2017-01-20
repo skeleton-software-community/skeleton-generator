@@ -1,5 +1,7 @@
 package org.sklsft.generator.repository.backup.command.impl;
 
+import javax.inject.Inject;
+
 import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -13,14 +15,11 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class BackupArgumentsCommandFactory implements ApplicationContextAware {
+public class BackupArgumentsCommandFactory {
 
+	@Inject
 	private ApplicationContext applicationContext;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-	}
 
 	/**
 	 * create the appropriate command depending on what table is used for
