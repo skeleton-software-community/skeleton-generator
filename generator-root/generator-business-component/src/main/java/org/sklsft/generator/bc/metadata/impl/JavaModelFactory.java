@@ -93,6 +93,8 @@ public class JavaModelFactory implements ModelFactory {
         model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
         model.serviceImplPackageName = project.domainName + "." + project.projectName + ".bl.impl";
         model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";
+        model.junitPackageName = project.domainName + "." + project.projectName + ".junit";
+        model.junitDataPackageName =  model.junitPackageName + ".data";
         
         model.packages = new ArrayList<Package>();
 		return model;

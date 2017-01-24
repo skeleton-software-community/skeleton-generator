@@ -23,8 +23,12 @@ import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringPopulatorFile
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringPopulatorRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringRepositoryFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringServicesFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringTestFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.spring.SpringTestRepositoryFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.test.JUnitDataInitializerFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.test.LogbackTestFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.test.SetupTestFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.conf.test.TestPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.LogbackFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.ProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.conf.webapp.Richfaces3WebXmlFileWriteCommand;
@@ -139,6 +143,9 @@ public class Richfaces3ConfigurationStrategy  implements LayerStrategy {
 		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringTestRepositoryFileWriteCommand(project));
 		springTreeNode.add(springTestRepositoryTreeNode);
 		
+		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode(new SpringTestFileWriteCommand(project));
+		springTreeNode.add(springTestTreeNode);
+		
 		
 		/*
 		 * population
@@ -179,6 +186,15 @@ public class Richfaces3ConfigurationStrategy  implements LayerStrategy {
 		
 		FileWriteCommandTreeNode logbackTestTreeNode = new FileWriteCommandTreeNode(new LogbackTestFileWriteCommand(project));
 		testTreeNode.add(logbackTestTreeNode);
+		
+		FileWriteCommandTreeNode testPropertiesTreeNode = new FileWriteCommandTreeNode(new TestPropertiesFileWriteCommand(project));
+		testTreeNode.add(testPropertiesTreeNode);
+		
+		FileWriteCommandTreeNode dataInitializerTreeNode = new FileWriteCommandTreeNode(new JUnitDataInitializerFileWriteCommand(project));
+		testTreeNode.add(dataInitializerTreeNode);
+		
+		FileWriteCommandTreeNode testSetupTreeNode = new FileWriteCommandTreeNode(new SetupTestFileWriteCommand(project));
+		testTreeNode.add(testSetupTreeNode);
 		
 		return configurationTreeNode;
 	}

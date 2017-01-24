@@ -41,6 +41,8 @@ public class Model {
 	public String processorPackageName;
 	public String serviceImplPackageName;
 	public String serviceInterfacePackageName;
+	public String junitPackageName;
+	public String junitDataPackageName;
 
 	/*
 	 * getters and setters
@@ -190,6 +192,30 @@ public class Model {
 	}
 	
 	
+	public String getMvcFilterPackageName() {
+		return mvcFilterPackageName;
+	}
+
+	public void setMvcFilterPackageName(String mvcFilterPackageName) {
+		this.mvcFilterPackageName = mvcFilterPackageName;
+	}
+
+	public String getJunitPackageName() {
+		return junitPackageName;
+	}
+
+	public void setJunitPackageName(String junitPackageName) {
+		this.junitPackageName = junitPackageName;
+	}
+
+	public String getJunitDataPackageName() {
+		return junitDataPackageName;
+	}
+
+	public void setJunitDataPackageName(String junitDataPackageName) {
+		this.junitDataPackageName = junitDataPackageName;
+	}
+
 	/**
      * run through all the tables until it is found
      * @param tableName
