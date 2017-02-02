@@ -50,7 +50,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
         writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
         skipLine();
         
-        writeLine("<h:form>");
+        writeLine("<h:form id=" + CHAR_34 + currentBean.objectName + "ListForm" + CHAR_34 + ">");
         skipLine();
         
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
