@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sklsft.demo.junit.data.JUnitDataInitializer;
+import ${project.model.junitDataPackageName}.JUnitDataInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;

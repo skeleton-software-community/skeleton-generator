@@ -30,7 +30,9 @@
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 		<java.version>1.7</java.version>
 		
-		<skeleton.commons.version>1.1.0-SNAPSHOT</skeleton.commons.version>
+		<skeleton.commons.version>1.1.0</skeleton.commons.version>
+		<skeleton.generator.version>2.1.0</skeleton.generator.version>
+		
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 		
@@ -101,6 +103,13 @@
 				<version>${project.version}</version>
 			</dependency>
 			
+			
+			<!-- skeleton generator -->
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-bash</artifactId>
+				<version>${skeleton.generator.version}</version>
+			</dependency>
 			
 			<!-- skeleton commons -->
 			<dependency>
