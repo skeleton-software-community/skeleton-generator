@@ -125,7 +125,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine("public void create" + this.bean.className + "() {");
 
 		for (Property property : this.bean.formBean.properties) {
-			if (property.comboBoxBean != null && property.editable) {
+			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
@@ -173,7 +173,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		writeLine("public void edit" + bean.className + "(Long id) {");
 		
 		for (Property property : bean.formBean.properties) {
-			if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
