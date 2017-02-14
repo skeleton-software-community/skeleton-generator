@@ -141,7 +141,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		writeLine("public void load() {");
 	
 		for (Property property : this.bean.formBean.properties) {
-			if (property.comboBoxBean != null) {
+			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
@@ -272,7 +272,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine("public void create" + currentBean.className + "() {");
 
 			for (Property property : currentBean.formBean.properties) {
-				if (property.comboBoxBean != null && property.editable) {
+				if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
@@ -294,7 +294,7 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 			writeLine("public void create" + currentBean.className + "() {");
 
 			for (Property property : oneToMany.formBean.properties) {
-				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
+				if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}

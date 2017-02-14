@@ -105,7 +105,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
                 
         writeLine("try {");
         
-        writeLine(referenceBean.formBean.className + " " + referenceBean.formBean.objectName + " = mapper.mapFrom(new " + referenceBean.formBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length),1);");
+        writeLine(referenceBean.formBean.className + " " + referenceBean.formBean.objectName + " = mapper.mapFrom(new " + referenceBean.formBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length));");
         skipLine();               
         
         for (int i=0;i<findPropertyList.size();i++)
