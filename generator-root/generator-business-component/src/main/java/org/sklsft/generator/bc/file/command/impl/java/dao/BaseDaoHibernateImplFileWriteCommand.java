@@ -324,6 +324,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+			writeLine(currentBean.objectName + ".get" + bean.className + "().get" + currentBean.className + "Collection().remove(" + currentBean.objectName + ");");
 			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
 			writeLine("}");
 			skipLine();

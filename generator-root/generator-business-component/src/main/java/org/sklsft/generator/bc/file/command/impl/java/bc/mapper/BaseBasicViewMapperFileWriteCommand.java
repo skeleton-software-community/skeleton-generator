@@ -35,6 +35,15 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
+		if (this.bean.isComponent) {
+			javaImports.add("import " + this.bean.parentBean.myPackage.rightsManagerImplPackageName + "." + this.bean.parentBean.rightsManagerClassName + ";");
+			javaImports.add("import " + this.bean.parentBean.myPackage.stateManagerImplPackageName + "." + this.bean.parentBean.stateManagerClassName + ";");
+		} 
+		else {
+			javaImports.add("import " + this.bean.myPackage.rightsManagerImplPackageName + "." + this.bean.rightsManagerClassName + ";");
+			javaImports.add("import " + this.bean.myPackage.stateManagerImplPackageName + "." + this.bean.stateManagerClassName + ";");
+		}
+
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.visibility.isListVisible()) {
@@ -110,6 +119,22 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		skipLine();
+		
+		if (this.bean.isComponent) {
+			writeLine("@Inject");
+			writeLine("protected " + this.bean.parentBean.rightsManagerClassName + " " + this.bean.parentBean.rightsManagerObjectName + ";");
+			
+			writeLine("@Inject");
+			writeLine("protected " + this.bean.parentBean.stateManagerClassName + " " + this.bean.parentBean.stateManagerObjectName + ";");
+		} 
+		else {
+			writeLine("@Inject");
+			writeLine("protected " + this.bean.rightsManagerClassName + " " + this.bean.rightsManagerObjectName + ";");
+			
+			writeLine("@Inject");
+			writeLine("protected " + this.bean.stateManagerClassName + " " + this.bean.stateManagerObjectName + ";");
+		}
 
 		skipLine();
 
@@ -125,11 +150,28 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * mapping view from object");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("public " + this.bean.basicViewBean.className + " mapFrom(" + this.bean.basicViewBean.className + " " + this.bean.basicViewBean.objectName + ", " + this.bean.className + " "
-				+ this.bean.objectName + ") {");
+		writeLine("public " + this.bean.basicViewBean.className + " mapFrom(" + this.bean.basicViewBean.className + " " + this.bean.basicViewBean.objectName +
+				", " + this.bean.className + " " + this.bean.objectName + ") {");
 		
-		writeLine(this.bean.basicViewBean.objectName + " = super.mapFrom(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
+		writeLine(this.bean.basicViewBean.objectName + " = super.mapFrom(" + this.bean.basicViewBean.objectName + ", "
+				+ this.bean.objectName + ");");
 		writeLine(this.bean.basicViewBean.objectName + ".setSelected(false);");
+		if (this.bean.isComponent) {
+			writeLine(this.bean.basicViewBean.objectName + ".setCanDelete(" 
+					+ this.bean.parentBean.rightsManagerObjectName + ".canDelete(" + this.bean.objectName + ".get" + this.bean.parentBean.className+ "())" 
+					+ " && "
+					+ this.bean.parentBean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + ".get" + this.bean.parentBean.className + "())" 										
+					+ ");");
+		} 
+		else {
+			writeLine(this.bean.basicViewBean.objectName + ".setCanDelete(" 
+					+ this.bean.rightsManagerObjectName + ".canDelete(" + this.bean.objectName + ")" 
+					+ " && "
+					+ this.bean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + ")" 										
+					+ ");");
+		}
+		
+
 
 		for (Property property : this.bean.properties) {			
 			if (property.referenceBean != null) {
@@ -142,6 +184,8 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		
+		
 
 		writeLine("return " + this.bean.basicViewBean.objectName + ";");
 

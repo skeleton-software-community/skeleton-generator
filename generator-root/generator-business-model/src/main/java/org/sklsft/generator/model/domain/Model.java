@@ -38,6 +38,15 @@ public class Model {
 	public String daoImplPackageName;
 	public String mapperPackageName;
 	public String stateManagerPackageName;
+	public String rightsManagerPackageName;
+	public String getRightsManagerPackageName() {
+		return rightsManagerPackageName;
+	}
+
+	public void setRightsManagerPackageName(String rightsManagerPackageName) {
+		this.rightsManagerPackageName = rightsManagerPackageName;
+	}
+
 	public String processorPackageName;
 	public String serviceImplPackageName;
 	public String serviceInterfacePackageName;

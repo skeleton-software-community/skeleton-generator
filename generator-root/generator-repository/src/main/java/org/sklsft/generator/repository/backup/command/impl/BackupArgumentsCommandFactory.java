@@ -3,9 +3,7 @@ package org.sklsft.generator.repository.backup.command.impl;
 import javax.inject.Inject;
 
 import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**

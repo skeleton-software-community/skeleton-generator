@@ -18,14 +18,23 @@ function setCaretToEnd(e) {
 }
 
 
-
+function displaySelectUnselectAll() {
+	var checkbox = $("input[id$='selectUnselectAll']").get(0);
+	
+	var elements = $("input[id$='selectUnselect']");
+	
+	
+	if (elements.length == 0) {
+		checkbox.style.display = "none";	
+	}
+}
 
 
 function selectUnselectAll(checkbox) {
 	var elements = checkbox.form.elements;
 	for ( var i = 0; i < elements.length; i++) {
 		var element = elements[i];
-		if (/selected$/.test(element.id)) {
+		if (/selectUnselect$/.test(element.id)) {
 			element.checked = checkbox.checked;
 		}
 	}
@@ -44,7 +53,7 @@ function selectUnselect(arg) {
 	var selectedItemNumber = 0;
 	for ( var elementIndex = 0; elementIndex < elements.length; elementIndex++) {
 		var element = elements[elementIndex];
-		if (/selected$/.test(element.id)) {
+		if (/selectUnselect$/.test(element.id)) {
 			if (!element.checked) {
 				allSelected = false;
 			} else {

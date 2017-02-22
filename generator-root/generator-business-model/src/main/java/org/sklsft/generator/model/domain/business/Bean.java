@@ -45,6 +45,10 @@ public class Bean {
 	public String stateManagerClassName;
 	public String stateManagerObjectName;
 	
+	public String baseRightsManagerClassName;
+	public String rightsManagerClassName;
+	public String rightsManagerObjectName;
+	
 	public String baseProcessorClassName;
 	public String processorClassName;
 	public String processorObjectName;
@@ -82,6 +86,7 @@ public class Bean {
 	public boolean isComponent = false;
 	public boolean isEmbedded = false;
 	public boolean isOneToOneComponent = false;
+	public Bean parentBean = null;
 	
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;

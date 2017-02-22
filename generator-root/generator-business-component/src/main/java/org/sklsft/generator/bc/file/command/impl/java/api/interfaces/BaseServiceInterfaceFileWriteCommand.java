@@ -191,7 +191,7 @@ private Bean bean;
             writeLine("/**");
             writeLine(" * create one to many component " + currentBean.objectName);
             writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "();");
+            writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "(Long id);");
             skipLine();
         }
     }
