@@ -82,7 +82,7 @@ public class JsfOneToManyModalViewFileWriteCommand extends JsfXhtmlFileWriteComm
 		
 		if (this.oneToMany.referenceBean.updateEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 
-					+ " rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34
+					+ " rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 + " disabled=" + CHAR_34 + "#{not view.canUpdate}" + CHAR_34
 					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
 					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
 					+ CHAR_34 + "/>");

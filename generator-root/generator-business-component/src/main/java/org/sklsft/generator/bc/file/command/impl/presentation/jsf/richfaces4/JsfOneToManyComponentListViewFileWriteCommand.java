@@ -128,8 +128,9 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAll(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
+		writeLine("<script>$(function(){displaySelectUnselectAll();});</script>");
 		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selected" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".selected}" + CHAR_34 + " onclick=" + CHAR_34
+		writeLine("<h:selectBooleanCheckbox rendered="+ CHAR_34 +"#{" + currentBean.objectName + ".canDelete}" + CHAR_34 + " id=" + CHAR_34 + "selectUnselect" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".selected}" + CHAR_34 + " onclick=" + CHAR_34
 				+ "selectUnselect('" + currentBean.objectName + "ListForm:" + currentBean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
 		writeLine("</rich:column>");
 		skipLine();
@@ -147,6 +148,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		if (currentBean.deleteEnabled) {
 			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ".id)}" + CHAR_34);
+			writeLine("rendered="+ CHAR_34 +"#{" + currentBean.objectName + ".canDelete}" + CHAR_34);
 			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDelete}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/delete.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34
 					+ "#{i18n.delete}" + CHAR_34 + "/>");
@@ -190,7 +192,7 @@ public class JsfOneToManyComponentListViewFileWriteCommand extends JsfXhtmlFileW
 
 		if (currentBean.createEnabled) {
 			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className
-					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('show')"
+					+ "}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('show')"
 					+ CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}

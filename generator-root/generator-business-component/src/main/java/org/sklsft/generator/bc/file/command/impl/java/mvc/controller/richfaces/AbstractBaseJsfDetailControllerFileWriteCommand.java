@@ -32,7 +32,8 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
-
+		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
+		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
 
@@ -276,8 +277,11 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
 			}
-
-			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + this.bean.serviceObjectName + ".create" + currentBean.className + "());");
+			writeLine("try {");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + this.bean.serviceObjectName + ".create" + currentBean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
+			writeLine("} catch (OperationDeniedException e) {");
+			writeLine("displayError(e.getMessage());");
+			writeLine("}");
 			writeLine("}");
 			skipLine();
 		}
@@ -299,7 +303,11 @@ public abstract class AbstractBaseJsfDetailControllerFileWriteCommand extends Ja
 				}
 			}
 
+			writeLine("try {");
 			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create());");
+			writeLine("} catch (OperationDeniedException e) {");
+			writeLine("displayError(e.getMessage());");
+			writeLine("}");
 			writeLine("}");
 			skipLine();
 		}

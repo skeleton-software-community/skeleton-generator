@@ -5,6 +5,7 @@ public class FullViewBean {
 	public String className;
 	public String objectName;
 	
+	public String baseMapperClassName;
 	public String mapperClassName;
 	public String mapperObjectName;
 	

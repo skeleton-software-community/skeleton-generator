@@ -2,11 +2,14 @@ package org.sklsft.generator.bc.file.strategy.impl.bc;
 
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseBasicViewMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseFormMapperFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseFullViewMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BasicViewMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FormMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.FullViewMapperFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.BaseProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.rightsmanager.BaseRightsManagerImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.rightsmanager.RightsManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
@@ -51,6 +54,39 @@ public class BusinessComponentStrategy implements LayerStrategy {
 				}
 			}
 		}
+		
+		
+		//Rights Managers
+		FileWriteCommandTreeNode baseRightsManagerTreeNode = new FileWriteCommandTreeNode("Base rights managers");
+		bcTreeNode.add(baseRightsManagerTreeNode );
+
+		for (Package myPackage : project.model.packages) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			baseRightsManagerTreeNode .add(packageTreeNode);
+			
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseRightsManagerImplFileWriteCommand(bean));
+					baseRightsManagerTreeNode .add(beanTreeNode);
+				}
+			}
+		}
+
+		FileWriteCommandTreeNode rightsManagerTreeNode = new FileWriteCommandTreeNode("Rights managers");
+		bcTreeNode.add(rightsManagerTreeNode);
+
+		for (Package myPackage : project.model.packages) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			rightsManagerTreeNode.add(packageTreeNode);
+			
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new RightsManagerImplFileWriteCommand(bean));
+					packageTreeNode.add(beanTreeNode);
+				}
+			}
+		}
+		
 		
 		
 		FileWriteCommandTreeNode baseProcessorTreeNode = new FileWriteCommandTreeNode("Base processors");
@@ -99,6 +135,9 @@ public class BusinessComponentStrategy implements LayerStrategy {
 					
 					FileWriteCommandTreeNode formMapperTreeNode = new FileWriteCommandTreeNode(new BaseFormMapperFileWriteCommand(bean));
 					packageTreeNode.add(formMapperTreeNode);
+					
+					FileWriteCommandTreeNode fullMapperTreeNode = new FileWriteCommandTreeNode(new BaseFullViewMapperFileWriteCommand(bean));
+					packageTreeNode.add(fullMapperTreeNode);
 				}
 			}
 		}

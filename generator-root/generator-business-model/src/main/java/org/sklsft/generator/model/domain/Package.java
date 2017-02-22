@@ -42,9 +42,13 @@ public class Package {
 	public String fullViewMapperPackageName;
 	public String baseBasicViewMapperPackageName;
 	public String basicViewMapperPackageName;
+	public String baseFullViewMapperPackageName;
 
 	public String baseStateManagerImplPackageName;
 	public String stateManagerImplPackageName;
+	
+	public String baseRightsManagerImplPackageName;
+	public String rightsManagerImplPackageName;
 
 	public String baseProcessorImplPackageName;
 	public String processorImplPackageName;
