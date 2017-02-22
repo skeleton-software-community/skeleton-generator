@@ -46,8 +46,10 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
         
         writeLine("<h:form>");
         skipLine();
-
+        
+        writeLine("<h:panelGroup rendered=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34 + ">");
         writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
+        writeLine("</h:panelGroup>");
         skipLine();
         
         writeLine("<h2>#{i18n." + bean.objectName + "Detail}</h2>");
@@ -76,7 +78,7 @@ public class JsfDetailViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
        
         if (this.bean.updateEnabled)
         {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".update}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>"); 
+            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " rendered=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".update}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>"); 
         }
 
         this.writeNotOverridableContent();

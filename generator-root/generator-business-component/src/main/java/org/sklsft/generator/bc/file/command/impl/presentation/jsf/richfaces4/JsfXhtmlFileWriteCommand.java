@@ -159,6 +159,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			skipLine();
 			write(" disabled=" + CHAR_34 + "true" + CHAR_34);
 		}
+		else{
+			skipLine();
+			write("disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34);
+		}
 		
 		writeLine(">");
 
@@ -227,6 +231,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
 		}
+		else{
+			skipLine();
+			write("disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34);
+		}
 		writeLine("/>");
 	}
 	
@@ -242,6 +250,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
 		}
+		else{
+			skipLine();
+			write("disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34);
+		}
 		writeLine("/>");
 	}
 	
@@ -254,7 +266,7 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 				+ CHAR_34);
 		if (property.editable) {
 			writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
-					+ " disabled=" + CHAR_34 + "false"
+					+ " disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}"
 					+ CHAR_34 + "/>");
 			
 		} else {
@@ -310,6 +322,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
 		}
+		else{
+			skipLine();
+			write("disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34);
+		}
 		
 		writeLine(">");
 		writeLine("<f:convertNumber integerOnly=" + CHAR_34 + "true" + CHAR_34 + " pattern=" + CHAR_34 + "#,##0"
@@ -339,6 +355,10 @@ public abstract class JsfXhtmlFileWriteCommand extends XhtmlFileWriteCommand {
 		if (!property.editable) {
 			skipLine();
 			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+		}
+		else{
+			skipLine();
+			write("disabled=" + CHAR_34 + "#{not " + bean.detailViewObjectName + ".selected" + bean.className + ".canUpdate}" + CHAR_34);
 		}
 		writeLine("/>");
 		

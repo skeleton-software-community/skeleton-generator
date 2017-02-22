@@ -7,7 +7,6 @@ import org.sklsft.generator.bc.file.command.impl.java.JavaFileWriteCommand;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DetailMode;
-import org.sklsft.generator.model.metadata.Visibility;
 
 public abstract class AbstractBaseJsfListControllerFileWriteCommand extends JavaFileWriteCommand {
 
@@ -28,6 +27,7 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
+		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -129,8 +129,13 @@ public abstract class AbstractBaseJsfListControllerFileWriteCommand extends Java
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
 		}
+		writeLine(this.bean.fullViewBean.className + " view = null;");
+		writeLine("try {");
+		writeLine("view = " + "this." + this.bean.serviceObjectName + ".create();");
+		
+		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(view);");
+		writeLine("} catch (OperationDeniedException e) {displayError(e.getMessage());}");
 
-		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create());");
 		writeLine("}");
 		skipLine();
 
