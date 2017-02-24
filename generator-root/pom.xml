@@ -26,8 +26,7 @@
 		</license>
 	</licenses>
 
-	<developers>
-	
+	<developers>	
 		<developer>
 			<id>nthibault</id>
 			<name>Nicolas Thibault</name>
@@ -38,8 +37,7 @@
 			<id>mregragui</id>
 			<name>Mounir Regragui</name>
 			<email>mounir.regragui@sklsft.org</email>
-		</developer>
-		
+		</developer>		
 	</developers>
 	
 	<scm>
@@ -63,26 +61,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<encoding>UTF-8</encoding>
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
-		<sourceJDK>1.7</sourceJDK>
-		<targetJDK>1.7</targetJDK>
-		<compileSource>1.7</compileSource>
+		<java.version>1.8</java.version>
 				
-		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.version>4.3.6.RELEASE</spring.version>
 		<javax.inject.version>1</javax.inject.version>
 		<slf4j.version>1.7.2</slf4j.version>
-		<junit.version>4.11</junit.version>
 		<logback.version>1.0.13</logback.version>
+		<junit.version>4.12</junit.version>		
 		<velocity.version>1.7</velocity.version>
 		
-		<postgresql.version>9.1-901.jdbc4</postgresql.version>
+		<postgresql.version>9.4.1208</postgresql.version>
 		<ojdbc.version>11.2.0.3</ojdbc.version>
 		
+		<commons.lang.version>2.5</commons.lang.version>
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+		<commons.io.version>2.4</commons.io.version>		
 	</properties>
 
-	<dependencyManagement>
-	
+	<dependencyManagement>	
 		<dependencies>
-
 			<dependency>
 				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-business-model</artifactId>
@@ -111,16 +108,16 @@
 			<!-- gestion des logs -->
 			<!-- logback -->
 			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback.version}</version>
 				<scope>runtime</scope>
-			</dependency>
-			
-	   		<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
 			</dependency>
 			
 			<dependency>
@@ -130,7 +127,7 @@
 			</dependency>
 			
 			
-			<!-- drivers -->
+			<!-- drivers-->
 			<dependency>
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc6</artifactId>
@@ -139,7 +136,7 @@
 			</dependency>
 			
 			<dependency>
-				<groupId>postgresql</groupId>
+				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>${postgresql.version}</version>
 			 </dependency>
@@ -206,23 +203,21 @@
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
-				<version>2.5</version>
+				<version>${commons.lang.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
-				<version>1.4</version>
+				<version>${commons.dbcp.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.4</version>
-			</dependency>
-			
-		</dependencies>
-		
+				<version>${commons.io.version}</version>
+			</dependency>			
+		</dependencies>		
 	</dependencyManagement>
 
 	<build>
@@ -233,9 +228,9 @@
 				<configuration>
 					<verbose>true</verbose>
 					<fork>true</fork>
-					<compilerVersion>${targetJDK}</compilerVersion>
-					<source>${sourceJDK}</source>
-					<target>${targetJDK}</target>
+					<compilerVersion>${java.version}</compilerVersion>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
@@ -264,7 +259,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 	
@@ -272,8 +266,7 @@
 		<profile>
 			<id>release</id>
 			<build>
-				<plugins>
-				
+				<plugins>				
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
@@ -320,6 +313,4 @@
 			</build>
 		</profile>
 	</profiles>
-		
-	
 </project>

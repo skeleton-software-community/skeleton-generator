@@ -38,33 +38,13 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	}
 	
 	
-	
-	
-
-	@Override
-	public void insertPackageMetaData(PackageMetaData packageMetaData, int index, ProjectMetaData projectMetaData) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void insertTableMetaData(TableMetaData tableMetaData, int index, PackageMetaData packageMetaData) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void insertColumnMetaData(ColumnMetaData columnMetaData, int index, TableMetaData tableMetaData) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
 		logger.info("start persisting meta data");
 		projectMetaDataDao.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");
 	}
+	
 	
 	@Override
 	public void initProjectMetaData(ProjectMetaData projectMetaData) {
@@ -77,5 +57,4 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		projectMetaDataDao.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");
 	}
-	
 }

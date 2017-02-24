@@ -27,7 +27,7 @@ public class BackupPostExecutionChecker {
 	private static final Logger logger = LoggerFactory.getLogger(BackupPostExecutionChecker.class);
 	
 	@Inject
-	TableNotEmptyChecker tableNotEmptyChecker;
+	private TableNotEmptyChecker tableNotEmptyChecker;
 
 	public List<BackupPlanPostExecutionWarning> checkPlan(DataSource dataSource, Project project, Set<String> tables) {
 		
