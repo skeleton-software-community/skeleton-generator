@@ -17,7 +17,6 @@ public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 		fullViewBean.className = bean.className + "FullView";
 		fullViewBean.objectName = bean.objectName + "FullView";
 		
-		fullViewBean.baseMapperClassName = fullViewBean.className + "BaseMapper";
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
 		
@@ -35,7 +34,6 @@ public class JavaFullViewBeanFactory implements FullViewBeanFactory {
 		fullViewBean.className = bean.className + "FullView";
 		fullViewBean.objectName = bean.objectName + "FullView";
 		
-		fullViewBean.baseMapperClassName = fullViewBean.className + "BaseMapper";
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
 		

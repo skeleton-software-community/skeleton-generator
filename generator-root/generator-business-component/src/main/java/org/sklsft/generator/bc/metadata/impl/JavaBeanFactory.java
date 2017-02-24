@@ -58,10 +58,6 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.stateManagerClassName = bean.className + "StateManager";
 		bean.stateManagerObjectName = bean.objectName + "StateManager";
 		
-		bean.baseRightsManagerClassName = bean.className + "BaseRightsManager";
-		bean.rightsManagerClassName = bean.className + "RightsManager";
-		bean.rightsManagerObjectName = bean.objectName + "RightsManager";
-		
 		bean.baseProcessorClassName = bean.className + "BaseProcessor";
 		bean.processorClassName = bean.className + "Processor";
 		bean.processorObjectName = bean.objectName + "Processor";
@@ -129,7 +125,6 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToMany.collectionGetterName = "get" + bean.className + "Collection";
 				oneToMany.collectionSetterName = "set" + bean.className + "Collection";
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				bean.parentBean = parentBean;
 				parentBean.oneToManyList.add(oneToMany);
 				oneToMany.parentBean = parentBean;
 			}
@@ -143,7 +138,6 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToManyComponent.collectionGetterName = "get" + bean.className + "Collection";
 				oneToManyComponent.collectionSetterName = "set" + bean.className + "Collection";
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				bean.parentBean = parentBean;
 				oneToManyComponent.parentBean = parentBean;
 				parentBean.oneToManyComponentList.add(oneToManyComponent);
 			}
@@ -167,7 +161,6 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToOneComponent.getterName = "get" + bean.className;
 				oneToOneComponent.setterName = "set" + bean.className;
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				bean.parentBean = parentBean;
 				oneToOneComponent.parentBean = parentBean;				
 				parentBean.oneToOneComponentList.add(oneToOneComponent);
 			}

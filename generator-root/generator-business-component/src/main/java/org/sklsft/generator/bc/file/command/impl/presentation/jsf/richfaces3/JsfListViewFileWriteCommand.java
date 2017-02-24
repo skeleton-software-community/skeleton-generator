@@ -141,7 +141,7 @@ public class JsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 		}
 		
 		if (this.bean.deleteEnabled) {
-			writeLine("<a4j:commandLink rendered="+ CHAR_34 +"#{" + this.bean.objectName + ".canDelete}"+ CHAR_34 +" action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete(" + this.bean.objectName + ".id)}" + CHAR_34);
+			writeLine("<a4j:commandLink  action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete(" + this.bean.objectName + ".id)}" + CHAR_34);
 			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDelete}')) return false" + CHAR_34 + " reRender=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/delete.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34
 					+ "#{i18n.delete}" + CHAR_34 + "/>");

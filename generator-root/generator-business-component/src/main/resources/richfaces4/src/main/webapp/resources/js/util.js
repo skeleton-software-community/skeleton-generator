@@ -18,16 +18,7 @@ function setCaretToEnd(e) {
 }
 
 
-function hideCheck() {
-	var checkbox = $("input[id$='selectUnselectAll']");
-	
-	var elements = $("input[id$='selected']");
-	
-	
-	if (elements.length == 0) {
-		$($("input[id$='selectUnselectAll']")[0]).addClass("hideElt");	
-	}
-}
+
 
 
 function selectUnselectAll(checkbox) {

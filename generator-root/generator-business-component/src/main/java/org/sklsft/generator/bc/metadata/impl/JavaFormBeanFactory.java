@@ -1,9 +1,11 @@
 package org.sklsft.generator.bc.metadata.impl;
 
 import org.sklsft.generator.bc.metadata.interfaces.FormBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.FormBean;
+import org.sklsft.generator.model.domain.ui.FullViewBean;
 import org.springframework.stereotype.Component;
 
 @Component("javaFormBeanFactory")

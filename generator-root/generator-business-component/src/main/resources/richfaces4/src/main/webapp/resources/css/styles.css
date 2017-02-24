@@ -8,10 +8,6 @@
   url("#{resource['/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');
 }
 
-.hideElt{
-	display: none;
-}
-
 
 body {
 	padding-top: 70px;

@@ -88,7 +88,6 @@ public class JavaModelFactory implements ModelFactory {
         model.enversPackageName = project.domainName + "." + project.projectName + ".model.envers";
         model.mapperPackageName = project.domainName + "." + project.projectName + ".bc.mapper";
         model.stateManagerPackageName = project.domainName + "." + project.projectName + ".bc.statemanager";
-        model.rightsManagerPackageName = project.domainName + "." + project.projectName + ".bc.rightsmanager";
         model.processorPackageName = project.domainName + "." + project.projectName + ".bc.processor";
         model.daoImplPackageName = project.domainName + "." + project.projectName + ".repository.dao.impl";
         model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
