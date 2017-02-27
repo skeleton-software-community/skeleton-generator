@@ -1,4 +1,3 @@
-
 function setSelectionRange(input, selectionStart, selectionEnd) {
 	if (input.setSelectionRange) {
 		input.focus();
@@ -19,16 +18,16 @@ function setCaretToEnd(e) {
 
 
 function displaySelectUnselectAll() {
-	var checkbox = $("input[id$='selectUnselectAll']").get(0);
-	
+	var checkbox = $("input[id$='selectUnselectAll']").get(0);	
 	var elements = $("input[id$='selectUnselect']");
 	
+	bindSelectUnselectAll(checkbox, elements);
 	
 	if (elements.length == 0) {
-		checkbox.style.display = "none";	
+		checkbox.checked = false;
+		checkbox.style.display = "none";
 	}
 }
-
 
 function selectUnselectAll(checkbox) {
 	var elements = checkbox.form.elements;
@@ -38,7 +37,7 @@ function selectUnselectAll(checkbox) {
 			element.checked = checkbox.checked;
 		}
 	}
-	if (checkbox.checked == true) {
+	if (checkbox.checked) {
 		showActions();
 	} else {
 		hideActions();
@@ -46,12 +45,16 @@ function selectUnselectAll(checkbox) {
 }
 
 function selectUnselect(arg) {
-	checkbox = document
-			.getElementById(arg);
+	checkbox = document.getElementById(arg);
 	var elements = checkbox.form.elements;
+	
+	bindSelectUnselectAll(checkbox, elements);	
+}
+
+function bindSelectUnselectAll(checkbox, elements) {
 	var allSelected = true;
 	var selectedItemNumber = 0;
-	for ( var elementIndex = 0; elementIndex < elements.length; elementIndex++) {
+	for (var elementIndex = 0; elementIndex < elements.length; elementIndex++) {
 		var element = elements[elementIndex];
 		if (/selectUnselect$/.test(element.id)) {
 			if (!element.checked) {
