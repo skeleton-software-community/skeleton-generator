@@ -1,4 +1,4 @@
-You are using skeleton generator version 2.1.1.
+You are using skeleton generator version 2.1.2.
 
 Use one of the following commands :
 . init : to setup a project from scratch.
