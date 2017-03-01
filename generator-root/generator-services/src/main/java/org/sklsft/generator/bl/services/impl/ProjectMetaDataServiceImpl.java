@@ -4,10 +4,7 @@ import javax.inject.Inject;
 
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.sklsft.generator.model.metadata.ColumnMetaData;
-import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

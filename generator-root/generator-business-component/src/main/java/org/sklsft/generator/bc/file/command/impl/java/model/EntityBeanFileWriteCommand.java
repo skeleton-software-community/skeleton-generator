@@ -11,7 +11,6 @@ import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DataType;
-import org.sklsft.generator.model.metadata.DatabaseEngine;
 
 
 /**
@@ -64,6 +63,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.annotations.Fetch;");
 		javaImports.add("import org.hibernate.annotations.FetchMode;");
 		javaImports.add("import javax.persistence.UniqueConstraint;");
+		javaImports.add("import org.hibernate.annotations.Type;");
 		
 		
 
@@ -245,8 +245,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				if (property.dataType.equals(DataType.DATETIME)) {
 					writeLine("@Temporal(TemporalType.TIMESTAMP)");
 				}
-				if (property.dataType.equals(DataType.TEXT) && bean.myPackage.model.project.databaseEngine.equals(DatabaseEngine.ORACLE)) {
+				if (property.dataType.equals(DataType.TEXT)) {
 					writeLine("@Lob");
+					writeLine("@Type(type=" + CHAR_34 + "org.hibernate.type.TextType" + CHAR_34 + ")");
 				}
 				write("@Column(name = " + CHAR_34 + property.column.name + CHAR_34);
 				if (!property.nullable) {
