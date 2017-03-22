@@ -7,9 +7,9 @@
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>generator-business-component</artifactId>
-	<name>Generator - Business component</name>
-	<description>Module Business component du projet Generator</description>
+	<artifactId>generator-jsf-skeletons</artifactId>
+	<name>Generator - JSF Skeletons</name>
+	<description>Module JSF Skeletons du projet Generator</description>
 
 	<packaging>jar</packaging>
 
@@ -17,19 +17,9 @@
 		
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-business-model</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-repository</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-skeletons</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 </project>
