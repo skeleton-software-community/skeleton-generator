@@ -14,6 +14,7 @@
 		<module>generator-business-model</module>
 		<module>generator-repository</module>
 		<module>generator-skeletons</module>
+		<module>generator-core-skeletons</module>
 		<module>generator-jsf-skeletons</module>
 		<module>generator-business-component</module>
 		<module>generator-services</module>
@@ -97,6 +98,18 @@
 			<dependency>
 				<groupId>org.sklsft.generator</groupId>
 				<artifactId>generator-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-core-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-jsf-skeletons</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			

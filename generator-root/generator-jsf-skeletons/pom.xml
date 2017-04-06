@@ -17,7 +17,7 @@
 		
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-skeletons</artifactId>
+			<artifactId>generator-core-skeletons</artifactId>
 		</dependency>
 
 	</dependencies>

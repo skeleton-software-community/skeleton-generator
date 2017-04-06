@@ -1,0 +1,66 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>org.hsqldb.jdbcDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:hsqldb:mem:${project.databaseName}</value>
+		</property>
+		<property name="username">
+			<value>sa</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="packagesToScan">
+			<list>
+				<value>${project.domainName}.${project.projectName}</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	
+#if ($project.audited)
+		<property name="eventListeners">
+			<map>
+				<entry key="post-insert" value-ref="enversEventListener" />
+				<entry key="post-update" value-ref="enversEventListener" />
+				<entry key="post-delete" value-ref="enversEventListener" />
+				<entry key="post-collection-recreate" value-ref="enversEventListener" />
+				<entry key="pre-collection-remove" value-ref="enversEventListener" />
+				<entry key="pre-collection-update" value-ref="enversEventListener" />
+			</map>
+		</property>
+#end
+	</bean>
+	
+#if ($project.audited)
+	<bean id="enversEventListener" class="org.hibernate.envers.event.AuditEventListener" />
+	
+#end
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+</beans>

@@ -14,11 +14,6 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-		
-		<dependency>
-			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-business-model</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>

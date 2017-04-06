@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.sklsft.generator.bc.build.DatabaseCleaner;
+import org.sklsft.generator.bc.build.TableBuilder;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Package;
@@ -23,7 +25,7 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseBuilderImpl.class);
 	
 	@Inject
-	DatabaseCleaner databaseCleaner;
+	private DatabaseCleaner databaseCleaner;
 
 	@Override
 	public void buildDatabase(DataSource dataSource, Project project) throws InvalidFileException, IOException, SQLException {

@@ -1,6 +1,5 @@
 package org.sklsft.generator.bash.launcher;
 
-import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
@@ -53,7 +52,7 @@ public class ProjectInitializerLauncher {
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
 			Project project;
 			
-			CodeGenerator codeWriter = appContext.getBean(CodeGenerator.class);
+			CodeGenerator codeGenerator = appContext.getBean(CodeGenerator.class);
 			
 			try {
 				logger.info("start loading project");
@@ -84,8 +83,7 @@ public class ProjectInitializerLauncher {
 			try {
 				logger.info("start copying resources");
 				
-				FileWriteCommandTree tree = codeWriter.buildFileImportTree(project);
-				codeWriter.generateCode(tree);
+				codeGenerator.initResources(project);
 				
 				logger.info("copying resources completed");
 				
@@ -97,8 +95,7 @@ public class ProjectInitializerLauncher {
 			try {
 				logger.info("start writing configuration");
 				
-				FileWriteCommandTree tree = codeWriter.buildConfigurationTree(project);
-				codeWriter.generateCode(tree);
+				codeGenerator.initConfiguration(project);
 				
 				logger.info("writing configuration completed");
 				

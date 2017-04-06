@@ -1,6 +1,5 @@
 package org.sklsft.generator.bash.launcher;
 
-import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
@@ -67,8 +66,7 @@ public class CodeGeneratorLauncher {
 				logger.info("start executing code writing");
 
 				CodeGenerator codeGenerator = appContext.getBean(CodeGenerator.class);
-				FileWriteCommandTree tree = codeGenerator.buildFileWriteCommandTree(project);
-				codeGenerator.generateCode(tree);
+				codeGenerator.generateCode(project);
 
 				logger.info("executing code writing completed");
 

@@ -19,6 +19,12 @@
 			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-business-model</artifactId>
 		</dependency>
+		
+		<!-- gestion des logs -->	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
 		<!-- apache velocity-->
 		<dependency>

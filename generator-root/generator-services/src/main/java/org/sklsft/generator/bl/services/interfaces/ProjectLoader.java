@@ -4,7 +4,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 
 /**
- * Defines the contract of a project loader : get a project metadata representation from its persistent representation
+ * Defines the contract of a project loader : get a {@link Project} representation from its persistent {@link ProjectMetaData} representation
  * @author Nicolas Thibault
  *
  */

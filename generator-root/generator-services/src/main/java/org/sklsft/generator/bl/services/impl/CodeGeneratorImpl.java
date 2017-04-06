@@ -1,50 +1,70 @@
 package org.sklsft.generator.bl.services.impl;
 
-import org.sklsft.generator.bc.file.executor.FileWriteCommandTree;
-import org.sklsft.generator.bc.file.factory.impl.FileWriteCommandTreeFactoryBuilder;
-import org.sklsft.generator.bc.file.factory.interfaces.FileWriteCommandTreeFactory;
+import org.sklsft.generator.bc.resolvers.SkeletonResolver;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.skeletons.Skeleton;
+import org.sklsft.generator.skeletons.layers.Layer;
+import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * An implementation of a {@link CodeGenerator} that uses a {@link FileWriteCommandTreeFactory} to build its {@link FileWriteCommandTree} trees<br/>
- * The choice of the factory is determined by a static Builder ({@link FileWriteCommandTreeFactoryBuilder})
+ * 
  * @author Nicolas Thibault
  *
  */
 @Component
 public class CodeGeneratorImpl implements CodeGenerator {
-
-	@Override
-	public FileWriteCommandTree buildFileImportTree(Project project) {
-
-		FileWriteCommandTreeFactory factory = FileWriteCommandTreeFactoryBuilder.getFileWriteCommandTreeFactory(project);
-		
-		return factory.buildFileImportTree(project);
-	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorImpl.class);
+	
 	
 	@Override
-	public FileWriteCommandTree buildConfigurationTree(Project project) {
+	public void initResources(Project project) {
 
-		FileWriteCommandTreeFactory factory = FileWriteCommandTreeFactoryBuilder.getFileWriteCommandTreeFactory(project);
+		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
 		
-		return factory.buildConfigurationTree(project);
+		for (Layer layer : skeleton.getLayers()) {			
+			FileWriteCommandTreeNode root = layer.getResourcesNode(project);
+			if (root != null) {
+				logger.info("start copying resources for layer : " + layer.getName());
+				
+				root.execute();
+			}
+		}		
 	}
+
 	
 	@Override
-	public FileWriteCommandTree buildFileWriteCommandTree(Project project) {
+	public void initConfiguration(Project project) {
 
-		FileWriteCommandTreeFactory factory = FileWriteCommandTreeFactoryBuilder.getFileWriteCommandTreeFactory(project);
+		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
 		
-		return factory.buildTree(project);
-	}	
-
-	@Override
-	public void generateCode(FileWriteCommandTree tree) {
-
-		tree.launch();
-		
+		for (Layer layer : skeleton.getLayers()) {			
+			FileWriteCommandTreeNode root = layer.getConfigurationNode(project);
+			if (root != null) {
+				logger.info("start creating configuration for layer : " + layer.getName());
+				
+				root.execute();
+			}
+		}
 	}
 
+
+	@Override
+	public void generateCode(Project project) {
+
+		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
+		
+		for (Layer layer : skeleton.getLayers()) {			
+			FileWriteCommandTreeNode root = layer.getGenerationNode(project);
+			if (root != null) {
+				logger.info("start generating layer : " + layer.getName());
+				
+				root.execute();
+			}
+		}		
+	}
 }

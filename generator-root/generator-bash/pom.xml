@@ -19,6 +19,11 @@
 			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-services</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.sklsft.generator</groupId>
+			<artifactId>generator-jsf-skeletons</artifactId>
+		</dependency>
 	
 		<!-- gestion des logs -->		
 		<dependency>

@@ -23,12 +23,9 @@ public class ProjectLoaderImpl implements ProjectLoader {
 	 * properties injected by spring
 	 */
 	@Resource(name="javaProjectFactory")
-	ProjectFactory projectFactory;
+	private ProjectFactory projectFactory;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.bl.services.interfaces.ProjectLoader#loadProject(java.lang.String)
-	 */
+
 	@Override
 	public Project loadProject(ProjectMetaData projectMetaData) {
 		
