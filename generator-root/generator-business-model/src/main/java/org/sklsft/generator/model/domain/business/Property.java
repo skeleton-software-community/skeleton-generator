@@ -16,7 +16,7 @@ public class Property {
 	public String capName;
 	public String getterName;
 	public String setterName;
-	public String fetchName;
+	
 	public String beanDataType;
 	public DataType dataType;
 	public boolean nullable;
@@ -30,8 +30,7 @@ public class Property {
 	public String rendering;
 	public List<String> annotations;
 
-	public String joinedAliasName;
-	public String lastPropertyName;
+	
 
 	public Bean comboBoxBean;
 
@@ -58,16 +57,7 @@ public class Property {
 						Property property = new Property();
 						property.name = currentProperty.name + tempProperty.capName;
 						property.capName = currentProperty.capName + tempProperty.capName;
-						property.fetchName = currentProperty.fetchName + "." + tempProperty.fetchName;
-						property.beanDataType = tempProperty.beanDataType;
-						property.dataType = tempProperty.dataType;
-						property.format = tempProperty.format;
-						property.nullable = currentProperty.nullable;
-						property.visibility = currentProperty.visibility;
-						property.editable = currentProperty.editable;
-						property.lastPropertyName = tempProperty.lastPropertyName;
-						property.joinedAliasName = currentProperty.capName + tempProperty.joinedAliasName;
-						property.comboBoxBean = tempProperty.comboBoxBean;
+						
 						property.rendering = tempProperty.rendering;
 						referencePropertyList.add(property);
 					}
@@ -75,15 +65,6 @@ public class Property {
 					Property property = new Property();
 					property.name = currentProperty.name;
 					property.capName = currentProperty.capName;
-					property.fetchName = currentProperty.fetchName;
-					property.beanDataType = currentProperty.beanDataType;
-					property.dataType = currentProperty.dataType;
-					property.format = currentProperty.format;
-					property.nullable = currentProperty.nullable;
-					property.visibility = currentProperty.visibility;
-					property.editable = currentProperty.editable;
-					property.lastPropertyName = currentProperty.name;
-					property.joinedAliasName = "";
 
 					if (this.referenceBean.cardinality == 1) {
 						property.rendering = this.rendering;
@@ -94,9 +75,7 @@ public class Property {
 							property.rendering = this.rendering + "(" + currentProperty.rendering + ")";
 						}
 					}
-					if (this.referenceBean.hasComboBox) {
-						property.comboBoxBean = this.referenceBean;
-					}
+					
 					referencePropertyList.add(property);
 				}
 			}

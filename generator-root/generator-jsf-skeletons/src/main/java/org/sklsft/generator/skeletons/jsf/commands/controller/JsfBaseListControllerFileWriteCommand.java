@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
@@ -124,7 +124,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" */");
 		writeLine("public void create" + this.bean.className + "() {");
 
-		for (Property property : this.bean.formBean.properties) {
+		for (ViewProperty property : this.bean.formBean.properties) {
 			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
@@ -177,7 +177,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" */");
 		writeLine("public void edit" + bean.className + "(Long id) {");
 		
-		for (Property property : bean.formBean.properties) {
+		for (ViewProperty property : bean.formBean.properties) {
 			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}

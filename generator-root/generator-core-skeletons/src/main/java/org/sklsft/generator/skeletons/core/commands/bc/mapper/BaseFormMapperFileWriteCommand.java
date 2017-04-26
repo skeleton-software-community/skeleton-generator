@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
@@ -151,48 +152,47 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 	
 	private void writeMapReferenceToView(Property property) {
 		
-		List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
+		List<ViewProperty> referencePropertyList = property.referenceBean.referenceViewProperties;
 		if (property.nullable) {
 			writeLine("if (" + this.bean.objectName + "." + property.getterName + "() != null) {");
-			for (Property referenceProperty : referencePropertyList) {
-				writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.fetchName + "." + referenceProperty.fetchName
+			for (ViewProperty referenceProperty : referencePropertyList) {
+				writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + referenceProperty.mappingPath
 						+ ");");
 			}
 			writeLine("}");
 
 		} else {
-			for (Property findProperty : referencePropertyList) {
-				writeLine(this.bean.formBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + findProperty.fetchName
+			for (ViewProperty findProperty : referencePropertyList) {
+				writeLine(this.bean.formBean.objectName + "." + property.setterName + findProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + findProperty.mappingPath
 						+ ");");
 			}
 		}
 	}
 	
-	private void writeMapEmbeddedToView(Property currentProperty) {
+	private void writeMapEmbeddedToView(Property property) {
 		
-		Bean referenceBean = currentProperty.referenceBean;
+		Bean embeddedBean = property.referenceBean;
 		
-		for (int i = 1; i < referenceBean.properties.size();i++) {
-			Property property = referenceBean.properties.get(i);
-			if (property.visibility.isDetailVisible()) {
-				if (property.referenceBean != null) {
-					List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
-					if (property.nullable) {
-						writeLine("if (" + this.bean.objectName + "." + currentProperty.getterName + "()." + property.getterName + "() != null) {");
-						for (Property referenceProperty : referencePropertyList) {
-							writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + "." + referenceProperty.fetchName
+		for (Property embeddedProperty : embeddedBean.properties) {	
+			if (embeddedProperty.visibility.isDetailVisible()) {
+				if (embeddedProperty.referenceBean != null) {
+					List<ViewProperty> referencePropertyList = embeddedProperty.referenceBean.referenceViewProperties;
+					if (embeddedProperty.nullable) {
+						writeLine("if (" + this.bean.objectName + "." + property.getterName + "()." + embeddedProperty.getterName + "() != null) {");
+						for (ViewProperty referenceProperty : referencePropertyList) {
+							writeLine(this.bean.formBean.objectName + "." + embeddedProperty.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + embeddedProperty.getterName + "()." + referenceProperty.mappingPath
 									+ ");");
 						}
 						writeLine("}");
 	
 					} else {
-						for (Property referenceProperty : referencePropertyList) {
-							writeLine(this.bean.formBean.objectName + "." + property.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + "." + referenceProperty.fetchName
+						for (ViewProperty referenceProperty : referencePropertyList) {
+							writeLine(this.bean.formBean.objectName + "." + embeddedProperty.setterName + referenceProperty.capName + "(" + this.bean.objectName + "." + property.getterName + "()." + embeddedProperty.getterName + "()." + referenceProperty.mappingPath
 									+ ");");
 						}
 					}
 				} else {
-					writeLine(this.bean.formBean.objectName + "." + property.setterName + "(" + this.bean.objectName + "." + currentProperty.fetchName + "." + property.fetchName + ");");
+					writeLine(this.bean.formBean.objectName + "." + embeddedProperty.setterName + "(" + this.bean.objectName + "." + property.getterName + "()." + embeddedProperty.getterName + "());");
 				}
 			}
 		}
@@ -227,16 +227,16 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 	
 
 	private void writeMapReferenceToObject(Property property) {
-		List<Property> referencePropertyList = property.referenceBean.getReferenceProperties();
-		writeLine(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find(");
-		writeLine(this.bean.formBean.objectName + "." + property.getterName + referencePropertyList.get(0).capName + "()");
-		for (int j = 1; j < referencePropertyList.size(); j++) {
-			writeLine("," + this.bean.formBean.objectName + "." + property.getterName + referencePropertyList.get(j).capName + "()");
+		boolean start = true;
+		write(this.bean.objectName + "." + property.setterName + "(" + property.referenceBean.daoObjectName + ".find(");
+		for (ViewProperty refProperty:property.referenceBean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(this.bean.formBean.objectName + "." + property.getterName + refProperty.capName + "()");
 		}
 		writeLine("));");		
 	}
 
-private void writeMapEmbeddedToObject(Property property) {
+	private void writeMapEmbeddedToObject(Property property) {
 		
 		Bean embeddedBean = property.referenceBean;
 		
@@ -246,16 +246,16 @@ private void writeMapEmbeddedToObject(Property property) {
 		writeLine(bean.objectName + "." + property.setterName + "(" + embeddedBean.objectName + ");");
 		writeLine("}");
 		
-		for (int i = 1; i < embeddedBean.properties.size(); i++) {
-			Property embeddedProperty = embeddedBean.properties.get(i);
+		for (Property embeddedProperty : embeddedBean.properties) {
 			if (embeddedProperty.visibility.isDetailVisible()) {
 				if (embeddedProperty.referenceBean != null) {
 					
-					List<Property> referencePropertyList = embeddedProperty.referenceBean.getReferenceProperties();
-					writeLine(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + embeddedProperty.referenceBean.daoObjectName + ".find(");
-					writeLine(this.bean.formBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(0).capName + "()");
-					for (int j = 1; j < referencePropertyList.size(); j++) {
-						writeLine("," + this.bean.formBean.objectName + "." + embeddedProperty.getterName + referencePropertyList.get(j).capName + "()");
+					List<ViewProperty> referencePropertyList = embeddedProperty.referenceBean.referenceViewProperties;
+					write(embeddedBean.objectName + "." + embeddedProperty.setterName + "(" + embeddedProperty.referenceBean.daoObjectName + ".find(");
+					boolean start = true;
+					for (ViewProperty refProperty : referencePropertyList) {
+						if (start) start = false; else write(", ");
+						write(this.bean.formBean.objectName + "." + embeddedProperty.getterName + refProperty.capName + "()");
 					}
 					writeLine("));");
 					

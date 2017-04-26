@@ -35,8 +35,7 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 				writeLine(bean.objectName + "List=" + bean.listRendering);
 				writeLine(bean.objectName + "Detail=" + bean.detailRendering);
 
-				for (int i = 1; i< bean.properties.size();i++) {
-					Property property = bean.properties.get(i);
+				for (Property property : bean.properties) {
 					if (property.referenceBean != null) {
 						List<Property> referencePropertyList = property.getReferencePropertyList();
 						for (Property findProperty : referencePropertyList) {

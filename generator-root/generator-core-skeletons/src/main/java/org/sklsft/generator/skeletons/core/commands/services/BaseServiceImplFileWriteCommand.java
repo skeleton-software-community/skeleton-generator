@@ -2,12 +2,12 @@ package org.sklsft.generator.skeletons.core.commands.services;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
@@ -253,23 +253,23 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
     
     
     private void createFindObject() {
-        List<Property> findPropertyList = this.bean.getReferenceProperties();
-
+    	boolean start = true;
         writeLine("/**");
         writeLine(" * find object");
         writeLine(" */");
         writeLine("@Override");
         writeLine("@Transactional(readOnly=true)");
-        write("public " + this.bean.fullViewBean.className + " find(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
-        for (int i=1;i<findPropertyList.size();i++)
-        {
-            write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
-        }
-        writeLine(") {");
-        write(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".find(" + findPropertyList.get(0).name);
-        for (int i=1;i<findPropertyList.size();i++)
-        {
-            write(", " + findPropertyList.get(i).name);
+        write("public " + this.bean.fullViewBean.className + " find(");
+		for (ViewProperty property:bean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(") {");
+        start = true;
+		write(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".find(");
+		for (ViewProperty property:bean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(property.name);
         }
         writeLine(");");
         writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess(" + this.bean.objectName + ");");

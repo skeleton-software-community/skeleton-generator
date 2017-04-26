@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 
 public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWriteCommand {
 
@@ -64,7 +64,7 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-        for (Property property : this.bean.formBean.properties)
+        for (ViewProperty property : this.bean.formBean.properties)
         {
             writeInput(property, bean);
         }

@@ -2,17 +2,15 @@ package org.sklsft.generator.skeletons.core.commands.database.postgresql;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	private Table table;
-	private Map<String, String> fieldMap;
 
 	/*
 	 * constructor
@@ -23,17 +21,6 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 
 		this.table = table;
 
-		fieldMap = new HashMap<>();
-
-		for (int i = 0; i < table.getInsertColumnList().size(); i++) {
-			fieldMap.put(table.getInsertColumnList().get(i).name, "ARG" + i);
-		}
-
-		for (int i = 0; i < table.columns.size(); i++) {
-			if (table.columns.get(i).referenceTable != null) {
-				fieldMap.put(table.columns.get(i).name, "ID_ARG" + i);
-			}
-		}
 	}
 
 	@Override
@@ -50,9 +37,10 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 	 */
 	private void createTableFks() {
 		writeLine("-- table foreign keys and indexes --");
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				write("ALTER TABLE " + table.name + " ADD CONSTRAINT FK_" + table.name + "_" + i + " FOREIGN KEY (" + this.table.columns.get(i).name + ") REFERENCES " + table.columns.get(i).referenceTable.name);
+		int i = 0;
+		for (Column column:table.columns) {
+			if (column.referenceTable != null) {
+				write("ALTER TABLE " + table.name + " ADD CONSTRAINT FK_" + table.name + "_" + i + " FOREIGN KEY (" + column.name + ") REFERENCES " + column.referenceTable.name);
 				if (this.table.columns.get(i).deleteCascade) {
 					write(" ON DELETE CASCADE");
 				}
@@ -60,14 +48,17 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 				writeLine("/");
 				skipLine();
 			}
+			i++;
 		}
 
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			if (this.table.columns.get(i).referenceTable != null) {
-				writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + this.table.columns.get(i).name + ");");
+		i = 0;
+		for (Column column:table.columns) {
+			if (column.referenceTable != null) {
+				writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + column.name + ");");
 				writeLine("/");
 				skipLine();
 			}
+			i++;
 		}
 	}
 

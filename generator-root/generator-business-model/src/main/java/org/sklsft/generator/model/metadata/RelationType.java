@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlEnum;
  * <li>MANY_TO_ONE : the referenced bean will have a bidirectional one-to-many collection
  * <li>MANY_TO_ONE_COMPONENT : the referenced bean will have a unidirectional (not really for hibernate envers) one-to-many collection<br/>
  * the collection will be managed by the referenced bean
- * <li>UNIQUE : simple unique property, not really a relation
- * <li>UNIQUE_COMPONENT : a one-to-one relation where the referenced bean is managed by the current bean
+ * <li>EMBEDDED : a one-to-one relation where the referenced bean is managed by the current bean
  * <li>ONE_TO_ONE : a bi-directional one-to-one relation
  * <li>ONE_TO_ONE_COMPONENT : a unidirectional one-to-one relation (not really for hibernate envers)
  * <li>PROPERTY : default behavior of a referenced bean
@@ -28,9 +27,9 @@ public enum RelationType {
     PROPERTY;
 	
 	
-	public static Boolean isUnique(RelationType relationType)
+	public boolean isUnique()
     {
-        switch (relationType)
+        switch (this)
         {
             case ONE_TO_ONE:
                 return true;
@@ -44,9 +43,9 @@ public enum RelationType {
         }
     }
 	
-	public static Boolean isEmbedded(RelationType relationType)
+	public boolean isEmbedded()
     {
-        switch (relationType)
+        switch (this)
         {
             case EMBEDDED:
                 return true;
@@ -56,9 +55,9 @@ public enum RelationType {
         }
     }
 
-    public static Boolean isComponentLink(RelationType relationType)
+    public boolean isComponentLink()
     {
-        switch (relationType)
+        switch (this)
         {
             case ONE_TO_ONE_COMPONENT:
                 return true;

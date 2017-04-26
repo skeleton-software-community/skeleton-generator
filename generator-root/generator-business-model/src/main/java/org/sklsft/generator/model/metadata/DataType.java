@@ -22,111 +22,110 @@ public enum DataType {
 	DATETIME,
 	BOOLEAN;
 
-	public static String getJavaType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "String";
-
-		case STRING:
-			return "String";
-
-		case LONG:
-			return "Long";
-
-		case DOUBLE:
-			return "Double";
-
-		case DATETIME:
-			return "Date";
-
-		case BOOLEAN:
-			return "Boolean";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType);
+	public String getJavaType() {
+		switch (this) {
+			case TEXT:
+				return "String";
+	
+			case STRING:
+				return "String";
+	
+			case LONG:
+				return "Long";
+	
+			case DOUBLE:
+				return "Double";
+	
+			case DATETIME:
+				return "Date";
+	
+			case BOOLEAN:
+				return "Boolean";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + this);
 		}
 	}
 
 	
-	public static String getPostgresqlType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "TEXT";
-
-		case STRING:
-			return "VARCHAR(255)";
-
-		case LONG:
-			return "BIGINT";
-
-		case DOUBLE:
-			return "DOUBLE PRECISION";
-
-		case DATETIME:
-			return "TIMESTAMP WITHOUT TIME ZONE";
-
-		case BOOLEAN:
-			return "BOOLEAN";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType);
+	public String getPostgresqlType() {
+		switch (this) {
+			case TEXT:
+				return "TEXT";
+	
+			case STRING:
+				return "VARCHAR(255)";
+	
+			case LONG:
+				return "BIGINT";
+	
+			case DOUBLE:
+				return "DOUBLE PRECISION";
+	
+			case DATETIME:
+				return "TIMESTAMP WITHOUT TIME ZONE";
+	
+			case BOOLEAN:
+				return "BOOLEAN";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + this);
 		}
 	}
 
-	public static String getOracleType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "CLOB";
-
-		case STRING:
-			return "VARCHAR2(255)";
-
-		case LONG:
-			return "NUMBER(19,0)";
-
-		case DOUBLE:
-			return "FLOAT(24)";
-
-		case DATETIME:
-			return "DATE";
-
-		case BOOLEAN:
-			return "NUMBER(1,0)";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType);
+	public String getOracleType() {
+		switch (this) {
+			case TEXT:
+				return "CLOB";
+	
+			case STRING:
+				return "VARCHAR2(255)";
+	
+			case LONG:
+				return "NUMBER(19,0)";
+	
+			case DOUBLE:
+				return "FLOAT(24)";
+	
+			case DATETIME:
+				return "DATE";
+	
+			case BOOLEAN:
+				return "NUMBER(1,0)";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + this);
 		}
 	}
 
-	public static String getPlOracleType(DataType dataType) {
-		switch (dataType) {
-		case TEXT:
-			return "CLOB";
-
-		case STRING:
-			return "VARCHAR2";
-
-		case LONG:
-			return "NUMBER";
-
-		case DOUBLE:
-			return "FLOAT";
-
-		case DATETIME:
-			return "DATE";
-
-		case BOOLEAN:
-			return "NUMBER";
-
-		default:
-			throw new IllegalArgumentException("Unhandled data type " + dataType);
+	public String getPlOracleType() {
+		switch (this) {
+			case TEXT:
+				return "CLOB";
+	
+			case STRING:
+				return "VARCHAR2";
+	
+			case LONG:
+				return "NUMBER";
+	
+			case DOUBLE:
+				return "FLOAT";
+	
+			case DATETIME:
+				return "DATE";
+	
+			case BOOLEAN:
+				return "NUMBER";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + this);
 		}
 	}
 	
-	public static String stringToBuildArg(String value, DataType dataType)
+	public String stringToBuildArg(String value)
     {
-        switch (dataType)
-        {
+        switch (this) {
             case DATETIME:
                 return "new SimpleDateFormat(" + (char)34 + "yyyy-MM-dd" + (char)34 + ").parse(" + value + ")";
 

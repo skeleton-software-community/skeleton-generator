@@ -7,7 +7,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.Visibility;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
@@ -137,7 +137,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" */");
 		writeLine("public void load() {");
 	
-		for (Property property : this.bean.formBean.properties) {
+		for (ViewProperty property : this.bean.formBean.properties) {
 			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 			}
@@ -160,7 +160,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "() {");
 			
-			for (Property property : currentBean.formBean.properties) {
+			for (ViewProperty property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -268,7 +268,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : currentBean.formBean.properties) {
+			for (ViewProperty property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -293,7 +293,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void create" + currentBean.className + "() {");
 
-			for (Property property : oneToMany.formBean.properties) {
+			for (ViewProperty property : oneToMany.formBean.properties) {
 				if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -368,7 +368,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
 			
-			for (Property property : oneToMany.formBean.properties) {
+			for (ViewProperty property : oneToMany.formBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}
@@ -407,7 +407,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void edit" + currentBean.className + "(Long id) {");
 			
-			for (Property property : currentBean.formBean.properties) {
+			for (ViewProperty property : currentBean.formBean.properties) {
 				if (property.comboBoxBean != null && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
 					writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
 				}

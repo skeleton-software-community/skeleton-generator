@@ -125,8 +125,8 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (this.bean.table.cardinality > 0) {
 			skipLine();
 			write(", uniqueConstraints = {@UniqueConstraint(columnNames = {");
-			write(CHAR_34 + this.bean.table.columns.get(1).name + CHAR_34);
-			for (int i = 2; i <= this.bean.table.cardinality; i++) {
+			write(CHAR_34 + this.bean.table.columns.get(0).name + CHAR_34);
+			for (int i = 1; i < this.bean.table.cardinality; i++) {
 				write(", " + CHAR_34 + this.bean.table.columns.get(i).name + CHAR_34);
 			}
 			
@@ -189,25 +189,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("private Long id;");
 		skipLine();
 		
-		if (bean.isComponent && !bean.isEmbedded) {
-			
-			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
-			
-			if (bean.table.columns.get(1).annotations != null) {
-				for (String annotation:bean.table.columns.get(1).annotations) {
-					writeLine(annotation);
-				}
-			}
-			
-			writeLine("@ManyToOne(fetch = FetchType.LAZY)");
-			writeLine("@JoinColumn(name = " + CHAR_34 + bean.table.columns.get(1).name + CHAR_34 + ", nullable = false)");				
-			writeLine("private " + parentBean.className + " " + parentBean.objectName + ";");
-			skipLine();
-		}
-
-
-		for (int i = 1; i < this.bean.properties.size(); i++) {
-			Property property = this.bean.properties.get(i);
+		for (Property property:bean.properties) {
 			
 			if (property.annotations != null) {
 				for (String annotation:property.annotations) {
@@ -307,20 +289,15 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 		
-		if (bean.isComponent && !bean.isEmbedded) {
-			
-			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
-			
-			writeLine("public " + parentBean.className + " get" + parentBean.className + "() {");
-			writeLine("return this." + parentBean.objectName + ";");
-			writeLine("}");
-			skipLine();
-			writeLine("public void set" + parentBean.className + "(" + parentBean.className + " " + parentBean.objectName + ") {");
-			writeLine("this." + parentBean.objectName + " = " + parentBean.objectName + ";");
-			writeLine("}");
-			skipLine();
-		}
-
+		writeLine("public Long getId() {");
+		writeLine("return this.id;");
+		writeLine("}");
+		skipLine();
+		writeLine("public void setId(Long id) {");
+		writeLine("this.id = id;");
+		writeLine("}");
+		skipLine();
+		
 		for (Property property : this.bean.properties) {
 			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");
 			writeLine("return this." + property.name + ";");

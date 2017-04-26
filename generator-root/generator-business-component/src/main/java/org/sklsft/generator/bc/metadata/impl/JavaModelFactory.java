@@ -8,9 +8,9 @@ import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.FormBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ModelFactory;
-import org.sklsft.generator.bc.metadata.interfaces.OptionBeanFactory;
 import org.sklsft.generator.bc.metadata.interfaces.PackageFactory;
 import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
+import org.sklsft.generator.bc.metadata.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
@@ -53,10 +53,9 @@ public class JavaModelFactory implements ModelFactory {
 	@Resource(name="javaFormBeanFactory")
 	private FormBeanFactory formBeanFactory;
 	
-	@Resource(name="javaOptionBeanFactory")
-	private OptionBeanFactory optionBeanFactory;
-	
-	
+	@Resource(name="javaViewPropertiesFactory")
+	private ViewPropertiesFactory viewPropertiesFactory;
+		
 	
 	
 	public Model buildModel(ProjectMetaData projectMetaData, Project project)
@@ -136,6 +135,7 @@ public class JavaModelFactory implements ModelFactory {
 				bean.basicViewBean = basicViewBeanFactory.getBasicViewBean(bean);
 				bean.fullViewBean = fullViewBeanFactory.getFullViewBean(bean);
 				bean.formBean = formBeanFactory.getFormBean(bean);
+				bean.referenceViewProperties = viewPropertiesFactory.getReferenceProperties(bean);
 				
 				for (OneToMany oneToMany:bean.oneToManyList) {
 					oneToMany.basicViewBean = basicViewBeanFactory.getBasicViewBean(oneToMany);

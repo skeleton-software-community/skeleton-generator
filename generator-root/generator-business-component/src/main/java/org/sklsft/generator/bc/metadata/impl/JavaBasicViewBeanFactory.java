@@ -1,6 +1,9 @@
 package org.sklsft.generator.bc.metadata.impl;
 
+import javax.annotation.Resource;
+
 import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
@@ -8,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 @Component("javaBasicViewBeanFactory")
 public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
+	
+	@Resource(name="javaViewPropertiesFactory")
+	private ViewPropertiesFactory viewPropertiesFactory;
 
 	@Override
 	public BasicViewBean getBasicViewBean(Bean bean) {
@@ -24,7 +30,7 @@ public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 		basicViewBean.filterClassName = bean.className + "Filter";
 		basicViewBean.filterObjectName = bean.objectName + "Filter";
 		
-		basicViewBean.properties = bean.getBasicViewProperties();
+		basicViewBean.properties = viewPropertiesFactory.getBasicViewProperties(bean);
 		
 		return basicViewBean;
 	}
@@ -46,7 +52,7 @@ public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 		basicViewBean.filterClassName = bean.className + "Filter";
 		basicViewBean.filterObjectName = bean.objectName + "Filter";
 		
-		basicViewBean.properties = oneToMany.getBasicViewProperties();
+		basicViewBean.properties = viewPropertiesFactory.getBasicViewProperties(oneToMany);
 		
 		return basicViewBean;
 	}

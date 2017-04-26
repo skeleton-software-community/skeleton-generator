@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
-import org.sklsft.generator.model.domain.business.Property;
-import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
@@ -100,24 +99,24 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         writeLine("}");
         writeLine("logger.info(message);");
         skipLine();
-        
-        List<Property> findPropertyList = parentBean.getReferenceProperties();
                 
         writeLine("try {");
         
-        writeLine(referenceBean.formBean.className + " " + referenceBean.formBean.objectName + " = mapper.mapFrom(new " + referenceBean.formBean.className + "(), Arrays.copyOfRange(args," + findPropertyList.size() + ",args.length));");
+        List<ViewProperty> properties = parentBean.referenceViewProperties;
+        
+        writeLine(referenceBean.formBean.className + " " + referenceBean.formBean.objectName + " = mapper.mapFrom(new " + referenceBean.formBean.className + "(), Arrays.copyOfRange(args," + properties.size() + ",args.length));");
         skipLine();               
         
-        for (int i=0;i<findPropertyList.size();i++)
-        {
-        	String type = DataType.getJavaType(findPropertyList.get(i).dataType);
-        	
+        int i = 0;
+        for (ViewProperty property:properties) {
+        	String type = property.dataType.getJavaType();        	
         	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")args[" + i + "]:(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
+        	i++;
         }
         
         write(parentBean.fullViewBean.className + " " + parentBean.fullViewBean.objectName + " = " + parentBean.serviceObjectName + ".find(arg0");
-        for (int i=1;i<findPropertyList.size();i++)
-        {
+        
+        for (i=1;i<properties.size();i++) {
             write(", arg" + i);
         }
         writeLine(");");

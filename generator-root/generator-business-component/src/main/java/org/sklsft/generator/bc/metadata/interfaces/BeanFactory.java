@@ -8,6 +8,7 @@ import org.sklsft.generator.model.metadata.TableMetaData;
 public interface BeanFactory {
 
 	Bean scanBean(TableMetaData tableMetaData, Table table);
+	
 	Bean fillBean(Table table, Model model);
 	
 

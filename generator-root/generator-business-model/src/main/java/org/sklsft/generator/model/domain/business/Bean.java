@@ -8,9 +8,8 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
 import org.sklsft.generator.model.domain.ui.FormBean;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
-import org.sklsft.generator.model.domain.ui.OptionBean;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DetailMode;
-import org.sklsft.generator.model.metadata.Visibility;
 
 /**
  * representation of a bean<br/>
@@ -88,10 +87,10 @@ public class Bean {
 	public boolean isOneToOneComponent = false;
 	public Bean parentBean = null;
 	
+	public List<ViewProperty> referenceViewProperties = new ArrayList<>();
 	public BasicViewBean basicViewBean;
 	public FullViewBean fullViewBean;
 	public FormBean formBean;
-	public OptionBean optionBean;
 	
 	
 	/**
@@ -104,152 +103,10 @@ public class Bean {
 	}
 	
 
-	/**
-	 * get the list of properties that will be used in bean views to show
-	 * references to other beans
-	 * 
-	 * @return
-	 */
-	public List<Property> getReferenceProperties() {
-		List<Property> findPropertyList = new ArrayList<Property>();
-		List<Property> tempPropertyList = new ArrayList<Property>();
-		
-		int propertiesMaxIndex;
-		if (this.cardinality > 0) {
-			propertiesMaxIndex = this.cardinality;
-		} else {
-			propertiesMaxIndex = this.properties.size() - 1;
-		}
+	
 
-		for (int i = 1; i <= propertiesMaxIndex; i++) {
-			Property currentProperty = this.properties.get(i);
-			if (currentProperty.referenceBean != null) {
-				tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
-				for (Property tempProperty:tempPropertyList) {
-					Property property = new Property();
-					property.name = currentProperty.name + tempProperty.capName;
-					property.capName = currentProperty.capName + tempProperty.capName;
-					property.fetchName = currentProperty.fetchName + "." + tempProperty.fetchName;
-					property.beanDataType = tempProperty.beanDataType;
-					property.dataType = tempProperty.dataType;
-					property.format = tempProperty.format;
-					property.nullable = currentProperty.nullable;
-					property.visibility = currentProperty.visibility;
-					property.editable = currentProperty.editable;
-					property.lastPropertyName = tempProperty.lastPropertyName;
-					property.joinedAliasName = currentProperty.capName + tempProperty.joinedAliasName;
-					property.comboBoxBean = tempProperty.comboBoxBean;
-					property.rendering = tempProperty.rendering;
-					findPropertyList.add(property);
-				}
-			} else {
-				Property property = new Property();
-				property.name = currentProperty.name;
-				property.capName = currentProperty.capName;
-				property.fetchName = currentProperty.fetchName;
-				property.beanDataType = currentProperty.beanDataType;
-				property.dataType = currentProperty.dataType;
-				property.format = currentProperty.format;
-				property.nullable = currentProperty.nullable;
-				property.visibility = currentProperty.visibility;
-				property.editable = currentProperty.editable;
-				property.lastPropertyName = currentProperty.name;
-				property.joinedAliasName = "";
-				property.rendering = currentProperty.rendering;
-				if (hasComboBox) {
-					property.comboBoxBean = this;
-				}
-				findPropertyList.add(property);
-			}
-		}
-
-		return findPropertyList;
-
-	}
-
-	/**
-	 * get the list of properties that will be available in a view bean
-	 * 
-	 * @return
-	 */
-	public List<Property> getVisibleProperties() {
-		
-		return getVisiblePropertiesExcludingField(null);
-	}
 	
 	
-	/**
-	 * get the list of properties that will be available in a view bean<br>
-	 * Excludes a field name. Usefull for handling one to many views where we want to exclude reference to parent bean in a view
-	 */
-	public List<Property> getVisiblePropertiesExcludingField(String excludedFieldName) {
-		List<Property> visiblePropertyList = new ArrayList<Property>();
-		
-		for (int i = 1; i < this.properties.size(); i++) {
-			Property currentProperty = this.properties.get(i);
-			if (currentProperty.referenceBean != null) {
-				if (!currentProperty.name.equals(excludedFieldName)) {
-					if (currentProperty.referenceBean.isEmbedded) {
-						addEmbeddedProperties(currentProperty, visiblePropertyList);
-					} else {
-						addReferenceProperties(currentProperty, visiblePropertyList);
-					}
-				}
-				
-			} else {
-				Property property = new Property();
-				property.name = currentProperty.name;
-				property.capName = currentProperty.capName;
-				property.beanDataType = currentProperty.beanDataType;
-				property.dataType = currentProperty.dataType;
-				property.format = currentProperty.format;
-				property.nullable = currentProperty.nullable;
-				property.visibility = currentProperty.visibility;
-				property.editable = currentProperty.editable;
-				property.rendering = currentProperty.rendering;
-				visiblePropertyList.add(property);
-			}
-		}
-
-		return visiblePropertyList;
-	}
-
-	private void addReferenceProperties(Property currentProperty, List<Property> visiblePropertyList) {
-		List<Property> tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
-		for (Property tempProperty:tempPropertyList) {
-			Property property = new Property();
-			property.name = currentProperty.name + tempProperty.capName;
-			property.capName = currentProperty.capName + tempProperty.capName;
-			property.beanDataType = tempProperty.beanDataType;
-			property.dataType = tempProperty.dataType;
-			property.format = tempProperty.format;
-			property.nullable = currentProperty.nullable;
-			property.visibility = currentProperty.visibility;
-			property.editable = currentProperty.editable;
-			property.comboBoxBean = tempProperty.comboBoxBean;
-			property.rendering = tempProperty.rendering;
-			visiblePropertyList.add(property);
-		}		
-	}
-	
-	private void addEmbeddedProperties(Property currentProperty, List<Property> visiblePropertyList) {
-		List<Property> tempPropertyList = currentProperty.referenceBean.getReferenceProperties();
-		for (Property tempProperty:tempPropertyList) {
-			Property property = new Property();
-			property.name = tempProperty.name;
-			property.capName = tempProperty.capName;
-			property.beanDataType = tempProperty.beanDataType;
-			property.dataType = tempProperty.dataType;
-			property.format = tempProperty.format;
-			property.nullable = tempProperty.nullable;
-			property.visibility = Visibility.min(currentProperty.visibility, tempProperty.visibility);
-			property.editable = tempProperty.editable;
-			property.comboBoxBean = tempProperty.comboBoxBean;
-			property.rendering = tempProperty.rendering;
-			visiblePropertyList.add(property);
-		}		
-	}
-
 	/**
 	 * get the list of aliases that will be used to build queries
 	 * 
@@ -259,7 +116,7 @@ public class Bean {
 		List<Alias> aliasList = new ArrayList<Alias>();
 		List<Alias> tempAliasList = new ArrayList<Alias>();
 
-		for (int i = 1; i <= this.cardinality; i++) {
+		for (int i = 0; i < this.cardinality; i++) {
 			Property currentProperty = this.properties.get(i);
 			if (currentProperty.referenceBean != null) {
 				Alias alias = new Alias();
@@ -279,29 +136,5 @@ public class Bean {
 		}
 
 		return aliasList;
-	}
-
-	public List<Property> getBasicViewProperties() {
-		List<Property> result = new ArrayList<>();
-		
-		for (Property property:getVisibleProperties()) {
-			if (property.visibility.isListVisible()) {
-				result.add(property);
-			}
-		}
-		
-		return result;
-	}
-	
-	public List<Property> getFormProperties() {
-		List<Property> result = new ArrayList<>();
-		
-		for (Property property:getVisibleProperties()) {
-			if (property.visibility.isDetailVisible()) {
-				result.add(property);
-			}
-		}
-		
-		return result;
 	}
 }

@@ -10,6 +10,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
@@ -191,22 +192,26 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createExistsObject() {
-		List<Property> findPropertyList = this.bean.getReferenceProperties();
+		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
 		List<Alias> findAliasList = this.bean.getReferenceAliases();
+		boolean start = true;
 
 		writeLine("/**");
 		writeLine(" * exists object");
 		writeLine(" */");
 		writeLine("@Override");
-		write("public boolean exists(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
-		for (int i = 1; i < findPropertyList.size(); i++) {
-			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
+		write("public boolean exists(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
 		}
 		writeLine(") {");
 
-		write("if (" + findPropertyList.get(0).name + " == null");
-		for (int i = 1; i < findPropertyList.size(); i++) {
-			write(" && " + findPropertyList.get(i).name + " == null");
+		start = true;
+		write("if (");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(" && ");
+			write(property.name + " == null");
 		}
 		writeLine(") {");
 
@@ -221,7 +226,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
-		for (Property property : findPropertyList) {
+		for (ViewProperty property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
 				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
@@ -238,24 +243,29 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createFindObject() {
-		List<Property> findPropertyList = this.bean.getReferenceProperties();
+		boolean start = true;
+		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
 		List<Alias> findAliasList = this.bean.getReferenceAliases();
 
 		writeLine("/**");
 		writeLine(" * find object");
 		writeLine(" */");
 		writeLine("@Override");
-		write("public " + this.bean.className + " find(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
-		for (int i = 1; i < findPropertyList.size(); i++) {
-			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
+		write("public " + this.bean.className + " find(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
 		}
 		writeLine(") {");
 
-		write("if (" + findPropertyList.get(0).name + " == null");
-		for (int i = 1; i < findPropertyList.size(); i++) {
-			write(" && " + findPropertyList.get(i).name + " == null");
+		start = true;
+		write("if (");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(" && ");
+			write(property.name + " == null");
 		}
 		writeLine(") {");
+
 		writeLine("return null;");
 		writeLine("}");
 
@@ -266,7 +276,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
-		for (Property property : findPropertyList) {
+		for (ViewProperty property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
 				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 

@@ -10,7 +10,6 @@ import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.util.naming.JavaClassNaming;
@@ -18,8 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component("javaBeanFactory")
 public class JavaBeanFactory implements BeanFactory {
-	
-		
+
 	@Override
 	public Bean scanBean(TableMetaData tableMetaData, Table table) {
 		Bean bean = new Bean();
@@ -53,15 +51,15 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.baseServiceInterfaceName = bean.className + "BaseService";
 		bean.serviceInterfaceName = bean.className + "Service";
 		bean.serviceObjectName = bean.objectName + "Service";
-		
+
 		bean.baseStateManagerClassName = bean.className + "BaseStateManager";
 		bean.stateManagerClassName = bean.className + "StateManager";
 		bean.stateManagerObjectName = bean.objectName + "StateManager";
-		
+
 		bean.baseRightsManagerClassName = bean.className + "BaseRightsManager";
 		bean.rightsManagerClassName = bean.className + "RightsManager";
 		bean.rightsManagerObjectName = bean.objectName + "RightsManager";
-		
+
 		bean.baseProcessorClassName = bean.className + "BaseProcessor";
 		bean.processorClassName = bean.className + "Processor";
 		bean.processorObjectName = bean.objectName + "Processor";
@@ -69,11 +67,11 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.baseListControllerClassName = bean.className + "BaseListController";
 		bean.listControllerClassName = bean.className + "ListController";
 		bean.listControllerObjectName = bean.objectName + "ListController";
-		
+
 		bean.baseDetailControllerClassName = bean.className + "BaseDetailController";
 		bean.detailControllerClassName = bean.className + "DetailController";
 		bean.detailControllerObjectName = bean.objectName + "DetailController";
-		
+
 		bean.detailViewClassName = bean.className + "DetailView";
 		bean.detailViewObjectName = bean.objectName + "DetailView";
 		bean.listViewClassName = bean.className + "ListView";
@@ -85,41 +83,39 @@ public class JavaBeanFactory implements BeanFactory {
 	@Override
 	public Bean fillBean(Table table, Model model) {
 		Bean bean = model.findBean(table.originalName);
-		
+
 		for (Column column : table.columns) {
-			
-			Property property = null;
 
-			if (!RelationType.isComponentLink(column.relation)) {
-				property = new Property();
-				property.column = column;
-				
-				if (column.referenceTable != null) {
-					property.name = JavaClassNaming.getObjectName(column.originalName.replace("_ID", "").replace("_id", ""));
-					property.capName = JavaClassNaming.getClassName(column.originalName.replace("_ID", "").replace("_id", ""));
-					property.referenceBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-					property.beanDataType = property.referenceBean.className;
-				} else {
-					property.name = JavaClassNaming.getObjectName(column.originalName);
-					property.capName = JavaClassNaming.getClassName(column.originalName);
-					property.beanDataType = DataType.getJavaType(column.dataType);
+			Property property = new Property();
+			property.column = column;
 
-				}
-				property.getterName = "get" + property.capName;
-				property.setterName = "set" + property.capName;
-				property.fetchName = property.getterName + "()";
-				property.dataType = column.dataType;
-				property.nullable = column.nullable;
-				property.relation = column.relation;
-				property.embedded = RelationType.isEmbedded(property.relation);
-				property.unique = column.unique;
-				property.format = column.format;
-				property.visibility = column.visibility;
-				property.editable = column.editable;
-				property.rendering = column.rendering;
-				property.annotations = column.annotations;
-				bean.properties.add(property);
+			if (column.referenceTable != null) {
+				property.name = JavaClassNaming
+						.getObjectName(column.originalName.replace("_ID", "").replace("_id", ""));
+				property.capName = JavaClassNaming
+						.getClassName(column.originalName.replace("_ID", "").replace("_id", ""));
+				property.referenceBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
+				property.beanDataType = property.referenceBean.className;
+			} else {
+				property.name = JavaClassNaming.getObjectName(column.originalName);
+				property.capName = JavaClassNaming.getClassName(column.originalName);
+				property.beanDataType = column.dataType.getJavaType();
+
 			}
+			property.getterName = "get" + property.capName;
+			property.setterName = "set" + property.capName;
+
+			property.dataType = column.dataType;
+			property.nullable = column.nullable;
+			property.relation = column.relation;
+			property.embedded = property.relation.isEmbedded();
+			property.unique = column.unique;
+			property.format = column.format;
+			property.visibility = column.visibility;
+			property.editable = column.editable;
+			property.rendering = column.rendering;
+			property.annotations = column.annotations;
+			bean.properties.add(property);
 
 			if (column.relation.equals(RelationType.MANY_TO_ONE)) {
 				OneToMany oneToMany = new OneToMany();
@@ -157,7 +153,7 @@ public class JavaBeanFactory implements BeanFactory {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.oneToOneList.add(oneToOne);
 			}
-			
+
 			if (column.relation.equals(RelationType.ONE_TO_ONE_COMPONENT)) {
 				bean.isComponent = true;
 				bean.isOneToOneComponent = true;
@@ -168,13 +164,12 @@ public class JavaBeanFactory implements BeanFactory {
 				oneToOneComponent.setterName = "set" + bean.className;
 				Bean parentBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				bean.parentBean = parentBean;
-				oneToOneComponent.parentBean = parentBean;				
+				oneToOneComponent.parentBean = parentBean;
 				parentBean.oneToOneComponentList.add(oneToOneComponent);
 			}
 
 			if (column.relation.equals(RelationType.EMBEDDED)) {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				targetBean.isComponent = true;
 				targetBean.isEmbedded = true;
 			}
 		}

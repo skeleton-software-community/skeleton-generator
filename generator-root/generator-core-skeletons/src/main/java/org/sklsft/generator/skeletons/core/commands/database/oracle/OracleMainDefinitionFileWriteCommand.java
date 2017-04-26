@@ -61,72 +61,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 					writeLine("END;");
 					writeLine("/");
 					skipLine();
-				}
-
-				writeLine("-- drop stored procedures --");
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE get_" + table.name.toLowerCase() + "';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE find_" + table.name.toLowerCase() + "';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE ins_" + table.name.toLowerCase() + "';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE ins_" + table.name.toLowerCase() + "_bc';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE upd_" + table.name.toLowerCase() + "';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE upd_" + table.name.toLowerCase() + "_bc';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE del_" + table.name.toLowerCase() + "';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
-
-				writeLine("BEGIN");
-				writeLine("EXECUTE IMMEDIATE 'DROP PROCEDURE del_" + table.name.toLowerCase() + "_bc';");
-				writeLine("EXCEPTION");
-				writeLine("WHEN OTHERS THEN NULL;");
-				writeLine("END;");
-				writeLine("/");
-				skipLine();
+				}				
 
 				writeLine("-- drop sequence --");
 				writeLine("BEGIN");

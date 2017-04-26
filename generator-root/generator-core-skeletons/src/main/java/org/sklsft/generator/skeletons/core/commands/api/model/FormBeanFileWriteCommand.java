@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 
@@ -65,12 +65,9 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * properties");
         writeLine(" */");
 
-        for (Property property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.bean.formBean.properties) {
         	if (!property.nullable) {
         		writeLine("@NotNull");
-//        		if (property.dataType.equals(DataType.STRING) || property.dataType.equals(DataType.TEXT)) {
-//        			writeLine("@NotEmpty");
-//        		}
         	}
         	writeLine("private " + property.beanDataType + " " + property.name + ";");
         }
@@ -84,7 +81,7 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * getters and setters");
         writeLine(" */");
 
-        for (Property property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.bean.formBean.properties) {
             writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
             writeLine("return this." + property.name + ";");
             writeLine("}");

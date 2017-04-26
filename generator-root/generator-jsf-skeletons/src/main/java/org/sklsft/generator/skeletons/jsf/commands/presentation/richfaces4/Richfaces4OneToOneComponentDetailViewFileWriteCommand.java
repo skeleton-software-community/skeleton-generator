@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 
 public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richfaces4XhtmlFileWriteCommand {
 
@@ -73,7 +73,7 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
         
         writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 
-		for (Property property : currentBean.formBean.properties) {
+		for (ViewProperty property : currentBean.formBean.properties) {
 			if (property.visibility.isDetailVisible()) {
 				writeInput(property, currentBean);
 			}

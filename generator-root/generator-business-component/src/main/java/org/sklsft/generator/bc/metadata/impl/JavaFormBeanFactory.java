@@ -1,6 +1,9 @@
 package org.sklsft.generator.bc.metadata.impl;
 
+import javax.annotation.Resource;
+
 import org.sklsft.generator.bc.metadata.interfaces.FormBeanFactory;
+import org.sklsft.generator.bc.metadata.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.FormBean;
@@ -8,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 @Component("javaFormBeanFactory")
 public class JavaFormBeanFactory implements FormBeanFactory {
+	
+	@Resource(name="javaViewPropertiesFactory")
+	private ViewPropertiesFactory viewPropertiesFactory;
 
 	@Override
 	public FormBean getFormBean(Bean bean) {
@@ -21,7 +27,7 @@ public class JavaFormBeanFactory implements FormBeanFactory {
 		formBean.mapperClassName = formBean.className + "Mapper";
 		formBean.mapperObjectName = formBean.objectName + "Mapper";
 		
-		formBean.properties = bean.getFormProperties();
+		formBean.properties = viewPropertiesFactory.getFormProperties(bean);
 		
 		return formBean;
 	}
@@ -41,7 +47,7 @@ public class JavaFormBeanFactory implements FormBeanFactory {
 		fullViewBean.mapperClassName = fullViewBean.className + "Mapper";
 		fullViewBean.mapperObjectName = fullViewBean.objectName + "Mapper";
 		
-		fullViewBean.properties = oneToMany.getFormProperties();
+		fullViewBean.properties = viewPropertiesFactory.getFormProperties(oneToMany);
 		
 		return fullViewBean;
 	}

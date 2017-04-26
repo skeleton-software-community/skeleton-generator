@@ -1,7 +1,7 @@
 package org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.skeletons.commands.impl.typed.XhtmlFileWriteCommand;
 
@@ -11,7 +11,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		super(folderName, fileName);
 	}
 
-	protected void writeListComponent(Property property, Bean bean) {
+	protected void writeListComponent(ViewProperty property, Bean bean) {
 		switch (property.dataType) {
 		case BOOLEAN:
 			if (property.nullable) {
@@ -101,11 +101,11 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	}
 	
 	
-	protected void writeInput(Property property, Bean bean){
+	protected void writeInput(ViewProperty property, Bean bean){
 		writeInput("", property, bean);
 	}
 	
-	protected void writeInput(String prefix, Property property, Bean bean){
+	protected void writeInput(String prefix, ViewProperty property, Bean bean){
 		
 		writeLine("<div class=" + CHAR_34 + "col-xs-12" + CHAR_34 + ">");
 		
@@ -147,7 +147,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
         skipLine();
 	}
 	
-	private void writeCombobox(String prefix, Property property, Bean bean){
+	private void writeCombobox(String prefix, ViewProperty property, Bean bean){
 		
 		write("<h:selectOneMenu id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass=" + CHAR_34
@@ -216,7 +216,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	}
 	
 	
-	private void writeStringInput(String prefix, Property property, Bean bean){
+	private void writeStringInput(String prefix, ViewProperty property, Bean bean){
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
@@ -230,7 +230,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("/>");
 	}
 	
-	private void writeTextInput(String prefix, Property property, Bean bean){
+	private void writeTextInput(String prefix, ViewProperty property, Bean bean){
 		write("<h:inputTextarea id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " rows="
@@ -245,7 +245,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("/>");
 	}
 	
-	private void writeBooleanInput(String prefix, Property property, Bean bean){
+	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<div class=" + CHAR_34 + "checkbox" + CHAR_34 + ">");
 		writeLine("<label>");
 		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + prefix 
@@ -267,7 +267,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("</div>");
 	}
 	
-	private void writeDoubleInput(String prefix, Property property, Bean bean){
+	private void writeDoubleInput(String prefix, ViewProperty property, Bean bean){
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
@@ -299,7 +299,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("</h:inputText>");
 	}
 	
-	private void writeLongInput(String prefix, Property property, Bean bean){
+	private void writeLongInput(String prefix, ViewProperty property, Bean bean){
 		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
 				+ property.capName + CHAR_34 + " styleClass="
 				+ CHAR_34 + "form-control" + CHAR_34 + " value="
@@ -317,7 +317,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("</h:inputText>");
 	}
 	
-	private void writeDateInput(String prefix, Property property, Bean bean){
+	private void writeDateInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<rich:calendar id=" + CHAR_34 + prefix 
 				+ bean.objectName + property.capName + CHAR_34
 				+ " inputClass=" + CHAR_34 + "form-control"
@@ -345,7 +345,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	}
 	
 	
-	protected void writeFilter(Property property, Bean bean) {
+	protected void writeFilter(ViewProperty property, Bean bean) {
 		switch (property.dataType) {
 		case STRING:
 	
@@ -378,7 +378,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		}
 	}
 	
-	protected void writeFilter(Property property, Bean currentBean, Bean parentBean) {
+	protected void writeFilter(ViewProperty property, Bean currentBean, Bean parentBean) {
 		switch (property.dataType) {
 		case STRING:
 	
@@ -411,7 +411,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		}
 	}
 	
-	public void writeFilterExpression(Property property, Bean bean) {
+	public void writeFilterExpression(ViewProperty property, Bean bean) {
 		
 		switch (property.dataType) {
 		case STRING:
@@ -445,7 +445,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		}
 	}
 	
-	public void writeFilterExpression(Property property, Bean currentBean, Bean parentBean) {
+	public void writeFilterExpression(ViewProperty property, Bean currentBean, Bean parentBean) {
 		
 		switch (property.dataType) {
 		case STRING:

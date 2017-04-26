@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DetailMode;
 
 public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWriteCommand {
@@ -108,7 +108,7 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		writeLine("</rich:column>");
 		skipLine();
 
-		for (Property property : this.bean.basicViewBean.properties) {
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
 			writeLine("<rich:column>");
 			writeFilter(property, this.bean);
 			writeLine("</rich:column>");
@@ -161,7 +161,7 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		skipLine();
 
 
-		for (Property property : this.bean.basicViewBean.properties) {
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
 			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + this.bean.objectName + "." + property.name + "}" + CHAR_34);
 			writeFilterExpression(property, bean);
 			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");

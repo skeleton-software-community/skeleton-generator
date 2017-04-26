@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 
 public class Richfaces4OneToManyModalViewFileWriteCommand extends Richfaces4XhtmlFileWriteCommand {
 
@@ -65,7 +65,7 @@ public class Richfaces4OneToManyModalViewFileWriteCommand extends Richfaces4Xhtm
 		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
 		skipLine();
 
-		for (Property property : oneToMany.formBean.properties) {
+		for (ViewProperty property : oneToMany.formBean.properties) {
 			writeInput(property, currentBean);
 		}
 

@@ -2,12 +2,12 @@ package org.sklsft.generator.skeletons.core.commands.api.interfaces;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
@@ -32,16 +32,16 @@ private Bean bean;
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
 		
 		for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList) {
-		    Bean currentBean = OneToOneComponent.referenceBean;
-		    javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-		    javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
+			Bean currentBean = OneToOneComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
 		}
 		
 		for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList) {
-		    Bean currentBean = uniqueComponent.referenceBean;
-		    javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
-		    javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-		    javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
+			Bean currentBean = uniqueComponent.referenceBean;
+			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
 		}
 
 	}
@@ -72,258 +72,258 @@ private Bean bean;
 		
 		}
 
-        createLoadObjectList();
-        createLoadObject();
-        createFindObject();
-        createLoadOneToOneComponent();
-        createLoadOneToManyComponentList();
-        createLoadOneToManyComponent();
-        createCreateObject();
-        createCreateOneToManyComponent();
-        createSaveObject();
-        createSaveOneToOneComponent();
-        createSaveOneToManyComponent();
-        createUpdateObject();
-        createUpdateUniqueComponent();
-        createUpdateOneToManyComponent();
-        createDeleteObject();
-        createDeleteOneToOneComponent();
-        createDeleteOneToManyComponent();
-        createDeleteObjectList();
-        createDeleteOneToManyComponentList();
+		createLoadObjectList();
+		createLoadObject();
+		createFindObject();
+		createLoadOneToOneComponent();
+		createLoadOneToManyComponentList();
+		createLoadOneToManyComponent();
+		createCreateObject();
+		createCreateOneToManyComponent();
+		createSaveObject();
+		createSaveOneToOneComponent();
+		createSaveOneToManyComponent();
+		createUpdateObject();
+		createUpdateUniqueComponent();
+		createUpdateOneToManyComponent();
+		createDeleteObject();
+		createDeleteOneToOneComponent();
+		createDeleteOneToManyComponent();
+		createDeleteObjectList();
+		createDeleteOneToManyComponentList();
 
-        writeLine("}");
+		writeLine("}");
 
-    }
+	}
 
-    private void createLoadObjectList() {
-        writeLine("/**");
-        writeLine(" * load object list");
-        writeLine(" */");
-        writeLine("List<" + this.bean.basicViewBean.className + "> loadList();");
-        skipLine();
+	private void createLoadObjectList() {
+		writeLine("/**");
+		writeLine(" * load object list");
+		writeLine(" */");
+		writeLine("List<" + this.bean.basicViewBean.className + "> loadList();");
+		skipLine();
 
-        for (Property property : this.bean.properties) {
-            if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
-                writeLine("/**");
-                writeLine(" * load object list from " + property.name);
-                writeLine(" */");
-                writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
-                skipLine();
-            }
-        }
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+				writeLine("/**");
+				writeLine(" * load object list from " + property.name);
+				writeLine(" */");
+				writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
+				skipLine();
+			}
+		}
 
-    }
+	}
 
-    private void createLoadObject() {
-        writeLine("/**");
-        writeLine(" * load object");
-        writeLine(" */");
-        writeLine(this.bean.fullViewBean.className + " load(Long id);");
-        skipLine();
+	private void createLoadObject() {
+		writeLine("/**");
+		writeLine(" * load object");
+		writeLine(" */");
+		writeLine(this.bean.fullViewBean.className + " load(Long id);");
+		skipLine();
 
-    }
-    
-    
-    private void createFindObject() {
-        List<Property> findPropertyList = this.bean.getReferenceProperties();
+	}
+	
+	
+	private void createFindObject() {
+		boolean start = true;
+		writeLine("/**");
+		writeLine(" * find object");
+		writeLine(" */");
+		write(this.bean.fullViewBean.className + " find(");
+		for (ViewProperty property:bean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(");");
+		skipLine();
+	}
+	
 
-        writeLine("/**");
-        writeLine(" * find object");
-        writeLine(" */");
-        write(this.bean.fullViewBean.className + " find(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
-        for (int i=1;i<findPropertyList.size();i++) {
-            write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
-        }
-        writeLine(");");
-        skipLine();
-    }
-    
+	private void createLoadOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 
-    private void createLoadOneToOneComponent() {
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-            Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * load one to one component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * load one to one component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
-            skipLine();
-        }
-    }
+	private void createLoadOneToManyComponentList() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createLoadOneToManyComponentList() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * load one to many component " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id);");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * load one to many component " + currentBean.objectName + " list");
-            writeLine(" */");
-            writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id);");
-            skipLine();
-        }
-    }
+	private void createLoadOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createLoadOneToManyComponent() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * load one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");			
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * load one to many component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id);");            
-            skipLine();
-        }
-    }
+	private void createCreateObject() {
+		writeLine("/**");
+		writeLine(" * create object");
+		writeLine(" */");
+		writeLine(this.bean.fullViewBean.className + " create();");
+		skipLine();
+	}
 
-    private void createCreateObject() {
-        writeLine("/**");
-        writeLine(" * create object");
-        writeLine(" */");
-        writeLine(this.bean.fullViewBean.className + " create();");
-        skipLine();
-    }
+	private void createCreateOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createCreateOneToManyComponent() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * create one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "(Long id);");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * create one to many component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "(Long id);");
-            skipLine();
-        }
-    }
+	private void createSaveObject() {
+		writeLine("/**");
+		writeLine(" * save object");		
+		writeLine(" */");
+		writeLine("Long save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+		skipLine();
+		
+		for (Property property:bean.properties) {
+			if (property.referenceBean!=null) {
+				if (property.relation.equals(RelationType.MANY_TO_ONE)) {
+					
+					Bean parentBean = property.referenceBean;
+					
+					writeLine("/**");
+					writeLine(" * save object from parent " + parentBean.className);		
+					writeLine(" */");
+					writeLine("Long saveFrom" + parentBean.className + "(Long " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+					skipLine();
+				}
+			}
+		}
+	}
+	
+	private void createSaveOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 
-    private void createSaveObject() {
-    	writeLine("/**");
-        writeLine(" * save object");        
-        writeLine(" */");
-        writeLine("Long save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
-        skipLine();
-    	
-    	for (Property property:bean.properties) {
-        	if (property.referenceBean!=null) {
-        		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-        			
-        			Bean parentBean = property.referenceBean;
-        			
-        			writeLine("/**");
-        	        writeLine(" * save object from parent " + parentBean.className);        
-        	        writeLine(" */");
-        	        writeLine("Long saveFrom" + parentBean.className + "(Long " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
-        	        skipLine();
-        		}
-        	}
-        }
-    }
-    
-    private void createSaveOneToOneComponent() {
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-            Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * save one to one component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("public void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * save one to one component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine("public void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
-            skipLine();
-        }
-    }
+	private void createSaveOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createSaveOneToManyComponent() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * save one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * save one to many component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine("void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
-            skipLine();
-        }
-    }
+	private void createUpdateObject() {
+		writeLine("/**");		
+		writeLine(" * update object");		
+		writeLine(" */");
+		writeLine("void update(Long id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+		skipLine();
+	}
 
-    private void createUpdateObject() {
-        writeLine("/**");        
-        writeLine(" * update object");        
-        writeLine(" */");
-        writeLine("void update(Long id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
-        skipLine();
-    }
+	private void createUpdateUniqueComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 
-    private void createUpdateUniqueComponent() {
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-            Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * update one to one component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * update one to one component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
-            skipLine();
-        }
-    }
+	private void createUpdateOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createUpdateOneToManyComponent() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * update one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");
-            writeLine(" * update one to many component " + currentBean.objectName);
-            writeLine(" */");
-            writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
-            skipLine();
-        }
-    }
+	private void createDeleteObject() {
+		writeLine("/**");		
+		writeLine(" * delete object");		
+		writeLine(" */");
+		writeLine("void delete(Long id);");
+		skipLine();
+	}
+	
+	private void createDeleteOneToOneComponent() {
+		for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+			Bean currentBean = oneToOneComponent.referenceBean;
 
-    private void createDeleteObject() {
-        writeLine("/**");        
-        writeLine(" * delete object");        
-        writeLine(" */");
-        writeLine("void delete(Long id);");
-        skipLine();
-    }
-    
-    private void createDeleteOneToOneComponent() {
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
-            Bean currentBean = oneToOneComponent.referenceBean;
+			writeLine("/**");			
+			writeLine(" * delete one to one component " + currentBean.objectName);			
+			writeLine(" */");
+			writeLine("public void delete" + currentBean.className + "(Long id);");			
+			skipLine();
+		}
+	}
 
-            writeLine("/**");            
-            writeLine(" * delete one to one component " + currentBean.objectName);            
-            writeLine(" */");
-            writeLine("public void delete" + currentBean.className + "(Long id);");            
-            skipLine();
-        }
-    }
+	private void createDeleteOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createDeleteOneToManyComponent() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");			
+			writeLine(" * delete one to many component " + currentBean.objectName);			
+			writeLine(" */");
+			writeLine("void delete" + currentBean.className + "(Long id);");
+			skipLine();
+		}
+	}
 
-            writeLine("/**");            
-            writeLine(" * delete one to many component " + currentBean.objectName);            
-            writeLine(" */");
-            writeLine("void delete" + currentBean.className + "(Long id);");
-            skipLine();
-        }
-    }
+	private void createDeleteObjectList() {
+		writeLine("/**");		
+		writeLine(" * delete object list");		
+		writeLine(" */");
+		writeLine("void deleteList(List<Long> idList);");
+		skipLine();
+	}
 
-    private void createDeleteObjectList() {
-        writeLine("/**");        
-        writeLine(" * delete object list");        
-        writeLine(" */");
-        writeLine("void deleteList(List<Long> idList);");
-        skipLine();
-    }
+	private void createDeleteOneToManyComponentList() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 
-    private void createDeleteOneToManyComponentList() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
-
-            writeLine("/**");
-            writeLine(" * delete one to many component " + currentBean.objectName + " list");
-            writeLine(" */");
-            writeLine("void delete" + currentBean.className + "List(List<Long> idList);");
-            skipLine();
-        }
-    }
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("void delete" + currentBean.className + "List(List<Long> idList);");
+			skipLine();
+		}
+	}
 }

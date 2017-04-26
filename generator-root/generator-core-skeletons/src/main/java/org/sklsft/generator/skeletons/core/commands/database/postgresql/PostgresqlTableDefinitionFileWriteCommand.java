@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
@@ -44,20 +45,15 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write(table.columns.get(0).name + " " + DataType.getPostgresqlType(table.columns.get(0).dataType));
+		write("id " + DataType.LONG.getPostgresqlType());
 
-		for (int i = 1; i < this.table.columns.size(); i++) {
+		for (Column column:table.columns) {
 			writeLine(",");
-			write(this.table.columns.get(i).name + " " + DataType.getPostgresqlType(table.columns.get(i).dataType));
-			if (this.table.columns.get(i).nullable) {
+			write(column.name + " " + column.dataType.getPostgresqlType());
+			if (column.nullable) {
 				write(" NULL");
 			} else {
 				write(" NOT NULL");
-			}
-			if (this.table.columns.get(i).unique) {
-				if (!(i == 1 && table.cardinality == 1)) {
-					write(" UNIQUE");
-				}
 			}
 		}
 
@@ -67,8 +63,8 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		skipLine();
 		
 		if (table.cardinality > 0) {
-			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(1).name);
-			for (int i = 2; i <= this.table.cardinality; i++) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
+			for (int i = 1; i < this.table.cardinality; i++) {
 				write("," + this.table.columns.get(i).name);
 			}
 			writeLine(");");
@@ -76,7 +72,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 			skipLine();
 		}
 
-		writeLine("ALTER TABLE " + table.name + " ADD CONSTRAINT PK_" + table.name + " PRIMARY KEY (" + this.table.columns.get(0).name + ");");
+		writeLine("ALTER TABLE " + table.name + " ADD CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID);");
 		writeLine("/");
 		skipLine();			
 
@@ -98,12 +94,12 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("-- table d'audit des elements --");
 		writeLine("CREATE TABLE " + table.name + "_aud");
 		writeLine("(");
-		writeLine(table.columns.get(0).name + " integer NOT NULL,");
+		writeLine("id integer NOT NULL,");
 		writeLine("rev integer NOT NULL,");
 		writeLine("revtype smallint NOT NULL,");
 
-		for (int i = 1; i < this.table.columns.size(); i++) {
-			writeLine(this.table.columns.get(i).name + " " + DataType.getPostgresqlType(table.columns.get(i).dataType) + " NULL,");
+		for (Column column:table.columns) {
+			writeLine(column.name + " " + column.dataType.getPostgresqlType() + " NULL,");
 		}
 
 		writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (id, rev),");
