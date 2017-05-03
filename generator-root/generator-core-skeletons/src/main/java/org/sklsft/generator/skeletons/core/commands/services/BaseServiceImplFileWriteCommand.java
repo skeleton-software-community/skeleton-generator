@@ -154,18 +154,21 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		
 		if (this.bean.hasComboBox) {
-		    writeLine("/**");
+		    
+			Property comboProperty = this.bean.properties.get(0);
+			
+			writeLine("/**");
 			writeLine(" * get options");
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("@Transactional(readOnly=true)");
-			writeLine("public List<" + this.bean.properties.get(1).beanDataType + "> getOptions() {");
+			writeLine("public List<" + comboProperty.beanDataType + "> getOptions() {");
 			writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadList();");
-			writeLine("List<" + this.bean.properties.get(1).beanDataType + "> " + this.bean.objectName + this.bean.properties.get(1).capName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
+			writeLine("List<" + comboProperty.beanDataType + "> " + this.bean.objectName + comboProperty.capName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
 			writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-			writeLine(this.bean.objectName + this.bean.properties.get(1).capName + "List.add(" + this.bean.objectName + ".get" + this.bean.properties.get(1).capName + "());");
+			writeLine(this.bean.objectName + comboProperty.capName + "List.add(" + this.bean.objectName + ".get" + comboProperty.capName + "());");
 			writeLine("}");
-			writeLine("return " + this.bean.objectName + this.bean.properties.get(1).capName + "List;");
+			writeLine("return " + this.bean.objectName + comboProperty.capName + "List;");
 			writeLine("}");
 			skipLine();
 
@@ -429,7 +432,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.formBean.mapperObjectName + ".mapTo(" + currentBean.formBean.objectName + ", new " + currentBean.className + "());");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanSave" + currentBean.className + "(" + this.bean.objectName + ");");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".save" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ");");
             writeLine("}");
@@ -449,7 +452,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + currentBean.formBean.mapperObjectName + ".mapTo(" + currentBean.formBean.objectName + ", new " + currentBean.className + "());");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanSave" + currentBean.className + "(" + this.bean.objectName + ");");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanSave" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".save" + currentBean.className + "(" + currentBean.objectName + "," + this.bean.objectName + ");");
             writeLine("}");
@@ -485,7 +488,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + bean.objectName + ");");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.objectName + ".set" + currentBean.className + "(this." + currentBean.formBean.mapperObjectName + ".mapTo(" + currentBean.formBean.objectName + ", " + currentBean.objectName + "));");
             writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + currentBean.objectName + ");");
@@ -505,7 +508,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = this." + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ".get" + bean.className + "());");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanUpdate" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(currentBean.objectName + " = this." + currentBean.formBean.mapperObjectName + ".mapTo(" + currentBean.formBean.objectName + ", " + currentBean.objectName + ");");
             writeLine(this.bean.processorObjectName + ".update" + currentBean.className + "(" + currentBean.objectName + ");");
@@ -541,7 +544,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Transactional(rollbackFor=Exception.class)");
             writeLine("public void delete" + currentBean.className + "(Long id) {");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ".get" + bean.className + "());");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
@@ -561,7 +564,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public void delete" + currentBean.className + "(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = this." + this.bean.daoObjectName + ".load(id);");
             writeLine(currentBean.className + " " + currentBean.objectName + " = " + bean.objectName + ".get" + currentBean.className + "();");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + bean.objectName + ");");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");
@@ -603,7 +606,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("if (idList != null){");
             writeLine("for (Long i:idList){");
             writeLine(currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(i);");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ".get" + bean.className + "());");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine(this.bean.stateManagerObjectName + ".checkCanDelete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("this." + this.bean.processorObjectName + ".delete" + currentBean.className + "(" + currentBean.objectName + ");");
             writeLine("}");

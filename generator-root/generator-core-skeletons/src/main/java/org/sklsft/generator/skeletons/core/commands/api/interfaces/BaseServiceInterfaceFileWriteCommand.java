@@ -64,10 +64,13 @@ private Bean bean;
 		skipLine();		
 		
 		if (this.bean.hasComboBox) {
+			
+			Property comboProperty = this.bean.properties.get(0);
+			
 			writeLine("/**");
 			writeLine(" * get options");
 			writeLine(" */");
-			writeLine("List<" + this.bean.properties.get(1).beanDataType + "> getOptions();");
+			writeLine("List<" + comboProperty.beanDataType + "> getOptions();");
 			skipLine();
 		
 		}

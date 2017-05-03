@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 
 public interface ViewPropertiesFactory {
 
+	public List<ViewProperty> getViewProperties(Property property);
+	
 	public List<ViewProperty> getReferenceProperties(Bean bean);
 	
 	public List<ViewProperty> getBasicViewProperties(Bean bean);

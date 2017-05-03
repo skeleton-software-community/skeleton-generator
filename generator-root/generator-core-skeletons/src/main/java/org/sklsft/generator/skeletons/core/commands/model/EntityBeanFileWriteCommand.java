@@ -92,12 +92,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToOneComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 		}
-		
-		if (bean.isComponent && !bean.isEmbedded) {
-			
-			Bean parentBean = bean.myPackage.model.findBean(bean.table.columns.get(1).referenceTable.originalName);
-			javaImports.add("import " + parentBean.myPackage.omPackageName + "." + parentBean.className + ";");
-		}
 	}
 
 	@Override

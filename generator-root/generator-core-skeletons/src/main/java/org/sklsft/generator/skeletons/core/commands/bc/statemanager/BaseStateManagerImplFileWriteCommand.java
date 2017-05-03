@@ -78,8 +78,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
         	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can save one to one component " + currentBean.className);
@@ -99,8 +98,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             skipLine();
         }
         
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
         	Bean currentBean = oneToManyComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can save one to many component " + currentBean.className);
@@ -137,8 +135,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
             Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can update one to one component " + currentBean.className);
@@ -158,8 +155,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             skipLine();
         }
 
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can update one to many component " + currentBean.className);
@@ -196,8 +192,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
             Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can delete one to one component " + currentBean.className);
@@ -217,8 +212,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             skipLine();
         }
         
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can delete one to many component " + currentBean.className);

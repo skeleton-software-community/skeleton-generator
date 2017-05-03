@@ -5,7 +5,7 @@ import org.sklsft.generator.model.domain.database.Column;
 public class OneToManyComponent {
 
 	public Bean referenceBean;
-    public Column referenceColumn;
+	public Property referenceProperty;
     public Bean parentBean;
     public String collectionName;
     public String collectionGetterName;

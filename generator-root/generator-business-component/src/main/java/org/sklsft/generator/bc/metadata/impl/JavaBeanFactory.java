@@ -134,7 +134,7 @@ public class JavaBeanFactory implements BeanFactory {
 				bean.isComponent = true;
 				OneToManyComponent oneToManyComponent = new OneToManyComponent();
 				oneToManyComponent.referenceBean = bean;
-				oneToManyComponent.referenceColumn = column;
+				oneToManyComponent.referenceProperty = property;
 				oneToManyComponent.collectionName = bean.objectName + "Collection";
 				oneToManyComponent.collectionGetterName = "get" + bean.className + "Collection";
 				oneToManyComponent.collectionSetterName = "set" + bean.className + "Collection";
@@ -171,6 +171,7 @@ public class JavaBeanFactory implements BeanFactory {
 			if (column.relation.equals(RelationType.EMBEDDED)) {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.isEmbedded = true;
+				targetBean.isComponent = true;
 			}
 		}
 

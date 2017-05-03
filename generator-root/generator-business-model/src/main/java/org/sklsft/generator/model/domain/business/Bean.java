@@ -15,8 +15,6 @@ import org.sklsft.generator.model.metadata.DetailMode;
  * representation of a bean<br/>
  * Properties are willingly public because of their intensive use in file write
  * commands<br/>
- * The cardinality of a bean represents the number of fields that are needed to
- * build the business key (and its associated unique constraint)
  * 
  * @author Nicolas Thibault
  * 
@@ -64,6 +62,10 @@ public class Bean {
 	public String detailViewObjectName;
 	public String listViewObjectName;
 	
+	/**
+	 * represents the number of fields that are needed to
+	 * build the business key (and its associated unique constraint)
+	 */
 	public int cardinality;
 	public String listRendering;
 	public String detailRendering;
@@ -72,7 +74,7 @@ public class Bean {
 	public boolean updateEnabled;
 	public boolean deleteEnabled;
 	public DetailMode detailMode;
-	
+		
 	public List<String> interfaces;
 	public List<String> annotations;
 
@@ -92,49 +94,4 @@ public class Bean {
 	public FullViewBean fullViewBean;
 	public FormBean formBean;
 	
-	
-	/**
-	 * determines whether the bean will have several tabs in the detail view (Mode Page)
-	 * 
-	 * @return
-	 */
-	public boolean hasTabsInDetailView() {
-		return (this.oneToManyComponentList.size() > 0 || this.oneToManyList.size() > 0 || this.oneToOneComponentList.size() > 0 || this.oneToOneList.size() > 0);
-	}
-	
-
-	
-
-	
-	
-	/**
-	 * get the list of aliases that will be used to build queries
-	 * 
-	 * @return
-	 */
-	public List<Alias> getReferenceAliases() {
-		List<Alias> aliasList = new ArrayList<Alias>();
-		List<Alias> tempAliasList = new ArrayList<Alias>();
-
-		for (int i = 0; i < this.cardinality; i++) {
-			Property currentProperty = this.properties.get(i);
-			if (currentProperty.referenceBean != null) {
-				Alias alias = new Alias();
-				alias.propertyName = currentProperty.name;
-				alias.name = currentProperty.capName;
-				aliasList.add(alias);
-
-				tempAliasList = currentProperty.referenceBean.getReferenceAliases();
-				for (int j = 0; j < tempAliasList.size(); j++) {
-					Alias currentAlias = tempAliasList.get(j);
-					Alias tempAlias = new Alias();
-					tempAlias.propertyName = alias.propertyName + "." + currentAlias.propertyName;
-					tempAlias.name = alias.name + currentAlias.name;
-					aliasList.add(tempAlias);
-				}
-			}
-		}
-
-		return aliasList;
-	}
 }

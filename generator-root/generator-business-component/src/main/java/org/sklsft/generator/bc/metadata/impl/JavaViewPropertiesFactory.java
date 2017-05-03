@@ -14,6 +14,97 @@ import org.springframework.stereotype.Component;
 @Component("javaViewPropertiesFactory")
 public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 
+	public List<ViewProperty> getViewProperties(Property myProperty) {
+
+		List<ViewProperty> result = new ArrayList<>();
+		
+		if (myProperty.referenceBean == null) {
+			ViewProperty viewProperty = new ViewProperty();
+			viewProperty.name = myProperty.name;
+			viewProperty.capName = myProperty.capName;
+			viewProperty.mappingPath = myProperty.getterName + "()";
+			viewProperty.beanDataType = myProperty.beanDataType;
+			viewProperty.dataType = myProperty.dataType;
+			viewProperty.format = myProperty.format;
+			viewProperty.nullable = myProperty.nullable;
+			viewProperty.visibility = myProperty.visibility;
+			viewProperty.editable = myProperty.editable;
+			viewProperty.lastPropertyName = myProperty.name;
+			viewProperty.joinedAliasName = "";
+			viewProperty.comboBoxBean = myProperty.comboBoxBean;					
+			viewProperty.rendering = myProperty.rendering;
+			result.add(viewProperty);
+		} else {
+			
+			int limit = myProperty.embedded?myProperty.referenceBean.properties.size():myProperty.referenceBean.cardinality;
+			
+			for (int i = 0; i < limit; i++) {
+				
+				Property property = myProperty.referenceBean.properties.get(i);
+				
+				if (property.referenceBean != null) {
+					List<ViewProperty> tempPropertyList = getViewProperties(property);
+					for (ViewProperty tempProperty:tempPropertyList) {
+						ViewProperty viewProperty = new ViewProperty();
+						if (myProperty.embedded) {
+							viewProperty.name = tempProperty.name;
+							viewProperty.capName = tempProperty.capName;
+						} else {
+							viewProperty.name = myProperty.name + tempProperty.capName;
+							viewProperty.capName = myProperty.capName + tempProperty.capName;
+						}
+						viewProperty.mappingPath = myProperty.getterName + "()." + tempProperty.mappingPath;
+						viewProperty.beanDataType = tempProperty.beanDataType;
+						viewProperty.dataType = tempProperty.dataType;
+						viewProperty.format = tempProperty.format;
+						viewProperty.nullable = myProperty.nullable || tempProperty.nullable;
+						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
+						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
+						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
+						viewProperty.joinedAliasName = myProperty.capName + tempProperty.joinedAliasName;
+						viewProperty.comboBoxBean = tempProperty.comboBoxBean;					
+						viewProperty.rendering = tempProperty.rendering;
+						result.add(viewProperty);
+					}
+				} else {
+					ViewProperty viewProperty = new ViewProperty();
+					if (myProperty.embedded) {
+						viewProperty.name = property.name;
+						viewProperty.capName = property.capName;
+					} else {
+						viewProperty.name = myProperty.name + property.capName;
+						viewProperty.capName = myProperty.capName + property.capName;
+					}
+					viewProperty.mappingPath = myProperty.getterName + "()." + property.getterName + "()";
+					viewProperty.beanDataType = property.beanDataType;
+					viewProperty.dataType = property.dataType;
+					viewProperty.format = property.format;
+					viewProperty.nullable = myProperty.nullable || property.nullable;
+					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
+					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
+					viewProperty.lastPropertyName = property.name;
+					viewProperty.joinedAliasName = myProperty.capName;
+					if (myProperty.referenceBean.hasComboBox) {
+						viewProperty.comboBoxBean = myProperty.referenceBean;
+					}
+					if (myProperty.referenceBean.cardinality == 1) {
+						viewProperty.rendering = myProperty.rendering;
+					} else {
+						if (myProperty.embedded) {
+							viewProperty.rendering = property.rendering;
+						} else {
+							viewProperty.rendering = myProperty.rendering + "(" + property.rendering + ")";
+						}
+					}
+					
+					result.add(viewProperty);
+				}
+			}
+		}
+
+		return result;
+	}
+
 	/**
 	 * get the list of properties that will be used in bean views to show
 	 * references to other beans
@@ -22,48 +113,10 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 	 */
 	public List<ViewProperty> getReferenceProperties(Bean bean) {
 		List<ViewProperty> result = new ArrayList<>();
-		List<ViewProperty> tempPropertyList = new ArrayList<>();
 		
 		for (int i = 0; i < bean.cardinality; i++) {
-			Property currentProperty = bean.properties.get(i);
-			if (currentProperty.referenceBean != null) {
-				tempPropertyList = getReferenceProperties(currentProperty.referenceBean);
-				for (ViewProperty tempProperty:tempPropertyList) {
-					ViewProperty viewProperty = new ViewProperty();
-					viewProperty.name = currentProperty.name + tempProperty.capName;
-					viewProperty.capName = currentProperty.capName + tempProperty.capName;
-					viewProperty.mappingPath = currentProperty.getterName + "()." + tempProperty.mappingPath;
-					viewProperty.beanDataType = tempProperty.beanDataType;
-					viewProperty.dataType = tempProperty.dataType;
-					viewProperty.format = tempProperty.format;
-					viewProperty.nullable = currentProperty.nullable;
-					viewProperty.visibility = currentProperty.visibility;
-					viewProperty.editable = currentProperty.editable;
-					viewProperty.lastPropertyName = tempProperty.lastPropertyName;
-					viewProperty.joinedAliasName = currentProperty.capName + tempProperty.joinedAliasName;
-					viewProperty.comboBoxBean = tempProperty.comboBoxBean;
-					
-					result.add(viewProperty);
-				}
-			} else {
-				ViewProperty viewProperty = new ViewProperty();
-				viewProperty.name = currentProperty.name;
-				viewProperty.capName = currentProperty.capName;
-				viewProperty.mappingPath = currentProperty.getterName + "()";
-				viewProperty.beanDataType = currentProperty.beanDataType;
-				viewProperty.dataType = currentProperty.dataType;
-				viewProperty.format = currentProperty.format;
-				viewProperty.nullable = currentProperty.nullable;
-				viewProperty.visibility = currentProperty.visibility;
-				viewProperty.editable = currentProperty.editable;
-				viewProperty.lastPropertyName = currentProperty.name;
-				viewProperty.joinedAliasName = "";
-				if (bean.hasComboBox) {
-					viewProperty.comboBoxBean = bean;
-				}
-				
-				result.add(viewProperty);
-			}
+			Property property = bean.properties.get(i);
+			result.addAll(property.viewProperties);
 		}
 
 		return result;
@@ -89,69 +142,14 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 	private List<ViewProperty> getViewPropertiesExcludingField(Bean bean, String excludedFieldName) {
 		List<ViewProperty> result = new ArrayList<>();
 		
-		for (Property currentProperty:bean.properties) {
-			if (currentProperty.referenceBean != null) {
-				if (!currentProperty.relation.isComponentLink() && !currentProperty.name.equals(excludedFieldName)) {
-					if (currentProperty.referenceBean.isEmbedded) {
-						addEmbeddedProperties(currentProperty, result);
-					} else {
-						addReferenceProperties(currentProperty, result);
-					}
-				}				
-			} else {
-				ViewProperty viewProperty = new ViewProperty();
-				viewProperty.name = currentProperty.name;
-				viewProperty.capName = currentProperty.capName;
-				viewProperty.beanDataType = currentProperty.beanDataType;
-				viewProperty.dataType = currentProperty.dataType;
-				viewProperty.format = currentProperty.format;
-				viewProperty.nullable = currentProperty.nullable;
-				viewProperty.visibility = currentProperty.visibility;
-				viewProperty.editable = currentProperty.editable;
-
-				result.add(viewProperty);
-			}
+		for (Property property:bean.properties) {
+			if (!property.relation.isComponentLink() && !property.name.equals(excludedFieldName)) {
+				result.addAll(property.viewProperties);
+			}			
 		}
 
 		return result;
 	}
-	
-	private void addReferenceProperties(Property currentProperty, List<ViewProperty> visiblePropertyList) {
-		List<ViewProperty> tempPropertyList = getReferenceProperties(currentProperty.referenceBean);
-		for (ViewProperty tempProperty:tempPropertyList) {
-			ViewProperty viewProperty = new ViewProperty();
-			viewProperty.name = currentProperty.name + tempProperty.capName;
-			viewProperty.capName = currentProperty.capName + tempProperty.capName;
-			viewProperty.beanDataType = tempProperty.beanDataType;
-			viewProperty.dataType = tempProperty.dataType;
-			viewProperty.format = tempProperty.format;
-			viewProperty.nullable = currentProperty.nullable;
-			viewProperty.visibility = currentProperty.visibility;
-			viewProperty.editable = currentProperty.editable;
-			viewProperty.comboBoxBean = tempProperty.comboBoxBean;
-
-			visiblePropertyList.add(viewProperty);
-		}		
-	}
-	
-	private void addEmbeddedProperties(Property currentProperty, List<ViewProperty> visiblePropertyList) {
-		List<ViewProperty> tempPropertyList = getViewProperties(currentProperty.referenceBean);
-		for (ViewProperty tempProperty:tempPropertyList) {
-			ViewProperty viewProperty = new ViewProperty();
-			viewProperty.name = tempProperty.name;
-			viewProperty.capName = tempProperty.capName;
-			viewProperty.beanDataType = tempProperty.beanDataType;
-			viewProperty.dataType = tempProperty.dataType;
-			viewProperty.format = tempProperty.format;
-			viewProperty.nullable = tempProperty.nullable;
-			viewProperty.visibility = Visibility.min(currentProperty.visibility, tempProperty.visibility);
-			viewProperty.editable = tempProperty.editable;
-			viewProperty.comboBoxBean = tempProperty.comboBoxBean;
-
-			visiblePropertyList.add(viewProperty);
-		}		
-	}
-
 	
 
 	public List<ViewProperty> getBasicViewProperties(Bean bean) {

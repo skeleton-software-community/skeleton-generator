@@ -16,6 +16,7 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
+import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
@@ -65,6 +66,7 @@ public class JavaModelFactory implements ModelFactory {
         if (projectMetaData.getPackages() != null) {
 	        scanPackages(projectMetaData, model);
 	        fillPackages(projectMetaData, model);
+	        buildViewProperties(model);
 	        buildViews(model);
         }
 
@@ -119,13 +121,26 @@ public class JavaModelFactory implements ModelFactory {
 		}
 	}
 	
+	private void buildViewProperties(Model model) {
+		for (Package pack:model.getPackages()) {
+			for (Bean bean:pack.beans) {
+				for (Property property:bean.properties) {
+					property.viewProperties = viewPropertiesFactory.getViewProperties(property);
+				}
+			}
+		}
+	}
 	
 	private void buildViews(Model model) {
 		for (Package pack:model.getPackages()) {
 			for (Bean bean:pack.beans) {
+				for (Property property:bean.properties) {
+					property.viewProperties = viewPropertiesFactory.getViewProperties(property);
+				}
 				
 				if (bean.detailMode == null) {
-					if (bean.hasTabsInDetailView()) {
+					boolean hasTabsInDetailView = hasTabsInDetailView(bean);
+					if (hasTabsInDetailView) {
 						bean.detailMode = DetailMode.PAGE;
 					} else {
 						bean.detailMode = DetailMode.MODAL;
@@ -143,6 +158,12 @@ public class JavaModelFactory implements ModelFactory {
 				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * determines whether the bean will have several tabs in the detail view (Mode Page)
+	 */
+	private boolean hasTabsInDetailView(Bean bean) {
+		return bean.oneToManyComponentList.size() > 0 || bean.oneToManyList.size() > 0 || bean.oneToOneComponentList.size() > 0 || bean.oneToOneList.size() > 0;
 	}
 }

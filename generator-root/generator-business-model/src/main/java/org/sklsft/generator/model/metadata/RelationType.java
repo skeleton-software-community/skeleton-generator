@@ -27,10 +27,8 @@ public enum RelationType {
     PROPERTY;
 	
 	
-	public boolean isUnique()
-    {
-        switch (this)
-        {
+	public boolean isUnique() {
+        switch (this) {
             case ONE_TO_ONE:
                 return true;
                 
@@ -39,14 +37,11 @@ public enum RelationType {
 
             default:
                 return false;
-
         }
     }
 	
-	public boolean isEmbedded()
-    {
-        switch (this)
-        {
+	public boolean isEmbedded() {
+        switch (this) {
             case EMBEDDED:
                 return true;
 
@@ -55,10 +50,8 @@ public enum RelationType {
         }
     }
 
-    public boolean isComponentLink()
-    {
-        switch (this)
-        {
+    public boolean isComponentLink() {
+        switch (this) {
             case ONE_TO_ONE_COMPONENT:
                 return true;
 
@@ -67,7 +60,6 @@ public enum RelationType {
 
             default:
                 return false;
-
         }
     }
 }

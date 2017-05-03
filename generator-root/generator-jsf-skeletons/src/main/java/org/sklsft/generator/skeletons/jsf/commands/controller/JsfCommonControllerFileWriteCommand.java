@@ -92,9 +92,9 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 					writeLine("public void load" + bean.className + "Options() {");
 					writeLine("List<SelectItem> result = new ArrayList<>();");
 					writeLine("result.add(new SelectItem(null," + CHAR_34 + CHAR_34 + "));");
-					writeLine("List<" + bean.properties.get(1).beanDataType + "> options = this." + bean.serviceObjectName + ".getOptions();");
+					writeLine("List<" + bean.properties.get(0).beanDataType + "> options = this." + bean.serviceObjectName + ".getOptions();");
 					writeLine("if (options != null){");
-					writeLine("for (" + bean.properties.get(1).beanDataType + " option:options){");
+					writeLine("for (" + bean.properties.get(0).beanDataType + " option:options){");
 					writeLine("result.add(new SelectItem(option));");
 					writeLine("}");
 					writeLine("}");

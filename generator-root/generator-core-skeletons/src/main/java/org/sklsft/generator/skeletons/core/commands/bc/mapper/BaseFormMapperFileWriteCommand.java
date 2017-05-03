@@ -38,7 +38,7 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible() && !property.relation.isComponentLink()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -91,7 +91,7 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 		this.daoSet = new HashSet<>();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible() && !property.relation.isComponentLink()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -132,14 +132,12 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.formBean.objectName + " = super.mapFrom(" + this.bean.formBean.objectName + ", " + this.bean.objectName + ");");
 		
 		for (Property property : this.bean.properties) {			
-			if (property.referenceBean != null) {
-				if (property.visibility.isDetailVisible()) {
-					if (property.embedded) {
-						writeMapEmbeddedToView(property);
-					} else {
-						writeMapReferenceToView(property);
-					}					
-				}
+			if (property.referenceBean != null && property.visibility.isDetailVisible() && !property.relation.isComponentLink()) {
+				if (property.embedded) {
+					writeMapEmbeddedToView(property);
+				} else {
+					writeMapReferenceToView(property);
+				}					
 			}
 		}
 
@@ -210,7 +208,7 @@ public class BaseFormMapperFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.objectName + " = super.mapTo(" + this.bean.formBean.objectName + ", " + this.bean.objectName + ");");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isDetailVisible()) {
+			if (property.referenceBean != null && property.visibility.isDetailVisible() && !property.relation.isComponentLink()) {
 				if (property.embedded) {
 					writeMapEmbeddedToObject(property);
 				} else {

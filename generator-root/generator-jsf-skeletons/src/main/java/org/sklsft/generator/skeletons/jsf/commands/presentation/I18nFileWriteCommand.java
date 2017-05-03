@@ -2,12 +2,11 @@ package org.sklsft.generator.skeletons.jsf.commands.presentation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.PropertiesFileWriteCommand;
 
 public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
@@ -35,19 +34,8 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 				writeLine(bean.objectName + "List=" + bean.listRendering);
 				writeLine(bean.objectName + "Detail=" + bean.detailRendering);
 
-				for (Property property : bean.properties) {
-					if (property.referenceBean != null) {
-						List<Property> referencePropertyList = property.getReferencePropertyList();
-						for (Property findProperty : referencePropertyList) {
-							if (property.referenceBean.isEmbedded) {
-								writeLine(bean.objectName + findProperty.capName + "=" + findProperty.rendering);
-							} else {
-								writeLine(bean.objectName + property.capName + findProperty.capName + "=" + findProperty.rendering);
-							}
-						}
-					} else {
-						writeLine(bean.objectName + property.capName + "=" + property.rendering);
-					}
+				for (ViewProperty property : bean.formBean.properties) {					
+					writeLine(bean.objectName + property.capName + "=" + property.rendering);
 				}
 				skipLine();
 			}

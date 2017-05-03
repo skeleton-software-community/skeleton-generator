@@ -2,6 +2,7 @@ package org.sklsft.generator.skeletons.core.commands.dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -106,7 +107,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			if (property.referenceBean != null) {
 				writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + CHAR_34 + ",FetchMode.JOIN);");
 
-				for (Alias alias : property.referenceBean.getReferenceAliases()) {
+				for (Alias alias : getReferenceAliases(property.referenceBean)) {
 					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 				}
@@ -153,7 +154,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 					if (prop.referenceBean != null) {
 						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
 
-						for (Alias alias : prop.referenceBean.getReferenceAliases()) {
+						for (Alias alias : getReferenceAliases(prop.referenceBean)) {
 							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 						}
@@ -193,7 +194,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 	private void createExistsObject() {
 		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
-		List<Alias> findAliasList = this.bean.getReferenceAliases();
+		List<Alias> findAliasList = getReferenceAliases(bean);
 		boolean start = true;
 
 		writeLine("/**");
@@ -245,7 +246,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	private void createFindObject() {
 		boolean start = true;
 		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
-		List<Alias> findAliasList = this.bean.getReferenceAliases();
+		List<Alias> findAliasList = getReferenceAliases(bean);
 
 		writeLine("/**");
 		writeLine(" * find object");
@@ -305,7 +306,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ") {");
-			writeLine(currentBean.objectName + ".set" + bean.className + "(" + bean.objectName + ");");
+			writeLine(currentBean.objectName + "." + oneToManyComponent.referenceProperty.setterName + "(" + bean.objectName + ");");
 			writeLine("this.sessionFactory.getCurrentSession().save(" + currentBean.objectName + ");");
 			writeLine("}");
 			skipLine();
@@ -335,7 +336,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-			writeLine(currentBean.objectName + ".get" + bean.className + "().get" + currentBean.className + "Collection().remove(" + currentBean.objectName + ");");
+			writeLine(currentBean.objectName + "." + oneToManyComponent.referenceProperty.getterName + "().get" + currentBean.className + "Collection().remove(" + currentBean.objectName + ");");
 			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
 			writeLine("}");
 			skipLine();
@@ -355,6 +356,39 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("}");
 			skipLine();
 		}
+	}
+	
+	
+	
+	/**
+	 * get the list of aliases that will be used to build queries
+	 * 
+	 * @return
+	 */
+	public List<Alias> getReferenceAliases(Bean bean) {
+		List<Alias> aliasList = new ArrayList<Alias>();
+		List<Alias> tempAliasList = new ArrayList<Alias>();
+
+		for (int i = 0; i < bean.cardinality; i++) {
+			Property currentProperty = bean.properties.get(i);
+			if (currentProperty.referenceBean != null) {
+				Alias alias = new Alias();
+				alias.propertyName = currentProperty.name;
+				alias.name = currentProperty.capName;
+				aliasList.add(alias);
+
+				tempAliasList = getReferenceAliases(currentProperty.referenceBean);
+				for (int j = 0; j < tempAliasList.size(); j++) {
+					Alias currentAlias = tempAliasList.get(j);
+					Alias tempAlias = new Alias();
+					tempAlias.propertyName = alias.propertyName + "." + currentAlias.propertyName;
+					tempAlias.name = alias.name + currentAlias.name;
+					aliasList.add(tempAlias);
+				}
+			}
+		}
+
+		return aliasList;
 	}
 
 }

@@ -31,14 +31,12 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import org.sklsft.commons.model.patterns.RightsManager;");
         
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
             Bean currentBean = oneToOneComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
         }
 
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
         }		
@@ -64,14 +62,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         
         
         
-        
-        
-        
-        
         /***********************************************************/
         /***************************Access**************************/
-        /***********************************************************/
-        
+        /***********************************************************/        
         writeLine("/**");
         writeLine(" * can access all");
         writeLine(" */");
@@ -107,21 +100,20 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         skipLine();
         
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
         	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can access one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canAccess" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("return canAccess(" + currentBean.objectName + ".get" + currentBean.parentBean.className + "());");
+            writeLine("public boolean canAccess" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
+            writeLine("return canAccess(" + bean.objectName + ");");
             writeLine("}");
             skipLine();
         	writeLine("/**");
             writeLine(" * check can access one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanAccess" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("if (!canAccess" + currentBean.className + "(" + currentBean.objectName + ")) {");        
+            writeLine("public void checkCanAccess" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
+            writeLine("if (!canAccess" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".accessDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
@@ -172,8 +164,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
         	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can create one to one component " + currentBean.className);
@@ -193,8 +184,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             skipLine();
         }
         
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
         	Bean currentBean = oneToManyComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can create one to many component " + currentBean.className);
@@ -218,10 +208,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         
         
         
-        
-        
-        
-        
+        /***********************************************************/
+        /***************************Save****************************/
+        /***********************************************************/
         writeLine("/**");
         writeLine(" * can save");
         writeLine(" */");
@@ -239,48 +228,51 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
         	Bean currentBean = oneToOneComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can save one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canSave" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
+            writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("return canUpdate(" + bean.objectName + ");");
             writeLine("}");
             skipLine();
         	writeLine("/**");
             writeLine(" * check can save one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanSave" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("if (!canSave" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
         }
         
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
         	Bean currentBean = oneToManyComponent.referenceBean;
         	writeLine("/**");
             writeLine(" * can save one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canSave" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("return canUpdate(" + this.bean.objectName + ");");
+            writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("return canUpdate(" + bean.objectName + ");");
             writeLine("}");
             skipLine();
         	writeLine("/**");
             writeLine(" * check can save one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanSave" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
-            writeLine("if (!canSave" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
+            writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
         }
-
+        /***********************************************************/
+        
+        
+        /***********************************************************/
+        /***************************Update**************************/
+        /***********************************************************/        
         writeLine("/**");
         writeLine(" * can update");
         writeLine(" */");
@@ -298,47 +290,51 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
             Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canUpdate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("return canUpdate(" + bean.objectName + ");");
+            writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return canUpdate(" + currentBean.objectName + "." + oneToOneComponent.referenceProperty.getterName + "());");
             writeLine("}");
             skipLine();
             writeLine("/**");
             writeLine(" * check can update one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanUpdate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("if (!canUpdate" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
         }
 
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can update one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canUpdate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("return canUpdate(" + bean.objectName + ");");
+            writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return canUpdate(" + currentBean.objectName + "." + oneToManyComponent.referenceProperty.getterName + "());");
             writeLine("}");
             skipLine();
             writeLine("/**");
             writeLine(" * check can update one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanUpdate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("if (!canUpdate" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
         }
+        /***********************************************************/
+        
+        
+        /***********************************************************/
+        /***************************Delete**************************/
+        /***********************************************************/
 
         writeLine("/**");
         writeLine(" * can delete");
@@ -357,20 +353,19 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("}");
         skipLine();
 
-        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
-        {
-            Bean currentBean = oneToOneComponent.referenceBean;
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+        	Bean currentBean = oneToOneComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can delete one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canDelete" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("return canUpdate(" + bean.objectName + ");");
+            writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return canUpdate(" + currentBean.objectName + "." + oneToOneComponent.referenceProperty.getterName + "());");
             writeLine("}");
             skipLine();
             writeLine("/**");
             writeLine(" * check can delete one to one component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanDelete" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
+            writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canDelete" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
             writeLine("}");
@@ -378,21 +373,20 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             skipLine();
         }
         
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
             writeLine(" * can delete one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public boolean canDelete" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("return canUpdate(" + bean.objectName + ");");
+            writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("return canUpdate(" + currentBean.objectName + "." + oneToManyComponent.referenceProperty.getterName + "());");
             writeLine("}");
             skipLine();
             writeLine("/**");
             writeLine(" * check can delete one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkCanDelete" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
-            writeLine("if (!canDelete" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+            writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");

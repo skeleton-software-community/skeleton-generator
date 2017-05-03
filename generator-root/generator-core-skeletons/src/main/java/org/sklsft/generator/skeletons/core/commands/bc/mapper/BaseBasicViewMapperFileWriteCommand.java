@@ -47,7 +47,7 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isListVisible() && !property.relation.isComponentLink()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -100,7 +100,7 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 		this.daoSet = new HashSet<>();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isListVisible() && !property.relation.isComponentLink()) {
 				if (!property.embedded) {
 					boolean test = this.daoSet.add(property.referenceBean.daoObjectName);
 					if (test) {
@@ -159,30 +159,25 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.basicViewBean.objectName + ".setSelected(false);");
 		if (this.bean.isComponent) {
 			writeLine(this.bean.basicViewBean.objectName + ".setCanDelete(" 
-					+ this.bean.parentBean.rightsManagerObjectName + ".canDelete(" + this.bean.objectName + ".get" + this.bean.parentBean.className+ "())" 
+					+ this.bean.parentBean.rightsManagerObjectName + ".canDelete" + bean.className + "(" + this.bean.objectName + ")" 
 					+ " && "
-					+ this.bean.parentBean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + ".get" + this.bean.parentBean.className + "())" 										
-					+ ");");
-		} 
-		else {
+					+ this.bean.parentBean.stateManagerObjectName + ".canDelete" + bean.className + "(" + this.bean.objectName + "));");
+		} else {
 			writeLine(this.bean.basicViewBean.objectName + ".setCanDelete(" 
 					+ this.bean.rightsManagerObjectName + ".canDelete(" + this.bean.objectName + ")" 
 					+ " && "
-					+ this.bean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + ")" 										
-					+ ");");
+					+ this.bean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + "));");
 		}
 		
 
 
 		for (Property property : this.bean.properties) {			
-			if (property.referenceBean != null) {
-				if (property.visibility.isListVisible()) {
-					if (property.embedded) {
-						writeMapEmbeddedToView(property);
-					} else {
-						writeMapReferenceToView(property);
-					}					
-				}
+			if (property.referenceBean != null && property.visibility.isListVisible() && !property.relation.isComponentLink()) {
+				if (property.embedded) {
+					writeMapEmbeddedToView(property);
+				} else {
+					writeMapReferenceToView(property);
+				}					
 			}
 		}
 		
@@ -252,7 +247,7 @@ public class BaseBasicViewMapperFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.objectName + " = super.mapTo(" + this.bean.basicViewBean.objectName + ", " + this.bean.objectName + ");");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && property.visibility.isListVisible()) {
+			if (property.referenceBean != null && property.visibility.isListVisible() && !property.relation.isComponentLink()) {
 				if (property.embedded) {
 					writeMapEmbeddedToObject(property);
 				} else {
