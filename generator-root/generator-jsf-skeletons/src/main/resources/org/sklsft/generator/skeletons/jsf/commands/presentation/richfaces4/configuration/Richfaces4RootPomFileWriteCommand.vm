@@ -67,12 +67,6 @@
 				<artifactId>${project.projectName}-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-		
-			<dependency>
-				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-util</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
