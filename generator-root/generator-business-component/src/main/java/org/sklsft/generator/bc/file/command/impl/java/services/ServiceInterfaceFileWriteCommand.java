@@ -11,7 +11,7 @@ public class ServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 	
 	public ServiceInterfaceFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-services\\src\\main\\java\\"
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\"
 				+ bean.myPackage.serviceInterfacePackageName.replace(".", "\\"), bean.serviceInterfaceName);
 
 		this.bean = bean;

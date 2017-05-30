@@ -58,10 +58,10 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
         createLoadObjectList();
         createLoadObject();
+        createLoadOneToManyComponent();
         createExistsObject();
         createFindObject();
         createSaveObject();
-        createUpdateObject();
         createDeleteObject();
 
         writeLine("}");
@@ -83,33 +83,53 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
         for (Property property : this.bean.properties)
         {
-            if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY))
+            if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE))
             {
 
                 writeLine("/**");
-                writeLine(" * load object list from list of " + property.referenceBean.objectName); 
+                writeLine(" * load object list from " + property.referenceBean.objectName); 
                 writeLine(" */");
-                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
 
                 writeLine("/**");
                 writeLine(" * load object list eagerly from list of " + property.referenceBean.objectName);
                 writeLine(" */");
-                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList);");
+                writeLine("List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (Long " + property.name + "Id);");
                 skipLine();
 
             }
         }
     }
 
-    private void createLoadObject()
+	private void createLoadObject()
     {
         writeLine("/**");
         writeLine(" * load object");
         writeLine(" */");
         writeLine(this.bean.className + " load" + this.bean.className + "(Long id);");
         skipLine();
+        skipLine();
+        
+        writeLine("/**");
+        writeLine(" * get object");
+        writeLine(" */");
+        writeLine(this.bean.className + " get" + this.bean.className + "(Long id);");
+        skipLine();
     }
+    
+    private void createLoadOneToManyComponent() {
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
+        {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className);
+            writeLine(" */");
+			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id);");
+			skipLine();
+        }
+	}
 
     private void createExistsObject()
     {
@@ -139,7 +159,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         {
             write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
         }
-        writeLine(") throws ObjectNotFoundException;");
+        writeLine(");");
         skipLine();
     }
 
@@ -161,15 +181,6 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		}
     }
 
-    private void createUpdateObject()
-    {
-        writeLine("/**"); 
-        writeLine(" * update object");
-        writeLine(" */");
-        writeLine("void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
-        skipLine();
-    }
-
     private void createDeleteObject()
     {
         writeLine("/**"); 
@@ -177,5 +188,14 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         writeLine("void delete" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ");");
         skipLine();
+        
+        for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
+			skipLine();
+		}
     }
 }

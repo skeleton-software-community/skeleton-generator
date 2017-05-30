@@ -190,13 +190,9 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		createUpdateUniqueComponent();
 		createUpdateOneToManyComponent();
 		createDeleteObject();
-		createDeleteOneToManyComponent();
-		createDeleteObjectList();
-		createDeleteOneToManyComponentList();
+		createDeleteOneToManyComponent();		
 		createListenSelectedObject();
-		createListenSelectedOneToManyComponent();
-		createListenSelectedObjectList();
-		createListenSelectedOneToManyComponentList();
+		createListenSelectedOneToManyComponent();		
 		createResetFlters();
 
 		writeLine("}");
@@ -208,32 +204,13 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * refresh object list");
 		writeLine(" */");
-		writeLine("public void refresh() {");
-		writeLine("if (this.loadedFrom == null){");
+		writeLine("public void refresh() {");		
 		writeLine("try {");
 		writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "List();");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
 		writeLine("this.displaySuccessfull = false;");
 		writeLine("}");
-		writeLine("return;");
-		writeLine("}");
-
-		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-				writeLine("if (this.loadedFrom.equals(" + CHAR_34 + property.referenceBean.className + CHAR_34 + ")) {");
-				writeLine("try {");
-				writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "ListFrom" + property.capName
-						+ "List(this.commonController.getSelected" + property.referenceBean.className + "IdList());");
-				writeLine("} catch (Exception e) {");
-				writeLine("logger.error(" + CHAR_34 + "display failure : " + CHAR_34 + " + e.getMessage(),e);");
-				writeLine("this.displaySuccessfull = false;");
-				writeLine("}");
-				writeLine("return;");
-				writeLine("}");
-			}
-		}
-
 		writeLine("}");
 		skipLine();
 	}
@@ -295,25 +272,6 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return SUCCESS;");
 		writeLine("}");
 		skipLine();
-
-		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-
-				writeLine("/**");
-				writeLine(" * load object list form list of " + property.referenceBean.objectName);
-				writeLine(" */");
-				writeLine("public String loadFrom" + property.referenceBean.className + "() {");
-				writeLine("this.setDefault();");
-				writeLine("if (this.commonController.getSelected" + property.referenceBean.className + "IdList() == null) {");
-				writeLine("return FAILURE;");
-				writeLine("}");
-				writeLine("this.loadedFrom = " + CHAR_34 + property.referenceBean.className + CHAR_34 + ";");
-				writeLine("this.refresh();");
-				writeLine("return SUCCESS;");
-				writeLine("}");
-				skipLine();
-			}
-		}
 	}
 
 	private void createDisplay() {
@@ -565,52 +523,14 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "() {");
-			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(this.commonController.getSelected" + currentBean.className + "Id(),this.commonController.getSelected"
-					+ this.bean.className + "Id());");
+			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(this.commonController.getSelected" + currentBean.className + "Id());");
 			writeLine("this.refresh" + this.bean.className + "();");
 			writeLine("}");
 			skipLine();
 		}
 	}
 
-	private void createDeleteObjectList() {
-		writeLine("/**");
-		writeLine(" * delete object list");
-		writeLine(" */");
-		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
-		writeLine("public void delete" + this.bean.className + "List() {");
-		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList() == null) {");
-		writeLine("return;");
-		writeLine("}");
-		
-		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(this.commonController.getSelected" + this.bean.className + "IdList());");
-		writeLine("this.refresh();");
-		
-		writeLine("}");
-		skipLine();
-	}
-
-	private void createDeleteOneToManyComponentList() {
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			Bean currentBean = oneToManyComponent.referenceBean;
-
-			writeLine("/**");
-			writeLine(" * delete one to many component list " + currentBean.objectName);
-			writeLine(" */");
-			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
-			writeLine("public void delete" + currentBean.className + "List() {");
-			writeLine("if (this.commonController.getSelected" + currentBean.className + "IdList() == null) {");
-			writeLine("return;");
-			writeLine("}");
-			
-			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "List(this.commonController.getSelected" + currentBean.className + "IdList(),this.commonController.getSelected"
-					+ this.bean.className + "Id());");
-			writeLine("this.refresh" + this.bean.className + "();");
-			
-			writeLine("}");
-			skipLine();
-		}
-	}
+	
 
 	private void createListenSelectedObject() {
 		writeLine("/**");
@@ -638,51 +558,7 @@ public class BaseJsfControllerFileWriteCommand extends JavaFileWriteCommand {
 		}
 	}
 
-	private void createListenSelectedObjectList() {
-		writeLine("/**");
-		writeLine(" * listen selected object id list");
-		writeLine(" */");
-		writeLine("public void listenSelected" + this.bean.className + "IdList(ActionEvent event) {");
-		writeLine("this.commonController.setSelected" + this.bean.className + "IdList(new ArrayList<Long>());");
-		writeLine("if (" + this.bean.objectName + "List != null){");
-		writeLine("for (" + this.bean.viewClassName + " " + this.bean.objectName + ":" + this.bean.objectName + "List){");
-		writeLine("if (" + this.bean.objectName + ".getSelected()){");
-		writeLine("this.commonController.getSelected" + this.bean.className + "IdList().add(" + this.bean.objectName + ".getId());");
-		writeLine("}");
-		writeLine("}");
-		writeLine("}");
-		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList().isEmpty()) {");
-		writeLine("this.commonController.setSelected" + this.bean.className + "IdList(null);");
-		writeLine("displayError(EMPTY_SELECTION);");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-	}
-
-	private void createListenSelectedOneToManyComponentList() {
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			Bean currentBean = oneToManyComponent.referenceBean;
-
-			writeLine("/**");
-			writeLine(" * listen selected one to many component id list " + currentBean.objectName);
-			writeLine(" */");
-			writeLine("public void listenSelected" + currentBean.className + "IdList(ActionEvent event) {");
-			writeLine("this.commonController.setSelected" + currentBean.className + "IdList(new ArrayList<Long>());");
-			writeLine("if (" + currentBean.objectName + "List != null){");
-			writeLine("for (" + currentBean.viewClassName + " " + currentBean.objectName + ":" + currentBean.objectName + "List){");
-			writeLine("if (" + currentBean.objectName + ".getSelected()){");
-			writeLine("this.commonController.getSelected" + currentBean.className + "IdList().add(" + currentBean.objectName + ".getId());");
-			writeLine("}");
-			writeLine("}");
-			writeLine("}");
-			writeLine("if (this.commonController.getSelected" + currentBean.className + "IdList().isEmpty()) {");
-			writeLine("this.commonController.setSelected" + currentBean.className + "IdList(null);");
-			writeLine("displayError(EMPTY_SELECTION);");
-			writeLine("}");
-			writeLine("}");
-			skipLine();
-		}
-	}
+	
 	
 	private void createResetFlters() {
 		

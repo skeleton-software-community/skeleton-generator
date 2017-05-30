@@ -17,7 +17,7 @@ public class ViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public ViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-model\\src\\main\\java\\" + bean.myPackage.ovPackageName.replace(".","\\"), bean.viewClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api\\src\\main\\java\\" + bean.myPackage.ovPackageName.replace(".","\\"), bean.viewClassName);
 		
 		this.bean = bean;
 		

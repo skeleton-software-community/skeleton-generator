@@ -77,10 +77,10 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		createLoadObjectList();
 		createLoadObject();
+		createLoadOneToManyComponent();
 		createExistsObject();
 		createFindObject();
 		createSaveObject();
-		createUpdateObject();
 		createDeleteObject();
 
 		write("}");
@@ -123,40 +123,42 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
 				writeLine("/**");
-				writeLine(" * load object list from list of " + property.name);
+				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
-				writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
-				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
+				writeLine("@Override");
+				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-				writeLine("if (" + property.name + "IdList == null || " + property.name + "IdList.isEmpty()){");
-				writeLine("criteria.add(Restrictions.isNull(" + (char) 34 + property.name + ".id" + (char) 34 + "));");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.in(" + (char) 34 + property.name + ".id" + (char) 34 + ", " + property.name + "IdList));");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
 				writeLine("}");
 				writeLine("return criteria.list();");
 				writeLine("}");
 				skipLine();
 
 				writeLine("/**");
-				writeLine(" * load object list eagerly from list of " + property.name);
+				writeLine(" * load object list eagerly from " + property.name);
 				writeLine(" */");
-				writeLine("@SuppressWarnings(" + (char) 34 + "unchecked" + (char) 34 + ")");
-				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + "List (List<Long> " + property.name + "IdList) {");
+				writeLine("@Override");
+				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("public List<" + this.bean.className + "> load" + this.bean.className + "ListEagerlyFrom" + property.capName + " (Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-				writeLine("if (" + property.name + "IdList == null || " + property.name + "IdList.isEmpty()){");
-				writeLine("criteria.add(Restrictions.isNull(" + (char) 34 + property.name + ".id" + (char) 34 + "));");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.in(" + (char) 34 + property.name + ".id" + (char) 34 + ", " + property.name + "IdList));");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
 				writeLine("}");
 
 				for (Property prop : this.bean.properties) {
 					if (prop.referenceBean != null) {
-						writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + (char) 34 + ",FetchMode.JOIN);");
+						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
 
 						for (Alias alias : prop.referenceBean.getFindAliases()) {
-							writeLine("criteria.setFetchMode(" + (char) 34 + prop.name + "." + alias.propertyName + (char) 34 + ",FetchMode.JOIN);");
+							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
 
 						}
 					}
@@ -169,15 +171,55 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 	}
-
+	
 	private void createLoadObject() {
 		writeLine("/**");
 		writeLine(" * load object");
 		writeLine(" */");
+		writeLine("@Override");
 		writeLine("public " + this.bean.className + " load" + this.bean.className + "(Long id) {");
-		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().load(" + this.bean.className + ".class,id);");
+		writeLine(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
+		
+		writeLine("if (" + this.bean.objectName + " == null) {");
+		writeLine("throw new ObjectNotFoundException(" + CHAR_34 + bean.className + ".notFound" + CHAR_34 + ");");
+		writeLine("} else {");
+		writeLine("return " + this.bean.objectName + ";");
+		writeLine("}");
 		writeLine("}");
 		skipLine();
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * get object");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("public " + this.bean.className + " get" + this.bean.className + "(Long id) {");
+		writeLine("return (" + this.bean.className + ")this.sessionFactory.getCurrentSession().get(" + this.bean.className + ".class,id);");
+		writeLine("}");
+		skipLine();
+		skipLine();
+	}
+	
+	private void createLoadOneToManyComponent() {
+		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
+        {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className);
+            writeLine(" */");
+            writeLine("@Override");
+			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id) {");
+			writeLine(currentBean.className + " " + currentBean.objectName + " = (" + currentBean.className + ")this.sessionFactory.getCurrentSession().get(" + currentBean.className + ".class,id);");
+			writeLine("if (" + currentBean.objectName + " == null) {");
+			writeLine("throw new ObjectNotFoundException(" + CHAR_34 + currentBean.className + ".notFound" + CHAR_34 + ");");
+			writeLine("} else {");
+			writeLine("return " + currentBean.objectName + ";");
+			writeLine("}");
+			writeLine("}");
+			skipLine();
+			skipLine();
+        }
 	}
 
 	private void createExistsObject() {
@@ -187,7 +229,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * exists object");
 		writeLine(" */");
-
+		writeLine("@Override");
 		write("public boolean exists" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
 		for (int i = 1; i < findPropertyList.size(); i++) {
 			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
@@ -208,15 +250,15 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.className + ".class)");
 
 		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + (char) 34 + alias.propertyName + (char) 34 + "," + (char) 34 + alias.name + (char) 34 + ")");
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
 		for (Property property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			} else {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.joinedAliasName + "." + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			}
 		}
@@ -234,11 +276,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * find object");
 		writeLine(" */");
+		writeLine("@Override");
 		write("public " + this.bean.className + " find" + this.bean.className + "(" + findPropertyList.get(0).beanDataType + " " + findPropertyList.get(0).name);
 		for (int i = 1; i < findPropertyList.size(); i++) {
 			write("," + findPropertyList.get(i).beanDataType + " " + findPropertyList.get(i).name);
 		}
-		writeLine(") throws ObjectNotFoundException {");
+		writeLine(") {");
 
 		write("if (" + findPropertyList.get(0).name + " == null");
 		for (int i = 1; i < findPropertyList.size(); i++) {
@@ -252,22 +295,22 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(this.bean.className + ".class)");
 
 		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + (char) 34 + alias.propertyName + (char) 34 + "," + (char) 34 + alias.name + (char) 34 + ")");
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
 		for (Property property : findPropertyList) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			} else {
-				writeLine(".add(Restrictions.eq(" + (char) 34 + property.joinedAliasName + "." + property.lastPropertyName + (char) 34 + "," + property.name + "))");
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
 			}
 		}
 
 		writeLine(".uniqueResult();");
 		writeLine("if (" + this.bean.objectName + " == null) {");
-		writeLine("throw new ObjectNotFoundException(" + (char) 34 + "Invalid Object Reference" + (char) 34 + ");");
+		writeLine("throw new ObjectNotFoundException(" + CHAR_34 + bean.className + ".notFound" + CHAR_34 + ");");
 		writeLine("} else {");
 		writeLine("return " + this.bean.objectName + ";");
 		writeLine("}");
@@ -299,16 +342,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 
-	private void createUpdateObject() {
-		writeLine("/**");
-		writeLine(" * update object");
-		writeLine(" */");
-		writeLine("public void update" + this.bean.className + "(" + this.bean.className + " " + this.bean.objectName + ") {");
-		writeLine("this.sessionFactory.getCurrentSession().update(" + this.bean.objectName + ");");
-		writeLine("}");
-		skipLine();
-	}
-
 	private void createDeleteObject() {
 		writeLine("/**");
 		writeLine(" * delete object");
@@ -317,5 +350,17 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("this.sessionFactory.getCurrentSession().delete(" + this.bean.objectName + ");");
 		writeLine("}");
 		skipLine();
+		
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
+			Bean currentBean = oneToManyComponent.referenceBean;
+			writeLine("/**");
+			writeLine(" * delete one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("@Override");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
+			writeLine("this.sessionFactory.getCurrentSession().delete(" + currentBean.objectName + ");");
+			writeLine("}");
+			skipLine();
+		}
 	}
 }

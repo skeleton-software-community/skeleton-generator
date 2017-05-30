@@ -41,6 +41,10 @@ public class Bean {
 	public String baseMapperName;
 	public String mapperName;
 	public String mapperObjectName;
+	
+	public String baseProcessorClassName;
+	public String processorClassName;
+	public String processorObjectName;
 
 	public String baseControllerClassName;
 	public String controllerClassName;

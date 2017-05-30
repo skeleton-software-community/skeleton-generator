@@ -2,6 +2,8 @@ package org.sklsft.generator.bc.file.strategy.impl.bc;
 
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.BaseMapperImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.mapper.MapperImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.processor.BaseProcessorImplFileWriteCommand;
+import org.sklsft.generator.bc.file.command.impl.java.bc.processor.ProcessorImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.BaseStateManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.command.impl.java.bc.statemanager.StateManagerImplFileWriteCommand;
 import org.sklsft.generator.bc.file.executor.FileWriteCommandTreeNode;
@@ -74,6 +76,36 @@ public class BusinessComponentStrategy implements LayerStrategy {
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new MapperImplFileWriteCommand(bean));
+					packageTreeNode.add(beanTreeNode);
+				}
+			}
+		}
+		
+		FileWriteCommandTreeNode baseProcessorTreeNode = new FileWriteCommandTreeNode("Base processors");
+		bcTreeNode.add(baseProcessorTreeNode);
+
+		for (Package myPackage : project.model.packages) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			baseProcessorTreeNode.add(packageTreeNode);
+			
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BaseProcessorImplFileWriteCommand(bean));
+					baseProcessorTreeNode.add(beanTreeNode);
+				}
+			}
+		}
+
+		FileWriteCommandTreeNode processorTreeNode = new FileWriteCommandTreeNode("Processors");
+		bcTreeNode.add(processorTreeNode);
+
+		for (Package myPackage : project.model.packages) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			processorTreeNode.add(packageTreeNode);
+			
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new ProcessorImplFileWriteCommand(bean));
 					packageTreeNode.add(beanTreeNode);
 				}
 			}

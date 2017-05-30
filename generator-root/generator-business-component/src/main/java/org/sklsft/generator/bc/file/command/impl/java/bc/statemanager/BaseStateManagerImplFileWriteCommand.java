@@ -83,7 +83,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * check before save");
         writeLine(" */");
-        writeLine("public void checkBeforeSave(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+        writeLine("public void checkBeforeSave(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("}");
         skipLine();
 
@@ -93,7 +93,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         	writeLine("/**");
             writeLine(" * check before save one to many compoennt " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("}");
             skipLine();
         }
@@ -101,7 +101,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * check before update");
         writeLine(" */");
-        writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " " + this.bean.viewObjectName + ") throws InvalidStateException {");
+        writeLine("public void checkBeforeUpdate(" + this.bean.className + " " + this.bean.objectName + ", " + this.bean.viewClassName + " " + this.bean.viewObjectName + ") {");
         writeLine("}");
         skipLine();
 
@@ -111,7 +111,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before update unique component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") {");
             writeLine("}");
             skipLine();
         }
@@ -122,7 +122,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before update one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ", " + currentBean.viewClassName + " " + currentBean.viewObjectName + ") {");
             writeLine("}");
             skipLine();
         }
@@ -130,7 +130,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * check before delete");
         writeLine(" */");
-        writeLine("public void checkBeforeDelete(" + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+        writeLine("public void checkBeforeDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("}");
         skipLine();
 
@@ -140,28 +140,10 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * check before delete one to many component " + currentBean.className);
             writeLine(" */");
-            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") throws InvalidStateException {");
+            writeLine("public void checkBeforeDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("}");
             skipLine();
-        }
-
-        writeLine("/**");
-        writeLine(" * set default");
-        writeLine(" */");
-        writeLine("public void setDefault(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("}");
-        skipLine();
-
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
-            Bean currentBean = oneToManyComponent.referenceBean;
-            writeLine("/**");
-            writeLine(" * set default on to many component " + currentBean.className);
-            writeLine(" */");
-            writeLine("public void setDefault" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("}");
-            skipLine();
-        }        
+        }     
 
         writeLine("}");
 

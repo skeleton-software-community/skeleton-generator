@@ -3,25 +3,20 @@ package org.sklsft.generator.bc.file.command.impl.presentation.jsf.common;
 import java.io.IOException;
 
 import org.sklsft.generator.bc.file.command.impl.presentation.jsf.JsfXhtmlFileWriteCommand;
-import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.om.Bean;
-import org.sklsft.generator.model.om.OneToMany;
-import org.sklsft.generator.model.om.OneToOne;
 import org.sklsft.generator.model.om.Property;
 
 public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand {
 
 	private Bean bean;
-	private boolean handleToolBar;
-	private boolean handleSelection;
 
-	public CommonJsfListViewFileWriteCommand(Bean bean, boolean handleToolBar, boolean handleSelection) {
+
+	public CommonJsfListViewFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + "\\" + bean.myPackage.model.project.projectName + "-webapp\\src\\main\\webapp\\sections\\" + bean.myPackage.name + "\\"
 				+ bean.className.toLowerCase(), bean.className + "List");
 
 		this.bean = bean;
-		this.handleToolBar = handleToolBar;
-		this.handleSelection = handleSelection;
+
 	}
 
 	@Override
@@ -59,63 +54,6 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 
 		writeLine("<h:form id=" + (char) 34 + this.bean.objectName + "Form" + (char) 34 + ">");
 
-		if (handleToolBar) {
-
-			writeLine("<rich:toolBar>");
-			writeLine("<rich:dropDownMenu value=" + (char) 34 + "Navigation" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
-
-			for (Property property : this.bean.properties) {
-				if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-					writeLine("<rich:menuItem value=" + (char) 34 + "back to #{i18n." + property.referenceBean.objectName + "List}" + (char) 34);
-					writeLine("rendered=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".loadedFrom == '" + property.referenceBean.className + "'}" + (char) 34);
-					writeLine("submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{" + property.referenceBean.controllerObjectName + ".display}" + (char) 34 + "/>");
-
-				}
-			}
-
-			for (OneToMany oneToMany : this.bean.oneToManyList) {
-				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToMany.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34);
-				writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
-						+ oneToMany.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
-
-			}
-
-			for (OneToOne oneToOne : this.bean.oneToOneList) {
-				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n." + oneToOne.referenceBean.objectName + "List}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34
-						+ " actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34 + " action=" + (char) 34 + "#{"
-						+ oneToOne.referenceBean.controllerObjectName + ".loadFrom" + this.bean.className + "}" + (char) 34 + "/>");
-			}
-
-			writeLine("</rich:dropDownMenu>");
-			skipLine();
-
-			writeLine("<rich:dropDownMenu value=" + (char) 34 + "Actions" + (char) 34 + " submitMode=" + (char) 34 + "none" + (char) 34 + ">");
-
-			if (this.bean.createEnabled) {
-				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.create}" + (char) 34 + " submitMode=" + (char) 34 + "server" + (char) 34 + " action=" + (char) 34 + "#{"
-						+ this.bean.controllerObjectName + ".create" + this.bean.className + "}" + (char) 34 + "/>");
-			}
-			if (this.bean.deleteEnabled) {
-				writeLine("<rich:menuItem value=" + (char) 34 + "#{i18n.dropSelection}" + (char) 34 + " submitMode=" + (char) 34 + "ajax" + (char) 34);
-				writeLine("actionListener=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".listenSelected" + this.bean.className + "IdList}" + (char) 34);
-				writeLine("action=" + (char) 34 + "#{" + this.bean.controllerObjectName + ".delete" + this.bean.className + "List}" + (char) 34);
-				writeLine("onclick=" + (char) 34 + "if (!confirm('#{i18n.confirmDropSelection}')) return false" + (char) 34);
-				writeLine("reRender=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + "/>");
-			}
-			skipLine();
-
-			this.writeNotOverridableContent();
-			skipLine();
-
-			writeLine("</rich:dropDownMenu>");
-			writeLine("</rich:toolBar>");
-			skipLine();
-
-			writeLine("<br/>");
-			skipLine();
-
-		}
-
 		writeLine("<h:panelGroup id=" + (char) 34 + this.bean.objectName + "PanelGroup" + (char) 34 + ">");
 		writeLine("<h:panelGroup rendered=" + (char) 34 + "#{!" + this.bean.controllerObjectName + ".displaySuccessfull}" + (char) 34 + " styleClass=" + (char) 34 + "errorMessage" + (char) 34
 				+ " layout=" + (char) 34 + "block" + (char) 34 + ">");
@@ -151,10 +89,6 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
 		writeLine("<rich:columnGroup>");
 
-		if (handleSelection) {
-			writeLine("<rich:column>");
-			writeLine("</rich:column>");
-		}
 		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column>");
@@ -174,18 +108,7 @@ public class CommonJsfListViewFileWriteCommand extends JsfXhtmlFileWriteCommand 
 		writeLine("</rich:columnGroup>");
 		writeLine("</f:facet>");
 
-		if (handleSelection) {
-			writeLine("<rich:column>");
-			writeLine("<f:facet name=" + (char) 34 + "header" + (char) 34 + ">");
-			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selectUnselectAll" + (char) 34 + " name=" + (char) 34 + "selectUnselectAll" + (char) 34 + " forceId=" + (char) 34 + "true"
-					+ (char) 34 + " onclick=" + (char) 34 + "selectUnselectAll(this)" + (char) 34 + " value=" + (char) 34 + "false" + (char) 34 + "/>");
-			writeLine("</f:facet>");
-			writeLine("<h:selectBooleanCheckbox id=" + (char) 34 + "selected" + (char) 34 + " value=" + (char) 34 + "#{" + this.bean.objectName + ".selected}" + (char) 34 + " onclick=" + (char) 34
-					+ "selectBox('" + bean.objectName + "Form:" + bean.objectName + "List:selectUnselectAll')" + (char) 34 + "/>");
-			writeLine("</rich:column>");
-			skipLine();
-		}
-
+		
 		for (Property property : this.bean.getVisibleProperties()) {
 			if (property.visibility.isListVisible()) {
 				writeLine("<rich:column sortBy=" + (char) 34 + "#{" + this.bean.objectName + "." + property.name + "}" + (char) 34);

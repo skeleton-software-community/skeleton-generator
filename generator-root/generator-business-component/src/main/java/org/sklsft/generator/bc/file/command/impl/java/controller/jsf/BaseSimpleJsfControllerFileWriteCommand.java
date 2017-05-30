@@ -113,9 +113,7 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		createEditObject();
 		createUpdateObject();
 		createDeleteObject();
-		createDeleteObjectList();
 		createListenSelectedObject();
-		createListenSelectedObjectList();
 		createResetFlters();
 
 		writeLine("}");
@@ -127,31 +125,13 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine(" * refresh object list");
 		writeLine(" */");
 		writeLine("public void refresh() {");
-		writeLine("if (this.loadedFrom == null){");
+
 		writeLine("try {");
 		writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "List();");
 		writeLine("} catch (Exception e) {");
 		writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
 		writeLine("this.displaySuccessfull = false;");
 		writeLine("}");
-		writeLine("return;");
-		writeLine("}");
-
-		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null && !property.relation.equals(RelationType.PROPERTY)) {
-				writeLine("if (this.loadedFrom.equals(" + (char) 34 + property.referenceBean.className + (char) 34 + ")) {");
-				writeLine("try {");
-				writeLine("this." + this.bean.objectName + "List = this." + this.bean.serviceObjectName + ".load" + this.bean.className + "ListFrom" + property.capName
-						+ "List(this.commonController.getSelected" + property.referenceBean.className + "IdList());");
-				writeLine("} catch (Exception e) {");
-				writeLine("logger.error(" + (char) 34 + "display failure : " + (char) 34 + " + e.getMessage(),e);");
-				writeLine("this.displaySuccessfull = false;");
-				writeLine("}");
-				writeLine("return;");
-				writeLine("}");
-			}
-		}
-
 		writeLine("}");
 		skipLine();
 	}
@@ -318,24 +298,6 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 	}
 	
 
-	private void createDeleteObjectList() {
-		writeLine("/**");
-		writeLine(" * delete object list");
-		writeLine(" */");
-		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
-		writeLine("public void delete" + this.bean.className + "List() {");
-		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList() == null) {");
-		writeLine("return;");
-		writeLine("}");
-		
-		writeLine(this.bean.serviceObjectName + ".delete" + this.bean.className + "List(this.commonController.getSelected" + this.bean.className + "IdList());");
-		writeLine("this.refresh();");
-		
-		writeLine("}");
-		skipLine();
-	}
-	
-
 	private void createListenSelectedObject() {
 		writeLine("/**");
 		writeLine(" * listen selected object id");
@@ -347,26 +309,6 @@ public class BaseSimpleJsfControllerFileWriteCommand extends JavaFileWriteComman
 		skipLine();
 	}
 
-	private void createListenSelectedObjectList() {
-		writeLine("/**");
-		writeLine(" * listen selected object id list");
-		writeLine(" */");
-		writeLine("public void listenSelected" + this.bean.className + "IdList(ActionEvent event) {");
-		writeLine("this.commonController.setSelected" + this.bean.className + "IdList(new ArrayList<Long>());");
-		writeLine("if (" + this.bean.objectName + "List != null){");
-		writeLine("for (" + this.bean.viewClassName + " " + this.bean.objectName + ":" + this.bean.objectName + "List){");
-		writeLine("if (" + this.bean.objectName + ".getSelected()){");
-		writeLine("this.commonController.getSelected" + this.bean.className + "IdList().add(" + this.bean.objectName + ".getId());");
-		writeLine("}");
-		writeLine("}");
-		writeLine("}");
-		writeLine("if (this.commonController.getSelected" + this.bean.className + "IdList().isEmpty()) {");
-		writeLine("this.commonController.setSelected" + this.bean.className + "IdList(null);");
-		writeLine("displayError(EMPTY_SELECTION);");
-		writeLine("}");
-		writeLine("}");
-		skipLine();
-	}
 	
 	private void createResetFlters() {
 		

@@ -12,8 +12,8 @@ public class FileWriteCommandTreeFactoryBuilder {
 	
 	public static FileWriteCommandTreeFactory getFileWriteCommandTreeFactory(Project project) {
 		switch (project.skeletonType) {
-			case SPRING_HIBERNATE_RICHFACES:
-				return new SpringHibernateRichFacesCommandTreeFactory();
+//			case SPRING_HIBERNATE_RICHFACES:
+//				return new SpringHibernateRichFacesCommandTreeFactory();
 				
 			case BASIC_SPRING_HIBERNATE_RICHFACES:
 				return new BasicSpringHibernateRichFacesCommandTreeFactory();

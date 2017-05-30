@@ -6,6 +6,6 @@ import org.sklsft.generator.model.om.Bean;
 public class SimpleJsfListViewFileWriteCommand extends CommonSimpleJsfListViewFileWriteCommand {
 
 	public SimpleJsfListViewFileWriteCommand(Bean bean) {
-		super(bean, false, false);
+		super(bean);
 	}
 }

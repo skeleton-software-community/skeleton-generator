@@ -36,6 +36,9 @@ public class Package {
 
     public String baseStateManagerPackageName;
     public String stateManagerPackageName;
+    
+    public String baseProcessorImplPackageName;
+    public String processorImplPackageName;
 
     public String facadeImplPackageName;
     public String facadeInterfacesPackageName;

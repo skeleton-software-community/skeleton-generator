@@ -73,8 +73,8 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.model = model;
 		myPackage.name = packageMetaData.getName().toLowerCase();
 
-		myPackage.omPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".om";
-		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".ov";
+		myPackage.omPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name;
+		myPackage.ovPackageName = model.project.domainName + "." + model.project.projectName + ".api.model." + myPackage.name;
 
 		myPackage.statusPackageName = model.project.domainName + "." + model.project.projectName + ".model." + myPackage.name + ".status";
 
@@ -84,16 +84,20 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.baseDAOImplPackageName = myPackage.DAOImplPackageName + ".base";
 		myPackage.baseDAOInterfacePackageName = myPackage.DAOInterfacePackageName + ".base";
 
-		myPackage.baseServiceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".impl";
-		myPackage.baseServiceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.baseservices." + myPackage.name + ".interfaces";
-		myPackage.serviceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".impl";
-		myPackage.serviceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".interfaces";
+		myPackage.baseServiceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name + ".base";
+		myPackage.baseServiceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".api.interfaces." + myPackage.name + ".base";
+		myPackage.serviceImplPackageName = model.project.domainName + "." + model.project.projectName + ".bl.services." + myPackage.name;
+		myPackage.serviceInterfacePackageName = model.project.domainName + "." + model.project.projectName + ".api.interfaces." + myPackage.name;
 
 		myPackage.mapperPackageName = model.project.domainName + "." + model.project.projectName + ".bc.mapper." + myPackage.name;
 		myPackage.baseMapperPackageName = myPackage.mapperPackageName + ".base";	
 		
 		myPackage.stateManagerPackageName = model.project.domainName + "." + model.project.projectName + ".bc.statemanager." + myPackage.name;
 		myPackage.baseStateManagerPackageName = myPackage.stateManagerPackageName + ".base";
+		
+		myPackage.baseProcessorImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.processor." + myPackage.name + ".base";
+		myPackage.processorImplPackageName = model.project.domainName + "." + model.project.projectName + ".bc.processor." + myPackage.name;
+
 
 		myPackage.facadeImplPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".impl";
 		myPackage.facadeInterfacesPackageName = model.project.domainName + "." + model.project.projectName + ".facade." + myPackage.name + ".interfaces";
