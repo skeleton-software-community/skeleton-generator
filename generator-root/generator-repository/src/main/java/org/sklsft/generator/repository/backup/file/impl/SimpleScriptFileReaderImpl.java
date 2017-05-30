@@ -25,6 +25,6 @@ public class SimpleScriptFileReaderImpl implements SimpleScriptFileReader {
 	}
 	
 	public String readScript(String scriptFilePath) throws IOException {
-		return readScript(scriptFilePath, StandardCharsets.ISO_8859_1);
+		return readScript(scriptFilePath, StandardCharsets.UTF_8);
 	}
 }
