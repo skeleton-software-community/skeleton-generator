@@ -248,7 +248,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			write("@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true");
-			writeLine(", mappedBy = " + CHAR_34 + oneToManyComponent.parentBean.objectName + CHAR_34 + ")");
+			writeLine(", mappedBy = " + CHAR_34 + oneToManyComponent.referenceProperty.name + CHAR_34 + ")");
 			
 
 			writeLine("private Set <" + oneToManyComponent.referenceBean.className + "> " + oneToManyComponent.collectionName + ";");
