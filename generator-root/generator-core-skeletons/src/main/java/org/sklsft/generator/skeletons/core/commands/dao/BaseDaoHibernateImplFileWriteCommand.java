@@ -249,6 +249,40 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		List<Alias> findAliasList = getReferenceAliases(bean);
 
 		writeLine("/**");
+		writeLine(" * find object or null");
+		writeLine(" */");
+		writeLine("@Override");
+		write("public " + this.bean.className + " findOrNull(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(") {");
+
+		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
+		writeLine(this.bean.className + ".class)");
+
+		for (Alias alias : findAliasList) {
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
+
+		}
+		for (ViewProperty property : findPropertyList) {
+			if (StringUtils.isEmpty(property.joinedAliasName)) {
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
+
+			} else {
+				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
+
+			}
+		}
+
+		writeLine(".uniqueResult();");
+		writeLine("return " + this.bean.objectName + ";");
+		writeLine("}");
+		skipLine();
+		
+		start = true;
+		writeLine("/**");
 		writeLine(" * find object");
 		writeLine(" */");
 		writeLine("@Override");
@@ -270,24 +304,13 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return null;");
 		writeLine("}");
 
-		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
-		writeLine(this.bean.className + ".class)");
-
-		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
-
+		start = true;
+		write(this.bean.className + " " + this.bean.objectName + " = findOrNull(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.name);
 		}
-		for (ViewProperty property : findPropertyList) {
-			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			} else {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			}
-		}
-
-		writeLine(".uniqueResult();");
+		writeLine(");");
 		writeLine("if (" + this.bean.objectName + " == null) {");
 		writeLine("throw new ObjectNotFoundException(" + CHAR_34 + bean.className + ".notFound" + CHAR_34 + ");");
 		writeLine("} else {");

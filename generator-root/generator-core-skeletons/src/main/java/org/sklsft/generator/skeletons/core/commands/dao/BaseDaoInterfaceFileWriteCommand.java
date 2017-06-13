@@ -126,6 +126,18 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	private void createFindObject() {
 		boolean start = true;
 		writeLine("/**");
+		writeLine(" * find object or null");
+		writeLine(" */");
+		write(this.bean.className + " findOrNull(");
+		for (ViewProperty property:bean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(");");
+		skipLine();
+		
+		start = true;
+		writeLine("/**");
 		writeLine(" * find object");  
 		writeLine(" */");
 		write(this.bean.className + " find(");
