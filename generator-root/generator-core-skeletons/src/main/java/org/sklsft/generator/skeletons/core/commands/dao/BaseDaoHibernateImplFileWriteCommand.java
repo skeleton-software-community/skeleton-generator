@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.sklsft.generator.model.domain.business.Alias;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
+import org.sklsft.generator.util.naming.JavaClassNaming;
 
 
 public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
@@ -35,15 +36,17 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import java.util.List;");
+		javaImports.add("import static org.sklsft.commons.model.patterns.HibernateCriteriaUtils.*;");
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import org.hibernate.criterion.Restrictions;");
 		javaImports.add("import org.hibernate.Criteria;");
+		javaImports.add("import org.hibernate.sql.JoinType;");
 		javaImports.add("import org.hibernate.FetchMode;");
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import org.springframework.stereotype.Repository;");
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDaoImpl;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
 	
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
@@ -104,11 +107,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 
 		for (Property property : this.bean.properties) {
-			if (property.referenceBean != null) {
+			if (property.visibility.isListVisible() && property.referenceBean != null) {
 				writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + CHAR_34 + ",FetchMode.JOIN);");
 
-				for (Alias alias : getReferenceAliases(property.referenceBean)) {
-					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
+				for (Alias alias : getAliases(property)) {
+					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyPath + CHAR_34 + ",FetchMode.JOIN);");
 
 				}
 			}
@@ -118,6 +121,36 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("}");
 		skipLine();
+		
+		
+		writeLine("/**");
+		writeLine(" * load filtered object list eagerly");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+		writeLine("public List<" + this.bean.className + "> loadListEagerly(" + bean.basicViewBean.filterClassName + " filter) {");
+		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
+
+		List<Alias> aliases = getAllAliases(bean);
+		for (Alias alias : aliases) {
+			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+		}
+		
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
+			String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+			
+			String addRestrictionText = getAddRestrictionText(property.dataType);
+			writeLine(addRestrictionText + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+			
+		}
+
+		writeLine("return criteria.list();");
+
+		writeLine("}");
+		skipLine();
+		
+		
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
@@ -155,8 +188,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
 
 						for (Alias alias : getReferenceAliases(prop.referenceBean)) {
-							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyName + CHAR_34 + ",FetchMode.JOIN);");
-
+							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyPath + CHAR_34 + ",FetchMode.JOIN);");
 						}
 					}
 				}
@@ -170,6 +202,24 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	
+	private String getAddRestrictionText(DataType dataType) {
+		switch (dataType) {
+			case BOOLEAN :
+				return "addBooleanRestriction(";
+			case LONG :
+				return "addLongContainsRestriction(";
+			case DATETIME :
+				return "addDateContainsRestriction(";
+			case DOUBLE :
+				return "addDoubleContainsRestriction(";
+			case STRING :
+			case TEXT :
+				return "addStringContainsRestriction(";
+			default :
+				throw new IllegalArgumentException("unhandled type : " + dataType.name());
+		}
+	}
+
 	private void createLoadOneToManyComponent() {
 		
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
@@ -193,8 +243,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 
 	private void createExistsObject() {
-		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
-		List<Alias> findAliasList = getReferenceAliases(bean);
 		boolean start = true;
 
 		writeLine("/**");
@@ -202,7 +250,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("@Override");
 		write("public boolean exists(");
-		for (ViewProperty property:findPropertyList) {
+		for (ViewProperty property:this.bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
 			write(property.beanDataType + " " + property.name);
 		}
@@ -210,7 +258,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		start = true;
 		write("if (");
-		for (ViewProperty property:findPropertyList) {
+		for (ViewProperty property:this.bean.referenceViewProperties) {
 			if (start) start = false; else write(" && ");
 			write(property.name + " == null");
 		}
@@ -223,11 +271,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
 		writeLine(this.bean.className + ".class)");
 
-		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
+		for (Alias alias : getReferenceAliases(bean)) {
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyPath + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
-		for (ViewProperty property : findPropertyList) {
+		for (ViewProperty property : this.bean.referenceViewProperties) {
 			if (StringUtils.isEmpty(property.joinedAliasName)) {
 				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
 
@@ -246,7 +294,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	private void createFindObject() {
 		boolean start = true;
 		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
-		List<Alias> findAliasList = getReferenceAliases(bean);
 
 		writeLine("/**");
 		writeLine(" * find object or null");
@@ -262,8 +309,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
 		writeLine(this.bean.className + ".class)");
 
-		for (Alias alias : findAliasList) {
-			writeLine(".createAlias(" + CHAR_34 + alias.propertyName + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
+		for (Alias alias : getReferenceAliases(bean)) {
+			writeLine(".createAlias(" + CHAR_34 + alias.propertyPath + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
 
 		}
 		for (ViewProperty property : findPropertyList) {
@@ -383,29 +430,49 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	
 	
-	/**
-	 * get the list of aliases that will be used to build queries
-	 * 
-	 * @return
-	 */
-	public List<Alias> getReferenceAliases(Bean bean) {
+	
+	
+	private class Alias {
+
+		public String propertyPath;
+		public String propertyName;
+	    public String name;
+	    public Alias parent;
+	}
+	
+	
+
+	
+	private List<Alias> getReferenceAliases(Bean bean) {
+		return getAliases(bean, bean.cardinality);
+	}
+	
+	private List<Alias> getAllAliases(Bean bean) {
+		return getAliases(bean, bean.properties.size());
+	}
+	
+	private List<Alias> getAliases(Bean bean, int size) {
 		List<Alias> aliasList = new ArrayList<Alias>();
 		List<Alias> tempAliasList = new ArrayList<Alias>();
 
-		for (int i = 0; i < bean.cardinality; i++) {
+		for (int i = 0; i < size; i++) {
 			Property currentProperty = bean.properties.get(i);
-			if (currentProperty.referenceBean != null) {
+			if (currentProperty.visibility.isListVisible() && currentProperty.referenceBean != null) {
 				Alias alias = new Alias();
+				alias.propertyPath = currentProperty.name;
 				alias.propertyName = currentProperty.name;
-				alias.name = currentProperty.capName;
+				alias.name = currentProperty.name;
+				alias.parent = null;
 				aliasList.add(alias);
-
-				tempAliasList = getReferenceAliases(currentProperty.referenceBean);
+				
+				tempAliasList = getAliases(currentProperty);
 				for (int j = 0; j < tempAliasList.size(); j++) {
 					Alias currentAlias = tempAliasList.get(j);
 					Alias tempAlias = new Alias();
-					tempAlias.propertyName = alias.propertyName + "." + currentAlias.propertyName;
-					tempAlias.name = alias.name + currentAlias.name;
+					tempAlias.propertyPath = alias.propertyPath + "." + currentAlias.propertyPath;
+					tempAlias.propertyName = currentAlias.propertyName;
+					tempAlias.name = alias.name + JavaClassNaming.getClassNameFromObjectName(currentAlias.name);
+					tempAlias.parent = currentAlias.parent == null?alias:currentAlias.parent;
 					aliasList.add(tempAlias);
 				}
 			}
@@ -413,5 +480,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		return aliasList;
 	}
-
+	
+	private List<Alias> getAliases(Property property) {
+		if (property.embedded) {
+			return getAllAliases(property.referenceBean);
+		} else {
+			return getReferenceAliases(property.referenceBean);
+		}
+	}
 }

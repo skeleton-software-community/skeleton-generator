@@ -34,6 +34,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDao;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -72,20 +73,23 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 	}
 	
-	private void createLoadObjectList()
-	{	   
+	private void createLoadObjectList() {  
+		
+		writeLine("/**");
+		writeLine(" * load filtered object list eagerly");
+		writeLine(" */");
+		writeLine("List<" + this.bean.className + "> loadListEagerly(" + bean.basicViewBean.filterClassName + " filter);");
+		skipLine();
 
-		for (Property property : this.bean.properties)
-		{
-			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE))
-			{
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
 
 				writeLine("/**");
 				writeLine(" * load object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
 				writeLine("List<" + this.bean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
 				skipLine();
-
+				
 				writeLine("/**");
 				writeLine(" * load object list eagerly from list of " + property.referenceBean.objectName);
 				writeLine(" */");
@@ -98,8 +102,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 	
 	private void createLoadOneToManyComponent() {		
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-		{
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.className);

@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.Visibility;
+import org.sklsft.generator.util.naming.JavaClassNaming;
 import org.springframework.stereotype.Component;
 
 @Component("javaViewPropertiesFactory")
@@ -61,7 +62,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
 						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
-						viewProperty.joinedAliasName = myProperty.capName + tempProperty.joinedAliasName;
+						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
 						viewProperty.comboBoxBean = tempProperty.comboBoxBean;					
 						viewProperty.rendering = tempProperty.rendering;
 						result.add(viewProperty);
@@ -83,7 +84,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
 					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
 					viewProperty.lastPropertyName = property.name;
-					viewProperty.joinedAliasName = myProperty.capName;
+					viewProperty.joinedAliasName = myProperty.name;
 					if (myProperty.referenceBean.hasComboBox) {
 						viewProperty.comboBoxBean = myProperty.referenceBean;
 					}
