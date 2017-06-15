@@ -30,6 +30,7 @@ private Bean bean;
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
 		
 		for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList) {
 			Bean currentBean = OneToOneComponent.referenceBean;
@@ -104,6 +105,12 @@ private Bean bean;
 		writeLine(" * load object list");
 		writeLine(" */");
 		writeLine("List<" + this.bean.basicViewBean.className + "> loadList();");
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * load filtered object list");
+		writeLine(" */");
+		writeLine("List<" + this.bean.basicViewBean.className + "> loadList(" + bean.basicViewBean.filterClassName + " filter);");
 		skipLine();
 
 		for (Property property : this.bean.properties) {

@@ -36,6 +36,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
+        javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
         for (Property property:bean.properties) {
@@ -209,6 +210,24 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
 
 		writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadListEagerly();");
+		writeLine("List<" + this.bean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
+		writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
+		writeLine("result.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
+		writeLine("}");
+		writeLine("return result;");
+		writeLine("}");
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * load filtered object list");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("@Transactional(readOnly=true)");
+		writeLine("public List<" + this.bean.basicViewBean.className + "> loadList(" + bean.basicViewBean.filterClassName + " filter) {");
+		
+        writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
+
+		writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadListEagerly(filter);");
 		writeLine("List<" + this.bean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
 		writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
 		writeLine("result.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
