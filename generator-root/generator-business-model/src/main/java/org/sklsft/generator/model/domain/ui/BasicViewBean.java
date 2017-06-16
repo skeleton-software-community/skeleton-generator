@@ -11,6 +11,7 @@ public class BasicViewBean {
 	
 	public String filterClassName;
 	public String filterObjectName;
+	public String orderingClassName;
 	
 	public String baseMapperClassName;
 	public String mapperClassName;

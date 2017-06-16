@@ -35,6 +35,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDao;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.orderingsPackageName + "." + bean.basicViewBean.orderingClassName + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -76,9 +77,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	private void createLoadObjectList() {  
 		
 		writeLine("/**");
-		writeLine(" * load filtered object list eagerly");
+		writeLine(" * count filtered object list");
 		writeLine(" */");
-		writeLine("List<" + this.bean.className + "> loadListEagerly(" + bean.basicViewBean.filterClassName + " filter);");
+		writeLine("Long count(" + bean.basicViewBean.filterClassName + " filter);");
+		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * scroll filtered object list");
+		writeLine(" */");
+		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.orderingClassName + " ordering, Long firstResult, Long maxResults);");
 		skipLine();
 
 		for (Property property : this.bean.properties) {
@@ -91,7 +98,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				skipLine();
 				
 				writeLine("/**");
-				writeLine(" * load object list eagerly from list of " + property.referenceBean.objectName);
+				writeLine(" * load object list eagerly from " + property.referenceBean.objectName);
 				writeLine(" */");
 				writeLine("List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + " (Long " + property.name + "Id);");
 				skipLine();

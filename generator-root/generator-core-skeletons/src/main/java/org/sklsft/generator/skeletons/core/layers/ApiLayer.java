@@ -10,6 +10,7 @@ import org.sklsft.generator.skeletons.core.commands.api.model.BasicViewBeanFileW
 import org.sklsft.generator.skeletons.core.commands.api.model.FilterFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.api.model.FormBeanFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.api.model.FullViewBeanFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.api.model.OrderingFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -89,6 +90,18 @@ public class ApiLayer extends AbstractLayer {
 				if (!bean.isEmbedded && !bean.isOneToOneComponent) {
 				
 					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new FilterFileWriteCommand(bean));
+					filterTreeNode.add(beanTreeNode);
+				}
+			}
+			
+			FileWriteCommandTreeNode oerderingTreeNode = new FileWriteCommandTreeNode("Orderings");
+			packageTreeNode.add(oerderingTreeNode);		
+
+			for (Bean bean : myPackage.beans) {
+				
+				if (!bean.isEmbedded && !bean.isOneToOneComponent) {
+				
+					FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new OrderingFileWriteCommand(bean));
 					filterTreeNode.add(beanTreeNode);
 				}
 			}

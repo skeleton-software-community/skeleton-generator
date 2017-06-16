@@ -29,6 +29,7 @@ public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 		
 		basicViewBean.filterClassName = bean.className + "Filter";
 		basicViewBean.filterObjectName = bean.objectName + "Filter";
+		basicViewBean.orderingClassName = bean.className + "Ordering";
 		
 		basicViewBean.properties = viewPropertiesFactory.getBasicViewProperties(bean);
 		
