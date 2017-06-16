@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+	
+	<!-- param : scrollView -->
+	<!-- param : scrollForm -->
+	<!-- param : scrollController -->
+	<!-- param : panelGroup -->
+
+	<ui:fragment rendered="#{scrollView.numberOfPages>1}">
+		<div class="scroller">
+			<a4j:commandLink action="#{scrollController.moveFirst()}"
+				render="#{panelGroup}">
+				<span class="glyphicon glyphicon-fast-backward"> </span>
+			</a4j:commandLink>
+			<a4j:commandLink action="#{scrollController.moveBackward()}"
+				render="#{panelGroup}">
+				<span class="glyphicon glyphicon-step-backward"> </span>
+			</a4j:commandLink>
+			<h:inputText value="#{scrollForm.page}"
+				style="width:50px">
+				<a4j:ajax event="keyup" render="#{panelGroup}"
+					listener="#{scrollController.refresh}"
+					oncomplete="setCaretToEnd(event);">
+					<a4j:attachQueue requestDelay="500" />
+				</a4j:ajax>
+			</h:inputText>
+			/ #{scrollView.numberOfPages}
+			<a4j:commandLink action="#{scrollController.moveForward()}"
+				render="#{panelGroup}">
+				<span class="glyphicon glyphicon-step-forward"> </span>
+			</a4j:commandLink>
+			<a4j:commandLink action="#{scrollController.moveLast()}"
+				render="#{panelGroup}">
+				<span class="glyphicon glyphicon-fast-forward"> </span>
+			</a4j:commandLink>
+		</div>
+	</ui:fragment>
+
+</ui:composition>

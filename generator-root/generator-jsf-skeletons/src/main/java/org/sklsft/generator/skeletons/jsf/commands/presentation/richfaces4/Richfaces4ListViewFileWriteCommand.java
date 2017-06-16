@@ -43,36 +43,34 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
 		skipLine();
 		
-		writeLine("<h:form id=" + CHAR_34 + bean.objectName + "ListForm" + CHAR_34 + ">");
-		writeLine("<a4j:jsFunction name=" + CHAR_34 + "load" + CHAR_34);
-		writeLine("action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".load}" + CHAR_34);
-		writeLine("render=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34);
-		writeLine("oncomplete=" + CHAR_34 + "$('#processingPanel').modal('hide')" + CHAR_34 + "/>");
+		writeLine("<f:metadata>");
+		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".load}" + CHAR_34 + "/>");
+		writeLine("</f:metadata>");
 		
-	    writeLine("<script>window.onload = function(){$('#processingPanel').modal('show');load();}</script>");
-		
-		writeLine("<h2>");
-		writeLine("#{i18n." + bean.objectName + "List}");
-		writeLine("</h2>");
+		writeLine("<h:form id=" + CHAR_34 + bean.objectName + "ListForm" + CHAR_34 + ">");		
 			
 		writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
 		
-		writeLine("<a4j:region>");
-		skipLine();		
+		writeLine("<h2>");
+		writeLine("#{i18n." + bean.objectName + "List} (#{" + bean.listViewObjectName + ".scrollView.size})");
+		writeLine("</h2>");
 		
-		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{empty " + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34 + ">");
+		writeLine("<a4j:region>");
+		skipLine();
+		
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.size == 0}" + CHAR_34 + ">");
 		writeLine("#{i18n.noDataFound}<br/>");
 		writeLine("</ui:fragment>");
 		skipLine();
 		
-		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{not empty " + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34 + ">");
+		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.size > 0}" + CHAR_34 + ">");
 		
 		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
 		skipLine();
 
 		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
 		writeLine("id=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
-		writeLine("value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + "." + this.bean.objectName + "List}" + CHAR_34
+		writeLine("value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".scrollView.elements}" + CHAR_34
 				+ " rowClasses=" + CHAR_34 + "datatableRow, datatableRowLight" + CHAR_34 + ">");
 		skipLine();
 
@@ -101,7 +99,7 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		
 		writeLine("<rich:column>");
 		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".reset" + bean.basicViewBean.filterClassName + "}" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34 + ">");
+		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".reset}" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + ">");
 		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
 		writeLine("</a4j:commandLink>");
 		
@@ -109,8 +107,15 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		skipLine();
 
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			writeLine("<rich:column>");
-			writeFilter(property, this.bean);
+			writeLine("<rich:column>");			
+			writeLine("<h:inputText");
+			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.filter." + property.name + "}" + CHAR_34);
+			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
+			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
+			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
+			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
+			writeLine("</a4j:ajax>");
+			writeLine("</h:inputText>");			
 			writeLine("</rich:column>");
 			skipLine();
 		}
@@ -162,10 +167,16 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 
 
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			writeLine("<rich:column sortBy=" + CHAR_34 + "#{" + this.bean.objectName + "." + property.name + "}" + CHAR_34);
-			writeFilterExpression(property, bean);
+			writeLine("<rich:column>");
 			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-			writeLine("<h:outputText value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34 + " />");
+			
+			writeLine("<ui:include src=" + CHAR_34 + "/resources/components/datatable-header.xhtml" + CHAR_34 + ">");
+			writeLine("<ui:param name=" + CHAR_34 + "label" + CHAR_34 + " value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34 + "/>");
+			writeLine("<ui:param name=" + CHAR_34 + "orderType" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.sorting." + property.name + "OrderType}" + CHAR_34 + "/>");
+			writeLine("<ui:param name=" + CHAR_34 + "scrollController" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listControllerObjectName + "}" + CHAR_34 + "/>");
+			writeLine("<ui:param name=" + CHAR_34 + "panelGroup" + CHAR_34 + " value=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
+			writeLine("</ui:include>");
+
 			writeLine("</f:facet>");
 
 			writeListComponent(property, this.bean);
@@ -179,10 +190,13 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		
 		writeLine("</div>");
 		skipLine();
-		writeLine("<div class=" + CHAR_34 + "scroller" + CHAR_34 + ">");
-		writeLine("<rich:dataScroller id=" + CHAR_34 + bean.objectName + "Scroller" + CHAR_34 + " maxPages=" + CHAR_34 + "5" + CHAR_34 + " renderIfSinglePage=" + CHAR_34 + "false"
-				+ CHAR_34 + " for=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + "/>");
-		writeLine("</div>");
+		
+		writeLine("<ui:include src=" + CHAR_34 + "/resources/components/scroller.xhtml" + CHAR_34 + ">");
+		writeLine("<ui:param name=" + CHAR_34 + "scrollView" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView}" + CHAR_34 + "/>");
+		writeLine("<ui:param name=" + CHAR_34 + "scrollForm" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm}" + CHAR_34 + "/>");
+		writeLine("<ui:param name=" + CHAR_34 + "scrollController" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listControllerObjectName + "}" + CHAR_34 + "/>");
+		writeLine("<ui:param name=" + CHAR_34 + "panelGroup" + CHAR_34 + " value=" + CHAR_34 + "" + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
+		writeLine("</ui:include>");		
 		skipLine();
 		
 		writeLine("</ui:fragment>");

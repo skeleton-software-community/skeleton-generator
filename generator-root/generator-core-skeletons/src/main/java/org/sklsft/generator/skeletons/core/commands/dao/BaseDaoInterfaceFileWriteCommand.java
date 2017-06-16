@@ -35,7 +35,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDao;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
-		javaImports.add("import " + bean.myPackage.orderingsPackageName + "." + bean.basicViewBean.orderingClassName + ";");
+		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -65,6 +65,8 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		createLoadObjectList();
+		createCount();		
+		createScroll();
 		createLoadOneToManyComponent();
 		createExistsObject();
 		createFindObject();
@@ -74,19 +76,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 	}
 	
-	private void createLoadObjectList() {  
-		
-		writeLine("/**");
-		writeLine(" * count filtered object list");
-		writeLine(" */");
-		writeLine("Long count(" + bean.basicViewBean.filterClassName + " filter);");
-		skipLine();
-		
-		writeLine("/**");
-		writeLine(" * scroll filtered object list");
-		writeLine(" */");
-		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.orderingClassName + " ordering, Long firstResult, Long maxResults);");
-		skipLine();
+	private void createLoadObjectList() {		
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
@@ -105,6 +95,23 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
 			}
 		}
+	}
+	
+	
+	private void createCount() {
+		writeLine("/**");
+		writeLine(" * count filtered object list");
+		writeLine(" */");
+		writeLine("Long count(" + bean.basicViewBean.filterClassName + " filter);");
+		skipLine();
+	}
+	
+	private void createScroll() {
+		writeLine("/**");
+		writeLine(" * scroll filtered object list");
+		writeLine(" */");
+		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " ordering, Long firstResult, Long maxResults);");
+		skipLine();
 	}
 
 	

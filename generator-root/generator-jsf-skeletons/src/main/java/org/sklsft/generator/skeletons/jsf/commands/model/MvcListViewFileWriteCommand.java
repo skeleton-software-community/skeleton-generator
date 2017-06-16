@@ -22,12 +22,15 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		
 		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import java.util.List;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.springframework.stereotype.Component;");
         javaImports.add("import org.springframework.context.annotation.Scope;");
         javaImports.add("import org.springframework.web.context.WebApplicationContext;");
 		
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.filtersPackageName + "." + this.bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.sortingsPackageName + "." + this.bean.basicViewBean.sortingClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 	}
 
@@ -56,27 +59,27 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/*");
 		writeLine(" * properties");
 		writeLine(" */");
-		writeLine("protected List<" + this.bean.basicViewBean.className + "> " + this.bean.objectName + "List;");
-		writeLine("protected " + this.bean.basicViewBean.filterClassName + " " + this.bean.basicViewBean.filterObjectName + " = new " + this.bean.basicViewBean.filterClassName + "();");
+		writeLine("protected ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> scrollForm = new ScrollForm<>();");
+		writeLine("protected ScrollView<" + bean.basicViewBean.className + "> scrollView = new ScrollView<>();");
 		writeLine("protected " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
 		skipLine();
 
 		writeLine("/*");
 		writeLine(" * getters and setters");
 		writeLine(" */");
-		writeLine("public List<" + this.bean.basicViewBean.className + "> get" + this.bean.className + "List() {");
-		writeLine("return " + this.bean.objectName + "List;");
+		writeLine("public ScrollView<" + bean.basicViewBean.className + "> getScrollView() {");
+		writeLine("return scrollView;");
 		writeLine("}");
-		writeLine("public void set" + this.bean.className + "List(List<" + this.bean.basicViewBean.className + "> " + this.bean.objectName + "List) {");
-		writeLine("this." + this.bean.objectName + "List = " + this.bean.objectName + "List;");
+		writeLine("public void setScrollView(ScrollView<" + this.bean.basicViewBean.className + "> scrollView) {");
+		writeLine("this.scrollView = scrollView;");
 		writeLine("}");
 		skipLine();
 		
-		writeLine("public " + this.bean.basicViewBean.filterClassName + " get" + this.bean.basicViewBean.filterClassName + "() {");
-		writeLine("return " + this.bean.basicViewBean.filterObjectName + ";");
+		writeLine("public ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> getScrollForm() {");
+		writeLine("return scrollForm;");
 		writeLine("}");
-		writeLine("public void set" + this.bean.basicViewBean.filterClassName + "(" + this.bean.basicViewBean.filterClassName + " " + this.bean.basicViewBean.filterObjectName + ") {");
-		writeLine("this." + this.bean.basicViewBean.filterObjectName + " = " + this.bean.basicViewBean.filterObjectName + ";");
+		writeLine("public void setScrollForm(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> scrollForm) {");
+		writeLine("this.scrollForm = scrollForm;");
 		writeLine("}");
 		skipLine();
 		

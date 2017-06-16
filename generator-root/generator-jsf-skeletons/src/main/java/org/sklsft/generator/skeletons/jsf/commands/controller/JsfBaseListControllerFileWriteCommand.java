@@ -28,6 +28,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -35,6 +36,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
 		javaImports.add("import " + this.bean.myPackage.listViewPackageName + "." + this.bean.listViewClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.filtersPackageName + "." + this.bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + this.bean.myPackage.sortingsPackageName + "." + this.bean.basicViewBean.sortingClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 	}
@@ -103,8 +105,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * load object list");
 		writeLine(" */");
 		writeLine("public void load() {");
-		writeLine("this.reset" + bean.basicViewBean.filterClassName + "();");
-		writeLine("this.refresh();");
+		writeLine("this.reset();");
 		writeLine("}");
 		skipLine();
 		
@@ -112,7 +113,8 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * refresh object list");
 		writeLine(" */");
 		writeLine("public void refresh() {");
-		writeLine("this." + this.bean.listViewObjectName + ".set" + this.bean.className + "List(this." + this.bean.serviceObjectName + ".loadList());");
+		writeLine(bean.listViewObjectName + ".setScrollView(" + bean.serviceObjectName + ".scroll(" + bean.listViewObjectName + ".getScrollForm()));");
+		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollView().getCurrentPage());");
 		writeLine("}");
 		skipLine();
 	}
@@ -222,7 +224,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
 		writeLine("public void deleteList() {");
 		writeLine("List<Long> ids = new ArrayList<>();");
-		writeLine("for (" + bean.basicViewBean.className + " " + bean.objectName + ":" + bean.objectName + "ListView.get" + bean.className + "List()) {");
+		writeLine("for (" + bean.basicViewBean.className + " " + bean.objectName + ":" + bean.listViewObjectName + ".getScrollView().getElements()) {");
 		writeLine("if (" + bean.objectName + ".getSelected()) {");
 		writeLine("ids.add(" + bean.objectName + ".getId());");
 		writeLine("}");
@@ -237,11 +239,46 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 	private void createResetFlters() {
 		
 		writeLine("/**");
-		writeLine(" * reset object datatable filter");
+		writeLine(" * reset filters and sortings");
 		writeLine(" */");
-		writeLine("public void reset" + bean.basicViewBean.filterClassName + "() {");
-		writeLine("this." + this.bean.listViewObjectName + ".set" + bean.basicViewBean.filterClassName + "(new " + bean.basicViewBean.filterClassName + "());");
+		writeLine("public void reset() {");
+		writeLine("this." + this.bean.listViewObjectName + ".setScrollForm(new ScrollForm<>());");
+		writeLine("this." + this.bean.listViewObjectName + ".getScrollForm().setFilter(new " + bean.basicViewBean.filterClassName + "());");
+		writeLine("this." + this.bean.listViewObjectName + ".getScrollForm().setSorting(new " + bean.basicViewBean.sortingClassName + "());");
+		writeLine("refresh();");
 		writeLine("}");
 		skipLine();
+		
+		writeLine("/**");
+		writeLine(" * move forward");
+		writeLine(" */");
+		writeLine("public void moveForward() {");
+		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollForm().getPage()+1);");
+		writeLine("refresh();");
+		writeLine("}");
+		
+		writeLine("/**");
+		writeLine(" * move last");
+		writeLine(" */");
+		writeLine("public void moveLast() {");
+		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollView().getNumberOfPages());");
+		writeLine("refresh();");
+		writeLine("}");
+		
+		writeLine("/**");
+		writeLine(" * move backward");
+		writeLine(" */");
+		writeLine("public void moveBackward() {");
+		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollForm().getPage()-1);");
+		writeLine("refresh();");
+		writeLine("}");
+		
+		writeLine("/**");
+		writeLine(" * move first");
+		writeLine(" */");
+		writeLine("public void moveFirst() {");
+		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(1L);");
+		writeLine("refresh();");
+		writeLine("}");
 	}
 }

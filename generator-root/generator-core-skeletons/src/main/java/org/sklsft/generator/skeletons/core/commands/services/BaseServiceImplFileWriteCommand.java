@@ -32,11 +32,14 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import javax.inject.Inject;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
         javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
+        javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
         javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
         for (Property property:bean.properties) {
@@ -176,6 +179,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         }
 
 		createLoadObjectList();
+		createScroll();
 		createLoadObject();
 		createFindObject();
 		createLoadOneToOneComponent();
@@ -218,24 +222,6 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		skipLine();
 		
-		writeLine("/**");
-		writeLine(" * load filtered object list");
-		writeLine(" */");
-		writeLine("@Override");
-		writeLine("@Transactional(readOnly=true)");
-		writeLine("public List<" + this.bean.basicViewBean.className + "> loadList(" + bean.basicViewBean.filterClassName + " filter) {");
-		
-        writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
-
-		writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadListEagerly(filter);");
-		writeLine("List<" + this.bean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
-		writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-		writeLine("result.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
-		writeLine("}");
-		writeLine("return result;");
-		writeLine("}");
-		skipLine();
-		
 		for (Property property : this.bean.properties) {
 		    if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
 		        writeLine("/**");
@@ -255,8 +241,34 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		        skipLine();
 		    }
 		}
-
     }
+    
+    
+    private void createScroll() {
+
+		writeLine("/**");
+		writeLine(" * scroll object list");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("@Transactional(readOnly=true)");
+		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+		writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
+		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
+		writeLine("result.setSize(" + bean.daoObjectName + ".count());");
+		writeLine("Long count = " + bean.daoObjectName + ".count(form.getFilter());");
+		writeLine("result.setNumberOfPages(count/form.getElementsPerPage() + ((count%form.getElementsPerPage()) > 0L?1L:0L));");
+		writeLine("result.setCurrentPage(Math.max(1L, Math.min(form.getPage()!=null?form.getPage():1L, result.getNumberOfPages())));");
+		writeLine("List<" + this.bean.className + "> list = " + bean.daoObjectName + ".scroll(form.getFilter(), form.getSorting(),(result.getCurrentPage()-1)*form.getElementsPerPage(), form.getElementsPerPage());");
+		writeLine("List<" + this.bean.basicViewBean.className + "> elements = new ArrayList<>(list.size());");
+		writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : list) {");
+		writeLine("elements.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
+		writeLine("}");
+		writeLine("result.setElements(elements);");
+		writeLine("return result;");
+		writeLine("}");
+		skipLine();
+    }
+    
 
 	private void createLoadObject() {
 		writeLine("/**");

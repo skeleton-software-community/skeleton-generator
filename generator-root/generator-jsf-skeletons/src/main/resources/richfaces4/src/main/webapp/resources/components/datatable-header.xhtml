@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<!-- param : label -->
+	<!-- param : orderType -->
+	<!-- param : scrollController -->
+	<!-- param : panelGroup -->
+
+	<a4j:commandLink
+		rendered="#{empty orderType}"
+		action="#{scrollController.refresh}" render="#{panelGroup}">
+		<h:outputText value="#{label}" />
+		<f:setPropertyActionListener value="ASC"
+			target="#{orderType}">
+		</f:setPropertyActionListener>
+	</a4j:commandLink>
+	<a4j:commandLink
+		rendered="#{orderType=='ASC'}"
+		action="#{scrollController.refresh}" render="#{panelGroup}">
+		<h:outputText value="#{label}" />
+		<f:setPropertyActionListener value="DESC"
+			target="#{orderType}">
+		</f:setPropertyActionListener>
+		<span class="glyphicon glyphicon-triangle-top" />
+	</a4j:commandLink>
+	<a4j:commandLink
+		rendered="#{orderType=='DESC'}"
+		action="#{scrollController.refresh}" render="#{panelGroup}">
+		<h:outputText value="#{label}" />
+		<f:setPropertyActionListener value="#{null}"
+			target="#{orderType}">
+		</f:setPropertyActionListener>
+		<span class="glyphicon glyphicon-triangle-bottom" />
+	</a4j:commandLink>
+
+</ui:composition>

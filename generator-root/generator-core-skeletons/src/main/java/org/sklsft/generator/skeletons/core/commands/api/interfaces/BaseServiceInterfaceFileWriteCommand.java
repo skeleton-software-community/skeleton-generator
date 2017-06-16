@@ -27,10 +27,13 @@ private Bean bean;
 		
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import java.util.List;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
+		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		
 		for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList) {
 			Bean currentBean = OneToOneComponent.referenceBean;
@@ -77,6 +80,7 @@ private Bean bean;
 		}
 
 		createLoadObjectList();
+		createScroll();
 		createLoadObject();
 		createFindObject();
 		createLoadOneToOneComponent();
@@ -106,12 +110,6 @@ private Bean bean;
 		writeLine(" */");
 		writeLine("List<" + this.bean.basicViewBean.className + "> loadList();");
 		skipLine();
-		
-		writeLine("/**");
-		writeLine(" * load filtered object list");
-		writeLine(" */");
-		writeLine("List<" + this.bean.basicViewBean.className + "> loadList(" + bean.basicViewBean.filterClassName + " filter);");
-		skipLine();
 
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
@@ -124,6 +122,16 @@ private Bean bean;
 		}
 
 	}
+	
+	
+	private void createScroll() {
+		writeLine("/**");
+		writeLine(" * scroll object list");
+		writeLine(" */");
+		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
+		skipLine();
+	}
+	
 
 	private void createLoadObject() {
 		writeLine("/**");

@@ -7,11 +7,11 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
-public class OrderingFileWriteCommand extends JavaFileWriteCommand {
+public class SortingFileWriteCommand extends JavaFileWriteCommand {
 
 	private Bean bean;
 
-	public OrderingFileWriteCommand(Bean bean) {
+	public SortingFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
 				+ bean.myPackage.sortingsPackageName.replace(".", File.separator), bean.basicViewBean.sortingClassName);
 

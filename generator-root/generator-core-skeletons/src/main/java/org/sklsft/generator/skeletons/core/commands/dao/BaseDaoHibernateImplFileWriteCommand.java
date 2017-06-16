@@ -41,6 +41,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.criterion.Projections;");
 		javaImports.add("import org.hibernate.criterion.Restrictions;");
 		javaImports.add("import org.hibernate.Criteria;");
+		javaImports.add("import org.hibernate.criterion.Order;");
+		javaImports.add("import org.sklsft.commons.api.model.OrderType;");
 		javaImports.add("import org.hibernate.sql.JoinType;");
 		javaImports.add("import org.hibernate.FetchMode;");
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
@@ -48,7 +50,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDaoImpl;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
-		javaImports.add("import " + bean.myPackage.orderingsPackageName + "." + bean.basicViewBean.orderingClassName + ";");
+		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
 	
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
@@ -100,87 +102,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 	}
 	
-	private void createCount() {
-		
-		writeLine("/**");
-		writeLine(" * count filtered object list");
-		writeLine(" */");
-		writeLine("@Override");
-		writeLine("public Long count(" + bean.basicViewBean.filterClassName + " filter) {");
-		
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
-
-		List<Alias> aliases = getAllAliases(bean);
-		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
-		}
-		
-		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
-			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-			
-			String addRestrictionText = getAddRestrictionText(property.dataType);
-			writeLine(addRestrictionText + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");			
-		}
-
-		writeLine("return (Long) criteria.uniqueResult();");
-		writeLine("}");
-		skipLine();
-	}
 	
-	private void createScroll() {
-		
-		writeLine("/**");
-		writeLine(" * scroll filtered object list");
-		writeLine(" */");
-		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.orderingClassName + " ordering, Long firstResult, Long maxResults) {");
-		
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-
-		List<Alias> aliases = getAllAliases(bean);
-		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
-		}
-		
-		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
-			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-			
-			String addRestrictionText = getAddRestrictionText(property.dataType);
-			writeLine(addRestrictionText + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");			
-		}
-		writeLine("if (firstResult != null){");
-		writeLine("criteria.setFirstResult(firstResult.intValue());");
-		writeLine("}");
-		writeLine("if (maxResults != null){");
-		writeLine("criteria.setMaxResults(maxResults.intValue());");
-		writeLine("}");
-
-		writeLine("return criteria.list();");
-		writeLine("}");
-		skipLine();
-	}
-	
-	
-	private String getAddRestrictionText(DataType dataType) {
-		switch (dataType) {
-			case BOOLEAN :
-				return "addBooleanRestriction(";
-			case LONG :
-				return "addLongContainsRestriction(";
-			case DATETIME :
-				return "addDateContainsRestriction(";
-			case DOUBLE :
-				return "addDoubleContainsRestriction(";
-			case STRING :
-			case TEXT :
-				return "addStringContainsRestriction(";
-			default :
-				throw new IllegalArgumentException("unhandled type : " + dataType.name());
-		}
-	}
-	
-
 	private void createLoadObjectList() {
 
 		writeLine("/**");
@@ -256,7 +178,126 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 	}
+	
+	
+	private void createCount() {
+		
+		writeLine("/**");
+		writeLine(" * count filtered object list");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("public Long count(" + bean.basicViewBean.filterClassName + " filter) {");
+		
+		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
 
+		List<Alias> aliases = getAllAliases(bean);
+		for (Alias alias : aliases) {
+			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+		}
+		
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
+			writeRestriction(property);
+		}
+
+		writeLine("return (Long) criteria.uniqueResult();");
+		writeLine("}");
+		skipLine();
+	}
+	
+	private void createScroll() {
+		
+		writeLine("/**");
+		writeLine(" * scroll filtered object list");
+		writeLine(" */");
+		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+		
+		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
+
+		List<Alias> aliases = getAllAliases(bean);
+		for (Alias alias : aliases) {
+			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+		}
+		
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
+			writeRestriction(property);
+		}
+		
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
+			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+			writeLine("if (sorting.get" + property.capName + "OrderType() != null) {");
+			writeLine("if (sorting.get" + property.capName + "OrderType().equals(OrderType.ASC)) {");
+			writeLine(propertyCriteria + ".addOrder(Order.asc(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "));");
+			writeLine("} else {");
+			writeLine(propertyCriteria + ".addOrder(Order.desc(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "));");
+			writeLine("}");
+			writeLine("}");
+		}
+		
+		writeLine("if (firstResult != null){");
+		writeLine("criteria.setFirstResult(firstResult.intValue());");
+		writeLine("}");
+		writeLine("if (maxResults != null){");
+		writeLine("criteria.setMaxResults(maxResults.intValue());");
+		writeLine("}");
+
+		writeLine("return criteria.list();");
+		writeLine("}");
+		skipLine();
+	}
+	
+	
+	private void writeRestriction(ViewProperty property) {
+		switch (property.dataType) {
+			case BOOLEAN :
+				writeBooleanRestriction(property);
+				return;
+			case LONG :
+				writeLongRestriction(property);
+				return;
+			case DATETIME :
+				writeDateRestriction(property);
+				return;
+			case DOUBLE :
+				writeDoubleRestriction(property);
+				return;
+			case STRING :
+			case TEXT :
+				writeTextRestriction(property);
+				return;
+			default :
+				throw new IllegalArgumentException("unhandled type : " + property.dataType.name());
+		}
+	}
+	
+	private void writeTextRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addStringContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+	}
+	
+	private void writeBooleanRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addBooleanRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+	}
+	
+	private void writeDoubleRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addDoubleContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+	}
+	
+	private void writeDateRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addDoubleContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+	}
+	
+	private void writeLongRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addLongContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+	}
 	
 
 	private void createLoadOneToManyComponent() {

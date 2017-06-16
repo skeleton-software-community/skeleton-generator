@@ -79,7 +79,7 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.basicViewsPackageName = model.apiModelPackageName + "." + myPackage.name + ".views.basic";
 		myPackage.formsPackageName = model.apiModelPackageName + "." + myPackage.name + ".forms";
 		myPackage.filtersPackageName = model.apiModelPackageName + "." + myPackage.name + ".filters";
-		myPackage.orderingsPackageName = model.apiModelPackageName + "." + myPackage.name + ".orderings";
+		myPackage.sortingsPackageName = model.apiModelPackageName + "." + myPackage.name + ".sortings";
 		
 		myPackage.baseDAOImplPackageName = model.daoImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseDAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name + ".base";

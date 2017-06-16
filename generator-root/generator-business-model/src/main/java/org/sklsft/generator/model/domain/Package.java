@@ -23,7 +23,7 @@ public class Package {
 	public String omPackageName;
 
 	public String filtersPackageName;
-	public String orderingsPackageName;
+	public String sortingsPackageName;
 	public String basicViewsPackageName;
 	public String fullViewsPackageName;
 	public String formsPackageName;
