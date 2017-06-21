@@ -130,6 +130,16 @@ private Bean bean;
 		writeLine(" */");
 		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+				writeLine("/**");
+				writeLine(" * scroll object list from " + property.name);
+				writeLine(" */");
+				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (Long " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
+				skipLine();
+			}
+		}
 	}
 	
 

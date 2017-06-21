@@ -202,6 +202,55 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return (Long) criteria.uniqueResult();");
 		writeLine("}");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+
+				writeLine("/**");
+				writeLine(" * count object list from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("public Long countFrom" + property.capName + "(Long " + property.name + "Id) {");
+				
+				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
+
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
+				writeLine("} else {");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
+				writeLine("}");
+				
+				writeLine("return (Long) criteria.uniqueResult();");
+				writeLine("}");
+				skipLine();
+				
+				
+				writeLine("/**");
+				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("public Long countFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter) {");
+				
+				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
+
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
+				writeLine("} else {");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
+				writeLine("}");
+				
+				aliases = getAllAliases(bean);
+				for (Alias alias : aliases) {
+					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+				}
+				
+				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
+					writeRestriction(viewProperty);
+				}
+
+				writeLine("return (Long) criteria.uniqueResult();");
+				writeLine("}");
+				skipLine();
+			}
+		}
 	}
 	
 	private void createScroll() {
@@ -224,13 +273,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
 			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-			writeLine("if (sorting.get" + property.capName + "OrderType() != null) {");
-			writeLine("if (sorting.get" + property.capName + "OrderType().equals(OrderType.ASC)) {");
-			writeLine(propertyCriteria + ".addOrder(Order.asc(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "));");
-			writeLine("} else {");
-			writeLine(propertyCriteria + ".addOrder(Order.desc(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "));");
-			writeLine("}");
-			writeLine("}");
+			writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + property.lastPropertyName + CHAR_34 + ", sorting.get" + property.capName + "OrderType());");
 		}
 		
 		writeLine("if (firstResult != null){");
@@ -243,6 +286,50 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return criteria.list();");
 		writeLine("}");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+
+				writeLine("/**");
+				writeLine(" * scroll filtered object list from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+				
+				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
+
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
+				writeLine("} else {");
+				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
+				writeLine("}");
+				
+				aliases = getAllAliases(bean);
+				for (Alias alias : aliases) {
+					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+				}
+				
+				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
+					writeRestriction(viewProperty);
+				}
+				
+				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
+					String propertyCriteria = StringUtils.isEmpty(viewProperty.joinedAliasName)?"criteria":viewProperty.joinedAliasName + "Criteria";
+					writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + viewProperty.lastPropertyName + CHAR_34 + ", sorting.get" + viewProperty.capName + "OrderType());");
+				}
+				
+				writeLine("if (firstResult != null){");
+				writeLine("criteria.setFirstResult(firstResult.intValue());");
+				writeLine("}");
+				writeLine("if (maxResults != null){");
+				writeLine("criteria.setMaxResults(maxResults.intValue());");
+				writeLine("}");
+
+				writeLine("return criteria.list();");
+				writeLine("}");
+				skipLine();
+				
+			}
+		}
 	}
 	
 	

@@ -267,6 +267,32 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("return result;");
 		writeLine("}");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+		    if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+		        writeLine("/**");
+		        writeLine(" * scroll object list from " + property.name);
+		        writeLine(" */");
+		        writeLine("@Override");
+				writeLine("@Transactional(readOnly=true)");
+				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (Long " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+				writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
+				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
+				writeLine("result.setSize(" + bean.daoObjectName + ".countFrom" + property.capName + "(" + property.name + "Id));");
+				writeLine("Long count = " + bean.daoObjectName + ".countFrom" + property.capName + "(" + property.name + "Id, form.getFilter());");
+				writeLine("result.setNumberOfPages(count/form.getElementsPerPage() + ((count%form.getElementsPerPage()) > 0L?1L:0L));");
+				writeLine("result.setCurrentPage(Math.max(1L, Math.min(form.getPage()!=null?form.getPage():1L, result.getNumberOfPages())));");
+				writeLine("List<" + this.bean.className + "> list = " + bean.daoObjectName + ".scrollFrom" + property.capName + "(" + property.name + "Id, form.getFilter(), form.getSorting(),(result.getCurrentPage()-1)*form.getElementsPerPage(), form.getElementsPerPage());");
+				writeLine("List<" + this.bean.basicViewBean.className + "> elements = new ArrayList<>(list.size());");
+				writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : list) {");
+				writeLine("elements.add(this." + bean.basicViewBean.mapperObjectName + ".mapFrom(new " + this.bean.basicViewBean.className + "()," + this.bean.objectName + "));");
+				writeLine("}");
+				writeLine("result.setElements(elements);");
+				writeLine("return result;");
+				writeLine("}");
+				skipLine();
+		    }
+		}
     }
     
 

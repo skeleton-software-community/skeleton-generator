@@ -84,13 +84,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * load object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
+				writeLine("List<" + this.bean.className + "> loadListFrom" + property.capName + "(Long " + property.name + "Id);");
 				skipLine();
 				
 				writeLine("/**");
 				writeLine(" * load object list eagerly from " + property.referenceBean.objectName);
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + " (Long " + property.name + "Id);");
+				writeLine("List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(Long " + property.name + "Id);");
 				skipLine();
 
 			}
@@ -104,6 +104,23 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("Long count(" + bean.basicViewBean.filterClassName + " filter);");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+
+				writeLine("/**");
+				writeLine(" * count object list from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("Long countFrom" + property.capName + "(Long " + property.name + "Id);");
+				skipLine();
+				
+				writeLine("/**");
+				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("Long countFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter);");
+				skipLine();
+			}
+		}
 	}
 	
 	private void createScroll() {
@@ -112,6 +129,17 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " ordering, Long firstResult, Long maxResults);");
 		skipLine();
+		
+		for (Property property : this.bean.properties) {
+			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+
+				writeLine("/**");
+				writeLine(" * scroll filtered object from " + property.referenceBean.objectName); 
+				writeLine(" */");
+				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " ordering, Long firstResult, Long maxResults);");
+				skipLine();
+			}
+		}
 	}
 
 	
