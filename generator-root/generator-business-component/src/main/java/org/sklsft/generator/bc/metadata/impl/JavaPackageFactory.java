@@ -71,6 +71,7 @@ public class JavaPackageFactory implements PackageFactory {
 	private Package setUpPackage(PackageMetaData packageMetaData, Model model) {
 		Package myPackage = new Package();
 		myPackage.model = model;
+		myPackage.declaredName = packageMetaData.getName();
 		myPackage.name = packageMetaData.getName().toLowerCase();
 		
 		myPackage.omPackageName = model.modelPackageName + "." + myPackage.name;

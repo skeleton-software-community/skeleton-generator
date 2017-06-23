@@ -37,7 +37,7 @@ public class TableBuilder {
 
 	public void buildTable() throws IOException, InvalidFileException, SQLException {
 		
-		String scriptFilePath = table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + step + File.separator + table.myPackage.name + File.separator + table.originalName + ".sql";
+		String scriptFilePath = table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + step + File.separator + table.myPackage.declaredName + File.separator + table.originalName + ".sql";
 		
 		String script = scriptFileReader.readScript(scriptFilePath);
 			

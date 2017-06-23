@@ -66,6 +66,6 @@ public class BackupFileLocator {
 
 	private String getPathPrefix(String backupPath, int step, Table table) {
 		return backupPath + File.separator + step + File.separator
-				+ table.myPackage.name + File.separator + table.originalName;
+				+ table.myPackage.declaredName + File.separator + table.originalName;
 	}
 }

@@ -16,6 +16,7 @@ import org.sklsft.generator.model.domain.database.Table;
 public class Package {
 
 	public Model model;
+	public String declaredName;
 	public String name;
 	public List<Table> tables;
 	public List<Bean> beans;

@@ -51,7 +51,7 @@ public class DatabaseBuilderLauncher {
 		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 		
-		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-bash.xml", sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
+		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-bash.xml", "file:" + sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			
 			Project project;
