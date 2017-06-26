@@ -58,7 +58,7 @@ public class PopulatorLauncher {
 																								"classpath:applicationContext-${project.projectName}-services.xml",
 																								"classpath:applicationContext-${project.projectName}-business-component.xml",
 																								"classpath:applicationContext-${project.projectName}-repository.xml",
-																								sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
+																								"file:" + sourcePath + File.separator + DATASOURCE_CONTEXT_FILE);){
 			logger.info("Context loaded");
 			
 			Project project;

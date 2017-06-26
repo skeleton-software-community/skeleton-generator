@@ -248,37 +248,5 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("refresh();");
 		writeLine("}");
 		skipLine();
-		
-		writeLine("/**");
-		writeLine(" * move forward");
-		writeLine(" */");
-		writeLine("public void moveForward() {");
-		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollForm().getPage()+1);");
-		writeLine("refresh();");
-		writeLine("}");
-		
-		writeLine("/**");
-		writeLine(" * move last");
-		writeLine(" */");
-		writeLine("public void moveLast() {");
-		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollView().getNumberOfPages());");
-		writeLine("refresh();");
-		writeLine("}");
-		
-		writeLine("/**");
-		writeLine(" * move backward");
-		writeLine(" */");
-		writeLine("public void moveBackward() {");
-		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(" + bean.listViewObjectName + ".getScrollForm().getPage()-1);");
-		writeLine("refresh();");
-		writeLine("}");
-		
-		writeLine("/**");
-		writeLine(" * move first");
-		writeLine(" */");
-		writeLine("public void moveFirst() {");
-		writeLine(bean.listViewObjectName + ".getScrollForm().setPage(1L);");
-		writeLine("refresh();");
-		writeLine("}");
 	}
 }

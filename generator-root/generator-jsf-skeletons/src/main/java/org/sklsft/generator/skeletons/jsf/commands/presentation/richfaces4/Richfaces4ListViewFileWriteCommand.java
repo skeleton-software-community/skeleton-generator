@@ -28,8 +28,7 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		writeLine("xmlns:h = " + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
 		writeLine("xmlns:rich = " + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
 		writeLine("xmlns:a4j = " + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-		writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34);
-		writeLine("xmlns:fn=" + CHAR_34 + "http://java.sun.com/jsp/jstl/functions" + CHAR_34);
+		writeLine("xmlns:cc=" + CHAR_34 + "http://java.sun.com/jsf/composite/components" + CHAR_34);
 		writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
 		skipLine();
 
@@ -71,6 +70,7 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
 		writeLine("id=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
 		writeLine("value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".scrollView.elements}" + CHAR_34
+				+ " headerClass=" + CHAR_34 + "datatableHeader" + CHAR_34
 				+ " rowClasses=" + CHAR_34 + "datatableRow, datatableRowLight" + CHAR_34 + ">");
 		skipLine();
 
@@ -170,12 +170,11 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 			writeLine("<rich:column>");
 			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
 			
-			writeLine("<ui:include src=" + CHAR_34 + "/resources/components/datatable-header.xhtml" + CHAR_34 + ">");
-			writeLine("<ui:param name=" + CHAR_34 + "label" + CHAR_34 + " value=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34 + "/>");
-			writeLine("<ui:param name=" + CHAR_34 + "orderType" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.sorting." + property.name + "OrderType}" + CHAR_34 + "/>");
-			writeLine("<ui:param name=" + CHAR_34 + "scrollController" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listControllerObjectName + "}" + CHAR_34 + "/>");
-			writeLine("<ui:param name=" + CHAR_34 + "panelGroup" + CHAR_34 + " value=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
-			writeLine("</ui:include>");
+			writeLine("<cc:datatableHeader");
+			writeLine("label=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34);
+			writeLine("orderType=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.sorting." + property.name + "OrderType}" + CHAR_34);
+			writeLine("action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
+			writeLine("render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
 
 			writeLine("</f:facet>");
 
@@ -191,12 +190,11 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		writeLine("</div>");
 		skipLine();
 		
-		writeLine("<ui:include src=" + CHAR_34 + "/resources/components/scroller.xhtml" + CHAR_34 + ">");
-		writeLine("<ui:param name=" + CHAR_34 + "scrollView" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView}" + CHAR_34 + "/>");
-		writeLine("<ui:param name=" + CHAR_34 + "scrollForm" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm}" + CHAR_34 + "/>");
-		writeLine("<ui:param name=" + CHAR_34 + "scrollController" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.listControllerObjectName + "}" + CHAR_34 + "/>");
-		writeLine("<ui:param name=" + CHAR_34 + "panelGroup" + CHAR_34 + " value=" + CHAR_34 + "" + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
-		writeLine("</ui:include>");		
+		writeLine("<cc:datatableScroller");
+		writeLine("page=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.page}" + CHAR_34);
+		writeLine("numberOfPages=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.numberOfPages}" + CHAR_34);
+		writeLine("action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
+		writeLine("render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");		
 		skipLine();
 		
 		writeLine("</ui:fragment>");
