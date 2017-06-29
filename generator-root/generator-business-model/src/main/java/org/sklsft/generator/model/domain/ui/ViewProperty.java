@@ -25,5 +25,6 @@ public class ViewProperty {
 	
 	public String joinedAliasName;
 	public String lastPropertyName;
+	public String lastColumnName;
 	
 }

@@ -38,6 +38,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import static org.sklsft.commons.model.patterns.HibernateCriteriaUtils.*;");
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.util.List;");
 		javaImports.add("import org.hibernate.criterion.Projections;");
 		javaImports.add("import org.hibernate.criterion.Restrictions;");
 		javaImports.add("import org.hibernate.Criteria;");
@@ -357,31 +358,31 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	private void writeTextRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addStringContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}
 	
 	private void writeBooleanRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBooleanRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}
 	
 	private void writeDoubleRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addDoubleContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}
 	
 	private void writeDateRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addDoubleContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
+		writeLine("addDateContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}
 	
 	private void writeLongRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastPropertyName + CHAR_34;
+		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addLongContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}

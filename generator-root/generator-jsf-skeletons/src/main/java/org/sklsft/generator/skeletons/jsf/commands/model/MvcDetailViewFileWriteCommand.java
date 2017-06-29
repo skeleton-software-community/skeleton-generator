@@ -178,7 +178,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("public ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> get" + currentBean.className + "ScrollForm() {");
 			writeLine("return " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
-			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.className + "ScrollForm) {");
+			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm) {");
 			writeLine("this." + currentBean.objectName + "ScrollForm = " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
 			skipLine();

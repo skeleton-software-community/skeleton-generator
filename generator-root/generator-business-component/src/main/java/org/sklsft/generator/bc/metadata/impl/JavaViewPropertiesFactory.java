@@ -31,6 +31,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.visibility = myProperty.visibility;
 			viewProperty.editable = myProperty.editable;
 			viewProperty.lastPropertyName = myProperty.name;
+			viewProperty.lastColumnName = myProperty.column.name;
 			viewProperty.joinedAliasName = "";
 			viewProperty.comboBoxBean = myProperty.comboBoxBean;					
 			viewProperty.rendering = myProperty.rendering;
@@ -62,6 +63,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
 						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
+						viewProperty.lastColumnName = tempProperty.lastColumnName;
 						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
 						viewProperty.comboBoxBean = tempProperty.comboBoxBean;					
 						viewProperty.rendering = tempProperty.rendering;
@@ -84,6 +86,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
 					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
 					viewProperty.lastPropertyName = property.name;
+					viewProperty.lastColumnName = property.column.name;
 					viewProperty.joinedAliasName = myProperty.name;
 					if (myProperty.referenceBean.hasComboBox) {
 						viewProperty.comboBoxBean = myProperty.referenceBean;
