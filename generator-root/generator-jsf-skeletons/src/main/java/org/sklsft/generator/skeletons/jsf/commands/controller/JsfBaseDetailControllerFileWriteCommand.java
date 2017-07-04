@@ -213,7 +213,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" * refresh one to many " + currentBean.objectName + " list");
 			writeLine(" */");
 			writeLine("public void refresh" + currentBean.className + "List() {");
-			writeLine(bean.detailViewObjectName + ".set" + currentBean.className + "ScrollView(" + currentBean.serviceObjectName + ".scrollFrom" + bean.className + "(" + bean.detailViewObjectName + ".getSelected" + bean.className + "().getId(), " + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm()));");
+			writeLine(bean.detailViewObjectName + ".set" + currentBean.className + "ScrollView(" + currentBean.serviceObjectName + ".scrollFrom" + oneToMany.referenceProperty.capName + "(" + bean.detailViewObjectName + ".getSelected" + bean.className + "().getId(), " + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm()));");
 			writeLine(bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setPage(" + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollView().getCurrentPage());");
 			writeLine("}");
 			skipLine();

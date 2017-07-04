@@ -193,7 +193,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		List<Alias> aliases = getAllAliases(bean);
 		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
 		}
 		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
@@ -240,7 +240,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				aliases = getAllAliases(bean);
 				for (Alias alias : aliases) {
-					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
 				}
 				
 				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
@@ -265,7 +265,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		List<Alias> aliases = getAllAliases(bean);
 		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
 		}
 		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
@@ -306,7 +306,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				aliases = getAllAliases(bean);
 				for (Alias alias : aliases) {
-					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parent!=null?(alias.parent.name + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
 				}
 				
 				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
@@ -605,7 +605,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		public String propertyPath;
 		public String propertyName;
 	    public String name;
-	    public Alias parent;
+	    public String parentName;
 	}
 	
 	
@@ -630,18 +630,18 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				alias.propertyPath = currentProperty.name;
 				alias.propertyName = currentProperty.name;
 				alias.name = currentProperty.name;
-				alias.parent = null;
+				alias.parentName = null;
 				aliasList.add(alias);
 				
 				tempAliasList = getAliases(currentProperty);
 				for (int j = 0; j < tempAliasList.size(); j++) {
-					Alias currentAlias = tempAliasList.get(j);
-					Alias tempAlias = new Alias();
-					tempAlias.propertyPath = alias.propertyPath + "." + currentAlias.propertyPath;
-					tempAlias.propertyName = currentAlias.propertyName;
-					tempAlias.name = alias.name + JavaClassNaming.getClassNameFromObjectName(currentAlias.name);
-					tempAlias.parent = currentAlias.parent == null?alias:currentAlias.parent;
-					aliasList.add(tempAlias);
+					Alias tempAlias = tempAliasList.get(j);
+					Alias newAlias = new Alias();
+					newAlias.propertyPath = alias.propertyPath + "." + tempAlias.propertyPath;
+					newAlias.propertyName = tempAlias.propertyName;
+					newAlias.name = alias.name + JavaClassNaming.getClassNameFromObjectName(tempAlias.name);
+					newAlias.parentName = tempAlias.parentName == null?alias.name:alias.name + JavaClassNaming.getClassNameFromObjectName(tempAlias.parentName);
+					aliasList.add(newAlias);
 				}
 			}
 		}
