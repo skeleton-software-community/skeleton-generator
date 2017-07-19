@@ -184,6 +184,16 @@ ul.nav.nav-pills {
 	padding-bottom:8px;
 }
 
+.datatable-scroller {
+	text-align:center;
+	padding-top:8px;
+	padding-bottom:8px;
+}
+
+.datatable-scroller .datatable-scroller-page-input {
+	width:50px;
+}
+
 .dropList {
 	font-size:14px;
 	display:none;

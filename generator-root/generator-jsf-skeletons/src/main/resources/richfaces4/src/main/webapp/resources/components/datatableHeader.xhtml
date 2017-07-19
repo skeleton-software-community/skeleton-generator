@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="label" type="java.lang.String" />
+	<composite:attribute name="orderType" type="org.sklsft.commons.api.model.OrderType" />
+	<composite:attribute name="action" method-signature="void action()" />
+	<composite:attribute name="render" type="java.lang.String" default="@this" />
+</composite:interface>
+
+<composite:implementation>
+
+	<a4j:commandLink rendered="#{empty cc.attrs.orderType}"
+		action="#{cc.attrs.action}" render="#{cc.attrs.render}">
+		<h:outputText value="#{cc.attrs.label}" />
+		<f:setPropertyActionListener value="ASC" target="#{cc.attrs.orderType}">
+		</f:setPropertyActionListener>
+	</a4j:commandLink>
+	<a4j:commandLink rendered="#{cc.attrs.orderType=='ASC'}"
+		action="#{cc.attrs.action}" render="#{cc.attrs.render}">
+		<h:outputText value="#{cc.attrs.label}" />
+		<f:setPropertyActionListener value="DESC" target="#{cc.attrs.orderType}">
+		</f:setPropertyActionListener>
+		<span class="glyphicon glyphicon-triangle-top" />
+	</a4j:commandLink>
+	<a4j:commandLink rendered="#{cc.attrs.orderType=='DESC'}"
+		action="#{cc.attrs.action}" render="#{cc.attrs.render}">
+		<h:outputText value="#{cc.attrs.label}" />
+		<f:setPropertyActionListener value="#{null}" target="#{cc.attrs.orderType}">
+		</f:setPropertyActionListener>
+		<span class="glyphicon glyphicon-triangle-bottom" />
+	</a4j:commandLink>
+
+</composite:implementation>
+</html>
