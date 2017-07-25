@@ -11,7 +11,6 @@ import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
-import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 import org.sklsft.generator.util.naming.JavaClassNaming;

@@ -13,9 +13,9 @@
 	
 	<!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>/temp/log/generator.log</File>
+		<File>/tmp/log/generator.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>/temp/log/generator.%d{yyyy-MM-dd}.log
+			<FileNamePattern>/tmp/log/generator.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			 <maxHistory>5</maxHistory>
 			 <maxFileSize>10MB</maxFileSize>
