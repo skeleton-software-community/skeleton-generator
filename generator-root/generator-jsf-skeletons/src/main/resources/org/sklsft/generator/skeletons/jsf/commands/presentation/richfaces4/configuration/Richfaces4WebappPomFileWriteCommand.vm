@@ -48,13 +48,6 @@
 		</dependency>
 		
 		
-		<!-- hibernate -->
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-		</dependency>
-				
-		
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
