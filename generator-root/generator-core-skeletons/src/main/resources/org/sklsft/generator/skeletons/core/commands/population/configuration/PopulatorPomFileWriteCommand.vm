@@ -46,13 +46,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
-		
-		
-		<!-- hibernate -->
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-		</dependency>
 				
 		
 		<!-- spring -->
