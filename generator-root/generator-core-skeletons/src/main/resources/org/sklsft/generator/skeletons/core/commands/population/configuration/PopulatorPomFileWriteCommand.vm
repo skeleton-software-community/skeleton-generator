@@ -94,6 +94,13 @@
 			<artifactId>commons-digester</artifactId>
 		</dependency>
 		
+		
+		<!-- javax.el -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 </project>

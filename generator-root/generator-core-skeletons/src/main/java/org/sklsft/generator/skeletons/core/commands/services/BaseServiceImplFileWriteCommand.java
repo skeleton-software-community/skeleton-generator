@@ -374,8 +374,9 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id) {");
             writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
             writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess" + currentBean.className + "(" + this.bean.objectName + ");");
-            writeLine("List<" + currentBean.basicViewBean.className + "> result = new ArrayList<>(" + this.bean.objectName + ".get" + currentBean.className + "Collection().size());");
-            writeLine("for (" + currentBean.className + " " + currentBean.objectName + ":" + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
+            writeLine("List<" + currentBean.className + "> " + currentBean.objectName + "List = " + this.bean.daoObjectName + ".load" + currentBean.className + "List(id);");
+            writeLine("List<" + currentBean.basicViewBean.className + "> result = new ArrayList<>(" + currentBean.objectName + "List.size());");
+            writeLine("for (" + currentBean.className + " " + currentBean.objectName + ":" + currentBean.objectName + "List){");
             writeLine("result.add(this." + currentBean.basicViewBean.mapperObjectName + ".mapFrom(new " + currentBean.basicViewBean.className + "()," + currentBean.objectName + "));");
             writeLine("}");
             writeLine("return result;");

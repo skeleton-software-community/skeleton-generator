@@ -18,12 +18,12 @@ import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
-import org.sklsft.generator.repository.backup.datasource.interfaces.OutputDataSourceProvider;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
 public class PopulatorLauncher {
 
@@ -37,21 +37,19 @@ public class PopulatorLauncher {
 	/**
 	 * 
 	 * @param args 0->the workspace folder where the "data-model" folder will be detected
-	 * @param args 1->the target datasource to be populated
-	 * @param args 2->the folder where the backup plan will be read
-	 * @param args 3(optional)->a list of semicolon separated table names if you want to restrict the population with this list
+	 * @param args 1->the folder where the backup plan will be read
+	 * @param args 2(optional)->a list of semicolon separated table names if you want to restrict the population with this list
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 3) {
-			throw new IllegalArgumentException("workspace path, datasource and backup plan folder are Mandatory");
+		if (args.length < 2) {
+			throw new IllegalArgumentException("workspace path and backup plan folder are Mandatory");
 		}
 		String workspacePath = args[0];
-		String databaseName = args[1];
-		String backupPath = args[2];
+		String backupPath = args[1];
 		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
-		
+
 		Set<String> tables = extractTables(args);
 		
 		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-${project.projectName}-populator.xml",
@@ -81,12 +79,9 @@ public class PopulatorLauncher {
 			
 			try {
 				
-				OutputDataSourceProvider outputDataSourceProvider = appContext.getBean(OutputDataSourceProvider.class);
-				DataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
-				
 				LocalSessionFactoryBean sessionFactory = appContext.getBean(LocalSessionFactoryBean.class);
-				sessionFactory.setDataSource(dataSource);
-				
+				DataSource dataSource = SessionFactoryUtils.getDataSource(sessionFactory.getObject());
+												
 				InputDataSourceProvider inputDataSourceProvider = appContext.getBean(InputDataSourceProvider.class);
 				
 				BackupPreExecutionChecker preChecker = appContext.getBean(BackupPreExecutionChecker.class);
@@ -96,8 +91,12 @@ public class PopulatorLauncher {
 				
 				PopulatorPrompter prompter = new PopulatorPrompter();
 				prompter.printPreExecutionWarnings(preExecutionWarnings);
-				prompter.promptForConfirmation();
 				
+				logger.info("noPrompt: " + System.getProperty("noPrompt"));
+
+				if (!Boolean.valueOf(System.getProperty("noPrompt"))) {
+					prompter.promptForConfirmation();
+				}
 				
 				Populator populator = appContext.getBean(Populator.class);
 				populator.populate(inputDataSourceProvider, project, tables, backupPath);
@@ -120,8 +119,8 @@ public class PopulatorLauncher {
 		
 		Set<String> tables = null;
 		
-		if (args.length > 3) {
-			String tablesArg = args[3];
+		if (args.length > 2) {
+			String tablesArg = args[2];
 			String[] tableTokens = tablesArg.split(";");
 			tables = new HashSet<String>();
 			for (String table:tableTokens) {

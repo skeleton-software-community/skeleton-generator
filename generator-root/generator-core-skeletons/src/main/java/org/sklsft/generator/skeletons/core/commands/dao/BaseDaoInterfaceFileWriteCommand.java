@@ -40,6 +40,8 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		
 		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
@@ -65,8 +67,11 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 
 		createLoadObjectList();
-		createCount();		
+		createCount();
 		createScroll();
+		createLoadOneToManyComponentList();
+		createCountOneToManyComponent();		
+		createScrollOneToManyComponent();
 		createLoadOneToManyComponent();
 		createExistsObject();
 		createFindObject();
@@ -141,6 +146,42 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 	}
+	
+	
+	private void createLoadOneToManyComponentList() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className + " list");
+            writeLine(" */");
+			writeLine("List<" + currentBean.className + "> load" + currentBean.className + "List(Long " + bean.objectName + "Id);");
+			skipLine();
+        }
+	}
+	
+	
+	private void createCountOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * count one to many component " + currentBean.className); 
+			writeLine(" */");
+			writeLine("Long count" + currentBean.className + "(Long " + bean.objectName + "Id);");
+			skipLine();
+			
+			writeLine("/**");
+			writeLine(" * count filtered one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("Long count" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter);");
+			skipLine();
+		}
+	}
+	
+	
+	private void createScrollOneToManyComponent() {
+		
+	}
 
 	
 	private void createLoadOneToManyComponent() {		
@@ -149,7 +190,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id);");
+			writeLine(currentBean.className + " load" + currentBean.className + "(Long id);");
 			skipLine();
 		}
 	}
@@ -200,7 +241,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * save one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
+			writeLine("void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();
 		}
 		
@@ -209,7 +250,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * save one to one component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
+			writeLine("void save" + currentBean.className + "(" + this.bean.className + " " + this.bean.objectName + ", " + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();
 		}
 	}
@@ -221,7 +262,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
+			writeLine("void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();
 		}
 		
@@ -230,7 +271,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * delete one to one component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
+			writeLine("void delete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ");");
 			skipLine();
 		}
 	}

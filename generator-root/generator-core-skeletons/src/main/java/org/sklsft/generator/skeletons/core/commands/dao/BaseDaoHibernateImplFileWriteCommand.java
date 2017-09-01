@@ -56,6 +56,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		
 		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
@@ -92,6 +94,9 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		createLoadObjectList();
 		createCount();		
 		createScroll();
+		createLoadOneToManyComponentList();
+		createCountOneToManyComponent();		
+		createScrollOneToManyComponent();
 		createLoadOneToManyComponent();
 		createExistsObject();
 		createFindObject();
@@ -258,6 +263,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
+		writeLine("@Override");
+		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -293,6 +300,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * scroll filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
+				writeLine("@Override");
+				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
 				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 				
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -386,11 +395,91 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("addLongContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
 	}
 	
+	
+	private void createLoadOneToManyComponentList() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.className + " list");
+            writeLine(" */");
+            writeLine("@Override");
+    		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+			writeLine("public List<" + currentBean.className + "> load" + currentBean.className + "List(Long " + bean.objectName + "Id) {");
+			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("} else {");
+			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("}");
+			writeLine("return criteria.list();");
+			writeLine("}");
+			skipLine();
+        }
+	}
+	
+	
+	private void createCountOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * count one to many component " + currentBean.className); 
+			writeLine(" */");
+			writeLine("@Override");
+			writeLine("public Long count" + currentBean.className + "(Long " + bean.objectName + "Id) {");
+						
+			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
+
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("} else {");
+			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("}");
+			
+			writeLine("return (Long) criteria.uniqueResult();");
+			
+			writeLine("}");
+			skipLine();
+			
+			writeLine("/**");
+			writeLine("@Override");
+			writeLine(" * count filtered one to many component " + currentBean.className);
+			writeLine(" */");
+			writeLine("public Long count" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
+			
+			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
+
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("} else {");
+			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("}");
+			
+			List<Alias> aliases = getAllAliases(currentBean);
+			for (Alias alias : aliases) {
+				writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			}
+			
+			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
+				writeRestriction(viewProperty);
+			}
+			
+			writeLine("return (Long) criteria.uniqueResult();");
+			
+			writeLine("}");
+			skipLine();
+		}
+	}
+	
+	
+	private void createScrollOneToManyComponent() {
+		
+	}
+	
 
 	private void createLoadOneToManyComponent() {
 		
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList)
-        {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             writeLine("/**");
             writeLine(" * load one to many component " + currentBean.className);
@@ -404,7 +493,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("return " + currentBean.objectName + ";");
 			writeLine("}");
 			writeLine("}");
-			skipLine();
 			skipLine();
         }
 	}
@@ -624,7 +712,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		for (int i = 0; i < size; i++) {
 			Property currentProperty = bean.properties.get(i);
-			if (currentProperty.visibility.isListVisible() && currentProperty.referenceBean != null) {
+			if (currentProperty.visibility.isListVisible() && currentProperty.referenceBean != null && !currentProperty.relation.isComponentLink()) {
 				Alias alias = new Alias();
 				alias.propertyPath = currentProperty.name;
 				alias.propertyName = currentProperty.name;
