@@ -157,7 +157,7 @@ public class Richfaces4OneToManyListViewFileWriteCommand extends Richfaces4Xhtml
 			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + currentBean.objectName + ".id}" + CHAR_34 + " />");
 			writeLine("</h:link>");
 		} else {
-			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + oneToMany.parentBean.detailControllerObjectName + ".edit" + currentBean.className + "(" + currentBean.objectName + ".id)"+ "}"
+			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".edit" + currentBean.className + "(" + currentBean.objectName + ".id)"+ "}"
 					+ CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('show')"
 					+ CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
 			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");

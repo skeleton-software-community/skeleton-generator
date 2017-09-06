@@ -21,7 +21,6 @@ import org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4.confi
 import org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4.configuration.Richfaces4SpringWebappFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4.configuration.Richfaces4WebXmlFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4.configuration.Richfaces4WebappPomFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4.resources.Richfaces4CustomFilterFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -38,9 +37,6 @@ public class Richfaces4PresentationLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, "/richfaces4/src/",project.projectName + "-webapp"));
 		resourcesTreeNode.add(copyResourcesTreeNode);
-		
-		FileWriteCommandTreeNode customFilterTreeNode = new FileWriteCommandTreeNode(new Richfaces4CustomFilterFileWriteCommand(project));
-		resourcesTreeNode.add(customFilterTreeNode);
 		
 		return resourcesTreeNode;
 	}

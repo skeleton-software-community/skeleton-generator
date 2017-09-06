@@ -395,6 +395,8 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@Override");
+            writeLine("@Transactional(readOnly=true)");
 			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (Long " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
 			writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(" + bean.objectName + "Id);");
             writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess" + currentBean.className + "(" + this.bean.objectName + ");");
