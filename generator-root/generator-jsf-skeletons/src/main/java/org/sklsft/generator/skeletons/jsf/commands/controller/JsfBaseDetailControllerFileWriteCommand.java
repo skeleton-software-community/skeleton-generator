@@ -45,6 +45,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 		}
@@ -187,8 +188,15 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 
 			writeLine("this.reset" + currentBean.basicViewBean.filterClassName + "();");
 			
-			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.className + "List(this." + this.bean.serviceObjectName + ".load" + currentBean.className + "List(this." + this.bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
+			writeLine("}");
+			skipLine();
 			
+			writeLine("/**");
+			writeLine(" * refresh one to many " + currentBean.objectName + " list");
+			writeLine(" */");
+			writeLine("public void refresh" + currentBean.className + "List() {");
+			writeLine(bean.detailViewObjectName + ".set" + currentBean.className + "ScrollView(" + bean.serviceObjectName + ".scroll" + currentBean.className + "(" + bean.detailViewObjectName + ".getSelected" + bean.className + "().getId(), " + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm()));");
+			writeLine(bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setPage(" + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollView().getCurrentPage());");
 			writeLine("}");
 			skipLine();
 		}
@@ -204,7 +212,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("public void load" + currentBean.className + "List() {");
 
-			writeLine("this.reset" + currentBean.className + "List();");
+			writeLine("this.reset" + currentBean.basicViewBean.filterClassName + "();");
 			
 			writeLine("}");
 			skipLine();
@@ -506,7 +514,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
 			writeLine("List<Long> ids = new ArrayList<>();");
-			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "List()) {");
+			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollView().getElements()) {");
 			writeLine("if (" + currentBean.objectName + ".getSelected()) {");
 			writeLine("ids.add(" + currentBean.objectName + ".getId());");
 			writeLine("}");
@@ -550,7 +558,10 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" * reset one to many component " + currentBean.basicViewBean.filterClassName + " datatable filter");
 			writeLine(" */");
 			writeLine("public void reset" + currentBean.basicViewBean.filterClassName + "() {");
-			writeLine(this.bean.detailViewObjectName + ".set" + currentBean.basicViewBean.filterClassName + "(new " + currentBean.basicViewBean.filterClassName + "());");
+			writeLine("this." + this.bean.detailViewObjectName + ".set" + currentBean.className + "ScrollForm(new ScrollForm<>());");
+			writeLine("this." + this.bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setFilter(new " + currentBean.basicViewBean.filterClassName + "());");
+			writeLine("this." + this.bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setSorting(new " + currentBean.basicViewBean.sortingClassName + "());");
+			writeLine("refresh" + currentBean.className + "List();");
 			writeLine("}");
 			skipLine();
 		}
@@ -561,7 +572,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * reset one to many " + currentBean.basicViewBean.filterClassName + " datatable filter and sorting");
 			writeLine(" */");
-			writeLine("public void reset" + currentBean.className + "List() {");
+			writeLine("public void reset" + currentBean.basicViewBean.filterClassName + "() {");
 			writeLine("this." + this.bean.detailViewObjectName + ".set" + currentBean.className + "ScrollForm(new ScrollForm<>());");
 			writeLine("this." + this.bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setFilter(new " + currentBean.basicViewBean.filterClassName + "());");
 			writeLine("this." + this.bean.detailViewObjectName + ".get" + currentBean.className + "ScrollForm().setSorting(new " + currentBean.basicViewBean.sortingClassName + "());");

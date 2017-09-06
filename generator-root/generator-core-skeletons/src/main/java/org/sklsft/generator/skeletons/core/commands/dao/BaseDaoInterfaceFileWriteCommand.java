@@ -132,7 +132,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
-		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " ordering, Long firstResult, Long maxResults);");
+		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 		skipLine();
 		
 		for (Property property : this.bean.properties) {
@@ -141,7 +141,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * scroll filtered object from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " ordering, Long firstResult, Long maxResults);");
+				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 				skipLine();
 			}
 		}
@@ -180,7 +180,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 	
 	
 	private void createScrollOneToManyComponent() {
-		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * scroll filtered one to many component " + currentBean.className); 
+			writeLine(" */");
+			writeLine("List<" + currentBean.className + "> scroll" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+			skipLine();
+		}
 	}
 
 	

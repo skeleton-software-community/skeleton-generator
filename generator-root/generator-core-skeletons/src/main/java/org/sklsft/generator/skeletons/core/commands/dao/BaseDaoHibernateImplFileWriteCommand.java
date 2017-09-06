@@ -472,9 +472,53 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	
+
 	private void createScrollOneToManyComponent() {
-		
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+
+			writeLine("/**");
+			writeLine(" * scroll filtered one to many component " + currentBean.className); 
+			writeLine(" */");
+			writeLine("@Override");
+			writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+			
+			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
+
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("} else {");
+			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("}");
+			
+			List<Alias> aliases = getAllAliases(bean);
+			for (Alias alias : aliases) {
+				writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			}
+			
+			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
+				writeRestriction(viewProperty);
+			}
+			
+			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
+				String propertyCriteria = StringUtils.isEmpty(viewProperty.joinedAliasName)?"criteria":viewProperty.joinedAliasName + "Criteria";
+				writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + viewProperty.lastPropertyName + CHAR_34 + ", sorting.get" + viewProperty.capName + "OrderType());");
+			}
+			
+			writeLine("if (firstResult != null){");
+			writeLine("criteria.setFirstResult(firstResult.intValue());");
+			writeLine("}");
+			writeLine("if (maxResults != null){");
+			writeLine("criteria.setMaxResults(maxResults.intValue());");
+			writeLine("}");
+
+			writeLine("return criteria.list();");
+			writeLine("}");
+			skipLine();
+		}
 	}
+
 	
 
 	private void createLoadOneToManyComponent() {

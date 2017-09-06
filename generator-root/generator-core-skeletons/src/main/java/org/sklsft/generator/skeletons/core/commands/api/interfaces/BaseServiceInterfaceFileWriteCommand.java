@@ -41,11 +41,13 @@ private Bean bean;
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
 		}
 		
-		for (OneToManyComponent uniqueComponent : this.bean.oneToManyComponentList) {
-			Bean currentBean = uniqueComponent.referenceBean;
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 
 	}
@@ -85,6 +87,7 @@ private Bean bean;
 		createFindObject();
 		createLoadOneToOneComponent();
 		createLoadOneToManyComponentList();
+		createScrollOneToManyComponent();
 		createLoadOneToManyComponent();
 		createCreateObject();
 		createCreateOneToManyComponent();
@@ -188,6 +191,18 @@ private Bean bean;
 			writeLine(" * load one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
 			writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id);");
+			skipLine();
+		}
+	}
+	
+	private void createScrollOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * scroll one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (Long " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form);");
 			skipLine();
 		}
 	}
