@@ -91,9 +91,9 @@ public class JavaBeanFactory implements BeanFactory {
 
 			if (column.referenceTable != null) {
 				property.name = JavaClassNaming
-						.getObjectName(column.originalName.replace("_ID", "").replace("_id", ""));
+						.getObjectName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
 				property.capName = JavaClassNaming
-						.getClassName(column.originalName.replace("_ID", "").replace("_id", ""));
+						.getClassName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
 				property.referenceBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				property.beanDataType = property.referenceBean.className;
 			} else {
