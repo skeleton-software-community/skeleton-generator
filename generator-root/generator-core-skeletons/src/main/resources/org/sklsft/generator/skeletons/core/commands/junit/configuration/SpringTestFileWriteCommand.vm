@@ -17,9 +17,8 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<context:component-scan base-package="${project.domainName}.${project.projectName}">
 	</context:component-scan>
 	
-	<!-- for data injectors -->
-	<bean class="org.sklsft.generator.repository.backup.command.impl.JUnitDataInjector"/>
-	<bean class="org.sklsft.generator.repository.backup.command.impl.BackupArgumentsCommandFactory"/>
+	<context:component-scan base-package="org.sklsft.generator">
+	</context:component-scan>
 
 	<!-- aspects -->
 	<aop:aspectj-autoproxy />

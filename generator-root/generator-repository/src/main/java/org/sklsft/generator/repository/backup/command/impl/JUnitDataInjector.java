@@ -6,8 +6,9 @@ import org.sklsft.generator.repository.backup.command.interfaces.BackupArguments
 import org.sklsft.generator.repository.backup.reader.impl.TextDelimitedFileBackupReader;
 import org.sklsft.generator.repository.backup.reader.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.reader.model.BackupArguments;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class JUnitDataInjector {
 	
 	@Inject
