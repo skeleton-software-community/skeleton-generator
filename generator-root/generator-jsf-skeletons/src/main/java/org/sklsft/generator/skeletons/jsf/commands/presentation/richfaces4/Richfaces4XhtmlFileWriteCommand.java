@@ -346,136 +346,45 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	
 	
 	protected void writeFilter(ViewProperty property, Bean bean) {
-		switch (property.dataType) {
-		case STRING:
-	
-			writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
-					+ property.capName + "Filter" + CHAR_34);
-			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
-			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
-			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
-			writeLine("</a4j:ajax>");
-			writeLine("</h:inputText>");
-			break;
-			
 		
-		default:
+		switch (property.dataType) {
+			case STRING:
+			case TEXT:
+		
+				
+				writeLine("<h:inputText");
+				writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.filter." + property.name + "}" + CHAR_34);
+				writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
+				writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
+				writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
+				writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");			
+				break;
+				
 			
-			writeLine("<h:inputText id=" + CHAR_34 + bean.objectName
-					+ property.capName + "Filter" + CHAR_34);
-			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
-			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "List, " + bean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
-			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
-			writeLine("</a4j:ajax>");
-			writeLine("</h:inputText>");
-			break;
-			
+			default:				
 	
 		}
 	}
 	
 	protected void writeFilter(ViewProperty property, Bean currentBean, Bean parentBean) {
 		switch (property.dataType) {
-		case STRING:
-	
-			writeLine("<h:inputText id=" + CHAR_34 + currentBean.objectName
-					+ property.capName + "Filter" + CHAR_34);
-			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
-			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
-			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
-			writeLine("</a4j:ajax>");			
-			writeLine("</h:inputText>");
-			break;
-			
+			case STRING:
+			case TEXT:
 		
-		default:
+				writeLine("<h:inputText");
+				writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollForm.filter." + property.name + "}" + CHAR_34);
+				writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
+				writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".refresh" + currentBean.className + "List}" + CHAR_34);
+				writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
+				writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				break;
+				
 			
-			writeLine("<h:inputText id=" + CHAR_34 + currentBean.objectName
-					+ property.capName + "Filter" + CHAR_34);
-			writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + "}" + CHAR_34);
-			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "List, " + currentBean.objectName + "Scroller" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + " >");
-			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + " />");
-			writeLine("</a4j:ajax>");
-			writeLine("</h:inputText>");
-			break;
-			
-	
-		}
-	}
-	
-	public void writeFilterExpression(ViewProperty property, Bean bean) {
-		
-		switch (property.dataType) {
-		case STRING:
-	
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + bean.objectName + "." + property.name + ", " + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-		
-		
-		case TEXT:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + bean.objectName + "." + property.name + ", " + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-		
-		case DATETIME:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{customFilter.filterDate(" + bean.objectName + "." + property.name + ", " + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-			
-		case BOOLEAN:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{customFilter.filterBoolean(" + bean.objectName + "." + property.name + ", " + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-		
-		default:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + bean.objectName + "." + property.name + ", " + bean.listViewObjectName + "." + bean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-		}
-	}
-	
-	public void writeFilterExpression(ViewProperty property, Bean currentBean, Bean parentBean) {
-		
-		switch (property.dataType) {
-		case STRING:
-	
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + currentBean.objectName + "." + property.name + ", " + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-		
-		
-		case TEXT:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + currentBean.objectName + "." + property.name + ", " + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-		
-		case DATETIME:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{customFilter.filterDate(" + currentBean.objectName + "." + property.name + ", " + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-			
-		case BOOLEAN:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{customFilter.filterBoolean(" + currentBean.objectName + "." + property.name + ", " + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
-			
-		
-		default:
-			
-			writeLine("filterType=" + CHAR_34 + "custom" + CHAR_34  + " filterExpression=" + CHAR_34 + "#{fn:containsIgnoreCase(" + currentBean.objectName + "." + property.name + ", " + parentBean.detailViewObjectName + "." + currentBean.basicViewBean.filterObjectName + "." + property.name + ")}" + CHAR_34 + ">");
-			break;
+			default:
 		}
 	}
 }

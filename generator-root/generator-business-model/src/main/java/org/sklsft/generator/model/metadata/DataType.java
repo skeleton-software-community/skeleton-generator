@@ -15,39 +15,34 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum(String.class)
 public enum DataType {
-	TEXT,
-	STRING,
-	LONG,
-	DOUBLE,
-	DATETIME,
-	BOOLEAN;
+	TEXT("String", false),
+	STRING("String", false),
+	LONG("Long", true),
+	DOUBLE("Double", true),
+	DATETIME("Date", true),
+	BOOLEAN("Boolean", false);	
+	
+
+	private DataType(String javaType, boolean limitable) {
+		this.javaType = javaType;
+		this.limitable = limitable;		
+	}
+	
+	
+	private String javaType;
+	private boolean limitable;
+	
+
 
 	public String getJavaType() {
-		switch (this) {
-			case TEXT:
-				return "String";
+		return javaType;
+	}
 	
-			case STRING:
-				return "String";
-	
-			case LONG:
-				return "Long";
-	
-			case DOUBLE:
-				return "Double";
-	
-			case DATETIME:
-				return "Date";
-	
-			case BOOLEAN:
-				return "Boolean";
-	
-			default:
-				throw new IllegalArgumentException("Unhandled data type " + this);
-		}
+	public boolean isLimitable() {
+		return limitable;
 	}
 
-	
+
 	public String getPostgresqlType() {
 		switch (this) {
 			case TEXT:
@@ -63,7 +58,7 @@ public enum DataType {
 				return "DOUBLE PRECISION";
 	
 			case DATETIME:
-				return "TIMESTAMP WITHOUT TIME ZONE";
+				return "TIMESTAMP WITH TIME ZONE";
 	
 			case BOOLEAN:
 				return "BOOLEAN";
@@ -97,49 +92,4 @@ public enum DataType {
 				throw new IllegalArgumentException("Unhandled data type " + this);
 		}
 	}
-
-	public String getPlOracleType() {
-		switch (this) {
-			case TEXT:
-				return "CLOB";
-	
-			case STRING:
-				return "VARCHAR2";
-	
-			case LONG:
-				return "NUMBER";
-	
-			case DOUBLE:
-				return "FLOAT";
-	
-			case DATETIME:
-				return "DATE";
-	
-			case BOOLEAN:
-				return "NUMBER";
-	
-			default:
-				throw new IllegalArgumentException("Unhandled data type " + this);
-		}
-	}
-	
-	public String stringToBuildArg(String value)
-    {
-        switch (this) {
-            case DATETIME:
-                return "new SimpleDateFormat(" + (char)34 + "yyyy-MM-dd" + (char)34 + ").parse(" + value + ")";
-
-            case DOUBLE:
-                return "Double.valueOf(" + value + ")";
-
-            case LONG:
-                return "Long.valueOf(" + value + ")";
-
-            case BOOLEAN:
-                return "Boolean.valueOf(" + value + ")";
-
-            default:
-                return value;
-        }
-    }
 }

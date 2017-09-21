@@ -4,10 +4,10 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.skeletons.core.commands.database.configuration.DataSourceContextFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.database.configuration.postgresql.PostgresqlMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableFkDefinitionFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.database.postgresql.PostgresqlMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.postgresql.PostgresqlTableDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.postgresql.PostgresqlTableFkDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -32,6 +32,20 @@ public class DefaultDatabaseLayer extends AbstractLayer {
 		FileWriteCommandTreeNode dataSourceContextTreeNode = new FileWriteCommandTreeNode(new DataSourceContextFileWriteCommand(project));
 		configurationTreeNode.add(dataSourceContextTreeNode);
 		
+		FileWriteCommandTreeNode mainFileTreeNode = null;
+		switch (project.databaseEngine) {
+		case ORACLE:
+			break;
+			
+		case POSTGRESQL:
+			mainFileTreeNode = new FileWriteCommandTreeNode(new PostgresqlMainDefinitionFileWriteCommand(project));
+			break;
+
+		default:
+			throw new IllegalArgumentException("unhandled database");
+		}
+		
+		configurationTreeNode.add(mainFileTreeNode);
 		return configurationTreeNode;
 	}
 
@@ -43,14 +57,13 @@ public class DefaultDatabaseLayer extends AbstractLayer {
 		FileWriteCommandTreeNode definitionFilesTreeNode = new FileWriteCommandTreeNode("Definition Files");
 		databaseTreeNode.add(definitionFilesTreeNode);
 
-		FileWriteCommandTreeNode mainFileTreeNode;
+		FileWriteCommandTreeNode mainFileTreeNode = new FileWriteCommandTreeNode();
 		switch (project.databaseEngine) {
 		case ORACLE:
 			mainFileTreeNode = new FileWriteCommandTreeNode(new OracleMainDefinitionFileWriteCommand(project));
 			break;
 			
 		case POSTGRESQL:
-			mainFileTreeNode = new FileWriteCommandTreeNode(new PostgresqlMainDefinitionFileWriteCommand(project));
 			break;
 
 		default:

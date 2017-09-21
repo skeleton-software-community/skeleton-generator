@@ -58,7 +58,12 @@ public class FilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		
 		for (ViewProperty property:this.bean.basicViewBean.properties) {
-			writeLine("private String " + property.name + ";");
+			if (property.dataType.isLimitable()) {
+				writeLine("private " + property.beanDataType + " " + property.name + "MinValue;");
+				writeLine("private " + property.beanDataType + " " + property.name + "MaxValue;");
+			} else {
+				writeLine("private " + property.beanDataType + " " + property.name + ";");
+			}
 		}
 		skipLine();
 
@@ -70,15 +75,31 @@ public class FilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 
 		for (ViewProperty property:this.bean.basicViewBean.properties) {
-			writeLine("public String get" + property.capName + "() {");
-			writeLine("return this." + property.name + ";");
-			writeLine("}");
-			skipLine();
-
-			writeLine("public void set" + property.capName + "(String " + property.name + ") {");
-			writeLine("this." + property.name + " = " + property.name + ";");
-			writeLine("}");
-			skipLine();
+			if (property.dataType.isLimitable()) {
+				writeLine("public " + property.beanDataType + " get" + property.capName + "MinValue() {");
+	            writeLine("return this." + property.name + "MinValue;");
+	            writeLine("}");
+	            
+	            writeLine("public void set" + property.capName + "MinValue(" + property.beanDataType + " " + property.name + "MinValue) {");
+	            writeLine("this." + property.name + "MinValue = " + property.name + "MinValue;");
+	            writeLine("}");
+	            
+	            writeLine("public " + property.beanDataType + " get" + property.capName + "MaxValue() {");
+	            writeLine("return this." + property.name + "MaxValue;");
+	            writeLine("}");
+	            
+	            writeLine("public void set" + property.capName + "MaxValue(" + property.beanDataType + " " + property.name + "MaxValue) {");
+	            writeLine("this." + property.name + "MaxValue = " + property.name + "MaxValue;");
+	            writeLine("}");
+			} else {
+				writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
+	            writeLine("return this." + property.name + ";");
+	            writeLine("}");
+	            
+	            writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
+	            writeLine("this." + property.name + " = " + property.name + ";");
+	            writeLine("}");
+			}
 		}
 		skipLine();
 	}

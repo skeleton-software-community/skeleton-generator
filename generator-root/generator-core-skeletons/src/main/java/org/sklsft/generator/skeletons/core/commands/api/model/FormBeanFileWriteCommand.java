@@ -85,12 +85,10 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
             writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
             writeLine("return this." + property.name + ";");
             writeLine("}");
-            skipLine();
             
             writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
             writeLine("this." + property.name + " = " + property.name + ";");
             writeLine("}");
-            skipLine();
         }
         skipLine();
 	}

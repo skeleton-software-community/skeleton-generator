@@ -107,15 +107,8 @@ public class Richfaces4ListViewFileWriteCommand extends Richfaces4XhtmlFileWrite
 		skipLine();
 
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			writeLine("<rich:column>");			
-			writeLine("<h:inputText");
-			writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.filter." + property.name + "}" + CHAR_34);
-			writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-			writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
-			writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
-			writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
-			writeLine("</a4j:ajax>");
-			writeLine("</h:inputText>");			
+			writeLine("<rich:column>");
+			writeFilter(property, bean);
 			writeLine("</rich:column>");
 			skipLine();
 		}

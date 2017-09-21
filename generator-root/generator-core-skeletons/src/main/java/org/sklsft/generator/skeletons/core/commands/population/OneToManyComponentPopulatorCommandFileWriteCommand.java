@@ -109,7 +109,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         
         int i = 0;
         for (ViewProperty property:properties) {
-        	String type = property.dataType.getJavaType();        	
+        	String type = property.beanDataType;        	
         	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")args[" + i + "]:(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
         	i++;
         }
