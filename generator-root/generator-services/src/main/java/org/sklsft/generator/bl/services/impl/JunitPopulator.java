@@ -1,10 +1,11 @@
 package org.sklsft.generator.bl.services.impl;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.sklsft.generator.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
@@ -54,19 +55,17 @@ public class JunitPopulator {
 
 					for (Table table : myPackage.tables) {
 
-						logger.info("start populating table : " + table.name);
+						logger.info("start populating table : " + table.name);					
 
-						try {							
+						BackupCommand command = commandFactory.getBackupCommand(table, PersistenceMode.CSV, null);
 
-							BackupCommand command = commandFactory.getBackupCommand(table, PersistenceMode.CSV, null);
-
-							String path = backupLocator.getBackupFilePath(backupPath, step, table, PersistenceMode.CSV);
-
+						String path = backupLocator.getBackupFilePath(backupPath, step, table, PersistenceMode.CSV);
+						
+						if (Files.exists(Paths.get(path))) {
 							command.execute(path);
-
 							logger.info("populating table : " + table.name + " completed");
-						} catch (BackupFileNotFoundException e) {
-							logger.error(e.getMessage());
+						} else {
+							logger.warn("populating table : " + table.name + " : no backup found");
 						}
 					}
 					logger.info("populating package " + myPackage.name + " completed");
