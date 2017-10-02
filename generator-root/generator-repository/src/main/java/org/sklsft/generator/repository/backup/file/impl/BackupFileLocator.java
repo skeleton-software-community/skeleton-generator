@@ -5,24 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.sklsft.generator.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BackupFileLocator {
-
-	public PersistenceMode resolvePersistenceMode(String backupPath, int step, Table table) {
-
-		PersistenceMode mode = resolvePersistenceModeOrNull(backupPath, step, table);
-
-		if (mode == null) {
-			throw new BackupFileNotFoundException("No backup file found for table : " + table.name);
-		} else {
-			return mode;
-		}
-	}
 
 	public PersistenceMode resolvePersistenceModeOrNull(String backupPath, int step, Table table) {
 		if (existsFileForType(backupPath, step, table, PersistenceMode.CMD)) {
@@ -40,11 +28,7 @@ public class BackupFileLocator {
 		return getPathPrefix(backupPath, step, table) + mode.getExtension();
 	}
 
-	public String getBackupFilePath(String backupPath, int step, Table table) {
-		PersistenceMode mode = resolvePersistenceMode(backupPath, step, table);
-		return getPathPrefix(backupPath, step, table) + mode.getExtension();
-	}
-
+	
 	public boolean existsFileForTable(String backupPath, int maxStep, Table table) {
 		for (int step = 1; step <= maxStep; step++) {
 			for (PersistenceMode mode : PersistenceMode.values()) {

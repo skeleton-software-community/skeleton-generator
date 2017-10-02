@@ -378,19 +378,19 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	private void writeDoubleRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
+		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
 	}
 	
 	private void writeDateRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
+		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
 	}
 	
 	private void writeLongRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
+		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
 	}

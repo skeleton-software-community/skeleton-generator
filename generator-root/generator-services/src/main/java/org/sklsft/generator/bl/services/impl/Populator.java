@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.sklsft.generator.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
@@ -56,20 +55,17 @@ public class Populator {
 					if (tables == null || tables.contains(table.originalName)) {
 
 						logger.info("start populating table : " + table.name);
-
-						try {
-							
-							PersistenceMode mode = backupLocator.resolvePersistenceMode(backupPath, step, table);
-							
-							BackupCommand command = commandFactory.getBackupCommand(table, mode, inputDataSourceProvider);
-							
-							String path = backupLocator.getBackupFilePath(backupPath, step, table, mode);
-									
-							command.execute(path);
-							
+						
+						PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(backupPath, step, table);
+						
+						if (mode != null) {							
+							BackupCommand command = commandFactory.getBackupCommand(table, mode, inputDataSourceProvider);								
+							String path = backupLocator.getBackupFilePath(backupPath, step, table, mode);										
+							command.execute(path);								
 							logger.info("populating table : " + table.name + " completed");
-						} catch (BackupFileNotFoundException e) {
-							logger.error(e.getMessage());
+							
+						} else {
+							logger.warn("populating table : " + table.name + " : no backup found");
 						}
 					} else {
 						logger.info("table : " + table.name + " skipped");

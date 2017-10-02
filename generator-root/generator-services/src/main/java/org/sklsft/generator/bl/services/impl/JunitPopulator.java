@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.repository.backup.command.impl.BackupCommandFactory;
@@ -53,19 +54,22 @@ public class JunitPopulator {
 
 					logger.info("start populating package : " + myPackage.name);
 
-					for (Table table : myPackage.tables) {
-
-						logger.info("start populating table : " + table.name);					
-
-						BackupCommand command = commandFactory.getBackupCommand(table, PersistenceMode.CSV, null);
-
-						String path = backupLocator.getBackupFilePath(backupPath, step, table, PersistenceMode.CSV);
+					for (Bean bean : myPackage.beans) {
 						
-						if (Files.exists(Paths.get(path))) {
-							command.execute(path);
-							logger.info("populating table : " + table.name + " completed");
-						} else {
-							logger.warn("populating table : " + table.name + " : no backup found");
+						if (!bean.isEmbedded) {
+
+							logger.info("start populating table : " + bean.table.name);					
+	
+							BackupCommand command = commandFactory.getBackupCommand(bean.table, PersistenceMode.CSV, null);
+	
+							String path = backupLocator.getBackupFilePath(backupPath, step, bean.table, PersistenceMode.CSV);
+							
+							if (Files.exists(Paths.get(path))) {
+								command.execute(path);
+								logger.info("populating table : " + bean.table.name + " completed");
+							} else {
+								logger.warn("populating table : " + bean.table.name + " : no backup found");
+							}
 						}
 					}
 					logger.info("populating package " + myPackage.name + " completed");

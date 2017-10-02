@@ -141,7 +141,7 @@ public class BackupPreExecutionChecker {
 		
 		List<BackupPlanPreExecutionWarning> result = new LinkedList<>();
 		
-		String filePath = backupLocator.getBackupFilePath(backupPath, step, table);
+		String filePath = backupLocator.getBackupFilePath(backupPath, step, table, PersistenceMode.XML);
 		SourceAndScript sourceAndScript = xmlFileSourceAndScriptParser.parse(filePath);
 		String sourceRef = sourceAndScript.getSource();
 

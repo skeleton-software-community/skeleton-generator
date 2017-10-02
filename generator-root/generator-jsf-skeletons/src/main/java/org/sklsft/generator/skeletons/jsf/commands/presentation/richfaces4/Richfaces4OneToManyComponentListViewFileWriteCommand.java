@@ -32,6 +32,7 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 		writeLine("xmlns:rich = " + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
 		writeLine("xmlns:a4j = " + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
 		writeLine("xmlns:cc=" + CHAR_34 + "http://java.sun.com/jsf/composite/components" + CHAR_34);
+		writeLine("xmlns:s=" + CHAR_34 + "http://commons.sklsft.org/ui/components" + CHAR_34);
 		writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
         skipLine();
 
@@ -64,8 +65,36 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 		writeLine("</h2>");
         
 		writeLine("<a4j:region>");
-		skipLine();	
-
+		skipLine();
+		
+		writeLine("<div class=\"filter-panel\">");
+		writeLine("<h3>");
+		writeLine("#{i18n.filters}");
+		
+		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.className + "Filter}" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
+		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
+		writeLine("</a4j:commandLink>");
+		
+		writeLine("</h3>");
+		
+		writeLine("<div class=\"row row-eq-height\">");
+		
+		for (ViewProperty property : currentBean.basicViewBean.properties) {			
+			
+			writeLine("<div class=\"col-xs-3\">");
+			writeFilter(property, currentBean, parentBean);
+			writeLine("</div>");
+			skipLine();
+		}
+		
+		
+		writeLine("</div>");
+		writeLine("</div>");
+		
+		writeLine("<div class=\"results-panel\">");
+		
+		writeLine("<h:panelGroup id=" + CHAR_34 + "resultsPanelGroup" + CHAR_34 + ">");		
+		
 		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.size == 0}" + CHAR_34 + ">");
 		writeLine("#{i18n.noDataFound}<br/>");
 		writeLine("</ui:fragment>");
@@ -74,59 +103,15 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.size > 0}" + CHAR_34 + ">");
 		skipLine();
 		
-		writeLine("<div style=" + CHAR_34 + "overflow-x:scroll" + CHAR_34 + ">");
+		writeLine("<s:tooltip for=" + CHAR_34 + ".truncated-text" + CHAR_34 + "/>");
 		skipLine();
-
+		
 		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
 		writeLine("id=" + CHAR_34 + currentBean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + currentBean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
 		writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.elements}" + CHAR_34
-				+ " headerClass=" + CHAR_34 + "datatableHeader" + CHAR_34
-				+ " rowClasses=" + CHAR_34 + "datatableRow, datatableRowLight" + CHAR_34 + ">");
+				+ " headerClass=" + CHAR_34 + "datatable-header" + CHAR_34
+				+ " rowClasses=" + CHAR_34 + "datatable-row, datatable-row-light" + CHAR_34 + ">");
 		skipLine();
-
-		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-		writeLine("<rich:columnGroup>");
-
-		
-		writeLine("<rich:column>");
-		
-		writeLine("<div id=" + CHAR_34 + "dropList" + CHAR_34 + " class=" + CHAR_34 + "dropList" + CHAR_34 + ">");
-		
-		if (currentBean.deleteEnabled) {
-			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.deleteSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDeleteSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + currentBean.objectName + "PanelGroup"
-					+ CHAR_34 + ">");
-			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
-		
-			writeLine("</a4j:commandLink>");
-		}
-
-
-		writeLine("</div>");	
-		writeLine("</rich:column>");
-		skipLine();
-		
-		writeLine("<rich:column>");
-		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".reset" + currentBean.className + "List}" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + ">");
-		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
-		writeLine("</a4j:commandLink>");
-		
-		writeLine("</rich:column>");
-		skipLine();
-
-		for (ViewProperty property : currentBean.basicViewBean.properties) {
-			writeLine("<rich:column>");			
-			writeFilter(property, currentBean, parentBean);
-			writeLine("</rich:column>");
-			skipLine();
-		}
-
-		
-
-		writeLine("</rich:columnGroup>");
-		writeLine("</f:facet>");
-
 		
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
@@ -141,6 +126,21 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 		writeLine("<rich:column>");
 		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
 		writeLine("<h:outputText value=" + CHAR_34 + "Actions" + CHAR_34 + " />");
+		
+		writeLine("<div id=" + CHAR_34 + "drop-list" + CHAR_34 + " class=" + CHAR_34 + "drop-list" + CHAR_34 + ">");
+		
+		if (currentBean.deleteEnabled) {
+			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.deleteSelection}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "List}" + CHAR_34);
+			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDeleteSelection}')) return false" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34+ " render=" + CHAR_34 + currentBean.objectName + "PanelGroup"
+					+ CHAR_34 + ">");
+			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
+		
+			writeLine("</a4j:commandLink>");
+		}
+
+		writeLine("</div>");
+		skipLine();
+		
 		writeLine("</f:facet>");
 		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
 
@@ -187,13 +187,9 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 			writeLine("</rich:column>");
 			skipLine();
 		}
-
 		
 		writeLine("</rich:dataTable>");
-		skipLine();
-		
-		writeLine("</div>");
-		skipLine();
+		skipLine();		
 		
 		writeLine("<cc:datatableScroller");
 		writeLine("page=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollForm.page}" + CHAR_34);
@@ -203,6 +199,10 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 		skipLine();
 		
 		writeLine("</ui:fragment>");
+		skipLine();		
+		writeLine("</h:panelGroup>");
+		skipLine();
+		writeLine("</div>");
 		skipLine();
 
 		if (currentBean.createEnabled) {
@@ -211,14 +211,12 @@ public class Richfaces4OneToManyComponentListViewFileWriteCommand extends Richfa
 					+ CHAR_34 + " execute=" + CHAR_34 + "@this" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
 			skipLine();
 		}
-
 		
 		this.writeNotOverridableContent();
 		skipLine();
 		
 		writeLine("</a4j:region>");
 		skipLine();
-
 		writeLine("</h:panelGroup>");
 		skipLine();
 		

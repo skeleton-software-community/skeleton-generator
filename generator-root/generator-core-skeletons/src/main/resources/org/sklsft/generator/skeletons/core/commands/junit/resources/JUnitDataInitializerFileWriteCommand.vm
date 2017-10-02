@@ -3,15 +3,21 @@ package ${project.model.junitDataPackageName};
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.sklsft.commons.api.exception.TechnicalError;
-import org.sklsft.generator.repository.backup.command.impl.JUnitDataInjector;
+import org.sklsft.generator.bl.services.impl.JunitPopulator;
+import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
+import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,27 +27,45 @@ public class JUnitDataInitializer {
 	 * logger
 	 */
 	private final Logger logger = LoggerFactory.getLogger(JUnitDataInitializer.class);
+	
+	private static final String TRUNCATE_SHEMA_SCRIPT = "TRUNCATE SCHEMA PUBLIC RESTART IDENTITY AND COMMIT NO CHECK";
+	private static final String CREATE_NORMALIZE_FUNCTION = "CREATE FUNCTION normalize(CHAR VARYING(255))"
+																		+ " RETURNS CHAR VARYING(255)"
+																		+ " LANGUAGE JAVA DETERMINISTIC NO SQL"
+																		+ " EXTERNAL NAME 'CLASSPATH:org.sklsft.commons.text.StringUtils.normalize'";
+	
 	private boolean initialized = false;
-	
-
-	@Inject
-	private JUnitDataInjector dataInjector;
+	private Project project;
 	
 	@Inject
-	private ApplicationContext applicationContext;
+	private JunitPopulator populator;
+	
+	@Inject
+	private DataSource dataSource;
+	
+	@Inject
+	private ProjectMetaDataService projectMetaDataService;
+	
+	@Inject
+	private ProjectLoader projectLoader;
 
 	
 
-	public void initialize() {
+	public void initialize(String... packages) {
 
 		if (initialized) {
 			cleanDatabase();
+		} else {
+			createNormalizeFunction();
+			logger.info("start loading project");
+			ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData("..");
+			project = projectLoader.loadProject(projectMetaData);
+			logger.info("loading project " + project.projectName + " completed");
 		}
 
 		logger.info("Initializing data");
-
-		//call dataInjector.inject here
-		
+		Set<String> packs = new HashSet<>(Arrays.asList(packages));		
+		populator.populate(project, packs, "src/test/resources/junit/data");		
 		logger.info("completed");
 
 		initialized = true;
@@ -50,12 +74,19 @@ public class JUnitDataInitializer {
 	
 	private void cleanDatabase() {
 
-		DataSource dataSource = (DataSource) applicationContext.getBean(DataSource.class);
-
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
-			statement.execute("TRUNCATE SCHEMA PUBLIC RESTART IDENTITY AND COMMIT NO CHECK");
+			statement.execute(TRUNCATE_SHEMA_SCRIPT);
 		} catch (SQLException e) {
 			throw new TechnicalError(TechnicalError.ERROR_UNKNOWN, e);
+		}
+	}
+	
+	private void createNormalizeFunction() {
+
+		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {			
+			statement.execute(CREATE_NORMALIZE_FUNCTION);
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e);
 		}
 	}
 }

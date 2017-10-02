@@ -38,9 +38,9 @@ function selectUnselectAll(checkbox) {
 		}
 	}
 	if (checkbox.checked) {
-		showActions();
+		show('drop-list');
 	} else {
-		hideActions();
+		hide('drop-list');
 	}
 }
 
@@ -66,16 +66,16 @@ function bindSelectUnselectAll(checkbox, elements) {
 	}
 	checkbox.checked = allSelected;
 	if (selectedItemNumber > 0) {
-		showActions();
+		show('drop-list');
 	} else {
-		hideActions();
+		hide('drop-list');
 	}
 }
 
-function showActions() {
-	document.getElementById('dropList').style.display = "block";
+function show(arg) {
+	document.getElementById(arg).style.display = "block";
 }
 
-function hideActions() {
-	document.getElementById('dropList').style.display = "none";
+function hide(arg) {
+	document.getElementById(arg).style.display = "none";
 }

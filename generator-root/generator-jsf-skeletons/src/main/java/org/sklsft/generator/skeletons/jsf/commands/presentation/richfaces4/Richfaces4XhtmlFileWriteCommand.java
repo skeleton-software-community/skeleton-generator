@@ -15,33 +15,22 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		switch (property.dataType) {
 		case BOOLEAN:
 			if (property.nullable) {
-				writeLine("<h:outputText value=" + CHAR_34 + "#{"
-						+ bean.objectName + "." + property.name + "}"
-						+ CHAR_34 + "/>");
+				writeLine("<h:outputText value=\"#{"+ bean.objectName + "." + property.name + "}\"/>");
 			} else {
-				writeLine("<h:selectBooleanCheckbox value=" + CHAR_34 + "#{"
-						+ bean.objectName + "." + property.name + "}"
-						+ CHAR_34 + " disabled=" + CHAR_34 + "true"
-						+ CHAR_34 + "/>");
+				writeLine("<h:selectBooleanCheckbox value=\"#{" + bean.objectName + "." + property.name + "}\" disabled=\"true\"/>");
 			}
 			break;
 
 		case DATETIME:
-			writeLine("<h:outputText value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ ">");
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
 
 			switch (property.format) {
 			case DATE:
-				writeLine("<f:convertDateTime type=" + CHAR_34 + "date"
-						+ CHAR_34 + " dateStyle=" + CHAR_34 + "medium"
-						+ CHAR_34 + "/>");
+				writeLine("<f:convertDateTime type=\"date\" dateStyle=\"medium\"/>");
 				break;
 
 			default:
-				writeLine("<f:convertDateTime type=" + CHAR_34 + "both"
-						+ CHAR_34 + " dateStyle=" + CHAR_34 + "medium"
-						+ CHAR_34 + "/>");
+				writeLine("<f:convertDateTime type=\"both\" dateStyle=\"medium\"/>");
 				break;
 			}
 			writeLine("</h:outputText>");
@@ -49,53 +38,43 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 			break;
 
 		case DOUBLE:
-			writeLine("<h:outputText value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ ">");
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
 
 			switch (property.format) {
 			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34 + "#,##0.00"
-						+ CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
 				break;
 
 			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.0000" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
 				break;
 
 			default:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.########" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 				break;
 			}
 			writeLine("</h:outputText>");
 			break;
 
 		case LONG:
-			writeLine("<h:outputText value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ ">");
-			writeLine("<f:convertNumber pattern=" + CHAR_34 + "#,##0"
-					+ CHAR_34 + "/>");
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
+			writeLine("<f:convertNumber pattern=\"#,##0\"/>");
 			writeLine("</h:outputText>");
 			break;
 
 		case STRING:
-			writeLine("<h:outputText value=" + CHAR_34 + "#{"
-					+ bean.objectName + "." + property.name + "}" + CHAR_34
-					+ "/>");
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\"/>");
 			break;
 
 		case TEXT:
-			writeLine("<pre class=" + CHAR_34 + "truncated-text" + CHAR_34 + ">");
+			writeLine("<pre class=\"truncated-text\"");
+			writeLine(" data-toggle=\"tooltip\"");
+			writeLine(" data-html=\"true\"");
+			writeLine(" data-title='&lt;pre&gt;#{" + bean.objectName + "." + property.name + "}&lt;/pre&gt;'");
+			writeLine(" data-placement=\"bottom\"");
+			writeLine(" data-trigger=\"click\">");
 			writeLine("#{" + bean.objectName + "." + property.name + "}");
 			writeLine("</pre>");
-			writeLine("<rich:tooltip>");
-			writeLine("<pre>");
-			writeLine("#{" + bean.objectName + "." + property.name + "}");
-			writeLine("</pre>");
-			writeLine("</rich:tooltip>");
 			break;
 		}
 	}
@@ -107,7 +86,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	
 	protected void writeInput(String prefix, ViewProperty property, Bean bean){
 		
-		writeLine("<div class=" + CHAR_34 + "col-xs-12" + CHAR_34 + ">");
+		writeLine("<div class=\"col-xs-12\">");
 		
 		if (!property.dataType.equals(DataType.BOOLEAN)) {
             writeLine("<label>#{i18n." + bean.objectName + property.capName + "}</label>");
@@ -140,7 +119,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		}
 		
 		if (!property.dataType.equals(DataType.BOOLEAN)) {
-			writeLine("<h:message for=" + CHAR_34 + prefix + bean.objectName + property.capName + CHAR_34 + " styleClass=" + CHAR_34 + "detail-error-message" + CHAR_34 + "/>");
+			writeLine("<h:message for=\"" + prefix + bean.objectName + property.capName + "\" styleClass=\"detail-error-message\"/>");
 		}
 		
 		writeLine("</div>");
@@ -149,15 +128,11 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	
 	private void writeCombobox(String prefix, ViewProperty property, Bean bean){
 		
-		write("<h:selectOneMenu id=" + CHAR_34 + prefix + bean.objectName
-				+ property.capName + CHAR_34 + " styleClass=" + CHAR_34
-				+ "form-control" + CHAR_34 + " value=" + CHAR_34
-				+ "#{form." + property.name + "}"
-				+ CHAR_34);
+		write("<h:selectOneMenu id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
 				
 		if (!property.editable) {
-			skipLine();
-			write(" disabled=" + CHAR_34 + "true" + CHAR_34);
+			write(" disabled=\"true\"");
 		}
 		
 		writeLine(">");
@@ -166,15 +141,11 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		case DATETIME:
 			switch (property.format) {
 			case DATE:
-				writeLine("<f:convertDateTime type=" + CHAR_34
-						+ "date" + CHAR_34 + " dateStyle="
-						+ CHAR_34 + "long" + CHAR_34 + "/>");
+				writeLine("<f:convertDateTime type=\"date\" dateStyle=\"long\"/>");
 				break;
 
 			default:
-				writeLine("<f:convertDateTime type=" + CHAR_34
-						+ "both" + CHAR_34 + " dateStyle="
-						+ CHAR_34 + "long" + CHAR_34 + "/>");
+				writeLine("<f:convertDateTime type=\"both\" dateStyle=\"long\"/>");
 				break;
 
 			}
@@ -183,84 +154,61 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		case DOUBLE:
 			switch (property.format) {
 			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.00" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
 				break;
 
 			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.0000" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
 				break;
 
 			default:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.########" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 				break;
 			}
 			break;
 
 		case LONG:
-			writeLine("<f:convertNumber integerOnly=" + CHAR_34 + "true" + CHAR_34 + " pattern=" + CHAR_34 + "#,##0"
-					+ CHAR_34 + "/>");
+			writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
 			break;
 
 		default:
 			break;
 		}
 
-		writeLine("<f:selectItems value=" + CHAR_34
-				+ "#{commonView."
-				+ property.comboBoxBean.objectName
-				+ "Options}" + CHAR_34 + "/>");
+		writeLine("<f:selectItems value=\"#{commonView." + property.comboBoxBean.objectName + "Options}\"/>");
 		writeLine("</h:selectOneMenu>");
 	}
 	
 	
 	private void writeStringInput(String prefix, ViewProperty property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
-				+ property.capName + CHAR_34 + " styleClass="
-				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{form."
-				+ property.name + "}" + CHAR_34);
+		write("<h:inputText id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
 		
 		if (!property.editable) {
-			skipLine();
-			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+			write(" disabled=\"true\"");
 		}
 		writeLine("/>");
 	}
 	
 	private void writeTextInput(String prefix, ViewProperty property, Bean bean){
-		write("<h:inputTextarea id=" + CHAR_34 + prefix + bean.objectName
-				+ property.capName + CHAR_34 + " styleClass="
-				+ CHAR_34 + "form-control" + CHAR_34 + " rows="
-				+ CHAR_34 + "10" + CHAR_34 + " value="
-				+ CHAR_34 + "#{form."
-				+ property.name + "}" + CHAR_34);
+		write("<h:inputTextarea id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" rows=\"10\" value=\"#{form." + property.name + "}\"");
 		
 		if (!property.editable) {
-			skipLine();
-			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+			write(" disabled=\"true\"");
 		}
 		writeLine("/>");
 	}
 	
 	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
-		writeLine("<div class=" + CHAR_34 + "checkbox" + CHAR_34 + ">");
+		writeLine("<div class=\"checkbox\">");
 		writeLine("<label>");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + prefix 
-				+ bean.objectName + property.capName
-				+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
-				+ CHAR_34);
+		writeLine("<h:selectBooleanCheckbox id=\"" + prefix 
+				+ bean.objectName + property.capName + "\" value=\"#{form." + property.name + "}\"");
 		if (property.editable) {
-			writeLine("readonly=" + CHAR_34 + "false" + CHAR_34
-					+ " disabled=" + CHAR_34 + "false"
-					+ CHAR_34 + "/>");
-			
+			writeLine("readonly=\"false\" disabled=\"false\"/>");			
 		} else {
-			writeLine("readonly=" + CHAR_34 + "true" + CHAR_34
-					+ " disabled=" + CHAR_34 + "true"
-					+ CHAR_34 + "/>");
+			writeLine("readonly=\"true\" disabled=\"true\"/>");
 		}
 		writeLine("#{i18n." + bean.objectName + property.capName + "}");
 		writeLine("</label>");
@@ -268,123 +216,172 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	}
 	
 	private void writeDoubleInput(String prefix, ViewProperty property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
-				+ property.capName + CHAR_34 + " styleClass="
-				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{form."
-				+ property.name + "}" + CHAR_34);
+		write("<h:inputText id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form."
+				+ property.name + "}\"");
 		
 		if (!property.editable) {
-			skipLine();
-			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+			write(" disabled=\"true\"");
 		}
 		writeLine(">");
 
 		switch (property.format) {
 			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.00" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
 				break;
 	
 			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.0000" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
 				break;
 	
 			default:
-				writeLine("<f:convertNumber pattern=" + CHAR_34
-						+ "#,##0.########" + CHAR_34 + "/>");
+				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 				break;
 		}
 		writeLine("</h:inputText>");
 	}
 	
 	private void writeLongInput(String prefix, ViewProperty property, Bean bean){
-		write("<h:inputText id=" + CHAR_34 + prefix + bean.objectName
-				+ property.capName + CHAR_34 + " styleClass="
-				+ CHAR_34 + "form-control" + CHAR_34 + " value="
-				+ CHAR_34 + "#{form."
-				+ property.name + "}" + CHAR_34);
+		write("<h:inputText id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
 				
 		if (!property.editable) {
 			skipLine();
-			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+			write("disabled=\"true\"");
 		}
 		
 		writeLine(">");
-		writeLine("<f:convertNumber integerOnly=" + CHAR_34 + "true" + CHAR_34 + " pattern=" + CHAR_34 + "#,##0"
-				+ CHAR_34 + "/>");
+		writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
 		writeLine("</h:inputText>");
 	}
 	
 	private void writeDateInput(String prefix, ViewProperty property, Bean bean){
-		writeLine("<rich:calendar id=" + CHAR_34 + prefix 
-				+ bean.objectName + property.capName + CHAR_34
-				+ " inputClass=" + CHAR_34 + "form-control"
-				+ CHAR_34 + " value=" + CHAR_34 + "#{form." + property.name + "}"
-				+ CHAR_34);
+		writeLine("<rich:calendar id=\"" + prefix + bean.objectName + property.capName +
+				"\" inputClass=\"form-control\" value=\"#{form." + property.name + "}\"");
 
 		switch (property.format) {
 		case DATE:
-			write(" datePattern=" + CHAR_34 + "dd MMMM yyyy"
-					+ CHAR_34);
+			write(" datePattern=\"dd MMMM yyyy\"");
 			break;
 
 		default:
-			write(" datePattern=" + CHAR_34
-					+ "dd MMMM yyyy HH:mm" + CHAR_34);
+			write(" datePattern=\"dd MMMM yyyy HH:mm\"");
 			break;
 		}
 				
 		if (!property.editable) {
 			skipLine();
-			write("disabled=" + CHAR_34 + "true" + CHAR_34);
+			write("disabled=\"true\"");
 		}
 		writeLine("/>");
 		
 	}
 	
 	
-	protected void writeFilter(ViewProperty property, Bean bean) {
+	protected void writeFilter(ViewProperty property, Bean bean, Bean parentBean) {
+		
+		writeLine("<label>#{i18n." + bean.objectName + property.capName + "}</label>");
+		
+		String scrollForm = parentBean!=null?parentBean.detailViewObjectName + "." + bean.objectName + "ScrollForm":bean.listViewObjectName + ".scrollForm";
+		String refreshMethod = parentBean!=null?parentBean.detailControllerObjectName + ".refresh" + bean.className + "List":bean.listControllerObjectName + ".refresh";
 		
 		switch (property.dataType) {
 			case STRING:
 			case TEXT:
-		
-				
 				writeLine("<h:inputText");
-				writeLine("value=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.filter." + property.name + "}" + CHAR_34);
-				writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-				writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
-				writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
-				writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
+				writeLine("value=\"#{" + scrollForm + ".filter." + property.name + "}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
 				writeLine("</a4j:ajax>");
 				writeLine("</h:inputText>");			
 				break;
 				
+			case DATETIME:				
+				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("inputClass=\"form-control\"");
+				switch (property.format) {
+				case DATE:
+					writeLine("datePattern=\"dd MMMM yyyy\">");
+					break;
+
+				default:
+					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
+					break;
+				}
+				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("</a4j:ajax>");
+				writeLine("</rich:calendar>");
+				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("inputClass=\"form-control\"");
+				switch (property.format) {
+				case DATE:
+					writeLine("datePattern=\"dd MMMM yyyy\">");
+					break;
+
+				default:
+					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
+					break;
+				}
+				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("</a4j:ajax>");
+				writeLine("</rich:calendar>");
+				break;
+				
+			case DOUBLE:
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				break;
+			
+			case LONG:
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				
+				break;
+				
+			case BOOLEAN:
+				
+				writeLine("<h:selectOneMenu value=\"#{" + scrollForm + ".filter." + property.name + "}\" styleClass=\"form-control\">");
+				writeLine("<f:selectItem itemLabel=\"\" itemValue=\"#{null}\"></f:selectItem>");
+				writeLine("<f:selectItem itemLabel=\"#{i18n.trueLabel}\" itemValue=\"#{true}\"></f:selectItem>");
+				writeLine("<f:selectItem itemLabel=\"#{i18n.falseLabel}\" itemValue=\"#{false}\"></f:selectItem>");
+				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:selectOneMenu>");
+				
+				break;
 			
 			default:				
 	
 		}
 	}
 	
-	protected void writeFilter(ViewProperty property, Bean currentBean, Bean parentBean) {
-		switch (property.dataType) {
-			case STRING:
-			case TEXT:
-		
-				writeLine("<h:inputText");
-				writeLine("value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollForm.filter." + property.name + "}" + CHAR_34);
-				writeLine("styleClass=" + CHAR_34 + "dataTableFilter" + CHAR_34 + ">");
-				writeLine("<a4j:ajax event=" + CHAR_34 + "keyup" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup" + CHAR_34 + " listener=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".refresh" + currentBean.className + "List}" + CHAR_34);
-				writeLine("oncomplete=" + CHAR_34 + "setCaretToEnd(event);" + CHAR_34 + ">");
-				writeLine("<a4j:attachQueue requestDelay=" + CHAR_34 + "500" + CHAR_34 + "/>");
-				writeLine("</a4j:ajax>");
-				writeLine("</h:inputText>");
-				break;
-				
-			
-			default:
-		}
+	protected void writeFilter(ViewProperty property, Bean bean) {
+		writeFilter(property, bean, null);
 	}
 }

@@ -14,7 +14,6 @@
 
 	<modules>
 		<module>${project.projectName}-api</module>
-		<module>${project.projectName}-util</module>
 		<module>${project.projectName}-business-model</module>
 		<module>${project.projectName}-repository</module>
 		<module>${project.projectName}-business-component</module>
