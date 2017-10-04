@@ -35,7 +35,7 @@ public class Richfaces4PresentationLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode resourcesTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, "/richfaces4/src/",project.projectName + "-webapp"));
+		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, getClass(), "/richfaces4/src/",project.projectName + "-webapp"));
 		resourcesTreeNode.add(copyResourcesTreeNode);
 		
 		return resourcesTreeNode;

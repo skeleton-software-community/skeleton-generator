@@ -24,12 +24,14 @@ import org.sklsft.generator.skeletons.commands.interfaces.FileWriteCommand;
 public class ResourcesFileWriteCommand implements FileWriteCommand {
 	
 	private static String separator = "/";
+	private Class<?> clazz;
 	private String resourcesRootPath;
 	private String targetRootPath;
 	private Project project;
 	
-	public ResourcesFileWriteCommand(Project project, String resourcesRootPath, String targetRootPath) {
+	public ResourcesFileWriteCommand(Project project, Class<?> clazz, String resourcesRootPath, String targetRootPath) {
 		this.project = project;
+		this.clazz = clazz;
 		this.resourcesRootPath = resourcesRootPath;
 		this.targetRootPath = targetRootPath;
 	}
@@ -42,7 +44,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 	@Override
 	public void execute() throws IOException {
 		
-		URL url = getClass().getResource(resourcesRootPath);
+		URL url = clazz.getResource(resourcesRootPath);
 		File targetFolder = new File(project.workspaceFolder + File.separator + targetRootPath);
 		File resourcesFolder = null;
 		
@@ -53,7 +55,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 			
 			File jar;
 			try {
-				jar = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+				jar = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
 			} catch (URISyntaxException e) {
 				throw new IOException("failed to jar path", e);
 			}
