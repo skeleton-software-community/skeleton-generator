@@ -23,6 +23,7 @@ public class Table {
 	public int cardinality;
 
 	public List<Column> columns = new ArrayList<>();
+	public List<UniqueConstraint> uniqueConstraints = new ArrayList<>();
 
 	/**
 	 * get the list of arguments used in find stored procedure

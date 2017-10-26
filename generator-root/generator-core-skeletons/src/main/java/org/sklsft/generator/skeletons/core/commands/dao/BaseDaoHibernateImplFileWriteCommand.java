@@ -12,6 +12,7 @@ import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 import org.sklsft.generator.util.naming.JavaClassNaming;
 
@@ -98,8 +99,16 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		createCountOneToManyComponent();		
 		createScrollOneToManyComponent();
 		createLoadOneToManyComponent();
-		createExistsObject();
-		createFindObject();
+		
+		if (bean.cardinality>0) {
+			createExistsObject();
+			createFindObject();
+		}
+		if (bean.selectable) {
+			if (bean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+				createSearch();
+			}
+		}
 		createSaveComponent();
 		createDeleteComponent();
 
@@ -662,6 +671,25 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("} else {");
 		writeLine("return " + this.bean.objectName + ";");
 		writeLine("}");
+		writeLine("}");
+		skipLine();
+	}
+	
+	
+	private void createSearch() {
+		
+		Property targetProperty = bean.selectionBehavior.targetProperty;
+		
+		writeLine("/**");
+		writeLine(" * search");
+		writeLine(" */");
+		writeLine("@Override");
+		writeLine("public List<" + this.bean.className + "> search(String arg) {");
+		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
+		String propertyPath =  CHAR_34 + "{alias}." + targetProperty.column.name + CHAR_34;
+		writeLine("addStringContainsRestriction(criteria, " + propertyPath + ", arg);");
+		writeLine("criteria.setMaxResults(20);");
+		writeLine("return criteria.list();");
 		writeLine("}");
 		skipLine();
 	}

@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.repository.backup.command.impl.BackupCommandFactory;
 import org.sklsft.generator.repository.backup.command.interfaces.BackupCommand;

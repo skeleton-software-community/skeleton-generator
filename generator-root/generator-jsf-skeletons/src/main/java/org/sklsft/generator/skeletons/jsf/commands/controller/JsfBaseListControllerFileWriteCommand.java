@@ -127,8 +127,8 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("public void create" + this.bean.className + "() {");
 
 		for (ViewProperty property : this.bean.formBean.properties) {
-			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
+			if (property.isComboboxable() && property.visibility.isDetailVisible()) {
+				writeLine("this.commonController.load" + property.selectableBean.className + "Options();");
 			}
 		}
 
@@ -180,8 +180,8 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("public void edit" + bean.className + "(Long id) {");
 		
 		for (ViewProperty property : bean.formBean.properties) {
-			if (property.comboBoxBean != null && property.visibility.isDetailVisible()) {
-				writeLine("this.commonController.load" + property.comboBoxBean.className + "Options();");
+			if (property.isComboboxable() && property.visibility.isDetailVisible()) {
+				writeLine("this.commonController.load" + property.selectableBean.className + "Options();");
 			}
 		}
 		

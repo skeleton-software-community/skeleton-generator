@@ -3,6 +3,7 @@ package org.sklsft.generator.model.domain.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sklsft.generator.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
@@ -69,7 +70,6 @@ public class Bean {
 	public int cardinality;
 	public String listRendering;
 	public String detailRendering;
-	public boolean hasComboBox;
 	public boolean createEnabled;
 	public boolean updateEnabled;
 	public boolean deleteEnabled;
@@ -83,6 +83,9 @@ public class Bean {
 	public List<OneToManyComponent> oneToManyComponentList = new ArrayList<>();
 	public List<OneToOne> oneToOneList = new ArrayList<>();
 	public List<OneToOneComponent> oneToOneComponentList = new ArrayList<>();
+	
+	public boolean selectable = false;
+	public SelectionBehavior selectionBehavior;
 
 	public boolean isComponent = false;
 	public boolean isEmbedded = false;
@@ -94,4 +97,13 @@ public class Bean {
 	public FullViewBean fullViewBean;
 	public FormBean formBean;
 	
+	
+	public Property findPropertyByColumnName(String columnName) {
+		for (Property property:properties) {
+			if (property.column.originalName.equals(columnName)) {
+				return property;
+			}
+		}
+		throw new PropertyNotFoundException("Property : " + columnName + " not found");
+	}
 }

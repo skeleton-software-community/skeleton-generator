@@ -29,8 +29,6 @@ public class Property {
 	public Visibility visibility;
 	public String rendering;
 	public List<String> annotations;
-
-	public Bean comboBoxBean;
 	
 	public List<ViewProperty> viewProperties;
 

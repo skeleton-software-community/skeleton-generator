@@ -9,7 +9,7 @@ public interface BeanFactory {
 
 	Bean scanBean(TableMetaData tableMetaData, Table table);
 	
-	Bean fillBean(Table table, Model model);
+	Bean fillBean(TableMetaData tableMetaData, Table table, Model model);
 	
 
 }

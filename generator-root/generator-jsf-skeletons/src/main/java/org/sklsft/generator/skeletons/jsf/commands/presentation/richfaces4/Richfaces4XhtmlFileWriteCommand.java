@@ -3,6 +3,7 @@ package org.sklsft.generator.skeletons.jsf.commands.presentation.richfaces4;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.XhtmlFileWriteCommand;
 
 public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteCommand {
@@ -92,8 +93,12 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
             writeLine("<label>#{i18n." + bean.objectName + property.capName + "}</label>");
 		}
 		
-		if (property.comboBoxBean != null) {
-			writeCombobox(prefix, property, bean);
+		if (property.selectableBean != null) {
+			if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+				writeCombobox(prefix, property, bean);
+			} else {
+				writeAutocomplete(prefix, property, bean);
+			}
 		} else {
 		
 			switch (property.dataType) {
@@ -137,46 +142,21 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 		
 		writeLine(">");
 
-		switch (property.dataType) {
-		case DATETIME:
-			switch (property.format) {
-			case DATE:
-				writeLine("<f:convertDateTime type=\"date\" dateStyle=\"long\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertDateTime type=\"both\" dateStyle=\"long\"/>");
-				break;
-
-			}
-			break;
-
-		case DOUBLE:
-			switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-			}
-			break;
-
-		case LONG:
-			writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-			break;
-
-		default:
-			break;
-		}
-
-		writeLine("<f:selectItems value=\"#{commonView." + property.comboBoxBean.objectName + "Options}\"/>");
+		writeLine("<f:selectItems value=\"#{commonView." + property.selectableBean.objectName + "Options}\"");
+		writeLine("var=\"option\" itemValue=\"#{option.key}\" itemLabel=\"#{option.label}\"/>");
 		writeLine("</h:selectOneMenu>");
+	}
+	
+	private void writeAutocomplete(String prefix, ViewProperty property, Bean bean){
+		
+		writeLine("<rich:autocomplete id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
+				
+		if (!property.editable) {
+			write(" disabled=\"true\"");
+		}
+		
+		writeLine(" autocompleteMethod=\"#{commonController.search" + property.selectableBean.className + "Options}\"/>");
 	}
 	
 	

@@ -62,7 +62,7 @@ public class JavaPackageFactory implements PackageFactory {
 			logger.info("Filling table " + tableMetaData.getName());
 			Table table = tableFactory.fillTable(tableMetaData, pack);
 			logger.info("adding bean from table : " + table.name);
-			Bean bean = beanFactory.fillBean(table, model);
+			Bean bean = beanFactory.fillBean(tableMetaData, table, model);
 			logger.info("bean : " + bean.className + " added");
 		}
 		return pack;

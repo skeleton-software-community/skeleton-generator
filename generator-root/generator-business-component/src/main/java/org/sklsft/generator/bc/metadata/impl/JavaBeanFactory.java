@@ -8,6 +8,7 @@ import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.business.SelectionBehavior;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.RelationType;
@@ -32,9 +33,15 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.createEnabled = tableMetaData.getCreateEnabled();
 		bean.updateEnabled = tableMetaData.getUpdateEnabled();
 		bean.deleteEnabled = tableMetaData.getDeleteEnabled();
-		bean.hasComboBox = tableMetaData.getComboxable();
 		bean.detailRendering = tableMetaData.getDetailRendering();
 		bean.listRendering = tableMetaData.getListRendering();
+		
+		if (tableMetaData.getSelectionBehavior() != null) {
+			SelectionBehavior selectionBehavior = new SelectionBehavior();
+			selectionBehavior.selectionMode = tableMetaData.getSelectionBehavior().getSelectionMode();
+			bean.selectionBehavior = selectionBehavior;
+			bean.selectable = true;
+		}
 
 		bean.className = JavaClassNaming.getClassName(table.originalName);
 		bean.objectName = JavaClassNaming.getObjectName(table.originalName);
@@ -81,7 +88,7 @@ public class JavaBeanFactory implements BeanFactory {
 	}
 
 	@Override
-	public Bean fillBean(Table table, Model model) {
+	public Bean fillBean(TableMetaData tableMetaData, Table table, Model model) {
 		Bean bean = model.findBean(table.originalName);
 
 		for (Column column : table.columns) {
@@ -172,6 +179,13 @@ public class JavaBeanFactory implements BeanFactory {
 				Bean targetBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				targetBean.isEmbedded = true;
 				targetBean.isComponent = true;
+			}
+		}
+		
+		if (bean.selectable) {
+			bean.selectionBehavior.targetProperty = bean.properties.get(0);
+			if (tableMetaData.getSelectionBehavior().getLabelColumn()!=null) {
+				bean.selectionBehavior.labelProperty = bean.findPropertyByColumnName(tableMetaData.getSelectionBehavior().getLabelColumn());
 			}
 		}
 

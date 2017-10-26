@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
@@ -73,8 +74,16 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		createCountOneToManyComponent();		
 		createScrollOneToManyComponent();
 		createLoadOneToManyComponent();
-		createExistsObject();
-		createFindObject();
+		
+		if (bean.cardinality>0) {
+			createExistsObject();
+			createFindObject();
+		}
+		if (bean.selectable) {
+			if (bean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+				createSearch();
+			}
+		}
 		createSaveComponent();
 		createDeleteComponent();
 
@@ -240,6 +249,15 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			write(property.beanDataType + " " + property.name);
 		}
 		writeLine(");");
+		skipLine();
+	}
+	
+	
+	private void createSearch() {
+		writeLine("/**");
+		writeLine(" * search");
+		writeLine(" */");
+		writeLine("List<" + this.bean.className + "> search(String arg);");
 		skipLine();
 	}
 

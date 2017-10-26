@@ -32,26 +32,8 @@
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
-		
-#if ($project.audited)
-		<property name="eventListeners">
-			<map>
-				<entry key="post-insert" value-ref="enversEventListener" />
-				<entry key="post-update" value-ref="enversEventListener" />
-				<entry key="post-delete" value-ref="enversEventListener" />
-				<entry key="post-collection-recreate" value-ref="enversEventListener" />
-				<entry key="pre-collection-remove" value-ref="enversEventListener" />
-				<entry key="pre-collection-update" value-ref="enversEventListener" />
-			</map>
-		</property>
-#end
-
 	</bean>
 
-#if ($project.audited)
-	<bean id="enversEventListener" class="org.hibernate.envers.event.AuditEventListener" />
-	
-#end
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 </beans>

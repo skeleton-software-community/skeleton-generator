@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" targetNamespace="http://generator.sklsft.org/schema/model/metadata" xmlns:tns="http://generator.sklsft.org/schema/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:metadata="http://generator.sklsft.org/schema/model/metadata">
+<xs:schema version="1.0" targetNamespace="http://generator.sklsft.org/schema/model/metadata" xmlns:metadata="http://generator.sklsft.org/schema/model/metadata" xmlns:tns="http://generator.sklsft.org/schema/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="project" type="tns:project"/>
 
@@ -40,7 +40,7 @@
 
   <xs:complexType name="table">
     <xs:sequence>
-      <xs:element name="detailMode" type="tns:detailMode" minOccurs="0"/>
+      <xs:element name="selectionBehavior" type="tns:selectionBehavior" minOccurs="0"/>
       <xs:element name="interfaces" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
@@ -62,15 +62,41 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="uniqueConstraints" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="uniqueConstraint" type="tns:uniqueConstraint" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="cardinality" type="xs:int" use="required"/>
     <xs:attribute name="listRendering" type="xs:string"/>
     <xs:attribute name="detailRendering" type="xs:string"/>
-    <xs:attribute name="comboxable" type="xs:boolean"/>
     <xs:attribute name="createEnabled" type="xs:boolean"/>
     <xs:attribute name="updateEnabled" type="xs:boolean"/>
     <xs:attribute name="deleteEnabled" type="xs:boolean"/>
+    <xs:attribute name="detailMode" type="tns:detailMode"/>
+  </xs:complexType>
+
+  <xs:complexType name="selectionBehavior">
+    <xs:sequence/>
+    <xs:attribute name="selectionMode" type="tns:selectionMode" use="required"/>
+    <xs:attribute name="labelColumn" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="uniqueConstraint">
+    <xs:sequence>
+      <xs:element name="fields" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="field" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="project">
@@ -162,6 +188,13 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="selectionMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DROPDOWN_OPTIONS"/>
+      <xs:enumeration value="AUTO_COMPLETE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="persistenceMode">
     <xs:restriction base="xs:string">
       <xs:enumeration value="CSV"/>
@@ -172,7 +205,6 @@
 
   <xs:simpleType name="skeletonType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="SPRING_HIBERNATE_RICHFACES_3"/>
       <xs:enumeration value="SPRING_HIBERNATE_RICHFACES_4"/>
     </xs:restriction>
   </xs:simpleType>

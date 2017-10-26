@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
@@ -25,7 +26,7 @@ public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import java.util.List;");		
 		javaImports.add("import java.util.ArrayList;");
-		javaImports.add("import javax.faces.model.SelectItem;");
+		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.context.annotation.Scope;");
@@ -60,7 +61,7 @@ public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
+				if (bean.selectable && bean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
 					writeLine("private List<SelectItem>" + bean.objectName + "Options;");
 				}
 			}
@@ -73,7 +74,7 @@ public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
+				if (bean.selectable && bean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
 					writeLine("public List<SelectItem> get" + bean.className + "Options() {");
 					writeLine("return " + bean.objectName + "Options;");
 					writeLine("}");

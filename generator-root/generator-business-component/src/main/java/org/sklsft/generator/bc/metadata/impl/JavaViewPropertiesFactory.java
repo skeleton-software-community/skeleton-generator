@@ -32,8 +32,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.editable = myProperty.editable;
 			viewProperty.lastPropertyName = myProperty.name;
 			viewProperty.lastColumnName = myProperty.column.name;
-			viewProperty.joinedAliasName = "";
-			viewProperty.comboBoxBean = myProperty.comboBoxBean;					
+			viewProperty.joinedAliasName = "";				
 			viewProperty.rendering = myProperty.rendering;
 			result.add(viewProperty);
 		} else {
@@ -65,7 +64,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
 						viewProperty.lastColumnName = tempProperty.lastColumnName;
 						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
-						viewProperty.comboBoxBean = tempProperty.comboBoxBean;					
+						viewProperty.selectableBean = tempProperty.selectableBean;					
 						viewProperty.rendering = tempProperty.rendering;
 						result.add(viewProperty);
 					}
@@ -88,8 +87,8 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.lastPropertyName = property.name;
 					viewProperty.lastColumnName = property.column.name;
 					viewProperty.joinedAliasName = myProperty.name;
-					if (myProperty.referenceBean.hasComboBox) {
-						viewProperty.comboBoxBean = myProperty.referenceBean;
+					if (myProperty.referenceBean.selectable) {
+						viewProperty.selectableBean = myProperty.referenceBean;
 					}
 					if (myProperty.referenceBean.cardinality == 1) {
 						viewProperty.rendering = myProperty.rendering;

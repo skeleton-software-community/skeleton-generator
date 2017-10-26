@@ -25,15 +25,15 @@ public class TableMetaData {
 	@XmlAttribute
 	private String detailRendering;
 	@XmlAttribute
-	private Boolean comboxable = false;
-	@XmlAttribute
 	private Boolean createEnabled = true;
 	@XmlAttribute
 	private Boolean updateEnabled = true;
 	@XmlAttribute
 	private Boolean deleteEnabled = true;
-	@XmlElement
+	@XmlAttribute
 	private DetailMode detailMode;
+	@XmlElement(name="selectionBehavior")
+	private SelectionBehaviorMetaData selectionBehavior;
 	
 	@XmlElementWrapper(name="interfaces")
 	@XmlElement(name="interface")
@@ -46,6 +46,10 @@ public class TableMetaData {
 	@XmlElementWrapper(name="columns")
 	@XmlElement(name="column")
 	private List<ColumnMetaData> columns;
+	
+	@XmlElementWrapper(name="uniqueConstraints")
+	@XmlElement(name="uniqueConstraint")
+	private List<UniqueConstraintMetaData> uniqueConstraints;
 	
 	
 	/*
@@ -75,12 +79,6 @@ public class TableMetaData {
 	public void setDetailRendering(String detailRendering) {
 		this.detailRendering = detailRendering;
 	}
-	public Boolean getComboxable() {
-		return comboxable;
-	}
-	public void setComboxable(Boolean comboxable) {
-		this.comboxable = comboxable;
-	}
 	public Boolean getCreateEnabled() {
 		return createEnabled;
 	}
@@ -105,6 +103,12 @@ public class TableMetaData {
 	public void setDetailMode(DetailMode detailMode) {
 		this.detailMode = detailMode;
 	}
+	public SelectionBehaviorMetaData getSelectionBehavior() {
+		return selectionBehavior;
+	}
+	public void setSelectionBehavior(SelectionBehaviorMetaData selectionBehavior) {
+		this.selectionBehavior = selectionBehavior;
+	}
 	public List<String> getInterfaces() {
 		return interfaces;
 	}
@@ -122,5 +126,11 @@ public class TableMetaData {
 	}
 	public void setColumns(List<ColumnMetaData> columns) {
 		this.columns = columns;
+	}
+	public List<UniqueConstraintMetaData> getUniqueConstraints() {
+		return uniqueConstraints;
+	}
+	public void setUniqueConstraints(List<UniqueConstraintMetaData> uniqueConstraints) {
+		this.uniqueConstraints = uniqueConstraints;
 	}
 }

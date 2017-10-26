@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
@@ -29,6 +30,7 @@ private Bean bean;
 		javaImports.add("import java.util.List;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
+		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
@@ -69,22 +71,16 @@ private Bean bean;
 		writeLine("public interface " + this.bean.baseServiceInterfaceName + " {");
 		skipLine();		
 		
-		if (this.bean.hasComboBox) {
-			
-			Property comboProperty = this.bean.properties.get(0);
-			
-			writeLine("/**");
-			writeLine(" * get options");
-			writeLine(" */");
-			writeLine("List<" + comboProperty.beanDataType + "> getOptions();");
-			skipLine();
 		
+		if (this.bean.selectable) {
+			createGetOptions();
 		}
-
 		createLoadObjectList();
 		createScroll();
 		createLoadObject();
-		createFindObject();
+		if (bean.cardinality>0) {
+			createFindObject();
+		}
 		createLoadOneToOneComponent();
 		createLoadOneToManyComponentList();
 		createScrollOneToManyComponent();
@@ -105,6 +101,24 @@ private Bean bean;
 
 		writeLine("}");
 
+	}
+
+	private void createGetOptions() {
+		
+		if (bean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {			
+			writeLine("/**");
+			writeLine(" * get options");
+			writeLine(" */");
+			writeLine("List<SelectItem> getOptions();");
+			skipLine();
+		}
+		if (bean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {			
+			writeLine("/**");
+			writeLine(" * search options");
+			writeLine(" */");
+			writeLine("List<SelectItem> searchOptions(String arg);");
+			skipLine();
+		}
 	}
 
 	private void createLoadObjectList() {

@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
@@ -24,7 +25,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import java.util.List;");		
 		javaImports.add("import java.util.ArrayList;");
-		javaImports.add("import javax.faces.model.SelectItem;");
+		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.springframework.context.annotation.Scope;");
@@ -34,7 +35,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
+				if (bean.selectable) {
 					javaImports.add("import " + bean.myPackage.serviceInterfacePackageName + "." + bean.serviceInterfaceName + ";");
 				}
 			}
@@ -74,7 +75,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
+				if (!bean.isComponent && bean.selectable) {
 					writeLine("@Inject");
 					writeLine("private " + bean.serviceInterfaceName + " " + bean.serviceObjectName + ";");
 				}
@@ -85,22 +86,30 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 
 		for (Package myPackage : this.project.model.packages) {
 			for (Bean bean : myPackage.beans) {
-				if (!bean.isComponent && bean.hasComboBox) {
-					writeLine("/**");
-					writeLine(" * load combobox items for " + bean.className);
-					writeLine(" */");
-					writeLine("public void load" + bean.className + "Options() {");
-					writeLine("List<SelectItem> result = new ArrayList<>();");
-					writeLine("result.add(new SelectItem(null," + CHAR_34 + CHAR_34 + "));");
-					writeLine("List<" + bean.properties.get(0).beanDataType + "> options = this." + bean.serviceObjectName + ".getOptions();");
-					writeLine("if (options != null){");
-					writeLine("for (" + bean.properties.get(0).beanDataType + " option:options){");
-					writeLine("result.add(new SelectItem(option));");
-					writeLine("}");
-					writeLine("}");
-					writeLine("this.commonView.set" + bean.className + "Options(result);");
-					writeLine("}");
-					skipLine();
+				if (bean.selectable) {
+					if (bean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+						writeLine("/**");
+						writeLine(" * load options for " + bean.className);
+						writeLine(" */");
+						writeLine("public void load" + bean.className + "Options() {");
+						writeLine("List<SelectItem> options = this." + bean.serviceObjectName + ".getOptions();");
+						writeLine("this.commonView.set" + bean.className + "Options(options);");
+						writeLine("}");
+						skipLine();
+					} else {
+						writeLine("/**");
+						writeLine(" * search options for " + bean.className);
+						writeLine(" */");
+						writeLine("public List<String> search" + bean.className + "Options(String arg) {");
+						writeLine("List<SelectItem> options = this." + bean.serviceObjectName + ".searchOptions(arg);");
+						writeLine("List<String> result = new ArrayList<>(options.size());");
+						writeLine("for (SelectItem option : options) {");
+						writeLine("result.add(option.getKey());");
+						writeLine("}");
+						writeLine("return result;");
+						writeLine("}");
+						skipLine();
+					}
 				}
 			}
 		}

@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.RelationType;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
@@ -34,6 +35,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
+		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
@@ -159,31 +161,16 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 		
 		
-		if (this.bean.hasComboBox) {
-		    
-			Property comboProperty = this.bean.properties.get(0);
-			
-			writeLine("/**");
-			writeLine(" * get options");
-			writeLine(" */");
-			writeLine("@Override");
-			writeLine("@Transactional(readOnly=true)");
-			writeLine("public List<" + comboProperty.beanDataType + "> getOptions() {");
-			writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadList();");
-			writeLine("List<" + comboProperty.beanDataType + "> " + this.bean.objectName + comboProperty.capName + "List = new ArrayList<>(" + this.bean.objectName + "List.size());");
-			writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
-			writeLine(this.bean.objectName + comboProperty.capName + "List.add(" + this.bean.objectName + ".get" + comboProperty.capName + "());");
-			writeLine("}");
-			writeLine("return " + this.bean.objectName + comboProperty.capName + "List;");
-			writeLine("}");
-			skipLine();
-
-        }
-
+		
+		if (this.bean.selectable) {
+			createGetOptions();
+		}
 		createLoadObjectList();
 		createScroll();
 		createLoadObject();
-		createFindObject();
+		if (bean.cardinality>0) {
+			createFindObject();
+		}
 		createLoadOneToOneComponent();
 		createLoadOneToManyComponentList();
 		createScrollOneToManyComponent();
@@ -205,6 +192,46 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 
     }
+	
+	private void createGetOptions() {
+			
+		Property targetProperty = bean.selectionBehavior.targetProperty;
+		Property labelProperty = bean.selectionBehavior.labelProperty!=null?bean.selectionBehavior.labelProperty:bean.selectionBehavior.targetProperty;
+		
+		if (bean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+			
+			writeLine("/**");
+			writeLine(" * get options");
+			writeLine(" */");
+			writeLine("@Override");
+			writeLine("@Transactional(readOnly=true)");
+			writeLine("public List<SelectItem> getOptions() {");
+			writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".loadList();");
+			writeLine("List<SelectItem> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
+			writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
+			writeLine("result.add(new SelectItem(" + this.bean.objectName + "." + targetProperty.getterName + "(), " + this.bean.objectName + "." + labelProperty.getterName + "()));");
+			writeLine("}");
+			writeLine("return result;");
+			writeLine("}");
+			skipLine();
+		}
+		if (bean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {			
+			writeLine("/**");
+			writeLine(" * search options");
+			writeLine(" */");
+			writeLine("@Override");
+			writeLine("@Transactional(readOnly=true)");
+			writeLine("public List<SelectItem> searchOptions(String arg) {");
+			writeLine("List<" + this.bean.className + "> " + this.bean.objectName + "List = " + this.bean.daoObjectName + ".search(arg);");
+			writeLine("List<SelectItem> result = new ArrayList<>(" + this.bean.objectName + "List.size());");
+			writeLine("for (" + this.bean.className + " " + this.bean.objectName + " : " + this.bean.objectName + "List) {");
+			writeLine("result.add(new SelectItem(" + this.bean.objectName + "." + targetProperty.getterName + "(), " + this.bean.objectName + "." + labelProperty.getterName + "()));");
+			writeLine("}");
+			writeLine("return result;");
+			writeLine("}");
+			skipLine();
+		}
+	}
 
     private void createLoadObjectList() {
 		writeLine("/**");
