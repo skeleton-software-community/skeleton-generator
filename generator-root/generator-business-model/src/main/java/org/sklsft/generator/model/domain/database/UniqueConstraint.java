@@ -1,5 +1,6 @@
 package org.sklsft.generator.model.domain.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.sklsft.generator.model.domain.business.Property;
@@ -15,6 +16,6 @@ import org.sklsft.generator.model.domain.business.Property;
 public class UniqueConstraint {
 
 	public String name;	
-	public List<Column> columns;	
-	public List<Property> properties;
+	public List<Column> columns = new ArrayList<>();	
+	public List<Property> properties = new ArrayList<>();
 }

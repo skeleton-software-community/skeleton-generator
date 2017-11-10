@@ -3,7 +3,9 @@ package org.sklsft.generator.model.domain.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sklsft.generator.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.domain.business.Property;
 
 /**
  * representation of a table<br/>
@@ -24,6 +26,16 @@ public class Table {
 
 	public List<Column> columns = new ArrayList<>();
 	public List<UniqueConstraint> uniqueConstraints = new ArrayList<>();
+	
+	
+	public Column findColumnByName(String columnName) {
+		for (Column column:columns) {
+			if (column.originalName.equals(columnName)) {
+				return column;
+			}
+		}
+		throw new PropertyNotFoundException("Column : " + columnName + " not found");
+	}
 
 	/**
 	 * get the list of arguments used in find stored procedure

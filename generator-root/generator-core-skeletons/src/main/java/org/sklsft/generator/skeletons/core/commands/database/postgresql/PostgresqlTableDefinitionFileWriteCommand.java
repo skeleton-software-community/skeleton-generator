@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
@@ -29,6 +30,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	public void writeContent() throws IOException {
 
 		createTable();
+		createConstraints();
 
 		if (table.myPackage.model.project.audited) {
 			createAuditTable();
@@ -61,16 +63,6 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine(");");
 		writeLine("/");
 		skipLine();
-		
-		if (table.cardinality > 0) {
-			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
-			for (int i = 1; i < this.table.cardinality; i++) {
-				write("," + this.table.columns.get(i).name);
-			}
-			writeLine(");");
-			writeLine("/");
-			skipLine();
-		}
 
 		writeLine("ALTER TABLE " + table.name + " ADD CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID);");
 		writeLine("/");
@@ -86,6 +78,34 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("/");
 		skipLine();
 	}
+	
+	
+	/*
+	 * create constraints
+	 */
+	private void createConstraints() {
+		if (table.cardinality > 0) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
+			for (int i = 1; i < this.table.cardinality; i++) {
+				write("," + this.table.columns.get(i).name);
+			}
+			writeLine(");");
+			writeLine("/");
+			skipLine();
+		}
+		
+		for (UniqueConstraint uniqueConstraint:table.uniqueConstraints) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT UC_" + uniqueConstraint.name + " UNIQUE (" + uniqueConstraint.columns.get(0).name);
+			for (int i = 1; i < uniqueConstraint.columns.size(); i++) {
+				write("," + uniqueConstraint.columns.get(i).name);
+			}
+			writeLine(");");
+			writeLine("/");
+			skipLine();
+		}
+		
+	}
+	
 
 	/*
 	 * create audit table

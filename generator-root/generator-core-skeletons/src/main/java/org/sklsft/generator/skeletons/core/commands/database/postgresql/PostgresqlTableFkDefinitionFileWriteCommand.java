@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -33,7 +34,7 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 	}
 
 	/*
-	 * create table
+	 * create fks and indexes
 	 */
 	private void createTableFks() {
 		writeLine("-- table foreign keys and indexes --");
@@ -61,5 +62,4 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 			i++;
 		}
 	}
-
 }

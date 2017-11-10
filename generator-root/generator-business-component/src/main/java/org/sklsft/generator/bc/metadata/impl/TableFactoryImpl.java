@@ -1,13 +1,17 @@
 package org.sklsft.generator.bc.metadata.impl;
 
+import java.util.ArrayList;
+
 import org.sklsft.generator.bc.metadata.interfaces.TableFactory;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
 import org.sklsft.generator.model.metadata.Format;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
+import org.sklsft.generator.model.metadata.UniqueConstraintMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
 import org.sklsft.generator.util.naming.SQLNaming;
 import org.springframework.stereotype.Component;
@@ -26,15 +30,6 @@ public class TableFactoryImpl implements TableFactory {
 		table.originalName = tableMetaData.getName();
 		table.name = SQLNaming.rename(table.originalName, myPackage.model.project.databaseEngine);
 		table.cardinality = tableMetaData.getCardinality();
-
-//        Column idColumn = new Column();
-//        idColumn.name = "ID";
-//        idColumn.originalName = "ID";
-//        idColumn.dataType = DataType.LONG;
-//        idColumn.relation = RelationType.PROPERTY;
-//        idColumn.nullable = false;
-//        idColumn.unique = true;
-//        table.columns.add(idColumn);
         
         return table;
 	}
@@ -72,6 +67,18 @@ public class TableFactoryImpl implements TableFactory {
             column.rendering = columnMetaData.getRendering();
             column.annotations = columnMetaData.getAnnotations();
             table.columns.add(column);
+        }
+        
+        if (tableMetaData.getUniqueConstraints()!=null && !tableMetaData.getUniqueConstraints().isEmpty()) {
+        	table.uniqueConstraints = new ArrayList<>();
+        	for (UniqueConstraintMetaData uniqueConstraintMetaData:tableMetaData.getUniqueConstraints()) {
+        		UniqueConstraint uniqueConstraint = new UniqueConstraint();
+        		uniqueConstraint.name = uniqueConstraintMetaData.getName();
+        		for (String columnName:uniqueConstraintMetaData.getFields()) {
+        			uniqueConstraint.columns.add(table.findColumnByName(columnName));
+        		}
+        		table.uniqueConstraints.add(uniqueConstraint);
+        	}
         }
 		
         return table;
