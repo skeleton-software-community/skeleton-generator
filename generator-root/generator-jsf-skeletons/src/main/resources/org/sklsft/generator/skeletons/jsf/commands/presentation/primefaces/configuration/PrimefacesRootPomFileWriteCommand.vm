@@ -1,0 +1,393 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>${project.domainName}.${project.projectName}</groupId>
+	<artifactId>${project.projectName}-root</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>${project.projectName}-root</name>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>${project.projectName}-api</module>
+		<module>${project.projectName}-business-model</module>
+		<module>${project.projectName}-repository</module>
+		<module>${project.projectName}-business-component</module>
+		<module>${project.projectName}-services</module>
+		<module>${project.projectName}-webapp</module>
+		<module>${project.projectName}-populator</module>
+		<module>${project.projectName}-test</module>
+	</modules>
+	
+	<properties>
+	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
+		<java.version>1.8</java.version>
+		
+		<skeleton.commons.version>3.0.0-M2</skeleton.commons.version>
+		<skeleton.generator.version>3.0.0-M2</skeleton.generator.version>
+		
+		<slf4j.version>1.7.2</slf4j.version>
+		<logback.version>1.0.13</logback.version>
+		
+		<hibernate.validator.version>5.2.3.Final</hibernate.validator.version>
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
+		
+		<hsqldb.version>2.3.3</hsqldb.version>
+		
+		<hibernate.version>5.0.7.Final</hibernate.version>
+		
+		<spring.version>4.3.5.RELEASE</spring.version>
+		<spring.security.version>4.2.1.RELEASE</spring.security.version>
+		<aspectj.version>1.7.3</aspectj.version>
+		<javax.inject.version>1</javax.inject.version>
+		
+		<servlet.version>3.1.0</servlet.version>
+		<javax.el.version>3.0.1-b08</javax.el.version>
+		<jstl.version>1.2</jstl.version>
+		<jsf.version>2.2.13</jsf.version>
+		<richfaces.version>4.5.8.Final</richfaces.version>
+
+		<junit.version>4.12</junit.version>
+		
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+		
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-business-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-repository</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-business-component</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-populator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			
+			<!-- skeleton generator -->
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-bash</artifactId>
+				<version>${skeleton.generator.version}</version>
+			</dependency>
+			
+			<!-- skeleton commons -->
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-api</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-entities</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-crypto</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-mapper</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-mvc</artifactId>
+				<version>${skeleton.commons.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.primefaces</groupId>
+						<artifactId>primefaces</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			
+			<!-- loggers -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+			
+	   		<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+		
+			<!-- validation -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation.version}</version>
+			</dependency>
+			
+			
+			<!-- hsqldb Driver -->
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>${hsqldb.version}</version>
+			</dependency>
+			
+			
+			<!-- hibernate -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			
+#if ($project.audited)
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-envers</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			
+#end
+			
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			
+			<!-- Spring security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			
+			
+			<!-- AspectJ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjtools</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			
+			
+			<!-- Inject annotation -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
+			
+			
+			<!-- WEBAPP -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.glassfish</groupId>
+				<artifactId>javax.el</artifactId>
+				<version>${javax.el.version}</version>
+			</dependency>
+
+			
+			<!-- JSF -->
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+			
+			
+			<!-- Richfaces -->
+			<dependency>  
+				<groupId>org.richfaces</groupId>
+				<artifactId>richfaces</artifactId>
+				<version>${richfaces.version}</version>
+			</dependency>
+			
+			
+			<!-- unit tests -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			
+			<!-- apache commons -->
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.4</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.8.1</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.5</version>
+			</dependency>
+					
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+	
+		<plugins>		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>${java.version}</compilerVersion>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+		
+	</build>
+	
+</project>
