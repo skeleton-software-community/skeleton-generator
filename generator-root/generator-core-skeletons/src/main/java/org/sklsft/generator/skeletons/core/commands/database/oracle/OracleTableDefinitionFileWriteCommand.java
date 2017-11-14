@@ -55,11 +55,11 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write("ID " + DataType.LONG.getOracleType());
+		write("ID " + getOracleType(DataType.LONG));
 
 		for (Column column:table.columns) {
 			writeLine(",");
-			write(column.name + " " + column.dataType.getOracleType());
+			write(column.name + " " + getOracleType(column.dataType));
 			if (column.nullable) {
 				write(" NULL");
 			} else {
@@ -125,7 +125,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("REVTYPE smallint NOT NULL,");
 
         for (Column column:table.columns) {
-            writeLine(column.name + " " + column.dataType.getOracleType() + " NULL,");
+            writeLine(column.name + " " + getOracleType(column.dataType) + " NULL,");
         }
 
         writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
@@ -139,4 +139,30 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("/");
         skipLine();
     }
+	
+	
+	private String getOracleType(DataType type) {
+		switch (type) {
+			case TEXT:
+				return "CLOB";
+	
+			case STRING:
+				return "VARCHAR2(255)";
+	
+			case LONG:
+				return "NUMBER(19,0)";
+	
+			case DOUBLE:
+				return "FLOAT(24)";
+	
+			case DATETIME:
+				return "DATE";
+	
+			case BOOLEAN:
+				return "NUMBER(1,0)";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + this);
+		}
+	}
 }

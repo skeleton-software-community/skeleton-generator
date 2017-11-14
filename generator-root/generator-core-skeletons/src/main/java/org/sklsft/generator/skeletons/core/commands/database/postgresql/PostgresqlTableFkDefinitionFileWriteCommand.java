@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {

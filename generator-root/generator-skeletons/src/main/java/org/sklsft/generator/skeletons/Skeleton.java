@@ -2,6 +2,7 @@ package org.sklsft.generator.skeletons;
 
 import java.util.List;
 
+import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.layers.Layer;
 
 /**
@@ -10,6 +11,8 @@ import org.sklsft.generator.skeletons.layers.Layer;
  *
  */
 public interface Skeleton {
+	
+	String getName();
 
-	List<Layer> getLayers();
+	List<Layer> getLayers(Project project);
 }

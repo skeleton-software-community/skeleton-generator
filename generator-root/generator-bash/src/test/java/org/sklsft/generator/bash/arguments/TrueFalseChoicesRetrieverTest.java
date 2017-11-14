@@ -6,6 +6,6 @@ public class TrueFalseChoicesRetrieverTest {
 
 	@Test
 	public void test() {
-		System.out.println(new SkeletonTypeChoicesHelper().getFullMessage());
+		System.out.println(new SkeletonChoicesHelper().getFullMessage());
 	}
 }

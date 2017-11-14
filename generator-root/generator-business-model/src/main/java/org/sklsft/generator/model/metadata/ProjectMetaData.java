@@ -31,9 +31,9 @@ public class ProjectMetaData {
 	@XmlElement(required=true)
     private String projectName;
 	@XmlElement(required=true)
-    private SkeletonType skeletonType;
+    private String skeleton;
 	@XmlElement(required=true)
-    private DatabaseEngine databaseEngine;
+    private String databaseEngine;
 	@XmlElement(required=true)
     private String databaseName;
 	@XmlElement
@@ -95,19 +95,19 @@ public class ProjectMetaData {
 		this.projectName = projectName;
 	}
 
-	public SkeletonType getSkeletonType() {
-		return skeletonType;
+	public String getSkeleton() {
+		return skeleton;
 	}
 
-	public void setSkeletonType(SkeletonType skeletonType) {
-		this.skeletonType = skeletonType;
+	public void setSkeleton(String skeleton) {
+		this.skeleton = skeleton;
 	}
 
-	public DatabaseEngine getDatabaseEngine() {
+	public String getDatabaseEngine() {
 		return databaseEngine;
 	}
 
-	public void setDatabaseEngine(DatabaseEngine databaseEngine) {
+	public void setDatabaseEngine(String databaseEngine) {
 		this.databaseEngine = databaseEngine;
 	}
 

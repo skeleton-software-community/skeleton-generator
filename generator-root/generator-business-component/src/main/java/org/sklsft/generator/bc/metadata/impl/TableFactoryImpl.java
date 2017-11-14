@@ -3,6 +3,7 @@ package org.sklsft.generator.bc.metadata.impl;
 import java.util.ArrayList;
 
 import org.sklsft.generator.bc.metadata.interfaces.TableFactory;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
@@ -13,7 +14,6 @@ import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.model.metadata.UniqueConstraintMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
-import org.sklsft.generator.util.naming.SQLNaming;
 import org.springframework.stereotype.Component;
 
 
@@ -28,7 +28,7 @@ public class TableFactoryImpl implements TableFactory {
 		Table table = new Table();
 		table.myPackage = myPackage;
 		table.originalName = tableMetaData.getName();
-		table.name = SQLNaming.rename(table.originalName, myPackage.model.project.databaseEngine);
+		table.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(table.originalName);
 		table.cardinality = tableMetaData.getCardinality();
         
         return table;
@@ -41,7 +41,7 @@ public class TableFactoryImpl implements TableFactory {
         for (ColumnMetaData columnMetaData : tableMetaData.getColumns()) {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
-            column.name = SQLNaming.rename(column.originalName, table.myPackage.model.project.databaseEngine);
+            column.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(column.originalName);
             column.dataType = columnMetaData.getDataType();
             column.nullable = (columnMetaData.getNullable());
             if (columnMetaData.getReferenceTableRelation() != null) {

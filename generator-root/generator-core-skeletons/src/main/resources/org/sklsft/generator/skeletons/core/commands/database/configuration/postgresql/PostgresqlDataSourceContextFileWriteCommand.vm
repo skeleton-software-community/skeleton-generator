@@ -39,14 +39,8 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 	<!-- here is the list of all sources used by or to populate your project database -->
 	<bean name="${project.projectName}"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-#if ($project.databaseEngine.name() == "ORACLE")
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@${project.databaseDNS}:${project.databasePort}:${project.databaseName}" />
-#end
-#if ($project.databaseEngine.name() == "POSTGRESQL")
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://${project.databaseDNS}:${project.databasePort}/${project.databaseName}" />
-#end
 		<property name="username" value="${project.databaseUserName}" />
 		<property name="password" value="${project.databasePassword}" />
 	</bean>

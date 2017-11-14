@@ -47,11 +47,11 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write("id " + DataType.LONG.getPostgresqlType());
+		write("id " + getPostgresqlType(DataType.LONG));
 
 		for (Column column:table.columns) {
 			writeLine(",");
-			write(column.name + " " + column.dataType.getPostgresqlType());
+			write(column.name + " " + getPostgresqlType(column.dataType));
 			if (column.nullable) {
 				write(" NULL");
 			} else {
@@ -119,7 +119,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("revtype smallint NOT NULL,");
 
 		for (Column column:table.columns) {
-			writeLine(column.name + " " + column.dataType.getPostgresqlType() + " NULL,");
+			writeLine(column.name + " " + getPostgresqlType(column.dataType) + " NULL,");
 		}
 
 		writeLine("CONSTRAINT " + table.name + "_aud_pkey PRIMARY KEY (id, rev),");
@@ -129,5 +129,31 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine(")");
 		writeLine(";");
 		skipLine();
+	}
+	
+	
+	public String getPostgresqlType(DataType type) {
+		switch (type) {
+			case TEXT:
+				return "TEXT";
+	
+			case STRING:
+				return "VARCHAR(255)";
+	
+			case LONG:
+				return "BIGINT";
+	
+			case DOUBLE:
+				return "DOUBLE PRECISION";
+	
+			case DATETIME:
+				return "TIMESTAMP WITH TIME ZONE";
+	
+			case BOOLEAN:
+				return "BOOLEAN";
+	
+			default:
+				throw new IllegalArgumentException("Unhandled data type " + type);
+		}
 	}
 }

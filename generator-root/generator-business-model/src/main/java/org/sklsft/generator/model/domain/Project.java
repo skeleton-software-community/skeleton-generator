@@ -2,9 +2,6 @@ package org.sklsft.generator.model.domain;
 
 import java.io.File;
 
-import org.sklsft.generator.model.metadata.DatabaseEngine;
-import org.sklsft.generator.model.metadata.SkeletonType;
-
 
 /**
  * Full representation of a project<br/>
@@ -24,9 +21,9 @@ public class Project {
     public String workspaceFolder;
 	public String domainName;
     public String projectName;
-    public SkeletonType skeletonType;
+    public String skeleton;
     
-    public DatabaseEngine databaseEngine;
+    public String databaseEngine;
     public String databaseName;
     public String databaseDNS;
     public String databasePort;
@@ -73,19 +70,19 @@ public class Project {
 		this.projectName = projectName;
 	}
 
-	public SkeletonType getSkeletonType() {
-		return skeletonType;
+	public String getSkeleton() {
+		return skeleton;
 	}
 
-	public void setSkeletonType(SkeletonType skeletonType) {
-		this.skeletonType = skeletonType;
+	public void setSkeleton(String skeleton) {
+		this.skeleton = skeleton;
 	}
 
-	public DatabaseEngine getDatabaseEngine() {
+	public String getDatabaseEngine() {
 		return databaseEngine;
 	}
 
-	public void setDatabaseEngine(DatabaseEngine databaseEngine) {
+	public void setDatabaseEngine(String databaseEngine) {
 		this.databaseEngine = databaseEngine;
 	}
 

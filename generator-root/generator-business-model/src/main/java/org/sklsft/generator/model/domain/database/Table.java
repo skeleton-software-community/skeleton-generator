@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.sklsft.generator.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.domain.Package;
-import org.sklsft.generator.model.domain.business.Property;
 
 /**
  * representation of a table<br/>

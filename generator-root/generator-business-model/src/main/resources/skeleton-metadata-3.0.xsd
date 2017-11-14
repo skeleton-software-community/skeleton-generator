@@ -103,8 +103,8 @@
     <xs:sequence>
       <xs:element name="domainName" type="xs:string"/>
       <xs:element name="projectName" type="xs:string"/>
-      <xs:element name="skeletonType" type="tns:skeletonType"/>
-      <xs:element name="databaseEngine" type="tns:databaseEngine"/>
+      <xs:element name="skeleton" type="xs:string"/>
+      <xs:element name="databaseEngine" type="xs:string"/>
       <xs:element name="databaseName" type="xs:string"/>
       <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
       <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
@@ -161,13 +161,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="databaseEngine">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="POSTGRESQL"/>
-      <xs:enumeration value="ORACLE"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="detailMode">
     <xs:restriction base="xs:string">
       <xs:enumeration value="MODAL"/>
@@ -200,12 +193,6 @@
       <xs:enumeration value="CSV"/>
       <xs:enumeration value="XML"/>
       <xs:enumeration value="CMD"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="skeletonType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SPRING_HIBERNATE_RICHFACES_4"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

@@ -26,7 +26,7 @@ public class CodeGeneratorImpl implements CodeGenerator {
 
 		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
 		
-		for (Layer layer : skeleton.getLayers()) {			
+		for (Layer layer : skeleton.getLayers(project)) {			
 			FileWriteCommandTreeNode root = layer.getResourcesNode(project);
 			if (root != null) {
 				logger.info("start copying resources for layer : " + layer.getName());
@@ -42,7 +42,7 @@ public class CodeGeneratorImpl implements CodeGenerator {
 
 		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
 		
-		for (Layer layer : skeleton.getLayers()) {			
+		for (Layer layer : skeleton.getLayers(project)) {			
 			FileWriteCommandTreeNode root = layer.getConfigurationNode(project);
 			if (root != null) {
 				logger.info("start creating configuration for layer : " + layer.getName());
@@ -58,7 +58,7 @@ public class CodeGeneratorImpl implements CodeGenerator {
 
 		Skeleton skeleton = SkeletonResolver.getSkeleton(project);
 		
-		for (Layer layer : skeleton.getLayers()) {			
+		for (Layer layer : skeleton.getLayers(project)) {			
 			FileWriteCommandTreeNode root = layer.getGenerationNode(project);
 			if (root != null) {
 				logger.info("start generating layer : " + layer.getName());

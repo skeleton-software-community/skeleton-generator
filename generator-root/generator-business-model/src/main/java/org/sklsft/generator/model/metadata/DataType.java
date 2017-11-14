@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlEnum;
  * <li>STRING (varchar(255))
  * <li>LONG
  * <li>DOUBLE
- * <li>DATETIME (without timezone)
+ * <li>DATETIME
  * <li>BOOLEAN
  * @author Nicolas Thibault
  *
@@ -40,56 +40,5 @@ public enum DataType {
 	
 	public boolean isLimitable() {
 		return limitable;
-	}
-
-
-	public String getPostgresqlType() {
-		switch (this) {
-			case TEXT:
-				return "TEXT";
-	
-			case STRING:
-				return "VARCHAR(255)";
-	
-			case LONG:
-				return "BIGINT";
-	
-			case DOUBLE:
-				return "DOUBLE PRECISION";
-	
-			case DATETIME:
-				return "TIMESTAMP WITH TIME ZONE";
-	
-			case BOOLEAN:
-				return "BOOLEAN";
-	
-			default:
-				throw new IllegalArgumentException("Unhandled data type " + this);
-		}
-	}
-
-	public String getOracleType() {
-		switch (this) {
-			case TEXT:
-				return "CLOB";
-	
-			case STRING:
-				return "VARCHAR2(255)";
-	
-			case LONG:
-				return "NUMBER(19,0)";
-	
-			case DOUBLE:
-				return "FLOAT(24)";
-	
-			case DATETIME:
-				return "DATE";
-	
-			case BOOLEAN:
-				return "NUMBER(1,0)";
-	
-			default:
-				throw new IllegalArgumentException("Unhandled data type " + this);
-		}
 	}
 }

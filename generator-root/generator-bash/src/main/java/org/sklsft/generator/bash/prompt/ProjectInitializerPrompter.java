@@ -9,7 +9,7 @@ import java.util.List;
 import org.sklsft.generator.bash.arguments.BasicFreeChoicesHelper;
 import org.sklsft.generator.bash.arguments.ChoicesHelper;
 import org.sklsft.generator.bash.arguments.DatabaseEngineChoicesHelper;
-import org.sklsft.generator.bash.arguments.SkeletonTypeChoicesHelper;
+import org.sklsft.generator.bash.arguments.SkeletonChoicesHelper;
 import org.sklsft.generator.bash.arguments.TrueFalseChoicesHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class ProjectInitializerPrompter implements ArgumentsPrompter {
 		super();
 		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your domain name  (ex:org.sklsft) : "));
 		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your project name (ex:demo) : "));
-		choicesHelpers.add(new SkeletonTypeChoicesHelper());
+		choicesHelpers.add(new SkeletonChoicesHelper());
 		choicesHelpers.add(new DatabaseEngineChoicesHelper());
 		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database name (ex:DEMO) : "));
 		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database host name (ex:localhost) : "));
