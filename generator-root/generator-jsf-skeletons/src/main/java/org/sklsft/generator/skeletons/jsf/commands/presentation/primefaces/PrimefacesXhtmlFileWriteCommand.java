@@ -142,6 +142,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		
 		writeLine(">");
 
+		writeLine("<f:selectItem itemValue=\"#{null}\" itemLabel=\"\"/>");
 		writeLine("<f:selectItems value=\"#{commonView." + property.selectableBean.objectName + "Options}\"");
 		writeLine("var=\"option\" itemValue=\"#{option.key}\" itemLabel=\"#{option.label}\"/>");
 		writeLine("</h:selectOneMenu>");
