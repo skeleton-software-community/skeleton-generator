@@ -21,13 +21,10 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
-        writeLine("xmlns:ui=" + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
-        writeLine("xmlns:f=" + CHAR_34 + "http://java.sun.com/jsf/core" + CHAR_34);
-        writeLine("xmlns:h=" + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
-        writeLine("xmlns:rich=" + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
-        writeLine("xmlns:a4j=" + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-        writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34 + ">");
+		writeLine("<ui:composition xmlns=\"http://www.w3.org/1999/xhtml\"");
+        writeLine("xmlns:ui=\"http://java.sun.com/jsf/facelets\"");
+        writeLine("xmlns:f=\"http://java.sun.com/jsf/core\"");
+        writeLine("xmlns:h=\"http://java.sun.com/jsf/html\">");
         skipLine();
 
         writeLine("<!-- -->");
@@ -37,11 +34,11 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         writeLine("<!-- -->");
         skipLine();
 
-        writeLine("<ul class=" + CHAR_34 + "nav nav-pills" + CHAR_34 + ">");
+        writeLine("<ul class=\"nav nav-pills\">");
         
-        writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + bean.objectName + "DetailsMenu" + CHAR_34 + ">");
-		writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
-		writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
+        writeLine("<li role=\"presentation\" id=\"" + bean.objectName + "DetailsMenu\">");
+		writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf\">");
+		writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 		writeLine("#{i18n." + bean.objectName + "Detail}");
 		writeLine("</h:link>");
 		writeLine("</li>");
@@ -50,9 +47,9 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToOneComponent.referenceBean;
 
-			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "DetailsMenu" + CHAR_34 + ">");
-			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "DetailsMenu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf\">");
+			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 			writeLine("#{i18n." + currentBean.objectName + "Detail}");
 			writeLine("</h:link>");
 			writeLine("</li>");
@@ -62,9 +59,9 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToManyComponent.referenceBean;
 
-			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ListMenu" + CHAR_34 + ">");
-			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "ListMenu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf\">");
+			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");
 			writeLine("</li>");
@@ -74,9 +71,9 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToMany.referenceBean;
 
-			writeLine("<li role=" + CHAR_34 + "presentation" + CHAR_34 + " id=" + CHAR_34 + currentBean.objectName + "ListMenu" + CHAR_34 + ">");
-			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf" + CHAR_34 + ">");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "ListMenu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf\">");
+			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");
 			writeLine("</li>");

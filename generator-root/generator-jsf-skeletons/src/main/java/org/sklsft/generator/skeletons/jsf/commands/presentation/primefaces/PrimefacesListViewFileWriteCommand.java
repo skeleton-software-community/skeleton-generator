@@ -22,15 +22,14 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
-		writeLine("xmlns:ui=" + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
-		writeLine("xmlns:f = " + CHAR_34 + "http://java.sun.com/jsf/core" + CHAR_34);
-		writeLine("xmlns:h = " + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
-		writeLine("xmlns:rich = " + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
-		writeLine("xmlns:a4j = " + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-		writeLine("xmlns:cc=" + CHAR_34 + "http://java.sun.com/jsf/composite/components" + CHAR_34);
-		writeLine("xmlns:s=" + CHAR_34 + "http://commons.sklsft.org/ui/components" + CHAR_34);
-		writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
+		writeLine("<ui:composition xmlns=\"http://www.w3.org/1999/xhtml\"");
+		writeLine("xmlns:ui=\"http://java.sun.com/jsf/facelets\"");
+		writeLine("xmlns:f = \"http://java.sun.com/jsf/core\"");
+		writeLine("xmlns:h = \"http://java.sun.com/jsf/html\"");
+		writeLine("xmlns:p=\"http://primefaces.org/ui\"");
+		writeLine("xmlns:cc=\"http://java.sun.com/jsf/composite/components\"");
+		writeLine("xmlns:s=\"http://commons.sklsft.org/ui/components\"");
+		writeLine("template=\"/templates/template.xhtml\">");
 		skipLine();
 
 		writeLine("<!-- -->");
@@ -41,30 +40,27 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		skipLine();
 
 		writeLine("<f:metadata>");
-		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".load}" + CHAR_34 + "/>");
+		writeLine("<f:viewAction action=\"#{" + this.bean.listControllerObjectName + ".load}\"/>");
 		writeLine("</f:metadata>");
 		
-		writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
+		writeLine("<ui:define name=\"content\">");
 		skipLine();		
 		
-		writeLine("<h:form id=" + CHAR_34 + bean.objectName + "ListForm" + CHAR_34 + ">");		
+		writeLine("<h:form id=\"" + bean.objectName + "ListForm\">");		
 			
-		writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
+		writeLine("<h:panelGroup id=\"" + this.bean.objectName + "PanelGroup\">");
 		
 		writeLine("<h2>");
 		writeLine("#{i18n." + bean.objectName + "List} (#{" + bean.listViewObjectName + ".scrollView.size})");
-		writeLine("</h2>");
-		
-		writeLine("<a4j:region>");
-		skipLine();		
+		writeLine("</h2>");	
 		
 		writeLine("<div class=\"filter-panel\">");
 		writeLine("<h3>");
 		writeLine("#{i18n.filters}");
 		
-		writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".reset}" + CHAR_34 + " render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + ">");
-		writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/refresh.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.resetFilter}" + CHAR_34 + "/>");
-		writeLine("</a4j:commandLink>");
+		writeLine("<p:commandLink action=\"#{" + bean.listControllerObjectName + ".reset}\" process=\"@this\" update=\"@form:" + bean.objectName + "PanelGroup\">");
+		writeLine("<h:graphicImage url=\"/resources/images/icons/refresh.png\" styleClass=\"imageIcon\" title=\"#{i18n.resetFilter}\"/>");
+		writeLine("</p:commandLink>");
 		
 		writeLine("</h3>");
 		
@@ -84,108 +80,107 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		
 		writeLine("<div class=\"results-panel\">");
 		
-		writeLine("<h:panelGroup id=" + CHAR_34 + "resultsPanelGroup" + CHAR_34 + ">");		
+		writeLine("<h:panelGroup id=\"resultsPanelGroup\">");		
 		
-		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.elements.size() == 0}" + CHAR_34 + ">");
+		writeLine("<ui:fragment rendered=\"#{" + bean.listViewObjectName + ".scrollView.elements.size() == 0}\">");
 		writeLine("#{i18n.noDataFound}<br/>");
 		writeLine("</ui:fragment>");
 		skipLine();
 		
-		writeLine("<ui:fragment rendered=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.elements.size() > 0}" + CHAR_34 + ">");
+		writeLine("<ui:fragment rendered=\"#{" + bean.listViewObjectName + ".scrollView.elements.size() > 0}\">");
 		
-		writeLine("<s:tooltip for=" + CHAR_34 + ".truncated-text" + CHAR_34 + "/>");
+		writeLine("<s:tooltip for=\".truncated-text\"/>");
 		skipLine();
 		
-		writeLine("<rich:dataTable rows=" + CHAR_34 + "10" + CHAR_34);
-		writeLine("id=" + CHAR_34 + this.bean.objectName + "List" + CHAR_34 + " var=" + CHAR_34 + this.bean.objectName + CHAR_34 + " name=" + CHAR_34 + "datatable" + CHAR_34);
-		writeLine("value=" + CHAR_34 + "#{" + this.bean.listViewObjectName + ".scrollView.elements}" + CHAR_34
-				+ " headerClass=" + CHAR_34 + "datatable-header" + CHAR_34
-				+ " rowClasses=" + CHAR_34 + "datatable-row, datatable-row-light" + CHAR_34 + ">");
+		writeLine("<p:dataTable rows=\"10\"");
+		writeLine("id=\"" + this.bean.objectName + "List\" var=\"" + this.bean.objectName + "\" name=\"datatable\"");
+		writeLine("value=\"#{" + this.bean.listViewObjectName + ".scrollView.elements}\" headerClass=\"datatable-header\" rowClasses=\"datatable-row, datatable-row-light\">");
 		skipLine();
 		
-		writeLine("<rich:column>");
-		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-		writeLine("<h:selectBooleanCheckbox id=" + CHAR_34 + "selectUnselectAll" + CHAR_34 + " onclick=" + CHAR_34 + "selectUnselectAll(this)" + CHAR_34 + " value=" + CHAR_34 + "false" + CHAR_34 + "/>");
+		writeLine("<p:column>");
+		writeLine("<f:facet name=\"header\">");
+		writeLine("<h:selectBooleanCheckbox id=\"selectUnselectAll\" onclick=\"selectUnselectAll(this)\" value=\"false\"/>");
 		writeLine("<script>$(function(){displaySelectUnselectAll();});</script>");
 		writeLine("</f:facet>");
-		writeLine("<h:selectBooleanCheckbox rendered="+ CHAR_34 +"#{" + this.bean.objectName + ".canDelete}" + CHAR_34 + " id=" + CHAR_34 + "selectUnselect" + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.objectName + ".selected}" + CHAR_34 + " onclick=" + CHAR_34
-				+ "selectUnselect('" + bean.objectName + "ListForm:" + bean.objectName + "List:selectUnselectAll')" + CHAR_34 + "/>");
-		writeLine("</rich:column>");
+		writeLine("<h:selectBooleanCheckbox rendered=\"#{" + this.bean.objectName + ".canDelete}\" id=\"selectUnselect\" value=\"#{" + this.bean.objectName + ".selected}\" onclick=\""
+				+ "selectUnselect('" + bean.objectName + "ListForm:" + bean.objectName + "List:selectUnselectAll')\"/>");
+		writeLine("</p:column>");
 		skipLine();
 		
-		writeLine("<rich:column>");
-		writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
-		writeLine("<h:outputText value=" + CHAR_34 + "Actions" + CHAR_34 + " />");
-		writeLine("<div class=" + CHAR_34 + "drop-list" + CHAR_34 + " id=" + CHAR_34 + "drop-list" + CHAR_34 + ">");
+		writeLine("<p:column>");
+		writeLine("<f:facet name=\"header\">");
+		writeLine("<h:outputText value=\"Actions\" />");
+		writeLine("<div class=\"drop-list\" id=\"drop-list\">");
 
 		if (bean.deleteEnabled) {
-			writeLine("<a4j:commandLink title=" + CHAR_34 + "#{i18n.deleteSelection}" + CHAR_34 + " action=" + CHAR_34
-					+ "#{" + bean.listControllerObjectName + ".deleteList}" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDeleteSelection}')) return false" + CHAR_34
-					+ " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + bean.objectName
-					+ "PanelGroup" + CHAR_34 + ">");
-			writeLine("<span class=" + CHAR_34 + "glyphicon glyphicon-trash" + CHAR_34 + "/>");
+			writeLine("<p:commandLink title=\"#{i18n.deleteSelection}\" action=\"#{" + bean.listControllerObjectName + ".deleteList}\"");
+			writeLine("onclick=\"if (!confirm('#{i18n.confirmDeleteSelection}')) return false\""
+					+ " process=\"@form:" + bean.objectName + "PanelGroup\""
+					+ " update=\":messages, @form:" + bean.objectName + "PanelGroup\">");
+			writeLine("<span class=\"glyphicon glyphicon-trash\"/>");
 
-			writeLine("</a4j:commandLink>");
+			writeLine("</p:commandLink>");
 		}
 
 		writeLine("</div>");
 		writeLine("</f:facet>");
-		writeLine("<h:panelGrid columns=" + CHAR_34 + "2" + CHAR_34 + ">");
+		writeLine("<h:panelGrid styleClass=\"actions-grid\" columns=\"2\">");
 		
 		if (bean.detailMode.equals(DetailMode.PAGE)) {
-			writeLine("<h:link outcome=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf" + CHAR_34 + ">");
-			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
-			writeLine("<f:param name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.objectName + ".id}" + CHAR_34 + " />");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf\">");
+			writeLine("<h:graphicImage url=\"/resources/images/icons/edit.png\" styleClass=\"imageIcon\" title=\"#{i18n.edit}\"/>");
+			writeLine("<f:param name=\"id\" value=\"#{" + bean.objectName + ".id}\" />");
 			writeLine("</h:link>");
 		} else {
-			writeLine("<a4j:commandLink action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".edit" + this.bean.className + "(" + bean.objectName + ".id)"+ "}"
-					+ CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + bean.objectName + "Modal').modal('show')"
-					+ CHAR_34 + " render=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
-			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/edit.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34 + "#{i18n.edit}" + CHAR_34 + "/>");
-			writeLine("</a4j:commandLink>");
+			writeLine("<p:commandLink action=\"#{" + this.bean.listControllerObjectName + ".edit" + this.bean.className + "(" + bean.objectName + ".id)"+ "}\""
+					+ " oncomplete=\"$('#" + bean.objectName + "Modal').modal('show')\""
+					+ " process=\"@this\""
+					+ " update=\"@form:" + bean.objectName + "DetailPanelGroup\">");
+			writeLine("<h:graphicImage url=\"/resources/images/icons/edit.png\" styleClass=\"imageIcon\" title=\"#{i18n.edit}\"/>");
+			writeLine("</p:commandLink>");
 		}
 		
 		if (this.bean.deleteEnabled) {
-			writeLine("<a4j:commandLink rendered="+ CHAR_34 +"#{" + this.bean.objectName + ".canDelete}"+ CHAR_34 +" action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".delete(" + this.bean.objectName + ".id)}" + CHAR_34);
-			writeLine("onclick=" + CHAR_34 + "if (!confirm('#{i18n.confirmDelete}')) return false" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "PanelGroup" + CHAR_34 + ">");
-			writeLine("<h:graphicImage url=" + CHAR_34 + "/resources/images/icons/delete.png" + CHAR_34 + " styleClass=" + CHAR_34 + "imageIcon" + CHAR_34 + " title=" + CHAR_34
-					+ "#{i18n.delete}" + CHAR_34 + "/>");
-			writeLine("</a4j:commandLink>");
+			writeLine("<p:commandLink rendered=\"#{" + this.bean.objectName + ".canDelete}\" action=\"#{" + this.bean.listControllerObjectName + ".delete(" + this.bean.objectName + ".id)}\"");
+			writeLine("onclick=\"if (!confirm('#{i18n.confirmDelete}')) return false\""
+			+ " process=\"@this\""
+			+ " update=\":messages, @form:" + this.bean.objectName + "PanelGroup\">");
+			writeLine("<h:graphicImage url=\"/resources/images/icons/delete.png\" styleClass=\"imageIcon\" title=\"#{i18n.delete}\"/>");
+			writeLine("</p:commandLink>");
 
 		}
 		writeLine("</h:panelGrid>");
-		writeLine("</rich:column>");
+		writeLine("</p:column>");
 		skipLine();
 
 
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			writeLine("<rich:column>");
-			writeLine("<f:facet name=" + CHAR_34 + "header" + CHAR_34 + ">");
+			writeLine("<p:column>");
+			writeLine("<f:facet name=\"header\">");
 			
 			writeLine("<cc:datatableHeader");
-			writeLine("label=" + CHAR_34 + "#{i18n." + this.bean.objectName + property.capName + "}" + CHAR_34);
-			writeLine("orderType=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.sorting." + property.name + "OrderType}" + CHAR_34);
-			writeLine("action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
-			writeLine("render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");
+			writeLine("label=\"#{i18n." + this.bean.objectName + property.capName + "}\"");
+			writeLine("orderType=\"#{" + bean.listViewObjectName + ".scrollForm.sorting." + property.name + "OrderType}\"");
+			writeLine("action=\"#{" + bean.listControllerObjectName + ".refresh}\"");
+			writeLine("render=\"@form:" + bean.objectName + "PanelGroup\"/>");
 
 			writeLine("</f:facet>");
 
 			writeListComponent(property, this.bean);
 
-			writeLine("</rich:column>");
+			writeLine("</p:column>");
 			skipLine();
 		}
 
-		writeLine("</rich:dataTable>");
+		writeLine("</p:dataTable>");
 		skipLine();
 		
 		
 		writeLine("<cc:datatableScroller");
-		writeLine("page=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollForm.page}" + CHAR_34);
-		writeLine("numberOfPages=" + CHAR_34 + "#{" + bean.listViewObjectName + ".scrollView.numberOfPages}" + CHAR_34);
-		writeLine("action=" + CHAR_34 + "#{" + bean.listControllerObjectName + ".refresh}" + CHAR_34);
-		writeLine("render=" + CHAR_34 + bean.objectName + "PanelGroup" + CHAR_34 + "/>");		
+		writeLine("page=\"#{" + bean.listViewObjectName + ".scrollForm.page}\"");
+		writeLine("numberOfPages=\"#{" + bean.listViewObjectName + ".scrollView.numberOfPages}\"");
+		writeLine("action=\"#{" + bean.listControllerObjectName + ".refresh}\"");
+		writeLine("render=\"@form:" + bean.objectName + "PanelGroup\"/>");		
 		skipLine();
 		
 		writeLine("</ui:fragment>");
@@ -197,26 +192,25 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		skipLine();
 
 		if (this.bean.createEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.create}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}"
-					+ CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) {$('#" + bean.objectName + "Modal').modal('show')}"
-					+ CHAR_34 + " render=" + CHAR_34 + bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+			writeLine("<p:commandButton value=\"#{i18n.create}\" action=\"#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}\""
+					+ " styleClass=\"btn btn-info\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) {$('#" + bean.objectName + "Modal').modal('show')}\""
+					+ " process=\"@this\""
+					+ " update=\"" + bean.objectName + "DetailPanelGroup\"/>");
 
 			skipLine();
 		}		
 			
 		this.writeNotOverridableContent();
 
-		writeLine("</a4j:region>");
-		skipLine();
 		writeLine("</h:panelGroup>");
 		skipLine();
 		
 		
         
-        writeLine("<div class=" + CHAR_34 + "modal modal-default" + CHAR_34 + " id=" + CHAR_34 + bean.objectName + "Modal" + CHAR_34 + " tabindex=" + CHAR_34 + "-1" + CHAR_34 + " aria-hidden=" + CHAR_34 + "true" + CHAR_34 + ">");
-        writeLine("<div class=" + CHAR_34 + "modal-dialog modal-lg" + CHAR_34 + ">");
-        writeLine("<div class=" + CHAR_34 + "modal-content" + CHAR_34 + ">");
-        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Modal.xhtml" + CHAR_34 + "/>");
+        writeLine("<div class=\"modal modal-default\" id=\"" + bean.objectName + "Modal\" tabindex=\"-1\" aria-hidden=\"true\">");
+        writeLine("<div class=\"modal-dialog modal-lg\">");
+        writeLine("<div class=\"modal-content\">");
+        writeLine("<ui:include src=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Modal.xhtml\"/>");
         writeLine("</div>");
         writeLine("</div>");
         writeLine("</div>");

@@ -150,14 +150,14 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 	
 	private void writeAutocomplete(String prefix, ViewProperty property, Bean bean){
 		
-		writeLine("<rich:autocomplete id=\"" + prefix + bean.objectName
+		writeLine("<p:autoComplete id=\"" + prefix + bean.objectName
 				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
 				
 		if (!property.editable) {
 			write(" disabled=\"true\"");
 		}
 		
-		writeLine(" autocompleteMethod=\"#{commonController.search" + property.selectableBean.className + "Options}\"/>");
+		writeLine(" completeMethod=\"#{commonController.search" + property.selectableBean.className + "Options}\"/>");
 	}
 	
 	
@@ -237,8 +237,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 	}
 	
 	private void writeDateInput(String prefix, ViewProperty property, Bean bean){
-		writeLine("<rich:calendar id=\"" + prefix + bean.objectName + property.capName +
-				"\" inputClass=\"form-control\" value=\"#{form." + property.name + "}\"");
+		writeLine("<p:calendar id=\"" + prefix + bean.objectName + property.capName +
+				"\" class=\"form-control date-picker\" value=\"#{form." + property.name + "}\"");
 
 		switch (property.format) {
 		case DATE:
@@ -272,57 +272,49 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:inputText");
 				writeLine("value=\"#{" + scrollForm + ".filter." + property.name + "}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");			
 				break;
 				
 			case DATETIME:				
-				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("inputClass=\"form-control\"");
+				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("class=\"form-control date-picker\"");
 				switch (property.format) {
-				case DATE:
-					writeLine("datePattern=\"dd MMMM yyyy\">");
-					break;
-
-				default:
-					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-					break;
-				}
-				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("</a4j:ajax>");
-				writeLine("</rich:calendar>");
-				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("inputClass=\"form-control\"");
+					case DATE:
+						writeLine("datePattern=\"dd MMMM yyyy\">");
+						break;
+	
+					default:
+						writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
+						break;
+					}
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</p:calendar>");
+				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("class=\"form-control date-picker\"");
 				switch (property.format) {
-				case DATE:
-					writeLine("datePattern=\"dd MMMM yyyy\">");
-					break;
+					case DATE:
+						writeLine("datePattern=\"dd MMMM yyyy\">");
+						break;
 
-				default:
-					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-					break;
+					default:
+						writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
+						break;
 				}
-				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("</a4j:ajax>");
-				writeLine("</rich:calendar>");
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</p:calendar>");
 				break;
 				
 			case DOUBLE:
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				break;
 			
@@ -330,17 +322,13 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
 				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("styleClass=\"form-control\">");
 				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				break;
@@ -351,8 +339,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<f:selectItem itemLabel=\"\" itemValue=\"#{null}\"></f:selectItem>");
 				writeLine("<f:selectItem itemLabel=\"#{i18n.trueLabel}\" itemValue=\"#{true}\"></f:selectItem>");
 				writeLine("<f:selectItem itemLabel=\"#{i18n.falseLabel}\" itemValue=\"#{false}\"></f:selectItem>");
-				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
-				writeLine("</a4j:ajax>");
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:selectOneMenu>");
 				
 				break;

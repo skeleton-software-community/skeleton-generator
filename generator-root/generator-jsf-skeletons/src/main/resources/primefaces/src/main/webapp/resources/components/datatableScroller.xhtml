@@ -5,8 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
@@ -20,34 +19,33 @@
 
 	<ui:fragment rendered="#{cc.attrs.numberOfPages>1}">
 		<div class="datatable-scroller">
-			<a4j:commandLink onclick="$('.datatable-scroller-page-input').val(1)"
+			<p:commandLink onclick="$('.datatable-scroller-page-input').val(1)"
 				action="#{cc.attrs.action}"
-				render="#{cc.attrs.render}">
+				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-fast-backward"> </span>
-			</a4j:commandLink>
-			<a4j:commandLink onclick="$('.datatable-scroller-page-input').get(0).value--"
+			</p:commandLink>
+			<p:commandLink onclick="$('.datatable-scroller-page-input').get(0).value--"
 				action="#{cc.attrs.action}"
-				render="#{cc.attrs.render}">
+				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-step-backward"> </span>
-			</a4j:commandLink>
+			</p:commandLink>
 			<h:inputText value="#{cc.attrs.page}" class="datatable-scroller-page-input">
-				<a4j:ajax event="keyup" render="#{cc.attrs.render}"
-					listener="#{cc.attrs.action}"
+				<p:ajax event="keyup" update="#{cc.attrs.render}"
+					listener="#{cc.attrs.action}" delay="500"
 					oncomplete="setCaretToEnd(event);">
-					<a4j:attachQueue requestDelay="500" />
-				</a4j:ajax>
+				</p:ajax>
 			</h:inputText>
 			/ <span class="datatable-scroller-page-number">#{cc.attrs.numberOfPages}</span>
-			<a4j:commandLink onclick="$('.datatable-scroller-page-input').get(0).value++"
+			<p:commandLink onclick="$('.datatable-scroller-page-input').get(0).value++"
 				action="#{cc.attrs.action}"
-				render="#{cc.attrs.render}">
+				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-step-forward"> </span>
-			</a4j:commandLink>
-			<a4j:commandLink  onclick="$('.datatable-scroller-page-input').val($('.datatable-scroller-page-number').text())"
+			</p:commandLink>
+			<p:commandLink  onclick="$('.datatable-scroller-page-input').val($('.datatable-scroller-page-number').text())"
 				action="#{cc.attrs.action}"
-				render="#{cc.attrs.render}">
+				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-fast-forward"> </span>
-			</a4j:commandLink>
+			</p:commandLink>
 		</div>
 	</ui:fragment>
 
