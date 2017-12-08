@@ -18,7 +18,7 @@ public class DatabaseHandlerResolver {
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
 		provider.addIncludeFilter(new AssignableTypeFilter(DatabaseHandler.class));
 		
-		Set<BeanDefinition> defs = provider.findCandidateComponents("");
+		Set<BeanDefinition> defs = provider.findCandidateComponents("org.sklsft.generator.skeletons");
 		
 		for (BeanDefinition def:defs) {
 			try {

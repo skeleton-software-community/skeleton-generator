@@ -51,7 +51,8 @@
 		<javax.el.version>3.0.1-b08</javax.el.version>
 		<jstl.version>1.2</jstl.version>
 		<jsf.version>2.2.13</jsf.version>
-		<richfaces.version>4.5.8.Final</richfaces.version>
+		<primefaces.version>5.1</primefaces.version>
+		<primefaces.theme.version>1.0.10</primefaces.theme.version>
 
 		<junit.version>4.12</junit.version>
 		
@@ -332,11 +333,17 @@
 			</dependency>
 			
 			
-			<!-- Richfaces -->
-			<dependency>  
-				<groupId>org.richfaces</groupId>
-				<artifactId>richfaces</artifactId>
-				<version>${richfaces.version}</version>
+			<!-- Prime Faces -->
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>${primefaces.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.primefaces.themes</groupId>
+				<artifactId>bootstrap</artifactId>
+				<version>${primefaces.theme.version}</version>
 			</dependency>
 			
 			

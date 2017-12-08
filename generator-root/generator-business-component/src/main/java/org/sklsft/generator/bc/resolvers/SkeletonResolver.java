@@ -23,7 +23,7 @@ public class SkeletonResolver {
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
 		provider.addIncludeFilter(new AssignableTypeFilter(Skeleton.class));
 		
-		Set<BeanDefinition> defs = provider.findCandidateComponents("");
+		Set<BeanDefinition> defs = provider.findCandidateComponents("org.sklsft.generator.skeletons");
 		
 		for (BeanDefinition def:defs) {
 			try {

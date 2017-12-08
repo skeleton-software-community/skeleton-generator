@@ -108,10 +108,10 @@
 	</context-param>
 
 
-	<!-- Richfaces configuration -->
+	<!-- primefaces configuration -->
 	<context-param>
-	    <param-name>org.richfaces.enableControlSkinning</param-name>
-	    <param-value>false</param-value>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
 	</context-param>
 
 </web-app>

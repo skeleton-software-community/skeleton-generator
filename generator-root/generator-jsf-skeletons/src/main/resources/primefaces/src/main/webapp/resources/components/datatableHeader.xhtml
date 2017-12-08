@@ -18,20 +18,20 @@
 <composite:implementation>
 
 	<p:commandLink rendered="#{empty cc.attrs.orderType}"
-		action="#{cc.attrs.action}" update="#{cc.attrs.render}">
+		action="#{cc.attrs.action}" process="@this" update="#{cc.attrs.render}">
 		<h:outputText value="#{cc.attrs.label}" />
 		<f:setPropertyActionListener value="ASC" target="#{cc.attrs.orderType}">
 		</f:setPropertyActionListener>
 	</p:commandLink>
 	<p:commandLink rendered="#{cc.attrs.orderType=='ASC'}"
-		action="#{cc.attrs.action}" update="#{cc.attrs.render}">
+		action="#{cc.attrs.action}" process="@this" update="#{cc.attrs.render}">
 		<h:outputText value="#{cc.attrs.label}" />
 		<f:setPropertyActionListener value="DESC" target="#{cc.attrs.orderType}">
 		</f:setPropertyActionListener>
 		<span class="glyphicon glyphicon-triangle-top" />
 	</p:commandLink>
 	<p:commandLink rendered="#{cc.attrs.orderType=='DESC'}"
-		action="#{cc.attrs.action}" update="#{cc.attrs.render}">
+		action="#{cc.attrs.action}" process="@this" update="#{cc.attrs.render}">
 		<h:outputText value="#{cc.attrs.label}" />
 		<f:setPropertyActionListener value="#{null}" target="#{cc.attrs.orderType}">
 		</f:setPropertyActionListener>

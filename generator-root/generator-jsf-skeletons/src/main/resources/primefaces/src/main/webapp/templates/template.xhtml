@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:p="http://primefaces.org/ui">
 
 
 <h:head>
@@ -45,11 +44,7 @@
 
 	<div class="container">
 
-		<rich:notifyStack id="globalStack" position="topRight"
-			styleClass="global-stack" direction="vertical">
-			<rich:notifyMessages globalOnly="true"
-				stayTime="5000" stack="globalStack" sticky="false" />
-		</rich:notifyStack>
+		<p:growl id="messages" sticky="false" life="4000" globalOnly="true" />
 
 		<div class="page">
 			<ui:insert name="content" />
@@ -79,7 +74,7 @@
 		</div>
 	</div>
 
-	<h:outputScript library="org.richfaces" name="jquery.js" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<script type="text/javascript"
 		src="#{application.contextPath}/resources/js/bootstrap.min.js" />
 	<script type="text/javascript"
