@@ -63,19 +63,19 @@ public class PrimefacesModalViewFileWriteCommand extends PrimefacesXhtmlFileWrit
 	        writeLine("<p:commandButton value=\"#{i18n.save}\" action=\"#{" + bean.listControllerObjectName + ".save}\""
 	        		+ " rendered=\"#{empty view.id}\""
 	        		+ " styleClass=\"btn btn-success\" process=\"@form:" + bean.objectName + "DetailPanelGroup\" update=\":messages, @form:" + bean.objectName + "PanelGroup, @form:" + bean.objectName
-					+ "DetailPanelGroup\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + bean.objectName + "Modal').modal('hide');\"/>");
+					+ "DetailPanelGroup\" oncomplete=\"onSuccess(args, function(){$('#" + bean.objectName + "Modal').modal('hide')});\"/>");
         }
         
         if (bean.updateEnabled) {
 	        writeLine("<p:commandButton value=\"#{i18n.update}\" action=\"#{" + bean.listControllerObjectName + ".update}\""
 					+ " rendered=\"#{not empty view.id}\" disabled=\"#{not view.canUpdate}\""
 					+ " styleClass=\"btn btn-success\" process=\"@form:" + bean.objectName + "DetailPanelGroup\" update=\":messages, @form:" + bean.objectName + "PanelGroup, @form:" + bean.objectName
-					+ "DetailPanelGroup\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + bean.objectName + "Modal').modal('hide');\"/>");
+					+ "DetailPanelGroup\" oncomplete=\"onSuccess(args, function(){$('#" + bean.objectName + "Modal').modal('hide')});\"/>");
         }
         
 		writeLine("<p:commandButton value=\"#{i18n.cancel}\" actionListener=\"#{" + bean.listControllerObjectName + ".resetForm}\""
 				+ " styleClass=\"btn btn-info\""
-				+ " immediate=\"true\" execute=\"@this\" update=\"@form:" + bean.objectName + "PanelGroup\""
+				+ " immediate=\"true\" process=\"@this\" update=\"@form:" + bean.objectName + "PanelGroup\""
 				+ " oncomplete=\"$('#" + bean.objectName + "Modal').modal('hide')\"/>");
 
 

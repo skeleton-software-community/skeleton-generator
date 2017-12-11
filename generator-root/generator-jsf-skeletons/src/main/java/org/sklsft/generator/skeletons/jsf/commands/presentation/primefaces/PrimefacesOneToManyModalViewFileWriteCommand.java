@@ -70,14 +70,14 @@ public class PrimefacesOneToManyModalViewFileWriteCommand extends PrimefacesXhtm
 			writeLine("<p:commandButton value=\"#{i18n.save}\" action=\"#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}\""
 					+ " rendered=\"#{empty view.id}\""
 					+ " styleClass=\"btn btn-success\" process=\"@form:" +  currentBean.objectName + "DetailPanelGroup\" update=\":messages, @form:" +  currentBean.objectName + "PanelGroup, @form:" + currentBean.objectName + "DetailPanelGroup\"" 
-					+ " oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
+					+ " oncomplete=\"onSuccess(args, function(){$('#" + currentBean.objectName + "Modal').modal('hide')});\"/>");
 		}
 		
 		if (this.oneToMany.referenceBean.updateEnabled) {
 			writeLine("<p:commandButton value=\"#{i18n.update}\" action=\"#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}\""
 					+ " rendered=\"#{not empty view.id}\" disabled=\"#{not view.canUpdate}\""
 					+ " styleClass=\"btn btn-success\" process=\"@form:" + currentBean.objectName + "DetailPanelGroup\" update=\":messages, @form:" + currentBean.objectName + "PanelGroup, @form:" + currentBean.objectName + "DetailPanelGroup\"" 
-					+ " oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
+					+ " oncomplete=\"onSuccess(args, function(){$('#" + currentBean.objectName + "Modal').modal('hide')});\"/>");
 		}
 		
 		writeLine("<p:commandButton value=\"#{i18n.cancel}\" actionListener=\"#{" + parentBean.listControllerObjectName + ".resetForm}\" styleClass=\"btn btn-info\" immediate=\"true\" process=\"@this\" update=\"@form:" +  currentBean.objectName + "PanelGroup\"" 

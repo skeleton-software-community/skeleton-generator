@@ -70,7 +70,7 @@ public class PrimefacesOneToManyComponentModalViewFileWriteCommand extends Prime
 			writeLine("<p:commandButton value=\"#{i18n.save}\" action=\"#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}\"" 
 					+ " rendered=\"#{empty view.id}\""
 					+ " styleClass=\"btn btn-success\" process=\"@form:" + currentBean.objectName + "DetailPanelGroup\" update=\":messages, @form:" +  currentBean.objectName + "PanelGroup, @form:" + currentBean.objectName
-					+ "DetailPanelGroup\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
+					+ "DetailPanelGroup\" oncomplete=\"onSuccess(args, function(){$('#" + currentBean.objectName + "Modal').modal('hide')});\"/>");
 		}
 		
 		if (this.oneToManyComponent.referenceBean.updateEnabled) {

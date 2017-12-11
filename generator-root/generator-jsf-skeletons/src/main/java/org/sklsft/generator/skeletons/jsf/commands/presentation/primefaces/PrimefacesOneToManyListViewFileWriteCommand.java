@@ -197,7 +197,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 
 		if (currentBean.createEnabled) {
 			writeLine("<p:commandButton value=\"#{i18n.create}\" action=\"#{" + parentBean.detailControllerObjectName + ".create" + currentBean.className	+ "}\"" 
-					+ " styleClass=\"btn btn-info\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('show')\""
+					+ " styleClass=\"btn btn-info\" oncomplete=\"onSuccess(args, function(){$('#" + currentBean.objectName + "Modal').modal('show')});\""
 					+ " process=\"@this\" update=\"@form:" +  currentBean.objectName + "DetailPanelGroup\"/>");
 			skipLine();
 		}

@@ -193,7 +193,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 
 		if (this.bean.createEnabled) {
 			writeLine("<p:commandButton value=\"#{i18n.create}\" action=\"#{" + this.bean.listControllerObjectName + ".create" + this.bean.className + "}\""
-					+ " styleClass=\"btn btn-info\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) {$('#" + bean.objectName + "Modal').modal('show')}\""
+					+ " styleClass=\"btn btn-info\" oncomplete=\"onSuccess(args, function(){$('#" + bean.objectName + "Modal').modal('show')});\""
 					+ " process=\"@this\""
 					+ " update=\"" + bean.objectName + "DetailPanelGroup\"/>");
 

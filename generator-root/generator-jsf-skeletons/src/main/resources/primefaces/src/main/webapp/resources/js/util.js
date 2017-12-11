@@ -79,3 +79,10 @@ function show(arg) {
 function hide(arg) {
 	document.getElementById(arg).style.display = "none";
 }
+
+
+function onSuccess(args, callback) {
+	if(!args.validationFailed && (!args.maximumSeverity || args.maximumSeverity.ordinal==0)) {
+		callback();
+	}
+}
