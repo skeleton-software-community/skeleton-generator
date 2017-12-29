@@ -38,6 +38,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import static org.sklsft.commons.model.patterns.HibernateCriteriaUtils.*;");
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import org.hibernate.criterion.Projections;");
 		javaImports.add("import org.hibernate.criterion.Restrictions;");
@@ -365,6 +366,9 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			case DOUBLE :
 				writeDoubleRestriction(property);
 				return;
+			case BIG_DECIMAL :
+				writeBigDecimalRestriction(property);
+				return;
 			case STRING :
 			case TEXT :
 				writeTextRestriction(property);
@@ -387,6 +391,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	private void writeDoubleRestriction(ViewProperty property) {
+		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
+		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
+		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+	}
+	
+	private void writeBigDecimalRestriction(ViewProperty property) {
 		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");

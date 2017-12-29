@@ -56,6 +56,25 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 			}
 			writeLine("</h:outputText>");
 			break;
+			
+		case BIG_DECIMAL:
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
+
+			switch (property.format) {
+			case TWO_DECIMALS:
+				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
+				break;
+
+			case FOUR_DECIMALS:
+				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
+				break;
+
+			default:
+				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
+				break;
+			}
+			writeLine("</h:outputText>");
+			break;
 
 		case LONG:
 			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
@@ -110,6 +129,9 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 					break;
 				case DOUBLE:
 					writeDoubleInput(prefix, property, bean);
+					break;
+				case BIG_DECIMAL:
+					writeBigDecimalInput(prefix, property, bean);
 					break;
 				case LONG:
 					writeLongInput(prefix, property, bean);
@@ -222,6 +244,32 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("</h:inputText>");
 	}
 	
+	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
+		write("<h:inputText id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form."
+				+ property.name + "}\"");
+		
+		if (!property.editable) {
+			write(" disabled=\"true\"");
+		}
+		writeLine(">");
+
+		switch (property.format) {
+			case TWO_DECIMALS:
+				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
+				break;
+	
+			case FOUR_DECIMALS:
+				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
+				break;
+	
+			default:
+				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
+				break;
+		}
+		writeLine("</h:inputText>");
+	}
+	
 	private void writeLongInput(String prefix, ViewProperty property, Bean bean){
 		write("<h:inputText id=\"" + prefix + bean.objectName
 				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form." + property.name + "}\"");
@@ -306,6 +354,19 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				break;
 				
 			case DOUBLE:
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</h:inputText>");
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</h:inputText>");
+				break;
+				
+			case BIG_DECIMAL:
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");

@@ -127,6 +127,7 @@
       <xs:enumeration value="STRING"/>
       <xs:enumeration value="LONG"/>
       <xs:enumeration value="DOUBLE"/>
+      <xs:enumeration value="BIG_DECIMAL"/>
       <xs:enumeration value="DATETIME"/>
       <xs:enumeration value="BOOLEAN"/>
     </xs:restriction>

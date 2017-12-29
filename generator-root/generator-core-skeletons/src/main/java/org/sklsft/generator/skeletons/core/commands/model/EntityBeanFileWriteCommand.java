@@ -43,6 +43,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 		javaImports.add("import java.util.Set;");
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import javax.persistence.CascadeType;");
 		javaImports.add("import javax.persistence.Column;");

@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlEnum;
  * <li>STRING (varchar(255))
  * <li>LONG
  * <li>DOUBLE
+ * <li>BIG_DECIMAL
  * <li>DATETIME
  * <li>BOOLEAN
  * @author Nicolas Thibault
@@ -19,6 +20,7 @@ public enum DataType {
 	STRING("String", false),
 	LONG("Long", true),
 	DOUBLE("Double", true),
+	BIG_DECIMAL("BigDecimal", true),
 	DATETIME("Date", true),
 	BOOLEAN("Boolean", false);	
 	

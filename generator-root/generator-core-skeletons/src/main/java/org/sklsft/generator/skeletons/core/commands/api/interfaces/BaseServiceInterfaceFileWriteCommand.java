@@ -27,6 +27,7 @@ private Bean bean;
 	protected void fetchSpecificImports() {
 		
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");

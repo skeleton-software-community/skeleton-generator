@@ -154,6 +154,9 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	
 			case DOUBLE:
 				return "FLOAT(24)";
+				
+			case BIG_DECIMAL:
+				return "NUMERIC";
 	
 			case DATETIME:
 				return "DATE";

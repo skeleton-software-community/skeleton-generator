@@ -30,6 +30,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import java.util.Arrays;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.math.BigDecimal;");
 		
 		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;");
 		javaImports.add("import org.sklsft.generator.repository.backup.reader.model.BackupArguments;");

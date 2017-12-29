@@ -148,6 +148,9 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	
 			case DATETIME:
 				return "TIMESTAMP WITH TIME ZONE";
+				
+			case BIG_DECIMAL:
+				return "NUMERIC";
 	
 			case BOOLEAN:
 				return "BOOLEAN";

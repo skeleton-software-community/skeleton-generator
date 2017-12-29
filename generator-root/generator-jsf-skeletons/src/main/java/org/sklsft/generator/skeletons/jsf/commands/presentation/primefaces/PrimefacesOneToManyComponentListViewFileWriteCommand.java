@@ -138,7 +138,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		skipLine();
 		
 		writeLine("</f:facet>");
-		writeLine("<h:panelGrid columns=\"2\">");
+		writeLine("<h:panelGrid styleClass=\"actions-grid\" columns=\"2\">");
 
 		if (currentBean.detailMode.equals(DetailMode.PAGE)) {
 			writeLine("<h:link outcome=\"/sections/" + currentBean.myPackage.name + "/" + currentBean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf\">");
