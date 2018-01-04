@@ -5,7 +5,6 @@ import java.util.List;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
-import org.sklsft.generator.model.metadata.Format;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.Visibility;
 
@@ -24,7 +23,6 @@ public class Property {
 	public Bean referenceBean;
 	public RelationType relation;
 	public boolean embedded;
-	public Format format;
 	public boolean editable;
 	public Visibility visibility;
 	public String rendering;

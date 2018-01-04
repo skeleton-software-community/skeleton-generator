@@ -158,8 +158,11 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			case BIG_DECIMAL:
 				return "NUMERIC";
 	
-			case DATETIME:
+			case DATE:
 				return "DATE";
+			
+			case DATETIME:
+				return "TIMESTAMP WITH TIME ZONE";
 	
 			case BOOLEAN:
 				return "NUMBER(1,0)";

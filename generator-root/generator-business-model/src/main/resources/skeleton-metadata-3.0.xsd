@@ -19,7 +19,6 @@
     <xs:attribute name="unique" type="xs:boolean"/>
     <xs:attribute name="referenceTableName" type="xs:string"/>
     <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
-    <xs:attribute name="format" type="tns:format"/>
     <xs:attribute name="editable" type="xs:boolean"/>
     <xs:attribute name="visibility" type="tns:visibility"/>
     <xs:attribute name="rendering" type="xs:string"/>
@@ -128,6 +127,7 @@
       <xs:enumeration value="LONG"/>
       <xs:enumeration value="DOUBLE"/>
       <xs:enumeration value="BIG_DECIMAL"/>
+      <xs:enumeration value="DATE"/>
       <xs:enumeration value="DATETIME"/>
       <xs:enumeration value="BOOLEAN"/>
     </xs:restriction>
@@ -141,16 +141,6 @@
       <xs:enumeration value="ONE_TO_ONE"/>
       <xs:enumeration value="ONE_TO_ONE_COMPONENT"/>
       <xs:enumeration value="PROPERTY"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="format">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="DEFAULT"/>
-      <xs:enumeration value="TWO_DECIMALS"/>
-      <xs:enumeration value="FOUR_DECIMALS"/>
-      <xs:enumeration value="DATE"/>
-      <xs:enumeration value="DATE_AND_TIME"/>
     </xs:restriction>
   </xs:simpleType>
 

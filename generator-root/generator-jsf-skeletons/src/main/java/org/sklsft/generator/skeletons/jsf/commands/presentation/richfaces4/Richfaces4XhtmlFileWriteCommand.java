@@ -21,39 +21,30 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:selectBooleanCheckbox value=\"#{" + bean.objectName + "." + property.name + "}\" disabled=\"true\"/>");
 			}
 			break;
+			
+		case DATE:
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
+			writeLine("<f:convertDateTime pattern=\"yyyy-MM-dd\"/>");
+			writeLine("</h:outputText>");
+
+			break;
 
 		case DATETIME:
-			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
-
-			switch (property.format) {
-			case DATE:
-				writeLine("<f:convertDateTime type=\"date\" dateStyle=\"medium\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertDateTime type=\"both\" dateStyle=\"medium\"/>");
-				break;
-			}
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
+			writeLine("<f:convertDateTime pattern=\"yyyy-MM-dd HH:mm:ss\"/>");
 			writeLine("</h:outputText>");
 
 			break;
 
 		case DOUBLE:
 			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
-
-			switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-			}
+			writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
+			writeLine("</h:outputText>");
+			break;
+			
+		case BIG_DECIMAL:
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
+			writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 			writeLine("</h:outputText>");
 			break;
 
@@ -105,11 +96,17 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 				case BOOLEAN:
 					writeBooleanInput(prefix, property, bean);
 					break;
-				case DATETIME:
+				case DATE:
 					writeDateInput(prefix, property, bean);
+					break;
+				case DATETIME:
+					writeDateTimeInput(prefix, property, bean);
 					break;
 				case DOUBLE:
 					writeDoubleInput(prefix, property, bean);
+					break;
+				case BIG_DECIMAL:
+					writeBigDecimalInput(prefix, property, bean);
 					break;
 				case LONG:
 					writeLongInput(prefix, property, bean);
@@ -205,20 +202,20 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 			write(" disabled=\"true\"");
 		}
 		writeLine(">");
-
-		switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
+		writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
+		writeLine("</h:inputText>");
+	}
 	
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-	
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
+	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
+		write("<h:inputText id=\"" + prefix + bean.objectName
+				+ property.capName + "\" styleClass=\"form-control\" value=\"#{form."
+				+ property.name + "}\"");
+		
+		if (!property.editable) {
+			write(" disabled=\"true\"");
 		}
+		writeLine(">");
+		writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 		writeLine("</h:inputText>");
 	}
 	
@@ -239,16 +236,22 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 	private void writeDateInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<rich:calendar id=\"" + prefix + bean.objectName + property.capName +
 				"\" inputClass=\"form-control\" value=\"#{form." + property.name + "}\"");
+		write(" datePattern=\"yyyy-MM-dd\"");
 
-		switch (property.format) {
-		case DATE:
-			write(" datePattern=\"dd MMMM yyyy\"");
-			break;
-
-		default:
-			write(" datePattern=\"dd MMMM yyyy HH:mm\"");
-			break;
+				
+		if (!property.editable) {
+			skipLine();
+			write("disabled=\"true\"");
 		}
+		writeLine("/>");
+		
+	}
+	
+	private void writeDateTimeInput(String prefix, ViewProperty property, Bean bean){
+		writeLine("<rich:calendar id=\"" + prefix + bean.objectName + property.capName +
+				"\" inputClass=\"form-control\" value=\"#{form." + property.name + "}\"");
+		write(" datePattern=\"yyyy-MM-dd HH:mm:ss\"");
+
 				
 		if (!property.editable) {
 			skipLine();
@@ -278,38 +281,54 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("</h:inputText>");			
 				break;
 				
-			case DATETIME:				
+			case DATE:				
 				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("inputClass=\"form-control\"");
-				switch (property.format) {
-				case DATE:
-					writeLine("datePattern=\"dd MMMM yyyy\">");
-					break;
-
-				default:
-					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-					break;
-				}
+				writeLine("datePattern=\"yyyy-MM-dd\">");
 				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
 				writeLine("</a4j:ajax>");
 				writeLine("</rich:calendar>");
 				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("inputClass=\"form-control\"");
-				switch (property.format) {
-				case DATE:
-					writeLine("datePattern=\"dd MMMM yyyy\">");
-					break;
-
-				default:
-					writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-					break;
-				}
+				writeLine("datePattern=\"yyyy-MM-dd\">");
+				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("</a4j:ajax>");
+				writeLine("</rich:calendar>");
+				break;
+				
+			case DATETIME:				
+				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("inputClass=\"form-control\"");
+				writeLine("datePattern=\"yyyy-MM-dd HH:mm:ss\">");
+				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("</a4j:ajax>");
+				writeLine("</rich:calendar>");
+				writeLine("<rich:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("inputClass=\"form-control\"");
+				writeLine("datePattern=\"yyyy-MM-dd HH:mm:ss\">");
 				writeLine("<a4j:ajax event=\"change\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
 				writeLine("</a4j:ajax>");
 				writeLine("</rich:calendar>");
 				break;
 				
 			case DOUBLE:
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				
+				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("styleClass=\"form-control\">");
+				writeLine("<a4j:ajax event=\"keyup\" render=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\">");
+				writeLine("<a4j:attachQueue requestDelay=\"500\"/>");
+				writeLine("</a4j:ajax>");
+				writeLine("</h:inputText>");
+				break;
+				
+			case BIG_DECIMAL:
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
@@ -355,9 +374,7 @@ public abstract class Richfaces4XhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("</a4j:ajax>");
 				writeLine("</h:selectOneMenu>");
 				
-				break;
-			
-			default:				
+				break;				
 	
 		}
 	}

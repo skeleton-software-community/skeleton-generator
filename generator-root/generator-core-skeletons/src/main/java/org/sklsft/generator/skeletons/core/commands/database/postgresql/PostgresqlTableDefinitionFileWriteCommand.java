@@ -145,6 +145,9 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	
 			case DOUBLE:
 				return "DOUBLE PRECISION";
+				
+			case DATE:
+				return "DATE";
 	
 			case DATETIME:
 				return "TIMESTAMP WITH TIME ZONE";

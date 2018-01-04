@@ -219,6 +219,9 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					skipLine();
 				}
 			} else {
+				if (property.dataType.equals(DataType.DATE)) {
+					writeLine("@Temporal(TemporalType.DATE)");
+				}
 				if (property.dataType.equals(DataType.DATETIME)) {
 					writeLine("@Temporal(TemporalType.TIMESTAMP)");
 				}

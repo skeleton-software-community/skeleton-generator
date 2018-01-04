@@ -30,8 +30,6 @@ public class ColumnMetaData {
 	@XmlAttribute
 	private RelationType referenceTableRelation;
 	@XmlAttribute
-	private Format format;
-	@XmlAttribute
 	private Boolean editable = true;
 	@XmlAttribute
 	private Visibility visibility;
@@ -80,12 +78,6 @@ public class ColumnMetaData {
 	}
 	public void setReferenceTableRelation(RelationType referenceTableRelation) {
 		this.referenceTableRelation = referenceTableRelation;
-	}
-	public Format getFormat() {
-		return format;
-	}
-	public void setFormat(Format format) {
-		this.format = format;
 	}
 	public Boolean getEditable() {
 		return editable;

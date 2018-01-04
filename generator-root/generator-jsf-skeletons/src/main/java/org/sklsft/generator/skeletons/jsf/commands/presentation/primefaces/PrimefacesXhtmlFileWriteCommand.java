@@ -21,58 +21,30 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:selectBooleanCheckbox value=\"#{" + bean.objectName + "." + property.name + "}\" disabled=\"true\"/>");
 			}
 			break;
+			
+		case DATE:
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
+			writeLine("<f:convertDateTime pattern=\"yyyy-MM-dd\"/>");
+			writeLine("</h:outputText>");
+
+			break;
 
 		case DATETIME:
-			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
-
-			switch (property.format) {
-			case DATE:
-				writeLine("<f:convertDateTime type=\"date\" dateStyle=\"medium\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertDateTime type=\"both\" dateStyle=\"medium\"/>");
-				break;
-			}
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
+			writeLine("<f:convertDateTime pattern=\"yyyy-MM-dd HH:mm:ss\"/>");
 			writeLine("</h:outputText>");
 
 			break;
 
 		case DOUBLE:
 			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
-
-			switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-			}
+			writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 			writeLine("</h:outputText>");
 			break;
 			
 		case BIG_DECIMAL:
-			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
-
-			switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-			}
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
+			writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 			writeLine("</h:outputText>");
 			break;
 
@@ -124,8 +96,11 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				case BOOLEAN:
 					writeBooleanInput(prefix, property, bean);
 					break;
-				case DATETIME:
+				case DATE:
 					writeDateInput(prefix, property, bean);
+					break;
+				case DATETIME:
+					writeDateTimeInput(prefix, property, bean);
 					break;
 				case DOUBLE:
 					writeDoubleInput(prefix, property, bean);
@@ -226,21 +201,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		if (!property.editable) {
 			write(" disabled=\"true\"");
 		}
-		writeLine(">");
-
-		switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-	
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-	
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-		}
+		writeLine(">");		
+		writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 		writeLine("</h:inputText>");
 	}
 	
@@ -252,21 +214,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		if (!property.editable) {
 			write(" disabled=\"true\"");
 		}
-		writeLine(">");
-
-		switch (property.format) {
-			case TWO_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.00\"/>");
-				break;
-	
-			case FOUR_DECIMALS:
-				writeLine("<f:convertNumber pattern=\"#,##0.0000\"/>");
-				break;
-	
-			default:
-				writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
-				break;
-		}
+		writeLine(">");		
+		writeLine("<f:convertNumber pattern=\"#,##0.########\"/>");
 		writeLine("</h:inputText>");
 	}
 	
@@ -288,15 +237,21 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("<p:calendar id=\"" + prefix + bean.objectName + property.capName +
 				"\" class=\"form-control date-picker\" value=\"#{form." + property.name + "}\"");
 
-		switch (property.format) {
-		case DATE:
-			write(" datePattern=\"dd MMMM yyyy\"");
-			break;
-
-		default:
-			write(" datePattern=\"dd MMMM yyyy HH:mm\"");
-			break;
+		write(" pattern=\"yyyy-MM-dd\" mask=\"true\"");
+				
+		if (!property.editable) {
+			skipLine();
+			write("disabled=\"true\"");
 		}
+		writeLine("/>");
+		
+	}
+	
+	private void writeDateTimeInput(String prefix, ViewProperty property, Bean bean){
+		writeLine("<p:calendar id=\"" + prefix + bean.objectName + property.capName +
+				"\" class=\"form-control date-picker\" value=\"#{form." + property.name + "}\"");
+
+		write(" pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\"");
 				
 		if (!property.editable) {
 			skipLine();
@@ -324,31 +279,28 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("</h:inputText>");			
 				break;
 				
-			case DATETIME:				
+			case DATE:				
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				switch (property.format) {
-					case DATE:
-						writeLine("datePattern=\"dd MMMM yyyy\">");
-						break;
-	
-					default:
-						writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-						break;
-					}
+				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
 				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				switch (property.format) {
-					case DATE:
-						writeLine("datePattern=\"dd MMMM yyyy\">");
-						break;
-
-					default:
-						writeLine("datePattern=\"dd MMMM yyyy HH:mm\">");
-						break;
-				}
+				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</p:calendar>");
+				break;
+				
+			case DATETIME:				
+				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
+				writeLine("class=\"form-control date-picker\"");
+				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("</p:calendar>");
+				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
+				writeLine("class=\"form-control date-picker\"");
+				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
 				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
@@ -404,9 +356,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("</h:selectOneMenu>");
 				
 				break;
-			
-			default:				
-	
+
 		}
 	}
 	

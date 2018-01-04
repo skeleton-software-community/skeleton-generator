@@ -360,8 +360,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			case LONG :
 				writeLongRestriction(property);
 				return;
-			case DATETIME :
+			case DATE :
 				writeDateRestriction(property);
+				return;
+			case DATETIME :
+				writeDateTimeRestriction(property);
 				return;
 			case DOUBLE :
 				writeDoubleRestriction(property);
@@ -373,8 +376,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			case TEXT :
 				writeTextRestriction(property);
 				return;
-			default :
-				throw new IllegalArgumentException("unhandled type : " + property.dataType.name());
 		}
 	}
 	
@@ -391,24 +392,26 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	private void writeDoubleRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+		writeComparableRestriction(property);
 	}
 	
 	private void writeBigDecimalRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+		writeComparableRestriction(property);
 	}
 	
 	private void writeDateRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+		writeComparableRestriction(property);
+	}
+	
+	private void writeDateTimeRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
 	}
 	
 	private void writeLongRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeComparableRestriction(ViewProperty property) {
 		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
 		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
 		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");

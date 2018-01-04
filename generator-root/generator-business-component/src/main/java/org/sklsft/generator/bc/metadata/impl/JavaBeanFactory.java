@@ -118,7 +118,6 @@ public class JavaBeanFactory implements BeanFactory {
 			property.relation = column.relation;
 			property.embedded = property.relation.isEmbedded();
 			property.unique = column.unique;
-			property.format = column.format;
 			property.visibility = column.visibility;
 			property.editable = column.editable;
 			property.rendering = column.rendering;

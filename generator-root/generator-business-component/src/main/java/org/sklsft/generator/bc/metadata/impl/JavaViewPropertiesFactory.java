@@ -26,7 +26,6 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.mappingPath = myProperty.getterName + "()";
 			viewProperty.beanDataType = myProperty.beanDataType;
 			viewProperty.dataType = myProperty.dataType;
-			viewProperty.format = myProperty.format;
 			viewProperty.nullable = myProperty.nullable;
 			viewProperty.visibility = myProperty.visibility;
 			viewProperty.editable = myProperty.editable;
@@ -57,7 +56,6 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.mappingPath = myProperty.getterName + "()." + tempProperty.mappingPath;
 						viewProperty.beanDataType = tempProperty.beanDataType;
 						viewProperty.dataType = tempProperty.dataType;
-						viewProperty.format = tempProperty.format;
 						viewProperty.nullable = myProperty.nullable || tempProperty.nullable;
 						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
 						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
@@ -80,7 +78,6 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.mappingPath = myProperty.getterName + "()." + property.getterName + "()";
 					viewProperty.beanDataType = property.beanDataType;
 					viewProperty.dataType = property.dataType;
-					viewProperty.format = property.format;
 					viewProperty.nullable = myProperty.nullable || property.nullable;
 					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
 					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
