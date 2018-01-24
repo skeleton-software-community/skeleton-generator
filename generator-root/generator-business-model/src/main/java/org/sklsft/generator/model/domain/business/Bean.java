@@ -26,6 +26,7 @@ public class Bean {
 	public Package myPackage;
 	public String className;
 	public String objectName;
+	public String urlPiece;
 
 	public String baseDaoClassName;
 	public String daoClassName;
@@ -50,6 +51,8 @@ public class Bean {
 	public String baseProcessorClassName;
 	public String processorClassName;
 	public String processorObjectName;
+	
+	public String baseRestControllerClassName;
 
 	public String baseListControllerClassName;
 	public String baseDetailControllerClassName;

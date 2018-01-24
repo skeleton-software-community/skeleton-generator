@@ -78,23 +78,28 @@ public class JavaModelFactory implements ModelFactory {
 		Model model = new Model();
         model.project = project;
 
-        model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
-        model.mvcModelPackageName = project.domainName + "." + project.projectName + ".mvc.model";
         model.apiModelPackageName = project.domainName + "." + project.projectName + ".api.model";
+        model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";
         model.modelPackageName = project.domainName + "." + project.projectName + ".model";
-        model.mvcFilterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
-        model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
-        model.builderPackageName = project.domainName + "." + project.projectName + ".populator.builder";
-        model.executorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
         model.enversPackageName = project.domainName + "." + project.projectName + ".model.envers";
+        model.daoImplPackageName = project.domainName + "." + project.projectName + ".repository.dao.impl";
+        model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
+        
         model.mapperPackageName = project.domainName + "." + project.projectName + ".bc.mapper";
         model.stateManagerPackageName = project.domainName + "." + project.projectName + ".bc.statemanager";
         model.rightsManagerPackageName = project.domainName + "." + project.projectName + ".bc.rightsmanager";
         model.processorPackageName = project.domainName + "." + project.projectName + ".bc.processor";
-        model.daoImplPackageName = project.domainName + "." + project.projectName + ".repository.dao.impl";
-        model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
         model.serviceImplPackageName = project.domainName + "." + project.projectName + ".bl.impl";
-        model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";
+       
+        model.restControllerPackageName = project.domainName + "." + project.projectName + ".rest.controller";
+        
+        model.controllerPackageName = project.domainName + "." + project.projectName + ".mvc.controller";
+        model.mvcModelPackageName = project.domainName + "." + project.projectName + ".mvc.model";
+        model.mvcFilterPackageName = project.domainName + "." + project.projectName + ".mvc.filter";
+       
+        model.commandPackageName = project.domainName + "." + project.projectName + ".populator.command";
+        model.builderPackageName = project.domainName + "." + project.projectName + ".populator.builder";
+        model.executorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
         model.junitPackageName = project.domainName + "." + project.projectName + ".junit";
         model.junitDataPackageName =  model.junitPackageName + ".data";
         

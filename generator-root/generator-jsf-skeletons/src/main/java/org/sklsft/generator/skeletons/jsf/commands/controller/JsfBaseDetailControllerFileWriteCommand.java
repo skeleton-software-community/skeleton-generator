@@ -430,7 +430,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 				}
 			}
 			
-			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + this.bean.serviceObjectName + ".load" + currentBean.className + "(id, this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
+			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(" + this.bean.serviceObjectName + ".load" + currentBean.className + "(id));");
 			writeLine("}");
 			skipLine();
 		}

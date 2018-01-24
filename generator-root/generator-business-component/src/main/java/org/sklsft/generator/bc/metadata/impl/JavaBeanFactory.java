@@ -46,6 +46,7 @@ public class JavaBeanFactory implements BeanFactory {
 
 		bean.className = JavaClassNaming.getClassName(table.originalName);
 		bean.objectName = JavaClassNaming.getObjectName(table.originalName);
+		bean.urlPiece = JavaClassNaming.getUrlPiece(table.originalName);
 
 		bean.baseDaoClassName = bean.className + "BaseDaoImpl";
 		bean.daoClassName = bean.className + "DaoImpl";
@@ -71,6 +72,8 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.baseProcessorClassName = bean.className + "BaseProcessor";
 		bean.processorClassName = bean.className + "Processor";
 		bean.processorObjectName = bean.objectName + "Processor";
+		
+		bean.baseRestControllerClassName = bean.className + "BaseController";
 
 		bean.baseListControllerClassName = bean.className + "BaseListController";
 		bean.listControllerClassName = bean.className + "ListController";

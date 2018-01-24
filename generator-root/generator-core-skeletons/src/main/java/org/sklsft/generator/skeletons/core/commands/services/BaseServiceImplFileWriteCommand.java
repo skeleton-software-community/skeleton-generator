@@ -33,7 +33,6 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import java.util.ArrayList;");
         javaImports.add("import javax.inject.Inject;");
         javaImports.add("import org.springframework.transaction.annotation.Transactional;");
-        javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
@@ -454,15 +453,10 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("@Transactional(readOnly=true)");
-            writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long " + currentBean.objectName + "Id,Long id) {");            
-            writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(id);");
-            writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess" + currentBean.className + "(" + this.bean.objectName + ");");
-            writeLine("for (" + currentBean.className + " collection" + currentBean.className + " : " + this.bean.objectName + ".get" + currentBean.className + "Collection()){");
-            writeLine("if (collection" + currentBean.className + ".getId().equals(" + currentBean.objectName + "Id)){");
-            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(new " + currentBean.fullViewBean.className + "(),collection" + currentBean.className + ");");
-            writeLine("}");
-            writeLine("}");
-            writeLine("throw new ObjectNotFoundException(" + CHAR_34 + "Invalid one to many component id" + CHAR_34 + ");");
+            writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id) {");            
+            writeLine(currentBean.className + " " + currentBean.objectName + " = " + this.bean.daoObjectName + ".load" + currentBean.className + "(id);");
+            writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess" + currentBean.className + "(" + currentBean.objectName + ".get" + oneToManyComponent.referenceProperty.capName + "());");
+            writeLine("return this." + currentBean.fullViewBean.mapperObjectName + ".mapFrom(" + currentBean.objectName + ");");
             writeLine("}");
             skipLine();
         }

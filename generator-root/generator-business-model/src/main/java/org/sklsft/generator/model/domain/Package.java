@@ -18,6 +18,7 @@ public class Package {
 	public Model model;
 	public String declaredName;
 	public String name;
+	public String urlPiece;
 	public List<Table> tables;
 	public List<Bean> beans;
 
@@ -54,9 +55,8 @@ public class Package {
 
 	public String baseProcessorImplPackageName;
 	public String processorImplPackageName;
-
-	public String facadeImplPackageName;
-	public String facadeInterfacesPackageName;
+	
+	public String baseRestControllerPackageName;
 
 	public String baseListControllerPackageName;
 	public String listControllerPackageName;	

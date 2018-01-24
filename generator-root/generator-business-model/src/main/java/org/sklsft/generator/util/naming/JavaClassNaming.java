@@ -3,7 +3,16 @@ package org.sklsft.generator.util.naming;
 public class JavaClassNaming {
 	
 	private static final String DATABASE_NAMING_SEPARATOR = "_";
+	private static final String URL_NAMING_SEPARATOR = "-";
 	
+	
+	/**
+	 * converts a table name to the corresponding url piece<br/>
+	 * Conventions are of type : abc-def
+	 */
+	public static String getUrlPiece(String tableName) {
+        return tableName.toLowerCase().replace(DATABASE_NAMING_SEPARATOR, URL_NAMING_SEPARATOR);
+    }
 	
 	/**
 	 * converts a table name to the corresponding class name<br/>

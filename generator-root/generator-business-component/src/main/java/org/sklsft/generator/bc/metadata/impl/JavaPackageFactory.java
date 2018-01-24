@@ -73,6 +73,7 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.model = model;
 		myPackage.declaredName = packageMetaData.getName();
 		myPackage.name = packageMetaData.getName().toLowerCase();
+		myPackage.urlPiece = myPackage.name;
 		
 		myPackage.omPackageName = model.modelPackageName + "." + myPackage.name;
 		
@@ -108,11 +109,12 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.baseProcessorImplPackageName = model.processorPackageName + "." + myPackage.name + ".base";
 		myPackage.processorImplPackageName = model.processorPackageName + "." + myPackage.name;
 		
+		myPackage.baseRestControllerPackageName = model.restControllerPackageName + "." + myPackage.name + ".base";
+		
 		myPackage.baseListControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".list.base";
 		myPackage.listControllerPackageName = model.controllerPackageName + "." + myPackage.name+ ".list";
 		myPackage.baseDetailControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".detail.base";
 		myPackage.detailControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".detail";
-		
 		
 		myPackage.listViewPackageName = model.mvcModelPackageName + "." + myPackage.name + ".list";
 		myPackage.detailViewPackageName = model.mvcModelPackageName + "." + myPackage.name + ".detail";

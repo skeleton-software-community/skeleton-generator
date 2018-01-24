@@ -366,7 +366,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             writeLine(" * check can delete one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("if (!canDelete" + currentBean.className + "(" + bean.objectName + ")) {");        
+            writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
