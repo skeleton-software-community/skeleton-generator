@@ -164,7 +164,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 			writeLine("}");
 			writeLine("@Override");
 			writeLine("public void redirectOnComplete(Object result) {");
-			writeLine("redirect(" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf?id=" + CHAR_34 + " + result);");
+			writeLine("redirect(" + CHAR_34 + "/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/details.jsf?id=" + CHAR_34 + " + result);");
 			writeLine("}");
 			writeLine("});");
 			writeLine("}");
