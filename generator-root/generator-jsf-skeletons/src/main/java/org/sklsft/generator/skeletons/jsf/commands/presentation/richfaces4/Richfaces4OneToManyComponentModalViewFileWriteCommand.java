@@ -13,8 +13,7 @@ public class Richfaces4OneToManyComponentModalViewFileWriteCommand extends Richf
 
 	public Richfaces4OneToManyComponentModalViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
 		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.name + File.separator + oneToManyComponent.parentBean.className.toLowerCase(),
-				oneToManyComponent.referenceBean.className + "Modal");
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.urlPiece + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece,"modal");
 
 		this.oneToManyComponent = oneToManyComponent;
 	}
@@ -25,13 +24,12 @@ public class Richfaces4OneToManyComponentModalViewFileWriteCommand extends Richf
 		Bean currentBean = oneToManyComponent.referenceBean;
 		Bean parentBean = oneToManyComponent.parentBean;
 
-		writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
-		writeLine("xmlns:ui=" + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
-		writeLine("xmlns:f=" + CHAR_34 + "http://java.sun.com/jsf/core" + CHAR_34);
-		writeLine("xmlns:h=" + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
-		writeLine("xmlns:rich=" + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
-		writeLine("xmlns:a4j=" + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-		writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34 + ">");
+		writeLine("<ui:composition xmlns=\"http://www.w3.org/1999/xhtml\"");
+		writeLine("xmlns:ui=\"http://java.sun.com/jsf/facelets\"");
+		writeLine("xmlns:f=\"http://java.sun.com/jsf/core\"");
+		writeLine("xmlns:h=\"http://java.sun.com/jsf/html\"");
+		writeLine("xmlns:rich=\"http://richfaces.org/rich\"");
+		writeLine("xmlns:a4j=\"http://richfaces.org/a4j\">");
 		skipLine();
 
 		writeLine("<!-- -->");
@@ -41,28 +39,26 @@ public class Richfaces4OneToManyComponentModalViewFileWriteCommand extends Richf
 		writeLine("<!-- -->");
 		skipLine();
 		
-		writeLine("<div class=" + CHAR_34 + "modal-header" + CHAR_34 + ">");
+		writeLine("<div class=\"modal-header\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("#{i18n." + currentBean.objectName + "Details}");
 		writeLine("</h2>");
 		writeLine("</div>");
 		skipLine();
 		
-		writeLine("<div class=" + CHAR_34 + "modal-body" + CHAR_34 + ">");
+		writeLine("<div class=\"modal-body\">");
 
-		writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+		writeLine("<h:panelGroup id=\"" + currentBean.objectName + "DetailPanelGroup\">");
 		skipLine();
 
 		writeLine("<a4j:region>");
 		skipLine();
 
-		writeLine("<ui:param name=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}"
-				+ CHAR_34 + "/>");
-		writeLine("<ui:param name=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}"
-				+ CHAR_34 + "/>");
+		writeLine("<ui:param name=\"view\" value=\"#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}\"/>");
+		writeLine("<ui:param name=\"form\" value=\"#{view.form}\"/>");
 		skipLine();
 
-		writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
+		writeLine("<div class=\"row\">");
 		skipLine();
 
 		for (ViewProperty property : currentBean.formBean.properties) {
@@ -74,23 +70,22 @@ public class Richfaces4OneToManyComponentModalViewFileWriteCommand extends Richf
 		
 		
 		if (this.oneToManyComponent.referenceBean.createEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 
-					+ " rendered=" + CHAR_34 + "#{empty view.id}" + CHAR_34
-					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName
-					+ "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')"
-					+ CHAR_34 + "/>");
+			writeLine("<a4j:commandButton value=\"#{i18n.save}\" action=\"#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}\""
+					+ " rendered=\"#{empty view.id}\""
+					+ " styleClass=\"btn btn-success\" execute=\"@region\" render=\"" + currentBean.objectName + "PanelGroup, " + currentBean.objectName
+					+ "DetailPanelGroup\" oncomplete=\"if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal ==0}) $('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
 		}
 		
 		if (this.oneToManyComponent.referenceBean.updateEnabled) {
-			writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className+ "}"+ CHAR_34 
-					+ " rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 + " disabled=" + CHAR_34 + "#{not view.canUpdate}" + CHAR_34
-					+ " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34
-					+ " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + currentBean.objectName + "PanelGroup, " + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34
-					+ "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal==0}) $('#" + currentBean.objectName + "Modal').modal('hide')" + CHAR_34 + "/>");
+			writeLine("<a4j:commandButton value=\"#{i18n.update}\" action=\"#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className+ "}\"" 
+					+ " rendered=\"#{not empty view.id}\" disabled=\"#{not view.canUpdate}\""
+					+ " styleClass=\"btn btn-success\""
+					+ " execute=\"@region\" render=\"" + currentBean.objectName + "PanelGroup, " + currentBean.objectName + "DetailPanelGroup\" oncomplete=\""
+					+ "if (#{empty facesContext.maximumSeverity or facesContext.maximumSeverity.ordinal==0}) $('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
 		}
 		
-		writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.cancel}" + CHAR_34 + " actionListener=" + CHAR_34 + "#{" + parentBean.listControllerObjectName + ".resetForm}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-info" + CHAR_34 + " immediate=" + CHAR_34 + "true" + CHAR_34 + " update=" + CHAR_34 + currentBean.objectName
-				+ "PanelGroup" + CHAR_34 + " oncomplete=" + CHAR_34 + "$('#" + currentBean.objectName + "Modal').modal('hide')" + CHAR_34 + "/>");
+		writeLine("<a4j:commandButton value=\"#{i18n.cancel}\" actionListener=\"#{" + parentBean.listControllerObjectName + ".resetForm}\" styleClass=\"btn btn-info\" immediate=\"true\" update=\"" + currentBean.objectName
+				+ "PanelGroup\" oncomplete=\"$('#" + currentBean.objectName + "Modal').modal('hide')\"/>");
 
 		skipLine();
 

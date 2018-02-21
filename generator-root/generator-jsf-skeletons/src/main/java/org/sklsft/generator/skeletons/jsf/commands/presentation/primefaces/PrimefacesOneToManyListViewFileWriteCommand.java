@@ -14,8 +14,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 
 	public PrimefacesOneToManyListViewFileWriteCommand(OneToMany oneToMany) {
 		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.name + File.separator + oneToMany.parentBean.className.toLowerCase(),
-				oneToMany.referenceBean.className + "List");
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.urlPiece + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece,"list");
 		this.oneToMany = oneToMany;
 	}
 
@@ -53,8 +52,8 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
         writeLine("<h:form id=\"" +  currentBean.objectName + "ListForm\">");
         skipLine();
         
-        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml\"/>");
-        skipLine();        
+        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/menu.xhtml\"/>");
+        skipLine();
         
         writeLine("<h:panelGroup id=\"" +  currentBean.objectName + "PanelGroup\">");
 		skipLine();
@@ -136,7 +135,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 		writeLine("<h:panelGrid styleClass=\"actions-grid\" columns=\"2\">");
 
 		if (currentBean.detailMode.equals(DetailMode.PAGE)) {
-			writeLine("<h:link outcome=\"/sections/" + currentBean.myPackage.name + "/" + currentBean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf\">");
+			writeLine("<h:link outcome=\"/sections/" + currentBean.myPackage.urlPiece + "/" + currentBean.urlPiece + "/details.jsf\">");
 			writeLine("<h:graphicImage url=\"/resources/images/icons/edit.png\" styleClass=\"imageIcon\" title=\"#{i18n.edit}\"/>");
 			writeLine("<f:param name=\"id\" value=\"#{" + currentBean.objectName + ".id}\" />");
 			writeLine("</h:link>");
@@ -212,7 +211,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 		 writeLine("<div class=\"modal modal-default\" id=\"" +  currentBean.objectName + "Modal\" tabindex=\"-1\" aria-hidden=\"true\">");
          writeLine("<div class=\"modal-dialog modal-lg\">");
          writeLine("<div class=\"modal-content\">");
-         writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Modal.xhtml\"/>");
+         writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/" + currentBean.urlPiece + "/modal.xhtml\"/>");
          writeLine("</div>");
          writeLine("</div>");
          writeLine("</div>");
@@ -221,9 +220,8 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 		
 		writeLine("</h:form>");
         
-        writeLine("<script>$('#" + currentBean.objectName + "ListMenu').addClass('active');</script>");
+        writeLine("<script>$('#" + currentBean.urlPiece + "-list-menu').addClass('active');</script>");
         
-
 		writeLine("</ui:define>");
 		writeLine("</ui:composition>");
 	}

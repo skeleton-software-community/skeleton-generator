@@ -13,8 +13,7 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
 
 	public PrimefacesOneToOneComponentDetailViewFileWriteCommand(OneToOneComponent oneToOneComponent) {
 		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.name + File.separator + oneToOneComponent.parentBean.className.toLowerCase(),
-				oneToOneComponent.referenceBean.className + "Details");
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.urlPiece + File.separator + oneToOneComponent.parentBean.urlPiece + File.separator + oneToOneComponent.referenceBean.urlPiece, "details");
 
 		this.oneToOneComponent = oneToOneComponent;
 	}
@@ -51,7 +50,7 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
         writeLine("<h:form>");
         skipLine();
         
-        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml\"/>");
+        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/menu.xhtml\"/>");
         skipLine();
 
         writeLine("<h2>");
@@ -110,9 +109,8 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
         
         writeLine("</h:form>");
         
-        writeLine("<script>$('#" + currentBean.objectName + "DetailsMenu').addClass('active');</script>");
+        writeLine("<script>$('#" + currentBean.urlPiece + "-menu').addClass('active');</script>");
         
-
 		writeLine("</ui:define>");
 		writeLine("</ui:composition>");
 

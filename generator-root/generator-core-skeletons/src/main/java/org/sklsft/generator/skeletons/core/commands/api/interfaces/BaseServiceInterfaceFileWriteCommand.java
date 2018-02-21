@@ -182,6 +182,7 @@ private Bean bean;
 		writeLine("/**");
 		writeLine(" * find object");
 		writeLine(" */");
+		writeLine("public static final String FIND_URL = \"/" + bean.urlPiece + "/find\";");
 		write(this.bean.fullViewBean.className + " find(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
@@ -392,6 +393,7 @@ private Bean bean;
 		writeLine(" * delete object list");		
 		writeLine(" */");
 		writeLine("void deleteList(List<Long> idList);");
+		writeLine("public static final String DELETE_LIST_URL = \"/" + bean.urlPiece + "/delete\";");
 		skipLine();
 	}
 
@@ -403,6 +405,7 @@ private Bean bean;
 			writeLine(" * delete one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
 			writeLine("void delete" + currentBean.className + "List(List<Long> idList);");
+			writeLine("public static final String DELETE_" + currentBean.table.originalName + "_LIST_URL = \"/" + currentBean.urlPiece + "/delete\";");
 			skipLine();
 		}
 	}

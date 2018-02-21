@@ -32,7 +32,7 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 			for (Bean bean : myPackage.beans) {
 				writeLine("#" + bean.className);
 				writeLine(bean.objectName + "List=" + bean.listRendering);
-				writeLine(bean.objectName + "Detail=" + bean.detailRendering);
+				writeLine(bean.objectName + "Details=" + bean.detailRendering);
 
 				for (ViewProperty property : bean.formBean.properties) {					
 					writeLine(bean.objectName + property.capName + "=" + property.rendering);

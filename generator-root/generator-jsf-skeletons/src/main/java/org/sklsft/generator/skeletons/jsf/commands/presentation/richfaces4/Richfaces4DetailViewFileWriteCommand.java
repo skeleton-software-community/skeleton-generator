@@ -11,7 +11,7 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
 	private Bean bean;
 	
 	public Richfaces4DetailViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.name + File.separator + bean.className.toLowerCase(), bean.className + "Details");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "details");
 
 		this.bean = bean;
 	}
@@ -19,14 +19,13 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
 	@Override
 	protected void writeContent() throws IOException {
 
-		writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
-        writeLine("xmlns:ui=" + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
-        writeLine("xmlns:f=" + CHAR_34 + "http://java.sun.com/jsf/core" + CHAR_34);
-        writeLine("xmlns:h=" + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
-        writeLine("xmlns:rich=" + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
-        writeLine("xmlns:a4j=" + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-        writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34);
-        writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
+		writeLine("<ui:composition xmlns=\"http://www.w3.org/1999/xhtml\"");
+        writeLine("xmlns:ui=\"http://java.sun.com/jsf/facelets\"");
+        writeLine("xmlns:f=\"http://java.sun.com/jsf/core\"");
+        writeLine("xmlns:h=\"http://java.sun.com/jsf/html\"");
+        writeLine("xmlns:rich=\"http://richfaces.org/rich\"");
+        writeLine("xmlns:a4j=\"http://richfaces.org/a4j\"");
+        writeLine("template=\"/templates/template.xhtml\">");
         skipLine();
 
         writeLine("<!-- -->");
@@ -37,32 +36,32 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
         skipLine();
         
         writeLine("<f:metadata>");
-		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}" + CHAR_34 + " />");
-		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + bean.detailControllerObjectName + ".load}" + CHAR_34 + " />");
+		writeLine("<f:viewParam name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
+		writeLine("<f:viewAction action=\"#{" + bean.detailControllerObjectName + ".load}\" />");
 		writeLine("</f:metadata>");
 
-        writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
+        writeLine("<ui:define name=\"content\">");
         skipLine();
         
         writeLine("<h:form>");
         skipLine();
 
-        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
+        writeLine("<ui:include src=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/" + "menu.xhtml\"/>");
         skipLine();
         
-        writeLine("<h2>#{i18n." + bean.objectName + "Detail}</h2>");
+        writeLine("<h2>#{i18n." + bean.objectName + "Details}</h2>");
         
-        writeLine("<h:panelGroup id=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+        writeLine("<h:panelGroup id=\"" + this.bean.objectName + "DetailPanelGroup\">");
         skipLine();
         
         writeLine("<a4j:region>");
         skipLine();
 
-        writeLine("<ui:param name=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + this.bean.detailViewObjectName + ".selected" + this.bean.className + "}" + CHAR_34 + "/>");
-        writeLine("<ui:param name=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}" + CHAR_34 + "/>");
+        writeLine("<ui:param name=\"view\" value=\"#{" + this.bean.detailViewObjectName + ".selected" + this.bean.className + "}\"/>");
+        writeLine("<ui:param name=\"form\" value=\"#{view.form}\"/>");
         skipLine();
         
-        writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
+        writeLine("<div class=\"row\">");
 
         for (ViewProperty property : this.bean.formBean.properties)
         {
@@ -76,7 +75,7 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
        
         if (this.bean.updateEnabled)
         {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + " disabled=" + CHAR_34 + "#{not view.canUpdate}" + CHAR_34 + " action=" + CHAR_34 + "#{" + this.bean.detailControllerObjectName + ".update}" + CHAR_34 + " styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + " render=" + CHAR_34 + this.bean.objectName + "DetailPanelGroup" + CHAR_34 + "/>"); 
+            writeLine("<a4j:commandButton value=\"#{i18n.update}\" disabled=\"#{not view.canUpdate}\" action=\"#{" + this.bean.detailControllerObjectName + ".update}\" styleClass=\"btn btn-success\" execute=\"@region\" render=\"" + this.bean.objectName + "DetailPanelGroup\"/>"); 
         }
 
         this.writeNotOverridableContent();
@@ -90,7 +89,7 @@ public class Richfaces4DetailViewFileWriteCommand extends Richfaces4XhtmlFileWri
         
         writeLine("</h:form>");
         
-        writeLine("<script>$('#" + bean.objectName + "DetailsMenu').addClass('active');</script>");
+        writeLine("<script>$('#menu').addClass('active');</script>");
         
         writeLine("</ui:define>");
         writeLine("</ui:composition>");

@@ -11,7 +11,7 @@ public class PrimefacesDetailViewFileWriteCommand extends PrimefacesXhtmlFileWri
 	private Bean bean;
 	
 	public PrimefacesDetailViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.name + File.separator + bean.className.toLowerCase(), bean.className + "Details");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "details");
 
 		this.bean = bean;
 	}
@@ -45,10 +45,10 @@ public class PrimefacesDetailViewFileWriteCommand extends PrimefacesXhtmlFileWri
         writeLine("<h:form>");
         skipLine();
 
-        writeLine("<ui:include src=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "DetailsMenu.xhtml\"/>");
+        writeLine("<ui:include src=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/" + "menu.xhtml\"/>");
         skipLine();
         
-        writeLine("<h2>#{i18n." + bean.objectName + "Detail}</h2>");
+        writeLine("<h2>#{i18n." + bean.objectName + "Details}</h2>");
         
         writeLine("<h:panelGroup id=\"" + this.bean.objectName + "DetailPanelGroup\">");
         skipLine();
@@ -82,7 +82,7 @@ public class PrimefacesDetailViewFileWriteCommand extends PrimefacesXhtmlFileWri
         
         writeLine("</h:form>");
         
-        writeLine("<script>$('#" + bean.objectName + "DetailsMenu').addClass('active');</script>");
+        writeLine("<script>$('#menu').addClass('active');</script>");
         
         writeLine("</ui:define>");
         writeLine("</ui:composition>");

@@ -13,8 +13,7 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
 
 	public Richfaces4OneToOneComponentDetailViewFileWriteCommand(OneToOneComponent oneToOneComponent) {
 		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.name + File.separator + oneToOneComponent.parentBean.className.toLowerCase(),
-				oneToOneComponent.referenceBean.className + "Details");
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.urlPiece + File.separator + oneToOneComponent.parentBean.urlPiece + File.separator + oneToOneComponent.referenceBean.urlPiece, "details");
 
 		this.oneToOneComponent = oneToOneComponent;
 	}
@@ -25,15 +24,13 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
 		Bean currentBean = oneToOneComponent.referenceBean;
         Bean parentBean = oneToOneComponent.parentBean;
 
-        writeLine("<ui:composition xmlns=" + CHAR_34 + "http://www.w3.org/1999/xhtml" + CHAR_34);
-		writeLine("xmlns:ui = " + CHAR_34 + "http://java.sun.com/jsf/facelets" + CHAR_34);
-		writeLine("xmlns:f = " + CHAR_34 + "http://java.sun.com/jsf/core" + CHAR_34);
-		writeLine("xmlns:h = " + CHAR_34 + "http://java.sun.com/jsf/html" + CHAR_34);
-		writeLine("xmlns:rich = " + CHAR_34 + "http://richfaces.org/rich" + CHAR_34);
-		writeLine("xmlns:a4j = " + CHAR_34 + "http://richfaces.org/a4j" + CHAR_34);
-		writeLine("xmlns:fn=" + CHAR_34 + "http://java.sun.com/jsp/jstl/functions" + CHAR_34);
-		writeLine("xmlns:c=" + CHAR_34 + "http://java.sun.com/jstl/core" + CHAR_34);
-        writeLine("template=" + CHAR_34 + "/templates/template.xhtml" + CHAR_34 + ">");
+        writeLine("<ui:composition xmlns=\"http://www.w3.org/1999/xhtml\"");
+		writeLine("xmlns:ui = \"http://java.sun.com/jsf/facelets\"");
+		writeLine("xmlns:f = \"http://java.sun.com/jsf/core\"");
+		writeLine("xmlns:h = \"http://java.sun.com/jsf/html\"");
+		writeLine("xmlns:rich = \"http://richfaces.org/rich\"");
+		writeLine("xmlns:a4j = \"http://richfaces.org/a4j\"");
+        writeLine("template=\"/templates/template.xhtml\">");
         skipLine();
 
         writeLine("<!-- -->");
@@ -44,34 +41,34 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
         skipLine();
         
         writeLine("<f:metadata>");
-		writeLine("<f:viewParam name=" + CHAR_34 + "id" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + ".id}" + CHAR_34 + " />");
-		writeLine("<f:viewAction action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".load" + currentBean.className + "}" + CHAR_34 + " />");
+		writeLine("<f:viewParam name=\"id\" value=\"#{" + parentBean.detailViewObjectName + ".selected" + parentBean.className + ".id}\" />");
+		writeLine("<f:viewAction action=\"#{" + parentBean.detailControllerObjectName + ".load" + currentBean.className + "}\" />");
 		writeLine("</f:metadata>");
 
-        writeLine("<ui:define name=" + CHAR_34 + "content" + CHAR_34 + ">");
+        writeLine("<ui:define name=\"content\">");
         skipLine();
         
         writeLine("<h:form>");
         skipLine();
         
-        writeLine("<ui:include src=" + CHAR_34 + "/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml" + CHAR_34 + "/>");
+        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/menu.xhtml\"/>");
         skipLine();
-
+        
         writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("#{i18n." + currentBean.objectName + "Details}");
 		writeLine("</h2>");
         
-        writeLine("<h:panelGroup id=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + ">");
+        writeLine("<h:panelGroup id=\"" +  currentBean.objectName + "DetailPanelGroup\">");
 		skipLine();
 		
 		writeLine("<a4j:region>");
 		skipLine();
         
-		writeLine("<ui:param name=" + CHAR_34 + "view" + CHAR_34 + " value=" + CHAR_34 + "#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}" + CHAR_34 + "/>");
-        writeLine("<ui:param name=" + CHAR_34 + "form" + CHAR_34 + " value=" + CHAR_34 + "#{view.form}" + CHAR_34 + "/>");
+		writeLine("<ui:param name=\"view\" value=\"#{" + parentBean.detailViewObjectName + ".selected" + currentBean.className + "}\"/>");
+        writeLine("<ui:param name=\"form\" value=\"#{view.form}\"/>");
         skipLine();
         
-        writeLine("<div class=" + CHAR_34 + "row" + CHAR_34 + ">");
+        writeLine("<div class=\"row\">");
 
 		for (ViewProperty property : currentBean.formBean.properties) {
 			if (property.visibility.isDetailVisible()) {
@@ -84,27 +81,27 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
         skipLine();
         
         if (this.oneToOneComponent.referenceBean.updateEnabled) {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.update}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 + " disabled=" + CHAR_34 + "#{not view.canUpdate}" + CHAR_34 + 
-            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}" + CHAR_34 + 
-            		" styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + 
-            		" render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+            writeLine("<a4j:commandButton value=\"#{i18n.update}\"" +  
+            		" rendered=\"#{not empty view.id}\" disabled=\"#{not view.canUpdate}\"" +  
+            		" action=\"#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className + "}\"" +  
+            		" styleClass=\"btn btn-success\" execute=\"@region\"" +  
+            		" render=\"" +  currentBean.objectName + "DetailPanelGroup\"/>");
         }
         
         if (this.oneToOneComponent.referenceBean.deleteEnabled) {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.delete}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{not empty view.id}" + CHAR_34 +
-            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}" + CHAR_34 + 
-            		" styleClass=" + CHAR_34 + "btn btn-warning" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + 
-            		" render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+            writeLine("<a4j:commandButton value=\"#{i18n.delete}\"" +  
+            		" rendered=\"#{not empty view.id}\"" + 
+            		" action=\"#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}\"" +  
+            		" styleClass=\"btn btn-warning\" execute=\"@region\"" +  
+            		" render=\"" +  currentBean.objectName + "DetailPanelGroup\"/>");
         }
         
         if (this.oneToOneComponent.referenceBean.createEnabled) {
-            writeLine("<a4j:commandButton value=" + CHAR_34 + "#{i18n.save}" + CHAR_34 + 
-            		" rendered=" + CHAR_34 + "#{empty view.id}" + CHAR_34 +
-            		" action=" + CHAR_34 + "#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}" + CHAR_34 + 
-            		" styleClass=" + CHAR_34 + "btn btn-success" + CHAR_34 + " execute=" + CHAR_34 + "@region" + CHAR_34 + 
-            		" render=" + CHAR_34 + currentBean.objectName + "DetailPanelGroup" + CHAR_34 + "/>");
+            writeLine("<a4j:commandButton value=\"#{i18n.save}\"" +  
+            		" rendered=\"#{empty view.id}\"" + 
+            		" action=\"#{" + parentBean.detailControllerObjectName + ".save" + currentBean.className + "}\"" +  
+            		" styleClass=\"btn btn-success\" execute=\"@region\"" +  
+            		" render=\"" +  currentBean.objectName + "DetailPanelGroup\"/>");
         }
     
         skipLine();
@@ -119,9 +116,8 @@ public class Richfaces4OneToOneComponentDetailViewFileWriteCommand extends Richf
         
         writeLine("</h:form>");
         
-        writeLine("<script>$('#" + currentBean.objectName + "DetailsMenu').addClass('active');</script>");
+        writeLine("<script>$('#" + currentBean.urlPiece + "-menu').addClass('active');</script>");
         
-
 		writeLine("</ui:define>");
 		writeLine("</ui:composition>");
 

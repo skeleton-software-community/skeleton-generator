@@ -13,7 +13,7 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
 	private Bean bean;
 	
 	public PrimefacesDetailMenuFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.name + File.separator + bean.className.toLowerCase(), bean.className + "DetailsMenu");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "menu");
 
 		this.bean = bean;
 	}
@@ -36,10 +36,10 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
 
         writeLine("<ul class=\"nav nav-pills\">");
         
-        writeLine("<li role=\"presentation\" id=\"" + bean.objectName + "DetailsMenu\">");
-		writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf\">");
+        writeLine("<li role=\"presentation\" id=\"menu\">");
+		writeLine("<h:link outcome=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/details.jsf\">");
 		writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
-		writeLine("#{i18n." + bean.objectName + "Detail}");
+		writeLine("#{i18n." + bean.objectName + "Details}");
 		writeLine("</h:link>");
 		writeLine("</li>");
         
@@ -47,10 +47,10 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToOneComponent.referenceBean;
 
-			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "DetailsMenu\">");
-			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "Details.jsf\">");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.urlPiece + "-menu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/" + currentBean.urlPiece + "/details.jsf\">");
 			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
-			writeLine("#{i18n." + currentBean.objectName + "Detail}");
+			writeLine("#{i18n." + currentBean.objectName + "Details}");
 			writeLine("</h:link>");
 			writeLine("</li>");
         }
@@ -59,8 +59,8 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToManyComponent.referenceBean;
 
-			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "ListMenu\">");
-			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf\">");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.urlPiece + "-list-menu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/" + currentBean.urlPiece + "/list.jsf\">");
 			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");
@@ -71,8 +71,8 @@ public class PrimefacesDetailMenuFileWriteCommand extends PrimefacesXhtmlFileWri
         {
         	Bean currentBean = oneToMany.referenceBean;
 
-			writeLine("<li role=\"presentation\" id=\"" + currentBean.objectName + "ListMenu\">");
-			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + currentBean.className + "List.jsf\">");
+			writeLine("<li role=\"presentation\" id=\"" + currentBean.urlPiece + "-list-menu\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/" + currentBean.urlPiece + "/list.jsf\">");
 			writeLine("<f:param name=\"id\" value=\"#{" + bean.detailViewObjectName + ".selected" + bean.className + ".id}\" />");
 			writeLine("#{i18n." + currentBean.objectName + "List}");
 			writeLine("</h:link>");

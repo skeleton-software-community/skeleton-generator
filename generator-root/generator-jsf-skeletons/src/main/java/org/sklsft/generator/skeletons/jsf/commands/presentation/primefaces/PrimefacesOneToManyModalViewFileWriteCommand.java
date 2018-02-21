@@ -13,8 +13,7 @@ public class PrimefacesOneToManyModalViewFileWriteCommand extends PrimefacesXhtm
 
 	public PrimefacesOneToManyModalViewFileWriteCommand(OneToMany oneToMany) {
 		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.name + File.separator + oneToMany.parentBean.className.toLowerCase(),
-				oneToMany.referenceBean.className + "Modal");
+				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.urlPiece + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece, "modal");
 
 		this.oneToMany = oneToMany;
 	}
@@ -42,7 +41,7 @@ public class PrimefacesOneToManyModalViewFileWriteCommand extends PrimefacesXhtm
 		
 		writeLine("<div class=\"modal-header\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("#{i18n." + currentBean.objectName + "Details}");
 		writeLine("</h2>");
 		writeLine("</div>");
 		skipLine();

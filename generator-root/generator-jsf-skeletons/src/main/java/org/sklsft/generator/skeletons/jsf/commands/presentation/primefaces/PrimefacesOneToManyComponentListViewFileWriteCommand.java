@@ -13,9 +13,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 	private OneToManyComponent oneToManyComponent;
 
 	public PrimefacesOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.name + File.separator + oneToManyComponent.parentBean.className.toLowerCase(),
-				oneToManyComponent.referenceBean.className + "List");
+		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.urlPiece + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece, "list");
 		this.oneToManyComponent = oneToManyComponent;
 	}
 
@@ -53,7 +51,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
         writeLine("<h:form id=\"" +  currentBean.objectName + "ListForm\">");
         skipLine();
         
-        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + parentBean.className + "DetailsMenu.xhtml\"/>");
+        writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/menu.xhtml\"/>");
         skipLine();
         
         writeLine("<h:panelGroup id=\"" +  currentBean.objectName + "PanelGroup\">");
@@ -217,7 +215,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		 writeLine("<div class=\"modal modal-default\" id=\"" +  currentBean.objectName + "Modal\" tabindex=\"-1\" aria-hidden=\"true\">");
          writeLine("<div class=\"modal-dialog modal-lg\">");
          writeLine("<div class=\"modal-content\">");
-         writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.name + "/" + parentBean.className.toLowerCase() + "/" + currentBean.className + "Modal.xhtml\"/>");
+         writeLine("<ui:include src=\"/sections/" + parentBean.myPackage.urlPiece + "/" + parentBean.urlPiece + "/" + currentBean.urlPiece + "/modal.xhtml\"/>");
          writeLine("</div>");
          writeLine("</div>");
          writeLine("</div>");
@@ -226,9 +224,8 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		
 		writeLine("</h:form>");
         
-        writeLine("<script>$('#" + currentBean.objectName + "ListMenu').addClass('active');</script>");
+		writeLine("<script>$('#" + currentBean.urlPiece + "-list-menu').addClass('active');</script>");
         
-
 		writeLine("</ui:define>");
 		writeLine("</ui:composition>");
 	}

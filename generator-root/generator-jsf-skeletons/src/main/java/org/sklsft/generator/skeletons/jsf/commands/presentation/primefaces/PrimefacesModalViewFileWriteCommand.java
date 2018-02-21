@@ -11,7 +11,7 @@ public class PrimefacesModalViewFileWriteCommand extends PrimefacesXhtmlFileWrit
 	private Bean bean;
 	
 	public PrimefacesModalViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.name + File.separator + bean.className.toLowerCase(), bean.className + "Modal");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "modal");
 
 		this.bean = bean;
 	}
@@ -35,7 +35,7 @@ public class PrimefacesModalViewFileWriteCommand extends PrimefacesXhtmlFileWrit
 
         writeLine("<div class=\"modal-header\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + bean.objectName + "Detail}");
+		writeLine("#{i18n." + bean.objectName + "Details}");
 		writeLine("</h2>");
 		writeLine("</div>");
 		skipLine();

@@ -12,8 +12,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 	private Bean bean;
 
 	public PrimefacesListViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + bean.myPackage.name + File.separator
-				+ bean.className.toLowerCase(), bean.className + "List");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "list");
 
 		this.bean = bean;
 		
@@ -127,7 +126,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		writeLine("<h:panelGrid styleClass=\"actions-grid\" columns=\"2\">");
 		
 		if (bean.detailMode.equals(DetailMode.PAGE)) {
-			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Details.jsf\">");
+			writeLine("<h:link outcome=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/details.jsf\">");
 			writeLine("<h:graphicImage url=\"/resources/images/icons/edit.png\" styleClass=\"imageIcon\" title=\"#{i18n.edit}\"/>");
 			writeLine("<f:param name=\"id\" value=\"#{" + bean.objectName + ".id}\" />");
 			writeLine("</h:link>");
@@ -210,7 +209,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
         writeLine("<div class=\"modal modal-default\" id=\"" + bean.objectName + "Modal\" tabindex=\"-1\" aria-hidden=\"true\">");
         writeLine("<div class=\"modal-dialog modal-lg\">");
         writeLine("<div class=\"modal-content\">");
-        writeLine("<ui:include src=\"/sections/" + bean.myPackage.name + "/" + this.bean.className.toLowerCase() + "/" + bean.className + "Modal.xhtml\"/>");
+        writeLine("<ui:include src=\"/sections/" + bean.myPackage.urlPiece + "/" + this.bean.urlPiece + "/modal.xhtml\"/>");
         writeLine("</div>");
         writeLine("</div>");
         writeLine("</div>");
