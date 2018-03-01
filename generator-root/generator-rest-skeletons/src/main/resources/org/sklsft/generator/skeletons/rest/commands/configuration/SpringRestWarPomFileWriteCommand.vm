@@ -11,8 +11,8 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>${project.projectName}-webapp</artifactId>
-	<name>${project.projectName}-webapp</name>
+	<artifactId>${project.projectName}-rest</artifactId>
+	<name>${project.projectName}-rest</name>
 
 	<packaging>war</packaging>
 
@@ -27,7 +27,7 @@
 		<!-- skeleton commons -->
 		<dependency>
 			<groupId>org.sklsft.commons</groupId>
-			<artifactId>commons-mvc</artifactId>
+			<artifactId>commons-rest</artifactId>
 		</dependency>
 		
 		
@@ -67,24 +67,7 @@
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		
-		
-		<!-- Spring security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		
 		
@@ -117,28 +100,11 @@
 			<artifactId>javax.el</artifactId>
 		</dependency>
 		
-		
-		<!-- JSF -->
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-		</dependency>
 
+		<!-- json mapping -->
 		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-		</dependency>
-
-
-		<!-- Prime Faces -->
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>bootstrap</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
 		</dependency>
 		
 		

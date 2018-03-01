@@ -49,7 +49,6 @@
 		
 		<servlet.version>3.1.0</servlet.version>
 		<javax.el.version>3.0.1-b08</javax.el.version>
-		<jstl.version>1.2</jstl.version>
 		<jsf.version>2.2.13</jsf.version>
 		<primefaces.version>5.1</primefaces.version>
 		<primefaces.theme.version>1.0.10</primefaces.theme.version>
@@ -304,12 +303,6 @@
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
 				<version>${servlet.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>jstl</groupId>
-				<artifactId>jstl</artifactId>
-				<version>${jstl.version}</version>
 			</dependency>
 			
 			<dependency>

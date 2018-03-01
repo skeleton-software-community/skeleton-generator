@@ -8,9 +8,8 @@ import org.sklsft.generator.skeletons.jsf.commands.controller.JsfBaseListControl
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfCommonControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfListControllerFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.LogbackFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.MavenInstallBatchFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.ProjectPropertiesFileWriteCommand;
+import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.WebappLogbackFileWriteCommand;
+import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.WebappProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.resources.JsfBaseControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.model.JsfCommonViewFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -38,14 +37,11 @@ public class JsfControllerLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new ProjectPropertiesFileWriteCommand(project));
+		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new WebappProjectPropertiesFileWriteCommand(project));
 		configurationTreeNode.add(propertiesTreeNode);
 		
-		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new LogbackFileWriteCommand(project));
+		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new WebappLogbackFileWriteCommand(project));
 		configurationTreeNode.add(logbackTreeNode);
-		
-		FileWriteCommandTreeNode mavenInstallPomTreeNode = new FileWriteCommandTreeNode(new MavenInstallBatchFileWriteCommand(project));
-		configurationTreeNode.add(mavenInstallPomTreeNode);
 		
 		return configurationTreeNode;
 	}

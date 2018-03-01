@@ -1,0 +1,35 @@
+<configuration>
+
+	<property resource="${project.projectName}.properties" />
+
+	<!--Console appender -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+			</pattern>
+		</layout>
+	</appender>
+
+
+	<!--Daily rolling file appender -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/var/log/${project.projectName}-rest.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-rest.log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<maxHistory>5</maxHistory>
+			<maxFileSize>10MB</maxFileSize>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+			</pattern>
+		</layout>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
