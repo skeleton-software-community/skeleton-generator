@@ -124,7 +124,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * load object list eagerly");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> loadListEagerly() {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 
@@ -151,7 +151,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("@SuppressWarnings(\"unchecked\")");
 				writeLine("public List<" + this.bean.className + "> loadListFrom" + property.capName + "(Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 				writeLine("if (" + property.name + "Id == null){");
@@ -167,7 +167,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * load object list eagerly from " + property.name);
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("@SuppressWarnings(\"unchecked\")");
 				writeLine("public List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(Long " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 				writeLine("if (" + property.name + "Id == null){");
@@ -274,7 +274,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -311,7 +311,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * scroll filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+				writeLine("@SuppressWarnings(\"unchecked\")");
 				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 				
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
@@ -425,7 +425,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to many component " + currentBean.className + " list");
             writeLine(" */");
             writeLine("@Override");
-    		writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+            writeLine("@SuppressWarnings(\"unchecked\")");
 			writeLine("public List<" + currentBean.className + "> load" + currentBean.className + "List(Long " + bean.objectName + "Id) {");
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
 			writeLine("if (" + bean.objectName + "Id == null){");
@@ -503,7 +503,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * scroll filtered one to many component " + currentBean.className); 
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("@SuppressWarnings(" + CHAR_34 + "unchecked" + CHAR_34 + ")");
+			writeLine("@SuppressWarnings(\"unchecked\")");
 			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 			
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
@@ -697,6 +697,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * search");
 		writeLine(" */");
 		writeLine("@Override");
+		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> search(String arg) {");
 		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 		String propertyPath =  CHAR_34 + "{alias}." + targetProperty.column.name + CHAR_34;
