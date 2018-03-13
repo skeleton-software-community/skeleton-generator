@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SpringRestSpringContextFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringRestSpringContextFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-rest/src/main/resources", "applicationContext-" + project.projectName + "-webapp", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.projectName + "-rest/src/main/resources", "applicationContext-" + project.projectName + "-rest", FileType.XML, project);
 	}
 
 }

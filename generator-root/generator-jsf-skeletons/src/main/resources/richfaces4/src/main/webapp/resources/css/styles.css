@@ -303,10 +303,11 @@ pre.truncated-text {
 */
 .form-control.rf-cal-inp {
 	width:100%;
+	background-color:white
 }
 
-.form-control.rf-cal-inp[readonly]{
-	background-color: white;
+.form-control.rf-cal-inp[disabled]{
+	background-color: #eee;
 }
 
 img.rf-cal-btn {

@@ -30,7 +30,7 @@ a:hover {
 }
 
 .navbar-default {
-    background-color: #200687;
+    background-color: #3b5998;
     color: white;
     min-height:70px;
     border:none;
@@ -86,7 +86,7 @@ a:hover {
 
 
 .navbar-nav>li>.dropdown-menu {
-	background-color:#200687;
+	background-color:#3b5998;
 	padding-top:0px;
 	padding-bottom:0px;
 }
@@ -131,7 +131,7 @@ a:hover {
 	position:fixed;
 	bottom:0;
 	width:100%;
-	background-color: #200687;
+	background-color: #3b5998;
 	color:white;
 	z-index:1030;		
 	min-height: 70px;
@@ -289,10 +289,14 @@ pre.truncated-text {
 	padding:0px;	
 }
 
-.hasDatepicker {
+.hasDatepicker, .date-picker>input[disabled]{
 	display:inline-block;
 	height: 32px;
 	width:100%;
+}
+
+.date-picker>input[disabled]{
+	background-color:rgb(238, 238, 238);
 }
 
 .ui-datepicker {   
