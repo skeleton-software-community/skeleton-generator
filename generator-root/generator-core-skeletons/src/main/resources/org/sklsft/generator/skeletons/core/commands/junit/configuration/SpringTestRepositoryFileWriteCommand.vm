@@ -43,7 +43,5 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			<ref bean="dataSource" />
 		</property>
 	</bean>
-	
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 </beans>

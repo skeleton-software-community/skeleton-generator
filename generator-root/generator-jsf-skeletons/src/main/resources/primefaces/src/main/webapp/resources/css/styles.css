@@ -32,7 +32,7 @@ a:hover {
 .navbar-default {
     background-color: #3b5998;
     color: white;
-    min-height:70px;
+    height:70px;
     border:none;
 }
 
@@ -45,6 +45,7 @@ a:hover {
 .navbar-default .navbar-brand {
 	font-size:24px;
 	color: white;
+	padding: 10px 10px;
 }
 .navbar-default .navbar-brand>img {
     display: inline;
@@ -52,21 +53,25 @@ a:hover {
 }
 
 
-.navbar-default .navbar-brand {
-    font-size:28px;
-}
-
 .navbar-default .navbar-brand:hover {
     color:white;
 }
 
+@media (max-width: 767px) {
+	.navbar-nav {
+	    margin: 0px -15px;
+	}
+}
+
 .navbar-nav>li>a {
-    line-height: 45px;
-    font-size:18px;
+    line-height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover .navbar-nav>li>a {
     color: white;
+    background-color: #3b5998;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
@@ -96,6 +101,7 @@ a:hover {
     padding: 8px 20px;
     line-height: 1.42857143;
     color: white;
+    background-color:#3b5998;
     white-space: nowrap;
 }
 
@@ -113,6 +119,7 @@ a:hover {
 	
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
 	    color: white;
+	    background-color:#3b5998;
 	}
 }
 
@@ -134,7 +141,7 @@ a:hover {
 	background-color: #3b5998;
 	color:white;
 	z-index:1030;		
-	min-height: 70px;
+	height: 70px;
     margin-top: 20px;
     padding:15px;
 }
