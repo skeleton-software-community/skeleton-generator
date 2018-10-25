@@ -96,7 +96,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
 			writeLine("protected ScrollView<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "ScrollView = new ScrollView<>();");
-			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + ";");
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + " = new " + currentBean.fullViewBean.className + "();");
 			
 			skipLine();
 		}
@@ -106,7 +106,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToMany.referenceBean;
 			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
 			writeLine("protected ScrollView<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "ScrollView = new ScrollView<>();");
-			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + ";");
+			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + " = new " + currentBean.fullViewBean.className + "();");
 			skipLine();
 		}
 		

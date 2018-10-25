@@ -61,7 +61,7 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("protected ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> scrollForm = new ScrollForm<>();");
 		writeLine("protected ScrollView<" + bean.basicViewBean.className + "> scrollView = new ScrollView<>();");
-		writeLine("protected " + this.bean.fullViewBean.className + " selected" + this.bean.className + ";");
+		writeLine("protected " + this.bean.fullViewBean.className + " selected" + this.bean.className + " = new " + this.bean.fullViewBean.className + "();");
 		skipLine();
 
 		writeLine("/*");
