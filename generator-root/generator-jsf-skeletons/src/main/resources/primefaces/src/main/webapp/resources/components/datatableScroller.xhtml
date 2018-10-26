@@ -21,15 +21,17 @@
 		<div class="datatable-scroller">
 			<p:commandLink onclick="$('.datatable-scroller-page-input').val(1)"
 				action="#{cc.attrs.action}"
+				process="@this, @parent:datatable-scroller-page-input"
 				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-fast-backward"> </span>
 			</p:commandLink>
 			<p:commandLink onclick="$('.datatable-scroller-page-input').get(0).value--"
 				action="#{cc.attrs.action}"
+				process="@this, @parent:datatable-scroller-page-input"
 				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-step-backward"> </span>
 			</p:commandLink>
-			<h:inputText value="#{cc.attrs.page}" class="datatable-scroller-page-input">
+			<h:inputText value="#{cc.attrs.page}" id="datatable-scroller-page-input" class="datatable-scroller-page-input">
 				<p:ajax event="keyup" update="#{cc.attrs.render}"
 					listener="#{cc.attrs.action}" delay="500"
 					oncomplete="setCaretToEnd(event);">
@@ -38,11 +40,13 @@
 			/ <span class="datatable-scroller-page-number">#{cc.attrs.numberOfPages}</span>
 			<p:commandLink onclick="$('.datatable-scroller-page-input').get(0).value++"
 				action="#{cc.attrs.action}"
+				process="@this, @parent:datatable-scroller-page-input"
 				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-step-forward"> </span>
 			</p:commandLink>
 			<p:commandLink  onclick="$('.datatable-scroller-page-input').val($('.datatable-scroller-page-number').text())"
 				action="#{cc.attrs.action}"
+				process="@this, @parent:datatable-scroller-page-input"
 				update="#{cc.attrs.render}">
 				<span class="glyphicon glyphicon-fast-forward"> </span>
 			</p:commandLink>
