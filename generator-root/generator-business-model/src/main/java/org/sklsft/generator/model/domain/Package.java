@@ -57,6 +57,7 @@ public class Package {
 	public String processorImplPackageName;
 	
 	public String baseRestControllerPackageName;
+	public String restControllerPackageName;
 
 	public String baseListControllerPackageName;
 	public String listControllerPackageName;	

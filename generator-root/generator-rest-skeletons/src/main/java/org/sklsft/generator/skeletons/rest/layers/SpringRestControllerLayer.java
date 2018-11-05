@@ -5,6 +5,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.SpringRestBaseControllerCommand;
+import org.sklsft.generator.skeletons.rest.commands.SpringRestControllerCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLogbackFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestRootPomFileWriteCommand;
@@ -70,6 +71,21 @@ public class SpringRestControllerLayer extends AbstractLayer {
 				if (!bean.isComponent) {
 					FileWriteCommandTreeNode beanBaseControllerTreeNode = new FileWriteCommandTreeNode(new SpringRestBaseControllerCommand(bean));
 					packageTreeNode.add(beanBaseControllerTreeNode);
+				}
+			}
+		}
+		
+		FileWriteCommandTreeNode controllerTreeNode = new FileWriteCommandTreeNode("REST Controllers");
+		controllersLayerTreeNode.add(controllerTreeNode);
+
+		for (Package myPackage : project.model.packages) {
+			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+			controllerTreeNode.add(packageTreeNode);
+			
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					FileWriteCommandTreeNode beanControllerTreeNode = new FileWriteCommandTreeNode(new SpringRestControllerCommand(bean));
+					packageTreeNode.add(beanControllerTreeNode);
 				}
 			}
 		}

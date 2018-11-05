@@ -110,6 +110,7 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.processorImplPackageName = model.processorPackageName + "." + myPackage.name;
 		
 		myPackage.baseRestControllerPackageName = model.restControllerPackageName + "." + myPackage.name + ".base";
+		myPackage.restControllerPackageName = model.restControllerPackageName + "." + myPackage.name;
 		
 		myPackage.baseListControllerPackageName = model.controllerPackageName + "." + myPackage.name + ".list.base";
 		myPackage.listControllerPackageName = model.controllerPackageName + "." + myPackage.name+ ".list";

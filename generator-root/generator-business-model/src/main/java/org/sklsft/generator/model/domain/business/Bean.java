@@ -53,6 +53,7 @@ public class Bean {
 	public String processorObjectName;
 	
 	public String baseRestControllerClassName;
+	public String restControllerClassName;
 
 	public String baseListControllerClassName;
 	public String baseDetailControllerClassName;

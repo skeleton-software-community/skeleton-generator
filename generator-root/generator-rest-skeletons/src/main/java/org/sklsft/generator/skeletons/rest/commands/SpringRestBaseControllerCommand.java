@@ -55,7 +55,6 @@ private Bean bean;
 			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
-		javaImports.add("import org.springframework.stereotype.Controller;");
 		javaImports.add("import org.springframework.web.bind.annotation.PathVariable;");
 		javaImports.add("import org.springframework.web.bind.annotation.RequestBody;");
 		javaImports.add("import org.springframework.web.bind.annotation.RequestMapping;");
@@ -79,7 +78,6 @@ private Bean bean;
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("@Controller");
 		writeLine("public class " + this.bean.baseRestControllerClassName + " {");
 		skipLine();
 		writeLine("/*");
