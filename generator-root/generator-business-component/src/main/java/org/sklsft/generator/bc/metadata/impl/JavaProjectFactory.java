@@ -30,7 +30,7 @@ public class JavaProjectFactory implements ProjectFactory {
 	 * properties injected by spring
 	 */
 	@Resource(name="javaModelFactory")
-	ModelFactory modelFactory;
+	private ModelFactory modelFactory;
 	
 	/*
 	 * (non-Javadoc)
