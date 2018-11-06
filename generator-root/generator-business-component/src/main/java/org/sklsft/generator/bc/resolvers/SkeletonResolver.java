@@ -1,7 +1,9 @@
 package org.sklsft.generator.bc.resolvers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.sklsft.generator.model.domain.Project;
@@ -23,7 +25,13 @@ public class SkeletonResolver {
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
 		provider.addIncludeFilter(new AssignableTypeFilter(Skeleton.class));
 		
-		Set<BeanDefinition> defs = provider.findCandidateComponents("org.sklsft.generator.skeletons");
+		String[] packagesToScan = ResourceBundle.getBundle("generator").getString("skeletons.path").split(",");
+		
+		Set<BeanDefinition> defs = new HashSet<>();
+		
+		for (String packageToScan:packagesToScan) {
+			defs.addAll(provider.findCandidateComponents(packageToScan.trim()));
+		}
 		
 		for (BeanDefinition def:defs) {
 			try {
