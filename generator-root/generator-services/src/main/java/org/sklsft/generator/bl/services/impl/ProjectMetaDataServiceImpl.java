@@ -2,9 +2,12 @@ package org.sklsft.generator.bl.services.impl;
 
 import javax.inject.Inject;
 
+import org.sklsft.generator.bc.validation.ProjectMetaDataValidator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.sklsft.generator.exception.InvalidProjectMetaDataException;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +25,10 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	 * properties injected by spring
 	 */
 	@Inject
-	ProjectMetaDataDao projectMetaDataDao;
+	private ProjectMetaDataDao projectMetaDataDao;
+	
+	@Inject
+	private ProjectMetaDataValidator projectMetaDataValidator;
 	
 	
 	@Override
@@ -32,6 +38,16 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		logger.info("end reading meta data");
 		
 		return projectMetaData;
+	}
+	
+	
+	@Override
+	public ProjectValidationReport validate(ProjectMetaData project) {
+		logger.info("start validating meta data");
+		ProjectValidationReport report = projectMetaDataValidator.validate(project);
+		logger.info("end validating meta data");
+		
+		return report;
 	}
 	
 	

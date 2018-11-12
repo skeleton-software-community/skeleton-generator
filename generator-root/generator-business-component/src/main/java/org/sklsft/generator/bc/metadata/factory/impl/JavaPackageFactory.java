@@ -1,14 +1,14 @@
-package org.sklsft.generator.bc.metadata.impl;
+package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
-import org.sklsft.generator.bc.metadata.interfaces.BeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.PackageFactory;
-import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
-import org.sklsft.generator.bc.metadata.interfaces.TableFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.BeanFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.PackageFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ProjectFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.TableFactory;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.business.Bean;

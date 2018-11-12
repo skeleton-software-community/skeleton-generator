@@ -1,16 +1,16 @@
-package org.sklsft.generator.bc.metadata.impl;
+package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.sklsft.generator.bc.metadata.interfaces.BasicViewBeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.FormBeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.FullViewBeanFactory;
-import org.sklsft.generator.bc.metadata.interfaces.ModelFactory;
-import org.sklsft.generator.bc.metadata.interfaces.PackageFactory;
-import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
-import org.sklsft.generator.bc.metadata.interfaces.ViewPropertiesFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.BasicViewBeanFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.FormBeanFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.FullViewBeanFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ModelFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.PackageFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ProjectFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;

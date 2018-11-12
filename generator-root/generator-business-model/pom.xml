@@ -12,5 +12,14 @@
 	<description>Module Business Model du projet Generator</description>
 
 	<packaging>jar</packaging>
+	
+	<dependencies>
+	
+		<!-- gestion des logs -->	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+	</dependencies>
 
 </project>

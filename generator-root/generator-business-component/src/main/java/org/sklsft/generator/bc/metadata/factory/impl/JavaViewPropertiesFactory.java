@@ -1,9 +1,9 @@
-package org.sklsft.generator.bc.metadata.impl;
+package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sklsft.generator.bc.metadata.interfaces.ViewPropertiesFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.Property;

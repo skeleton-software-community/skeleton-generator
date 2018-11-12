@@ -1,6 +1,7 @@
 package org.sklsft.generator.bl.services.interfaces;
 
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 
 /**
  * All the necessary services relative to xml representation of a project
@@ -15,8 +16,15 @@ public interface ProjectMetaDataService {
 	 * @return
 	 */
 	ProjectMetaData loadProjectMetaData(String folderPath);
-
-
+	
+	
+	/**
+	 * validates a @{link ProjectMetaData}
+	 * @return
+	 */
+	ProjectValidationReport validate(ProjectMetaData project);
+	
+	
 	/**
 	 * persists a @{link ProjectMetaData} to an xml file
 	 * @param projectMetaData

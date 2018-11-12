@@ -1,4 +1,4 @@
-package org.sklsft.generator.bc.metadata.interfaces;
+package org.sklsft.generator.bc.metadata.factory.interfaces;
 
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;

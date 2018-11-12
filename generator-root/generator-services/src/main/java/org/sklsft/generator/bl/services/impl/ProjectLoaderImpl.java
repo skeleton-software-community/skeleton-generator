@@ -2,7 +2,7 @@ package org.sklsft.generator.bl.services.impl;
 
 import javax.annotation.Resource;
 
-import org.sklsft.generator.bc.metadata.interfaces.ProjectFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.ProjectFactory;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;

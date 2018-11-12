@@ -1,8 +1,8 @@
-package org.sklsft.generator.bc.metadata.impl;
+package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
 
-import org.sklsft.generator.bc.metadata.interfaces.TableFactory;
+import org.sklsft.generator.bc.metadata.factory.interfaces.TableFactory;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
