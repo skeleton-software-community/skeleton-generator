@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadata:project xmlns:metadata="http://generator.sklsft.org/schema/model/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://generator.sklsft.org/schema/model/metadata skeleton-metadata-3.0.xsd">
+    <domainName>org.sklsft</domainName>
+    <projectName>demo</projectName>
+    <skeleton>SPRING_HIBERNATE_PRIMEFACES</skeleton>
+    <databaseEngine>POSTGRESQL</databaseEngine>
+    <databaseName>demo</databaseName>
+    <databaseDNS>localhost</databaseDNS>
+    <databasePort>5432</databasePort>
+    <databaseUserName>postgres</databaseUserName>
+    <databasePassword>postgres</databasePassword>
+    <audited>false</audited>
+	<packages>
+		<package name="LOCALIZATION">
+			<tables>
+				<table name="COUNTRY" cardinality="1" listRendering="Countries"
+					detailRendering="Country details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<selectionBehavior selectionMode="DROPDOWN_OPTIONS"/>
+					<columns>
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="ISO Code">
+						</column>
+						<column name="LABEL" dataType="STRING" nullable="false"
+							editable="true" rendering="Label">
+						</column>
+					</columns>
+				</table>
+				<table name="REGION" cardinality="2" listRendering="Regions/States/Provinces"
+					detailRendering="Region details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<columns>						
+						<column name="COUNTRY_ID" dataType="LONG"
+							referenceTableName="COUNTRY" referenceTableRelation="MANY_TO_ONE"
+							nullable="false" editable="true" rendering="Country">
+						</column>
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="LABEL" dataType="STRING" nullable="false"
+							editable="true" rendering="Label">
+						</column>					
+					</columns>					
+				</table>
+				<table name="CITY" cardinality="2" listRendering="Cities"
+					detailRendering="City details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<columns>
+						<column name="REGION_ID" dataType="LONG"
+							referenceTableName="REGION" referenceTableRelation="MANY_TO_ONE"
+							nullable="false" editable="true" rendering="Region">
+						</column>
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="LABEL" dataType="STRING" nullable="false"
+							editable="true" rendering="Label">
+						</column>
+					</columns>
+				</table>
+			</tables>
+		</package>
+		<package name="TIME">
+			<tables>
+				<table name="CALENDAR" cardinality="1" listRendering="Calendars"
+					detailRendering="Calendar details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<selectionBehavior selectionMode="DROPDOWN_OPTIONS"/>
+					<columns>						
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="LABEL" dataType="STRING" nullable="false"
+							editable="true" rendering="Label">
+						</column>
+					</columns>
+				</table>
+				<table name="CALENDAR_DAY_OFF" cardinality="2" listRendering="Days off" detailRendering="Day off"
+					createEnabled="true" updateEnabled="true" deleteEnabled="true">
+					<columns>
+						<column name="CALENDAR_ID" dataType="LONG" nullable="false" referenceTableName="CALENDAR" referenceTableRelation="MANY_TO_ONE_COMPONENT"
+							editable="true" rendering="User">
+						</column>
+						<column name="DAY_OFF_DATE" dataType="DATETIME" nullable="false" editable="true" rendering="Date">
+						</column>
+						<column name="DAY_OFF_LABEL" dataType="STRING" nullable="true" editable="true" rendering="Label">
+						</column>
+					</columns>
+				</table>
+			</tables>
+		</package>
+		<package name="ORGANIZATIONS">
+			<tables>
+				<table cardinality="1" name="ORGANIZATION" listRendering="Organizations" detailRendering="Organization">
+					<selectionBehavior selectionMode="AUTO_COMPLETE"/>
+					<columns>	
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="ORGANIZATION_DESCRIPTION_ID" dataType="LONG" nullable="false"
+							editable="true" rendering="Code"
+							referenceTableName="ORGANIZATION_DESCRIPTION" referenceTableRelation="EMBEDDED">
+						</column>
+					</columns>
+				</table>
+				<table cardinality="0" name="ORGANIZATION_DESCRIPTION">
+					<columns>
+						<column name="DESCRIPTION" dataType="TEXT" nullable="true"
+							editable="true" rendering="Description">
+						</column>
+					</columns>
+				</table>
+				<table cardinality="1" name="ORGANIZATION_CERTIFICATION" listRendering="Certifications" detailRendering="Certification">
+					<columns>
+						<column name="ORGANIZATION_ID" dataType="LONG" nullable="true"
+							editable="true" rendering="Description" referenceTableName="ORGANIZATION"
+							referenceTableRelation="ONE_TO_ONE_COMPONENT">
+						</column>
+						<column name="CERTIFIED" dataType="BOOLEAN" nullable="false"
+							editable="true" rendering="Certified">
+						</column>
+					</columns>
+				</table>
+			</tables>
+		</package>
+		<package name="DUMMY">
+			<tables>
+				<table name="FOOL" cardinality="1" listRendering="Fools"
+					detailRendering="Fool details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<selectionBehavior selectionMode="AUTO_COMPLETE"/>
+					<columns>	
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="DESCRIPTION" dataType="TEXT" nullable="true"
+							editable="true" rendering="Description">
+						</column>
+						<column name="LONG_FIELD" dataType="LONG" nullable="true"
+							editable="true" rendering="Long">
+						</column>
+						<column name="BOOLEAN_FIELD" dataType="BOOLEAN" nullable="true"
+							editable="true" rendering="Boolean">
+						</column>
+						<column name="DOUBLE_FIELD" dataType="DOUBLE" nullable="true"
+							editable="true" rendering="Double">
+						</column>
+						<column name="DECIMAL_FIELD" dataType="BIG_DECIMAL" nullable="true"
+							editable="true" rendering="Decimal">
+						</column>
+						<column name="DATE_FIELD" dataType="DATE" nullable="true"
+							editable="true" rendering="Date">
+						</column>
+						<column name="DATETIME_FIELD" dataType="DATETIME" nullable="true"
+							editable="true" rendering="Date and time">
+						</column>
+					</columns>
+				</table>
+				<table name="STUPID" cardinality="1" listRendering="Stupids"
+					detailRendering="Stupid details" createEnabled="true"
+					updateEnabled="true" deleteEnabled="true">
+					<columns>						
+						<column name="CODE" dataType="STRING" nullable="false"
+							editable="true" rendering="Code">
+						</column>
+						<column name="FOOL_ID" dataType="LONG" nullable="false" referenceTableName="FOOL"
+							editable="true" rendering="Fool">
+						</column>
+					</columns>
+				</table>
+			</tables>
+		</package>
+	</packages>
+</metadata:project>
