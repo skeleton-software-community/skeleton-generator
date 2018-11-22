@@ -15,7 +15,7 @@ public class ProjectValidationReport {
 	public boolean hasWarnings = false;
 	public boolean hasErrors = false;
 	
-private static final Logger logger = LoggerFactory.getLogger(ProjectValidationReport.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProjectValidationReport.class);
 	
 	public void add (TableMetaData table, ColumnMetaData column, String message) {		
 		records.add(new ProjectValidationRecord(Level.WARN, table, column, message));

@@ -38,4 +38,14 @@ public class ProjectMetaDataServiceTest {
 		Assert.assertFalse(report.hasErrors);
 		Assert.assertFalse(report.hasWarnings);
 	}
+	
+	
+	@Test
+	public void testLoadFailureOnDuplicateTables() {
+		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/failure/1");
+		ProjectValidationReport report = service.validate(project);
+		report.print();
+		Assert.assertTrue(report.hasErrors);
+		Assert.assertFalse(report.hasWarnings);
+	}
 }
