@@ -2,9 +2,12 @@ package org.sklsft.generator.bl.services;
 
 import javax.inject.Inject;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +33,9 @@ public class ProjectMetaDataServiceTest {
 	
 	@Test
 	public void testLoadSuccess() {
-		service.loadProjectMetaData("src/test/resources/projects/success/1");
+		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/success/1");
+		ProjectValidationReport report = service.validate(project);
+		Assert.assertFalse(report.hasErrors);
+		Assert.assertFalse(report.hasWarnings);
 	}
 }
