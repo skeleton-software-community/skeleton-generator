@@ -42,7 +42,7 @@ public class JavaPackageFactory implements PackageFactory {
 		Package myPackage = setUpPackage(packageMetaData, model);
 		
 		for (TableMetaData tableMetaData : packageMetaData.getTables()){
-			logger.info("Scanning table " + tableMetaData.getName());
+			logger.trace("Scanning table " + tableMetaData.getName());
 			
 			Table table = tableFactory.scanTable(tableMetaData, myPackage);
 			myPackage.tables.add(table);
@@ -59,11 +59,11 @@ public class JavaPackageFactory implements PackageFactory {
 		Package pack = model.findPackage(packageMetaData.getName());
 		
 		for (TableMetaData tableMetaData : packageMetaData.getTables()){
-			logger.info("Filling table " + tableMetaData.getName());
+			logger.trace("Filling table " + tableMetaData.getName());
 			Table table = tableFactory.fillTable(tableMetaData, pack);
-			logger.info("adding bean from table : " + table.name);
+			logger.trace("adding bean from table : " + table.name);
 			Bean bean = beanFactory.fillBean(tableMetaData, table, model);
-			logger.info("bean : " + bean.className + " added");
+			logger.trace("bean : " + bean.className + " added");
 		}
 		return pack;
 	}

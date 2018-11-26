@@ -111,7 +111,7 @@ public class JavaModelFactory implements ModelFactory {
 	private void fillPackages(ProjectMetaData projectMetaData, Model model) {
 		for (PackageMetaData packageMetaData : projectMetaData.getPackages()){
 			Package myPackage = packageFactory.fillPackage(packageMetaData, model);
-			logger.info("Filling package : " + myPackage.name);
+			logger.trace("Filling package : " + myPackage.name);
 			
 		}
 	}
@@ -120,7 +120,7 @@ public class JavaModelFactory implements ModelFactory {
 	private void scanPackages(ProjectMetaData projectMetaData, Model model) {
 		for (PackageMetaData packageMetaData : projectMetaData.getPackages())
 		{
-			logger.info("Scanning package : " + packageMetaData.getName());
+			logger.trace("Scanning package : " + packageMetaData.getName());
 			Package myPackage = packageFactory.scanPackage(packageMetaData, model);
 			model.packages.add(myPackage);
 		}
