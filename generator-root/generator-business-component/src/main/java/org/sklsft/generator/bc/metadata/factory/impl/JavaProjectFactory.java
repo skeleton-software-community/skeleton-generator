@@ -53,9 +53,9 @@ public class JavaProjectFactory implements ProjectFactory {
 		project.databasePassword = projectMetaData.getDatabasePassword();
 		project.audited = projectMetaData.getAudited();
 		
-		logger.info("start building model");
+		logger.trace("start building model");
 		project.model = modelFactory.buildModel(projectMetaData, project);
-		logger.info("end building model");
+		logger.trace("end building model");
 		
 		return project;
 	}

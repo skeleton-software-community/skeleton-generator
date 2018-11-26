@@ -4,7 +4,8 @@ import org.sklsft.generator.bc.validation.rules.ProjectMetaDataRuleChecker;
 
 public enum Rules {
 
-	NO_DUPLICATE_TABLE(NoDuplicateTableChecker.class);
+	NO_DUPLICATE_TABLE(NoDuplicateTableChecker.class),
+	INVALID_TABLE_REFERENCE(InvalidReferenceTableChecker.class);
 	
 	private Class<? extends ProjectMetaDataRuleChecker> checkerClass; 
 	

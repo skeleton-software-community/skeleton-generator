@@ -27,11 +27,6 @@ public class ProjectMetaDataServiceTest {
 	
 	
 	@Test
-	public void testSetup() {
-		logger.info("Your test environment is ready to use !");			
-	}
-	
-	@Test
 	public void testLoadSuccess() {
 		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/success/1");
 		ProjectValidationReport report = service.validate(project);
@@ -43,6 +38,16 @@ public class ProjectMetaDataServiceTest {
 	@Test
 	public void testLoadFailureOnDuplicateTables() {
 		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/failure/1");
+		ProjectValidationReport report = service.validate(project);
+		report.print();
+		Assert.assertTrue(report.hasErrors);
+		Assert.assertFalse(report.hasWarnings);
+	}
+	
+	
+	@Test
+	public void testLoadFailureOnInvalidTableReference() {
+		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/failure/2");
 		ProjectValidationReport report = service.validate(project);
 		report.print();
 		Assert.assertTrue(report.hasErrors);
