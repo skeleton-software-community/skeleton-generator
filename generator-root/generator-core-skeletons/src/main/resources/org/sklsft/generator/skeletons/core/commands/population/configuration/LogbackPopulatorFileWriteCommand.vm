@@ -4,32 +4,38 @@
 
 	<!--Console appender -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>
-				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
-		</layout>
+		</encoder>
 	</appender>
 
 
 	<!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>/var/log/${project.projectName}-populator.log</File>
+		<File>${log.directory}/${project.projectName}-populator.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-populator.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${log.directory}/${project.projectName}/${project.projectName}-populator.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
-			<maxHistory>5</maxHistory>
-			<maxFileSize>10MB</maxFileSize>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>
-				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
-		</layout>
+		</encoder>
 	</appender>
 
-	<root level="info">
-		<appender-ref ref="STDOUT" />
+	<logger name="${project.domainName}" level="${log.app.level}">
 		<appender-ref ref="FILE" />
+	</logger>
+	
+	<logger name="org.sklsft" level="${log.app.level}">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="${log.root.level}">
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

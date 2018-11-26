@@ -9,7 +9,13 @@
 		</layout>
 	</appender>
 
-	<root level="info">
+	<logger name="${project.domainName}" level="${log.app.level}">
+	</logger>
+	
+	<logger name="org.sklsft" level="${log.app.level}">
+	</logger>
+
+	<root level="${log.root.level}">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
