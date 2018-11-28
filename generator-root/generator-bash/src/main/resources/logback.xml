@@ -6,7 +6,8 @@
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%d{dd/MM HH:mm:ss.SSS}|%-4level|%msg%n
+			<pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
 		</encoder>
 	</appender>
@@ -20,7 +21,8 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%d{dd/MM HH:mm:ss.SSS}|%-4level|%msg%n
+			<pattern>
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
 		</encoder>
 	</appender>
