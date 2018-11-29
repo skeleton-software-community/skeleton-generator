@@ -18,15 +18,13 @@ public class InputDataSourceProviderImpl implements InputDataSourceProvider {
 	 * properties
 	 */
 	private Map<String, DataSource> dataSources;
-	private String productionSourceReference;
 	
 	
 	/*
 	 * constructor
 	 */
-	public InputDataSourceProviderImpl(Map<String, DataSource> dataSources, String productionSourceReference) {
+	public InputDataSourceProviderImpl(Map<String, DataSource> dataSources) {
 		this.dataSources = dataSources;
-		this.productionSourceReference = productionSourceReference;
 	}
 
 	
@@ -40,11 +38,5 @@ public class InputDataSourceProviderImpl implements InputDataSourceProvider {
 		}
 		
 		return result;
-	}
-
-
-	@Override
-	public String getPoductionSourceReference() {
-		return productionSourceReference;
 	}
 }

@@ -14,5 +14,4 @@ public interface InputDataSourceProvider {
 
 	public DataSource getDataSource(String dataSourceName) throws DataSourceNotFoundException;
 
-	public String getPoductionSourceReference();
 }
