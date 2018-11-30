@@ -1,5 +1,7 @@
 package org.sklsft.generator.bc.metadata.factory.interfaces;
 
+import java.util.List;
+
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.metadata.PackageMetaData;
@@ -13,8 +15,8 @@ import org.sklsft.generator.model.metadata.PackageMetaData;
 public interface PackageFactory {
 
 
-	Package scanPackage(PackageMetaData packageMetaData, Model model);
+	List<Package> scanPackages(PackageMetaData packageMetaData, Model model, Package parent);
 
-	Package fillPackage(PackageMetaData packageMetaData, Model model);
+	void fillPackage(PackageMetaData packageMetaData, Model model);
 
 }

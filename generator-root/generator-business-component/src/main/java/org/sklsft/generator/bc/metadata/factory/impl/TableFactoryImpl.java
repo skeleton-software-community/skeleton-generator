@@ -2,8 +2,10 @@ package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
 
+import org.sklsft.generator.bc.metadata.factory.interfaces.ProjectFactory;
 import org.sklsft.generator.bc.metadata.factory.interfaces.TableFactory;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
+import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
@@ -13,6 +15,8 @@ import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.model.metadata.UniqueConstraintMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
@@ -20,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TableFactoryImpl implements TableFactory {
 
-
+	private static final Logger logger = LoggerFactory.getLogger(TableFactory.class);
 
 	@Override
 	public Table scanTable(TableMetaData tableMetaData, Package myPackage) {
@@ -29,18 +33,20 @@ public class TableFactoryImpl implements TableFactory {
 		table.originalName = tableMetaData.getName();
 		table.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(table.originalName);
 		table.cardinality = tableMetaData.getCardinality();
+		
+		logger.trace("Table found : " + tableMetaData.getName());
         
         return table;
 	}
 
 	@Override
-	public Table fillTable(TableMetaData tableMetaData, Package myPackage) {
-		Table table = myPackage.model.findTable(tableMetaData.getName());
+	public Table fillTable(TableMetaData tableMetaData, Model model) {
+		Table table = model.findTable(tableMetaData.getName());
 		
         for (ColumnMetaData columnMetaData : tableMetaData.getColumns()) {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
-            column.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(column.originalName);
+            column.name = DatabaseHandlerResolver.getDatabaseHandler(model.project).rename(column.originalName);
             column.dataType = columnMetaData.getDataType();
             column.nullable = (columnMetaData.getNullable());
             if (columnMetaData.getReferenceTableRelation() != null) {
@@ -50,7 +56,7 @@ public class TableFactoryImpl implements TableFactory {
             }
             
             column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT));
-            column.referenceTable = myPackage.model.findTable(columnMetaData.getReferenceTableName());
+            column.referenceTable = model.findTable(columnMetaData.getReferenceTableName());
             column.unique = columnMetaData.getUnique() || column.relation.isUnique();
             column.editable = columnMetaData.getEditable();
             if (columnMetaData.getVisibility()!=null) {
@@ -74,8 +80,6 @@ public class TableFactoryImpl implements TableFactory {
         		table.uniqueConstraints.add(uniqueConstraint);
         	}
         }
-		
         return table;
-	}
-	
+	}	
 }

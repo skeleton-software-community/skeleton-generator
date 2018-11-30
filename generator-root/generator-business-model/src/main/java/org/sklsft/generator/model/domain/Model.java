@@ -186,6 +186,8 @@ public class Model {
 	public void setJunitDataPackageName(String junitDataPackageName) {
 		this.junitDataPackageName = junitDataPackageName;
 	}
+	
+	
 	/**
      * run through all the tables until it is found
      * @param tableName
@@ -211,13 +213,6 @@ public class Model {
 				+ tableName);
 	}
 
-	public Package findPackage(String packageName){
-		String lowerCaseName = packageName.toLowerCase();
-		for(Package packg : this.packages){
-			if(packg.name.equals(lowerCaseName)) return packg;
-		}
-		throw new PackageNotFoundException(packageName);
-	}
 
 	/**
 	 * run through all the beans until it is found

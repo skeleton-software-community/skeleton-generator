@@ -19,21 +19,25 @@ public class ZeroCardinalityReferenceTableChecker implements ProjectMetaDataRule
 		Map<String, TableMetaData> tablesMap = new HashMap<>();
 		
 		for (PackageMetaData packageMetaData:project.getPackages()) {
+			if (packageMetaData.getTables()!=null) {
 			for (TableMetaData table:packageMetaData.getTables()) {
 				tablesMap.put(table.getName(), table);
+			}
 			}
 		}
 		
 		for (PackageMetaData packageMetaData:project.getPackages()) {
-			for (TableMetaData table:packageMetaData.getTables()) {
-				for (ColumnMetaData column:table.getColumns()) {
-					if (column.getReferenceTableName() != null) {
-						TableMetaData referenceTable = tablesMap.get(column.getReferenceTableName());
-						if (referenceTable != null && referenceTable.getCardinality() == 0 && !RelationType.EMBEDDED.equals(column.getReferenceTableRelation())) {
-							report.addError(table, column, "Reference to a zero cardinality table");
+			if (packageMetaData.getTables()!=null) {
+				for (TableMetaData table:packageMetaData.getTables()) {
+					for (ColumnMetaData column:table.getColumns()) {
+						if (column.getReferenceTableName() != null) {
+							TableMetaData referenceTable = tablesMap.get(column.getReferenceTableName());
+							if (referenceTable != null && referenceTable.getCardinality() == 0 && !RelationType.EMBEDDED.equals(column.getReferenceTableRelation())) {
+								report.addError(table, column, "Reference to a zero cardinality table");
+							}
 						}
-					}
-				}				
+					}				
+				}
 			}
 		}
 		

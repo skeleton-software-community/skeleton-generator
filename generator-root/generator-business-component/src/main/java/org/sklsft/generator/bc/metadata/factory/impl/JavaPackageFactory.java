@@ -1,6 +1,7 @@
 package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -38,42 +39,60 @@ public class JavaPackageFactory implements PackageFactory {
 	private BeanFactory beanFactory;
 
 	@Override
-	public Package scanPackage(PackageMetaData packageMetaData, Model model){
-		Package myPackage = setUpPackage(packageMetaData, model);
+	public List<Package> scanPackages(PackageMetaData packageMetaData, Model model, Package parent) {
 		
-		for (TableMetaData tableMetaData : packageMetaData.getTables()){
-			logger.trace("Scanning table " + tableMetaData.getName());
-			
-			Table table = tableFactory.scanTable(tableMetaData, myPackage);
-			myPackage.tables.add(table);
-			
-			Bean bean = beanFactory.scanBean(tableMetaData, table);
-			myPackage.beans.add(bean);
+		List<Package> result = new ArrayList<>();
+		
+		Package myPackage = setUpPackage(packageMetaData, model, parent);
+		logger.trace("Package found : " + myPackage.name);
+		
+		if (packageMetaData.getTables() != null) {
+			for (TableMetaData tableMetaData : packageMetaData.getTables()){
+				
+				Table table = tableFactory.scanTable(tableMetaData, myPackage);
+				myPackage.tables.add(table);
+				
+				Bean bean = beanFactory.scanBean(tableMetaData, table);
+				myPackage.beans.add(bean);
+			}
 		}
 		
-		return myPackage;
+		result.add(myPackage);
+		
+		if (packageMetaData.getPackages() != null) {
+			for (PackageMetaData child:packageMetaData.getPackages()) {
+				result.addAll(scanPackages(child, model, myPackage));
+			}
+		}
+		
+		return result;
 	}
 
 	@Override
-	public Package fillPackage(PackageMetaData packageMetaData, Model model){
-		Package pack = model.findPackage(packageMetaData.getName());
-		
-		for (TableMetaData tableMetaData : packageMetaData.getTables()){
-			logger.trace("Filling table " + tableMetaData.getName());
-			Table table = tableFactory.fillTable(tableMetaData, pack);
-			logger.trace("adding bean from table : " + table.name);
-			Bean bean = beanFactory.fillBean(tableMetaData, table, model);
-			logger.trace("bean : " + bean.className + " added");
+	public void fillPackage(PackageMetaData packageMetaData, Model model){
+		if (packageMetaData.getTables() != null) {
+			for (TableMetaData tableMetaData : packageMetaData.getTables()){
+				logger.trace("Filling table " + tableMetaData.getName());
+				Table table = tableFactory.fillTable(tableMetaData, model);
+				logger.trace("Creating bean from table : " + table.name);
+				beanFactory.fillBean(tableMetaData, table, model);
+			}
 		}
-		return pack;
+		if (packageMetaData.getPackages() != null) {
+			for (PackageMetaData child:packageMetaData.getPackages()) {
+				fillPackage(child, model);
+			}
+		}
 	}
 
-	private Package setUpPackage(PackageMetaData packageMetaData, Model model) {
+	private Package setUpPackage(PackageMetaData packageMetaData, Model model, Package parent) {
 		Package myPackage = new Package();
 		myPackage.model = model;
-		myPackage.declaredName = packageMetaData.getName();
 		myPackage.name = packageMetaData.getName().toLowerCase();
-		myPackage.urlPiece = myPackage.name;
+		if (parent != null) {
+			myPackage.name = parent.name + "." + myPackage.name;
+		}
+		myPackage.urlPiece = myPackage.name.replace(".", "/");
 		
 		myPackage.omPackageName = model.modelPackageName + "." + myPackage.name;
 		
@@ -124,6 +143,7 @@ public class JavaPackageFactory implements PackageFactory {
 		
 		myPackage.tables = new ArrayList<Table>();
 		myPackage.beans = new ArrayList<Bean>();
+		
 		return myPackage;
 	}
 

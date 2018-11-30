@@ -1,6 +1,6 @@
 package org.sklsft.generator.skeletons.core.database;
 
-import org.sklsft.generator.skeletons.core.layers.OracleDatabaseLayer;
+import org.sklsft.generator.skeletons.core.layers.database.OracleDatabaseLayer;
 import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.sklsft.generator.skeletons.layers.Layer;
 
@@ -61,7 +61,7 @@ public class OracleHandler implements DatabaseHandler {
             return name;
         }
     }
-
+	
 	@Override
 	public Layer getLayer() {
 		return new OracleDatabaseLayer();

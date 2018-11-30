@@ -13,19 +13,21 @@ public class NoDuplicateTableChecker implements ProjectMetaDataRuleChecker {
 
 	@Override
 	public ProjectValidationReport checkRules(ProjectMetaData project, ProjectValidationReport report) {
-		
+
 		Map<String, TableMetaData> tablesMap = new HashMap<>();
-		
-		for (PackageMetaData packageMetaData:project.getPackages()) {
-			for (TableMetaData table:packageMetaData.getTables()) {
-				if (tablesMap.containsKey(table.getName().toLowerCase())) {
-					report.addError(table, null, "Duplicate table");
+
+		for (PackageMetaData packageMetaData : project.getAllPackages()) {
+			if (packageMetaData.getTables() != null) {
+				for (TableMetaData table : packageMetaData.getTables()) {
+					if (tablesMap.containsKey(table.getName().toLowerCase())) {
+						report.addError(table, null, "Duplicate table");
+					}
+					tablesMap.put(table.getName().toLowerCase(), table);
 				}
-				tablesMap.put(table.getName().toLowerCase(), table);
 			}
-		}		
-		
-		return report;		
+		}
+
+		return report;
 	}
 
 }

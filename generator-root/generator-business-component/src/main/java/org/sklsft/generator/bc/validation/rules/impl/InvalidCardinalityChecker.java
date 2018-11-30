@@ -17,21 +17,25 @@ public class InvalidCardinalityChecker implements ProjectMetaDataRuleChecker {
 		
 		Map<String, TableMetaData> tablesMap = new HashMap<>();
 		
-		for (PackageMetaData packageMetaData:project.getPackages()) {
-			for (TableMetaData table:packageMetaData.getTables()) {
-				tablesMap.put(table.getName(), table);
+		for (PackageMetaData packageMetaData:project.getAllPackages()) {
+			if (packageMetaData.getTables()!=null) {
+				for (TableMetaData table:packageMetaData.getTables()) {
+					tablesMap.put(table.getName(), table);
+				}
 			}
 		}
 		
-		for (PackageMetaData packageMetaData:project.getPackages()) {
-			for (TableMetaData table:packageMetaData.getTables()) {
-				for (ColumnMetaData column:table.getColumns()) {
-					if (column.getReferenceTableName() != null) {
-						if (!tablesMap.containsKey(column.getReferenceTableName())) {
-							report.addError(table, column, "Invalid table reference");
+		for (PackageMetaData packageMetaData:project.getAllPackages()) {
+			if (packageMetaData.getTables()!=null) {
+				for (TableMetaData table:packageMetaData.getTables()) {
+					for (ColumnMetaData column:table.getColumns()) {
+						if (column.getReferenceTableName() != null) {
+							if (!tablesMap.containsKey(column.getReferenceTableName())) {
+								report.addError(table, column, "Invalid table reference");
+							}
 						}
-					}
-				}				
+					}				
+				}
 			}
 		}
 		

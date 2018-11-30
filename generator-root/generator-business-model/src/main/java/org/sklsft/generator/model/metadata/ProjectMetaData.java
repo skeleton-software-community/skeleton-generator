@@ -1,5 +1,6 @@
 package org.sklsft.generator.model.metadata;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -58,59 +59,45 @@ public class ProjectMetaData {
     public PersistenceMode getPersistenceMode() {
 		return persistenceMode;
 	}
-
 	public void setPersistenceMode(PersistenceMode persistenceMode) {
 		this.persistenceMode = persistenceMode;
 	}
-
 	public String getSourceFolder() {
 		return sourceFolder;
 	}
-
 	public void setSourceFolder(String sourceFolder) {
 		this.sourceFolder = sourceFolder;
 	}
-
 	public String getWorkspaceFolder() {
 		return workspaceFolder;
 	}
-
 	public void setWorkspaceFolder(String workspaceFolder) {
 		this.workspaceFolder = workspaceFolder;
 	}
-
 	public String getDomainName() {
 		return domainName;
 	}
-
 	public void setDomainName(String domainName) {
 		this.domainName = domainName;
 	}
-
 	public String getProjectName() {
 		return projectName;
 	}
-
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-
 	public String getSkeleton() {
 		return skeleton;
 	}
-
 	public void setSkeleton(String skeleton) {
 		this.skeleton = skeleton;
 	}
-
 	public String getDatabaseEngine() {
 		return databaseEngine;
 	}
-
 	public void setDatabaseEngine(String databaseEngine) {
 		this.databaseEngine = databaseEngine;
 	}
-
 	public String getDatabaseName() {
 		return databaseName;
 	}
@@ -118,52 +105,68 @@ public class ProjectMetaData {
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
-
 	public String getDatabaseDNS() {
 		return databaseDNS;
 	}
-
 	public void setDatabaseDNS(String databaseDNS) {
 		this.databaseDNS = databaseDNS;
 	}
-
 	public String getDatabasePort() {
 		return databasePort;
 	}
-
 	public void setDatabasePort(String databasePort) {
 		this.databasePort = databasePort;
 	}
-
 	public String getDatabaseUserName() {
 		return databaseUserName;
 	}
-
 	public void setDatabaseUserName(String databaseUserName) {
 		this.databaseUserName = databaseUserName;
 	}
-
 	public String getDatabasePassword() {
 		return databasePassword;
 	}
-
 	public void setDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
 	}
-
 	public boolean getAudited() {
 		return audited;
 	}
-
 	public void setAudited(boolean audited) {
 		this.audited = audited;
 	}
-
 	public List<PackageMetaData> getPackages() {
 		return packages;
 	}
-
 	public void setPackages(List<PackageMetaData> packages) {
 		this.packages = packages;
+	}
+	
+	
+	
+	/**
+	 * recursive method to get all packages including children packages
+	 */
+	@XmlTransient
+	public List<PackageMetaData> getAllPackages() {
+		List<PackageMetaData> result = new ArrayList<>();
+		
+		if (packages != null) {
+			for (PackageMetaData pack : packages) {
+				result.addAll(getPackages(pack));
+			}
+		}
+		return result;
+	}
+	
+	private List<PackageMetaData> getPackages(PackageMetaData pack) {
+		List<PackageMetaData> result = new ArrayList<>();
+		result.add(pack);
+		if (pack.getPackages()!=null) {
+			for (PackageMetaData child:pack.getPackages()) {
+				result.addAll(getPackages(child));
+			}
+		}
+		return result;
 	}
 }

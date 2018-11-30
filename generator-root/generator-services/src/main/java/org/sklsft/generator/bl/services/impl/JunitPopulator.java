@@ -49,7 +49,7 @@ public class JunitPopulator {
 			logger.info("start bulding step " + step);
 			for (Package myPackage : project.model.packages) {
 
-				if (packages == null || packages.isEmpty() || packages.contains(myPackage.declaredName)) {
+				if (packages == null || packages.isEmpty() || packages.contains(myPackage.name)) {
 
 					logger.info("start populating package : " + myPackage.name);
 

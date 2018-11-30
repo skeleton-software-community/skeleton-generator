@@ -22,6 +22,10 @@ public class PackageMetaData {
 	@XmlElementWrapper(name="tables")
 	@XmlElement(name="table")
 	private List<TableMetaData> tables;
+	
+	@XmlElementWrapper(name="packages")
+	@XmlElement(name="package")
+	private List<PackageMetaData> packages;
 
 	
 	/*
@@ -38,5 +42,11 @@ public class PackageMetaData {
 	}
 	public void setTables(List<TableMetaData> tables) {
 		this.tables = tables;
+	}
+	public List<PackageMetaData> getPackages() {
+		return packages;
+	}
+	public void setPackages(List<PackageMetaData> packages) {
+		this.packages = packages;
 	}
 }

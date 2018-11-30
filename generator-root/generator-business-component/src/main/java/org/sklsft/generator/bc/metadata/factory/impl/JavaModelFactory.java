@@ -1,6 +1,7 @@
 package org.sklsft.generator.bc.metadata.factory.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -108,23 +109,21 @@ public class JavaModelFactory implements ModelFactory {
 	}
 
 
-	private void fillPackages(ProjectMetaData projectMetaData, Model model) {
-		for (PackageMetaData packageMetaData : projectMetaData.getPackages()){
-			Package myPackage = packageFactory.fillPackage(packageMetaData, model);
-			logger.trace("Filling package : " + myPackage.name);
-			
-		}
-	}
-
-
 	private void scanPackages(ProjectMetaData projectMetaData, Model model) {
-		for (PackageMetaData packageMetaData : projectMetaData.getPackages())
-		{
-			logger.trace("Scanning package : " + packageMetaData.getName());
-			Package myPackage = packageFactory.scanPackage(packageMetaData, model);
-			model.packages.add(myPackage);
+		logger.trace("Scanning packages");
+		for (PackageMetaData packageMetaData : projectMetaData.getPackages()) {
+			List<Package> myPackages = packageFactory.scanPackages(packageMetaData, model, null);
+			model.packages.addAll(myPackages);
 		}
 	}
+	
+	
+	private void fillPackages(ProjectMetaData projectMetaData, Model model) {
+		for (PackageMetaData packageMetaData : projectMetaData.getPackages()) {
+			packageFactory.fillPackage(packageMetaData, model);			
+		}
+	}
+	
 	
 	private void buildViewProperties(Model model) {
 		for (Package pack:model.getPackages()) {

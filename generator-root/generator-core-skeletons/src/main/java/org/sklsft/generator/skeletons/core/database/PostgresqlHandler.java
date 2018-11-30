@@ -1,6 +1,6 @@
 package org.sklsft.generator.skeletons.core.database;
 
-import org.sklsft.generator.skeletons.core.layers.PostgresDatabaseLayer;
+import org.sklsft.generator.skeletons.core.layers.database.PostgresDatabaseLayer;
 import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.sklsft.generator.skeletons.layers.Layer;
 

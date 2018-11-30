@@ -7,9 +7,9 @@
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>generator-services</artifactId>
-	<name>Generator - Services</name>
-	<description>Module Services du projet Generator</description>
+	<artifactId>generator-tests</artifactId>
+	<name>Generator - Tests</name>
+	<description>Tests unitaires du projet Generator</description>
 
 	<packaging>jar</packaging>
 
@@ -17,20 +17,19 @@
 		
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-business-model</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-repository</artifactId>
+			<artifactId>generator-services</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>
-			<artifactId>generator-business-component</artifactId>
+			<artifactId>generator-jsf-skeletons</artifactId>
 		</dependency>
 		
-		
+		<dependency>
+			<groupId>org.sklsft.generator</groupId>
+			<artifactId>generator-rest-skeletons</artifactId>
+		</dependency>
+	
 		<!-- gestion des logs -->		
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -59,13 +58,40 @@
 			</exclusions>
 		</dependency>
 		
-		
-		<!-- tests -->
+		<!-- Junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		
 	</dependencies>
-
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/describer.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>zip-packaging</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>							
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+     
 </project>
