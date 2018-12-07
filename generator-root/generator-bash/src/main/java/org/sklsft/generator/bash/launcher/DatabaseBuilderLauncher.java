@@ -4,11 +4,13 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
+import org.sklsft.generator.bash.prompt.ValidationPrompter;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.sklsft.generator.repository.backup.datasource.interfaces.OutputDataSourceProvider;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
@@ -63,6 +65,10 @@ public class DatabaseBuilderLauncher {
 				ProjectLoader projectLoader = appContext.getBean(ProjectLoader.class);
 				
 				ProjectMetaData projectMetaData = projectMetaDataService.loadProjectMetaData(workspacePath);
+				
+				ProjectValidationReport report = projectMetaDataService.validate(projectMetaData);
+				ValidationPrompter.promptOnValidation(report);
+				
 				project = projectLoader.loadProject(projectMetaData);
 				
 				logger.info("loading project " + project.projectName + " completed");
