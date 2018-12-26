@@ -17,7 +17,7 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 	 */
 	public OracleTableFkDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
+		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase().replaceAll(".", File.separator), table.originalName);
 
 		this.table = table;
 	}

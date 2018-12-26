@@ -20,7 +20,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	 */
 	public PostgresqlTableDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase(), table.originalName);
+		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
 		this.sequenceName = table.name + "_id_seq";
