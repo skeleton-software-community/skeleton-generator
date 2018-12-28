@@ -96,7 +96,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		writeLine("value=\"#{" + this.bean.listViewObjectName + ".scrollView.elements}\" headerClass=\"datatable-header\" rowClasses=\"datatable-row, datatable-row-light\">");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"40\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:selectBooleanCheckbox id=\"selectUnselectAll\" onclick=\"selectUnselectAll(this)\" value=\"false\"/>");
 		writeLine("<script>$(function(){displaySelectUnselectAll();});</script>");
@@ -106,7 +106,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		writeLine("</p:column>");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"100\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:outputText value=\"Actions\" />");
 		writeLine("<div class=\"drop-list\" id=\"drop-list\">");

@@ -108,7 +108,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 				+ " rowClasses=\"datatable-row, datatable-row-light\">");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"40\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:selectBooleanCheckbox id=\"selectUnselectAll\" onclick=\"selectUnselectAll(this)\" value=\"false\"/>");
 		writeLine("<script>$(function(){displaySelectUnselectAll();});</script>");
@@ -118,7 +118,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		writeLine("</p:column>");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"100\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:outputText value=\"Actions\" />");
 		

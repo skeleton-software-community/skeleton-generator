@@ -8,20 +8,28 @@
   url("#{resource['/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');
 }
 
+html {
+	height:100%;
+}
+
 
 body {
 	padding-top: 70px;
-	padding-bottom: 70px;
+	height:100%;
+}
+
+body>.container {
+	min-height:100%;
 }
 
 h2 {
-	font-size:24px;
+	font-size:20px;
 	color:#363636;
 	margin-bottom:1em;
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 4px;
 }
 
@@ -30,10 +38,10 @@ a:hover {
 }
 
 .navbar-default {
-    background-color: #3b5998;
-    color: white;
-    height:70px;
-    border:none;
+    background-color: #ffffff;
+    color: #767676;
+    height:71px;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .navbar-toggle {
@@ -44,17 +52,19 @@ a:hover {
 
 .navbar-default .navbar-brand {
 	font-size:24px;
-	color: white;
-	padding: 10px 10px;
+	color: #767676;
+	padding: 0px 0px;
 }
+
 .navbar-default .navbar-brand>img {
     display: inline;
-    height:50px;
+    height:70px;
+    margin-right:18px;
 }
 
 
 .navbar-default .navbar-brand:hover {
-    color:white;
+    color:#c0c0c0;
 }
 
 @media (max-width: 767px) {
@@ -70,28 +80,28 @@ a:hover {
 }
 
 .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover .navbar-nav>li>a {
-    color: white;
-    background-color: #3b5998;
+    color: #767676;
+    background-color: white;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
-    color: white;
-    background-color: #83ADD8;
+    color: #c0c0c0;
+    background-color: white;
 }
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
-    color: white;
-    background-color: #83ADD8;
+    color: #c0c0c0;
+    background-color: white;
 }
 
 .navbar-default .navbar-nav>li>a:hover {
-    color: white;
-    background-color: #83ADD8;
+    color: #c0c0c0;
+    background-color: white;
 }
 
 
 .navbar-nav>li>.dropdown-menu {
-	background-color:#3b5998;
+	background-color:white;
 	padding-top:0px;
 	padding-bottom:0px;
 }
@@ -100,50 +110,51 @@ a:hover {
     display: block;
     padding: 8px 20px;
     line-height: 1.42857143;
-    color: white;
-    background-color:#3b5998;
+    color: #767676;
+    background-color:white;
     white-space: nowrap;
 }
 
 .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
-    color: white;
+    color: #c0c0c0;
     text-decoration: none;
-    background-color: #83ADD8;
+    background-color: white;
 }
 
 @media (max-width: 767px) {
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
-	    color: white;
-	    background-color: #83ADD8;
+	    color: #c0c0c0;
+	    background-color: white;
 	}
 	
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
-	    color: white;
-	    background-color:#3b5998;
+	    color: #767676;
+	    background-color:white;
 	}
 }
 
 .page {
 	margin-top:20px;
 	margin-bottom:20px;
+	min-height:100%;
 }
 
 .page .centered-content {
 	text-align:center;
-	margin-top:80px;
+	margin-top:200px;
 }
 
 
 .footer {
-	position:fixed;
-	bottom:0;
-	width:100%;
-	background-color: #3b5998;
-	color:white;
-	z-index:1030;		
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	color: #363636;
+	z-index: 1030;		
 	height: 70px;
     margin-top: 20px;
-    padding:15px;
+    padding: 15px;
+    border-top: 1px solid #c0c0c0;
 }
 
 .footer .small {
@@ -151,13 +162,13 @@ a:hover {
 }
 
 .footer a {
-	color:white;
-	text-decoration:none;
-	font-style:italic;	
+	color: #363636;
+	text-decoration: none;
+	font-style: italic;	
 }
 
 .footer a:hover {
-	color:white;	
+	color: #c0c0c0;	
 }
 
 
@@ -198,12 +209,21 @@ ul.nav.nav-pills {
 }
 
 .ui-datatable thead th {
-	background-color:#e3dff2;
-	background-image:none;
+	background-color: #F9F9F9;
+	background-image: none;
+	color: #767676;
+}
+
+.ui-datatable thead th a {
+	color: #767676;
+}
+
+.ui-datatable thead th a:hover {
+	color: #c0c0c0;
 }
 
 .filter-panel {
-	padding:12px;
+	padding:6px 12px;
 	border:1px solid grey;
 	border-radius: 6px;
 	margin-bottom:12px;
@@ -287,19 +307,24 @@ pre.truncated-text {
 /**
 * forms
 */
+label {
+	font-size:0.9em;
+}
 
 .form-control {
-	margin-bottom:8px;	
+	margin-bottom:8px;
+	font-size: 0.9em !important;
 }
 
 .form-control.date-picker {
-	padding:0px;	
+	padding:0px;
 }
 
 .hasDatepicker, .date-picker>input[disabled]{
 	display:inline-block;
 	height: 32px;
 	width:100%;
+	font-size:1em !important;
 }
 
 .date-picker>input[disabled]{
@@ -311,14 +336,14 @@ pre.truncated-text {
 }
 
 .form-control.ui-autocomplete {
-	padding:0px;	
+	padding:0px;
 }
 
 .ui-autocomplete-input {
 	width:100%;
 	padding: 8px !important;
 	height:32px;
-	
+	font-size:1em !important;
 }
 
 .ui-autocomplete-panel {

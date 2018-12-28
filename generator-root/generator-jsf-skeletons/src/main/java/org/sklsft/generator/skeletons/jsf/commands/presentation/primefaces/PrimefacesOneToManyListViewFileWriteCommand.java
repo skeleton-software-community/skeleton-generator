@@ -106,7 +106,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 				+ " rowClasses=\"datatable-row, datatable-row-light\">");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"40\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:selectBooleanCheckbox id=\"selectUnselectAll\" onclick=\"selectUnselectAll(this)\" value=\"false\"/>");
 		writeLine("<script>$(function(){displaySelectUnselectAll();});</script>");
@@ -116,7 +116,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 		writeLine("</p:column>");
 		skipLine();
 		
-		writeLine("<p:column>");
+		writeLine("<p:column width=\"100\">");
 		writeLine("<f:facet name=\"header\">");
 		writeLine("<h:outputText value=\"Actions\" />");
 		writeLine("<div id=\"drop-list\" class=\"drop-list\">");
