@@ -32,7 +32,6 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 				<entry key="${project.projectName}" value-ref="${project.projectName}"/>
 	  		</map>
   		</constructor-arg>
-  		<constructor-arg name="productionSourceReference" value="${project.projectName}"/>
 	</bean>
 	
 	
