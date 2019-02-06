@@ -54,7 +54,7 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
         skipLine();
 
         writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("#{i18n." + currentBean.objectName + "Details}");
 		writeLine("</h2>");
         
         writeLine("<h:panelGroup id=\"" + currentBean.objectName + "DetailPanelGroup\">");

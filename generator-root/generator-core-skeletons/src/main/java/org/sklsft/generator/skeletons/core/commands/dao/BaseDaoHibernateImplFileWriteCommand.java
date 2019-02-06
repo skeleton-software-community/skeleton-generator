@@ -82,7 +82,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.baseDaoClassName  + " extends BaseDaoImpl<" + this.bean.className + ", Long> implements " + this.bean.baseDaoInterfaceName + " {");
+		writeLine("public class " + this.bean.baseDaoClassName  + " extends BaseDaoImpl<" + this.bean.className + ", " + bean.idType + "> implements " + this.bean.baseDaoInterfaceName + " {");
 		skipLine();
 		
 		writeLine("/**");
@@ -152,7 +152,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" */");
 				writeLine("@Override");
 				writeLine("@SuppressWarnings(\"unchecked\")");
-				writeLine("public List<" + this.bean.className + "> loadListFrom" + property.capName + "(Long " + property.name + "Id) {");
+				writeLine("public List<" + this.bean.className + "> loadListFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 				writeLine("if (" + property.name + "Id == null){");
 				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
@@ -168,7 +168,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" */");
 				writeLine("@Override");
 				writeLine("@SuppressWarnings(\"unchecked\")");
-				writeLine("public List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(Long " + property.name + "Id) {");
+				writeLine("public List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 				writeLine("if (" + property.name + "Id == null){");
 				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
@@ -224,7 +224,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * count object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("public Long countFrom" + property.capName + "(Long " + property.name + "Id) {");
+				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
 				
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
 
@@ -242,7 +242,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("public Long countFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter) {");
+				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter) {");
 				
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
 
@@ -312,7 +312,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" */");
 				writeLine("@Override");
 				writeLine("@SuppressWarnings(\"unchecked\")");
-				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 				
 				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
 
@@ -357,6 +357,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			case BOOLEAN :
 				writeBooleanRestriction(property);
 				return;
+			case SHORT :
+			case INTEGER :
 			case LONG :
 				writeLongRestriction(property);
 				return;
@@ -426,7 +428,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("@SuppressWarnings(\"unchecked\")");
-			writeLine("public List<" + currentBean.className + "> load" + currentBean.className + "List(Long " + bean.objectName + "Id) {");
+			writeLine("public List<" + currentBean.className + "> load" + currentBean.className + "List(" + bean.idType + " " + bean.objectName + "Id) {");
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
 			writeLine("if (" + bean.objectName + "Id == null){");
 			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
@@ -448,7 +450,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * count one to many component " + currentBean.className); 
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("public Long count" + currentBean.className + "(Long " + bean.objectName + "Id) {");
+			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id) {");
 						
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
 
@@ -467,7 +469,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("@Override");
 			writeLine(" * count filtered one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("public Long count" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
+			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
 			
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
 
@@ -504,7 +506,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("@SuppressWarnings(\"unchecked\")");
-			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 			
 			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
 
@@ -551,7 +553,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("@Override");
-			writeLine("public " + currentBean.className + " load" + currentBean.className + "(Long id) {");
+			writeLine("public " + currentBean.className + " load" + currentBean.className + "(" + currentBean.idType + " id) {");
 			writeLine(currentBean.className + " " + currentBean.objectName + " = (" + currentBean.className + ")this.sessionFactory.getCurrentSession().get(" + currentBean.className + ".class,id);");
 			writeLine("if (" + currentBean.objectName + " == null) {");
 			writeLine("throw new ObjectNotFoundException(" + CHAR_34 + currentBean.className + ".notFound" + CHAR_34 + ");");

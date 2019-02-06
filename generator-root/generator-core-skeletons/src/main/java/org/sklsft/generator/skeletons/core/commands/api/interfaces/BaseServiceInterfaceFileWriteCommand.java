@@ -137,7 +137,7 @@ private Bean bean;
 				writeLine("/**");
 				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
-				writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (Long " + property.name + "Id);");
+				writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id);");
 				writeLine("public static final String GET_" + bean.table.originalName + "_LIST_fROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/list\";");
 				skipLine();
 			}
@@ -158,7 +158,7 @@ private Bean bean;
 				writeLine("/**");
 				writeLine(" * scroll object list from " + property.name);
 				writeLine(" */");
-				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (Long " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
+				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
 				writeLine("public static final String SCROLL_" + bean.table.originalName + "_fROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/scroll\";");
 				skipLine();
 			}
@@ -170,7 +170,7 @@ private Bean bean;
 		writeLine("/**");
 		writeLine(" * load object");
 		writeLine(" */");
-		writeLine(this.bean.fullViewBean.className + " load(Long id);");
+		writeLine(this.bean.fullViewBean.className + " load(" + bean.idType + " id);");
 		writeLine("public static final String GET_URL = \"/" + bean.urlPiece + "/{id}\";");
 		skipLine();
 
@@ -200,7 +200,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * load one to one component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");
+			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(" + bean.idType + " id);");
 			writeLine("public static final String GET_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "\";");
 			skipLine();
 		}
@@ -213,7 +213,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
-			writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(Long id);");
+			writeLine("List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(" + bean.idType + " id);");
 			writeLine("public static final String GET_" + currentBean.table.originalName + "_LIST_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "/list\";");
 			skipLine();
 		}
@@ -226,7 +226,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (Long " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form);");
+			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form);");
 			writeLine("public static final String SCROLL_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "/scroll\";");
 			skipLine();
 		}
@@ -239,7 +239,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(Long id);");			
+			writeLine(currentBean.fullViewBean.className + " load" + currentBean.className + "(" + currentBean.idType + " id);");			
 			writeLine("public static final String GET_" + currentBean.table.originalName + "_URL = \"/" + currentBean.urlPiece + "/{id}\";");
 			skipLine();
 		}
@@ -261,7 +261,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * create one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "(Long id);");
+			writeLine(currentBean.fullViewBean.className + " create" + currentBean.className + "(" + bean.idType + " id);");
 			writeLine("public static final String GET_NEW_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "/new\";");
 			skipLine();
 		}
@@ -271,7 +271,7 @@ private Bean bean;
 		writeLine("/**");
 		writeLine(" * save object");
 		writeLine(" */");
-		writeLine("Long save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+		writeLine(bean.idType + " save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
 		writeLine("public static final String SAVE_URL = \"/" + bean.urlPiece + "\";");
 		skipLine();
 		
@@ -284,7 +284,7 @@ private Bean bean;
 					writeLine("/**");
 					writeLine(" * save object from parent " + parentBean.className);		
 					writeLine(" */");
-					writeLine("Long saveFrom" + parentBean.className + "(Long " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+					writeLine(bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
 					writeLine("public static final String SAVE_FROM_" + parentBean.table.originalName + "_URL = \"/" + parentBean.urlPiece + "/{" + parentBean.objectName + "Id}/" + bean.urlPiece + "\";");
 					skipLine();
 				}
@@ -299,7 +299,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * save one to one component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			writeLine("public void save" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
 			writeLine("public static final String SAVE_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "\";");
 			skipLine();
 		}
@@ -312,7 +312,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * save one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("void save" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			writeLine("void save" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
 			writeLine("public static final String SAVE_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "\";");
 			skipLine();
 		}
@@ -322,7 +322,7 @@ private Bean bean;
 		writeLine("/**");		
 		writeLine(" * update object");		
 		writeLine(" */");
-		writeLine("void update(Long id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
+		writeLine("void update(" + bean.idType + " id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
 		writeLine("public static final String UPDATE_URL = \"/" + bean.urlPiece + "/{id}\";");
 		skipLine();
 	}
@@ -334,7 +334,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * update one to one component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			writeLine("void update" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
 			writeLine("public static final String UPDATE_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "\";");
 			skipLine();
 		}
@@ -347,7 +347,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * update one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("void update" + currentBean.className + "(Long id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
+			writeLine("void update" + currentBean.className + "(" + currentBean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ");");
 			writeLine("public static final String UPDATE_" + currentBean.table.originalName + "_URL = \"/" + currentBean.urlPiece + "/{id}\";");
 			skipLine();
 		}
@@ -357,7 +357,7 @@ private Bean bean;
 		writeLine("/**");		
 		writeLine(" * delete object");		
 		writeLine(" */");
-		writeLine("void delete(Long id);");
+		writeLine("void delete(" + bean.idType + " id);");
 		writeLine("public static final String DELETE_URL = \"/" + bean.urlPiece + "/{id}\";");
 		skipLine();
 	}
@@ -369,7 +369,7 @@ private Bean bean;
 			writeLine("/**");			
 			writeLine(" * delete one to one component " + currentBean.objectName);			
 			writeLine(" */");
-			writeLine("public void delete" + currentBean.className + "(Long id);");
+			writeLine("public void delete" + currentBean.className + "(" + bean.idType + " id);");
 			writeLine("public static final String DELETE_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "\";");
 			skipLine();
 		}
@@ -382,7 +382,7 @@ private Bean bean;
 			writeLine("/**");			
 			writeLine(" * delete one to many component " + currentBean.objectName);			
 			writeLine(" */");
-			writeLine("void delete" + currentBean.className + "(Long id);");
+			writeLine("void delete" + currentBean.className + "(" + currentBean.idType + " id);");
 			writeLine("public static final String DELETE_" + currentBean.table.originalName + "_URL = \"/" + currentBean.urlPiece + "/{id}\";");
 			skipLine();
 		}
@@ -392,7 +392,7 @@ private Bean bean;
 		writeLine("/**");		
 		writeLine(" * delete object list");		
 		writeLine(" */");
-		writeLine("void deleteList(List<Long> idList);");
+		writeLine("void deleteList(List<" + bean.idType + "> idList);");
 		writeLine("public static final String DELETE_LIST_URL = \"/" + bean.urlPiece + "/delete\";");
 		skipLine();
 	}
@@ -404,7 +404,7 @@ private Bean bean;
 			writeLine("/**");
 			writeLine(" * delete one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
-			writeLine("void delete" + currentBean.className + "List(List<Long> idList);");
+			writeLine("void delete" + currentBean.className + "List(List<" + currentBean.idType + "> idList);");
 			writeLine("public static final String DELETE_" + currentBean.table.originalName + "_LIST_URL = \"/" + currentBean.urlPiece + "/delete\";");
 			skipLine();
 		}

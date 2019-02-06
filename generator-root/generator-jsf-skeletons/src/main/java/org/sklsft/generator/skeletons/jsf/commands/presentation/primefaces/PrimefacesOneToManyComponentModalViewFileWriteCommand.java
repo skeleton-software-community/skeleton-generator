@@ -40,7 +40,7 @@ public class PrimefacesOneToManyComponentModalViewFileWriteCommand extends Prime
 		
 		writeLine("<div class=\"modal-header\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "Detail}");
+		writeLine("#{i18n." + currentBean.objectName + "Details}");
 		writeLine("</h2>");
 		writeLine("</div>");
 		skipLine();

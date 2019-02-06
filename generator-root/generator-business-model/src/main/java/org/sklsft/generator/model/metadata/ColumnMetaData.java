@@ -19,7 +19,7 @@ public class ColumnMetaData {
 	 */
 	@XmlAttribute(required=true)
 	private String name;
-	@XmlAttribute(required=true)
+	@XmlAttribute
 	private DataType dataType;
 	@XmlAttribute
 	private Boolean nullable = true;

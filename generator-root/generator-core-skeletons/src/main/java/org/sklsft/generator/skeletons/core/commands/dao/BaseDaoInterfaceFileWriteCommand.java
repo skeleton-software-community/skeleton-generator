@@ -65,7 +65,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>no modification should be done to this file");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public interface " + this.bean.baseDaoInterfaceName + " extends BaseDao<" + this.bean.className + ", Long> {");
+		writeLine("public interface " + this.bean.baseDaoInterfaceName + " extends BaseDao<" + this.bean.className + ", " + bean.idType + "> {");
 		skipLine();
 
 		createLoadObjectList();
@@ -99,13 +99,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * load object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> loadListFrom" + property.capName + "(Long " + property.name + "Id);");
+				writeLine("List<" + this.bean.className + "> loadListFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id);");
 				skipLine();
 				
 				writeLine("/**");
 				writeLine(" * load object list eagerly from " + property.referenceBean.objectName);
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(Long " + property.name + "Id);");
+				writeLine("List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id);");
 				skipLine();
 
 			}
@@ -126,13 +126,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * count object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("Long countFrom" + property.capName + "(Long " + property.name + "Id);");
+				writeLine("Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id);");
 				skipLine();
 				
 				writeLine("/**");
 				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("Long countFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter);");
+				writeLine("Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter);");
 				skipLine();
 			}
 		}
@@ -151,7 +151,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * scroll filtered object from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(Long " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 				skipLine();
 			}
 		}
@@ -164,7 +164,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
             writeLine("/**");
             writeLine(" * load one to many component " + currentBean.className + " list");
             writeLine(" */");
-			writeLine("List<" + currentBean.className + "> load" + currentBean.className + "List(Long " + bean.objectName + "Id);");
+			writeLine("List<" + currentBean.className + "> load" + currentBean.className + "List(" + bean.idType + " " + bean.objectName + "Id);");
 			skipLine();
         }
 	}
@@ -177,13 +177,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * count one to many component " + currentBean.className); 
 			writeLine(" */");
-			writeLine("Long count" + currentBean.className + "(Long " + bean.objectName + "Id);");
+			writeLine("Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id);");
 			skipLine();
 			
 			writeLine("/**");
 			writeLine(" * count filtered one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("Long count" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter);");
+			writeLine("Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter);");
 			skipLine();
 		}
 	}
@@ -196,7 +196,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * scroll filtered one to many component " + currentBean.className); 
 			writeLine(" */");
-			writeLine("List<" + currentBean.className + "> scroll" + currentBean.className + "(Long " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+			writeLine("List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 			skipLine();
 		}
 	}
@@ -208,7 +208,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine(currentBean.className + " load" + currentBean.className + "(Long id);");
+			writeLine(currentBean.className + " load" + currentBean.className + "(" + currentBean.idType + " id);");
 			skipLine();
 		}
 	}

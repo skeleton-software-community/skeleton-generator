@@ -47,7 +47,7 @@ public class FullViewBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.fullViewBean.className + " extends FullView<Long, " + bean.formBean.className + "> {");
+		writeLine("public class " + this.bean.fullViewBean.className + " extends FullView<" + bean.idType + ", " + bean.formBean.className + "> {");
 		skipLine();
 
 		writeLine("private static final long serialVersionUID = 1L;");

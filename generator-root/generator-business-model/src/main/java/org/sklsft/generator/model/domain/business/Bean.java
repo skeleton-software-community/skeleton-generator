@@ -71,6 +71,7 @@ public class Bean {
 	 * represents the number of fields that are needed to
 	 * build the business key (and its associated unique constraint)
 	 */
+	public String idType;
 	public int cardinality;
 	public String listRendering;
 	public String detailRendering;

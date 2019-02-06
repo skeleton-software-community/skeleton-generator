@@ -10,6 +10,7 @@ import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.IdGeneratorType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 
@@ -57,6 +58,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import javax.persistence.OneToMany;");
 		javaImports.add("import javax.persistence.OneToOne;");
 		javaImports.add("import javax.persistence.SequenceGenerator;");
+		javaImports.add("import org.hibernate.annotations.GenericGenerator;");
 		javaImports.add("import javax.persistence.Table;");
 		javaImports.add("import javax.persistence.Temporal;");
 		javaImports.add("import javax.persistence.TemporalType;");
@@ -136,7 +138,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 			}
 		}
 
-		write("public class " + bean.className + " implements org.sklsft.commons.model.interfaces.Entity<Long>");
+		write("public class " + bean.className + " implements org.sklsft.commons.model.interfaces.Entity<" + bean.idType + ">");
 		if (bean.interfaces != null) {
 			for (String interfaceElem:bean.interfaces) {
 				write(", " + interfaceElem);
@@ -179,9 +181,15 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 
 		writeLine("@Id");
 		writeLine("@Column(name = " + CHAR_34 + "id" + CHAR_34 + ", nullable = false)");
-		writeLine("@SequenceGenerator(name = " + CHAR_34 + "generator" + CHAR_34 + ", sequenceName = " + CHAR_34 + this.bean.table.name + "_id_seq" + CHAR_34 + ", allocationSize=1)");
-		writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + CHAR_34 + "generator" + CHAR_34 + ")");
-		writeLine("private Long id;");
+		if (bean.table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
+			writeLine("@SequenceGenerator(name = " + CHAR_34 + "generator" + CHAR_34 + ", sequenceName = " + CHAR_34 + this.bean.table.name + "_id_seq" + CHAR_34 + ", allocationSize=1)");
+			writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + CHAR_34 + "generator" + CHAR_34 + ")");
+		}
+		if (bean.table.idGeneratorType.equals(IdGeneratorType.UUID)) {
+			writeLine("@GeneratedValue(generator=\"uuid\")");
+			writeLine("@GenericGenerator(name=\"uuid\", strategy = \"uuid2\")");
+		}
+		writeLine("private " + bean.idType + " id;");
 		skipLine();
 		
 		for (Property property:bean.properties) {
@@ -287,11 +295,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * getters and setters");
 		writeLine(" */");
 		
-		writeLine("public Long getId() {");
+		writeLine("public " + bean.idType + " getId() {");
 		writeLine("return this.id;");
 		writeLine("}");
 		skipLine();
-		writeLine("public void setId(Long id) {");
+		writeLine("public void setId(" + bean.idType + " id) {");
 		writeLine("this.id = id;");
 		writeLine("}");
 		skipLine();

@@ -57,7 +57,7 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseStateManagerClassName + " implements StateManager<" + this.bean.className + ", Long> {");
+        writeLine("public class " + this.bean.baseStateManagerClassName + " implements StateManager<" + this.bean.className + ", " + bean.idType + "> {");
         skipLine();
         
         

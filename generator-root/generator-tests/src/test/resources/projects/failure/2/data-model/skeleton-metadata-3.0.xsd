@@ -14,7 +14,7 @@
       </xs:element>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
-    <xs:attribute name="dataType" type="tns:dataType" use="required"/>
+    <xs:attribute name="dataType" type="tns:dataType"/>
     <xs:attribute name="nullable" type="xs:boolean"/>
     <xs:attribute name="unique" type="xs:boolean"/>
     <xs:attribute name="referenceTableName" type="xs:string"/>
@@ -77,6 +77,8 @@
       </xs:element>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="idType" type="tns:dataType"/>
+    <xs:attribute name="idGeneratorType" type="tns:idGeneratorType"/>
     <xs:attribute name="cardinality" type="xs:int" use="required"/>
     <xs:attribute name="listRendering" type="xs:string"/>
     <xs:attribute name="detailRendering" type="xs:string"/>
@@ -131,6 +133,8 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="TEXT"/>
       <xs:enumeration value="STRING"/>
+      <xs:enumeration value="SHORT"/>
+      <xs:enumeration value="INTEGER"/>
       <xs:enumeration value="LONG"/>
       <xs:enumeration value="DOUBLE"/>
       <xs:enumeration value="BIG_DECIMAL"/>
@@ -176,6 +180,14 @@
       <xs:enumeration value="CSS"/>
       <xs:enumeration value="BAT"/>
       <xs:enumeration value="PROPERTIES"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="idGeneratorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="SEQUENCE"/>
+      <xs:enumeration value="UUID"/>
     </xs:restriction>
   </xs:simpleType>
 

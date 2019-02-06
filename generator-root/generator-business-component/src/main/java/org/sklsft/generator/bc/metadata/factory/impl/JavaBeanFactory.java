@@ -28,6 +28,7 @@ public class JavaBeanFactory implements BeanFactory {
 		bean.isComponent = false;
 
 		bean.cardinality = table.cardinality;
+		bean.idType = table.idType.getJavaType();
 		bean.detailMode = tableMetaData.getDetailMode();
 		bean.interfaces = tableMetaData.getInterfaces();
 		bean.annotations = tableMetaData.getAnnotations();

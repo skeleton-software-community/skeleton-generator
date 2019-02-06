@@ -64,7 +64,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/*");
         writeLine(" * properties");
         writeLine(" */");
-        writeLine("private Long id;");
+        writeLine("private " + bean.idType + " id;");
         writeLine("private boolean selected;");
         writeLine("private boolean canDelete;");
 
@@ -80,12 +80,12 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/*");
         writeLine(" * getters and setters");
         writeLine(" */");
-        writeLine("public Long getId() {");
+        writeLine("public " + bean.idType + " getId() {");
         writeLine("return this.id;");
         writeLine("}");
         skipLine();
         
-        writeLine("public void setId(Long id) {");
+        writeLine("public void setId(" + bean.idType + " id) {");
         writeLine("this.id = id;");
         writeLine("}");
         skipLine();

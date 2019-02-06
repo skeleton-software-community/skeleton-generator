@@ -48,6 +48,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 			writeLine("</h:outputText>");
 			break;
 
+		case SHORT:
+		case INTEGER:
 		case LONG:
 			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");
 			writeLine("<f:convertNumber pattern=\"#,##0\"/>");
@@ -108,6 +110,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				case BIG_DECIMAL:
 					writeBigDecimalInput(prefix, property, bean);
 					break;
+				case SHORT:
+				case INTEGER:
 				case LONG:
 					writeLongInput(prefix, property, bean);
 					break;
@@ -331,6 +335,8 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("</h:inputText>");
 				break;
 			
+			case SHORT:
+			case INTEGER:
 			case LONG:
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");

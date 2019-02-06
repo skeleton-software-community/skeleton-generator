@@ -7,6 +7,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.IdGeneratorType;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
 public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -41,17 +42,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	}
 
 	private void createTable() {
-		writeLine("-- drop table --");
-		writeLine("BEGIN");
-		writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "';");
-		writeLine("EXCEPTION");
-		writeLine("WHEN OTHERS THEN NULL;");
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
-
 		
-
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
@@ -86,20 +77,13 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_TBL");
 		writeLine("/");
 		skipLine();
-		
-		writeLine("-- drop sequence --");
-		writeLine("BEGIN");
-		writeLine("EXECUTE IMMEDIATE 'DROP SEQUENCE " + sequenceName + "';");
-		writeLine("EXCEPTION");
-		writeLine("WHEN OTHERS THEN NULL;");
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
 
-		writeLine("-- create sequence --");
-		writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
-		writeLine("/");
-		skipLine();
+		if (table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
+			writeLine("-- create sequence --");
+			writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
+			writeLine("/");
+			skipLine();
+		}
 	}
 	
 	/*
@@ -107,15 +91,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	 */
 	private void createAuditTable()
     {
-		
-		writeLine("-- drop audit table --");
-		writeLine("BEGIN");
-		writeLine("EXECUTE IMMEDIATE 'DROP TABLE " + table.name + "_AUD';");
-		writeLine("EXCEPTION");
-		writeLine("WHEN OTHERS THEN NULL;");
-		writeLine("END;");
-		writeLine("/");
-		skipLine();
 		
         writeLine("-- create audit table --");
         writeLine("CREATE TABLE " + table.name + "_AUD");
@@ -149,6 +124,12 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			case STRING:
 				return "VARCHAR2(255)";
 	
+			case SHORT:
+				return "NUMBER(19,0)";
+				
+			case INTEGER:
+				return "NUMBER(19,0)";
+			
 			case LONG:
 				return "NUMBER(19,0)";
 	

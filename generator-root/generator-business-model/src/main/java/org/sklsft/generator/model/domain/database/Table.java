@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.sklsft.generator.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.domain.Package;
+import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.IdGeneratorType;
 
 /**
  * representation of a table<br/>
@@ -20,6 +22,8 @@ public class Table {
 
 	public Package myPackage;
 	public String name;
+	public DataType idType;
+	public IdGeneratorType idGeneratorType;
 	public String originalName;
 	public int cardinality;
 

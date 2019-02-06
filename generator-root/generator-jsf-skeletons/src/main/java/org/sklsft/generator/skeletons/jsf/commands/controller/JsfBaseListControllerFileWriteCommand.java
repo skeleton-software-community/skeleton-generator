@@ -177,7 +177,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * edit object");
 		writeLine(" */");
-		writeLine("public void edit" + bean.className + "(Long id) {");
+		writeLine("public void edit" + bean.className + "(" + bean.idType + " id) {");
 		
 		for (ViewProperty property : bean.formBean.properties) {
 			if (property.isComboboxable() && property.visibility.isDetailVisible()) {
@@ -209,7 +209,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * delete object");
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".delete" + CHAR_34 + ")");
-		writeLine("public void delete(Long id) {");
+		writeLine("public void delete(" + bean.idType + " id) {");
 		writeLine(this.bean.serviceObjectName + ".delete(id);");
 		writeLine("this.refresh();");
 		writeLine("}");
@@ -223,7 +223,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" */");
 		writeLine("@AjaxMethod(" + CHAR_34 + bean.className + ".deleteList" + CHAR_34 + ")");
 		writeLine("public void deleteList() {");
-		writeLine("List<Long> ids = new ArrayList<>();");
+		writeLine("List<" + bean.idType + "> ids = new ArrayList<>();");
 		writeLine("for (" + bean.basicViewBean.className + " " + bean.objectName + ":" + bean.listViewObjectName + ".getScrollView().getElements()) {");
 		writeLine("if (" + bean.objectName + ".getSelected()) {");
 		writeLine("ids.add(" + bean.objectName + ".getId());");

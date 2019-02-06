@@ -53,4 +53,14 @@ public class ProjectMetaDataServiceTest {
 		Assert.assertTrue(report.hasErrors);
 		Assert.assertFalse(report.hasWarnings);
 	}
+	
+	
+	@Test
+	public void testLoadFailureOnInvalidIdType() {
+		ProjectMetaData project = service.loadProjectMetaData("src/test/resources/projects/failure/3");
+		ProjectValidationReport report = service.validate(project);
+		report.print();
+		Assert.assertTrue(report.hasErrors);
+		Assert.assertFalse(report.hasWarnings);
+	}
 }

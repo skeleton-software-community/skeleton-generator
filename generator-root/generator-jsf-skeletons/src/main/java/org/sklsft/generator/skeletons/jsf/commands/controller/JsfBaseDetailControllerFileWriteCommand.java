@@ -383,7 +383,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * edit one to many " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public void edit" + currentBean.className + "(Long id) {");
+			writeLine("public void edit" + currentBean.className + "(" + currentBean.idType + " id) {");
 			
 			for (ViewProperty property : oneToMany.formBean.properties) {
 				if (property.isComboboxable() && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
@@ -422,7 +422,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * edit one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("public void edit" + currentBean.className + "(Long id) {");
+			writeLine("public void edit" + currentBean.className + "(" + currentBean.idType + " id) {");
 			
 			for (ViewProperty property : currentBean.formBean.properties) {
 				if (property.isComboboxable() && !property.visibility.equals(Visibility.NOT_VISIBLE) && property.editable) {
@@ -479,7 +479,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" * delete one to many component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
-			writeLine("public void delete" + currentBean.className + "(Long id) {");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.idType + " id) {");
 			writeLine(this.bean.serviceObjectName + ".delete" + currentBean.className + "(id);");
 			writeLine("load" + currentBean.className + "List();");
 			writeLine("}");
@@ -495,7 +495,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" * delete one to many " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".delete" + CHAR_34 + ")");
-			writeLine("public void delete" + currentBean.className + "(Long id) {");
+			writeLine("public void delete" + currentBean.className + "(" + currentBean.idType + " id) {");
 			writeLine(currentBean.serviceObjectName + ".delete(id);");
 			writeLine("refresh" + currentBean.className + "List();");
 			writeLine("}");
@@ -513,7 +513,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
-			writeLine("List<Long> ids = new ArrayList<>();");
+			writeLine("List<" + currentBean.idType + "> ids = new ArrayList<>();");
 			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollView().getElements()) {");
 			writeLine("if (" + currentBean.objectName + ".getSelected()) {");
 			writeLine("ids.add(" + currentBean.objectName + ".getId());");
@@ -535,7 +535,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine(" */");
 			writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".deleteList" + CHAR_34 + ")");
 			writeLine("public void delete" + currentBean.className + "List() {");
-			writeLine("List<Long> ids = new ArrayList<>();");
+			writeLine("List<" + currentBean.idType + "> ids = new ArrayList<>();");
 			writeLine("for (" + currentBean.basicViewBean.className + " " + currentBean.objectName + ":" + bean.detailViewObjectName + ".get" + currentBean.className + "ScrollView().getElements()) {");
 			writeLine("if (" + currentBean.objectName + ".getSelected()) {");
 			writeLine("ids.add(" + currentBean.objectName + ".getId());");

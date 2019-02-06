@@ -8,6 +8,7 @@ import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.IdGeneratorType;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 
 public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
@@ -47,7 +48,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write("id " + getPostgresqlType(DataType.LONG));
+		write("id " + getPostgresqlType(table.idType));
 
 		for (Column column:table.columns) {
 			writeLine(",");
@@ -68,15 +69,17 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		writeLine("/");
 		skipLine();			
 
-		writeLine("-- create sequence --");
-		writeLine("CREATE SEQUENCE " + sequenceName);
-		writeLine("INCREMENT 1");
-		writeLine("MINVALUE 0");
-		writeLine("MAXVALUE 9223372036854775807");
-		writeLine("START 0");
-		writeLine("CACHE 1;");
-		writeLine("/");
-		skipLine();
+		if (table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
+			writeLine("-- create sequence --");
+			writeLine("CREATE SEQUENCE " + sequenceName);
+			writeLine("INCREMENT 1");
+			writeLine("MINVALUE 0");
+			writeLine("MAXVALUE 9223372036854775807");
+			writeLine("START 0");
+			writeLine("CACHE 1;");
+			writeLine("/");
+			skipLine();
+		}
 	}
 	
 	
@@ -139,6 +142,12 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 	
 			case STRING:
 				return "VARCHAR(255)";
+				
+			case SHORT:
+				return "SMALLINT";
+				
+			case INTEGER:
+				return "INTEGER";
 	
 			case LONG:
 				return "BIGINT";

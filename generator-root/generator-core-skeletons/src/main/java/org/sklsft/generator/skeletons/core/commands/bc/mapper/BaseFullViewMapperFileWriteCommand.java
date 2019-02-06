@@ -56,7 +56,7 @@ public class BaseFullViewMapperFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         skipLine();
 
-        writeLine("public class " + this.bean.fullViewBean.baseMapperClassName + " extends FullViewMapper<" + this.bean.fullViewBean.className + ", Long, " + this.bean.formBean.className + ", " + this.bean.className + "> {");
+        writeLine("public class " + this.bean.fullViewBean.baseMapperClassName + " extends FullViewMapper<" + this.bean.fullViewBean.className + ", " + bean.idType + ", " + this.bean.formBean.className + ", " + this.bean.className + "> {");
         skipLine();
         
         if (this.bean.isComponent) {

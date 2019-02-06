@@ -57,7 +57,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseRightsManagerClassName + " implements RightsManager<" + this.bean.className + ", Long> {");
+        writeLine("public class " + this.bean.baseRightsManagerClassName + " implements RightsManager<" + this.bean.className + ", " + bean.idType + "> {");
         skipLine();
         
         

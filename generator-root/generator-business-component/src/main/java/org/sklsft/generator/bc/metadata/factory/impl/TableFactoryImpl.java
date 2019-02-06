@@ -10,6 +10,7 @@ import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.model.metadata.UniqueConstraintMetaData;
@@ -31,6 +32,16 @@ public class TableFactoryImpl implements TableFactory {
 		table.myPackage = myPackage;
 		table.originalName = tableMetaData.getName();
 		table.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(table.originalName);
+		if (tableMetaData.getIdType() != null) {
+			table.idType = tableMetaData.getIdType();
+		} else {
+			table.idType = DataType.LONG;
+		}
+		if (table.idGeneratorType != null) {
+			table.idGeneratorType = tableMetaData.getIdGeneratorType();
+		} else {
+			table.idGeneratorType = table.idType.getDefaultGenerator();
+		}
 		table.cardinality = tableMetaData.getCardinality();
 		
 		logger.trace("Table found : " + tableMetaData.getName());
@@ -46,7 +57,9 @@ public class TableFactoryImpl implements TableFactory {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
             column.name = DatabaseHandlerResolver.getDatabaseHandler(model.project).rename(column.originalName);
-            column.dataType = columnMetaData.getDataType();
+            if (columnMetaData.getDataType() != null) {
+            	column.dataType = columnMetaData.getDataType();
+            }            
             column.nullable = (columnMetaData.getNullable());
             if (columnMetaData.getReferenceTableRelation() != null) {
             	column.relation = columnMetaData.getReferenceTableRelation();
@@ -56,6 +69,11 @@ public class TableFactoryImpl implements TableFactory {
             
             column.deleteCascade = (column.relation.equals(RelationType.MANY_TO_ONE_COMPONENT));
             column.referenceTable = model.findTable(columnMetaData.getReferenceTableName());
+            
+            if (column.referenceTable != null) {
+            	column.dataType = column.referenceTable.idType;
+            }
+            
             column.unique = columnMetaData.getUnique() || column.relation.isUnique();
             column.editable = columnMetaData.getEditable();
             if (columnMetaData.getVisibility()!=null) {

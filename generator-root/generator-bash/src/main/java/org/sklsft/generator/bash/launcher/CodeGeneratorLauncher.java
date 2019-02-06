@@ -1,16 +1,11 @@
 package org.sklsft.generator.bash.launcher;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import org.sklsft.generator.bash.prompt.ValidationPrompter;
 import org.sklsft.generator.bl.services.interfaces.CodeGenerator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
-import org.sklsft.generator.exception.ProjectInitFailureException;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.metadata.validation.ProjectValidationRecord;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

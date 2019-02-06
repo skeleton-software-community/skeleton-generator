@@ -58,7 +58,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + ", Long> {");
+        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + ", " + bean.idType + "> {");
         skipLine();
 
         writeLine("/*"); 
@@ -72,7 +72,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/**");
         writeLine(" * process save");
         writeLine(" */");
-        writeLine("public Long save(" + this.bean.className + " " + this.bean.objectName + ") {");
+        writeLine("public " + bean.idType + " save(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("return " + this.bean.daoObjectName + ".save(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();

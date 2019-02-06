@@ -18,6 +18,10 @@ public class TableMetaData {
 	 */
 	@XmlAttribute(required=true)
 	private String name;
+	@XmlAttribute
+	private DataType idType;
+	@XmlAttribute
+	private IdGeneratorType idGeneratorType;
 	@XmlAttribute(required=true)
 	private int cardinality;
 	@XmlAttribute
@@ -60,7 +64,19 @@ public class TableMetaData {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}	
+	}
+	public DataType getIdType() {
+		return idType;
+	}
+	public void setIdType(DataType idType) {
+		this.idType = idType;
+	}
+	public IdGeneratorType getIdGeneratorType() {
+		return idGeneratorType;
+	}
+	public void setIdGeneratorType(IdGeneratorType idGeneratorType) {
+		this.idGeneratorType = idGeneratorType;
+	}
 	public int getCardinality() {
 		return cardinality;
 	}
