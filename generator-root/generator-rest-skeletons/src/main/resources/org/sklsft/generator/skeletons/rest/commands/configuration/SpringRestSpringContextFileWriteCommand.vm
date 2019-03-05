@@ -34,7 +34,13 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!-- Aspects -->
 	<aop:aspectj-autoproxy />
 
+	<bean name="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+
 	<!-- Aspects > Logging Aspect -->
-	<bean class="org.sklsft.commons.rest.aspect.LoggingAspect" />
+	<bean class="org.sklsft.commons.rest.aspect.LoggingAspect">
+		<property name="traceRequestHeaders" value="${log.traceRequestHeaders}"/>
+		<property name="traceRequestBody" value="${log.traceRequestBody}"/>
+		<property name="objectMapper" ref="objectMapper"/>
+	</bean>
 
 </beans>

@@ -1,0 +1,6 @@
+log.directory=/var/log/${project.projectName}
+log.root.level=INFO
+log.app.level=INFO
+log.showSql=false
+log.traceRequestHeaders=false
+log.traceRequestBody=true

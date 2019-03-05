@@ -6,7 +6,7 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>
-				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
 		</encoder>
 	</appender>
@@ -14,21 +14,28 @@
 
 	<!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>/var/log/${project.projectName}-rest.log</File>
+		<File>${log.directory}/${project.projectName}-rest.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>/var/log/${project.projectName}/${project.projectName}-rest.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${log.directory}/${project.projectName}-rest.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>
-				[%d{dd/MM HH:mm:ss.SSS}][%-5level][%logger{36}] - %M : %msg%n
+				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level] %msg%n
 			</pattern>
 		</encoder>
 	</appender>
 
-	<root level="info">
-		<appender-ref ref="STDOUT" />
+	<logger name="${project.domainName}" level="${log.app.level}">
 		<appender-ref ref="FILE" />
+	</logger>
+	
+	<logger name="org.sklsft" level="${log.app.level}">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="${log.root.level}">
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
