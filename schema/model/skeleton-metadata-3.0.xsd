@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://generator.sklsft.org/schema/model/metadata" xmlns:metadata="http://generator.sklsft.org/schema/model/metadata" xmlns:tns="http://generator.sklsft.org/schema/model/metadata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="project" type="tns:project"/>
+
+  <xs:complexType name="column">
+    <xs:sequence>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="dataType" type="tns:dataType"/>
+    <xs:attribute name="nullable" type="xs:boolean"/>
+    <xs:attribute name="unique" type="xs:boolean"/>
+    <xs:attribute name="referenceTableName" type="xs:string"/>
+    <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
+    <xs:attribute name="editable" type="xs:boolean"/>
+    <xs:attribute name="visibility" type="tns:visibility"/>
+    <xs:attribute name="rendering" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="package">
+    <xs:sequence>
+      <xs:element name="tables" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" type="tns:table" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="packages" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="package" type="tns:package" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="table">
+    <xs:sequence>
+      <xs:element name="selectionBehavior" type="tns:selectionBehavior" minOccurs="0"/>
+      <xs:element name="interfaces" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="interface" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="annotations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="annotation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="columns" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="column" type="tns:column" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="uniqueConstraints" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="uniqueConstraint" type="tns:uniqueConstraint" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="idType" type="tns:dataType"/>
+    <xs:attribute name="idGeneratorType" type="tns:idGeneratorType"/>
+    <xs:attribute name="cardinality" type="xs:int" use="required"/>
+    <xs:attribute name="listRendering" type="xs:string"/>
+    <xs:attribute name="detailRendering" type="xs:string"/>
+    <xs:attribute name="createEnabled" type="xs:boolean"/>
+    <xs:attribute name="updateEnabled" type="xs:boolean"/>
+    <xs:attribute name="deleteEnabled" type="xs:boolean"/>
+    <xs:attribute name="detailMode" type="tns:detailMode"/>
+  </xs:complexType>
+
+  <xs:complexType name="selectionBehavior">
+    <xs:sequence/>
+    <xs:attribute name="selectionMode" type="tns:selectionMode" use="required"/>
+    <xs:attribute name="labelColumn" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="uniqueConstraint">
+    <xs:sequence>
+      <xs:element name="fields" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="field" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="project">
+    <xs:sequence>
+      <xs:element name="domainName" type="xs:string"/>
+      <xs:element name="projectName" type="xs:string"/>
+      <xs:element name="skeleton" type="xs:string"/>
+      <xs:element name="databaseEngine" type="xs:string"/>
+      <xs:element name="databaseName" type="xs:string"/>
+      <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
+      <xs:element name="databaseUserName" type="xs:string" minOccurs="0"/>
+      <xs:element name="databasePassword" type="xs:string" minOccurs="0"/>
+      <xs:element name="audited" type="xs:boolean" default="false"/>
+      <xs:element name="packages" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="package" type="tns:package" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="dataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TEXT"/>
+      <xs:enumeration value="STRING"/>
+      <xs:enumeration value="SHORT"/>
+      <xs:enumeration value="INTEGER"/>
+      <xs:enumeration value="LONG"/>
+      <xs:enumeration value="DOUBLE"/>
+      <xs:enumeration value="BIG_DECIMAL"/>
+      <xs:enumeration value="DATE"/>
+      <xs:enumeration value="DATETIME"/>
+      <xs:enumeration value="BOOLEAN"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="relationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MANY_TO_ONE"/>
+      <xs:enumeration value="MANY_TO_ONE_COMPONENT"/>
+      <xs:enumeration value="EMBEDDED"/>
+      <xs:enumeration value="ONE_TO_ONE"/>
+      <xs:enumeration value="ONE_TO_ONE_COMPONENT"/>
+      <xs:enumeration value="PROPERTY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="visibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VISIBLE"/>
+      <xs:enumeration value="NOT_LIST"/>
+      <xs:enumeration value="NOT_VISIBLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="detailMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MODAL"/>
+      <xs:enumeration value="PAGE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="fileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="JAVA"/>
+      <xs:enumeration value="SQL"/>
+      <xs:enumeration value="XML"/>
+      <xs:enumeration value="XHTML"/>
+      <xs:enumeration value="JS"/>
+      <xs:enumeration value="CSS"/>
+      <xs:enumeration value="BAT"/>
+      <xs:enumeration value="PROPERTIES"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="idGeneratorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="SEQUENCE"/>
+      <xs:enumeration value="UUID"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="selectionMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DROPDOWN_OPTIONS"/>
+      <xs:enumeration value="AUTO_COMPLETE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="persistenceMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CSV"/>
+      <xs:enumeration value="XML"/>
+      <xs:enumeration value="CMD"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+
