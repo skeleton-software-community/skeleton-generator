@@ -1,5 +1,4 @@
 target/
-bin/
 
 .classpath
 .project
@@ -8,3 +7,4 @@ bin/
 .metadata/
 .recommenders/
 
+*.class
