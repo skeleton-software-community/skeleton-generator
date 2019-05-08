@@ -21,7 +21,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * This class can be launched to execute your database building<br/>
  * Argument required : 
  * <li>the workspace folder where the "data-model" folder will be detected
- * <li>the database name that must be declared in /data-model/CONTEXT/datasource-context.xml
+ * <li>the database name that must be declared in /data-model/datasource-context.xml
  * Depending on the meta data that is going to be read, the main method will :
  * <li>load the project representation
  * <li>clean the project database
@@ -35,13 +35,13 @@ public class DatabaseBuilderLauncher {
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseBuilderLauncher.class);
 	
-	private static final String DATASOURCE_CONTEXT_FILE ="CONTEXT" + File.separator + "datasource-context.xml";
+	private static final String DATASOURCE_CONTEXT_FILE = "datasource-context.xml";
 	
 	
 	/**
 	 * main method to be executed
 	 * @param args 0->the workspace folder where the "data-model" folder will be detected
-	 * @param args 1->the database name, declared in /data-model/CONTEXT/datasource-context.xml
+	 * @param args 1->the database name, declared in /data-model/datasource-context.xml
 	 */
 	public static void main(String[] args) {
 		

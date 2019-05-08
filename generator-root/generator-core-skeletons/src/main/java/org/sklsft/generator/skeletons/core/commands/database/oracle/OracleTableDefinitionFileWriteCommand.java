@@ -69,12 +69,12 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		for (int i = 1; i < this.table.cardinality; i++) {
 			write("," + this.table.columns.get(i).name);
 		}
-		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_IND)");
+		writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 		
 		writeLine(", CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
-		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID) TABLESPACE " + table.myPackage.model.project.databaseName + "_IND)");
+		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID) TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 
-		writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_TBL");
+		writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_TBL");
 		writeLine("/");
 		skipLine();
 
@@ -106,7 +106,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
         writeLine("CONSTRAINT FK_" + table.name + "_AUD FOREIGN KEY (REV)");
         writeLine("REFERENCES AUDITENTITY (ID)");
-        writeLine(") TABLESPACE " + table.myPackage.model.project.databaseName + "_AUD");
+        writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_AUD");
         writeLine("/");
         skipLine();
         

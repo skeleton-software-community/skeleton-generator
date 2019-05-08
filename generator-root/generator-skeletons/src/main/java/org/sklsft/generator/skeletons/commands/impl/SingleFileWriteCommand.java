@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.sklsft.generator.model.metadata.FileType;
+import org.sklsft.generator.model.metadata.files.FileType;
 import org.sklsft.generator.skeletons.commands.interfaces.FileWriteCommand;
 
 

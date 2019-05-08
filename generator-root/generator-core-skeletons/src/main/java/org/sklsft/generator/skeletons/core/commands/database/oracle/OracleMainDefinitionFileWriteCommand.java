@@ -101,7 +101,7 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine((char)34 + "TIMESTAMP" + (char)34 + " int NOT NULL,");
 		writeLine("LOGIN VARCHAR2(255),");
 		writeLine("CONSTRAINT PK_AUDITENTITY PRIMARY KEY (ID)");
-		writeLine(") TABLESPACE " + project.databaseName + "_AUD");
+		writeLine(") TABLESPACE " + project.projectName.toUpperCase() + "_AUD");
 		writeLine("/");
 		skipLine();
 		

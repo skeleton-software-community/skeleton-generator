@@ -32,7 +32,7 @@ public class PopulatorLauncher {
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(PopulatorLauncher.class);
 	
-	private static final String DATASOURCE_CONTEXT_FILE ="CONTEXT" + File.separator + "datasource-context.xml";
+	private static final String DATASOURCE_CONTEXT_FILE = "datasource-context.xml";
 	
 	/**
 	 * 

@@ -1,4 +1,4 @@
-package org.sklsft.generator.model.metadata;
+package org.sklsft.generator.model.metadata.files;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

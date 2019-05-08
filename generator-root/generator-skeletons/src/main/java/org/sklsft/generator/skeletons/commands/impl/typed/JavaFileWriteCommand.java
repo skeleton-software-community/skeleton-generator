@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.sklsft.generator.model.metadata.FileType;
+import org.sklsft.generator.model.metadata.files.FileType;
 import org.sklsft.generator.skeletons.commands.impl.SingleFileWriteCommand;
 
 

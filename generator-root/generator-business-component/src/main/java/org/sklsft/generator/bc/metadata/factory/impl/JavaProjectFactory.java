@@ -46,11 +46,6 @@ public class JavaProjectFactory implements ProjectFactory {
 		project.workspaceFolder = projectMetaData.getWorkspaceFolder();
 		project.skeleton = projectMetaData.getSkeleton();
 		project.databaseEngine = projectMetaData.getDatabaseEngine();
-		project.databaseName = projectMetaData.getDatabaseName();
-		project.databaseDNS = projectMetaData.getDatabaseDNS();
-		project.databasePort = projectMetaData.getDatabasePort();
-		project.databaseUserName = projectMetaData.getDatabaseUserName();
-		project.databasePassword = projectMetaData.getDatabasePassword();
 		project.audited = projectMetaData.getAudited();
 		
 		logger.trace("start building model");

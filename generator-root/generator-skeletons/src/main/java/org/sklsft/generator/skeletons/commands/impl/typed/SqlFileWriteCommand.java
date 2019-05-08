@@ -1,6 +1,6 @@
 package org.sklsft.generator.skeletons.commands.impl.typed;
 
-import org.sklsft.generator.model.metadata.FileType;
+import org.sklsft.generator.model.metadata.files.FileType;
 import org.sklsft.generator.skeletons.commands.impl.SingleFileWriteCommand;
 
 public abstract class SqlFileWriteCommand extends SingleFileWriteCommand{

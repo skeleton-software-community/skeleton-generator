@@ -35,16 +35,6 @@ public class ProjectMetaData {
     private String skeleton;
 	@XmlElement(required=true)
     private String databaseEngine;
-	@XmlElement(required=true)
-    private String databaseName;
-	@XmlElement
-    private String databaseDNS;
-	@XmlElement
-    private String databasePort;
-	@XmlElement
-    private String databaseUserName;
-	@XmlElement
-    private String databasePassword;
 	@XmlElement(defaultValue="false")
     private boolean audited = false;
     
@@ -97,37 +87,6 @@ public class ProjectMetaData {
 	}
 	public void setDatabaseEngine(String databaseEngine) {
 		this.databaseEngine = databaseEngine;
-	}
-	public String getDatabaseName() {
-		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-	public String getDatabaseDNS() {
-		return databaseDNS;
-	}
-	public void setDatabaseDNS(String databaseDNS) {
-		this.databaseDNS = databaseDNS;
-	}
-	public String getDatabasePort() {
-		return databasePort;
-	}
-	public void setDatabasePort(String databasePort) {
-		this.databasePort = databasePort;
-	}
-	public String getDatabaseUserName() {
-		return databaseUserName;
-	}
-	public void setDatabaseUserName(String databaseUserName) {
-		this.databaseUserName = databaseUserName;
-	}
-	public String getDatabasePassword() {
-		return databasePassword;
-	}
-	public void setDatabasePassword(String databasePassword) {
-		this.databasePassword = databasePassword;
 	}
 	public boolean getAudited() {
 		return audited;
