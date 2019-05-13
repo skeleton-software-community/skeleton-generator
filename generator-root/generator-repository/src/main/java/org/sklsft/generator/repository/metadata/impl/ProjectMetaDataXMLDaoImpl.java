@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.inject.Inject;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,6 +23,7 @@ import org.sklsft.generator.exception.ProjectAlreadyConfiguredException;
 import org.sklsft.generator.exception.ProjectInitFailureException;
 import org.sklsft.generator.exception.ProjectNotFoundException;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
@@ -34,7 +36,8 @@ import org.xml.sax.SAXException;
 @Component(value="projectMetaDataXmlDao")
 public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	
-	private static final String SCHEMA_LOCATION = "skeleton-metadata-3.0.xsd";
+	@Inject
+	private DataSourceContextInitializer dataSourceContextInitializer;
 
 
 	@Override
@@ -66,6 +69,27 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 		} catch (JAXBException | SAXException e) {
 			throw new InvalidProjectMetaDataException("Unable to parse skeleton.xml file", e);
 		}
+	}
+	
+	
+	@Override
+	public void initProject(ProjectMetaData projectMetaData) {
+		
+		projectMetaData.setSourceFolder(projectMetaData.getWorkspaceFolder() + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME);
+		
+		Path sourcePath = Paths.get(projectMetaData.getSourceFolder());
+		
+		if (Files.exists(sourcePath)) {
+			throw new ProjectAlreadyConfiguredException("A project has already been configured at : " + projectMetaData.getWorkspaceFolder());
+		}
+		
+		try {
+			Files.createDirectories(sourcePath);
+		} catch (IOException e) {
+			throw new ProjectInitFailureException("Failed to initialize project at : " + projectMetaData.getWorkspaceFolder(),e);
+		}
+		
+		
 	}
 	
 	
@@ -120,22 +144,12 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 
 
 	@Override
-	public void initProject(ProjectMetaData projectMetaData) {
-		
-		projectMetaData.setSourceFolder(projectMetaData.getWorkspaceFolder() + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME);
-		
-		Path sourcePath = Paths.get(projectMetaData.getSourceFolder());
-		
-		if (Files.exists(sourcePath)) {
-			throw new ProjectAlreadyConfiguredException("A project has already been configured at : " + projectMetaData.getWorkspaceFolder());
-		}
+	public void persistDatasourceContext(ProjectMetaData project, DataSourceMetaData datasource) {
 		
 		try {
-			Files.createDirectories(sourcePath);
+			dataSourceContextInitializer.init(datasource, project.getSourceFolder());
 		} catch (IOException e) {
-			throw new ProjectInitFailureException("Failed to initialize project at : " + projectMetaData.getWorkspaceFolder(),e);
+			throw new InvalidProjectMetaDataException("Failed to write datasource-context.xml", e);
 		}
-		
-		
 	}
 }

@@ -44,10 +44,6 @@ public class CsvFileParserImpl implements CsvFileParser {
 	}
 	
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.repository.dao.interfaces.MetaDataFileManager#readMataDataFile(java.lang.String)
-	 */
 	@Override
 	public CsvFile readData(String filePath) throws IOException, InvalidFileException {
 

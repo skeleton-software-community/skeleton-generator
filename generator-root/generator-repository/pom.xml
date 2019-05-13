@@ -48,6 +48,13 @@
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
 		
+		
+		<!-- apache velocity-->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		
 		<!-- utilitaires -->
 		<dependency>
 			<groupId>commons-lang</groupId>

@@ -34,8 +34,8 @@ public class ProjectInitializerLauncher {
 	 * @param args 0->the workspace folder where to put the "data-model" folder
 	 * @param args 1->the domain name of your project (org.foo for example)
 	 * @param args 2->your project name(myproject for example)
-	 * @param args 3->the skeleton type of your project {@see SkeletonType}
-	 * @param args 4->the database engine to be used {@see DatabaseEngine}
+	 * @param args 3->the skeleton type of your project @{link SkeletonType}
+	 * @param args 4->the database engine to be used @{link DatabaseEngine}
 	 * @param args 5->a boolean string representation (True/False) to indicate whereas you want to activate hibernate auditing functionnality or not (envers)
 	 * @param args 6->your database name (MYDATABASE for example)
 	 * @param args 7->your database hostname
@@ -53,11 +53,12 @@ public class ProjectInitializerLauncher {
 			logger.info("Context loaded");
 			
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
+			DataSourceMetaData datasource = null;
 			if (args.length > 6) {
 				if (args.length < 11) {
 					throw new IllegalArgumentException("5 arguments are mandatory to setup your local datasource");
 				}
-				DataSourceMetaData datasource = buildDataSource(args);
+				datasource = buildDataSource(args);
 			}
 			
 			Project project;
@@ -81,7 +82,7 @@ public class ProjectInitializerLauncher {
 				logger.info("start persisting project");
 				
 				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
-				projectMetaDataService.initProjectMetaData(projectMetaData);				
+				projectMetaDataService.initProjectMetaData(projectMetaData, datasource);				
 				
 				logger.info("persisting project completed");
 					

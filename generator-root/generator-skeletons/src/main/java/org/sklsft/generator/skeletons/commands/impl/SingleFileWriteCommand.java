@@ -59,10 +59,7 @@ public abstract class SingleFileWriteCommand implements FileWriteCommand {
 	}
 	
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.bl.command.file.interfaces.FileWriteCommand#execute()
-	 */
+
 	@Override
 	public void execute() throws IOException {
 		Path folderPath = Paths.get(folderName);

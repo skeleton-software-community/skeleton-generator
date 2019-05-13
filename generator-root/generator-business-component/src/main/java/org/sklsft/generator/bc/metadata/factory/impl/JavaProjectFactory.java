@@ -32,10 +32,7 @@ public class JavaProjectFactory implements ProjectFactory {
 	@Resource(name="javaModelFactory")
 	private ModelFactory modelFactory;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.skeleton.generator.bl.factory.interfaces.ProjectFactory#buildProject(com.skeleton.generator.model.metadata.ProjectMetaData)
-	 */
+
 	public Project buildProject(ProjectMetaData projectMetaData) {
 		
 		Project project = new Project();

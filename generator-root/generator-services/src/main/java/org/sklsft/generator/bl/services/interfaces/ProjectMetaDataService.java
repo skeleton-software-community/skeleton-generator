@@ -1,6 +1,7 @@
 package org.sklsft.generator.bl.services.interfaces;
 
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 
 /**
@@ -33,10 +34,10 @@ public interface ProjectMetaDataService {
 
 	
 	/**
-	 * to initialize a project from a @{link ProjectMetaData}
+	 * to initialize a project from a @{link ProjectMetaData} and a @{link {@link DataSourceMetaData}
 	 * <li>Checks that no project exists in the given folder
-	 * <li>Create the necessary folders, the skeleton.xsd and skeleton.xml files
-	 * @param projectMetaData
+	 * <li>Create the necessary folders, the skeleton.xsd, skeleton.xml and datasource-context.xml files
+	 * @param projectMetaData, datasource
 	 */
-	void initProjectMetaData(ProjectMetaData projectMetaData);
+	void initProjectMetaData(ProjectMetaData projectMetaData, DataSourceMetaData datasource);
 }

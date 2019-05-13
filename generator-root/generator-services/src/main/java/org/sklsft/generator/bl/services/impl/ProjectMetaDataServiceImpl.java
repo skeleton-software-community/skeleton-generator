@@ -6,6 +6,7 @@ import org.sklsft.generator.bc.validation.ProjectMetaDataValidator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	
 	
 	@Override
-	public void initProjectMetaData(ProjectMetaData projectMetaData) {
+	public void initProjectMetaData(ProjectMetaData projectMetaData, DataSourceMetaData datasource) {
 		
 		logger.info("start initializing project");
 		projectMetaDataDao.initProject(projectMetaData);
@@ -68,5 +69,11 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		logger.info("start persisting meta data");
 		projectMetaDataDao.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");
+		
+		if (datasource != null) {
+			logger.info("start persisting datasource context");
+			projectMetaDataDao.persistDatasourceContext(projectMetaData, datasource);
+			logger.info("end persisting datasource context");
+		}
 	}
 }
