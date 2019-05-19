@@ -8,8 +8,10 @@ public class DataSourceMetaData {
 	private String databaseName;
 	private String host;
 	private String port;
-	private String user;
+	private String userName;
 	private String password;
+	private String url;
+	private String driverClassName;
 	
 	
 	/*
@@ -33,16 +35,28 @@ public class DataSourceMetaData {
 	public void setPort(String port) {
 		this.port = port;
 	}
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getDriverClassName() {
+		return driverClassName;
+	}
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
 	}
 }

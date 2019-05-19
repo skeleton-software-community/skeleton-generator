@@ -37,6 +37,10 @@ public class DatabaseHandlerResolver {
 			}
 		}
 	}
+	
+	public static DatabaseHandler getDatabaseHandler(String databaseEngine) {
+		return handlers.get(databaseEngine);
+	}
 
 	public static DatabaseHandler getDatabaseHandler(Project project) {
 		return handlers.get(project.getDatabaseEngine());

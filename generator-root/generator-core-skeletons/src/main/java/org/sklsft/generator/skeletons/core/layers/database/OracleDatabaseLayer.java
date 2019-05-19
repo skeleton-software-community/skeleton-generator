@@ -3,7 +3,6 @@ package org.sklsft.generator.skeletons.core.layers.database;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.skeletons.core.commands.database.configuration.oracle.OracleDataSourceContextFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableFkDefinitionFileWriteCommand;
@@ -25,9 +24,6 @@ public class OracleDatabaseLayer extends AbstractLayer {
 	public FileWriteCommandTreeNode getConfigurationNode(Project project) {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
-		
-		FileWriteCommandTreeNode dataSourceContextTreeNode = new FileWriteCommandTreeNode(new OracleDataSourceContextFileWriteCommand(project));
-		configurationTreeNode.add(dataSourceContextTreeNode);
 		
 		return configurationTreeNode;
 	}

@@ -19,7 +19,7 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 	<bean id="projectDataSourceProvider" class="org.sklsft.generator.repository.backup.datasource.impl.OutputDataSourceProviderImpl">
 		<constructor-arg name="dataSources">
 	  		<map>
-				<entry key="${project.projectName}" value-ref="${project.projectName}"/>
+				<entry key="local" value-ref="local"/>
 	  		</map>
   		</constructor-arg>
 	</bean>
@@ -29,19 +29,19 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 	<bean id="inputDataSourceProvider" class="org.sklsft.generator.repository.backup.datasource.impl.InputDataSourceProviderImpl">
 		<constructor-arg name="dataSources">
 	  		<map>
-				<entry key="${project.projectName}" value-ref="${project.projectName}"/>
+				
 	  		</map>
   		</constructor-arg>
 	</bean>
 	
 	
 	<!-- here is the list of all sources used by or to populate your project database -->
-	<bean name="${project.projectName}"
+	<bean name="local"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@${project.databaseDNS}:${project.databasePort}:${project.databaseName}" />
-		<property name="username" value="${project.databaseUserName}" />
-		<property name="password" value="${project.databasePassword}" />
+		<property name="driverClassName" value="${datasource.driverClassName}" />
+		<property name="url" value="${datasource.url}" />
+		<property name="username" value="${datasource.userName}" />
+		<property name="password" value="${datasource.password}" />
 	</bean>
 	
 </beans>

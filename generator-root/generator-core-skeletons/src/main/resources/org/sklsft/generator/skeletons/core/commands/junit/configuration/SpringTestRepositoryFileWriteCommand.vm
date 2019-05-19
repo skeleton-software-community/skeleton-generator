@@ -12,7 +12,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 			<value>org.hsqldb.jdbcDriver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:hsqldb:mem:${project.databaseName}</value>
+			<value>jdbc:hsqldb:mem:${project.projectName}</value>
 		</property>
 		<property name="username">
 			<value>sa</value>

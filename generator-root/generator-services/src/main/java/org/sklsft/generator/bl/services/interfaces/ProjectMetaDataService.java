@@ -26,12 +26,6 @@ public interface ProjectMetaDataService {
 	ProjectValidationReport validate(ProjectMetaData project);
 	
 	
-	/**
-	 * persists a @{link ProjectMetaData} to an xml file
-	 * @param projectMetaData
-	 */
-	void persistProjectMetaData(ProjectMetaData projectMetaData);
-
 	
 	/**
 	 * to initialize a project from a @{link ProjectMetaData} and a @{link {@link DataSourceMetaData}

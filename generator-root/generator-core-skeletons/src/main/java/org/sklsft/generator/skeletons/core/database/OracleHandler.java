@@ -1,5 +1,6 @@
 package org.sklsft.generator.skeletons.core.database;
 
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.skeletons.core.layers.database.OracleDatabaseLayer;
 import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.sklsft.generator.skeletons.layers.Layer;
@@ -11,6 +12,16 @@ public class OracleHandler implements DatabaseHandler {
 	@Override
 	public String getName() {
 		return "ORACLE";
+	}
+	
+	@Override
+	public String getDriverClassName() {
+		return "oracle.jdbc.driver.OracleDriver";
+	}
+
+	@Override
+	public String getUrl(DataSourceMetaData datasource) {
+		return "jdbc:oracle:thin:@" + datasource.getHost() + ":" + datasource.getPort() + ":" + datasource.getDatabaseName();
 	}
 	
 	@Override

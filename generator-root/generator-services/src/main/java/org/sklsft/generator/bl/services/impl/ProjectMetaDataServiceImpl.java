@@ -2,6 +2,7 @@ package org.sklsft.generator.bl.services.impl;
 
 import javax.inject.Inject;
 
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
 import org.sklsft.generator.bc.validation.ProjectMetaDataValidator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
@@ -9,6 +10,7 @@ import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
+import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -52,14 +54,6 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	
 	
 	@Override
-	public void persistProjectMetaData(ProjectMetaData projectMetaData) {
-		logger.info("start persisting meta data");
-		projectMetaDataDao.persistProjectMetaData(projectMetaData);
-		logger.info("end persisting meta data");
-	}
-	
-	
-	@Override
 	public void initProjectMetaData(ProjectMetaData projectMetaData, DataSourceMetaData datasource) {
 		
 		logger.info("start initializing project");
@@ -70,10 +64,11 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		projectMetaDataDao.persistProjectMetaData(projectMetaData);
 		logger.info("end persisting meta data");
 		
-		if (datasource != null) {
-			logger.info("start persisting datasource context");
-			projectMetaDataDao.persistDatasourceContext(projectMetaData, datasource);
-			logger.info("end persisting datasource context");
-		}
+		logger.info("start persisting datasource context");
+		DatabaseHandler databaseHandler = DatabaseHandlerResolver.getDatabaseHandler(projectMetaData.getDatabaseEngine());
+		datasource.setDriverClassName(databaseHandler.getDriverClassName());
+		datasource.setUrl(databaseHandler.getUrl(datasource));		
+		projectMetaDataDao.persistDatasourceContext(projectMetaData, datasource);
+		logger.info("end persisting datasource context");
 	}
 }

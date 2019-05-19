@@ -6,11 +6,6 @@
 	<projectName>demo</projectName>
 	<skeleton>SPRING_HIBERNATE_PRIMEFACES</skeleton>
 	<databaseEngine>POSTGRESQL</databaseEngine>
-	<databaseName>demo</databaseName>
-	<databaseDNS>localhost</databaseDNS>
-	<databasePort>5432</databasePort>
-	<databaseUserName>postgres</databaseUserName>
-	<databasePassword>postgres</databasePassword>
 	<audited>false</audited>
 	<packages>
 		<package name="REFERENCE">

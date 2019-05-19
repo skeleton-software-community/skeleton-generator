@@ -45,21 +45,15 @@ public class ProjectInitializerLauncher {
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 6) {
-			throw new IllegalArgumentException("6 arguments are mandatory");
+		if (args.length < 11) {
+			throw new IllegalArgumentException("11 arguments are mandatory");
 		}
 				
 		try(FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("classpath:applicationContext-generator-bash.xml");){
 			logger.info("Context loaded");
 			
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
-			DataSourceMetaData datasource = null;
-			if (args.length > 6) {
-				if (args.length < 11) {
-					throw new IllegalArgumentException("5 arguments are mandatory to setup your local datasource");
-				}
-				datasource = buildDataSource(args);
-			}
+			DataSourceMetaData datasource = buildDataSource(args);
 			
 			Project project;
 			
@@ -139,7 +133,7 @@ public class ProjectInitializerLauncher {
 		result.setDatabaseName(args[6]);
 		result.setHost(args[7]);
 		result.setPort(args[8]);
-		result.setUser(args[9]);
+		result.setUserName(args[9]);
 		result.setPassword(args[10]);
 		
 		return result;

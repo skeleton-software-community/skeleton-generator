@@ -3,7 +3,6 @@ package org.sklsft.generator.skeletons.core.layers.database;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.skeletons.core.commands.database.configuration.postgresql.PostgresqlDataSourceContextFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.configuration.postgresql.PostgresqlMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.postgresql.PostgresqlTableDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.postgresql.PostgresqlTableFkDefinitionFileWriteCommand;
@@ -25,9 +24,6 @@ public class PostgresDatabaseLayer extends AbstractLayer {
 	public FileWriteCommandTreeNode getConfigurationNode(Project project) {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
-		
-		FileWriteCommandTreeNode dataSourceContextTreeNode = new FileWriteCommandTreeNode(new PostgresqlDataSourceContextFileWriteCommand(project));
-		configurationTreeNode.add(dataSourceContextTreeNode);
 		
 		FileWriteCommandTreeNode mainFileTreeNode = new FileWriteCommandTreeNode(new PostgresqlMainDefinitionFileWriteCommand(project));
 		configurationTreeNode.add(mainFileTreeNode);

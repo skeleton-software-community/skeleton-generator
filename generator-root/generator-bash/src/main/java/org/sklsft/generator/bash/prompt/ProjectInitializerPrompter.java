@@ -26,6 +26,7 @@ public class ProjectInitializerPrompter implements ArgumentsPrompter {
 	private static final Logger logger = LoggerFactory.getLogger(ProjectInitializerPrompter.class);
 
 	private List<ChoicesHelper> choicesHelpers = new ArrayList<>();
+	private List<ChoicesHelper> datasourceChoicesHelpers = new ArrayList<>();
 	
 	
 	
@@ -35,12 +36,13 @@ public class ProjectInitializerPrompter implements ArgumentsPrompter {
 		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your project name (ex:demo) : "));
 		choicesHelpers.add(new SkeletonChoicesHelper());
 		choicesHelpers.add(new DatabaseEngineChoicesHelper());
-		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database name (ex:DEMO) : "));
-		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database host name (ex:localhost) : "));
-		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database port (ex:5432) : "));
-		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database username (ex:postgres) : "));
-		choicesHelpers.add(new BasicFreeChoicesHelper("Enter your database password (ex:postgres) : "));
 		choicesHelpers.add(new TrueFalseChoicesHelper("Do you want to activate Hibernate envers fonctionality "));
+		
+		datasourceChoicesHelpers.add(new BasicFreeChoicesHelper("Enter your database name (ex:DEMO) : "));
+		datasourceChoicesHelpers.add(new BasicFreeChoicesHelper("Enter your database host name (ex:localhost) : "));
+		datasourceChoicesHelpers.add(new BasicFreeChoicesHelper("Enter your database port (ex:5432) : "));
+		datasourceChoicesHelpers.add(new BasicFreeChoicesHelper("Enter your database username (ex:postgres) : "));
+		datasourceChoicesHelpers.add(new BasicFreeChoicesHelper("Enter your database password (ex:postgres) : "));
 	}
 
 	public List<String> promptForArguments() {		
@@ -59,21 +61,33 @@ public class ProjectInitializerPrompter implements ArgumentsPrompter {
 					argument = helper.getChoice(input);
 				}
 				arguments.add(argument);
-			}
+			}			
 			
+			for (ChoicesHelper helper:datasourceChoicesHelpers) {
+				argument = null;
+				while(argument == null) {
+					System.out.println(helper.getFullMessage());
+					input = bufferedReader.readLine();
+					argument = helper.getChoice(input);
+				}
+				arguments.add(argument);
+			}
 		
 			System.out.println("domain name : " + arguments.get(0));
 			System.out.println("project name : " + arguments.get(1));
 			System.out.println("skeleton type : " + arguments.get(2));
 			System.out.println("database engine : " + arguments.get(3));
-			System.out.println("database name : " + arguments.get(4));
-			System.out.println("database host name : " + arguments.get(5));
-			System.out.println(" port : " + arguments.get(6));
-			System.out.println("database username : " + arguments.get(7));
-			System.out.println("database password : " + arguments.get(8));
-			System.out.println("hibernate envers activated : " + arguments.get(9));
+			System.out.println("hibernate envers activated : " + arguments.get(4));
+			
+			System.out.println("database name : " + arguments.get(5));
+			System.out.println("database host name : " + arguments.get(6));
+			System.out.println(" port : " + arguments.get(7));
+			System.out.println("database username : " + arguments.get(8));
+			System.out.println("database password : " + arguments.get(9));
+			
 			System.out.println("Please confirm your choice (Y/n)");
 			input = bufferedReader.readLine();
+			
 			if (!"Y".equals(input)) {
 				System.exit(0);
 			}
