@@ -29,6 +29,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.nullable = myProperty.nullable;
 			viewProperty.visibility = myProperty.visibility;
 			viewProperty.editable = myProperty.editable;
+			viewProperty.filterable = myProperty.filterable;
 			viewProperty.lastPropertyName = myProperty.name;
 			viewProperty.lastColumnName = myProperty.column.name;
 			viewProperty.joinedAliasName = "";				
@@ -81,6 +82,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.nullable = myProperty.nullable || property.nullable;
 					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
 					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
+					viewProperty.filterable = myProperty.embedded?property.filterable:myProperty.filterable;
 					viewProperty.lastPropertyName = property.name;
 					viewProperty.lastColumnName = property.column.name;
 					viewProperty.joinedAliasName = myProperty.name;

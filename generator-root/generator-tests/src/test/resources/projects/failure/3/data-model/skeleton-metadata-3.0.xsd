@@ -20,6 +20,7 @@
     <xs:attribute name="referenceTableName" type="xs:string"/>
     <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
     <xs:attribute name="editable" type="xs:boolean"/>
+    <xs:attribute name="filterable" type="xs:boolean"/>
     <xs:attribute name="visibility" type="tns:visibility"/>
     <xs:attribute name="rendering" type="xs:string"/>
   </xs:complexType>

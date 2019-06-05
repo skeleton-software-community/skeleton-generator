@@ -74,12 +74,13 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		
 		writeLine("<div class=\"row row-eq-height\">");
 		
-		for (ViewProperty property : currentBean.basicViewBean.properties) {			
-			
-			writeLine("<div class=\"col-xs-3\">");
-			writeFilter(property, currentBean, parentBean);
-			writeLine("</div>");
-			skipLine();
+		for (ViewProperty property : currentBean.basicViewBean.properties) {
+			if (property.filterable) {
+				writeLine("<div class=\"col-xs-3\">");
+				writeFilter(property, currentBean, parentBean);
+				writeLine("</div>");
+				skipLine();
+			}
 		}
 		
 		

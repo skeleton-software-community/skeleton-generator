@@ -76,6 +76,7 @@ public class TableFactoryImpl implements TableFactory {
             
             column.unique = columnMetaData.getUnique() || column.relation.isUnique();
             column.editable = columnMetaData.getEditable();
+            column.filterable = columnMetaData.getFilterable();
             if (columnMetaData.getVisibility()!=null) {
             	column.visibility = columnMetaData.getVisibility();
             } else {

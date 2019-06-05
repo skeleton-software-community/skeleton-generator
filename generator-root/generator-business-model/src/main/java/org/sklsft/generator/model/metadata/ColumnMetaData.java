@@ -32,6 +32,8 @@ public class ColumnMetaData {
 	@XmlAttribute
 	private Boolean editable = true;
 	@XmlAttribute
+	private Boolean filterable = true;
+	@XmlAttribute
 	private Visibility visibility;
 	@XmlAttribute
 	private String rendering;
@@ -84,6 +86,12 @@ public class ColumnMetaData {
 	}
 	public void setEditable(Boolean editable) {
 		this.editable = editable;
+	}
+	public Boolean getFilterable() {
+		return filterable;
+	}
+	public void setFilterable(Boolean filterable) {
+		this.filterable = filterable;
 	}
 	public Visibility getVisibility() {
 		return visibility;

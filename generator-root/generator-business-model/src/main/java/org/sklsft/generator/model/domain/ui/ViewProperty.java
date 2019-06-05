@@ -15,6 +15,7 @@ public class ViewProperty {
 	public String beanDataType;
 	public boolean nullable;
 	public boolean editable;
+	public boolean filterable;
 	public Visibility visibility;
 	public String rendering;
 	

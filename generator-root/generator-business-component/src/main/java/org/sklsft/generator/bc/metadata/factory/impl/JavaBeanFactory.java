@@ -125,6 +125,7 @@ public class JavaBeanFactory implements BeanFactory {
 			property.unique = column.unique;
 			property.visibility = column.visibility;
 			property.editable = column.editable;
+			property.filterable = column.filterable;
 			property.rendering = column.rendering;
 			property.annotations = column.annotations;
 			bean.properties.add(property);
@@ -191,6 +192,8 @@ public class JavaBeanFactory implements BeanFactory {
 			bean.selectionBehavior.targetProperty = bean.properties.get(0);
 			if (tableMetaData.getSelectionBehavior().getLabelColumn()!=null) {
 				bean.selectionBehavior.labelProperty = bean.findPropertyByColumnName(tableMetaData.getSelectionBehavior().getLabelColumn());
+			} else {
+				bean.selectionBehavior.labelProperty = bean.properties.get(0);
 			}
 		}
 		

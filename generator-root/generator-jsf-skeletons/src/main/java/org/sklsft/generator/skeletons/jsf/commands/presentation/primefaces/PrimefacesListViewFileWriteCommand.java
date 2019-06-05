@@ -65,12 +65,13 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		
 		writeLine("<div class=\"row row-eq-height\">");		
 		
-		for (ViewProperty property : this.bean.basicViewBean.properties) {			
-			
-			writeLine("<div class=\"col-xs-3\">");
-			writeFilter(property, bean);
-			writeLine("</div>");
-			skipLine();
+		for (ViewProperty property : this.bean.basicViewBean.properties) {
+			if (property.filterable) {
+				writeLine("<div class=\"col-xs-3\">");
+				writeFilter(property, bean);
+				writeLine("</div>");
+				skipLine();
+			}
 		}
 		
 		
@@ -79,7 +80,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 		
 		writeLine("<div class=\"results-panel\">");
 		
-		writeLine("<h:panelGroup id=\"resultsPanelGroup\">");		
+		writeLine("<h:panelGroup id=\"resultsPanelGroup\">");
 		
 		writeLine("<ui:fragment rendered=\"#{" + bean.listViewObjectName + ".scrollView.elements.size() == 0}\">");
 		writeLine("#{i18n.noDataFound}<br/>");

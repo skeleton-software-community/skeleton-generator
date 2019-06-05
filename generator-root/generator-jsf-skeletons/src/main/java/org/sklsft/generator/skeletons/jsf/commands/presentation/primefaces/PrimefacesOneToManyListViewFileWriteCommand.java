@@ -75,10 +75,12 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 		writeLine("<div class=\"row row-eq-height\">");
 		
 		for (ViewProperty property : oneToMany.basicViewBean.properties) {
-			writeLine("<div class=\"col-xs-3\">");
-			writeFilter(property, currentBean, parentBean);
-			writeLine("</div>");
-			skipLine();
+			if (property.filterable) {
+				writeLine("<div class=\"col-xs-3\">");
+				writeFilter(property, currentBean, parentBean);
+				writeLine("</div>");
+				skipLine();
+			}
 		}
 		
 		writeLine("</div>");

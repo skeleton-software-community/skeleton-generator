@@ -24,6 +24,7 @@ public class Property {
 	public RelationType relation;
 	public boolean embedded;
 	public boolean editable;
+	public boolean filterable;
 	public Visibility visibility;
 	public String rendering;
 	public List<String> annotations;

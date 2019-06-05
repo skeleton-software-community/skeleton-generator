@@ -18,6 +18,7 @@ public class Column {
     public boolean deleteCascade;
 
     public boolean editable;
+    public boolean filterable;
     public Visibility visibility;
     public String rendering;
     public List<String> annotations;
