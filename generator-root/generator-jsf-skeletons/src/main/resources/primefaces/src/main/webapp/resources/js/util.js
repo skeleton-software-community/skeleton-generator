@@ -11,8 +11,7 @@ function setSelectionRange(input, selectionStart, selectionEnd) {
 	}
 }
 
-function setCaretToEnd(e) {
-	var input = document.getElementById(e.source.id);
+function setCaretToEnd(input) {
 	setSelectionRange(input, input.value.length, input.value.length);
 }
 

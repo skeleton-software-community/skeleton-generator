@@ -138,6 +138,8 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				}
 			}
 		}
+		
+		writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 
 		writeLine("return criteria.list();");
 
@@ -159,6 +161,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("} else {");
 				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
 				writeLine("}");
+				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 				writeLine("return criteria.list();");
 				writeLine("}");
 				skipLine();
@@ -185,7 +188,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 						}
 					}
 				}
-
+				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 				writeLine("return criteria.list();");
 				writeLine("}");
 				skipLine();
@@ -299,7 +302,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("if (maxResults != null){");
 		writeLine("criteria.setMaxResults(maxResults.intValue());");
 		writeLine("}");
-
+		writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 		writeLine("return criteria.list();");
 		writeLine("}");
 		skipLine();
@@ -342,7 +345,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("if (maxResults != null){");
 				writeLine("criteria.setMaxResults(maxResults.intValue());");
 				writeLine("}");
-
+				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 				writeLine("return criteria.list();");
 				writeLine("}");
 				skipLine();
@@ -435,6 +438,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("} else {");
 			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
 			writeLine("}");
+			writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 			writeLine("return criteria.list();");
 			writeLine("}");
 			skipLine();
@@ -536,7 +540,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("if (maxResults != null){");
 			writeLine("criteria.setMaxResults(maxResults.intValue());");
 			writeLine("}");
-
+			writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
 			writeLine("return criteria.list();");
 			writeLine("}");
 			skipLine();

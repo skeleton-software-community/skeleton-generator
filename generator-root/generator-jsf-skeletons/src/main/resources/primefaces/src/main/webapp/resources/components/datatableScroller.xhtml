@@ -32,9 +32,9 @@
 				<span class="glyphicon glyphicon-step-backward"> </span>
 			</p:commandLink>
 			<h:inputText value="#{cc.attrs.page}" id="datatable-scroller-page-input" class="datatable-scroller-page-input">
-				<p:ajax event="keyup" update="#{cc.attrs.render}"
+				<p:ajax event="keyup" process="@parent" update="#{cc.attrs.render}"
 					listener="#{cc.attrs.action}" delay="500"
-					oncomplete="setCaretToEnd(event);">
+					oncomplete="setCaretToEnd($('.datatable-scroller-page-input').get(0));">
 				</p:ajax>
 			</h:inputText>
 			/ <span class="datatable-scroller-page-number">#{cc.attrs.numberOfPages}</span>

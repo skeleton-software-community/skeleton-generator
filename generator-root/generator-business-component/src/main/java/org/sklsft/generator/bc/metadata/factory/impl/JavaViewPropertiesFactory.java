@@ -60,6 +60,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.nullable = myProperty.nullable || tempProperty.nullable;
 						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
 						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
+						viewProperty.filterable = myProperty.embedded?tempProperty.filterable:myProperty.filterable;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
 						viewProperty.lastColumnName = tempProperty.lastColumnName;
 						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
