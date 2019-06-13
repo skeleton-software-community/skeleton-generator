@@ -20,6 +20,7 @@
     <xs:attribute name="referenceTableName" type="xs:string"/>
     <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
     <xs:attribute name="editable" type="xs:boolean"/>
+    <xs:attribute name="filterable" type="xs:boolean"/>
     <xs:attribute name="visibility" type="tns:visibility"/>
     <xs:attribute name="rendering" type="xs:string"/>
   </xs:complexType>
@@ -113,11 +114,6 @@
       <xs:element name="projectName" type="xs:string"/>
       <xs:element name="skeleton" type="xs:string"/>
       <xs:element name="databaseEngine" type="xs:string"/>
-      <xs:element name="databaseName" type="xs:string"/>
-      <xs:element name="databaseDNS" type="xs:string" minOccurs="0"/>
-      <xs:element name="databasePort" type="xs:string" minOccurs="0"/>
-      <xs:element name="databaseUserName" type="xs:string" minOccurs="0"/>
-      <xs:element name="databasePassword" type="xs:string" minOccurs="0"/>
       <xs:element name="audited" type="xs:boolean" default="false"/>
       <xs:element name="packages" minOccurs="0">
         <xs:complexType>
@@ -167,19 +163,6 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="MODAL"/>
       <xs:enumeration value="PAGE"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="fileType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="JAVA"/>
-      <xs:enumeration value="SQL"/>
-      <xs:enumeration value="XML"/>
-      <xs:enumeration value="XHTML"/>
-      <xs:enumeration value="JS"/>
-      <xs:enumeration value="CSS"/>
-      <xs:enumeration value="BAT"/>
-      <xs:enumeration value="PROPERTIES"/>
     </xs:restriction>
   </xs:simpleType>
 
