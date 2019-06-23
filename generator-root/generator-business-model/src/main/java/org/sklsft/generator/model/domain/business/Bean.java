@@ -36,6 +36,8 @@ public class Bean {
 
 	public String baseServiceClassName;
 	public String serviceClassName;
+	public String baseRestClientClassName;
+	public String serviceRestClientClassName;
 	public String baseServiceInterfaceName;
 	public String serviceInterfaceName;
 	public String serviceObjectName;

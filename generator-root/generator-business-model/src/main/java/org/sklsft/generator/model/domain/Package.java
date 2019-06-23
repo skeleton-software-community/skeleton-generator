@@ -38,6 +38,8 @@ public class Package {
 	public String baseServiceImplPackageName;
 	public String serviceInterfacePackageName;
 	public String serviceImplPackageName;
+	public String baseRestClientPackageName;
+	public String restClientPackageName;
 
 	public String baseFormMapperPackageName;
 	public String formMapperPackageName;
