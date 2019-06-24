@@ -58,6 +58,8 @@ public class JavaBeanFactory implements BeanFactory {
 
 		bean.baseServiceClassName = bean.className + "BaseServiceImpl";
 		bean.serviceClassName = bean.className + "ServiceImpl";
+		bean.baseRestClientClassName = bean.className + "BaseRestClient";
+		bean.restClientClassName = bean.className + "RestClient";
 		bean.baseServiceInterfaceName = bean.className + "BaseService";
 		bean.serviceInterfaceName = bean.className + "Service";
 		bean.serviceObjectName = bean.objectName + "Service";

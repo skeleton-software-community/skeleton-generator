@@ -17,6 +17,8 @@ import org.sklsft.generator.skeletons.jsf.layers.JsfControllerLayer;
 import org.sklsft.generator.skeletons.jsf.layers.JsfModelLayer;
 import org.sklsft.generator.skeletons.jsf.layers.PrimefacesPresentationLayer;
 import org.sklsft.generator.skeletons.layers.Layer;
+import org.sklsft.generator.skeletons.rest.layers.SpringRestClientLayer;
+import org.sklsft.generator.skeletons.rest.layers.SpringRestControllerLayer;
 
 
 public class SpringHibernatePrimefacesSkeleton implements Skeleton {
@@ -35,7 +37,9 @@ public class SpringHibernatePrimefacesSkeleton implements Skeleton {
 		layers.add(new HibernateBusinessModelLayer());
 		layers.add(new HibernateDaoLayer());
 		layers.add(new BusinessComponentLayer());
-		layers.add(new ServiceLayer());		
+		layers.add(new ServiceLayer());
+		layers.add(new SpringRestControllerLayer());
+		layers.add(new SpringRestClientLayer());
 		layers.add(new JsfModelLayer());
 		layers.add(new JsfControllerLayer());
 		layers.add(new PrimefacesPresentationLayer());

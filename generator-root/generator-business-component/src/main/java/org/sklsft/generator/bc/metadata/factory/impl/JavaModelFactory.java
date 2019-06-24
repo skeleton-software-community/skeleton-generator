@@ -91,6 +91,7 @@ public class JavaModelFactory implements ModelFactory {
         model.rightsManagerPackageName = project.domainName + "." + project.projectName + ".bc.rightsmanager";
         model.processorPackageName = project.domainName + "." + project.projectName + ".bc.processor";
         model.serviceImplPackageName = project.domainName + "." + project.projectName + ".bl.impl";
+        model.restClientPackageName = project.domainName + "." + project.projectName + ".rest.client";
        
         model.restControllerPackageName = project.domainName + "." + project.projectName + ".rest.controller";
         

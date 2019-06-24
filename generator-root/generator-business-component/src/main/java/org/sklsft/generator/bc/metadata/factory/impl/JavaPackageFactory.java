@@ -107,10 +107,14 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.DAOImplPackageName = model.daoImplPackageName + "." + myPackage.name;
 		myPackage.DAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name;
 		
-		myPackage.baseServiceImplPackageName = model.serviceImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseServiceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name + ".base";
-		myPackage.serviceImplPackageName = model.serviceImplPackageName + "." + myPackage.name;
 		myPackage.serviceInterfacePackageName = model.serviceInterfacePackageName + "." + myPackage.name;
+		myPackage.baseServiceImplPackageName = model.serviceImplPackageName + "." + myPackage.name + ".base";
+		myPackage.serviceImplPackageName = model.serviceImplPackageName + "." + myPackage.name;
+		myPackage.baseRestClientPackageName = model.restClientPackageName + "." + myPackage.name + ".base";
+		myPackage.restClientPackageName = model.restClientPackageName + "." + myPackage.name + ".base";
+		
+		
 		
 		myPackage.baseFormMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".forms.base";
 		myPackage.formMapperPackageName = model.mapperPackageName + "." + myPackage.name + ".forms";

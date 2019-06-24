@@ -22,6 +22,11 @@
 		
 		<dependency>
 			<groupId>org.sklsft.generator</groupId>
+			<artifactId>generator-rest-skeletons</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sklsft.generator</groupId>
 			<artifactId>generator-business-component</artifactId>
 		</dependency>
 

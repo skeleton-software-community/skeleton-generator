@@ -36,6 +36,7 @@ public class Model {
 	public String rightsManagerPackageName;
 	public String processorPackageName;
 	public String serviceImplPackageName;
+	public String restClientPackageName;
 	
 	public String restControllerPackageName;
 	
@@ -130,6 +131,12 @@ public class Model {
 	}
 	public void setServiceImplPackageName(String serviceImplPackageName) {
 		this.serviceImplPackageName = serviceImplPackageName;
+	}
+	public String getRestClientPackageName() {
+		return restClientPackageName;
+	}
+	public void setRestClientPackageName(String restClientPackageName) {
+		this.restClientPackageName = restClientPackageName;
 	}
 	public String getRestControllerPackageName() {
 		return restControllerPackageName;

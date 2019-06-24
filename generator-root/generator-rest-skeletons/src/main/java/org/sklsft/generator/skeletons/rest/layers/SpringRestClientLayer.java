@@ -5,6 +5,7 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.BaseRestClientFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.RestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestSpringContextFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -63,8 +64,8 @@ public class SpringRestClientLayer extends AbstractLayer {
 			
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					//FileWriteCommandTreeNode beanRestClientTreeNode = new FileWriteCommandTreeNode(new RestClientFileWriteCommand(bean));
-					//packageTreeNode.add(beanRestClientTreeNode);
+					FileWriteCommandTreeNode beanRestClientTreeNode = new FileWriteCommandTreeNode(new RestClientFileWriteCommand(bean));
+					packageTreeNode.add(beanRestClientTreeNode);
 				}
 			}
 		}
