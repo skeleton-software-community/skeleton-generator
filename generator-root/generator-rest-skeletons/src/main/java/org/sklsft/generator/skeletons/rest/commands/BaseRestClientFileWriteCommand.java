@@ -31,11 +31,14 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.Collection;");
         javaImports.add("import java.util.List;");
         javaImports.add("import java.util.ArrayList;");
+        javaImports.add("import java.util.Arrays;");
+        javaImports.add("import java.util.HashMap;");
+        javaImports.add("import java.util.Map;");
         javaImports.add("import javax.inject.Inject;");
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
-        javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
+
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
@@ -135,7 +138,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("@Override");
 			writeLine("public List<SelectItem> getOptions() {");
 
-			writeLine("return null;");
+			writeLine("return Arrays.asList(restClient.getForObject(GET_OPTIONS_URL, SelectItem[].class));");
 			writeLine("}");
 			skipLine();
 		}
@@ -146,7 +149,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("@Override");
 			writeLine("public List<SelectItem> searchOptions(String arg) {");
 			
-			writeLine("return null;");
+			writeLine("return Arrays.asList(restClient.postForObject(SEARCH_OPTIONS_URL, arg, SelectItem[].class));");
 			writeLine("}");
 			skipLine();
 		}
@@ -159,7 +162,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("@Override");
 		writeLine("public List<" + this.bean.basicViewBean.className + "> loadList() {");
 		
-		writeLine("return null;");
+		writeLine("return Arrays.asList(restClient.getForObject(GET_LIST_URL, " + this.bean.basicViewBean.className + "[].class));");
 		writeLine("}");
 		skipLine();
 		
@@ -170,8 +173,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine(" */");
 		        writeLine("@Override");
 		        writeLine("public List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id) {");
-		        
-		        writeLine("return null;");
+		        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
+		        writeLine("return Arrays.asList(restClient.getForObject(GET_" + bean.table.originalName + "_LIST_fROM_" + property.referenceBean.table.originalName + "_URL, " + this.bean.basicViewBean.className + "[].class, vars));");
 		        writeLine("}");
 		        skipLine();
 		    }
@@ -223,12 +227,17 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
     
     private void createFindObject() {
 
+    	boolean start = true;
         writeLine("/**");
         writeLine(" * find object");
         writeLine(" */");
         writeLine("@Override");
         write("public " + this.bean.fullViewBean.className + " find(");
-		
+		for (ViewProperty property:bean.referenceViewProperties) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(") {");
         writeLine("return null;");
         writeLine("}");
         skipLine();
@@ -479,7 +488,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         writeLine("@Override");
         writeLine("public void deleteList(List<" + bean.idType + "> idList) {");
-        writeLine(this.bean.className + " " + this.bean.objectName + ";");
+        
         
         writeLine("}");
         skipLine();
