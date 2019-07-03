@@ -138,7 +138,7 @@ private Bean bean;
 				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
 				writeLine("List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id);");
-				writeLine("public static final String GET_" + bean.table.originalName + "_LIST_fROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/list\";");
+				writeLine("public static final String GET_" + bean.table.originalName + "_LIST_FROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/list\";");
 				skipLine();
 			}
 		}
@@ -159,7 +159,7 @@ private Bean bean;
 				writeLine(" * scroll object list from " + property.name);
 				writeLine(" */");
 				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
-				writeLine("public static final String SCROLL_" + bean.table.originalName + "_fROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/scroll\";");
+				writeLine("public static final String SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/scroll\";");
 				skipLine();
 			}
 		}
@@ -274,22 +274,6 @@ private Bean bean;
 		writeLine(bean.idType + " save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
 		writeLine("public static final String SAVE_URL = \"/" + bean.urlPiece + "\";");
 		skipLine();
-		
-		for (Property property:bean.properties) {
-			if (property.referenceBean!=null) {
-				if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-					
-					Bean parentBean = property.referenceBean;
-					
-					writeLine("/**");
-					writeLine(" * save object from parent " + parentBean.className);		
-					writeLine(" */");
-					writeLine(bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
-					writeLine("public static final String SAVE_FROM_" + parentBean.table.originalName + "_URL = \"/" + parentBean.urlPiece + "/{" + parentBean.objectName + "Id}/" + bean.urlPiece + "\";");
-					skipLine();
-				}
-			}
-		}
 	}
 	
 	private void createSaveOneToOneComponent() {

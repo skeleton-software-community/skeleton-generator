@@ -505,31 +505,6 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine("return " + this.bean.processorObjectName + ".save(" + this.bean.objectName + ");");
         writeLine("}");
         skipLine();
-        
-        
-        for (Property property:bean.properties) {
-        	if (property.referenceBean!=null) {
-        		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-        			
-        			Bean parentBean = property.referenceBean;
-        			
-        			writeLine("/**");
-        	        writeLine(" * save object from parent " + parentBean.className);        
-        	        writeLine(" */");
-        	        writeLine("@Override");
-        	        writeLine("@Transactional(rollbackFor=Exception.class)");
-        	        writeLine("public " + bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
-        	        writeLine(this.bean.className + " " + this.bean.objectName + " = this." + bean.formBean.mapperObjectName + ".mapTo(" + this.bean.formBean.objectName + ", new " + this.bean.className + "());");
-        	        writeLine(parentBean.className + " " + parentBean.objectName + " = this." + parentBean.daoObjectName + ".load(" + parentBean.objectName + "Id);");
-        	        writeLine(this.bean.objectName + "." + property.setterName + "(" + parentBean.objectName + ");");
-        	        writeLine(this.bean.rightsManagerObjectName + ".checkCanSave(" + this.bean.objectName + ");");
-        	        writeLine(this.bean.stateManagerObjectName + ".checkCanSave(" + this.bean.objectName + ");");
-        	        writeLine("return " + this.bean.processorObjectName + ".save(" + this.bean.objectName + ");");
-        	        writeLine("}");
-        	        skipLine();
-        		}
-        	}
-        }
     }
     
     private void createSaveOneToOneComponent() {

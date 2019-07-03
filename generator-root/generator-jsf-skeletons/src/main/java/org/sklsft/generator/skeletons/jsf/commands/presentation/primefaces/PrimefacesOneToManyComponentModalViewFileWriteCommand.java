@@ -76,7 +76,7 @@ public class PrimefacesOneToManyComponentModalViewFileWriteCommand extends Prime
 			writeLine("<p:commandButton value=\"#{i18n.update}\" action=\"#{" + parentBean.detailControllerObjectName + ".update" + currentBean.className+ "}\"" 
 					+ " rendered=\"#{not empty view.id}\" disabled=\"#{not view.canUpdate}\""
 					+ " styleClass=\"btn btn-success\""
-					+ " process=\"@form:" + currentBean.objectName + "DetailPanelGroup + \" update=\":messages, @form:" +  currentBean.objectName + "PanelGroup, @form:" + currentBean.objectName + "DetailPanelGroup\""
+					+ " process=\"@form:" + currentBean.objectName + "DetailPanelGroup\" update=\":messages, @form:" +  currentBean.objectName + "PanelGroup, @form:" + currentBean.objectName + "DetailPanelGroup\""
 					+ " oncomplete=\"onSuccess(args, function(){$('#" + currentBean.objectName + "Modal').modal('hide')});\"/>");
 		}
 		
