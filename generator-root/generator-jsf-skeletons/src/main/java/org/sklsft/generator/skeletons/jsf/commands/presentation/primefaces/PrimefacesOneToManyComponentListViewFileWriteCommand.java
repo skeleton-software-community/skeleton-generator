@@ -147,6 +147,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 		} else {
 			writeLine("<p:commandLink action=\"#{" + parentBean.detailControllerObjectName + ".edit" + currentBean.className + "(" + currentBean.objectName + ".id)}\"" 
 					+ " oncomplete=\"$('#" + currentBean.objectName + "Modal').modal('show')\""
+					+ " process=\"@this\""
 					+ " update=\"@form:" +  currentBean.objectName + "DetailPanelGroup\">");
 			writeLine("<h:graphicImage url=\"/resources/images/icons/edit.png\" styleClass=\"imageIcon\" title=\"#{i18n.edit}\"/>");
 			writeLine("</p:commandLink>");
