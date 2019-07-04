@@ -474,7 +474,7 @@ private Bean bean;
 			writeLine(" * delete one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
 			writeLine("@RequestMapping(value = {" + bean.serviceInterfaceName + ".DELETE_" + currentBean.table.originalName + "_LIST_URL}, method = RequestMethod.POST)");
-			writeLine("public @ResponseBody void delete" + currentBean.className + "List(List<" + currentBean.idType + "> idList) {");
+			writeLine("public @ResponseBody void delete" + currentBean.className + "List(@RequestBody List<" + currentBean.idType + "> idList) {");
 			writeLine(bean.serviceObjectName + ".delete" + currentBean.className + "List(idList);");
 			writeLine("}");
 			skipLine();
