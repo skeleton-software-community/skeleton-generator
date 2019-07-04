@@ -39,7 +39,7 @@ public class RestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("@Service(\"bean.myPackage.model.project.projectName.toLowerCase() + this.bean.restClientClassName\")");
+        writeLine("@Service(\"" + bean.myPackage.model.project.projectName.toLowerCase() + this.bean.restClientClassName+"\")");
         writeLine("public class " + this.bean.restClientClassName + " extends " + this.bean.baseRestClientClassName + " implements " + this.bean.serviceInterfaceName + "{");
         skipLine();
         

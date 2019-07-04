@@ -38,6 +38,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
+		javaImports.add("import org.springframework.core.ParameterizedTypeReference;");
 
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
@@ -175,7 +176,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine("public List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id) {");
 		        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
 		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
-		        writeLine("return Arrays.asList(restClient.getForObject(GET_" + bean.table.originalName + "_LIST_fROM_" + property.referenceBean.table.originalName + "_URL, " + this.bean.basicViewBean.className + "[].class, vars));");
+		        writeLine("return Arrays.asList(restClient.getForObject(GET_" + bean.table.originalName + "_LIST_FROM_" + property.referenceBean.table.originalName + "_URL, " + this.bean.basicViewBean.className + "[].class, vars));");
 		        writeLine("}");
 		        skipLine();
 		    }
@@ -191,7 +192,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("@Override");
 		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 		
-		writeLine("return null;");
+		writeLine("return restClient.postForObject(SCROLL_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){});");
 		writeLine("}");
 		skipLine();
 		
@@ -202,8 +203,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine(" */");
 		        writeLine("@Override");
 				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
-				
-				writeLine("return null;");
+				writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
+		        writeLine("return restClient.postForObject(SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){}, vars);");
 				writeLine("}");
 				skipLine();
 		    }
@@ -218,7 +220,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("@Override");
 		writeLine("public " + this.bean.fullViewBean.className + " load(" + bean.idType + " id) {");
 		
-		writeLine("return null;");
+		writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+        writeLine("vars.put(\"id\", id);");
+        writeLine("return restClient.getForObject(GET_URL, " + this.bean.fullViewBean.className + ".class, vars);");
 		writeLine("}");
 		skipLine();
 
@@ -254,7 +258,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(" + bean.idType + " id) {");
             
-            writeLine("return null;");
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("return restClient.getForObject(GET_" + currentBean.table.originalName + "_URL, " + currentBean.fullViewBean.className + ".class, vars);");
 
             writeLine("}");
             skipLine();
@@ -271,7 +277,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("public List<" + currentBean.basicViewBean.className + "> load" + currentBean.className + "List(" + bean.idType + " id) {");
             
-            writeLine("return null;");
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+	        writeLine("vars.put(\"id\", id);");
+	        writeLine("return Arrays.asList(restClient.getForObject(GET_" + currentBean.table.originalName + "_LIST_URL, " + currentBean.basicViewBean.className + "[].class, vars));");
             writeLine("}");
             skipLine();
         }
@@ -285,9 +293,11 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
+			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
 			
-			writeLine("return null;");
+			writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+	        writeLine("vars.put(\"id\", id);");
+	        writeLine("return restClient.postForObject(SCROLL_" + currentBean.table.originalName + "_URL, form, new ParameterizedTypeReference<ScrollView<" + currentBean.basicViewBean.className +">>(){}, vars);");
 			writeLine("}");
 			skipLine();
 		}
@@ -303,7 +313,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine("@Override");
             writeLine("public " + currentBean.fullViewBean.className + " load" + currentBean.className + "(" + currentBean.idType + " id) {");            
           
-            writeLine("return null;");
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("return restClient.getForObject(GET_" + currentBean.table.originalName + "_URL, " + currentBean.fullViewBean.className + ".class, vars);");
             writeLine("}");
             skipLine();
         }
@@ -316,7 +328,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Override");
         writeLine("public " + this.bean.fullViewBean.className + " create() {");
         
-        writeLine("return null;");
+        writeLine("return restClient.getForObject(GET_NEW_URL, " + bean.fullViewBean.className + ".class);");
         writeLine("}");
         skipLine();
     }
@@ -330,8 +342,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public " + currentBean.fullViewBean.className + " create" + currentBean.className + "(" + bean.idType + " id) {");
-            
-            writeLine("return null;");
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("return restClient.getForObject(GET_NEW_" + currentBean.table.originalName + "_URL, " + currentBean.fullViewBean.className + ".class, vars);");
             writeLine("}");
             skipLine();
         }
@@ -344,7 +357,8 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Override");
         writeLine("public " + bean.idType + " save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
         
-        writeLine("return null;");
+        writeLine("return restClient.postForObject(SAVE_URL, " + this.bean.formBean.objectName + ", " + bean.idType + ".class);");
+        
         writeLine("}");
         skipLine();
         
@@ -360,8 +374,10 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         	        writeLine(" */");
         	        writeLine("@Override");
         	        writeLine("public " + bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
+        	        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+                    writeLine("vars.put(\"" + parentBean.objectName + "Id\", " + parentBean.objectName + "Id);");
+        	        writeLine("return restClient.postForObject(SAVE_FROM_" + parentBean.table.originalName + "_URL, " + this.bean.formBean.objectName + ", " + bean.idType + ".class, vars);");
         	        
-        	        writeLine("return null;");
         	        writeLine("}");
         	        skipLine();
         		}
@@ -378,7 +394,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void save" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
-            
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.postForObject(SAVE_" + currentBean.table.originalName + "_URL, " + currentBean.formBean.objectName + ", Void.class, vars);");
             writeLine("}");
             skipLine();
         }
@@ -393,19 +411,23 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void save" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
-            
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.postForObject(SAVE_" + currentBean.table.originalName + "_URL, " + currentBean.formBean.objectName + ", Void.class, vars);");
             writeLine("}");
             skipLine();
         }
     }
 
     private void createUpdateObject() {
-        writeLine("/**");        
-        writeLine(" * update object");        
-        writeLine(" */");
-        writeLine("@Override");
-        writeLine("public void update(" + bean.idType + " id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
-      
+    	writeLine("/**");        
+    	writeLine(" * update object");        
+    	writeLine(" */");
+    	writeLine("@Override");
+    	writeLine("public void update(" + bean.idType + " id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
+    	writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+        writeLine("vars.put(\"id\", id);");
+        writeLine("restClient.put(UPDATE_URL, " + bean.formBean.objectName + ", vars);");
         writeLine("}");
         skipLine();
     }
@@ -419,7 +441,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void update" + currentBean.className + "(" + bean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
-            
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.put(UPDATE_" + currentBean.table.originalName + "_URL, " + currentBean.formBean.objectName + ", vars);");
             writeLine("}");
             skipLine();
         }
@@ -434,7 +458,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void update" + currentBean.className + "(" + currentBean.idType + " id, " + currentBean.formBean.className + " " + currentBean.formBean.objectName + ") {");
-            
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.put(UPDATE_" + currentBean.table.originalName + "_URL, " + currentBean.formBean.objectName + ", vars);");
             writeLine("}");
             skipLine();
             skipLine();
@@ -447,7 +473,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
         writeLine("@Override");
         writeLine("public void delete(" + bean.idType + " id) {");
-       
+        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+        writeLine("vars.put(\"id\", id);");
+        writeLine("restClient.delete(DELETE_URL, vars);");
         writeLine("}");
         skipLine();
     }
@@ -461,7 +489,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void delete" + currentBean.className + "(" + currentBean.idType + " id) {");
-           
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.delete(DELETE_" + currentBean.table.originalName + "_URL, vars);");
             writeLine("}");
             skipLine();
         }
@@ -476,7 +506,9 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void delete" + currentBean.className + "(" + bean.idType + " id) {");
-            
+            writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
+            writeLine("vars.put(\"id\", id);");
+            writeLine("restClient.delete(DELETE_" + currentBean.table.originalName + "_URL, vars);");
             writeLine("}");
             skipLine();
         }
