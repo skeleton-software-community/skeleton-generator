@@ -521,7 +521,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         writeLine("@Override");
         writeLine("public void deleteList(List<" + bean.idType + "> idList) {");
         
-        
+        writeLine("restClient.postForObject(DELETE_LIST_URL, idList, Void.class);");
         writeLine("}");
         skipLine();
     }
@@ -535,7 +535,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" */");
             writeLine("@Override");
             writeLine("public void delete" + currentBean.className + "List(List<" + currentBean.idType + "> idList) {");
-            
+            writeLine("restClient.postForObject(DELETE_" + currentBean.table.originalName + "_LIST_URL, idList, Void.class);");
             writeLine("}");
             skipLine();
         }
