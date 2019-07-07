@@ -323,24 +323,6 @@ private Bean bean;
 		writeLine("return " + bean.serviceObjectName + ".save(form);");
 		writeLine("}");
 		skipLine();
-		
-		for (Property property:bean.properties) {
-			if (property.referenceBean!=null) {
-				if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-					
-					Bean parentBean = property.referenceBean;
-					
-					writeLine("/**");
-					writeLine(" * save object from parent " + parentBean.className);		
-					writeLine(" */");
-					writeLine("@RequestMapping(value = {" + bean.serviceInterfaceName + ".SAVE_FROM_" + parentBean.table.originalName + "_URL}, method = RequestMethod.POST)");
-					writeLine("public @ResponseBody " + bean.idType + " saveFrom" + parentBean.className + "(@PathVariable(\"" + parentBean.objectName + "Id\") " + parentBean.idType + " " + parentBean.objectName + "Id, @Valid @RequestBody " + this.bean.formBean.className + " form) {");
-					writeLine("return " + bean.serviceObjectName + ".saveFrom" + parentBean.className + "(" +  parentBean.objectName + "Id, form);");
-					writeLine("}");
-					skipLine();
-				}
-			}
-		}
 	}
 	
 	private void createSaveOneToOneComponent() {

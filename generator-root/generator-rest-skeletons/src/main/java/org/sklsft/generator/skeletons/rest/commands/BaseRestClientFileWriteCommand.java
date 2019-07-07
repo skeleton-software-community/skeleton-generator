@@ -361,28 +361,6 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         
         writeLine("}");
         skipLine();
-        
-        
-        for (Property property:bean.properties) {
-        	if (property.referenceBean!=null) {
-        		if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-        			
-        			Bean parentBean = property.referenceBean;
-        			
-        			writeLine("/**");
-        	        writeLine(" * save object from parent " + parentBean.className);        
-        	        writeLine(" */");
-        	        writeLine("@Override");
-        	        writeLine("public " + bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ") {");
-        	        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
-                    writeLine("vars.put(\"" + parentBean.objectName + "Id\", " + parentBean.objectName + "Id);");
-        	        writeLine("return restClient.postForObject(SAVE_FROM_" + parentBean.table.originalName + "_URL, " + this.bean.formBean.objectName + ", " + bean.idType + ".class, vars);");
-        	        
-        	        writeLine("}");
-        	        skipLine();
-        		}
-        	}
-        }
     }
     
     private void createSaveOneToOneComponent() {
