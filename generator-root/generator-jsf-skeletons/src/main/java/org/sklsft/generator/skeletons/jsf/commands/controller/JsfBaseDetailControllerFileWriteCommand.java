@@ -354,7 +354,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			if (currentBean.detailMode.equals(DetailMode.MODAL)) {
 				writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 				writeLine("public void save" + currentBean.className + "() {");
-				writeLine(currentBean.serviceObjectName + ".saveFrom" + bean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
+				writeLine(currentBean.serviceObjectName + ".save(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 				writeLine("refresh" + currentBean.className + "List();");
 				writeLine("}");
 				skipLine();
@@ -363,7 +363,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 				writeLine("executeAjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 				writeLine("@Override");
 				writeLine("public Object execute() {");
-				writeLine("return " + currentBean.serviceObjectName + ".saveFrom" + bean.className + "( " + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId(), " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
+				writeLine("return " + currentBean.serviceObjectName + ".save(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
 				writeLine("}");
 				writeLine("@Override");
 				writeLine("public void redirectOnComplete(Object result) {");

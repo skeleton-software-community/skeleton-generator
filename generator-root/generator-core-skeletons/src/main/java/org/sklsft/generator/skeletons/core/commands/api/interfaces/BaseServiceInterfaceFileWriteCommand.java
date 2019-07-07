@@ -274,22 +274,6 @@ private Bean bean;
 		writeLine(bean.idType + " save(" + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
 		writeLine("public static final String SAVE_URL = \"/" + bean.urlPiece + "\";");
 		skipLine();
-		
-		for (Property property:bean.properties) {
-			if (property.referenceBean!=null) {
-				if (property.relation.equals(RelationType.MANY_TO_ONE)) {
-					
-					Bean parentBean = property.referenceBean;
-					
-					writeLine("/**");
-					writeLine(" * save object from parent " + parentBean.className);		
-					writeLine(" */");
-					writeLine(bean.idType + " saveFrom" + parentBean.className + "(" + parentBean.idType + " " + parentBean.objectName + "Id, " + this.bean.formBean.className + " " + this.bean.formBean.objectName + ");");
-					writeLine("public static final String SAVE_FROM_" + parentBean.table.originalName + "_URL = \"/" + parentBean.urlPiece + "/{" + parentBean.objectName + "Id}/" + bean.urlPiece + "\";");
-					skipLine();
-				}
-			}
-		}
 	}
 	
 	private void createSaveOneToOneComponent() {
