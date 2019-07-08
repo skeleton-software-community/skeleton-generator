@@ -287,12 +287,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
 				
@@ -300,12 +300,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
 				

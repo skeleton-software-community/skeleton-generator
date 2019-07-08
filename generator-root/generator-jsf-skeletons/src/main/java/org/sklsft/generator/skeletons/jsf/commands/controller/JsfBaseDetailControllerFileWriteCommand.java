@@ -41,6 +41,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import " + this.bean.myPackage.serviceInterfacePackageName + "." + this.bean.serviceInterfaceName + ";");
 		
 		javaImports.add("import " + this.bean.myPackage.detailViewPackageName + "." + this.bean.detailViewClassName + ";");
+		javaImports.add("import " + bean.myPackage.formsPackageName + "." + bean.formBean.className + ";");
 	
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -56,6 +57,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.serviceInterfacePackageName + "." + currentBean.serviceInterfaceName + ";");
 		}
 	}
@@ -354,7 +356,15 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			if (currentBean.detailMode.equals(DetailMode.MODAL)) {
 				writeLine("@AjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ")");
 				writeLine("public void save" + currentBean.className + "() {");
-				writeLine(currentBean.serviceObjectName + ".save(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
+				
+				writeLine("load();");
+				writeLine(currentBean.formBean.className + " form = " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm();");
+				writeLine(bean.formBean.className + " " + bean.formBean.objectName + " = " + bean.detailViewObjectName + ".getSelected" + bean.className + "().getForm();");
+				
+				for (ViewProperty property:bean.referenceViewProperties) {
+					writeLine("form.set" + oneToMany.referenceProperty.capName + property.capName + "(" + bean.formBean.objectName + ".get" + property.capName + "());");
+				}
+				writeLine(currentBean.serviceObjectName + ".save(form);");
 				writeLine("refresh" + currentBean.className + "List();");
 				writeLine("}");
 				skipLine();
@@ -363,7 +373,13 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 				writeLine("executeAjaxMethod(" + CHAR_34 + currentBean.className + ".save" + CHAR_34 + ", new AjaxMethodTemplate() {");
 				writeLine("@Override");
 				writeLine("public Object execute() {");
-				writeLine("return " + currentBean.serviceObjectName + ".save(" + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm());");
+				writeLine("load();");
+				writeLine(currentBean.formBean.className + " form = " + bean.detailViewObjectName + ".getSelected" + currentBean.className + "().getForm();");
+				writeLine(bean.formBean.className + " " + bean.formBean.objectName + " = " + bean.detailViewObjectName + ".getSelected" + bean.className + "().getForm();");
+				for (ViewProperty property:bean.referenceViewProperties) {
+					writeLine("form.set" + oneToMany.referenceProperty.capName + property.capName + "(" + bean.formBean.objectName + ".get" + property.capName + "());");
+				}
+				writeLine("return " + currentBean.serviceObjectName + ".save(form);");
 				writeLine("}");
 				writeLine("@Override");
 				writeLine("public void redirectOnComplete(Object result) {");
