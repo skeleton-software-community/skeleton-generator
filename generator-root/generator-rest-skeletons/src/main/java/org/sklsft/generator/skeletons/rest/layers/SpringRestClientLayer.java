@@ -6,7 +6,8 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.BaseRestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.RestClientFileWriteCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestSpringContextFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientPomFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientSpringContextFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
 public class SpringRestClientLayer extends AbstractLayer {
@@ -29,8 +30,11 @@ public class SpringRestClientLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 				
-		FileWriteCommandTreeNode springWebappTreeNode = new FileWriteCommandTreeNode(new SpringRestSpringContextFileWriteCommand(project));
-		configurationTreeNode.add(springWebappTreeNode);
+		FileWriteCommandTreeNode pomTreeNode = new FileWriteCommandTreeNode(new SpringRestClientPomFileWriteCommand(project));
+		configurationTreeNode.add(pomTreeNode);
+		
+		FileWriteCommandTreeNode springContextTreeNode = new FileWriteCommandTreeNode(new SpringRestClientSpringContextFileWriteCommand(project));
+		configurationTreeNode.add(springContextTreeNode);
 		
 		return configurationTreeNode;
 	}

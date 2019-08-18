@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration;
+package org.sklsft.generator.skeletons.jsf.commands.root;
 
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.files.FileType;

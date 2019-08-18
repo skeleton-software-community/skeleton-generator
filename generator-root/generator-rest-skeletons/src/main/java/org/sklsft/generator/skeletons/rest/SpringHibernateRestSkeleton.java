@@ -15,6 +15,7 @@ import org.sklsft.generator.skeletons.core.layers.PopulatorLayer;
 import org.sklsft.generator.skeletons.core.layers.ServiceLayer;
 import org.sklsft.generator.skeletons.layers.Layer;
 import org.sklsft.generator.skeletons.rest.layers.SpringRestControllerLayer;
+import org.sklsft.generator.skeletons.rest.layers.SpringRestRootLayer;
 
 
 public class SpringHibernateRestSkeleton implements Skeleton {
@@ -29,6 +30,7 @@ public class SpringHibernateRestSkeleton implements Skeleton {
 		List<Layer> layers = new ArrayList<>();
 	
 		layers.add(DatabaseHandlerResolver.getDatabaseHandler(project).getLayer());
+		layers.add(new SpringRestRootLayer());
 		layers.add(new ApiLayer());
 		layers.add(new HibernateBusinessModelLayer());
 		layers.add(new HibernateDaoLayer());

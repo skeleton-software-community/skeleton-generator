@@ -18,6 +18,8 @@
 		<module>${project.projectName}-repository</module>
 		<module>${project.projectName}-business-component</module>
 		<module>${project.projectName}-services</module>
+		<module>${project.projectName}-rest</module>
+		<module>${project.projectName}-rest-client</module>
 		<module>${project.projectName}-webapp</module>
 		<module>${project.projectName}-populator</module>
 		<module>${project.projectName}-test</module>
@@ -49,6 +51,9 @@
 		
 		<servlet.version>3.1.0</servlet.version>
 		<javax.el.version>3.0.1-b08</javax.el.version>
+		
+		<jackson.version>2.6.0</jackson.version>
+		
 		<jsf.version>2.2.13</jsf.version>
 		<primefaces.version>5.1</primefaces.version>
 		<primefaces.theme.version>1.0.10</primefaces.theme.version>
@@ -92,6 +97,12 @@
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
+				<artifactId>${project.projectName}-rest-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>${project.domainName}.${project.projectName}</groupId>
 				<artifactId>${project.projectName}-populator</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -126,6 +137,18 @@
 			<dependency>
 				<groupId>org.sklsft.commons</groupId>
 				<artifactId>commons-mapper</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-rest</artifactId>
+				<version>${skeleton.commons.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.commons</groupId>
+				<artifactId>commons-rest-client</artifactId>
 				<version>${skeleton.commons.version}</version>
 			</dependency>
 			
@@ -242,6 +265,12 @@
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -309,6 +338,26 @@
 				<groupId>org.glassfish</groupId>
 				<artifactId>javax.el</artifactId>
 				<version>${javax.el.version}</version>
+			</dependency>
+			
+			
+			<!-- json mapping -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
 			</dependency>
 
 			

@@ -38,6 +38,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
+		javaImports.add("import org.sklsft.commons.rest.client.RestClient;");
 		javaImports.add("import org.springframework.core.ParameterizedTypeReference;");
 
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");

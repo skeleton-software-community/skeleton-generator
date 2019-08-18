@@ -32,9 +32,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:applicationContext-${project.projectName}-repository.xml
-			classpath:applicationContext-${project.projectName}-business-component.xml
-			classpath:applicationContext-${project.projectName}-services.xml
+			classpath:applicationContext-${project.projectName}-rest-client.xml
 			classpath:applicationContext-${project.projectName}-webapp.xml
 		</param-value>
 	</context-param>

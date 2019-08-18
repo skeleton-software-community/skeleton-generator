@@ -17,7 +17,6 @@ import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.Prime
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.PrimefacesOneToManyListViewFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.PrimefacesOneToManyModalViewFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.PrimefacesOneToOneComponentDetailViewFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesRootPomFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesSpringWebappFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesWebXmlFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesWebappPomFileWriteCommand;
@@ -45,9 +44,6 @@ public class PrimefacesPresentationLayer extends AbstractLayer {
 	public FileWriteCommandTreeNode getConfigurationNode(Project project) {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
-		
-		FileWriteCommandTreeNode rootPomTreeNode = new FileWriteCommandTreeNode(new PrimefacesRootPomFileWriteCommand(project));
-		configurationTreeNode.add(rootPomTreeNode);
 		
 		FileWriteCommandTreeNode webappPomTreeNode = new FileWriteCommandTreeNode(new PrimefacesWebappPomFileWriteCommand(project));
 		configurationTreeNode.add(webappPomTreeNode);

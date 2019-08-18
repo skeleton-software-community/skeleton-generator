@@ -20,7 +20,7 @@
 	
 		<dependency>
 			<groupId>${project.domainName}.${project.projectName}</groupId>
-			<artifactId>${project.projectName}-services</artifactId>
+			<artifactId>${project.projectName}-rest-client</artifactId>
 		</dependency>
 		
 		

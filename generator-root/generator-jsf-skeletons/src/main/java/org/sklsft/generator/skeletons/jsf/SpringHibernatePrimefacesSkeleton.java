@@ -16,6 +16,7 @@ import org.sklsft.generator.skeletons.core.layers.ServiceLayer;
 import org.sklsft.generator.skeletons.jsf.layers.JsfControllerLayer;
 import org.sklsft.generator.skeletons.jsf.layers.JsfModelLayer;
 import org.sklsft.generator.skeletons.jsf.layers.PrimefacesPresentationLayer;
+import org.sklsft.generator.skeletons.jsf.layers.PrimefacesRootLayer;
 import org.sklsft.generator.skeletons.layers.Layer;
 import org.sklsft.generator.skeletons.rest.layers.SpringRestClientLayer;
 import org.sklsft.generator.skeletons.rest.layers.SpringRestControllerLayer;
@@ -33,6 +34,7 @@ public class SpringHibernatePrimefacesSkeleton implements Skeleton {
 		List<Layer> layers = new ArrayList<>();
 	
 		layers.add(DatabaseHandlerResolver.getDatabaseHandler(project).getLayer());
+		layers.add(new PrimefacesRootLayer());
 		layers.add(new ApiLayer());
 		layers.add(new HibernateBusinessModelLayer());
 		layers.add(new HibernateDaoLayer());
