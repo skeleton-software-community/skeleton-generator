@@ -286,6 +286,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
 		writeLine("result.setSize(" + bean.daoObjectName + ".count());");
 		writeLine("Long count = " + bean.daoObjectName + ".count(form.getFilter());");
+		writeLine("result.setCount(count);");
 		writeLine("result.setNumberOfPages(count/form.getElementsPerPage() + ((count%form.getElementsPerPage()) > 0L?1L:0L));");
 		writeLine("result.setCurrentPage(Math.max(1L, Math.min(form.getPage()!=null?form.getPage():1L, result.getNumberOfPages())));");
 		writeLine("List<" + this.bean.className + "> list = " + bean.daoObjectName + ".scroll(form.getFilter(), form.getSorting(),(result.getCurrentPage()-1)*form.getElementsPerPage(), form.getElementsPerPage());");
@@ -310,6 +311,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
 				writeLine("result.setSize(" + bean.daoObjectName + ".countFrom" + property.capName + "(" + property.name + "Id));");
 				writeLine("Long count = " + bean.daoObjectName + ".countFrom" + property.capName + "(" + property.name + "Id, form.getFilter());");
+				writeLine("result.setCount(count);");
 				writeLine("result.setNumberOfPages(count/form.getElementsPerPage() + ((count%form.getElementsPerPage()) > 0L?1L:0L));");
 				writeLine("result.setCurrentPage(Math.max(1L, Math.min(form.getPage()!=null?form.getPage():1L, result.getNumberOfPages())));");
 				writeLine("List<" + this.bean.className + "> list = " + bean.daoObjectName + ".scrollFrom" + property.capName + "(" + property.name + "Id, form.getFilter(), form.getSorting(),(result.getCurrentPage()-1)*form.getElementsPerPage(), form.getElementsPerPage());");
@@ -430,6 +432,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> result = new ScrollView<>();");
 			writeLine("result.setSize(" + bean.daoObjectName + ".count" + currentBean.className + "(" + bean.objectName + "Id));");
 			writeLine("Long count = " + bean.daoObjectName + ".count" + currentBean.className + "(" + bean.objectName + "Id, form.getFilter());");
+			writeLine("result.setCount(count);");
 			writeLine("result.setNumberOfPages(count/form.getElementsPerPage() + ((count%form.getElementsPerPage()) > 0L?1L:0L));");
 			writeLine("result.setCurrentPage(Math.max(1L, Math.min(form.getPage()!=null?form.getPage():1L, result.getNumberOfPages())));");
 			writeLine("List<" + currentBean.className + "> list = " + bean.daoObjectName + ".scroll" + currentBean.className + "(" + bean.objectName + "Id, form.getFilter(), form.getSorting(),(result.getCurrentPage()-1)*form.getElementsPerPage(), form.getElementsPerPage());");

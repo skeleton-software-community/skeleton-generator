@@ -58,9 +58,11 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
         writeLine("<h:panelGroup id=\"" +  currentBean.objectName + "PanelGroup\">");
 		skipLine();
 		
+		writeLine("<h:panelGroup id=\"sizePanelGroup\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + currentBean.objectName + "List} (#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.size})");
+		writeLine("#{i18n." + currentBean.objectName + "List} (#{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.count} / #{" + parentBean.detailViewObjectName + "." + currentBean.objectName + "ScrollView.size})");
 		writeLine("</h2>");
+		writeLine("</h:panelGroup>");
 		
 		writeLine("<div class=\"filter-panel\">");
 		writeLine("<h3>");

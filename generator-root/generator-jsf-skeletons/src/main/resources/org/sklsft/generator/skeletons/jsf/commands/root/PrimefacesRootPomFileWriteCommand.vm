@@ -31,7 +31,7 @@
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 		<java.version>1.8</java.version>
 		
-		<skeleton.commons.version>3.0.0</skeleton.commons.version>
+		<skeleton.commons.version>3.0.1</skeleton.commons.version>
 		<skeleton.generator.version>3.0.0</skeleton.generator.version>
 		
 		<slf4j.version>1.7.25</slf4j.version>

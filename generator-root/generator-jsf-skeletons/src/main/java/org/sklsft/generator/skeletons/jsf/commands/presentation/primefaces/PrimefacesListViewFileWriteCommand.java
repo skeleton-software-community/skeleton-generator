@@ -49,9 +49,11 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 			
 		writeLine("<h:panelGroup id=\"" + this.bean.objectName + "PanelGroup\">");
 		
+		writeLine("<h:panelGroup id=\"sizePanelGroup\">");
 		writeLine("<h2>");
-		writeLine("#{i18n." + bean.objectName + "List} (#{" + bean.listViewObjectName + ".scrollView.size})");
-		writeLine("</h2>");	
+		writeLine("#{i18n." + bean.objectName + "List} (#{" + bean.listViewObjectName + ".scrollView.count} / #{" + bean.listViewObjectName + ".scrollView.size})");
+		writeLine("</h2>");
+		writeLine("</h:panelGroup>");
 		
 		writeLine("<div class=\"filter-panel\">");
 		writeLine("<h3>");

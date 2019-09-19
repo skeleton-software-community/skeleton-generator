@@ -279,7 +279,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:inputText");
 				writeLine("value=\"#{" + scrollForm + ".filter." + property.name + "}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");			
 				break;
 				
@@ -287,12 +287,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
 				
@@ -300,12 +300,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
 				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
 				
@@ -313,12 +313,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				break;
 				
@@ -326,12 +326,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				break;
 			
@@ -341,13 +341,13 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("styleClass=\"form-control\">");
 				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("styleClass=\"form-control\">");
 				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:inputText>");
 				
 				break;
@@ -358,7 +358,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 				writeLine("<f:selectItem itemLabel=\"\" itemValue=\"#{null}\"></f:selectItem>");
 				writeLine("<f:selectItem itemLabel=\"#{i18n.trueLabel}\" itemValue=\"#{true}\"></f:selectItem>");
 				writeLine("<f:selectItem itemLabel=\"#{i18n.falseLabel}\" itemValue=\"#{false}\"></f:selectItem>");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
+				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</h:selectOneMenu>");
 				
 				break;
