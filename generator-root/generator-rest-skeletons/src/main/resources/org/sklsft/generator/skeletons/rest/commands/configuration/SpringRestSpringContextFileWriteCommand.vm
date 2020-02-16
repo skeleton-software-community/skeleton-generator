@@ -22,8 +22,9 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="objectMapper"/>
+			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
