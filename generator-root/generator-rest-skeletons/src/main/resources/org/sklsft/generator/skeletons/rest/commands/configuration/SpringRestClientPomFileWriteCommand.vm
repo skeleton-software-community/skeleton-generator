@@ -32,6 +32,11 @@
 		
 		<dependency>
 			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-log</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
 			<artifactId>commons-rest-client</artifactId>
 		</dependency>
 		

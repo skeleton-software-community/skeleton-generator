@@ -30,6 +30,10 @@
 			<artifactId>commons-mvc</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.sklsft.commons</groupId>
+			<artifactId>commons-log</artifactId>
+		</dependency>
 		
 		<!-- logger -->
 		<dependency>

@@ -62,6 +62,17 @@
 		<filter-name>charsetFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
+	<filter>
+		<filter-name>requestContextFilter</filter-name>
+		<filter-class>org.sklsft.commons.mvc.servlet.filters.RequestContextFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>requestContextFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 
 	<!-- Jsf configuration -->
