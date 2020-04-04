@@ -57,13 +57,12 @@ public class JunitPopulator {
 						
 						if (!bean.isEmbedded) {
 
-							logger.info("start populating table : " + bean.table.name);					
-	
-							BackupCommand command = commandFactory.getBackupCommand(bean.table, PersistenceMode.CSV, null);
+							logger.info("start populating table : " + bean.table.name);
 	
 							String path = backupLocator.getBackupFilePath(backupPath, step, bean.table, PersistenceMode.CSV);
 							
 							if (Files.exists(Paths.get(path))) {
+								BackupCommand command = commandFactory.getBackupCommand(bean.table, PersistenceMode.CSV, null);
 								command.execute(path);
 								logger.info("populating table : " + bean.table.name + " completed");
 							} else {

@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class PrimefacesWebappPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PrimefacesWebappPomFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp", "pom", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName, "pom", FileType.XML, project);
 	}
-
 }

@@ -6,7 +6,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.core.commands.services.BaseServiceImplFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.services.ServiceImplFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.services.configuration.ServicesPomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.services.configuration.SpringServicesFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.services.configuration.SpringServicesConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -26,7 +26,7 @@ public class ServiceLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode springServicesTreeNode = new FileWriteCommandTreeNode(new SpringServicesFileWriteCommand(project));
+		FileWriteCommandTreeNode springServicesTreeNode = new FileWriteCommandTreeNode(new SpringServicesConfigFileWriteCommand(project));
 		configurationTreeNode.add(springServicesTreeNode);
 		
 		FileWriteCommandTreeNode servicesPomTreeNode = new FileWriteCommandTreeNode(new ServicesPomFileWriteCommand(project));

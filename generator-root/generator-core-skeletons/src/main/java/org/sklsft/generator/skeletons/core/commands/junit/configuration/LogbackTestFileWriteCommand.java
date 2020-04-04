@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class LogbackTestFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public LogbackTestFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-test/src/test/resources", "logback-test", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.testsArtefactName + File.separator + project.model.resourcesFolder, "logback", FileType.XML, project);
 	}
 
 }

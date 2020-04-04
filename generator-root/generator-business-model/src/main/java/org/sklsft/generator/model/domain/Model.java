@@ -21,21 +21,43 @@ public class Model {
 	 * properties
 	 */
 	public Project project;
+	
+	public String javaSourcesFolder;
+	public String testJavaSourcesFolder;
+	public String resourcesFolder;
+	public String testResourcesFolder;
+	public String webResourcesFolder;
+	
+	public String apiArtefactName;
+	public String modelArtefactName;
+	public String persistenceArtefactName;
+	public String componentsArtefactName;
+	public String servicesArtefactName;
+	public String populatorArtefactName;
+	public String testsArtefactName;	
+	public String restArtefactName;
+	public String restClientArtefactName;
+	public String webappArtefactName;
 
-	public List<Package> packages;
-
+	public List<Package> packages;	
+	
 	public String apiModelPackageName;
 	public String serviceInterfacePackageName;
+	
 	public String modelPackageName;
 	public String enversPackageName;
 	
+	public String persistencePackageName;
 	public String daoInterfacePackageName;
 	public String daoImplPackageName;
+	
+	public String componentsPackageName;
 	public String mapperPackageName;
 	public String stateManagerPackageName;
 	public String rightsManagerPackageName;
 	public String processorPackageName;
-	public String serviceImplPackageName;
+	
+	public String servicesPackageName;
 	public String restClientPackageName;
 	
 	public String restControllerPackageName;
@@ -48,7 +70,6 @@ public class Model {
 	public String builderPackageName;
 	public String executorPackageName;	
 	public String junitPackageName;
-	public String junitDataPackageName;
 
 	
 	/*
@@ -59,6 +80,96 @@ public class Model {
 	}
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	public String getJavaSourcesFolder() {
+		return javaSourcesFolder;
+	}
+	public void setJavaSourcesFolder(String javaSourcesFolder) {
+		this.javaSourcesFolder = javaSourcesFolder;
+	}
+	public String getTestJavaSourcesFolder() {
+		return testJavaSourcesFolder;
+	}
+	public void setTestJavaSourcesFolder(String testJavaSourcesFolder) {
+		this.testJavaSourcesFolder = testJavaSourcesFolder;
+	}
+	public String getResourcesFolder() {
+		return resourcesFolder;
+	}
+	public void setResourcesFolder(String resourcesFolder) {
+		this.resourcesFolder = resourcesFolder;
+	}
+	public String getTestResourcesFolder() {
+		return testResourcesFolder;
+	}
+	public void setTestResourcesFolder(String testResourcesFolder) {
+		this.testResourcesFolder = testResourcesFolder;
+	}
+	public String getWebResourcesFolder() {
+		return webResourcesFolder;
+	}
+	public void setWebResourcesFolder(String webResourcesFolder) {
+		this.webResourcesFolder = webResourcesFolder;
+	}
+	public String getApiArtefactName() {
+		return apiArtefactName;
+	}
+	public void setApiArtefactName(String apiArtefactName) {
+		this.apiArtefactName = apiArtefactName;
+	}
+	public String getModelArtefactName() {
+		return modelArtefactName;
+	}
+	public void setModelArtefactName(String modelArtefactName) {
+		this.modelArtefactName = modelArtefactName;
+	}
+	public String getPersistenceArtefactName() {
+		return persistenceArtefactName;
+	}
+	public void setPersistenceArtefactName(String persistenceArtefactName) {
+		this.persistenceArtefactName = persistenceArtefactName;
+	}
+	public String getComponentsArtefactName() {
+		return componentsArtefactName;
+	}
+	public void setComponentsArtefactName(String componentsArtefactName) {
+		this.componentsArtefactName = componentsArtefactName;
+	}
+	public String getServicesArtefactName() {
+		return servicesArtefactName;
+	}
+	public void setServicesArtefactName(String servicesArtefactName) {
+		this.servicesArtefactName = servicesArtefactName;
+	}
+	public String getPopulatorArtefactName() {
+		return populatorArtefactName;
+	}
+	public void setPopulatorArtefactName(String populatorArtefactName) {
+		this.populatorArtefactName = populatorArtefactName;
+	}
+	public String getTestsArtefactName() {
+		return testsArtefactName;
+	}
+	public void setTestsArtefactName(String testsArtefactName) {
+		this.testsArtefactName = testsArtefactName;
+	}
+	public String getRestArtefactName() {
+		return restArtefactName;
+	}
+	public void setRestArtefactName(String restArtefactName) {
+		this.restArtefactName = restArtefactName;
+	}
+	public String getRestClientArtefactName() {
+		return restClientArtefactName;
+	}
+	public void setRestClientArtefactName(String restClientArtefactName) {
+		this.restClientArtefactName = restClientArtefactName;
+	}
+	public String getWebappArtefactName() {
+		return webappArtefactName;
+	}
+	public void setWebappArtefactName(String webappArtefactName) {
+		this.webappArtefactName = webappArtefactName;
 	}
 	public List<Package> getPackages() {
 		return packages;
@@ -90,6 +201,12 @@ public class Model {
 	public void setEnversPackageName(String enversPackageName) {
 		this.enversPackageName = enversPackageName;
 	}
+	public String getPersistencePackageName() {
+		return persistencePackageName;
+	}
+	public void setPersistencePackageName(String persistencePackageName) {
+		this.persistencePackageName = persistencePackageName;
+	}
 	public String getDaoInterfacePackageName() {
 		return daoInterfacePackageName;
 	}
@@ -101,6 +218,12 @@ public class Model {
 	}
 	public void setDaoImplPackageName(String daoImplPackageName) {
 		this.daoImplPackageName = daoImplPackageName;
+	}
+	public String getComponentsPackageName() {
+		return componentsPackageName;
+	}
+	public void setComponentsPackageName(String componentsPackageName) {
+		this.componentsPackageName = componentsPackageName;
 	}
 	public String getMapperPackageName() {
 		return mapperPackageName;
@@ -126,11 +249,11 @@ public class Model {
 	public void setProcessorPackageName(String processorPackageName) {
 		this.processorPackageName = processorPackageName;
 	}
-	public String getServiceImplPackageName() {
-		return serviceImplPackageName;
+	public String getServicesPackageName() {
+		return servicesPackageName;
 	}
-	public void setServiceImplPackageName(String serviceImplPackageName) {
-		this.serviceImplPackageName = serviceImplPackageName;
+	public void setServicesPackageName(String servicesPackageName) {
+		this.servicesPackageName = servicesPackageName;
 	}
 	public String getRestClientPackageName() {
 		return restClientPackageName;
@@ -185,14 +308,7 @@ public class Model {
 	}
 	public void setJunitPackageName(String junitPackageName) {
 		this.junitPackageName = junitPackageName;
-	}
-	public String getJunitDataPackageName() {
-		return junitDataPackageName;
-	}
-	public void setJunitDataPackageName(String junitDataPackageName) {
-		this.junitDataPackageName = junitDataPackageName;
-	}
-	
+	}	
 	
 	/**
      * run through all the tables until it is found

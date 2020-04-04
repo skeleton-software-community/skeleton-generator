@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>${project.projectName}-rest-client</artifactId>
-	<name>${project.projectName}-rest-client</name>
+	<name>${project.model.restClientArtefactName}</name>
 
 	<packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
 	
 		<dependency>
 			<groupId>${project.domainName}.${project.projectName}</groupId>
-			<artifactId>${project.projectName}-api</artifactId>
+			<artifactId>${project.model.apiArtefactName}</artifactId>
 		</dependency>
 		
 		

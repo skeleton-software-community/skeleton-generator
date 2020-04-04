@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class WebappProjectPropertiesFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public WebappProjectPropertiesFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/resources", project.projectName, FileType.PROPERTIES, project);
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.resourcesFolder, "application", FileType.PROPERTIES, project);
 	}
 
 }

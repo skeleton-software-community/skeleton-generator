@@ -32,8 +32,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:applicationContext-${project.projectName}-rest-client.xml
-			classpath:applicationContext-${project.projectName}-webapp.xml
+			classpath:applicationContext-${project.model.restClientArtefactName}.xml
+			classpath:applicationContext-${project.model.webappArtefactName}.xml
 		</param-value>
 	</context-param>
 
@@ -77,12 +77,12 @@
 
 	<!-- Jsf configuration -->
 	<servlet>
-		<servlet-name>JSF</servlet-name>
+		<servlet-name>${project.model.webappArtefactName}</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>JSF</servlet-name>
+		<servlet-name>${project.model.webappArtefactName}</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 

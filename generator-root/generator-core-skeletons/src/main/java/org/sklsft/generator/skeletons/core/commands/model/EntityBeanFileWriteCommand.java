@@ -30,7 +30,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public EntityBeanFileWriteCommand(Bean bean) {
 
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-business-model" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.modelArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.omPackageName.replace(".", File.separator), bean.className);
 
 		this.bean = bean;

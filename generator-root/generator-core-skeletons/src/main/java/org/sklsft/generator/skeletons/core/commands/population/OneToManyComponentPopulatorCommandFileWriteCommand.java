@@ -16,7 +16,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
     private Bean parentBean;
 
     public OneToManyComponentPopulatorCommandFileWriteCommand(OneToManyComponent oneToManyComponent){
-        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-populator" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".",File.separator),
+        super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.populatorArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.model.javaSourcesFolder + File.separator + oneToManyComponent.referenceBean.myPackage.commandPackageName.replace(".",File.separator),
         		oneToManyComponent.referenceBean.className + "Command");
         
         		this.oneToManyComponent = oneToManyComponent;

@@ -2,10 +2,10 @@ package org.sklsft.generator.skeletons.core.layers;
 
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.LogbackTestFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestRepositoryFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestPomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestPropertiesFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestsConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringJUnitPersistenceConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPomFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.resources.JUnitDataInitializerFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.resources.SetupTestFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -36,19 +36,19 @@ public class JunitLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode testPomTreeNode = new FileWriteCommandTreeNode(new TestPomFileWriteCommand(project));
+		FileWriteCommandTreeNode testPomTreeNode = new FileWriteCommandTreeNode(new TestsPomFileWriteCommand(project));
 		configurationTreeNode.add(testPomTreeNode);
 		
-		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringTestRepositoryFileWriteCommand(project));
+		FileWriteCommandTreeNode springTestRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringJUnitPersistenceConfigFileWriteCommand(project));
 		configurationTreeNode.add(springTestRepositoryTreeNode);
 		
-		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode(new SpringTestFileWriteCommand(project));
+		FileWriteCommandTreeNode springTestTreeNode = new FileWriteCommandTreeNode(new SpringTestsConfigFileWriteCommand(project));
 		configurationTreeNode.add(springTestTreeNode);
 		
 		FileWriteCommandTreeNode logbackTestTreeNode = new FileWriteCommandTreeNode(new LogbackTestFileWriteCommand(project));
 		configurationTreeNode.add(logbackTestTreeNode);
 		
-		FileWriteCommandTreeNode testPropertiesTreeNode = new FileWriteCommandTreeNode(new TestPropertiesFileWriteCommand(project));
+		FileWriteCommandTreeNode testPropertiesTreeNode = new FileWriteCommandTreeNode(new TestsPropertiesFileWriteCommand(project));
 		configurationTreeNode.add(testPropertiesTreeNode);
 		
 		return configurationTreeNode;

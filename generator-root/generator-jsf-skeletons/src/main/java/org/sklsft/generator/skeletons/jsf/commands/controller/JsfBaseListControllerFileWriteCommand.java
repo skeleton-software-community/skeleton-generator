@@ -13,7 +13,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 	private Bean bean;
 
 	public JsfBaseListControllerFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.webappArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.baseListControllerPackageName.replace(".", File.separator), bean.baseListControllerClassName);
 
 		this.bean = bean;

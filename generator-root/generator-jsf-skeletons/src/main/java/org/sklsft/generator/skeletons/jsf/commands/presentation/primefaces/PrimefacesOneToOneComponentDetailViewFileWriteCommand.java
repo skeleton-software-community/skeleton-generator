@@ -12,8 +12,7 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
 	private OneToOneComponent oneToOneComponent;
 
 	public PrimefacesOneToOneComponentDetailViewFileWriteCommand(OneToOneComponent oneToOneComponent) {
-		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.urlPiece + File.separator + oneToOneComponent.parentBean.urlPiece + File.separator + oneToOneComponent.referenceBean.urlPiece, "details");
+		super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.webappArtefactName + File.separator + oneToOneComponent.referenceBean.myPackage.model.webResourcesFolder + File.separator + "sections" + File.separator + oneToOneComponent.referenceBean.myPackage.urlPiece + File.separator + oneToOneComponent.parentBean.urlPiece + File.separator + oneToOneComponent.referenceBean.urlPiece, "details");
 
 		this.oneToOneComponent = oneToOneComponent;
 	}

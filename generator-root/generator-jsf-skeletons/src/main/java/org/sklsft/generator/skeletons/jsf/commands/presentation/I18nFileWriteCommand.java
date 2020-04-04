@@ -14,7 +14,7 @@ public class I18nFileWriteCommand extends PropertiesFileWriteCommand {
 	private Project project;
 
 	public I18nFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "resources", "i18n");
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.resourcesFolder, "i18n");
 		this.project = project;
 	}
 

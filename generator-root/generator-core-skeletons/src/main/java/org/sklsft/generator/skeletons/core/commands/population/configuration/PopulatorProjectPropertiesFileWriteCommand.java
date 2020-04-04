@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class PopulatorProjectPropertiesFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PopulatorProjectPropertiesFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/resources", project.projectName, FileType.PROPERTIES, project);
+		super(project.workspaceFolder + File.separator + project.model.populatorArtefactName + File.separator + project.model.resourcesFolder, "application", FileType.PROPERTIES, project);
 	}
-
 }

@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SetupTestFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SetupTestFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-test/src/test/java/" + project.model.junitPackageName.replace(".", File.separator), "SetupTest", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.model.testsArtefactName + File.separator + project.model.testJavaSourcesFolder + File.separator + project.model.junitPackageName.replace(".", File.separator), "SetupTest", FileType.JAVA, project);
 	}
-
 }

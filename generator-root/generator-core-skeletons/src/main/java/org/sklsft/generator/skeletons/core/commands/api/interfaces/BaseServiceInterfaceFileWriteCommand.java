@@ -14,10 +14,10 @@ import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
 
 public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 
-private Bean bean;
+	private Bean bean;
 	
 	public BaseServiceInterfaceFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.apiArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.baseServiceInterfacePackageName.replace(".", File.separator), bean.baseServiceInterfaceName);
 
 		this.bean = bean;

@@ -11,7 +11,7 @@ public class MvcListViewFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
 	public MvcListViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.webappArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.listViewPackageName.replace(".", File.separator), bean.listViewClassName);
 
 		this.bean = bean;

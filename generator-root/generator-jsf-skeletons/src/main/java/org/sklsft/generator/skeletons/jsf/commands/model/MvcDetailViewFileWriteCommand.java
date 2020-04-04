@@ -14,7 +14,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
 	public MvcDetailViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.webappArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.detailViewPackageName.replace(".", File.separator), bean.detailViewClassName);
 
 		this.bean = bean;

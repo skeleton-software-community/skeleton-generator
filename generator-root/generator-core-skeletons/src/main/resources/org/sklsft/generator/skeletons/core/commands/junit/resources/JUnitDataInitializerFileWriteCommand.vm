@@ -1,4 +1,4 @@
-package ${project.model.junitDataPackageName};
+package ${project.model.junitPackageName};
 
 import java.sql.Connection;
 import java.sql.SQLException;

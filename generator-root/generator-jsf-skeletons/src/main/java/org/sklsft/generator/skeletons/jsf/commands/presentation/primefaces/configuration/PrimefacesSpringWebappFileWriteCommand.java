@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class PrimefacesSpringWebappFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PrimefacesSpringWebappFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/resources", "applicationContext-" + project.projectName + "-webapp", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.resourcesFolder, "applicationContext-" + project.projectName + "-webapp", FileType.XML, project);
 	}
-
 }

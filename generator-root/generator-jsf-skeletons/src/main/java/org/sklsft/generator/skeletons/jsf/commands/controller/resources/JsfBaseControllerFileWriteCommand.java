@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class JsfBaseControllerFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public JsfBaseControllerFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/java/" + project.model.controllerPackageName.replace(".", File.separator) + File.separator, "BaseController", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.javaSourcesFolder + File.separator + project.model.controllerPackageName.replace(".", File.separator) + File.separator, "BaseController", FileType.JAVA, project);
 	}
 
 }

@@ -1,13 +1,13 @@
 <configuration>
 
-	<property resource="${project.projectName}.properties" />
+	<property resource="application.properties" />
 
 	<!--Console appender -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
 			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
 				<pattern>
-				[%d{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%-5level][%channel][%transactionId][%correlationId] %msg%n
+				[%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}][%thread][%-5level][%channel][%transactionId][%correlationId] %msg%n
 				</pattern>
 			</layout>
 		</encoder>
@@ -16,16 +16,16 @@
 
 	<!--Daily rolling access file appender -->
 	<appender name="ACCESS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${log.directory}/${project.projectName}-rest-access.log</File>
+		<File>${log.directory}/${project.model.restArtefactName}-access.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log.directory}/${project.projectName}-rest-access.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${log.directory}/${project.model.restArtefactName}-access.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
 			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
 				<pattern>
-				{"@timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId",","logMessage":%msg}%n
+				{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId","logMessage":%msg}%n
 				</pattern>
 			</layout>
 		</encoder>
@@ -33,16 +33,16 @@
 	
 	<!--Daily rolling access file appender -->
 	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${log.directory}/${project.projectName}-rest-error.log</File>
+		<File>${log.directory}/${project.model.restArtefactName}-error.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log.directory}/${project.projectName}-rest-error.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${log.directory}/${project.model.restArtefactName}-error.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
 			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
 				<pattern>
-				{"@timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId",","logMessage":%msg}%n
+				{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId","logMessage":%msg}%n
 				</pattern>
 			</layout>
 		</encoder>

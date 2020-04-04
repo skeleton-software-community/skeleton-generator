@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SpringRestLogbackFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringRestLogbackFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-rest/src/main/resources", "logback", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.restArtefactName + File.separator + project.model.resourcesFolder, "logback", FileType.XML, project);
 	}
-
 }

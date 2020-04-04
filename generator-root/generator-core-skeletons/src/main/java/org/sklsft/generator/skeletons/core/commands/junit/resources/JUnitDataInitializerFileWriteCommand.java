@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class JUnitDataInitializerFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public JUnitDataInitializerFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-test/src/main/java/" + project.model.junitDataPackageName.replace(".", File.separator), "JUnitDataInitializer", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.model.testsArtefactName + File.separator + project.model.javaSourcesFolder + File.separator + project.model.junitPackageName.replace(".", File.separator), "JUnitDataInitializer", FileType.JAVA, project);
 	}
-
 }

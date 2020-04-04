@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class PrimefacesWebXmlFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PrimefacesWebXmlFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp/src/main/webapp/WEB-INF", "web", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.webResourcesFolder + File.separator + "WEB-INF", "web", FileType.XML, project);
 	}
-
 }

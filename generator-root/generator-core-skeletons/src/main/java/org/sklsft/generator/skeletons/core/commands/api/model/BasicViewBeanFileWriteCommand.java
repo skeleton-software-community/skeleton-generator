@@ -16,7 +16,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public BasicViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.basicViewsPackageName.replace(".",File.separator), bean.basicViewBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.apiArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator + bean.myPackage.basicViewsPackageName.replace(".",File.separator), bean.basicViewBean.className);
 		
 		this.bean = bean;
 		

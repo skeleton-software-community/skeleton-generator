@@ -16,7 +16,7 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
 	 */
 	public FormBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.formsPackageName.replace(".",File.separator), bean.formBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.apiArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator + bean.myPackage.formsPackageName.replace(".",File.separator), bean.formBean.className);
 		
 		this.bean = bean;
 		

@@ -17,7 +17,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 	
 	public BaseRestClientFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-rest-client" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.restClientArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.baseRestClientPackageName.replace(".", File.separator), bean.baseRestClientClassName);
 
 		this.bean = bean;

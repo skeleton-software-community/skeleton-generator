@@ -13,8 +13,7 @@ public class PrimefacesOneToManyListViewFileWriteCommand extends PrimefacesXhtml
 	private OneToMany oneToMany;
 
 	public PrimefacesOneToManyListViewFileWriteCommand(OneToMany oneToMany) {
-		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.project.projectName
-				+ "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.urlPiece + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece,"list");
+		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.webappArtefactName + File.separator + oneToMany.referenceBean.myPackage.model.webResourcesFolder + File.separator + "sections" + File.separator + oneToMany.parentBean.myPackage.urlPiece + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece,"list");
 		this.oneToMany = oneToMany;
 	}
 

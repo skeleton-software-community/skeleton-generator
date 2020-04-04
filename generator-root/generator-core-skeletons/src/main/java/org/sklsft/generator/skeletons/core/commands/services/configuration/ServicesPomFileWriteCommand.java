@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class ServicesPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public ServicesPomFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-services", "pom", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.servicesArtefactName, "pom", FileType.XML, project);
 	}
-
 }

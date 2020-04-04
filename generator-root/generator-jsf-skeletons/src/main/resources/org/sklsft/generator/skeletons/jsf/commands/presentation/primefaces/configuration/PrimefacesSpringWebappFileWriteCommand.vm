@@ -12,7 +12,7 @@ http://www.springframework.org/schema/security/spring-security.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<context:property-placeholder location="classpath:${project.projectName}.properties"/>
+	<context:property-placeholder location="classpath:application.properties"/>
 	
 	<context:annotation-config/>
 	
@@ -48,7 +48,7 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 		<property name="serializationInclusion" value="NON_NULL"/>			
 	</bean>
 	
-	<bean name="jsonSerializer" class="org.sklsft.commons.crypto.serialization.JsonSerializer">
+	<bean name="jsonSerializer" class="org.sklsft.commons.text.serialization.JsonSerializer">
 		<constructor-arg name="objectMapper" ref="objectMapper"/>
 	</bean>
 	

@@ -13,14 +13,14 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>${project.projectName}-api</module>
-		<module>${project.projectName}-business-model</module>
-		<module>${project.projectName}-repository</module>
-		<module>${project.projectName}-business-component</module>
-		<module>${project.projectName}-services</module>
-		<module>${project.projectName}-rest</module>
-		<module>${project.projectName}-populator</module>
-		<module>${project.projectName}-test</module>
+		<module>${project.model.apiArtefactName}</module>
+		<module>${project.model.modelArtefactName}</module>
+		<module>${project.model.persistenceArtefactName}</module>
+		<module>${project.model.componentsArtefactName}</module>
+		<module>${project.model.servicesArtefactName}</module>
+		<module>${project.model.restArtefactName}</module>
+		<module>${project.model.populatorArtefactName}</module>
+		<module>${project.model.testsArtefactName}</module>
 	</modules>
 	
 	<properties>
@@ -32,7 +32,7 @@
 		<skeleton.commons.version>3.1.0-SNAPSHOT</skeleton.commons.version>
 		<skeleton.generator.version>3.1.0-SNAPSHOT</skeleton.generator.version>
 		
-		<slf4j.version>1.7.25</slf4j.version>
+		<slf4j.version>1.7.30</slf4j.version>
 		<logback.version>1.2.3</logback.version>
 		
 		<hibernate.validator.version>5.2.3.Final</hibernate.validator.version>
@@ -40,19 +40,23 @@
 		
 		<hsqldb.version>2.3.3</hsqldb.version>
 		
-		<hibernate.version>5.0.7.Final</hibernate.version>
+		<hibernate.version>5.4.11.Final</hibernate.version>
 		
-		<spring.version>4.3.5.RELEASE</spring.version>
-		<spring.security.version>4.2.1.RELEASE</spring.security.version>
-		<aspectj.version>1.7.3</aspectj.version>
+		<spring.version>5.2.5.RELEASE</spring.version>
+		<spring.security.version>5.3.0.RELEASE</spring.security.version>
+		<aspectj.version>1.9.5</aspectj.version>
 		<javax.inject.version>1</javax.inject.version>
 		
 		<servlet.version>3.1.0</servlet.version>
 		<javax.el.version>3.0.1-b08</javax.el.version>
 		
-		<jackson.version>2.6.0</jackson.version>
+		<jackson.version>2.10.3</jackson.version>
+		
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+		<commons.digester.version>1.8.1</commons.digester.version>
+		<commons.lang.version>2.5</commons.lang.version>
 
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13</junit.version>
 		
 	</properties>
 	
@@ -61,37 +65,37 @@
 		
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-api</artifactId>
+				<artifactId>${project.model.apiArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-business-model</artifactId>
+				<artifactId>${project.model.modelArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-repository</artifactId>
+				<artifactId>${project.model.persistenceArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-business-component</artifactId>
+				<artifactId>${project.model.componentsArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-services</artifactId>
+				<artifactId>${project.model.servicesArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>${project.domainName}.${project.projectName}</groupId>
-				<artifactId>${project.projectName}-populator</artifactId>
+				<artifactId>${project.model.populatorArtefactName}</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
@@ -118,7 +122,7 @@
 			
 			<dependency>
 				<groupId>org.sklsft.commons</groupId>
-				<artifactId>commons-crypto</artifactId>
+				<artifactId>commons-text</artifactId>
 				<version>${skeleton.commons.version}</version>
 			</dependency>
 			
@@ -317,6 +321,26 @@
 			</dependency>
 
 			
+			<!-- apache commons -->
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${commons.dbcp.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>${commons.digester.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+			</dependency>
+			
+			
 			<!-- unit tests -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -324,33 +348,12 @@
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
-			
-			
-			<!-- apache commons -->
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>1.4</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>commons-digester</groupId>
-				<artifactId>commons-digester</artifactId>
-				<version>1.8.1</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.5</version>
-			</dependency>
 					
 		</dependencies>
 	</dependencyManagement>
 	
 	<build>
-	
-		<plugins>		
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -363,8 +366,7 @@
 					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
-		</plugins>
-		
+		</plugins>		
 	</build>
 	
 </project>

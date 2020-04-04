@@ -3,12 +3,12 @@ package org.sklsft.generator.skeletons.core.layers;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.skeletons.core.commands.dao.BaseDaoHibernateImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.dao.BaseDaoInterfaceFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.dao.DaoImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.dao.DaoInterfaceFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.dao.configuration.RepositoryPomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.dao.configuration.SpringRepositoryFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.BaseDaoHibernateImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.BaseDaoInterfaceFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.DaoImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.DaoInterfaceFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.configuration.PersistencePomFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.configuration.SpringPersistenceConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -28,10 +28,10 @@ public class HibernateDaoLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode repositoryPomTreeNode = new FileWriteCommandTreeNode(new RepositoryPomFileWriteCommand(project));
+		FileWriteCommandTreeNode repositoryPomTreeNode = new FileWriteCommandTreeNode(new PersistencePomFileWriteCommand(project));
 		configurationTreeNode.add(repositoryPomTreeNode);
 		
-		FileWriteCommandTreeNode springRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringRepositoryFileWriteCommand(project));
+		FileWriteCommandTreeNode springRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringPersistenceConfigFileWriteCommand(project));
 		configurationTreeNode.add(springRepositoryTreeNode);
 		
 		

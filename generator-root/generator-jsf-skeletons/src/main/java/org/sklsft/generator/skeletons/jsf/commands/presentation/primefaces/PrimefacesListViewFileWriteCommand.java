@@ -12,7 +12,7 @@ public class PrimefacesListViewFileWriteCommand extends PrimefacesXhtmlFileWrite
 	private Bean bean;
 
 	public PrimefacesListViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "list");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.webappArtefactName + File.separator + bean.myPackage.model.webResourcesFolder + File.separator + "sections" + File.separator + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "list");
 
 		this.bean = bean;
 		

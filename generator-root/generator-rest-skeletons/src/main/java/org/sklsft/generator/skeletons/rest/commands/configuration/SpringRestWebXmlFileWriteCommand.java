@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SpringRestWebXmlFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringRestWebXmlFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-rest/src/main/webapp/WEB-INF", "web", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.restArtefactName + File.separator + project.model.webResourcesFolder + File.separator + "WEB-INF", "web", FileType.XML, project);
 	}
 
 }

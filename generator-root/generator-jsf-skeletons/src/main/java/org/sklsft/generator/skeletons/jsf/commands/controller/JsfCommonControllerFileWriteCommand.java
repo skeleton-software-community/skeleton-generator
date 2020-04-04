@@ -14,7 +14,7 @@ public class JsfCommonControllerFileWriteCommand extends JavaFileWriteCommand {
 	private Project project;
 
 	public JsfCommonControllerFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + project.model.controllerPackageName.replace(".", File.separator),
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.javaSourcesFolder + File.separator + project.model.controllerPackageName.replace(".", File.separator),
 				"CommonController");
 
 		this.project = project;

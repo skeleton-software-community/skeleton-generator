@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class PopulatorPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public PopulatorPomFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator", "pom", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.populatorArtefactName, "pom", FileType.XML, project);
 	}
-
 }

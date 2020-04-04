@@ -12,7 +12,7 @@ public class OrderingFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
 	public OrderingFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-api" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.apiArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.sortingsPackageName.replace(".", File.separator), bean.basicViewBean.sortingClassName);
 
 		this.bean = bean;

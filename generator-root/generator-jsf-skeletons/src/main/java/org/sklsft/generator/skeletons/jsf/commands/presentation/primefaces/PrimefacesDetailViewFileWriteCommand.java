@@ -11,7 +11,7 @@ public class PrimefacesDetailViewFileWriteCommand extends PrimefacesXhtmlFileWri
 	private Bean bean;
 	
 	public PrimefacesDetailViewFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "details");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.webappArtefactName + File.separator + bean.myPackage.model.webResourcesFolder + File.separator + "sections" + File.separator  + bean.myPackage.urlPiece + File.separator + bean.urlPiece, "details");
 
 		this.bean = bean;
 	}

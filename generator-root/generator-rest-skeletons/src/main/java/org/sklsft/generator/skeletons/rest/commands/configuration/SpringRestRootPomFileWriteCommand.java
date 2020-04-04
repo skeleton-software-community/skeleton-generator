@@ -9,5 +9,4 @@ public class SpringRestRootPomFileWriteCommand extends ProjectTemplatizedFileWri
 	public SpringRestRootPomFileWriteCommand(Project project) {
 		super(project.workspaceFolder, "pom", FileType.XML, project);
 	}
-
 }

@@ -11,7 +11,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 	private Bean bean;
 
     public BeanPopulatorCommandFileWriteCommand(Bean bean){
-        super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-populator" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + bean.myPackage.commandPackageName.replace(".",File.separator),
+        super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.populatorArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator + bean.myPackage.commandPackageName.replace(".",File.separator),
         		bean.className + "Command");
         
         		this.bean = bean;

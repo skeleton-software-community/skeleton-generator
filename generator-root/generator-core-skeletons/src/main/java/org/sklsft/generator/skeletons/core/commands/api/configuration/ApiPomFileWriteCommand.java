@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class ApiPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public ApiPomFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-api", "pom", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.apiArtefactName, "pom", FileType.XML, project);
 	}
-
 }

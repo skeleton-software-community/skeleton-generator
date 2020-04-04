@@ -11,8 +11,8 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>${project.projectName}-api</artifactId>
-	<name>${project.projectName}-api</name>
+	<artifactId>${project.model.apiArtefactName}</artifactId>
+	<name>${project.model.apiArtefactName}</name>
 
 	<packaging>jar</packaging>
 

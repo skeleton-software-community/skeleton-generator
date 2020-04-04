@@ -14,7 +14,7 @@ public class JsfCommonViewFileWriteCommand extends JavaFileWriteCommand {
 	private Project project;
 
 	public JsfCommonViewFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + project.model.mvcModelPackageName.replace(".", File.separator),
+		super(project.workspaceFolder + File.separator + project.model.webappArtefactName + File.separator + project.model.javaSourcesFolder + File.separator + project.model.mvcModelPackageName.replace(".", File.separator),
 				"CommonView");
 
 		this.project = project;

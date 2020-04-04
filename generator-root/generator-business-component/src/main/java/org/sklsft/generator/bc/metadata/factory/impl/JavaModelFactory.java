@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.metadata.factory.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,19 +79,42 @@ public class JavaModelFactory implements ModelFactory {
 	private Model setUpModel(Project project) {
 		Model model = new Model();
         model.project = project;
+        
+        model.javaSourcesFolder = "src" + File.separator + "main" + File.separator + "java";
+        model.testJavaSourcesFolder = "src" + File.separator + "test" + File.separator + "java";
+        model.resourcesFolder = "src" + File.separator + "main" + File.separator + "resources";
+        model.testResourcesFolder = "src" + File.separator + "test" + File.separator + "resources";
+        model.webResourcesFolder = "src" + File.separator + "main" + File.separator + "webapp";
+        
+        model.apiArtefactName = project.projectName + "-api";
+        model.modelArtefactName = project.projectName + "-model";
+        model.persistenceArtefactName = project.projectName + "-persistence";
+        model.componentsArtefactName = project.projectName + "-components";
+        model.servicesArtefactName = project.projectName + "-services";
+        model.populatorArtefactName = project.projectName + "-populator";
+        model.testsArtefactName = project.projectName + "-tests";
+        model.restArtefactName = project.projectName + "-rest";
+        model.restClientArtefactName = project.projectName + "-rest-client";
+        model.webappArtefactName = project.projectName + "-webapp";
 
         model.apiModelPackageName = project.domainName + "." + project.projectName + ".api.model";
         model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";
+       
         model.modelPackageName = project.domainName + "." + project.projectName + ".model";
         model.enversPackageName = project.domainName + "." + project.projectName + ".model.envers";
-        model.daoImplPackageName = project.domainName + "." + project.projectName + ".repository.dao.impl";
-        model.daoInterfacePackageName = project.domainName + "." + project.projectName + ".repository.dao.interfaces";
         
-        model.mapperPackageName = project.domainName + "." + project.projectName + ".bc.mapper";
-        model.stateManagerPackageName = project.domainName + "." + project.projectName + ".bc.statemanager";
-        model.rightsManagerPackageName = project.domainName + "." + project.projectName + ".bc.rightsmanager";
-        model.processorPackageName = project.domainName + "." + project.projectName + ".bc.processor";
-        model.serviceImplPackageName = project.domainName + "." + project.projectName + ".bl.impl";
+        model.persistencePackageName = project.domainName + "." + project.projectName + ".persistence";
+        model.daoImplPackageName = model.persistencePackageName + ".impl";
+        model.daoInterfacePackageName = model.persistencePackageName + ".interfaces";
+        
+        model.componentsPackageName = project.domainName + "." + project.projectName + ".components";
+        model.mapperPackageName = model.componentsPackageName + ".mapper";
+        model.stateManagerPackageName = model.componentsPackageName + ".statemanager";
+        model.rightsManagerPackageName = model.componentsPackageName + ".rightsmanager";
+        model.processorPackageName = model.componentsPackageName + ".processor";
+       
+        model.servicesPackageName = project.domainName + "." + project.projectName + ".services";
+        
         model.restClientPackageName = project.domainName + "." + project.projectName + ".rest.client";
        
         model.restControllerPackageName = project.domainName + "." + project.projectName + ".rest.controller";
@@ -103,10 +127,10 @@ public class JavaModelFactory implements ModelFactory {
         model.builderPackageName = project.domainName + "." + project.projectName + ".populator.builder";
         model.executorPackageName = project.domainName + "." + project.projectName + ".populator.executor";
         model.junitPackageName = project.domainName + "." + project.projectName + ".junit";
-        model.junitDataPackageName =  model.junitPackageName + ".data";
         
         model.packages = new ArrayList<Package>();
-		return model;
+		
+        return model;
 	}
 
 

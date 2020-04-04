@@ -3,20 +3,20 @@ package org.sklsft.generator.skeletons.core.layers;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.skeletons.core.commands.bc.configuration.BusinessComponentPomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.configuration.SpringBusinessComponentFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.BaseBasicViewMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.BaseFormMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.BaseFullViewMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.BasicViewMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.FormMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.mapper.FullViewMapperFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.processor.BaseProcessorImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.processor.ProcessorImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.rightmanager.BaseRightsManagerImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.rightmanager.RightsManagerImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.statemanager.BaseStateManagerImplFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.bc.statemanager.StateManagerImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.configuration.ComponentsPomFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.configuration.SpringComponentsConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.BaseBasicViewMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.BaseFormMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.BaseFullViewMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.BasicViewMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.FormMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.mapper.FullViewMapperFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.processor.BaseProcessorImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.processor.ProcessorImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.rightmanager.BaseRightsManagerImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.rightmanager.RightsManagerImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.statemanager.BaseStateManagerImplFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.components.statemanager.StateManagerImplFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -36,10 +36,10 @@ public class BusinessComponentLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode businessComponentPomTreeNode = new FileWriteCommandTreeNode(new BusinessComponentPomFileWriteCommand(project));
+		FileWriteCommandTreeNode businessComponentPomTreeNode = new FileWriteCommandTreeNode(new ComponentsPomFileWriteCommand(project));
 		configurationTreeNode.add(businessComponentPomTreeNode);
 		
-		FileWriteCommandTreeNode springBusinessComponentTreeNode = new FileWriteCommandTreeNode(new SpringBusinessComponentFileWriteCommand(project));
+		FileWriteCommandTreeNode springBusinessComponentTreeNode = new FileWriteCommandTreeNode(new SpringComponentsConfigFileWriteCommand(project));
 		configurationTreeNode.add(springBusinessComponentTreeNode);
 		
 		return configurationTreeNode;

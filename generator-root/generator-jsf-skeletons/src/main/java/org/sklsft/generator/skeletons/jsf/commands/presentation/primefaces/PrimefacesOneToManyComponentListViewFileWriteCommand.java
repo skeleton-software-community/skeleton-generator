@@ -13,7 +13,7 @@ public class PrimefacesOneToManyComponentListViewFileWriteCommand extends Primef
 	private OneToManyComponent oneToManyComponent;
 
 	public PrimefacesOneToManyComponentListViewFileWriteCommand(OneToManyComponent oneToManyComponent) {
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.project.projectName + "-webapp" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.urlPiece + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece, "list");
+		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.webappArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.model.webResourcesFolder + File.separator + "sections" + File.separator + oneToManyComponent.parentBean.myPackage.urlPiece + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece, "list");
 		this.oneToManyComponent = oneToManyComponent;
 	}
 

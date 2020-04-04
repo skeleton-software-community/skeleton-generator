@@ -4,7 +4,7 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.core.commands.model.EntityBeanFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.model.configuration.BusinessModelPomFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.model.configuration.ModelPomFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.model.resources.AuditEntityFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.model.resources.AuditListenerFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -37,7 +37,7 @@ public class HibernateBusinessModelLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode businessModelPomTreeNode = new FileWriteCommandTreeNode(new BusinessModelPomFileWriteCommand(project));
+		FileWriteCommandTreeNode businessModelPomTreeNode = new FileWriteCommandTreeNode(new ModelPomFileWriteCommand(project));
 		configurationTreeNode.add(businessModelPomTreeNode);
 		
 		return configurationTreeNode;

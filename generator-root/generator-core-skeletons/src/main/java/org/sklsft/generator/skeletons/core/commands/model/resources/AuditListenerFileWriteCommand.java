@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class AuditListenerFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public AuditListenerFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-business-model/src/main/java/" + project.model.enversPackageName.replace(".", File.separator) + File.separator, "AuditListener", FileType.JAVA, project);
+		super(project.workspaceFolder + File.separator + project.model.modelArtefactName + File.separator + project.model.javaSourcesFolder + File.separator + project.model.enversPackageName.replace(".", File.separator), "AuditListener", FileType.JAVA, project);
 	}
 
 }

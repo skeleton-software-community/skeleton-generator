@@ -9,7 +9,7 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SpringRestProjectPropertiesFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringRestProjectPropertiesFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-rest/src/main/resources", project.projectName, FileType.PROPERTIES, project);
+		super(project.workspaceFolder + File.separator + project.model.restArtefactName + File.separator + project.model.resourcesFolder, "application", FileType.PROPERTIES, project);
 	}
 
 }

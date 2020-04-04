@@ -11,7 +11,7 @@ public class SpringRestControllerCommand extends JavaFileWriteCommand {
 private Bean bean;
 	
 	public SpringRestControllerCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.project.projectName + "-rest" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.restArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
 				+ bean.myPackage.restControllerPackageName.replace(".", File.separator), bean.restControllerClassName);
 
 		this.bean = bean;

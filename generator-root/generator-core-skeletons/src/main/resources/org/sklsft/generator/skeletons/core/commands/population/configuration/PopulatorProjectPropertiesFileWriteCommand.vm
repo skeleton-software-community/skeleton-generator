@@ -1,3 +1,4 @@
+spring.profiles.active=population
 log.directory=/var/log/${project.projectName}
 log.root.level=INFO
 log.app.level=INFO

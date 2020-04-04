@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class SpringRestWarPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public SpringRestWarPomFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-rest", "pom", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.restArtefactName, "pom", FileType.XML, project);
 	}
-
 }

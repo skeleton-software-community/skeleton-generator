@@ -9,7 +9,6 @@ import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatiz
 public class LogbackPopulatorFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
 	public LogbackPopulatorFileWriteCommand(Project project) {
-		super(project.workspaceFolder + File.separator + project.projectName + "-populator/src/main/resources", "logback", FileType.XML, project);
+		super(project.workspaceFolder + File.separator + project.model.populatorArtefactName + File.separator + project.model.resourcesFolder, "logback", FileType.XML, project);
 	}
-
 }

@@ -1,0 +1,4 @@
+spring.profiles.active=junit
+log.root.level=INFO
+log.app.level=INFO
+log.showSql=false
