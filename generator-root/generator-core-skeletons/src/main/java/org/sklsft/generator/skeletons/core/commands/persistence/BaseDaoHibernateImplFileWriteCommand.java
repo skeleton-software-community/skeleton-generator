@@ -36,21 +36,34 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-		javaImports.add("import static org.sklsft.commons.model.patterns.HibernateCriteriaUtils.*;");
+		
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.util.List;");
-		javaImports.add("import org.hibernate.criterion.Projections;");
-		javaImports.add("import org.hibernate.criterion.Restrictions;");
-		javaImports.add("import org.hibernate.Criteria;");
-		javaImports.add("import org.hibernate.criterion.Order;");
+		javaImports.add("import java.util.ArrayList;");
+		
+		javaImports.add("import javax.persistence.criteria.CriteriaBuilder;");
+		javaImports.add("import javax.persistence.criteria.CriteriaQuery;");
+		javaImports.add("import javax.persistence.criteria.Fetch;");
+		javaImports.add("import javax.persistence.criteria.Join;");
+		javaImports.add("import javax.persistence.criteria.Order;");
+		javaImports.add("import javax.persistence.criteria.Predicate;");
+		javaImports.add("import javax.persistence.criteria.Root;");
+		javaImports.add("import org.hibernate.Session;");
+		javaImports.add("import org.hibernate.query.Query;");
+		
+		javaImports.add("import static org.sklsft.commons.model.patterns.JpaCriteriaUtils.*;");
 		javaImports.add("import org.sklsft.commons.api.model.OrderType;");
-		javaImports.add("import org.hibernate.sql.JoinType;");
-		javaImports.add("import org.hibernate.FetchMode;");
+
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
-		javaImports.add("import org.springframework.stereotype.Repository;");
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDaoImpl;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
+		for (ViewProperty viewProperty:this.bean.basicViewBean.properties) {
+			if (viewProperty.referenceBean!=null) {
+				Bean currentBean = viewProperty.referenceBean;
+				javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+			}
+		}
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
@@ -102,7 +115,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		createLoadOneToManyComponent();
 		
 		if (bean.cardinality>0) {
-			createExistsObject();
 			createFindObject();
 		}
 		if (bean.selectable) {
@@ -124,25 +136,27 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * load object list eagerly");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(\"unchecked\")");
+		writeLine("@SuppressWarnings(\"unused\")");
 		writeLine("public List<" + this.bean.className + "> loadListEagerly() {");
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-
-		for (Property property : this.bean.properties) {
-			if (property.visibility.isListVisible() && property.referenceBean != null) {
-				writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + CHAR_34 + ",FetchMode.JOIN);");
-
-				for (Alias alias : getAliases(property)) {
-					writeLine("criteria.setFetchMode(" + CHAR_34 + property.name + "." + alias.propertyPath + CHAR_34 + ",FetchMode.JOIN);");
-
-				}
-			}
-		}
 		
-		writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-
-		writeLine("return criteria.list();");
-
+		writeLine("Session session = this.sessionFactory.getCurrentSession();");
+		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+		writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+		skipLine();
+		
+		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
+		for (Alias alias : getAllAliases(bean, null)) {
+			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+			writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
+		}
+		skipLine();
+		
+		writeLine("criteria.select(root);");
+		writeLine("List<Order> orders = new ArrayList<>();");		
+		writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+		writeLine("criteria.orderBy(orders);");
+		skipLine();
+		writeLine("return session.createQuery(criteria).getResultList();");
 		writeLine("}");
 		skipLine();
 		
@@ -153,51 +167,73 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * load object list from " + property.name);
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(\"unchecked\")");
 				writeLine("public List<" + this.bean.className + "> loadListFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
-				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
+				
+				writeLine("Session session = this.sessionFactory.getCurrentSession();");
+				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+				writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+				skipLine();
+				
+				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
+				writeLine("Join<" + property.beanDataType + ", " + bean.className + "> " + property.name + " = root.join(\"" + property.name + "\");");
+				skipLine();
+				
 				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
+				writeLine("criteria.where(builder.isNull(" + property.name + ".get(\"id\")));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
-				writeLine("}");
-				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-				writeLine("return criteria.list();");
+				writeLine("criteria.where(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
+				writeLine("}");				
+				skipLine();
+				
+				writeLine("criteria.select(root);");
+				writeLine("List<Order> orders = new ArrayList<>();");		
+				writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+				writeLine("criteria.orderBy(orders);");
+				skipLine();
+				writeLine("return session.createQuery(criteria).getResultList();");
 				writeLine("}");
 				skipLine();
+
 
 				writeLine("/**");
 				writeLine(" * load object list eagerly from " + property.name);
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(\"unchecked\")");
+				writeLine("@SuppressWarnings(\"unused\")");
 				writeLine("public List<" + this.bean.className + "> loadListEagerlyFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
-				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
-				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
-				writeLine("}");
-
-				for (Property prop : this.bean.properties) {
-					if (prop.referenceBean != null) {
-						writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + CHAR_34 + ",FetchMode.JOIN);");
-
-						for (Alias alias : getReferenceAliases(prop.referenceBean)) {
-							writeLine("criteria.setFetchMode(" + CHAR_34 + prop.name + "." + alias.propertyPath + CHAR_34 + ",FetchMode.JOIN);");
-						}
-					}
+				
+				writeLine("Session session = this.sessionFactory.getCurrentSession();");
+				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+				writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+				skipLine();
+				
+				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
+				for (Alias alias : getAllAliases(bean, null)) {
+					writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+					writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
 				}
-				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-				writeLine("return criteria.list();");
+				skipLine();
+				
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("criteria.where(builder.isNull(" + property.name + ".get(\"id\")));");
+				writeLine("} else {");
+				writeLine("criteria.where(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
+				writeLine("}");				
+				skipLine();
+				
+				writeLine("criteria.select(root);");
+				writeLine("List<Order> orders = new ArrayList<>();");		
+				writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+				writeLine("criteria.orderBy(orders);");
+				skipLine();
+				writeLine("return session.createQuery(criteria).getResultList();");
 				writeLine("}");
 				skipLine();
 
 			}
 		}
 	}
-	
-	
+		
 	private void createCount() {
 		
 		writeLine("/**");
@@ -206,20 +242,32 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("@Override");
 		writeLine("public Long count(" + bean.basicViewBean.filterClassName + " filter) {");
 		
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
-
-		List<Alias> aliases = getAllAliases(bean);
-		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
-		}
+		writeLine("Session session = this.sessionFactory.getCurrentSession();");
+		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+		writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
+		skipLine();
 		
+		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
+		for (Alias alias : getAllAliases(bean, null)) {
+			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+		}
+		skipLine();
+		
+		writeLine("List<Predicate> predicates = new ArrayList<>();");		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
 			writeRestriction(property);
 		}
-
-		writeLine("return (Long) criteria.uniqueResult();");
+			
+		writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+		skipLine();
+		
+		writeLine("criteria.select(builder.count(root));");	 
+		writeLine("return session.createQuery(criteria).getSingleResult();");
 		writeLine("}");
 		skipLine();
+		
+
+
 		
 		for (Property property : this.bean.properties) {
 			if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
@@ -228,16 +276,24 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * count object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
 				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id) {");
+				writeLine("Session session = this.sessionFactory.getCurrentSession();");
+				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+				writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
+				skipLine();
 				
-				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
-
+				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
+				writeLine("Join<" + property.beanDataType + ", " + bean.className + "> " + property.name + " = root.join(\"" + property.name + "\");");
+				skipLine();
+				
 				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
+				writeLine("criteria.where(builder.isNull(" + property.name + ".get(\"id\")));");
 				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
-				writeLine("}");
+				writeLine("criteria.where(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
+				writeLine("}");				
+				skipLine();
 				
-				writeLine("return (Long) criteria.uniqueResult();");
+				writeLine("criteria.select(builder.count(root));");	 
+				writeLine("return session.createQuery(criteria).getSingleResult();");
 				writeLine("}");
 				skipLine();
 				
@@ -246,25 +302,33 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
 				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter) {");
+				writeLine("Session session = this.sessionFactory.getCurrentSession();");
+				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+				writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
+				skipLine();
 				
-				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class).setProjection(Projections.rowCount());");
-
-				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
-				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
-				writeLine("}");
-				
-				aliases = getAllAliases(bean);
-				for (Alias alias : aliases) {
-					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
+				for (Alias alias : getAllAliases(bean, null)) {
+					writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
 				}
+				skipLine();
 				
+				writeLine("List<Predicate> predicates = new ArrayList<>();");		
 				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
 					writeRestriction(viewProperty);
 				}
-
-				writeLine("return (Long) criteria.uniqueResult();");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("predicates.add(builder.isNull(" + property.name + ".get(\"id\")));");
+				writeLine("} else {");
+				writeLine("predicates.add(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
+				writeLine("}");				
+				skipLine();
+					
+				writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+				skipLine();
+				
+				writeLine("criteria.select(builder.count(root));");	 
+				writeLine("return session.createQuery(criteria).getSingleResult();");
 				writeLine("}");
 				skipLine();
 			}
@@ -277,33 +341,49 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(\"unchecked\")");
+		writeLine("@SuppressWarnings(\"unused\")");
 		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-
-		List<Alias> aliases = getAllAliases(bean);
-		for (Alias alias : aliases) {
-			writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
-		}
+		writeLine("Session session = this.sessionFactory.getCurrentSession();");
+		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+		writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+		skipLine();
 		
+		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
+		for (Alias alias : getAllAliases(bean, null)) {
+			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+			writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
+		}
+		skipLine();
+		
+		writeLine("List<Predicate> predicates = new ArrayList<>();");		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
 			writeRestriction(property);
 		}
+			
+		writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+		skipLine();
+		
+		writeLine("criteria.select(root);");
+		writeLine("List<Order> orders = new ArrayList<>();");
 		
 		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-			writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + property.lastPropertyName + CHAR_34 + ", sorting.get" + property.capName + "OrderType());");
+			String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+			writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), sorting.get" + property.capName + "OrderType());");
 		}
 		
+		writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+		writeLine("criteria.orderBy(orders);");
+		skipLine();		
+		
+		writeLine("Query<" + this.bean.className + "> query = session.createQuery(criteria);");
 		writeLine("if (firstResult != null){");
-		writeLine("criteria.setFirstResult(firstResult.intValue());");
+		writeLine("query.setFirstResult(firstResult.intValue());");
 		writeLine("}");
 		writeLine("if (maxResults != null){");
-		writeLine("criteria.setMaxResults(maxResults.intValue());");
+		writeLine("query.setMaxResults(maxResults.intValue());");
 		writeLine("}");
-		writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-		writeLine("return criteria.list();");
+		writeLine("return query.getResultList();");
 		writeLine("}");
 		skipLine();
 		
@@ -314,114 +394,56 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" * scroll filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
 				writeLine("@Override");
-				writeLine("@SuppressWarnings(\"unchecked\")");
 				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+				writeLine("Session session = this.sessionFactory.getCurrentSession();");
+				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+				writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+				skipLine();
 				
-				writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-
-				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + property.name + ".id" + CHAR_34 + "));");
-				writeLine("} else {");
-				writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + property.name + ".id" + CHAR_34 + ", " + property.name + "Id));");
-				writeLine("}");
-				
-				aliases = getAllAliases(bean);
-				for (Alias alias : aliases) {
-					writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
+				for (Alias alias : getAllAliases(bean, null)) {
+					writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+					writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
 				}
+				skipLine();
 				
+				writeLine("List<Predicate> predicates = new ArrayList<>();");		
 				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
 					writeRestriction(viewProperty);
 				}
-				
-				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
-					String propertyCriteria = StringUtils.isEmpty(viewProperty.joinedAliasName)?"criteria":viewProperty.joinedAliasName + "Criteria";
-					writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + viewProperty.lastPropertyName + CHAR_34 + ", sorting.get" + viewProperty.capName + "OrderType());");
-				}
-				
-				writeLine("if (firstResult != null){");
-				writeLine("criteria.setFirstResult(firstResult.intValue());");
+				writeLine("if (" + property.name + "Id == null){");
+				writeLine("predicates.add(builder.isNull(" + property.name + ".get(\"id\")));");
+				writeLine("} else {");
+				writeLine("predicates.add(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
 				writeLine("}");
-				writeLine("if (maxResults != null){");
-				writeLine("criteria.setMaxResults(maxResults.intValue());");
-				writeLine("}");
-				writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-				writeLine("return criteria.list();");
-				writeLine("}");
+				writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
 				skipLine();
 				
+				writeLine("criteria.select(root);");
+				writeLine("List<Order> orders = new ArrayList<>();");
+				
+				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
+					String joinedAliasName = StringUtils.isEmpty(viewProperty.joinedAliasName)?"root":viewProperty.joinedAliasName;
+					writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(\"" + viewProperty.lastPropertyName + "\"), sorting.get" + viewProperty.capName + "OrderType());");
+				}
+				
+				writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+				writeLine("criteria.orderBy(orders);");
+				skipLine();		
+				
+				writeLine("Query<" + this.bean.className + "> query = session.createQuery(criteria);");
+				writeLine("if (firstResult != null){");
+				writeLine("query.setFirstResult(firstResult.intValue());");
+				writeLine("}");
+				writeLine("if (maxResults != null){");
+				writeLine("query.setMaxResults(maxResults.intValue());");
+				writeLine("}");
+				writeLine("return query.getResultList();");
+				writeLine("}");
+				skipLine();
 			}
 		}
 	}
-	
-	
-	private void writeRestriction(ViewProperty property) {
-		switch (property.dataType) {
-			case BOOLEAN :
-				writeBooleanRestriction(property);
-				return;
-			case SHORT :
-			case INTEGER :
-			case LONG :
-				writeLongRestriction(property);
-				return;
-			case DATE :
-				writeDateRestriction(property);
-				return;
-			case DATETIME :
-				writeDateTimeRestriction(property);
-				return;
-			case DOUBLE :
-				writeDoubleRestriction(property);
-				return;
-			case BIG_DECIMAL :
-				writeBigDecimalRestriction(property);
-				return;
-			case STRING :
-			case TEXT :
-				writeTextRestriction(property);
-				return;
-		}
-	}
-	
-	private void writeTextRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + "{alias}." + property.lastColumnName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addStringContainsRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
-	}
-	
-	private void writeBooleanRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addBooleanRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "());");
-	}
-	
-	private void writeDoubleRestriction(ViewProperty property) {
-		writeComparableRestriction(property);
-	}
-	
-	private void writeBigDecimalRestriction(ViewProperty property) {
-		writeComparableRestriction(property);
-	}
-	
-	private void writeDateRestriction(ViewProperty property) {
-		writeComparableRestriction(property);
-	}
-	
-	private void writeDateTimeRestriction(ViewProperty property) {
-		writeComparableRestriction(property);
-	}
-	
-	private void writeLongRestriction(ViewProperty property) {
-		writeComparableRestriction(property);
-	}
-	
-	private void writeComparableRestriction(ViewProperty property) {
-		String propertyPath =  CHAR_34 + property.lastPropertyName + CHAR_34;
-		String propertyCriteria = StringUtils.isEmpty(property.joinedAliasName)?"criteria":property.joinedAliasName + "Criteria";
-		writeLine("addBetweenRestriction(" + propertyCriteria + ", " + propertyPath + ", filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
-	}
-	
 	
 	private void createLoadOneToManyComponentList() {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
@@ -430,22 +452,39 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * load one to many component " + currentBean.className + " list");
             writeLine(" */");
             writeLine("@Override");
-            writeLine("@SuppressWarnings(\"unchecked\")");
 			writeLine("public List<" + currentBean.className + "> load" + currentBean.className + "List(" + bean.idType + " " + bean.objectName + "Id) {");
-			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
+			
+			writeLine("Session session = this.sessionFactory.getCurrentSession();");
+			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+			writeLine("CriteriaQuery<" + currentBean.className + "> criteria = builder.createQuery(" + currentBean.className + ".class);");
+			skipLine();
+			
+			writeLine("Root<" + currentBean.className + "> root = criteria.from(" + currentBean.className + ".class);");
+			writeLine("Join<" + oneToManyComponent.referenceProperty.beanDataType + ", " + currentBean.className + "> " + oneToManyComponent.referenceProperty.name + " = root.join(\"" + oneToManyComponent.referenceProperty.name + "\");");
+			for (Alias alias : getAllAliases(currentBean, null)) {
+				writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+				writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
+			}
+			skipLine();
+			
 			writeLine("if (" + bean.objectName + "Id == null){");
-			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("criteria.where(builder.isNull(" + oneToManyComponent.referenceProperty.name + ".get(\"id\")));");
 			writeLine("} else {");
-			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("criteria.where(builder.equal(" + oneToManyComponent.referenceProperty.name + ".get(\"id\"), " + bean.objectName + "Id));");
 			writeLine("}");
-			writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-			writeLine("return criteria.list();");
+			skipLine();
+			
+			writeLine("criteria.select(root);");
+			writeLine("List<Order> orders = new ArrayList<>();");		
+			writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+			writeLine("criteria.orderBy(orders);");
+			skipLine();
+			writeLine("return session.createQuery(criteria).getResultList();");
 			writeLine("}");
 			skipLine();
         }
 	}
-	
-	
+		
 	private void createCountOneToManyComponent() {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
@@ -456,16 +495,24 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("@Override");
 			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id) {");
 						
-			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
-
+			writeLine("Session session = this.sessionFactory.getCurrentSession();");
+			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+			writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
+			skipLine();
+			
+			writeLine("Root<" + currentBean.className + "> root = criteria.from(" + currentBean.className + ".class);");
+			writeLine("Join<" + oneToManyComponent.referenceProperty.beanDataType + ", " + currentBean.className + "> " + oneToManyComponent.referenceProperty.name + " = root.join(\"" + oneToManyComponent.referenceProperty.name + "\");");
+			skipLine();
+			
 			writeLine("if (" + bean.objectName + "Id == null){");
-			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
+			writeLine("criteria.where(builder.isNull(" + oneToManyComponent.referenceProperty.name + ".get(\"id\")));");
 			writeLine("} else {");
-			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
+			writeLine("criteria.where(builder.equal(" + oneToManyComponent.referenceProperty.name + ".get(\"id\"), " + bean.objectName + "Id));");
 			writeLine("}");
+			skipLine();
 			
-			writeLine("return (Long) criteria.uniqueResult();");
-			
+			writeLine("criteria.select(builder.count(root));");	 
+			writeLine("return session.createQuery(criteria).getSingleResult();");
 			writeLine("}");
 			skipLine();
 			
@@ -475,31 +522,36 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
 			
-			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class).setProjection(Projections.rowCount());");
-
-			writeLine("if (" + bean.objectName + "Id == null){");
-			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
-			writeLine("} else {");
-			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
-			writeLine("}");
+			writeLine("Session session = this.sessionFactory.getCurrentSession();");
+			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+			writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
+			skipLine();
 			
-			List<Alias> aliases = getAllAliases(currentBean);
-			for (Alias alias : aliases) {
-				writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			writeLine("Root<" + currentBean.className + "> root = criteria.from(" + currentBean.className + ".class);");
+			writeLine("Join<" + oneToManyComponent.referenceProperty.beanDataType + ", " + currentBean.className + "> " + oneToManyComponent.referenceProperty.name + " = root.join(\"" + oneToManyComponent.referenceProperty.name + "\");");
+			for (Alias alias : getAllAliases(currentBean, null)) {
+				writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
 			}
+			skipLine();
 			
+			writeLine("List<Predicate> predicates = new ArrayList<>();");		
 			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
 				writeRestriction(viewProperty);
-			}
+			}			
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("predicates.add(builder.isNull(" + oneToManyComponent.referenceProperty.name + ".get(\"id\")));");
+			writeLine("} else {");
+			writeLine("predicates.add(builder.equal(" + oneToManyComponent.referenceProperty.name + ".get(\"id\"), " + bean.objectName + "Id));");
+			writeLine("}");
+			writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+			skipLine();
 			
-			writeLine("return (Long) criteria.uniqueResult();");
-			
+			writeLine("criteria.select(builder.count(root));");	 
+			writeLine("return session.createQuery(criteria).getSingleResult();");
 			writeLine("}");
 			skipLine();
 		}
 	}
-	
-	
 
 	private void createScrollOneToManyComponent() {
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
@@ -509,45 +561,58 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * scroll filtered one to many component " + currentBean.className); 
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("@SuppressWarnings(\"unchecked\")");
+			writeLine("@SuppressWarnings(\"unused\")");
 			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 			
-			writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + currentBean.className + ".class);");
-
-			writeLine("if (" + bean.objectName + "Id == null){");
-			writeLine("criteria.add(Restrictions.isNull(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + "));");
-			writeLine("} else {");
-			writeLine("criteria.add(Restrictions.eq(" + CHAR_34 + oneToManyComponent.referenceProperty.name + ".id" + CHAR_34 + ", " + bean.objectName + "Id));");
-			writeLine("}");
+			writeLine("Session session = this.sessionFactory.getCurrentSession();");
+			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+			writeLine("CriteriaQuery<" + currentBean.className + "> criteria = builder.createQuery(" + currentBean.className + ".class);");
+			skipLine();
 			
-			List<Alias> aliases = getAllAliases(currentBean);
-			for (Alias alias : aliases) {
-				writeLine("Criteria " + alias.name + "Criteria = " + (alias.parentName!=null?(alias.parentName + "Criteria"):"criteria") + ".createCriteria(" + CHAR_34 + alias.propertyName + CHAR_34 + ", JoinType.LEFT_OUTER_JOIN);");
+			writeLine("Root<" + currentBean.className + "> root = criteria.from(" + currentBean.className + ".class);");
+			writeLine("Join<" + oneToManyComponent.referenceProperty.beanDataType + ", " + currentBean.className + "> " + oneToManyComponent.referenceProperty.name + " = root.join(\"" + oneToManyComponent.referenceProperty.name + "\");");
+			for (Alias alias : getAllAliases(currentBean, null)) {
+				writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
+				writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
 			}
+			skipLine();
 			
+			writeLine("List<Predicate> predicates = new ArrayList<>();");		
 			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
 				writeRestriction(viewProperty);
+			}			
+			writeLine("if (" + bean.objectName + "Id == null){");
+			writeLine("predicates.add(builder.isNull(" + oneToManyComponent.referenceProperty.name + ".get(\"id\")));");
+			writeLine("} else {");
+			writeLine("predicates.add(builder.equal(" + oneToManyComponent.referenceProperty.name + ".get(\"id\"), " + bean.objectName + "Id));");
+			writeLine("}");
+			writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+			skipLine();
+			
+			writeLine("criteria.select(root);");
+			writeLine("List<Order> orders = new ArrayList<>();");
+			
+			for (ViewProperty property : currentBean.basicViewBean.properties) {
+				String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+				writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), sorting.get" + property.capName + "OrderType());");
 			}
 			
-			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
-				String propertyCriteria = StringUtils.isEmpty(viewProperty.joinedAliasName)?"criteria":viewProperty.joinedAliasName + "Criteria";
-				writeLine("addOrder(" + propertyCriteria + ", " + CHAR_34 + viewProperty.lastPropertyName + CHAR_34 + ", sorting.get" + viewProperty.capName + "OrderType());");
-			}
+			writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+			writeLine("criteria.orderBy(orders);");
+			skipLine();		
 			
+			writeLine("Query<" + currentBean.className + "> query = session.createQuery(criteria);");
 			writeLine("if (firstResult != null){");
-			writeLine("criteria.setFirstResult(firstResult.intValue());");
+			writeLine("query.setFirstResult(firstResult.intValue());");
 			writeLine("}");
 			writeLine("if (maxResults != null){");
-			writeLine("criteria.setMaxResults(maxResults.intValue());");
+			writeLine("query.setMaxResults(maxResults.intValue());");
 			writeLine("}");
-			writeLine("addOrder(criteria, " + CHAR_34 + "id" + CHAR_34 + ", OrderType.DESC);");
-			writeLine("return criteria.list();");
+			writeLine("return query.getResultList();");
 			writeLine("}");
 			skipLine();
 		}
 	}
-
-	
 
 	private void createLoadOneToManyComponent() {
 		
@@ -569,55 +634,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
         }
 	}
 
-	private void createExistsObject() {
-		boolean start = true;
-
-		writeLine("/**");
-		writeLine(" * exists object");
-		writeLine(" */");
-		writeLine("@Override");
-		write("public boolean exists(");
-		for (ViewProperty property:this.bean.referenceViewProperties) {
-			if (start) start = false; else write(", ");
-			write(property.beanDataType + " " + property.name);
-		}
-		writeLine(") {");
-
-		start = true;
-		write("if (");
-		for (ViewProperty property:this.bean.referenceViewProperties) {
-			if (start) start = false; else write(" && ");
-			write(property.name + " == null");
-		}
-		writeLine(") {");
-
-		writeLine("return false;");
-
-		writeLine("}");
-
-		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
-		writeLine(this.bean.className + ".class)");
-
-		for (Alias alias : getReferenceAliases(bean)) {
-			writeLine(".createAlias(" + CHAR_34 + alias.propertyPath + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
-
-		}
-		for (ViewProperty property : this.bean.referenceViewProperties) {
-			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			} else {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			}
-		}
-
-		writeLine(".uniqueResult();");
-		writeLine("return " + this.bean.objectName + " != null;");
-		writeLine("}");
-		skipLine();
-	}
-
 	private void createFindObject() {
 		boolean start = true;
 		List<ViewProperty> findPropertyList = this.bean.referenceViewProperties;
@@ -633,27 +649,32 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		}
 		writeLine(") {");
 
-		write(this.bean.className + " " + this.bean.objectName + " = (" + this.bean.className + ")this.sessionFactory.getCurrentSession().createCriteria(");
-		writeLine(this.bean.className + ".class)");
-
-		for (Alias alias : getReferenceAliases(bean)) {
-			writeLine(".createAlias(" + CHAR_34 + alias.propertyPath + CHAR_34 + "," + CHAR_34 + alias.name + CHAR_34 + ")");
-
+		writeLine("Session session = this.sessionFactory.getCurrentSession();");
+		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+		writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+		skipLine();
+			
+		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
+		for (Alias alias : getReferenceAliases(bean, "")) {
+			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
 		}
-		for (ViewProperty property : findPropertyList) {
-			if (StringUtils.isEmpty(property.joinedAliasName)) {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			} else {
-				writeLine(".add(Restrictions.eq(" + CHAR_34 + property.joinedAliasName + "." + property.lastPropertyName + CHAR_34 + "," + property.name + "))");
-
-			}
+		skipLine();
+		
+		writeLine("List<Predicate> predicates = new ArrayList<>();");		
+		for (ViewProperty property : this.bean.referenceViewProperties) {
+			writeEqualsRestriction(property);
 		}
-
-		writeLine(".uniqueResult();");
-		writeLine("return " + this.bean.objectName + ";");
+			
+		writeLine("criteria.where(predicates.toArray(new Predicate[predicates.size()]));");
+		skipLine();
+		
+		writeLine("criteria.select(root);");
+		skipLine();
+		writeLine("return session.createQuery(criteria).getSingleResult();");
 		writeLine("}");
 		skipLine();
+		
+		
 		
 		start = true;
 		writeLine("/**");
@@ -692,9 +713,43 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("}");
 		writeLine("}");
 		skipLine();
+		
+		
+		start = true;
+		writeLine("/**");
+		writeLine(" * exists object");
+		writeLine(" */");
+		writeLine("@Override");
+		write("public boolean exists(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.beanDataType + " " + property.name);
+		}
+		writeLine(") {");
+
+		start = true;
+		write("if (");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(" && ");
+			write(property.name + " == null");
+		}
+		writeLine(") {");
+
+		writeLine("return false;");
+		writeLine("}");
+
+		start = true;
+		write(this.bean.className + " " + this.bean.objectName + " = findOrNull(");
+		for (ViewProperty property:findPropertyList) {
+			if (start) start = false; else write(", ");
+			write(property.name);
+		}
+		writeLine(");");
+		writeLine("return " + this.bean.objectName + " != null;");
+		writeLine("}");
+		skipLine();
 	}
-	
-	
+
 	private void createSearch() {
 		
 		Property targetProperty = bean.selectionBehavior.targetProperty;
@@ -703,13 +758,27 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * search");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> search(String arg) {");
-		writeLine("Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(" + this.bean.className + ".class);");
-		String propertyPath =  CHAR_34 + "{alias}." + targetProperty.column.name + CHAR_34;
-		writeLine("addStringContainsRestriction(criteria, " + propertyPath + ", arg);");
-		writeLine("criteria.setMaxResults(20);");
-		writeLine("return criteria.list();");
+		writeLine("Session session = this.sessionFactory.getCurrentSession();");
+		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
+		writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
+		skipLine();
+		
+		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
+		skipLine();
+		
+		writeLine("Predicate predicate = getStringContainsRestriction(builder, root.get(\"" + targetProperty.name + "\"), arg);");
+		writeLine("if (predicate!=null){");
+		writeLine("criteria.where(predicate);");
+		writeLine("}");
+		skipLine();
+		
+		writeLine("criteria.select(root);");
+		skipLine();		
+		
+		writeLine("Query<" + this.bean.className + "> query = session.createQuery(criteria);");
+		writeLine("query.setMaxResults(20);");
+		writeLine("return query.getResultList();");
 		writeLine("}");
 		skipLine();
 	}
@@ -743,7 +812,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		}
 	}
 
-
 	private void createDeleteComponent() {
 			
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList){
@@ -776,63 +844,119 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	}
 	
 	
-	
-	
-	
 	private class Alias {
 
-		public String propertyPath;
 		public String propertyName;
 	    public String name;
 	    public String parentName;
-	}
+	    public String beanDataType;
+	    public String parentBeanDataType;
+	}	
 	
-	
-
-	
-	private List<Alias> getReferenceAliases(Bean bean) {
-		return getAliases(bean, bean.cardinality);
-	}
-	
-	private List<Alias> getAllAliases(Bean bean) {
-		return getAliases(bean, bean.properties.size());
-	}
-	
-	private List<Alias> getAliases(Bean bean, int size) {
+	private List<Alias> getAliases(Bean bean, int size, String parentName) {
 		List<Alias> aliasList = new ArrayList<Alias>();
-		List<Alias> tempAliasList = new ArrayList<Alias>();
 
 		for (int i = 0; i < size; i++) {
 			Property currentProperty = bean.properties.get(i);
 			if (currentProperty.visibility.isListVisible() && currentProperty.referenceBean != null && !currentProperty.relation.isComponentLink()) {
 				Alias alias = new Alias();
-				alias.propertyPath = currentProperty.name;
 				alias.propertyName = currentProperty.name;
-				alias.name = currentProperty.name;
-				alias.parentName = null;
+				alias.parentName = StringUtils.isEmpty(parentName)?"root":parentName;
+				alias.name = StringUtils.isEmpty(parentName)?currentProperty.name:parentName+JavaClassNaming.getClassNameFromObjectName(currentProperty.name);
+				alias.parentBeanDataType = bean.className;
+				alias.beanDataType = currentProperty.beanDataType;
 				aliasList.add(alias);
-				
-				tempAliasList = getAliases(currentProperty);
-				for (int j = 0; j < tempAliasList.size(); j++) {
-					Alias tempAlias = tempAliasList.get(j);
-					Alias newAlias = new Alias();
-					newAlias.propertyPath = alias.propertyPath + "." + tempAlias.propertyPath;
-					newAlias.propertyName = tempAlias.propertyName;
-					newAlias.name = alias.name + JavaClassNaming.getClassNameFromObjectName(tempAlias.name);
-					newAlias.parentName = tempAlias.parentName == null?alias.name:alias.name + JavaClassNaming.getClassNameFromObjectName(tempAlias.parentName);
-					aliasList.add(newAlias);
-				}
+				aliasList.addAll(getAliases(currentProperty, alias.name));
 			}
 		}
 
 		return aliasList;
 	}
 	
-	private List<Alias> getAliases(Property property) {
+	private List<Alias> getReferenceAliases(Bean bean, String parentName) {
+		return getAliases(bean, bean.cardinality, parentName);
+	}
+	
+	private List<Alias> getAllAliases(Bean bean, String parentName) {
+		return getAliases(bean, bean.properties.size(), parentName);
+	}
+	
+	private List<Alias> getAliases(Property property, String parentName) {
 		if (property.embedded) {
-			return getAllAliases(property.referenceBean);
+			return getAllAliases(property.referenceBean, parentName);
 		} else {
-			return getReferenceAliases(property.referenceBean);
+			return getReferenceAliases(property.referenceBean, parentName);
 		}
+	}
+	
+	
+	private void writeRestriction(ViewProperty property) {
+		
+		switch (property.dataType) {
+			case BOOLEAN :
+				writeBooleanRestriction(property);
+				return;
+			case SHORT :
+			case INTEGER :
+			case LONG :
+				writeLongRestriction(property);
+				return;
+			case DATE :
+				writeDateRestriction(property);
+				return;
+			case DATETIME :
+				writeDateTimeRestriction(property);
+				return;
+			case DOUBLE :
+				writeDoubleRestriction(property);
+				return;
+			case BIG_DECIMAL :
+				writeBigDecimalRestriction(property);
+				return;
+			case STRING :
+			case TEXT :
+				writeTextRestriction(property);
+				return;
+		}
+	}
+	
+	private void writeTextRestriction(ViewProperty property) {
+		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+		writeLine("addStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "());");
+	}
+	
+	private void writeBooleanRestriction(ViewProperty property) {
+		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+		writeLine("addBooleanRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "());");
+	}
+	
+	private void writeDoubleRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeBigDecimalRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeDateRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeDateTimeRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeLongRestriction(ViewProperty property) {
+		writeComparableRestriction(property);
+	}
+	
+	private void writeComparableRestriction(ViewProperty property) {
+		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+		writeLine("addBetweenRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+	}
+	
+	private void writeEqualsRestriction(ViewProperty property) {
+		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
+		writeLine("addEqualsRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), " + property.name + ");");
 	}
 }

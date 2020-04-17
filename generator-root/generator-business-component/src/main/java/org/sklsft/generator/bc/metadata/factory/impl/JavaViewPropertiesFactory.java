@@ -31,7 +31,6 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.editable = myProperty.editable;
 			viewProperty.filterable = myProperty.filterable;
 			viewProperty.lastPropertyName = myProperty.name;
-			viewProperty.lastColumnName = myProperty.column.name;
 			viewProperty.joinedAliasName = "";				
 			viewProperty.rendering = myProperty.rendering;
 			result.add(viewProperty);
@@ -62,8 +61,8 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
 						viewProperty.filterable = myProperty.embedded?tempProperty.filterable:myProperty.filterable;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
-						viewProperty.lastColumnName = tempProperty.lastColumnName;
 						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
+						viewProperty.referenceBean = tempProperty.referenceBean;
 						viewProperty.selectableBean = tempProperty.selectableBean;					
 						viewProperty.rendering = tempProperty.rendering;
 						result.add(viewProperty);
@@ -85,8 +84,8 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
 					viewProperty.filterable = myProperty.embedded?property.filterable:myProperty.filterable;
 					viewProperty.lastPropertyName = property.name;
-					viewProperty.lastColumnName = property.column.name;
 					viewProperty.joinedAliasName = myProperty.name;
+					viewProperty.referenceBean = myProperty.referenceBean;
 					if (myProperty.referenceBean.selectable) {
 						viewProperty.selectableBean = myProperty.referenceBean;
 					}

@@ -19,13 +19,13 @@ public class ViewProperty {
 	public Visibility visibility;
 	public String rendering;
 	
+	public Bean referenceBean;
 	public Bean selectableBean;
 	
 	public String mappingPath;
 	
 	public String joinedAliasName;
 	public String lastPropertyName;
-	public String lastColumnName;
 	
 	
 	public boolean isComboboxable( ) {
