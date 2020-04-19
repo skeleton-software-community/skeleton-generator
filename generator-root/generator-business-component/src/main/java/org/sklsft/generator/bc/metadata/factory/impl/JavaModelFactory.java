@@ -163,9 +163,6 @@ public class JavaModelFactory implements ModelFactory {
 	private void buildViews(Model model) {
 		for (Package pack:model.getPackages()) {
 			for (Bean bean:pack.beans) {
-				for (Property property:bean.properties) {
-					property.viewProperties = viewPropertiesFactory.getViewProperties(property);
-				}
 				
 				if (bean.detailMode == null) {
 					boolean hasTabsInDetailView = hasTabsInDetailView(bean);
