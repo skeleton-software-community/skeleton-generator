@@ -180,10 +180,10 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 
 		writeLine("@Id");
-		writeLine("@Column(name = " + CHAR_34 + "id" + CHAR_34 + ", nullable = false)");
+		writeLine("@Column(name = \"id\", nullable = false)");
 		if (bean.table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
-			writeLine("@SequenceGenerator(name = " + CHAR_34 + "generator" + CHAR_34 + ", sequenceName = " + CHAR_34 + this.bean.table.name + "_id_seq" + CHAR_34 + ", allocationSize=1)");
-			writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = " + CHAR_34 + "generator" + CHAR_34 + ")");
+			writeLine("@SequenceGenerator(name = \"" + bean.objectName + "IdGenerator\", sequenceName = \"" + this.bean.table.name + "_id_seq" + "\", allocationSize=1)");
+			writeLine("@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = \"" + bean.objectName + "IdGenerator\")");
 		}
 		if (bean.table.idGeneratorType.equals(IdGeneratorType.UUID)) {
 			writeLine("@GeneratedValue(generator=\"uuid\")");
