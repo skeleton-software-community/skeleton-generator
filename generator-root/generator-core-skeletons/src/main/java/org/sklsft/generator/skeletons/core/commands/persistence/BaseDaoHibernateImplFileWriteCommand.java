@@ -339,7 +339,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
 		writeLine("Session session = this.sessionFactory.getCurrentSession();");
@@ -460,10 +459,6 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			
 			writeLine("Root<" + currentBean.className + "> root = criteria.from(" + currentBean.className + ".class);");
 			writeLine("Join<" + oneToManyComponent.referenceProperty.beanDataType + ", " + currentBean.className + "> " + oneToManyComponent.referenceProperty.name + " = root.join(\"" + oneToManyComponent.referenceProperty.name + "\");");
-			for (Alias alias : getAllAliases(currentBean, null)) {
-				writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\");");
-				writeLine(alias.parentName + ".fetch(\"" + alias.propertyName + "\");");
-			}
 			skipLine();
 			
 			writeLine("if (" + bean.objectName + "Id == null){");
