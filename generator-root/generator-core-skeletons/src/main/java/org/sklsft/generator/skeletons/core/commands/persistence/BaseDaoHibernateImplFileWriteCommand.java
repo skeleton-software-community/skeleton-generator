@@ -339,6 +339,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
 		writeLine("@Override");
+		writeLine("@SuppressWarnings(\"unchecked\")");
 		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
 		writeLine("Session session = this.sessionFactory.getCurrentSession();");
@@ -663,7 +664,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		writeLine("criteria.select(root);");
 		skipLine();
-		writeLine("return session.createQuery(criteria).getSingleResult();");
+		writeLine("return session.createQuery(criteria).uniqueResult();");
 		writeLine("}");
 		skipLine();
 		
