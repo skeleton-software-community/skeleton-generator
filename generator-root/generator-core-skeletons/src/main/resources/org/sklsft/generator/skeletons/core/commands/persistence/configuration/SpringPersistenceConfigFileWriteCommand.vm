@@ -25,7 +25,7 @@ public class PersistenceConfig {
 
 	@Bean
     public DataSource dataSource() throws NamingException {
-        return jndiTemplate.lookup("java:comp/env/jdbc/${project.projectName}, DataSource.class");
+        return jndiTemplate.lookup("java:comp/env/jdbc/${project.projectName}", DataSource.class);
     }
 	
 	@Bean
