@@ -30,10 +30,16 @@
 	</context-param>
 	
 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+	        org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+	    </param-value>
+	</context-param>
+	
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:applicationContext-${project.model.restClientArtefactName}.xml
-			classpath:applicationContext-${project.model.webappArtefactName}.xml
+			${project.model.mvcPackageName}.ApplicationConfig
 		</param-value>
 	</context-param>
 

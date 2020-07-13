@@ -53,8 +53,8 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		RestLoggingAspect result = new RestLoggingAspect();
 		result.setAccessLogger(accessLogger);
 		result.setErrorLogger(errorLogger);
-		result.setTraceRequestBody(Boolean.valueOf(env.getProperty("log.traceRequestBody")));
-		result.setTraceResponseBody(Boolean.valueOf(env.getProperty("log.traceResponseBody")));
+		result.setTraceRequestBody(Boolean.valueOf(env.getProperty("accessLog.traceRequestBody")));
+		result.setTraceResponseBody(Boolean.valueOf(env.getProperty("accessLog.traceResponseBody")));
 		return result;
 	}
 }

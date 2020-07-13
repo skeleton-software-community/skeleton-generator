@@ -1,9 +1,17 @@
+# Spring profiles
 spring.profiles.active=server
+
+# Logger settings
 log.directory=/var/log/${project.projectName}
 log.root.level=INFO
 log.app.level=INFO
-log.showSql=false
-log.accessLogsInRootLogger=false
-log.showSql=false
-log.traceRequestBody=true
-log.traceResponseBody=false
+log.accessLogsInRootLogger=true
+
+# Access logs settings
+accessLog.traceRequestBody=true
+accessLog.traceResponseBody=true
+accessLog.traceSentBody=true
+accessLog.traceReceivedBody=true
+
+# Hibernate settings
+hibernate.showSql=false

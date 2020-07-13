@@ -1,8 +1,14 @@
+# Logger settings
 log.directory=/var/log/${project.projectName}
 log.root.level=INFO
 log.app.level=INFO
-log.accessLogsInRootLogger=false
-log.traceRequestBody=true
-log.traceResponseBody=false
-log.traceRequestPayload=true
-log.traceResponsePayload=false
+log.accessLogsInRootLogger=true
+
+# Access logs settings
+accessLog.traceRequestBody=true
+accessLog.traceResponseBody=true
+accessLog.traceSentBody=true
+accessLog.traceReceivedBody=true
+
+# REST client settings
+restServer.url=http://localhost:8080/${project.projectName}-rest

@@ -34,6 +34,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import java.util.Arrays;");
         javaImports.add("import java.util.HashMap;");
         javaImports.add("import java.util.Map;");
+        javaImports.add("import javax.annotation.Resource;");
         javaImports.add("import javax.inject.Inject;");
         javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
@@ -92,7 +93,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * properties injected by spring");
 		writeLine(" */");
 		
-		writeLine("@Inject");
+		writeLine("@Resource(name=\"" + bean.myPackage.model.project.projectName + "RestClient\")");
 		writeLine("private RestClient restClient;");
 		
 		

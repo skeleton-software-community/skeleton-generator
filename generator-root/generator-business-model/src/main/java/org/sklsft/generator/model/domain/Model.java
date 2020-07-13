@@ -62,6 +62,7 @@ public class Model {
 	
 	public String restControllerPackageName;
 	
+	public String mvcPackageName;
 	public String controllerPackageName;
 	public String mvcModelPackageName;
 	public String mvcFilterPackageName;
@@ -266,6 +267,12 @@ public class Model {
 	}
 	public void setRestControllerPackageName(String restControllerPackageName) {
 		this.restControllerPackageName = restControllerPackageName;
+	}
+	public String getMvcPackageName() {
+		return mvcPackageName;
+	}
+	public void setMvcPackageName(String mvcPackageName) {
+		this.mvcPackageName = mvcPackageName;
 	}
 	public String getControllerPackageName() {
 		return controllerPackageName;

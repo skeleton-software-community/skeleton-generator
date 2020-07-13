@@ -7,7 +7,7 @@ import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.BaseRestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.RestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientPomFileWriteCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientSpringContextFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
 public class SpringRestClientLayer extends AbstractLayer {
@@ -33,7 +33,7 @@ public class SpringRestClientLayer extends AbstractLayer {
 		FileWriteCommandTreeNode pomTreeNode = new FileWriteCommandTreeNode(new SpringRestClientPomFileWriteCommand(project));
 		configurationTreeNode.add(pomTreeNode);
 		
-		FileWriteCommandTreeNode springContextTreeNode = new FileWriteCommandTreeNode(new SpringRestClientSpringContextFileWriteCommand(project));
+		FileWriteCommandTreeNode springContextTreeNode = new FileWriteCommandTreeNode(new SpringRestClientConfigFileWriteCommand(project));
 		configurationTreeNode.add(springContextTreeNode);
 		
 		return configurationTreeNode;
