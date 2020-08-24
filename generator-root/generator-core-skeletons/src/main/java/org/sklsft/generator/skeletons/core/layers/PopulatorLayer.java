@@ -4,8 +4,10 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.skeletons.core.commands.population.BeanPopulatorCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.OneToManyComponentPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponentPopulatorCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.LogbackPopulatorFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorPomFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorProjectPropertiesFileWriteCommand;
@@ -79,6 +81,12 @@ public class PopulatorLayer extends AbstractLayer {
                     {
                         FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new OneToManyComponentPopulatorCommandFileWriteCommand(oneToManyComponent));
                         packageTreeNode.add(oneToManyComponentTreeNode);
+                    }
+                    
+                    for (OneToOneComponent oneToOneComponent : bean.oneToOneComponentList)
+                    {
+                        FileWriteCommandTreeNode oneToOneComponentTreeNode = new FileWriteCommandTreeNode(new OneToOneComponentPopulatorCommandFileWriteCommand(oneToOneComponent));
+                        packageTreeNode.add(oneToOneComponentTreeNode);
                     }
                 }
             }
