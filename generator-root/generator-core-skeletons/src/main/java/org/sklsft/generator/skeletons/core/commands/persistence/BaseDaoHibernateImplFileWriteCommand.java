@@ -38,6 +38,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 
 		
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");

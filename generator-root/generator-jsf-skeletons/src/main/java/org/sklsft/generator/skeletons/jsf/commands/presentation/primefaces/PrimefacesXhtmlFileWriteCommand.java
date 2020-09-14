@@ -23,8 +23,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 			break;
 			
 		case DATE:
-			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\">");			
-			writeLine("<f:convertDateTime pattern=\"yyyy-MM-dd\"/>");
+			writeLine("<h:outputText value=\"#{" + bean.objectName + "." + property.name + "}\" converter=\"localDateConverter\">");
 			writeLine("</h:outputText>");
 
 			break;
@@ -241,7 +240,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("<p:calendar id=\"" + prefix + bean.objectName + property.capName +
 				"\" class=\"form-control date-picker\" value=\"#{form." + property.name + "}\"");
 
-		write(" pattern=\"yyyy-MM-dd\" mask=\"true\"");
+		write(" pattern=\"yyyy-MM-dd\" mask=\"true\" navigator=\"true\"");
 				
 		if (!property.editable) {
 			skipLine();
@@ -255,7 +254,7 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 		writeLine("<p:calendar id=\"" + prefix + bean.objectName + property.capName +
 				"\" class=\"form-control date-picker\" value=\"#{form." + property.name + "}\"");
 
-		write(" pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\"");
+		write(" pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\" navigator=\"true\"");
 				
 		if (!property.editable) {
 			skipLine();
@@ -286,12 +285,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 			case DATE:				
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
+				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\" navigator=\"true\">");
 				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\">");
+				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\" navigator=\"true\">");
 				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;
@@ -299,12 +298,12 @@ public abstract class PrimefacesXhtmlFileWriteCommand extends XhtmlFileWriteComm
 			case DATETIME:				
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
+				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\" navigator=\"true\">");
 				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
 				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\">");
+				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\" navigator=\"true\">");
 				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
 				writeLine("</p:calendar>");
 				break;

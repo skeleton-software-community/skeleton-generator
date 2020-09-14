@@ -44,6 +44,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		}
 		javaImports.add("import java.util.Set;");
 		javaImports.add("import java.util.Date;");
+		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.io.Serializable;");
 		javaImports.add("import javax.persistence.CascadeType;");
@@ -227,9 +228,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					skipLine();
 				}
 			} else {
-				if (property.dataType.equals(DataType.DATE)) {
-					writeLine("@Temporal(TemporalType.DATE)");
-				}
 				if (property.dataType.equals(DataType.DATETIME)) {
 					writeLine("@Temporal(TemporalType.TIMESTAMP)");
 				}
