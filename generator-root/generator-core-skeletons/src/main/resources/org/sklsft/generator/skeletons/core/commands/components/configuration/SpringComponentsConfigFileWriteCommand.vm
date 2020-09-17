@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
 public class ComponentsConfig {
@@ -16,6 +18,8 @@ public class ComponentsConfig {
 	public ObjectMapper objectMapper() {
 		ObjectMapper result = new ObjectMapper();
 		result.setSerializationInclusion(Include.NON_NULL);
+		result.registerModule(new JavaTimeModule());
+		result.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		return result;
 	}
 	
