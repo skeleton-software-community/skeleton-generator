@@ -23,7 +23,6 @@ import org.sklsft.generator.exception.ProjectAlreadyConfiguredException;
 import org.sklsft.generator.exception.ProjectInitFailureException;
 import org.sklsft.generator.exception.ProjectNotFoundException;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
@@ -144,10 +143,10 @@ public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 
 
 	@Override
-	public void persistDatasourceContext(ProjectMetaData project, DataSourceMetaData datasource) {
+	public void persistDatasourceContext(ProjectMetaData project) {
 		
 		try {
-			dataSourceContextInitializer.init(datasource, project.getSourceFolder());
+			dataSourceContextInitializer.init(project.getDataSource(), project.getSourceFolder());
 		} catch (IOException e) {
 			throw new InvalidProjectMetaDataException("Failed to write datasource-context.xml", e);
 		}

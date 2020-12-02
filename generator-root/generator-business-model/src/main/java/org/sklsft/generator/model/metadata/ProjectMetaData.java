@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
+
 
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -37,6 +39,9 @@ public class ProjectMetaData {
     private String databaseEngine;
 	@XmlElement(defaultValue="false")
     private boolean audited = false;
+	
+	@XmlTransient
+	private DataSourceMetaData DataSource = new DataSourceMetaData();
     
 	@XmlElementWrapper(name="packages")
 	@XmlElement(name="package")
@@ -93,6 +98,12 @@ public class ProjectMetaData {
 	}
 	public void setAudited(boolean audited) {
 		this.audited = audited;
+	}
+	public DataSourceMetaData getDataSource() {
+		return DataSource;
+	}
+	public void setDataSource(DataSourceMetaData dataSource) {
+		DataSource = dataSource;
 	}
 	public List<PackageMetaData> getPackages() {
 		return packages;

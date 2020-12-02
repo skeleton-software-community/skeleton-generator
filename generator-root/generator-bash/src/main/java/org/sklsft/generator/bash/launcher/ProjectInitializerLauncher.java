@@ -54,10 +54,24 @@ public class ProjectInitializerLauncher {
 			
 			ProjectMetaData projectMetaData = buildProjectMetaData(args);
 			DataSourceMetaData datasource = buildDataSource(args);
+			projectMetaData.setDataSource(datasource);
 			
 			Project project;
 			
-			CodeGenerator codeGenerator = appContext.getBean(CodeGenerator.class);
+			CodeGenerator codeGenerator = appContext.getBean(CodeGenerator.class);			
+			
+			try {
+				logger.info("start persisting project");
+				
+				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
+				projectMetaDataService.initProjectMetaData(projectMetaData);				
+				
+				logger.info("persisting project completed");
+					
+			} catch (Exception e) {
+				logger.error("failed", e);
+				return;
+			}
 			
 			try {
 				logger.info("start loading project");
@@ -66,19 +80,6 @@ public class ProjectInitializerLauncher {
 				project = projectLoader.loadProject(projectMetaData);
 				
 				logger.info("loading project " + project.projectName + " completed");
-					
-			} catch (Exception e) {
-				logger.error("failed", e);
-				return;
-			}
-			
-			try {
-				logger.info("start persisting project");
-				
-				ProjectMetaDataService projectMetaDataService = appContext.getBean(ProjectMetaDataService.class);
-				projectMetaDataService.initProjectMetaData(projectMetaData, datasource);				
-				
-				logger.info("persisting project completed");
 					
 			} catch (Exception e) {
 				logger.error("failed", e);

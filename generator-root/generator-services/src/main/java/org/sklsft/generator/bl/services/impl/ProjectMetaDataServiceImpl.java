@@ -7,7 +7,6 @@ import org.sklsft.generator.bc.validation.ProjectMetaDataValidator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
 import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
 import org.sklsft.generator.skeletons.database.DatabaseHandler;
@@ -54,7 +53,11 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	
 	
 	@Override
-	public void initProjectMetaData(ProjectMetaData projectMetaData, DataSourceMetaData datasource) {
+	public void initProjectMetaData(ProjectMetaData projectMetaData) {
+		
+		DatabaseHandler databaseHandler = DatabaseHandlerResolver.getDatabaseHandler(projectMetaData.getDatabaseEngine());
+		projectMetaData.getDataSource().setDriverClassName(databaseHandler.getDriverClassName());
+		projectMetaData.getDataSource().setUrl(databaseHandler.getUrl(projectMetaData.getDataSource()));
 		
 		logger.info("start initializing project");
 		projectMetaDataDao.initProject(projectMetaData);
@@ -65,10 +68,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		logger.info("end persisting meta data");
 		
 		logger.info("start persisting datasource context");
-		DatabaseHandler databaseHandler = DatabaseHandlerResolver.getDatabaseHandler(projectMetaData.getDatabaseEngine());
-		datasource.setDriverClassName(databaseHandler.getDriverClassName());
-		datasource.setUrl(databaseHandler.getUrl(datasource));		
-		projectMetaDataDao.persistDatasourceContext(projectMetaData, datasource);
+		projectMetaDataDao.persistDatasourceContext(projectMetaData);
 		logger.info("end persisting datasource context");
 	}
 }

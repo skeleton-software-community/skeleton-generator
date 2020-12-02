@@ -2,6 +2,8 @@ package org.sklsft.generator.model.domain;
 
 import java.io.File;
 
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
+
 
 /**
  * Full representation of a project<br/>
@@ -24,6 +26,8 @@ public class Project {
 	public String skeleton;
 	public String databaseEngine;
 	public boolean audited;
+	
+	public DataSourceMetaData dataSource;
     
 	public Model model;
 
