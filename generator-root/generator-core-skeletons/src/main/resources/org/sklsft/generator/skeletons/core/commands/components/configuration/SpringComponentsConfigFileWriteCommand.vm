@@ -1,10 +1,13 @@
 package ${project.model.componentsPackageName};
 
+import javax.inject.Inject;
+
 import org.sklsft.commons.log.AccessLogger;
 import org.sklsft.commons.log.ErrorLogger;
 import org.sklsft.commons.text.serialization.JsonSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +16,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
 public class ComponentsConfig {
+
+	@Inject
+	private Environment env;
 
 	@Bean
 	public ObjectMapper objectMapper() {
@@ -37,7 +43,9 @@ public class ComponentsConfig {
 	
 	@Bean
 	public ErrorLogger errorLogger() {
-		ErrorLogger result = new ErrorLogger(jsonSerializer());
+		ErrorLogger result = new ErrorLogger();
+		result.setSerializer(jsonSerializer());
+		result.setPrintErrorStackInRootLogger(env.getRequiredProperty("log.errorLogsInRootLogger", Boolean.class));
 		return result;
 	}
 }

@@ -1,0 +1,17 @@
+# Spring profiles
+spring.profiles.active=server
+
+# Access logs settings
+accessLog.traceRequestBody=true
+accessLog.traceResponseBody=true
+accessLog.traceSentBody=true
+accessLog.traceReceivedBody=true
+
+# DB
+db.driverClassName=${project.dataSource.driverClassName}
+db.url=${project.dataSource.url}
+db.userName=${project.dataSource.userName}
+db.password=${project.dataSource.password}
+
+# Hibernate settings
+hibernate.showSql=false

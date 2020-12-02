@@ -2,8 +2,8 @@ package org.sklsft.generator.skeletons.core.layers;
 
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.LogbackTestFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestsConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringJUnitPersistenceConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestsConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPomFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.resources.JUnitDataInitializerFileWriteCommand;

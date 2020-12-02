@@ -2,6 +2,8 @@ package org.sklsft.generator.model.domain;
 
 import java.io.File;
 
+import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
+
 
 /**
  * Full representation of a project<br/>
@@ -24,6 +26,8 @@ public class Project {
 	public String skeleton;
 	public String databaseEngine;
 	public boolean audited;
+	
+	public DataSourceMetaData dataSource;
     
 	public Model model;
 
@@ -72,6 +76,12 @@ public class Project {
 	}
 	public void setAudited(boolean audited) {
 		this.audited = audited;
+	}
+	public DataSourceMetaData getDataSource() {
+		return dataSource;
+	}
+	public void setDataSource(DataSourceMetaData dataSource) {
+		this.dataSource = dataSource;
 	}
 	public Model getModel() {
 		return model;

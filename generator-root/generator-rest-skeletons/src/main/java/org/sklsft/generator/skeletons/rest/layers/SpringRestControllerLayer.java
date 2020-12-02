@@ -6,9 +6,10 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.SpringRestBaseControllerCommand;
 import org.sklsft.generator.skeletons.rest.commands.SpringRestControllerCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLogbackFileWriteCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestApplicationConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLogbackFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestProjectLocalPropertiesFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestWarPomFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestWebXmlFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
@@ -33,6 +34,9 @@ public class SpringRestControllerLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new SpringRestProjectPropertiesFileWriteCommand(project));
 		configurationTreeNode.add(propertiesTreeNode);
+		
+		FileWriteCommandTreeNode localPropertiesTreeNode = new FileWriteCommandTreeNode(new SpringRestProjectLocalPropertiesFileWriteCommand(project));
+		configurationTreeNode.add(localPropertiesTreeNode);
 		
 		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new SpringRestLogbackFileWriteCommand(project));
 		configurationTreeNode.add(logbackTreeNode);

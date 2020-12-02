@@ -1,7 +1,6 @@
 package org.sklsft.generator.repository.metadata.interfaces;
 
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 
 /**
  * provides methods to :
@@ -25,5 +24,5 @@ public interface ProjectMetaDataDao {
 	
 	void persistProjectMetaData(ProjectMetaData projectMetaData);
 	
-	void persistDatasourceContext(ProjectMetaData projectMetaData, DataSourceMetaData datasource);
+	void persistDatasourceContext(ProjectMetaData projectMetaData);
 }

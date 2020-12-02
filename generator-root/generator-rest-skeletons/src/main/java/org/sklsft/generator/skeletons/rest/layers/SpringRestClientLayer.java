@@ -6,8 +6,8 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.rest.commands.BaseRestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.RestClientFileWriteCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientPomFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestClientPomFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
 public class SpringRestClientLayer extends AbstractLayer {

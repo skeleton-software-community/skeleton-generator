@@ -31,7 +31,7 @@ public interface ProjectMetaDataService {
 	 * to initialize a project from a @{link ProjectMetaData} and a @{link {@link DataSourceMetaData}
 	 * <li>Checks that no project exists in the given folder
 	 * <li>Create the necessary folders, the skeleton.xsd, skeleton.xml and datasource-context.xml files
-	 * @param projectMetaData, datasource
+	 * @param projectMetaData
 	 */
-	void initProjectMetaData(ProjectMetaData projectMetaData, DataSourceMetaData datasource);
+	void initProjectMetaData(ProjectMetaData projectMetaData);
 }
