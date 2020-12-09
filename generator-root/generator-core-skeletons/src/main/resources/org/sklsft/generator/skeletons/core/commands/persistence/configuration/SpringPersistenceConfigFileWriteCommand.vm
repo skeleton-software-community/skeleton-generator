@@ -24,9 +24,14 @@ public class PersistenceConfig {
 	private JndiTemplate jndiTemplate;
 
 	@Bean
-    public DataSource dataSource() throws NamingException {
-        return jndiTemplate.lookup("java:comp/env/jdbc/${project.projectName}", DataSource.class);
-    }
+    public DataSource dataSource() {
+		BasicDataSource result = new BasicDataSource();
+		result.setDriverClassName(env.getRequiredProperty("db.driverClassName"));
+		result.setUrl(env.getRequiredProperty("db.url"));
+		result.setUsername(env.getRequiredProperty("db.userName"));
+		result.setPassword(env.getRequiredProperty("db.password"));
+		return result;
+     }
 	
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() throws NamingException {
@@ -36,7 +41,7 @@ public class PersistenceConfig {
 		result.setDataSource(dataSource());
 		
 		Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.showSql"));
+		hibernateProperties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.showSql"));
 		result.setHibernateProperties(hibernateProperties);
 		
 		return result;
