@@ -74,9 +74,7 @@
 		<junit.version>4.13</junit.version>		
 		<velocity.version>1.7</velocity.version>
 		
-		<postgresql.version>9.4.1208</postgresql.version>
-		<ojdbc.version>11.2.0.3</ojdbc.version>
-		
+		<postgresql.version>42.2.18</postgresql.version>
 		<commons.lang.version>2.5</commons.lang.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<commons.io.version>2.4</commons.io.version>		
@@ -155,14 +153,7 @@
 			</dependency>
 			
 			
-			<!-- drivers-->
-			<dependency>
-				<groupId>com.oracle</groupId>
-				<artifactId>ojdbc6</artifactId>
-				<version>${ojdbc.version}</version>
-				<scope>runtime</scope>
-			</dependency>
-			
+			<!-- jdbc drivers -->
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>

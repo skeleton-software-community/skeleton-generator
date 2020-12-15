@@ -4,6 +4,8 @@ spring.profiles.active=junit
 # Logger settings
 log.root.level=INFO
 log.app.level=INFO
+log.accessLogsInRootLogger=true
+log.errorLogsInRootLogger=true
 
 # Hibernate settings
 hibernate.showSql=false

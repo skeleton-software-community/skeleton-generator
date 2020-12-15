@@ -4,7 +4,7 @@ CREATE SCHEMA public;
 -------------------------------------------------------------
 ---- FUNCTION normalize : unaccent and lowercase  ----
 -------------------------------------------------------------
-CREATE OR REPLACE FUNCTION normalize(text)
+CREATE OR REPLACE FUNCTION "normalize"(text)
 RETURNS text
 IMMUTABLE
 STRICT
