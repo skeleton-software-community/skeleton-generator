@@ -77,6 +77,12 @@ public class Project {
 	public void setAudited(boolean audited) {
 		this.audited = audited;
 	}
+	public DataSourceMetaData getDataSource() {
+		return dataSource;
+	}
+	public void setDataSource(DataSourceMetaData dataSource) {
+		this.dataSource = dataSource;
+	}
 	public Model getModel() {
 		return model;
 	}
