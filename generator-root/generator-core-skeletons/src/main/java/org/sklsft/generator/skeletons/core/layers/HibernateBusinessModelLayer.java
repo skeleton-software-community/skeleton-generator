@@ -4,6 +4,7 @@ import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.core.commands.model.EntityBeanFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.model.EntityMetaModelFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.model.configuration.ModelPomFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.model.resources.AuditEntityFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.model.resources.AuditListenerFileWriteCommand;
@@ -57,6 +58,9 @@ public class HibernateBusinessModelLayer extends AbstractLayer {
 			for (Bean bean : myPackage.beans) {
 				FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new EntityBeanFileWriteCommand(bean));
 				omTreeNode.add(beanTreeNode);
+				
+				FileWriteCommandTreeNode beanMetaModelTreeNode = new FileWriteCommandTreeNode(new EntityMetaModelFileWriteCommand(bean));
+				omTreeNode.add(beanMetaModelTreeNode);
 			}
 		}
 

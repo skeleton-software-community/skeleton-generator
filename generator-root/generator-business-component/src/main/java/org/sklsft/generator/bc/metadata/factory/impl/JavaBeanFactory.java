@@ -45,8 +45,8 @@ public class JavaBeanFactory implements BeanFactory {
 			bean.selectable = true;
 		}
 
-		bean.className = JavaClassNaming.getClassName(table.originalName);
-		bean.objectName = JavaClassNaming.getObjectName(table.originalName);
+		bean.className = JavaClassNaming.toClassName(table.originalName);
+		bean.objectName = JavaClassNaming.toObjectName(table.originalName);
 		bean.urlPiece = JavaClassNaming.getUrlPiece(table.originalName);
 
 		bean.baseDaoClassName = bean.className + "BaseDaoImpl";
@@ -106,14 +106,14 @@ public class JavaBeanFactory implements BeanFactory {
 
 			if (column.referenceTable != null) {
 				property.name = JavaClassNaming
-						.getObjectName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
+						.toObjectName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
 				property.capName = JavaClassNaming
-						.getClassName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
+						.toClassName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
 				property.referenceBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
 				property.beanDataType = property.referenceBean.className;
 			} else {
-				property.name = JavaClassNaming.getObjectName(column.originalName);
-				property.capName = JavaClassNaming.getClassName(column.originalName);
+				property.name = JavaClassNaming.toObjectName(column.originalName);
+				property.capName = JavaClassNaming.toClassName(column.originalName);
 				property.beanDataType = column.dataType.getJavaType();
 
 			}

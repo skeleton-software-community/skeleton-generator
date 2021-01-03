@@ -51,7 +51,7 @@ public class BackupCommandFactory {
 		
 		BackupArgumentReader argumentReader = readerFactory.getBackupArgumentReader(mode, inputDataSourceProvider);
 		
-		BackupArgumentsCommand command = backupArgumentsCommandFactory.getCommand(JavaClassNaming.getObjectName(table.originalName) + "Command");
+		BackupArgumentsCommand command = backupArgumentsCommandFactory.getCommand(JavaClassNaming.toObjectName(table.originalName) + "Command");
 		
 		return new BackupCommandWithArgumentsImpl(argumentReader, command);
 	}

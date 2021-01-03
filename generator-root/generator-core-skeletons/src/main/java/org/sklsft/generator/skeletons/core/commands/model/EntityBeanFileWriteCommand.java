@@ -112,7 +112,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		skipLine();
 
 		writeLine("@Entity");
 		if (bean.myPackage.model.project.audited) {

@@ -15,11 +15,18 @@
 	
 	<dependencies>
 	
-		<!-- gestion des logs -->	
+		<!-- logs -->	
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+		
+		<!-- Junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		
 	</dependencies>
-
+	
 </project>
