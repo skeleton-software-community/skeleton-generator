@@ -60,10 +60,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.sklsft.commons.api.exception.repository.ObjectNotFoundException;");
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDaoImpl;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
+		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + "_;");
 		for (ViewProperty viewProperty:this.bean.basicViewBean.properties) {
 			if (viewProperty.referenceBean!=null) {
 				Bean currentBean = viewProperty.referenceBean;
 				javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+				javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + "_;");
 			}
 		}
 		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
@@ -73,6 +75,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + "_;");
 			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
@@ -80,6 +83,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
 			Bean currentBean = oneToOneComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
+			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + "_;");
 		}
 	}
 
@@ -148,13 +152,13 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
 		for (Alias alias : getAllAliases(bean, null)) {
-			writeLine("Fetch<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".fetch(\"" + alias.propertyName + "\", JoinType.LEFT);");
+			writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = " + alias.parentName + ".fetch(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 		}
 		skipLine();
 		
 		writeLine("criteria.select(root);");
 		writeLine("List<Order> orders = new ArrayList<>();");		
-		writeLine("addOrder(builder, orders, root.get(\"id\"), OrderType.DESC);");
+		writeLine("addOrder(builder, orders, root.get(" + bean.className + "_.id), OrderType.DESC);");
 		writeLine("criteria.orderBy(orders);");
 		skipLine();
 		writeLine("return session.createQuery(criteria).getResultList();");
@@ -176,13 +180,13 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				skipLine();
 				
 				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
-				writeLine("Join<" + property.beanDataType + ", " + bean.className + "> " + property.name + " = root.join(\"" + property.name + "\", JoinType.LEFT);");
+				writeLine("Join<" + bean.className + ", " + property.beanDataType + "> " + property.name + " = root.join(" + bean.className + "_." + property.name + ", JoinType.LEFT);");
 				skipLine();
 				
 				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.where(builder.isNull(" + property.name + ".get(\"id\")));");
+				writeLine("criteria.where(builder.isNull(" + property.name + ".get(" + property.beanDataType + "_.id)));");
 				writeLine("} else {");
-				writeLine("criteria.where(builder.equal(" + property.name + ".get(\"id\"), " + property.name + "Id));");
+				writeLine("criteria.where(builder.equal(" + property.name + ".get(" + property.beanDataType + "_.id), " + property.name + "Id));");
 				writeLine("}");				
 				skipLine();
 				
@@ -210,14 +214,14 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
 				for (Alias alias : getAllAliases(bean, null)) {
-					writeLine("Fetch<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".fetch(\"" + alias.propertyName + "\", JoinType.LEFT);");
+					writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = " + alias.parentName + ".fetch(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 				}
 				skipLine();
 				
 				writeLine("if (" + property.name + "Id == null){");
-				writeLine("criteria.where(builder.isNull(((Join<" + property.beanDataType + "," + bean.className + ">)" + property.name + ").get(\"id\")));");
+				writeLine("criteria.where(builder.isNull(((Join<" + bean.className + "," + property.beanDataType + ">)" + property.name + ").get(\"id\")));");
 				writeLine("} else {");
-				writeLine("criteria.where(builder.equal(((Join<" + property.beanDataType + "," + bean.className + ">)" + property.name + ").get(\"id\"), " + property.name + "Id));");
+				writeLine("criteria.where(builder.equal(((Join<" + bean.className + "," + property.beanDataType + ">)" + property.name + ").get(\"id\"), " + property.name + "Id));");
 				writeLine("}");				
 				skipLine();
 				
@@ -249,7 +253,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
 		for (Alias alias : getAllAliases(bean, null)) {
-			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\", JoinType.LEFT);");
+			writeLine("Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = " + alias.parentName + ".join(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 		}
 		skipLine();
 		
@@ -282,7 +286,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				skipLine();
 				
 				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
-				writeLine("Join<" + property.beanDataType + ", " + bean.className + "> " + property.name + " = root.join(\"" + property.name + "\", JoinType.LEFT);");
+				writeLine("Join<" + bean.className + ", " + property.beanDataType + "> " + property.name + " = root.join(" + bean.className + "_." + property.name + ", JoinType.LEFT);");
 				skipLine();
 				
 				writeLine("if (" + property.name + "Id == null){");
@@ -309,7 +313,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
 				for (Alias alias : getAllAliases(bean, null)) {
-					writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\", JoinType.LEFT);");
+					writeLine("Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = " + alias.parentName + ".join(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 				}
 				skipLine();
 				
