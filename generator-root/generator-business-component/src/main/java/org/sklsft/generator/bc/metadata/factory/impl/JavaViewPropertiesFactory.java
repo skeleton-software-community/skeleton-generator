@@ -15,53 +15,55 @@ import org.springframework.stereotype.Component;
 @Component("javaViewPropertiesFactory")
 public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 
-	public List<ViewProperty> getViewProperties(Property myProperty) {
+	private List<ViewProperty> getViewProperties(Property property, Bean bean) {
 
 		List<ViewProperty> result = new ArrayList<>();
 		
-		if (myProperty.referenceBean == null) {
+		if (property.referenceBean == null) {
 			ViewProperty viewProperty = new ViewProperty();
-			viewProperty.name = myProperty.name;
-			viewProperty.capName = myProperty.capName;
-			viewProperty.mappingPath = myProperty.getterName + "()";
-			viewProperty.beanDataType = myProperty.beanDataType;
-			viewProperty.dataType = myProperty.dataType;
-			viewProperty.nullable = myProperty.nullable;
-			viewProperty.visibility = myProperty.visibility;
-			viewProperty.editable = myProperty.editable;
-			viewProperty.filterable = myProperty.filterable;
-			viewProperty.lastPropertyName = myProperty.name;
+			viewProperty.name = property.name;
+			viewProperty.capName = property.capName;
+			viewProperty.mappingPath = property.getterName + "()";
+			viewProperty.beanDataType = property.beanDataType;
+			viewProperty.dataType = property.dataType;
+			viewProperty.nullable = property.nullable;
+			viewProperty.visibility = property.visibility;
+			viewProperty.editable = property.editable;
+			viewProperty.filterable = property.filterable;
+			viewProperty.lastPropertyName = property.name;
+			viewProperty.lastParentBeanClassName = bean.className;
 			viewProperty.joinedAliasName = "";				
-			viewProperty.rendering = myProperty.rendering;
+			viewProperty.rendering = property.rendering;
 			result.add(viewProperty);
 		} else {
 			
-			int limit = myProperty.embedded?myProperty.referenceBean.properties.size():myProperty.referenceBean.cardinality;
+			int limit = property.embedded?property.referenceBean.properties.size():property.referenceBean.cardinality;
 			
 			for (int i = 0; i < limit; i++) {
 				
-				Property property = myProperty.referenceBean.properties.get(i);
+				Property referenceBeanProperty = property.referenceBean.properties.get(i);
 				
-				if (property.referenceBean != null) {
-					List<ViewProperty> tempPropertyList = getViewProperties(property);
+				if (referenceBeanProperty.referenceBean != null) {
+					List<ViewProperty> tempPropertyList = getViewProperties(referenceBeanProperty, property.referenceBean);
 					for (ViewProperty tempProperty:tempPropertyList) {
 						ViewProperty viewProperty = new ViewProperty();
-						if (myProperty.embedded) {
+						if (property.embedded) {
 							viewProperty.name = tempProperty.name;
 							viewProperty.capName = tempProperty.capName;
 						} else {
-							viewProperty.name = myProperty.name + tempProperty.capName;
-							viewProperty.capName = myProperty.capName + tempProperty.capName;
+							viewProperty.name = property.name + tempProperty.capName;
+							viewProperty.capName = property.capName + tempProperty.capName;
 						}
-						viewProperty.mappingPath = myProperty.getterName + "()." + tempProperty.mappingPath;
+						viewProperty.mappingPath = property.getterName + "()." + tempProperty.mappingPath;
 						viewProperty.beanDataType = tempProperty.beanDataType;
 						viewProperty.dataType = tempProperty.dataType;
-						viewProperty.nullable = myProperty.nullable || tempProperty.nullable;
-						viewProperty.visibility = Visibility.min(myProperty.visibility, tempProperty.visibility);
-						viewProperty.editable = myProperty.embedded?tempProperty.editable:myProperty.editable;
-						viewProperty.filterable = myProperty.embedded?tempProperty.filterable:myProperty.filterable;
+						viewProperty.nullable = property.nullable || tempProperty.nullable;
+						viewProperty.visibility = Visibility.min(property.visibility, tempProperty.visibility);
+						viewProperty.editable = property.embedded?tempProperty.editable:property.editable;
+						viewProperty.filterable = property.embedded?tempProperty.filterable:property.filterable;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
-						viewProperty.joinedAliasName = myProperty.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
+						viewProperty.lastParentBeanClassName = tempProperty.lastParentBeanClassName;
+						viewProperty.joinedAliasName = property.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
 						viewProperty.referenceBean = tempProperty.referenceBean;
 						viewProperty.selectableBean = tempProperty.selectableBean;					
 						viewProperty.rendering = tempProperty.rendering;
@@ -69,33 +71,34 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					}
 				} else {
 					ViewProperty viewProperty = new ViewProperty();
-					if (myProperty.embedded) {
-						viewProperty.name = property.name;
-						viewProperty.capName = property.capName;
+					if (property.embedded) {
+						viewProperty.name = referenceBeanProperty.name;
+						viewProperty.capName = referenceBeanProperty.capName;
 					} else {
-						viewProperty.name = myProperty.name + property.capName;
-						viewProperty.capName = myProperty.capName + property.capName;
+						viewProperty.name = property.name + referenceBeanProperty.capName;
+						viewProperty.capName = property.capName + referenceBeanProperty.capName;
 					}
-					viewProperty.mappingPath = myProperty.getterName + "()." + property.getterName + "()";
-					viewProperty.beanDataType = property.beanDataType;
-					viewProperty.dataType = property.dataType;
-					viewProperty.nullable = myProperty.nullable || property.nullable;
-					viewProperty.visibility = Visibility.min(myProperty.visibility, property.visibility);
-					viewProperty.editable = myProperty.embedded?property.editable:myProperty.editable;
-					viewProperty.filterable = myProperty.embedded?property.filterable:myProperty.filterable;
-					viewProperty.lastPropertyName = property.name;
-					viewProperty.joinedAliasName = myProperty.name;
-					viewProperty.referenceBean = myProperty.referenceBean;
-					if (myProperty.referenceBean.selectable) {
-						viewProperty.selectableBean = myProperty.referenceBean;
+					viewProperty.mappingPath = property.getterName + "()." + referenceBeanProperty.getterName + "()";
+					viewProperty.beanDataType = referenceBeanProperty.beanDataType;
+					viewProperty.dataType = referenceBeanProperty.dataType;
+					viewProperty.nullable = property.nullable || referenceBeanProperty.nullable;
+					viewProperty.visibility = Visibility.min(property.visibility, referenceBeanProperty.visibility);
+					viewProperty.editable = property.embedded?referenceBeanProperty.editable:property.editable;
+					viewProperty.filterable = property.embedded?referenceBeanProperty.filterable:property.filterable;
+					viewProperty.lastPropertyName = referenceBeanProperty.name;
+					viewProperty.lastParentBeanClassName = property.beanDataType;
+					viewProperty.joinedAliasName = property.name;
+					viewProperty.referenceBean = property.referenceBean;
+					if (property.referenceBean.selectable) {
+						viewProperty.selectableBean = property.referenceBean;
 					}
-					if (myProperty.referenceBean.cardinality == 1) {
-						viewProperty.rendering = myProperty.rendering;
+					if (property.referenceBean.cardinality == 1) {
+						viewProperty.rendering = property.rendering;
 					} else {
-						if (myProperty.embedded) {
-							viewProperty.rendering = property.rendering;
+						if (property.embedded) {
+							viewProperty.rendering = referenceBeanProperty.rendering;
 						} else {
-							viewProperty.rendering = myProperty.rendering + "(" + property.rendering + ")";
+							viewProperty.rendering = property.rendering + "(" + referenceBeanProperty.rendering + ")";
 						}
 					}
 					
@@ -118,7 +121,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 		
 		for (int i = 0; i < bean.cardinality; i++) {
 			Property property = bean.properties.get(i);
-			result.addAll(property.viewProperties);
+			result.addAll(getViewProperties(property, bean));
 		}
 
 		return result;
@@ -146,7 +149,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 		
 		for (Property property:bean.properties) {
 			if (!property.relation.isComponentLink() && !property.name.equals(excludedFieldName)) {
-				result.addAll(property.viewProperties);
+				result.addAll(getViewProperties(property, bean));
 			}			
 		}
 

@@ -25,6 +25,7 @@ public class ViewProperty {
 	public String mappingPath;
 	
 	public String joinedAliasName;
+	public String lastParentBeanClassName;
 	public String lastPropertyName;
 	
 	

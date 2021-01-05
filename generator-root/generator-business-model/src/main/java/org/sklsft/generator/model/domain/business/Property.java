@@ -3,7 +3,6 @@ package org.sklsft.generator.model.domain.business;
 import java.util.List;
 
 import org.sklsft.generator.model.domain.database.Column;
-import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.Visibility;
@@ -28,7 +27,5 @@ public class Property {
 	public Visibility visibility;
 	public String rendering;
 	public List<String> annotations;
-	
-	public List<ViewProperty> viewProperties;
 
 }
