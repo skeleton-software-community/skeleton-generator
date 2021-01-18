@@ -142,7 +142,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * load object list eagerly");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("@SuppressWarnings(\"unused\")");
+		writeLine("@SuppressWarnings({\"unused\",\"unchecked\"})");
 		writeLine("public List<" + this.bean.className + "> loadListEagerly() {");
 		
 		writeLine("Session session = this.sessionFactory.getCurrentSession();");
@@ -152,7 +152,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
 		for (Alias alias : getAllAliases(bean, null)) {
-			writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + "Fetch = " + alias.parentName + ".fetch(\"" + alias.propertyName + "\", JoinType.LEFT);");
+			writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + "Fetch = " + alias.parentName + ".fetch(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 			writeLine("Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = (Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + ">)" + alias.name +"Fetch;");
 		}
 		skipLine();
@@ -215,7 +215,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");
 				for (Alias alias : getAllAliases(bean, null)) {
-					writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + "Fetch = " + alias.parentName + ".fetch(\"" + alias.propertyName + "\", JoinType.LEFT);");
+					writeLine("Fetch<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + "Fetch = " + alias.parentName + ".fetch(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 					writeLine("Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = (Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + ">)" + alias.name +"Fetch;");
 				}
 				skipLine();
@@ -373,9 +373,9 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("criteria.select(root);");
 		writeLine("List<Order> orders = new ArrayList<>();");
 		
-		for (ViewProperty property : this.bean.basicViewBean.properties) {
-			String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-			writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), sorting.get" + property.capName + "OrderType());");
+		for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
+			String joinedAliasName = StringUtils.isEmpty(viewProperty.joinedAliasName)?"root":viewProperty.joinedAliasName;
+			writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(" + viewProperty.lastParentBeanClassName + "_." + viewProperty.lastPropertyName + "), sorting.get" + viewProperty.capName + "OrderType());");
 		}
 		
 		writeLine("addOrder(builder, orders, root.get(" + bean.className + "_.id), OrderType.DESC);");
@@ -431,7 +431,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				
 				for (ViewProperty viewProperty : this.bean.basicViewBean.properties) {
 					String joinedAliasName = StringUtils.isEmpty(viewProperty.joinedAliasName)?"root":viewProperty.joinedAliasName;
-					writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(\"" + viewProperty.lastPropertyName + "\"), sorting.get" + viewProperty.capName + "OrderType());");
+					writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(" + viewProperty.lastParentBeanClassName + "_." + viewProperty.lastPropertyName + "), sorting.get" + viewProperty.capName + "OrderType());");
 				}
 				
 				writeLine("addOrder(builder, orders, root.get(" + bean.className + "_.id), OrderType.DESC);");
@@ -520,9 +520,9 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			skipLine();
 			
 			writeLine("/**");
-			writeLine("@Override");
 			writeLine(" * count filtered one to many component " + currentBean.className);
 			writeLine(" */");
+			writeLine("@Override");
 			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
 			
 			writeLine("Session session = this.sessionFactory.getCurrentSession();");
@@ -595,7 +595,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			
 			for (ViewProperty viewProperty : currentBean.basicViewBean.properties) {
 				String joinedAliasName = StringUtils.isEmpty(viewProperty.joinedAliasName)?"root":viewProperty.joinedAliasName;
-				writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(\"" + viewProperty.lastPropertyName + "\"), sorting.get" + viewProperty.capName + "OrderType());");
+				writeLine("addOrder(builder, orders, " + joinedAliasName + ".get(" + viewProperty.lastParentBeanClassName + "_." + viewProperty.lastPropertyName + "), sorting.get" + viewProperty.capName + "OrderType());");
 			}
 			
 			writeLine("addOrder(builder, orders, root.get(" + currentBean.className + "_.id), OrderType.DESC);");
@@ -657,7 +657,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
 		for (Alias alias : getReferenceAliases(bean, "")) {
-			writeLine("Join<" + alias.beanDataType + ", " + alias.parentBeanDataType + "> " + alias.name + " = " + alias.parentName + ".join(\"" + alias.propertyName + "\", JoinType.LEFT);");
+			writeLine("Join<" + alias.parentBeanDataType + ", " + alias.beanDataType + "> " + alias.name + " = " + alias.parentName + ".join(" + alias.parentBeanDataType + "_." + alias.propertyName + ", JoinType.LEFT);");
 		}
 		skipLine();
 		
@@ -768,7 +768,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
 		skipLine();
 		
-		writeLine("Predicate predicate = getStringContainsRestriction(builder, root.get(\"" + targetProperty.name + "\"), arg);");
+		writeLine("Predicate predicate = getStringContainsRestriction(builder, root.get(" + bean.className + "_." + targetProperty.name + "), arg);");
 		writeLine("if (predicate!=null){");
 		writeLine("criteria.where(predicate);");
 		writeLine("}");
@@ -923,12 +923,12 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	private void writeTextRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "());");
+		writeLine("addStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
 	}
 	
 	private void writeBooleanRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addBooleanRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "());");
+		writeLine("addBooleanRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
 	}
 	
 	private void writeDoubleRestriction(ViewProperty property) {
@@ -953,11 +953,11 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	private void writeComparableRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addBetweenRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
+		writeLine("addBetweenRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "MinValue(), filter.get" + property.capName + "MaxValue());");
 	}
 	
 	private void writeEqualsRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addEqualsRestriction(builder, predicates, " + joinedAliasName + ".get(\"" + property.lastPropertyName + "\"), " + property.name + ");");
+		writeLine("addEqualsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), " + property.name + ");");
 	}
 }
