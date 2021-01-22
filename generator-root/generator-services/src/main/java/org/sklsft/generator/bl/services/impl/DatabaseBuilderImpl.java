@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.sklsft.generator.bc.build.DatabaseCleaner;
 import org.sklsft.generator.bc.build.TableBuilder;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Package;
@@ -37,7 +38,7 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 		
 		logger.info("start bulding database");
 		
-		int maxStep = FolderUtil.resolveMaxStep(project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER);
+		int maxStep = FolderUtil.resolveMaxStep(project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(project.databaseEngine));
 		
 		for (int step = 1; step <= maxStep; step++) {
 			

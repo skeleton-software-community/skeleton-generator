@@ -3,10 +3,11 @@ package org.sklsft.generator.skeletons.core.commands.database.oracle;
 import java.io.File;
 import java.io.IOException;
 
-import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
+import org.sklsft.generator.skeletons.core.database.OracleHandler;
 
 public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
@@ -17,7 +18,7 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 	 */
 	public OracleTableFkDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase().replaceAll(".", File.separator), table.originalName);
+		super(table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(OracleHandler.NAME) + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
 	}
@@ -52,7 +53,7 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 		i = 0;
 		for (Column column:table.columns) {
 			if (column.referenceTable != null) {
-                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + column.name + ") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND");
+                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + column.name + ")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND");
                 writeLine("/");
                 skipLine();
             }

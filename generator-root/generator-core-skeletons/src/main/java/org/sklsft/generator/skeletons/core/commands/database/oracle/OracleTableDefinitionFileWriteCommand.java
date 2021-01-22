@@ -3,12 +3,13 @@ package org.sklsft.generator.skeletons.core.commands.database.oracle;
 import java.io.File;
 import java.io.IOException;
 
-import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.IdGeneratorType;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
+import org.sklsft.generator.skeletons.core.database.OracleHandler;
 
 public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
@@ -21,7 +22,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	 */
 	public OracleTableDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
+		super(table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(OracleHandler.NAME) + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
 		this.sequenceName = table.name + "_id_seq";
@@ -46,7 +47,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		writeLine("-- create table --");
 		writeLine("CREATE TABLE " + table.name);
 		writeLine("(");
-		write("ID " + getOracleType(DataType.LONG));
+		write("ID " + getOracleType(table.idType));
 
 		for (Column column:table.columns) {
 			writeLine(",");
@@ -69,12 +70,12 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		for (int i = 1; i < this.table.cardinality; i++) {
 			write("," + this.table.columns.get(i).name);
 		}
-		writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
+		writeLine(")),"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 		
-		writeLine(", CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
-		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID) TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
+		writeLine("CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
+		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID))"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 
-		writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_TBL");
+		writeLine(")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_TBL");
 		writeLine("/");
 		skipLine();
 
@@ -106,7 +107,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
         writeLine("CONSTRAINT FK_" + table.name + "_AUD FOREIGN KEY (REV)");
         writeLine("REFERENCES AUDITENTITY (ID)");
-        writeLine(") TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_AUD");
+        writeLine(")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_AUD");
         writeLine("/");
         skipLine();
         
@@ -125,10 +126,10 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				return "VARCHAR2(255)";
 	
 			case SHORT:
-				return "NUMBER(19,0)";
+				return "NUMBER(5,0)";
 				
 			case INTEGER:
-				return "NUMBER(19,0)";
+				return "NUMBER(10,0)";
 			
 			case LONG:
 				return "NUMBER(19,0)";
@@ -137,7 +138,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 				return "FLOAT(24)";
 				
 			case BIG_DECIMAL:
-				return "NUMERIC";
+				return "NUMBER";
 	
 			case DATE:
 				return "DATE";

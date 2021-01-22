@@ -1,5 +1,6 @@
 package org.sklsft.generator.bc.resolvers;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,9 +13,11 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
-public class DatabaseHandlerResolver {
+public class DatabaseHandlerDiscovery {
 	
-	public static Map<String, DatabaseHandler> handlers = new HashMap<>();
+	public static Map<String, DatabaseHandler> handlersMap = new HashMap<>();
+	
+	public static Set<DatabaseHandler> handlers = new HashSet<>();
 	
 	static {
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
@@ -31,18 +34,29 @@ public class DatabaseHandlerResolver {
 		for (BeanDefinition def:defs) {
 			try {
 				DatabaseHandler handler = (DatabaseHandler) Class.forName(def.getBeanClassName()).newInstance();
-				handlers.put(handler.getName(), handler);			
+				handlersMap.put(handler.getName(), handler);
+				handlers.add(handler);
 			} catch (Exception e) {
 				throw new IllegalArgumentException("Invalid DatabaseHandler : " + def.getBeanClassName(), e);
 			}
 		}
 	}
 	
+	
+	public static String getBuildScriptFolder(String engineName) {
+		return "data-model" + File.separator + "scripts" + File.separator + "SQL" + File.separator + engineName + File.separator + "build";
+	}
+	
+	
+	public static String getBuildScriptFolder(DatabaseHandler handler) {
+		return getBuildScriptFolder(handler.getName());
+	}
+	
 	public static DatabaseHandler getDatabaseHandler(String databaseEngine) {
-		return handlers.get(databaseEngine);
+		return handlersMap.get(databaseEngine);
 	}
 
 	public static DatabaseHandler getDatabaseHandler(Project project) {
-		return handlers.get(project.getDatabaseEngine());
+		return handlersMap.get(project.getDatabaseEngine());
 	}
 }

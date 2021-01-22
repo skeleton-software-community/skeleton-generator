@@ -3,17 +3,19 @@ package org.sklsft.generator.skeletons.core.commands.database.oracle;
 import java.io.File;
 import java.io.IOException;
 
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
+import org.sklsft.generator.skeletons.core.database.OracleHandler;
 
 public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	private Project project;
 
 	public OracleMainDefinitionFileWriteCommand(Project project) {
-		super(project.sourceFolder + File.separator + "SQL" + File.separator + "BUILD", "MAIN");
+		super(project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(OracleHandler.NAME), "MAIN");
 		this.project = project;
 	}
 

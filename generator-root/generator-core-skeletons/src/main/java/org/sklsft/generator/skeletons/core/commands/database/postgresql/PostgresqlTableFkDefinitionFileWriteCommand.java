@@ -3,10 +3,11 @@ package org.sklsft.generator.skeletons.core.commands.database.postgresql;
 import java.io.File;
 import java.io.IOException;
 
-import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
+import org.sklsft.generator.skeletons.core.database.PostgresqlHandler;
 
 public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
@@ -17,7 +18,7 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 	 */
 	public PostgresqlTableFkDefinitionFileWriteCommand(Table table) {
 
-		super(table.myPackage.model.project.sourceFolder + File.separator + Project.BUILD_SCRIPT_FOLDER + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
+		super(table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(PostgresqlHandler.NAME) + File.separator + "2" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
 

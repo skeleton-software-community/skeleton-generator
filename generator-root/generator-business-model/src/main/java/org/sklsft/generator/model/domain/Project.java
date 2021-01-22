@@ -1,7 +1,5 @@
 package org.sklsft.generator.model.domain;
 
-import java.io.File;
-
 import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
 
 
@@ -13,8 +11,6 @@ import org.sklsft.generator.model.metadata.datasources.DataSourceMetaData;
  *
  */
 public class Project {
-	
-	public static final String BUILD_SCRIPT_FOLDER = "SQL" + File.separator + "BUILD";
 
 	/*
 	 * properties

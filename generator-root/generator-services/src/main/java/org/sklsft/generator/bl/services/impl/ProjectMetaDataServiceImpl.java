@@ -2,7 +2,7 @@ package org.sklsft.generator.bl.services.impl;
 
 import javax.inject.Inject;
 
-import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.bc.validation.ProjectMetaDataValidator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
@@ -55,7 +55,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 	@Override
 	public void initProjectMetaData(ProjectMetaData projectMetaData) {
 		
-		DatabaseHandler databaseHandler = DatabaseHandlerResolver.getDatabaseHandler(projectMetaData.getDatabaseEngine());
+		DatabaseHandler databaseHandler = DatabaseHandlerDiscovery.getDatabaseHandler(projectMetaData.getDatabaseEngine());
 		projectMetaData.getDataSource().setDriverClassName(databaseHandler.getDriverClassName());
 		projectMetaData.getDataSource().setUrl(databaseHandler.getUrl(projectMetaData.getDataSource()));
 		

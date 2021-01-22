@@ -7,9 +7,11 @@ import org.sklsft.generator.skeletons.layers.Layer;
 
 public class PostgresqlHandler implements DatabaseHandler {
 
+public static final String NAME = "POSTGRESQL";
+	
 	@Override
 	public String getName() {
-		return "POSTGRESQL";
+		return NAME;
 	}
 	
 	@Override

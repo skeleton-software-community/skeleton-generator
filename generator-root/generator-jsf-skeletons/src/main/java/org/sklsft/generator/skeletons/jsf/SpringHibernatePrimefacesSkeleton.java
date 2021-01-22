@@ -3,7 +3,7 @@ package org.sklsft.generator.skeletons.jsf;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.Skeleton;
 import org.sklsft.generator.skeletons.core.layers.ApiLayer;
@@ -13,6 +13,7 @@ import org.sklsft.generator.skeletons.core.layers.HibernateDaoLayer;
 import org.sklsft.generator.skeletons.core.layers.JunitLayer;
 import org.sklsft.generator.skeletons.core.layers.PopulatorLayer;
 import org.sklsft.generator.skeletons.core.layers.ServiceLayer;
+import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.sklsft.generator.skeletons.jsf.layers.JsfControllerLayer;
 import org.sklsft.generator.skeletons.jsf.layers.JsfModelLayer;
 import org.sklsft.generator.skeletons.jsf.layers.PrimefacesPresentationLayer;
@@ -33,7 +34,9 @@ public class SpringHibernatePrimefacesSkeleton implements Skeleton {
 	public List<Layer> getLayers(Project project) {
 		List<Layer> layers = new ArrayList<>();
 	
-		layers.add(DatabaseHandlerResolver.getDatabaseHandler(project).getLayer());
+		for (DatabaseHandler handler:DatabaseHandlerDiscovery.handlers) {
+			layers.add(handler.getLayer());
+		}
 		layers.add(new PrimefacesRootLayer());
 		layers.add(new ApiLayer());
 		layers.add(new HibernateBusinessModelLayer());

@@ -9,9 +9,11 @@ public class OracleHandler implements DatabaseHandler {
 
 	private static final String separator = "_";
 	
+	public static final String NAME = "ORACLE";
+	
 	@Override
 	public String getName() {
-		return "ORACLE";
+		return NAME;
 	}
 	
 	@Override
@@ -77,4 +79,6 @@ public class OracleHandler implements DatabaseHandler {
 	public Layer getLayer() {
 		return new OracleDatabaseLayer();
 	}
+
+	
 }

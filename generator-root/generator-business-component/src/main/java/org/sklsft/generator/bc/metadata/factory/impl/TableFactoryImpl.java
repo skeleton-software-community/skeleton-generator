@@ -3,7 +3,7 @@ package org.sklsft.generator.bc.metadata.factory.impl;
 import java.util.ArrayList;
 
 import org.sklsft.generator.bc.metadata.factory.interfaces.TableFactory;
-import org.sklsft.generator.bc.resolvers.DatabaseHandlerResolver;
+import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
@@ -31,7 +31,7 @@ public class TableFactoryImpl implements TableFactory {
 		Table table = new Table();
 		table.myPackage = myPackage;
 		table.originalName = tableMetaData.getName();
-		table.name = DatabaseHandlerResolver.getDatabaseHandler(myPackage.model.project).rename(table.originalName);
+		table.name = DatabaseHandlerDiscovery.getDatabaseHandler(myPackage.model.project).rename(table.originalName);
 		if (tableMetaData.getIdType() != null) {
 			table.idType = tableMetaData.getIdType();
 		} else {
@@ -56,7 +56,7 @@ public class TableFactoryImpl implements TableFactory {
         for (ColumnMetaData columnMetaData : tableMetaData.getColumns()) {
             Column column = new Column();
             column.originalName = columnMetaData.getName();
-            column.name = DatabaseHandlerResolver.getDatabaseHandler(model.project).rename(column.originalName);
+            column.name = DatabaseHandlerDiscovery.getDatabaseHandler(model.project).rename(column.originalName);
             if (columnMetaData.getDataType() != null) {
             	column.dataType = columnMetaData.getDataType();
             }            
