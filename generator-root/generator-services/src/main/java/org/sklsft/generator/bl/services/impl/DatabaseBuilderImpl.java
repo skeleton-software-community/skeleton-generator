@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bc.build.DatabaseCleaner;
 import org.sklsft.generator.bc.build.TableBuilder;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
@@ -29,7 +30,7 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 	private DatabaseCleaner databaseCleaner;
 
 	@Override
-	public void buildDatabase(DataSource dataSource, Project project) throws InvalidFileException, IOException, SQLException {
+	public void buildDatabase(BasicDataSource dataSource, Project project) throws InvalidFileException, IOException, SQLException {
 		
 		logger.info("start cleaning database");
 		databaseCleaner.cleanDatabase(dataSource, project);

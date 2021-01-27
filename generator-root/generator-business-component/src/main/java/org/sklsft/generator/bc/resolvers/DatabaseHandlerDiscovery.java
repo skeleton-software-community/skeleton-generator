@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.database.DatabaseHandler;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -16,6 +17,7 @@ import org.springframework.core.type.filter.AssignableTypeFilter;
 public class DatabaseHandlerDiscovery {
 	
 	public static Map<String, DatabaseHandler> handlersMap = new HashMap<>();
+	public static Map<String, DatabaseHandler> byDriverHandlersMap = new HashMap<>();
 	
 	public static Set<DatabaseHandler> handlers = new HashSet<>();
 	
@@ -27,6 +29,7 @@ public class DatabaseHandlerDiscovery {
 		
 		Set<BeanDefinition> defs = new HashSet<>();
 		
+		
 		for (String packageToScan:packagesToScan) {
 			defs.addAll(provider.findCandidateComponents(packageToScan.trim()));
 		}
@@ -35,6 +38,7 @@ public class DatabaseHandlerDiscovery {
 			try {
 				DatabaseHandler handler = (DatabaseHandler) Class.forName(def.getBeanClassName()).newInstance();
 				handlersMap.put(handler.getName(), handler);
+				byDriverHandlersMap.put(handler.getDriverClassName(), handler);
 				handlers.add(handler);
 			} catch (Exception e) {
 				throw new IllegalArgumentException("Invalid DatabaseHandler : " + def.getBeanClassName(), e);
@@ -50,6 +54,11 @@ public class DatabaseHandlerDiscovery {
 	
 	public static String getBuildScriptFolder(DatabaseHandler handler) {
 		return getBuildScriptFolder(handler.getName());
+	}
+	
+	public static String getBuildScriptFolder(BasicDataSource dataSource) {
+		DatabaseHandler handler = byDriverHandlersMap.get(dataSource.getDriverClassName());
+		return getBuildScriptFolder(handler);
 	}
 	
 	public static DatabaseHandler getDatabaseHandler(String databaseEngine) {

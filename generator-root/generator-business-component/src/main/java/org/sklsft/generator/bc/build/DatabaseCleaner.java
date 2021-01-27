@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.Project;
@@ -20,9 +21,9 @@ public class DatabaseCleaner {
 	@Inject
 	private SimpleScriptFileReader scriptFileReader;	
 
-	public void cleanDatabase(DataSource dataSource, Project project) throws IOException, InvalidFileException, SQLException {
+	public void cleanDatabase(BasicDataSource dataSource, Project project) throws IOException, InvalidFileException, SQLException {
 		
-		String scriptFilePath = project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(project.databaseEngine) + File.separator + "MAIN.sql";
+		String scriptFilePath = project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(dataSource) + File.separator + "MAIN.sql";
 		String script = scriptFileReader.readScript(scriptFilePath);
 			
 		new JdbcRawCommand(dataSource, script).execute();

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.exception.DataSourceNotFoundException;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
 import org.sklsft.generator.repository.backup.datasource.interfaces.OutputDataSourceProvider;
@@ -18,13 +19,13 @@ public class OutputDataSourceProviderImpl implements OutputDataSourceProvider {
 	/*
 	 * properties
 	 */
-	private Map<String, DataSource> dataSources;
+	private Map<String, BasicDataSource> dataSources;
 	
 	
 	/*
 	 * constructor
 	 */
-	public OutputDataSourceProviderImpl(Map<String, DataSource> dataSources) {
+	public OutputDataSourceProviderImpl(Map<String, BasicDataSource> dataSources) {
 		this.dataSources = dataSources;
 	}
 

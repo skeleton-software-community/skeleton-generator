@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.model.domain.database.Table;
@@ -20,14 +21,14 @@ public class TableBuilder {
 	 * properties
 	 */
 	private Table table;
-	private DataSource dataSource;
+	private BasicDataSource dataSource;
 	private SimpleScriptFileReader scriptFileReader;
 	private int step;
 	
 	/*
 	 * constructor
 	 */
-	public TableBuilder(Table table, DataSource dataSource, int step) {
+	public TableBuilder(Table table, BasicDataSource dataSource, int step) {
 		this.table = table;
 		this.dataSource = dataSource;
 		this.scriptFileReader = new SimpleScriptFileReaderImpl();
@@ -37,7 +38,7 @@ public class TableBuilder {
 
 	public void buildTable() throws IOException, InvalidFileException, SQLException {
 		
-		String scriptFilePath = table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(table.myPackage.model.project.databaseEngine) + File.separator + step + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator) + File.separator + table.originalName + ".sql";
+		String scriptFilePath = table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(dataSource) + File.separator + step + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator) + File.separator + table.originalName + ".sql";
 		
 		String script = scriptFileReader.readScript(scriptFilePath);
 			
