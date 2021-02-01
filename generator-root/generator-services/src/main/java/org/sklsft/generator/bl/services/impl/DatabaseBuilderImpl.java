@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bc.build.DatabaseCleaner;
@@ -34,11 +33,10 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 		
 		logger.info("start cleaning database");
 		databaseCleaner.cleanDatabase(dataSource, project);
-		
 		logger.info("cleaning database completed");
 		
-		logger.info("start bulding database");
-		
+		logger.info("start bulding database");		
+		TableBuilder tableBuilder = new TableBuilder(project, dataSource);		
 		int maxStep = FolderUtil.resolveMaxStep(project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(project.databaseEngine));
 		
 		for (int step = 1; step <= maxStep; step++) {
@@ -50,19 +48,14 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 				
 				for (Table table:myPackage.tables) {
 					logger.info("start building table : " + table.name);
-					
-					TableBuilder tableBuilder = new TableBuilder(table, dataSource, step);
-					tableBuilder.buildTable();
-					
+					tableBuilder.buildTable(table, step);					
 					logger.info("building table : " + table.name + " completed");
 				}
 				logger.info("building package " + myPackage.name + " completed");
 			}
 			logger.info("bulding step " + step + " completed");
 		}
-		
 		logger.info("bulding database completed");
-		
 	}
 	
 

@@ -15,3 +15,4 @@ db.password=${project.dataSource.password}
 
 # Hibernate settings
 hibernate.showSql=false
+hibernate.dialect=${project.dataSource.dialect}

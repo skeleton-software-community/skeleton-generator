@@ -39,6 +39,7 @@ public class PersistenceConfig {
 		
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.showSql"));
+		hibernateProperties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
 		result.setHibernateProperties(hibernateProperties);
 		
 		return result;

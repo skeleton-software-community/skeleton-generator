@@ -18,6 +18,11 @@ public static final String NAME = "POSTGRESQL";
 	public String getDriverClassName() {
 		return "org.postgresql.Driver";
 	}
+	
+	@Override
+	public String getDialect() {
+		return "org.hibernate.dialect.PostgreSQLDialect";
+	}
 
 	@Override
 	public String getUrl(DataSourceMetaData datasource) {

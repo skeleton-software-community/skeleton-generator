@@ -20,6 +20,11 @@ public class OracleHandler implements DatabaseHandler {
 	public String getDriverClassName() {
 		return "oracle.jdbc.driver.OracleDriver";
 	}
+	
+	@Override
+	public String getDialect() {
+		return "org.hibernate.dialect.Oracle12cDialect";
+	}
 
 	@Override
 	public String getUrl(DataSourceMetaData datasource) {

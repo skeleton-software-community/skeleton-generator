@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;

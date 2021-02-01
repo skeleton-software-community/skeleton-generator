@@ -12,6 +12,7 @@ public class DataSourceMetaData {
 	private String password;
 	private String url;
 	private String driverClassName;
+	private String dialect;
 	
 	
 	/*
@@ -58,5 +59,11 @@ public class DataSourceMetaData {
 	}
 	public void setDriverClassName(String driverClassName) {
 		this.driverClassName = driverClassName;
+	}
+	public String getDialect() {
+		return dialect;
+	}
+	public void setDialect(String dialect) {
+		this.dialect = dialect;
 	}
 }

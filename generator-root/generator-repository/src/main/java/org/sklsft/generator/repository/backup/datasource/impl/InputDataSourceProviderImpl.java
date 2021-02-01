@@ -2,14 +2,12 @@ package org.sklsft.generator.repository.backup.datasource.impl;
 
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.exception.DataSourceNotFoundException;
 import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
 
 /**
- * Simple implementation of a {@link InputDataSourceProvider} with a Map of {@link DataSource}
+ * Simple implementation of a {@link InputDataSourceProvider} with a Map of {@link BasicDataSource}
  * @author Nicolas Thibault
  *
  */
@@ -30,9 +28,9 @@ public class InputDataSourceProviderImpl implements InputDataSourceProvider {
 
 	
 	@Override
-	public DataSource getDataSource(String dataSourceName) throws DataSourceNotFoundException {
+	public BasicDataSource getDataSource(String dataSourceName) throws DataSourceNotFoundException {
 
-		DataSource result = dataSources.get(dataSourceName);
+		BasicDataSource result = dataSources.get(dataSourceName);
 		
 		if (result == null) {
 			throw new DataSourceNotFoundException("Unable to find input DataSource : " + dataSourceName);

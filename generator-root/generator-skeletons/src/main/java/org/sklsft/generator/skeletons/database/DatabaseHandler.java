@@ -9,6 +9,8 @@ public interface DatabaseHandler {
 	
 	String getDriverClassName();
 	
+	String getDialect();
+	
 	String getUrl(DataSourceMetaData datasource);
 	
 	String rename(String name);

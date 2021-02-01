@@ -2,8 +2,7 @@ package org.sklsft.generator.bash.launcher;
 
 import java.io.File;
 
-import javax.sql.DataSource;
-
+import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bash.prompt.ValidationPrompter;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
@@ -80,7 +79,7 @@ public class DatabaseBuilderLauncher {
 			
 			try {
 				OutputDataSourceProvider outputDataSourceProvider = appContext.getBean(OutputDataSourceProvider.class);
-				DataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
+				BasicDataSource dataSource = outputDataSourceProvider.getDataSource(databaseName);
 				
 				DatabaseBuilder databaseBuilder = appContext.getBean(DatabaseBuilder.class);
 				databaseBuilder.buildDatabase(dataSource, project);

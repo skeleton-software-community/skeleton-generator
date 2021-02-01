@@ -58,6 +58,7 @@ public class ProjectMetaDataServiceImpl implements ProjectMetaDataService {
 		DatabaseHandler databaseHandler = DatabaseHandlerDiscovery.getDatabaseHandler(projectMetaData.getDatabaseEngine());
 		projectMetaData.getDataSource().setDriverClassName(databaseHandler.getDriverClassName());
 		projectMetaData.getDataSource().setUrl(databaseHandler.getUrl(projectMetaData.getDataSource()));
+		projectMetaData.getDataSource().setDialect(databaseHandler.getDialect());
 		
 		logger.info("start initializing project");
 		projectMetaDataDao.initProject(projectMetaData);
