@@ -6,7 +6,7 @@
 ###############################################################################
 
 
-SKLGEN_VERSION=3.2.0
+SKLGEN_VERSION=3.3.0
 SKLGEN_RUNNABLE_JAR="$SKLGEN_HOME/boot/generator-bash-$SKLGEN_VERSION.jar"
 SKLGEN_LIB=$SKLGEN_HOME/lib
 SKLGEN_CLASSPATH=$SKLGEN_RUNNABLE_JAR:$SKLGEN_LIB/*
