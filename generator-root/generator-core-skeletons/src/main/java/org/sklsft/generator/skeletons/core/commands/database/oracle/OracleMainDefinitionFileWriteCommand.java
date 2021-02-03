@@ -22,6 +22,18 @@ public class OracleMainDefinitionFileWriteCommand extends SqlFileWriteCommand {
 	@Override
 	public void writeContent() throws IOException {
 		
+		writeLine("-- normalize --");
+		writeLine("CREATE OR REPLACE FUNCTION NORMALIZE(ARG IN VARCHAR2)");
+		writeLine("RETURN VARCHAR2");
+		writeLine("IS");
+		writeLine("BEGIN");
+		writeLine("RETURN TRANSLATE(");
+		writeLine("LOWER(ARG),");
+		writeLine("'àâäèéêëîïôöûü',");
+		writeLine("'aaaeeeeiioouu'");
+		writeLine(");");
+		writeLine("END NORMALIZE;");
+		
 		writeLine("-- drop foreign keys --");
 		for (Package myPackage : project.model.packages) {
 			for (Table table : myPackage.tables) {
