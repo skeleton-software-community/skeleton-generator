@@ -61,17 +61,18 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		writeLine(",");
 		
-		write("CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
-		for (int i = 1; i < this.table.cardinality; i++) {
-			write("," + this.table.columns.get(i).name);
+		if (table.cardinality > 0) {
+			write("CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
+			for (int i = 1; i < this.table.cardinality; i++) {
+				write("," + this.table.columns.get(i).name);
+			}
+			writeLine(")");
+			write("USING INDEX (CREATE INDEX UC_" + table.name + " ON " + table.name + "(" + this.table.columns.get(0).name);
+			for (int i = 1; i < this.table.cardinality; i++) {
+				write("," + this.table.columns.get(i).name);
+			}
+			writeLine(")),"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 		}
-		writeLine(")");
-		write("USING INDEX (CREATE INDEX UC_" + table.name + " ON " + table.name + "(" + this.table.columns.get(0).name);
-		for (int i = 1; i < this.table.cardinality; i++) {
-			write("," + this.table.columns.get(i).name);
-		}
-		writeLine(")),"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
-		
 		writeLine("CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
 		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID))"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
 
