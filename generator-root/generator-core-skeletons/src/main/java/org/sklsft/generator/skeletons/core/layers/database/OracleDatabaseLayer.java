@@ -3,7 +3,7 @@ package org.sklsft.generator.skeletons.core.layers.database;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleMainDefinitionFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.database.configuration.oracle.OracleMainDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.database.oracle.OracleTableFkDefinitionFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -25,6 +25,9 @@ public class OracleDatabaseLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
+		FileWriteCommandTreeNode mainFileTreeNode = new FileWriteCommandTreeNode(new OracleMainDefinitionFileWriteCommand(project));
+		configurationTreeNode.add(mainFileTreeNode);
+		
 		return configurationTreeNode;
 	}
 
@@ -35,9 +38,6 @@ public class OracleDatabaseLayer extends AbstractLayer {
 
 		FileWriteCommandTreeNode definitionFilesTreeNode = new FileWriteCommandTreeNode("Definition Files");
 		databaseTreeNode.add(definitionFilesTreeNode);
-
-		FileWriteCommandTreeNode mainFileTreeNode = new FileWriteCommandTreeNode(new OracleMainDefinitionFileWriteCommand(project));			
-		definitionFilesTreeNode.add(mainFileTreeNode);
 
 		for (Package myPackage : project.model.packages) {
 			FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);

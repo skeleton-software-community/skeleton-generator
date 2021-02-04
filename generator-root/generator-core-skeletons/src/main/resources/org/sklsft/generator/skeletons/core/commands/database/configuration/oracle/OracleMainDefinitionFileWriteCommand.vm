@@ -1,0 +1,58 @@
+-------------------------------------------------------------
+--------------------- PURGE USER SCHEMA  --------------------
+-------------------------------------------------------------
+BEGIN
+
+FOR c IN (SELECT table_name FROM user_tables) LOOP
+EXECUTE IMMEDIATE ('DROP TABLE "' || c.table_name || '" CASCADE CONSTRAINTS');
+END LOOP;
+
+FOR s IN (SELECT sequence_name FROM user_sequences) LOOP
+EXECUTE IMMEDIATE ('DROP SEQUENCE ' || s.sequence_name);
+END LOOP;
+
+END;
+/
+
+-------------------------------------------------------------
+---- FUNCTION normalize : unaccent and lowercase  ----
+-------------------------------------------------------------
+CREATE OR REPLACE FUNCTION NORMALIZE(ARG IN VARCHAR2)
+RETURN VARCHAR2
+IS
+BEGIN
+RETURN TRANSLATE(
+LOWER(ARG),
+'àâäèéêëîïôöûü',
+'aaaeeeeiioouu'
+);
+END NORMALIZE;
+/
+
+#if ($project.audited)	
+-------------------------------------------------------------
+-------------------- create global audit table --------------
+-------------------------------------------------------------
+CREATE TABLE AUDITENTITY"
+(
+ID int NOT NULL,
+'TIMESTAMP' int NOT NULL,
+LOGIN VARCHAR2(255),
+CONSTRAINT PK_AUDITENTITY PRIMARY KEY (ID)
+)
+/
+
+-- create hibernate sequence --
+CREATE SEQUENCE hibernate_sequence MINVALUE 1 NOMAXVALUE START WITH 1 INCREMENT BY 1 NOCYCLE
+/
+
+-- epoch in millis --
+CREATE OR REPLACE FUNCTION current_millis RETURN integer
+IS
+BEGIN
+return extract(day from (systimestamp - timestamp '1970-01-01 00:00:00')) * 86400000
++ (extract(hour   from (systimestamp - timestamp '1970-01-01 00:00:00'))-1) * 3600000
++ extract(minute from (systimestamp - timestamp '1970-01-01 00:00:00')) * 60000
++ extract(second from (systimestamp - timestamp '1970-01-01 00:00:00')) * 1000;
+END;
+#end
