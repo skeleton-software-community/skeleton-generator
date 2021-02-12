@@ -44,6 +44,8 @@ public class JavaProjectFactory implements ProjectFactory {
 		project.skeleton = projectMetaData.getSkeleton();
 		project.databaseEngine = projectMetaData.getDatabaseEngine();
 		project.audited = projectMetaData.getAudited();
+		project.tablesTableSpace = projectMetaData.tablesTableSpace;
+		project.indexesTableSpace = projectMetaData.indexesTableSpace;
 		project.dataSource = projectMetaData.getDataSource();
 		
 		logger.trace("start building model");

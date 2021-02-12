@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadata:project xmlns:metadata="http://generator.sklsft.org/schema/model/metadata"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://generator.sklsft.org/schema/model/metadata skeleton-metadata-3.1.xsd">
+	xsi:schemaLocation="http://generator.sklsft.org/schema/model/metadata skeleton-metadata-3.4.xsd">
 	<domainName>org.sklsft</domainName>
 	<projectName>demo</projectName>
 	<skeleton>SPRING_HIBERNATE_PRIMEFACES</skeleton>

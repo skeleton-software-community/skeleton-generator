@@ -15,7 +15,6 @@ import org.sklsft.generator.skeletons.core.database.PostgresqlHandler;
 public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	private Table table;
-	private String sequenceName;
 
 	/*
 	 * constructor
@@ -25,7 +24,6 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 		super(table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(PostgresqlHandler.NAME) + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
-		this.sequenceName = table.name + "_id_seq";
 	}
 
 	@Override
@@ -72,7 +70,7 @@ public class PostgresqlTableDefinitionFileWriteCommand extends SqlFileWriteComma
 
 		if (table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
 			writeLine("-- create sequence --");
-			writeLine("CREATE SEQUENCE " + sequenceName);
+			writeLine("CREATE SEQUENCE " + table.sequenceName);
 			writeLine("INCREMENT 1");
 			writeLine("MINVALUE 0");
 			writeLine("MAXVALUE 9223372036854775807");

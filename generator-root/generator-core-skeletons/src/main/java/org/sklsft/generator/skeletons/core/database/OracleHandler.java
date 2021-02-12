@@ -7,6 +7,8 @@ import org.sklsft.generator.skeletons.layers.Layer;
 
 public class OracleHandler implements DatabaseHandler {
 
+	private static final int MAX_TABLE_LENGTH = 23;
+
 	private static final String separator = "_";
 	
 	public static final String NAME = "ORACLE";
@@ -33,7 +35,7 @@ public class OracleHandler implements DatabaseHandler {
 	
 	@Override
 	public String rename(String name) {
-        if (name.length() > 20) {            
+        if (name.length() > MAX_TABLE_LENGTH) {            
             String[] elements = name.toLowerCase().split(separator);
             String result = "";
             boolean start = true;
@@ -59,7 +61,7 @@ public class OracleHandler implements DatabaseHandler {
             	}
             }
             
-            if (result.length() > 20) {
+            if (result.length() > MAX_TABLE_LENGTH) {
             	result = "";
                 start = true;
             	for (String element : elements) {

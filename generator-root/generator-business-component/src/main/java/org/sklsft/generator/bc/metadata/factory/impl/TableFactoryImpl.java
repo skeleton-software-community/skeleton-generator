@@ -43,7 +43,7 @@ public class TableFactoryImpl implements TableFactory {
 			table.idGeneratorType = table.idType.getDefaultGenerator();
 		}
 		table.cardinality = tableMetaData.getCardinality();
-		
+		table.sequenceName = table.name + "_SEQ";
 		logger.trace("Table found : " + tableMetaData.getName());
         
         return table;

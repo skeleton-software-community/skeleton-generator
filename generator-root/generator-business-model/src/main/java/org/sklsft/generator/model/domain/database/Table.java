@@ -24,6 +24,7 @@ public class Table {
 	public String name;
 	public DataType idType;
 	public IdGeneratorType idGeneratorType;
+	public String sequenceName;
 	public String originalName;
 	public int cardinality;
 

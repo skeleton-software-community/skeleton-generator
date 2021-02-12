@@ -53,7 +53,11 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 		i = 0;
 		for (Column column:table.columns) {
 			if (column.referenceTable != null) {
-                writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + column.name + ")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND");
+                write("CREATE INDEX IDX_" + table.name + "_F" + i + " ON " + this.table.name + "(" + column.name + ")");
+                if (table.myPackage.model.project.indexesTableSpace != null) {
+        			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
+        		}
+                skipLine();
                 writeLine("/");
                 skipLine();
             }

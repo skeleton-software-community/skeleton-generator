@@ -22,6 +22,8 @@ public class Project {
 	public String skeleton;
 	public String databaseEngine;
 	public boolean audited;
+	public String tablesTableSpace;
+	public String indexesTableSpace;
 	
 	public DataSourceMetaData dataSource;
     
@@ -72,6 +74,18 @@ public class Project {
 	}
 	public void setAudited(boolean audited) {
 		this.audited = audited;
+	}
+	public String getTablesTableSpace() {
+		return tablesTableSpace;
+	}
+	public void setTablesTableSpace(String tablesTableSpace) {
+		this.tablesTableSpace = tablesTableSpace;
+	}
+	public String getIndexesTableSpace() {
+		return indexesTableSpace;
+	}
+	public void setIndexesTableSpace(String indexesTableSpace) {
+		this.indexesTableSpace = indexesTableSpace;
 	}
 	public DataSourceMetaData getDataSource() {
 		return dataSource;

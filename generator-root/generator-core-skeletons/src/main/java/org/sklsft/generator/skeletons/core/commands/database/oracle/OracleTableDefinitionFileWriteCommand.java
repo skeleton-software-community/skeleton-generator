@@ -14,7 +14,6 @@ import org.sklsft.generator.skeletons.core.database.OracleHandler;
 public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 	private Table table;
-	private String sequenceName;
 	
 
 	/*
@@ -25,7 +24,6 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		super(table.myPackage.model.project.workspaceFolder + File.separator + DatabaseHandlerDiscovery.getBuildScriptFolder(OracleHandler.NAME) + File.separator + "1" + File.separator + table.myPackage.name.toUpperCase().replace(".", File.separator), table.originalName);
 
 		this.table = table;
-		this.sequenceName = table.name + "_id_seq";
 	}
 
 	@Override
@@ -66,23 +64,36 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 			for (int i = 1; i < this.table.cardinality; i++) {
 				write("," + this.table.columns.get(i).name);
 			}
-			writeLine(")");
-			write("USING INDEX (CREATE INDEX UC_" + table.name + " ON " + table.name + "(" + this.table.columns.get(0).name);
+			write(")");
+			write(" USING INDEX (CREATE INDEX IDX_" + table.name + "_UC ON " + table.name + "(" + this.table.columns.get(0).name);
 			for (int i = 1; i < this.table.cardinality; i++) {
 				write("," + this.table.columns.get(i).name);
 			}
-			writeLine(")),"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
+			write(")");
+			
+			if (table.myPackage.model.project.indexesTableSpace != null) {
+				write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
+			}
+			writeLine("),");
 		}
-		writeLine("CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
-		writeLine("USING INDEX (CREATE INDEX PK_" + table.name + " ON " + table.name + "(ID))"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_IND)");
-
-		writeLine(")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_TBL");
+		write("CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
+		write(" USING INDEX (CREATE INDEX IDX_" + table.name + "_PK ON " + table.name + "(ID)");
+		
+		if (table.myPackage.model.project.indexesTableSpace != null) {
+			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace + ")");
+		}
+		skipLine();
+		write(")");
+		if (table.myPackage.model.project.tablesTableSpace != null) {
+			write(" TABLESPACE " + table.myPackage.model.project.tablesTableSpace);
+		}
+		skipLine();
 		writeLine("/");
 		skipLine();
 
 		if (table.idGeneratorType.equals(IdGeneratorType.SEQUENCE)) {
 			writeLine("-- create sequence --");
-			writeLine("CREATE SEQUENCE " + sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
+			writeLine("CREATE SEQUENCE " + table.sequenceName + " MINVALUE 0 NOMAXVALUE START WITH 0 INCREMENT BY 1 NOCYCLE");
 			writeLine("/");
 			skipLine();
 		}
@@ -108,11 +119,19 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
         writeLine("CONSTRAINT PK_" + table.name + "_AUD PRIMARY KEY (ID, REV),");
         writeLine("CONSTRAINT FK_" + table.name + "_AUD FOREIGN KEY (REV)");
         writeLine("REFERENCES AUDITENTITY (ID)");
-        writeLine(")"); // TABLESPACE " + table.myPackage.model.project.projectName.toUpperCase() + "_AUD");
+        if (table.myPackage.model.project.tablesTableSpace != null) {
+			write(" TABLESPACE " + table.myPackage.model.project.tablesTableSpace + ")");
+		} else {
+			writeLine(")");
+		}
+		skipLine();
         writeLine("/");
         skipLine();
         
-        writeLine("CREATE INDEX FK_" + table.name + "_AUD ON " + this.table.name + "_AUD(REV)");
+        writeLine("CREATE INDEX IDX_" + table.name + "_AR ON " + this.table.name + "_AUD(REV)");
+        if (table.myPackage.model.project.indexesTableSpace != null) {
+			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
+		}
         writeLine("/");
         skipLine();
     }

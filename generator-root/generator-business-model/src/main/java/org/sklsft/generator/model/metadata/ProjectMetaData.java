@@ -39,6 +39,10 @@ public class ProjectMetaData {
     private String databaseEngine;
 	@XmlElement(defaultValue="false")
     private boolean audited = false;
+	@XmlElement(required=false)
+	public String tablesTableSpace;
+	@XmlElement(required=false)
+	public String indexesTableSpace;
 	
 	@XmlTransient
 	private DataSourceMetaData DataSource = new DataSourceMetaData();
@@ -98,6 +102,18 @@ public class ProjectMetaData {
 	}
 	public void setAudited(boolean audited) {
 		this.audited = audited;
+	}
+	public String getTablesTableSpace() {
+		return tablesTableSpace;
+	}
+	public void setTablesTableSpace(String tablesTableSpace) {
+		this.tablesTableSpace = tablesTableSpace;
+	}
+	public String getIndexesTableSpace() {
+		return indexesTableSpace;
+	}
+	public void setIndexesTableSpace(String indexesTableSpace) {
+		this.indexesTableSpace = indexesTableSpace;
 	}
 	public DataSourceMetaData getDataSource() {
 		return DataSource;
