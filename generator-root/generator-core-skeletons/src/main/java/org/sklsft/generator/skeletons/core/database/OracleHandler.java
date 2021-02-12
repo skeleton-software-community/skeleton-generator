@@ -7,7 +7,7 @@ import org.sklsft.generator.skeletons.layers.Layer;
 
 public class OracleHandler implements DatabaseHandler {
 
-	private static final int MAX_TABLE_LENGTH = 23;
+	private static final int MAX_TABLE_LENGTH = 22;
 
 	private static final String separator = "_";
 	
