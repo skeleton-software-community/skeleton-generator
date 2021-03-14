@@ -79,10 +79,11 @@
 		
 		<commons.lang.version>2.5</commons.lang.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
-		<commons.io.version>2.4</commons.io.version>		
+		<commons.io.version>2.4</commons.io.version>
+		<commons.csv.version>1.8</commons.csv.version>
 	</properties>
 
-	<dependencyManagement>	
+	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.sklsft.generator</groupId>
@@ -251,8 +252,13 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commons.io.version}</version>
-			</dependency>			
-		</dependencies>		
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-csv</artifactId>
+			    <version>${commons.csv.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
 	<build>

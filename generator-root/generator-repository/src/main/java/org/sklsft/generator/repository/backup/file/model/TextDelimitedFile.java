@@ -3,10 +3,10 @@ package org.sklsft.generator.repository.backup.file.model;
 import java.util.List;
 
 /**
- * representation of a csv file used to store backup data
+ * representation of a text delimited file used to store backup data
  *
  */
-public class CsvFile {
+public class TextDelimitedFile {
 	
 	/*
 	 * properties

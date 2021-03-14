@@ -12,11 +12,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.sklsft.generator.exception.InvalidFileException;
-import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
-import org.sklsft.generator.repository.backup.file.model.CsvFile;
+import org.sklsft.generator.repository.backup.file.interfaces.TextDelimitedFileParser;
+import org.sklsft.generator.repository.backup.file.model.TextDelimitedFile;
 
 
-public class CsvFileParserImpl implements CsvFileParser {
+public class LegacyTextDelimitedFileParserImpl implements TextDelimitedFileParser {
 	
 	/*
 	 * properties
@@ -28,27 +28,27 @@ public class CsvFileParserImpl implements CsvFileParser {
 	/*
 	 * constructor
 	 */
-	public CsvFileParserImpl() {
+	public LegacyTextDelimitedFileParserImpl() {
 		this.charset = StandardCharsets.ISO_8859_1;
 		this.separator = "\\$";
 	}
 	
-	public CsvFileParserImpl(Charset charset) {
+	public LegacyTextDelimitedFileParserImpl(Charset charset) {
 		this.charset = charset;
 		this.separator = "\\$";
 	}
 	
-	public CsvFileParserImpl(Charset charset, String separator) {
+	public LegacyTextDelimitedFileParserImpl(Charset charset, String separator) {
 		this.charset = charset;
 		this.separator = separator;
 	}
 	
 
 	@Override
-	public CsvFile readData(String filePath) throws IOException, InvalidFileException {
+	public TextDelimitedFile readData(String filePath) throws IOException, InvalidFileException {
 
 		Path path = Paths.get(filePath);
-		List<Object[]> tokensList = new ArrayList<Object[]>();
+		List<Object[]> tokensList = new ArrayList<>();
 		
 		try (BufferedReader reader = Files.newBufferedReader(path, charset);) {
 			
@@ -60,7 +60,7 @@ public class CsvFileParserImpl implements CsvFileParser {
 			}
 		}
 		
-		CsvFile result = new CsvFile();
+		TextDelimitedFile result = new TextDelimitedFile();
 		result.setData(tokensList);			
 		
 		return result;

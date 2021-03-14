@@ -19,6 +19,8 @@ public class BackupFileLocator {
 			return PersistenceMode.XML;
 		} else if (existsFileForType(backupPath, step, table, PersistenceMode.CSV)) {
 			return PersistenceMode.CSV;
+		} else if (existsFileForType(backupPath, step, table, PersistenceMode.TXT)) {
+			return PersistenceMode.TXT;
 		} else {
 			return null;
 		}

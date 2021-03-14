@@ -19,8 +19,10 @@ public class BackupArgumentReaderFactory {
 
 	public BackupArgumentReader getBackupArgumentReader(PersistenceMode type, InputDataSourceProvider inputSourceProvider) {
 		switch (type) {
+		case TXT:
+			return new LegacyTextDelimitedFileBackupReader();
 		case CSV:
-			return new TextDelimitedFileBackupReader();
+			return new StandardCsvFileBackupReader();
 		case XML:
 			return new XmlFileBackupReader(inputSourceProvider);
 		default:

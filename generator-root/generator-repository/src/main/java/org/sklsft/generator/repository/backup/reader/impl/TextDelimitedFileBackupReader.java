@@ -1,30 +1,28 @@
 package org.sklsft.generator.repository.backup.reader.impl;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.sklsft.generator.exception.InvalidFileException;
 import org.sklsft.generator.exception.ReadBackupFailureException;
-import org.sklsft.generator.repository.backup.file.impl.CsvFileParserImpl;
-import org.sklsft.generator.repository.backup.file.interfaces.CsvFileParser;
-import org.sklsft.generator.repository.backup.file.model.CsvFile;
+import org.sklsft.generator.repository.backup.file.interfaces.TextDelimitedFileParser;
+import org.sklsft.generator.repository.backup.file.model.TextDelimitedFile;
 import org.sklsft.generator.repository.backup.reader.interfaces.BackupArgumentReader;
 import org.sklsft.generator.repository.backup.reader.model.BackupArguments;
 
 
-public class TextDelimitedFileBackupReader implements BackupArgumentReader {
+public abstract class TextDelimitedFileBackupReader implements BackupArgumentReader {
 
 	/*
 	 * properties
 	 */
-	private CsvFileParser csvFileParser;
+	private TextDelimitedFileParser fileParser;
 	
 	/*
 	 * constructor
 	 */
-	public TextDelimitedFileBackupReader() {
-		this.csvFileParser = new CsvFileParserImpl(StandardCharsets.UTF_8);
+	public TextDelimitedFileBackupReader(TextDelimitedFileParser fileParser) {
+		this.fileParser = fileParser;
 	}
 	
 	public BackupArguments readBackupArgs(String backupFilePath)  {
@@ -37,7 +35,7 @@ public class TextDelimitedFileBackupReader implements BackupArgumentReader {
 
 	private List<Object[]> readArgs(String backupFilePath){
 		try {
-			CsvFile csvFile = csvFileParser.readData(backupFilePath);
+			TextDelimitedFile csvFile = fileParser.readData(backupFilePath);
 			
 			return csvFile.getData();
 			

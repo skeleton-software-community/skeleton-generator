@@ -3,7 +3,7 @@ package org.sklsft.generator.repository.backup.file.interfaces;
 import java.io.IOException;
 
 import org.sklsft.generator.exception.InvalidFileException;
-import org.sklsft.generator.repository.backup.file.model.CsvFile;
+import org.sklsft.generator.repository.backup.file.model.TextDelimitedFile;
 
 /**
  * provides two methodes to :
@@ -12,8 +12,8 @@ import org.sklsft.generator.repository.backup.file.model.CsvFile;
  * @author Nicolas Thibault
  *
  */
-public interface CsvFileParser {
+public interface TextDelimitedFileParser {
 
-	CsvFile readData(String filePath) throws IOException, InvalidFileException;
+	TextDelimitedFile readData(String filePath) throws IOException, InvalidFileException;
 	
 }

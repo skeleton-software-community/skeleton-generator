@@ -104,7 +104,7 @@ public class BackupPreExecutionChecker {
 		PersistenceMode mode = backupLocator.resolvePersistenceModeOrNull(backupPath, step, table);
 		if(mode!=null){
 			switch(mode){
-				case CSV : 
+				case TXT : 
 					result.add(new BackupPlanPreExecutionWarning(BackupPlanWarningType.HARDCODED_VALUES, step, table));
 					break;
 				default:
