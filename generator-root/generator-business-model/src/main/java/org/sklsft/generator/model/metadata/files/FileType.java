@@ -25,6 +25,7 @@ public enum FileType {
     JS (".js", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     CSS (".css", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     BAT (".bat", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
+    CSV (".csv", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
     PROPERTIES (".properties", StandardCharsets.ISO_8859_1, "# Specific Code Start", "# Specific Code End");
 	
 	private String extension;

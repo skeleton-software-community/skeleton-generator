@@ -1,6 +1,13 @@
 package org.sklsft.generator.skeletons.core.layers;
 
+import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
+import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
+import org.sklsft.generator.skeletons.core.commands.junit.BeanPopulatorFileTemplateCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.OneToManyComponentPopulatorFileTemplateCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.junit.OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.LogbackTestFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringJUnitPersistenceConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.SpringTestsConfigFileWriteCommand;
@@ -8,6 +15,9 @@ import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPom
 import org.sklsft.generator.skeletons.core.commands.junit.configuration.TestsPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.resources.JUnitDataInitializerFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.junit.resources.SetupTestFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.BeanPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.OneToManyComponentPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponentPopulatorCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -57,6 +67,38 @@ public class JunitLayer extends AbstractLayer {
 	@Override
 	public FileWriteCommandTreeNode getGenerationNode(Project project) {
 
-		return null;
+		FileWriteCommandTreeNode dataCsvTemplates = new FileWriteCommandTreeNode();
+        
+        FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode("CSV templates");
+        dataCsvTemplates.add(commandTreeNode);
+
+        for (Package myPackage : project.model.packages)
+        {
+            FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+            commandTreeNode.add(packageTreeNode);
+
+            for (Bean bean : myPackage.beans)
+            {
+                if (!bean.isComponent)
+                {
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BeanPopulatorFileTemplateCommandFileWriteCommand(bean));
+                    packageTreeNode.add(beanTreeNode);
+
+                    for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
+                    {
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new OneToManyComponentPopulatorFileTemplateCommandFileWriteCommand(oneToManyComponent));
+                        packageTreeNode.add(oneToManyComponentTreeNode);
+                    }
+                    
+                    for (OneToOneComponent oneToOneComponent : bean.oneToOneComponentList)
+                    {
+                        FileWriteCommandTreeNode oneToOneComponentTreeNode = new FileWriteCommandTreeNode(new OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand(oneToOneComponent));
+                        packageTreeNode.add(oneToOneComponentTreeNode);
+                    }
+                }
+            }
+        }
+        
+        return dataCsvTemplates;
 	}
 }
