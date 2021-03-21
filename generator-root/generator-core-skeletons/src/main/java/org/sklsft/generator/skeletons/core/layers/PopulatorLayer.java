@@ -6,8 +6,11 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.skeletons.core.commands.population.BeanPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.BeanPopulatorFileTemplateCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.OneToManyComponentPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.OneToManyComponentPopulatorFileTemplateCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponentPopulatorCommandFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.LogbackPopulatorFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorPomFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorProjectPropertiesFileWriteCommand;
@@ -65,8 +68,7 @@ public class PopulatorLayer extends AbstractLayer {
         FileWriteCommandTreeNode commandTreeNode = new FileWriteCommandTreeNode("Population commands");
         populatorLayerTreeNode.add(commandTreeNode);
 
-        for (Package myPackage : project.model.packages)
-        {
+        for (Package myPackage : project.model.packages) {
             FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
             commandTreeNode.add(packageTreeNode);
 
@@ -86,6 +88,36 @@ public class PopulatorLayer extends AbstractLayer {
                     for (OneToOneComponent oneToOneComponent : bean.oneToOneComponentList)
                     {
                         FileWriteCommandTreeNode oneToOneComponentTreeNode = new FileWriteCommandTreeNode(new OneToOneComponentPopulatorCommandFileWriteCommand(oneToOneComponent));
+                        packageTreeNode.add(oneToOneComponentTreeNode);
+                    }
+                }
+            }
+        }
+        
+        FileWriteCommandTreeNode dataCsvTemplates = new FileWriteCommandTreeNode("CSV templates");
+        populatorLayerTreeNode.add(dataCsvTemplates);
+
+        for (Package myPackage : project.model.packages)
+        {
+            FileWriteCommandTreeNode packageTreeNode = new FileWriteCommandTreeNode(myPackage.name);
+            commandTreeNode.add(packageTreeNode);
+
+            for (Bean bean : myPackage.beans)
+            {
+                if (!bean.isComponent)
+                {
+                    FileWriteCommandTreeNode beanTreeNode = new FileWriteCommandTreeNode(new BeanPopulatorFileTemplateCommandFileWriteCommand(bean));
+                    packageTreeNode.add(beanTreeNode);
+
+                    for (OneToManyComponent oneToManyComponent : bean.oneToManyComponentList)
+                    {
+                        FileWriteCommandTreeNode oneToManyComponentTreeNode = new FileWriteCommandTreeNode(new OneToManyComponentPopulatorFileTemplateCommandFileWriteCommand(oneToManyComponent));
+                        packageTreeNode.add(oneToManyComponentTreeNode);
+                    }
+                    
+                    for (OneToOneComponent oneToOneComponent : bean.oneToOneComponentList)
+                    {
+                        FileWriteCommandTreeNode oneToOneComponentTreeNode = new FileWriteCommandTreeNode(new OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand(oneToOneComponent));
                         packageTreeNode.add(oneToOneComponentTreeNode);
                     }
                 }

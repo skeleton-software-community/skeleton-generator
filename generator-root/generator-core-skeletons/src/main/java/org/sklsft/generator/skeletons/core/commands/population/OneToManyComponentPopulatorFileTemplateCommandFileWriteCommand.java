@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.core.commands.junit;
+package org.sklsft.generator.skeletons.core.commands.population;
 
 import java.io.File;
 import java.io.IOException;

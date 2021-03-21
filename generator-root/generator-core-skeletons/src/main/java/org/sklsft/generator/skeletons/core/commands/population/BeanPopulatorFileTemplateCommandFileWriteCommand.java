@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.core.commands.junit;
+package org.sklsft.generator.skeletons.core.commands.population;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class BeanPopulatorFileTemplateCommandFileWriteCommand extends CsvFileWri
 	private Bean bean;
 
     public BeanPopulatorFileTemplateCommandFileWriteCommand(Bean bean){
-        super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.testsArtefactName + File.separator + bean.myPackage.model.testResourcesFolder + File.separator + "junit" + File.separator + "data" + File.separator + "templates" + File.separator + bean.table.myPackage.name.toUpperCase().replace(".", File.separator),
+        super(bean.myPackage.model.project.workspaceFolder + File.separator + "data-model" + File.separator + "population" + File.separator + "templates" + File.separator + bean.table.myPackage.name.toUpperCase().replace(".", File.separator),
         		bean.table.originalName);
         
         		this.bean = bean;
