@@ -5,27 +5,37 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
+import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.CsvFileWriteCommand;
 
 public class OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand extends CsvFileWriteCommand {
 
-	private OneToOneComponent oneToOneComponent;
 	private Bean referenceBean;
     private Bean parentBean;
 
-    public OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand(OneToOneComponent oneToOneComponent){
-    	super(oneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.referenceBean.myPackage.model.testsArtefactName + File.separator + oneToOneComponent.referenceBean.myPackage.model.testResourcesFolder + File.separator + "junit" + File.separator + "data" + File.separator + "templates" + File.separator + oneToOneComponent.referenceBean.table.myPackage.name.toUpperCase().replace(".", File.separator),
-    			oneToOneComponent.referenceBean.table.originalName);
-        
-        		this.oneToOneComponent = oneToOneComponent;
-        		referenceBean = oneToOneComponent.referenceBean;
-        	    parentBean = oneToOneComponent.parentBean;
+    public OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand(OneToOneComponent OneToOneComponent){
+    	super(OneToOneComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + "data-model" + File.separator + "population" + File.separator + "templates" + File.separator + OneToOneComponent.referenceBean.table.myPackage.name.toUpperCase().replace(".", File.separator),
+    			OneToOneComponent.referenceBean.table.originalName);
+    			referenceBean = OneToOneComponent.referenceBean;
+    			parentBean = OneToOneComponent.parentBean;
     }
 
 
-	@Override
+    @Override
 	protected void writeContent() throws IOException {
 		
-		
+    	boolean start = true;
+    	for (ViewProperty property:parentBean.referenceViewProperties) {
+			if (start) {
+				start = false;
+			} else {
+				write(";");
+			}
+			write("\"" + property.rendering + "\"");
+		}
+		for (ViewProperty property:referenceBean.formBean.properties) {
+			write(";");
+			write("\"" + property.rendering + "\"");
+		}
 	}
 }
