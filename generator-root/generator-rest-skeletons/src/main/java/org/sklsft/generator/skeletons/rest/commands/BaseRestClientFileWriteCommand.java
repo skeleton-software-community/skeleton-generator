@@ -95,7 +95,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		
 		writeLine("@Resource(name=\"" + bean.myPackage.model.project.projectName + "RestClient\")");
-		writeLine("private RestClient restClient;");
+		writeLine("protected RestClient restClient;");
 		
 		
 		if (this.bean.selectable) {
