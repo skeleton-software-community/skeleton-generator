@@ -79,7 +79,7 @@
 		
 		<commons.lang.version>2.5</commons.lang.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
-		<commons.io.version>2.4</commons.io.version>
+		<commons.io.version>2.7</commons.io.version>
 		<commons.csv.version>1.8</commons.csv.version>
 	</properties>
 
