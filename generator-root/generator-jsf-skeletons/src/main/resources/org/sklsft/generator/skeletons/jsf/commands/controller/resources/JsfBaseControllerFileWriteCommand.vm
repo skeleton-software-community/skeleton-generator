@@ -98,8 +98,9 @@ public abstract class BaseController {
 		UIComponent component = event.getComponent();
 		UIForm form = findParentForm(component);
 
-		clearComponentHierarchy(form);
-
+		if(form != null) {
+			clearComponentHierarchy(form);
+		}
 	}
 	
 

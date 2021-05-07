@@ -44,7 +44,7 @@ function selectUnselectAll(checkbox) {
 }
 
 function selectUnselect(arg) {
-	checkbox = document.getElementById(arg);
+	var checkbox = document.getElementById(arg);
 	var elements = checkbox.form.elements;
 	
 	bindSelectUnselectAll(checkbox, elements);	

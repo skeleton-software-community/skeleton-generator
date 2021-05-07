@@ -75,7 +75,7 @@ public class OneToOneComponentPopulatorCommandFileWriteCommand extends JavaFileW
         writeLine("/*");
         writeLine(" * logger");
         writeLine(" */");
-        writeLine("private static final Logger logger = LoggerFactory.getLogger(" + parentBean.serviceInterfaceName + ".class);");
+        writeLine("private static final Logger logger = LoggerFactory.getLogger(" + oneToOneComponent.referenceBean.className + "Command.class);");
         skipLine();
     
         writeLine("@Inject");

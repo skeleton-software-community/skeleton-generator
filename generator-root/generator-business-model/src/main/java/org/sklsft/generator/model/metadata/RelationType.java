@@ -40,6 +40,10 @@ public enum RelationType {
         }
     }
 	
+	public boolean isNotNullable() {
+		return isEmbedded();
+	}
+	
 	public boolean isEmbedded() {
         switch (this) {
             case EMBEDDED:

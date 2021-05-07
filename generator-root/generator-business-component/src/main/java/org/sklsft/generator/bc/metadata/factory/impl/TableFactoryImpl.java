@@ -60,7 +60,7 @@ public class TableFactoryImpl implements TableFactory {
             if (columnMetaData.getDataType() != null) {
             	column.dataType = columnMetaData.getDataType();
             }            
-            column.nullable = (columnMetaData.getNullable());
+            
             if (columnMetaData.getReferenceTableRelation() != null) {
             	column.relation = columnMetaData.getReferenceTableRelation();
             } else {
@@ -75,6 +75,10 @@ public class TableFactoryImpl implements TableFactory {
             }
             
             column.unique = columnMetaData.getUnique() || column.relation.isUnique();
+            column.nullable = columnMetaData.getNullable();
+            if (column.relation.isNotNullable()) {
+            	column.nullable = false;
+            }
             column.editable = columnMetaData.getEditable();
             column.filterable = columnMetaData.getFilterable();
             if (columnMetaData.getVisibility()!=null) {

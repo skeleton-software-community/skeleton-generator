@@ -220,9 +220,13 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					skipLine();
 				} else {
 					writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
-					write("@JoinColumn(name = " + CHAR_34 + property.column.name + CHAR_34 + ", unique = true");
-					write(", nullable = false");
-					writeLine(")");
+					write("@JoinColumn(name = " + CHAR_34 + property.column.name + CHAR_34);
+					if (!property.nullable) {
+						write(", nullable = false");
+					}
+					if (property.unique) {
+						write(", unique = true");
+					}
 					writeLine("private " + property.referenceBean.className + " " + property.name + ";");
 					skipLine();
 				}

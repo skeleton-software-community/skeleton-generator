@@ -60,7 +60,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         writeLine("/*");
         writeLine(" * logger");
         writeLine(" */");
-        writeLine("private static final Logger logger = LoggerFactory.getLogger(" + bean.serviceInterfaceName + ".class);");
+        writeLine("private static final Logger logger = LoggerFactory.getLogger(" + bean.className + "Command.class);");
         skipLine();
         
         writeLine("@Inject");
