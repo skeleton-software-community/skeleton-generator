@@ -3,7 +3,7 @@
 
 	<groupId>org.sklsft.generator</groupId>
 	<artifactId>generator-root</artifactId>
-	<version>3.5.0</version>
+	<version>3.5.1-SNAPSHOT</version>
 	<name>Generator - Root</name>
 	<description>Module racine du projet Generator</description>
 	<url>http://generator.sklsft.org</url>
