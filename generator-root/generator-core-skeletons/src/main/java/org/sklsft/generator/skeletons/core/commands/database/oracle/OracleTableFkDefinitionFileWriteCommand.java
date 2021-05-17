@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.database.Column;
+import org.sklsft.generator.model.domain.database.Index;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 import org.sklsft.generator.skeletons.core.database.OracleHandler;
 
@@ -26,11 +28,37 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 	@Override
 	public void writeContent() throws IOException {
 		
+		createConstraints();
+		
 		createTableFks();
 
 		writeNotOverridableContent();
 
 		skipLine();
+	}
+	
+	private void createConstraints() {
+		writeLine("-- table unique constraints --");
+		for (UniqueConstraint constraint:table.uniqueConstraints) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT " + constraint.name + " UNIQUE (" + constraint.columns.get(0).name);
+			for (int i = 1; i < constraint.columns.size(); i++) {
+				write("," + constraint.columns.get(i).name);
+			}
+			write(")");
+			write(" USING INDEX (CREATE INDEX " + constraint.index.name + " ON " + table.name + "(" + constraint.columns.get(0).name);
+			for (int i = 1; i < constraint.columns.size(); i++) {
+				write("," + constraint.columns.get(i).name);
+			}
+			write(")");
+			
+			if (table.myPackage.model.project.indexesTableSpace != null) {
+				write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
+			}
+			write(")");
+			skipLine();
+			writeLine("/");
+            skipLine();
+		}
 	}
 
 	private void createTableFks() {
@@ -51,9 +79,9 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 		}
 		
 		i = 0;
-		for (Column column:table.columns) {
-			if (column.referenceTable != null) {
-                write("CREATE INDEX IDX_" + table.name + "_F" + i + " ON " + this.table.name + "(" + column.name + ")");
+		for (Index index:table.indexes) {
+			if (index.uniqueConstraint == null) {
+                write("CREATE INDEX " + index.name + " ON " + this.table.name + "(" + index.columns.get(0).name + ")");
                 if (table.myPackage.model.project.indexesTableSpace != null) {
         			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
         		}

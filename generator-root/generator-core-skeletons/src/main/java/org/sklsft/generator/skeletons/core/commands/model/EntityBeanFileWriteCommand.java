@@ -9,6 +9,8 @@ import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOne;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
+import org.sklsft.generator.model.domain.database.Index;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.IdGeneratorType;
 import org.sklsft.generator.skeletons.commands.impl.typed.JavaFileWriteCommand;
@@ -67,6 +69,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.hibernate.annotations.Fetch;");
 		javaImports.add("import org.hibernate.annotations.FetchMode;");
 		javaImports.add("import javax.persistence.UniqueConstraint;");
+		javaImports.add("import javax.persistence.Index;");
 		javaImports.add("import org.hibernate.annotations.Type;");
 		
 		
@@ -117,21 +120,43 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			writeLine("@Audited");
 		}
-		write("@Table(name=" + CHAR_34 + this.bean.table.name + CHAR_34 );
-		
-		if (this.bean.table.cardinality > 0) {
-			skipLine();
-			write(", uniqueConstraints = {@UniqueConstraint(columnNames = {");
-			write(CHAR_34 + this.bean.table.columns.get(0).name + CHAR_34);
-			for (int i = 1; i < this.bean.table.cardinality; i++) {
-				write(", " + CHAR_34 + this.bean.table.columns.get(i).name + CHAR_34);
+		write("@Table(name=" + CHAR_34 + this.bean.table.name + CHAR_34 );		
+		skipLine();
+		writeLine(", uniqueConstraints = {");
+		boolean start = true;
+		for (UniqueConstraint constraint:bean.table.uniqueConstraints) {
+			if (!start) {
+				write(", ");
+			} else {
+				start = false;
+			}				
+			write("@UniqueConstraint(name = " + CHAR_34 + constraint.name + CHAR_34 + ", columnNames = {");
+			write(CHAR_34 + constraint.columns.get(0).name + CHAR_34);
+			for (int i = 1; i < constraint.columns.size(); i++) {
+				write(", " + CHAR_34 + constraint.columns.get(i).name + CHAR_34);
 			}
-			
-			writeLine("})})");
+			writeLine("})");
 		}
-		else{
+		writeLine("}");
+		writeLine(", indexes = {");
+		start = true;
+		for (Index index:bean.table.indexes) {
+			if (!start) {
+				write(", ");
+			} else {
+				start = false;
+			}				
+			write("@Index(name = " + CHAR_34 + index.name + CHAR_34 + ", columnList = " + CHAR_34);
+			write(index.columns.get(0).name);
+			for (int i = 1; i < index.columns.size(); i++) {
+				write(", " + index.columns.get(i).name);
+			}
+			write("\"");
 			writeLine(")");
 		}
+		writeLine("})");
+
+		
 		if (bean.annotations != null) {
 			for (String annotation:bean.annotations) {
 				writeLine(annotation);
@@ -211,9 +236,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					if (!property.nullable) {
 						write(", nullable = false");
 					}
-					if (property.unique) {
-						write(", unique = true");
-					}
 					writeLine(")");
 					
 					writeLine("private " + property.beanDataType + " " + property.name + ";");
@@ -224,9 +246,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					if (!property.nullable) {
 						write(", nullable = false");
 					}
-					if (property.unique) {
-						write(", unique = true");
-					}
+					writeLine(")");
 					writeLine("private " + property.referenceBean.className + " " + property.name + ";");
 					skipLine();
 				}
@@ -241,9 +261,6 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				write("@Column(name = " + CHAR_34 + property.column.name + CHAR_34);
 				if (!property.nullable) {
 					write(", nullable = false");
-				}
-				if (property.unique) {
-					write(", unique = true");
 				}
 				writeLine(")");
 				

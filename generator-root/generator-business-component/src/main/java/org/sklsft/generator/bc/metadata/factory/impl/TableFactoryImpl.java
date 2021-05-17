@@ -1,12 +1,11 @@
 package org.sklsft.generator.bc.metadata.factory.impl;
 
-import java.util.ArrayList;
-
 import org.sklsft.generator.bc.metadata.factory.interfaces.TableFactory;
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.Model;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Column;
+import org.sklsft.generator.model.domain.database.Index;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
@@ -91,17 +90,73 @@ public class TableFactoryImpl implements TableFactory {
             table.columns.add(column);
         }
         
-        if (tableMetaData.getUniqueConstraints()!=null && !tableMetaData.getUniqueConstraints().isEmpty()) {
-        	table.uniqueConstraints = new ArrayList<>();
-        	for (UniqueConstraintMetaData uniqueConstraintMetaData:tableMetaData.getUniqueConstraints()) {
+        createConstraintsAndIndexes(tableMetaData, table);
+        
+        return table;
+	}
+
+	private void createConstraintsAndIndexes(TableMetaData tableMetaData, Table table) {
+		// unique constraint corresponding to the business key
+        if (table.cardinality > 0) {
+        	UniqueConstraint uniqueConstraint = new UniqueConstraint();
+        	Index index = new Index();
+        	uniqueConstraint.index = index;
+        	index.uniqueConstraint = uniqueConstraint;
+    		uniqueConstraint.name = "UC_" + table.name;
+    		index.name = "IDX_" + table.name + "_UC";
+    		for (int i = 0; i < table.cardinality; i++) {
+    			uniqueConstraint.columns.add(table.columns.get(i));
+    			index.columns.add(table.columns.get(i));
+    		}
+    		table.uniqueConstraints.add(uniqueConstraint);
+    		table.indexes.add(index);
+        }
+        // unique constraints on fields declared as unique or indexes on fk
+        for (int i = 0;i<table.columns.size();i++) {
+        	Column column = table.columns.get(i);
+        	if (column.unique) {
         		UniqueConstraint uniqueConstraint = new UniqueConstraint();
-        		uniqueConstraint.name = uniqueConstraintMetaData.getName();
-        		for (String columnName:uniqueConstraintMetaData.getFields()) {
-        			uniqueConstraint.columns.add(table.findColumnByName(columnName));
-        		}
+        		Index index = new Index();
+        		uniqueConstraint.index = index;
+            	index.uniqueConstraint = uniqueConstraint;
+            	
+        		uniqueConstraint.name = "UC_" + table.name + "_C" + i;
+        		uniqueConstraint.columns.add(column);        		
+        		
+        		index.name = "IDX_" + table.name + "_C" + i;
+        		index.columns.add(column);
+        		
         		table.uniqueConstraints.add(uniqueConstraint);
+        		table.indexes.add(index);
+        	} else {
+        		if (column.referenceTable != null) {
+        			Index index = new Index();
+            		index.name = "IDX_" + table.name + "_C" + i;
+            		index.columns.add(column);
+            		table.indexes.add(index);
+        		}
         	}
         }
-        return table;
-	}	
+        
+        // declared unique constraints
+        if (tableMetaData.getUniqueConstraints()!=null) {
+        	for (UniqueConstraintMetaData uniqueConstraintMetaData:tableMetaData.getUniqueConstraints()) {
+        		UniqueConstraint uniqueConstraint = new UniqueConstraint();       		
+        		Index index = new Index();        		
+        		uniqueConstraint.index = index;
+            	index.uniqueConstraint = uniqueConstraint;
+            	
+            	index.name = "IDX_" + uniqueConstraintMetaData.getName();
+            	uniqueConstraint.name = "UC_" + uniqueConstraintMetaData.getName();
+        		
+        		for (String columnName:uniqueConstraintMetaData.getFields()) {
+        			Column column = table.findColumnByName(columnName);
+        			uniqueConstraint.columns.add(column);
+        			index.columns.add(column);
+        		}
+        		table.uniqueConstraints.add(uniqueConstraint);
+        		table.indexes.add(index);
+        	}
+        }
+	}
 }

@@ -59,23 +59,7 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 
 		writeLine(",");
 		
-		if (table.cardinality > 0) {
-			write("CONSTRAINT UC_" + table.name + " UNIQUE (" + this.table.columns.get(0).name);
-			for (int i = 1; i < this.table.cardinality; i++) {
-				write("," + this.table.columns.get(i).name);
-			}
-			write(")");
-			write(" USING INDEX (CREATE INDEX IDX_" + table.name + "_UC ON " + table.name + "(" + this.table.columns.get(0).name);
-			for (int i = 1; i < this.table.cardinality; i++) {
-				write("," + this.table.columns.get(i).name);
-			}
-			write(")");
-			
-			if (table.myPackage.model.project.indexesTableSpace != null) {
-				write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
-			}
-			writeLine("),");
-		}
+		
 		write("CONSTRAINT PK_" + table.name + " PRIMARY KEY (ID)");
 		write(" USING INDEX (CREATE INDEX IDX_" + table.name + "_PK ON " + table.name + "(ID)");
 		

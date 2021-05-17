@@ -11,7 +11,6 @@ import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.domain.business.SelectionBehavior;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.domain.database.Table;
-import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.sklsft.generator.util.naming.JavaClassNaming;
@@ -196,13 +195,6 @@ public class JavaBeanFactory implements BeanFactory {
 				bean.selectionBehavior.labelProperty = bean.findPropertyByColumnName(tableMetaData.getSelectionBehavior().getLabelColumn());
 			} else {
 				bean.selectionBehavior.labelProperty = bean.properties.get(0);
-			}
-		}
-		
-		for (UniqueConstraint uniqueConstraint:bean.table.uniqueConstraints) {
-			for (Column column:uniqueConstraint.columns) {
-				Property property = bean.findPropertyByColumnName(column.originalName);
-				uniqueConstraint.properties.add(property);
 			}
 		}
 

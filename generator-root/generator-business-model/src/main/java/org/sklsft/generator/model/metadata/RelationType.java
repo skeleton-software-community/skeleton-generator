@@ -34,6 +34,9 @@ public enum RelationType {
                 
             case ONE_TO_ONE_COMPONENT:
                 return true;
+                
+            case EMBEDDED:
+                return true;
 
             default:
                 return false;

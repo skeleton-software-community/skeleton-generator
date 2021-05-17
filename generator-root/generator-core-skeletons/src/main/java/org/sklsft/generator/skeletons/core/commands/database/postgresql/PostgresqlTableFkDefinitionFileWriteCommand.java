@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import org.sklsft.generator.bc.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.database.Column;
+import org.sklsft.generator.model.domain.database.Index;
 import org.sklsft.generator.model.domain.database.Table;
+import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.skeletons.commands.impl.typed.SqlFileWriteCommand;
 import org.sklsft.generator.skeletons.core.database.PostgresqlHandler;
 
@@ -27,13 +29,33 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 	@Override
 	public void writeContent() throws IOException {
 
+		createConstraints();
+		
 		createTableFks();
+		
+		createIndexes();
 
 		writeNotOverridableContent();
 
 	}
+	
+	/**
+	 * create constraints
+	 */
+	private void createConstraints() {
+		
+		for (UniqueConstraint uniqueConstraint:table.uniqueConstraints) {
+			write("ALTER TABLE " + table.name + " ADD CONSTRAINT " + uniqueConstraint.name + " UNIQUE (" + uniqueConstraint.columns.get(0).name);
+			for (int i = 1; i < uniqueConstraint.columns.size(); i++) {
+				write("," + uniqueConstraint.columns.get(i).name);
+			}
+			writeLine(");");
+			writeLine("/");
+			skipLine();
+		}
+	}
 
-	/*
+	/**
 	 * create fks and indexes
 	 */
 	private void createTableFks() {
@@ -51,15 +73,20 @@ public class PostgresqlTableFkDefinitionFileWriteCommand extends SqlFileWriteCom
 			}
 			i++;
 		}
-
-		i = 0;
-		for (Column column:table.columns) {
-			if (column.referenceTable != null) {
-				writeLine("CREATE INDEX FK_" + table.name + "_" + i + " ON " + this.table.name + "(" + column.name + ");");
-				writeLine("/");
-				skipLine();
+	}
+	
+	/**
+	 * create indexes
+	 */
+	private void createIndexes() {
+		for (Index index:table.indexes) {
+			write("CREATE INDEX " + index.name + " ON " + this.table.name + "(" + index.columns.get(0).name);
+			for (int i = 1; i < index.columns.size(); i++) {
+				write("," + index.columns.get(i).name);
 			}
-			i++;
+			writeLine(");");
+			writeLine("/");
+			skipLine();
 		}
 	}
 }

@@ -30,6 +30,7 @@ public class Table {
 
 	public List<Column> columns = new ArrayList<>();
 	public List<UniqueConstraint> uniqueConstraints = new ArrayList<>();
+	public List<Index> indexes = new ArrayList<>();
 	
 	
 	public Column findColumnByName(String columnName) {
