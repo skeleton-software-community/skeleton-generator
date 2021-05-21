@@ -1,0 +1,368 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.sklsft.generator</groupId>
+	<artifactId>generator-root</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
+	<name>Generator - Root</name>
+	<description>Root of the Generator project</description>
+	<url>http://generator.sklsft.org</url>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>generator-model</module>
+		<module>generator-persistence</module>
+		<module>generator-skeletons</module>
+		<module>generator-core-skeletons</module>
+		<module>generator-rest-skeletons</module>
+		<module>generator-jsf-skeletons</module>
+		<module>generator-angular-skeletons</module>
+		<module>generator-components</module>
+		<module>generator-services</module>
+		<module>generator-bash</module>
+		<module>generator-tests</module>
+	</modules>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>	
+		<developer>
+			<id>nthibault</id>
+			<name>Nicolas Thibault</name>
+			<email>nicolas.thibault@sklsft.org</email>
+		</developer>
+		
+		<developer>
+			<id>mregragui</id>
+			<name>Mounir Regragui</name>
+			<email>mounir.regragui@sklsft.org</email>
+		</developer>		
+	</developers>
+	
+	<scm>
+		<connection>scm:git:git@github.com/skeleton-software-community/skeleton-generator.git</connection>
+		<developerConnection>scm:git:git@github.com/skeleton-software-community/skeleton-generator.git</developerConnection>
+		<url>git@github.com/skeleton-software-community/skeleton-generator.git</url>
+	</scm>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<encoding>UTF-8</encoding>
+		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
+		<java.version>1.8</java.version>
+				
+		<spring.version>5.2.5.RELEASE</spring.version>
+		<javax.inject.version>1</javax.inject.version>
+		<slf4j.version>1.7.30</slf4j.version>
+		<logback.version>1.2.3</logback.version>
+		<junit.version>4.13</junit.version>		
+		<velocity.version>1.7</velocity.version>
+		
+		<postgresql.version>42.2.18</postgresql.version>
+		<ojdbc.version>12.2.0.1</ojdbc.version>
+		
+		<commons.lang.version>2.5</commons.lang.version>
+		<commons.dbcp.version>1.4</commons.dbcp.version>
+		<commons.io.version>2.7</commons.io.version>
+		<commons.csv.version>1.8</commons.csv.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-persistence</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-core-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-jsf-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-angular-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-rest-skeletons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-components</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.sklsft.generator</groupId>
+				<artifactId>generator-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			
+			<!-- gestion des logs -->
+			<!-- logback -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			
+			<!-- postgresql drivers -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			 </dependency>
+			 
+			 <!-- oracle drivers-->
+			 <dependency>
+				<groupId>com.oracle.database.jdbc</groupId>
+				<artifactId>ojdbc8</artifactId>
+				<version>${ojdbc.version}</version>
+			</dependency>
+			 
+			 
+			<!-- Inject annotation -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
+			 
+			 
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+						
+			
+			<!-- tests -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			
+			<!-- apache velocity-->
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>${velocity.version}</version>
+			</dependency>
+			
+			
+			<!-- apache commons -->
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${commons.dbcp.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-csv</artifactId>
+			    <version>${commons.csv.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>${java.version}</compilerVersion>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>				
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+                    				<additionalparam>-Xdoclint:none</additionalparam>
+                				</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>				
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

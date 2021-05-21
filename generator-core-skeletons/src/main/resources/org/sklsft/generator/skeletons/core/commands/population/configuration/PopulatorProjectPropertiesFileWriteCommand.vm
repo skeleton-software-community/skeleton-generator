@@ -1,0 +1,12 @@
+# Spring profiles
+spring.profiles.active=population
+
+# Logger settings
+log.directory=/var/log/${project.projectName}
+log.root.level=INFO
+log.app.level=INFO
+log.accessLogsInRootLogger=true
+log.errorLogsInRootLogger=true
+
+# Hibernate settings
+hibernate.showSql=false
