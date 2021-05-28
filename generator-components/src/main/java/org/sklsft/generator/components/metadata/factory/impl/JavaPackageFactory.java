@@ -103,11 +103,7 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.filtersPackageName = model.apiModelPackageName + "." + myPackage.name + ".filters";
 		myPackage.sortingsPackageName = model.apiModelPackageName + "." + myPackage.name + ".sortings";
 		
-		myPackage.fullViewsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
-		myPackage.basicViewsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
-		myPackage.formsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
-		myPackage.filtersTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
-		myPackage.sortingsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
+		myPackage.tsFeaturePath = myPackage.name.replace(".", File.separator);
 		
 		myPackage.baseDAOImplPackageName = model.daoImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseDAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name + ".base";
