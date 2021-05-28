@@ -18,27 +18,31 @@ import javax.xml.bind.annotation.XmlEnum;
  */
 @XmlEnum(String.class)
 public enum DataType {
-	TEXT("String", false, false, IdGeneratorType.NONE),
-	STRING("String", false, true, IdGeneratorType.UUID),
-	SHORT("Short", true, true, IdGeneratorType.SEQUENCE),
-	INTEGER("Integer", true, true, IdGeneratorType.SEQUENCE),
-	LONG("Long", true, true, IdGeneratorType.SEQUENCE),
-	DOUBLE("Double", true, false, IdGeneratorType.NONE),
-	BIG_DECIMAL("BigDecimal", true, false, IdGeneratorType.NONE),
-	DATE("LocalDate", true, false, IdGeneratorType.NONE),
-	DATETIME("Date", true, false, IdGeneratorType.NONE),
-	BOOLEAN("Boolean", false, false, IdGeneratorType.NONE);	
+	TEXT("String", "string", false, false, IdGeneratorType.NONE),
+	STRING("String", "string", false, true, IdGeneratorType.UUID),
+	SHORT("Short", "number", true, true, IdGeneratorType.SEQUENCE),
+	INTEGER("Integer", "number", true, true, IdGeneratorType.SEQUENCE),
+	LONG("Long", "number", true, true, IdGeneratorType.SEQUENCE),
+	DOUBLE("Double", "number", true, false, IdGeneratorType.NONE),
+	BIG_DECIMAL("BigDecimal", "number", true, false, IdGeneratorType.NONE),
+	DATE("LocalDate", "Date", true, false, IdGeneratorType.NONE),
+	DATETIME("Date", "Date", true, false, IdGeneratorType.NONE),
+	BOOLEAN("Boolean", "boolean", false, false, IdGeneratorType.NONE);	
 	
 
-	private DataType(String javaType, boolean limitable, boolean idElligible, IdGeneratorType defaultGenerator) {
+	
+	
+	
+	private DataType(String javaType, String tsType, boolean limitable, boolean idElligible, IdGeneratorType defaultGenerator) {
 		this.javaType = javaType;
+		this.tsType = tsType;
 		this.limitable = limitable;
 		this.idElligible = idElligible;
 		this.defaultGenerator = defaultGenerator;
 	}
-	
-	
+
 	private String javaType;
+	private String tsType;
 	private boolean limitable;
 	private boolean idElligible;
 	private IdGeneratorType defaultGenerator;
@@ -48,6 +52,10 @@ public enum DataType {
 		return javaType;
 	}
 	
+	public String getTsType() {
+		return tsType;
+	}
+
 	public boolean isLimitable() {
 		return limitable;
 	}

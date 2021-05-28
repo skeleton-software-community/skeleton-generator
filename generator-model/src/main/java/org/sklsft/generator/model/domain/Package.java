@@ -28,6 +28,12 @@ public class Package {
 	public String basicViewsPackageName;
 	public String fullViewsPackageName;
 	public String formsPackageName;
+	
+	public String filtersTsPath;
+	public String sortingsTsPath;
+	public String basicViewsTsPath;
+	public String fullViewsTsPath;
+	public String formsTsPath;
 
 	public String baseDAOInterfacePackageName;
 	public String baseDAOImplPackageName;

@@ -238,7 +238,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 					}
 					writeLine(")");
 					
-					writeLine("private " + property.beanDataType + " " + property.name + ";");
+					writeLine("private " + property.javaType + " " + property.name + ";");
 					skipLine();
 				} else {
 					writeLine("@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)");
@@ -264,7 +264,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				}
 				writeLine(")");
 				
-				writeLine("private " + property.beanDataType + " " + property.name + ";");
+				writeLine("private " + property.javaType + " " + property.name + ";");
 				skipLine();
 			}
 			
@@ -323,11 +323,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		skipLine();
 		
 		for (Property property : this.bean.properties) {
-			writeLine("public " + property.beanDataType + " " + property.getterName + "() {");
+			writeLine("public " + property.javaType + " " + property.getterName + "() {");
 			writeLine("return this." + property.name + ";");
 			writeLine("}");
 			skipLine();
-			writeLine("public void " + property.setterName + "(" + property.beanDataType + " " + property.name + ") {");
+			writeLine("public void " + property.setterName + "(" + property.javaType + " " + property.name + ") {");
 			writeLine("this." + property.name + " = " + property.name + ";");
 			writeLine("}");
 			skipLine();

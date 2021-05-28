@@ -79,6 +79,7 @@ public class JavaModelFactory implements ModelFactory {
         model.project = project;
         
         model.javaSourcesFolder = "src" + File.separator + "main" + File.separator + "java";
+        model.tsSourcesFolder = "src" + File.separator + "app" + File.separator + "features";
         model.testJavaSourcesFolder = "src" + File.separator + "test" + File.separator + "java";
         model.resourcesFolder = "src" + File.separator + "main" + File.separator + "resources";
         model.testResourcesFolder = "src" + File.separator + "test" + File.separator + "resources";
@@ -94,6 +95,7 @@ public class JavaModelFactory implements ModelFactory {
         model.restArtefactName = project.projectName + "-rest";
         model.restClientArtefactName = project.projectName + "-rest-client";
         model.webappArtefactName = project.projectName + "-webapp";
+        model.tsUiArtefactName = project.projectName + "-ui";
 
         model.apiModelPackageName = project.domainName + "." + project.projectName + ".api.model";
         model.serviceInterfacePackageName = project.domainName + "." + project.projectName + ".api.interfaces";

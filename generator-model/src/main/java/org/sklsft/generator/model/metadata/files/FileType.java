@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum(String.class)
 public enum FileType {
 	JAVA (".java", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
+	TS (".ts", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     SQL (".sql", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --"),
     XML (".xml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     XHTML (".xhtml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),

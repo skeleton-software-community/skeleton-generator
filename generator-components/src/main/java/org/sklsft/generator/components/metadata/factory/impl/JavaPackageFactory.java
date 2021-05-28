@@ -1,5 +1,6 @@
 package org.sklsft.generator.components.metadata.factory.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +102,12 @@ public class JavaPackageFactory implements PackageFactory {
 		myPackage.formsPackageName = model.apiModelPackageName + "." + myPackage.name + ".forms";
 		myPackage.filtersPackageName = model.apiModelPackageName + "." + myPackage.name + ".filters";
 		myPackage.sortingsPackageName = model.apiModelPackageName + "." + myPackage.name + ".sortings";
+		
+		myPackage.fullViewsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
+		myPackage.basicViewsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
+		myPackage.formsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
+		myPackage.filtersTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
+		myPackage.sortingsTsPath = myPackage.name.replace(".", File.separator) + File.separator + "models";
 		
 		myPackage.baseDAOImplPackageName = model.daoImplPackageName + "." + myPackage.name + ".base";
 		myPackage.baseDAOInterfacePackageName = model.daoInterfacePackageName + "." + myPackage.name + ".base";

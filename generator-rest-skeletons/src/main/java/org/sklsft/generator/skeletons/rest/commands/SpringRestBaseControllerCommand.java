@@ -214,7 +214,7 @@ private Bean bean;
 		write("public @ResponseBody " + this.bean.fullViewBean.className + " find(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
-			write("@RequestParam(\"" + property.name + "\") " + property.beanDataType + " " + property.name);
+			write("@RequestParam(\"" + property.name + "\") " + property.javaType + " " + property.name);
 		}
 		start = true;
 		writeLine(") {");

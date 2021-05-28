@@ -70,7 +70,7 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private boolean canDelete;");
 
         for (ViewProperty property:this.bean.basicViewBean.properties) {
-            writeLine("private " + property.beanDataType + " " + property.name + ";");
+            writeLine("private " + property.javaType + " " + property.name + ";");
         }
         skipLine();
 
@@ -113,12 +113,12 @@ public class BasicViewBeanFileWriteCommand extends JavaFileWriteCommand {
        
 
         for (ViewProperty property:this.bean.basicViewBean.properties) {
-            writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
+            writeLine("public " + property.javaType + " get" + property.capName + "() {");
             writeLine("return this." + property.name + ";");
             writeLine("}");
             skipLine();
             
-            writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
+            writeLine("public void set" + property.capName + "(" + property.javaType + " " + property.name + ") {");
             writeLine("this." + property.name + " = " + property.name + ";");
             writeLine("}");
             skipLine();

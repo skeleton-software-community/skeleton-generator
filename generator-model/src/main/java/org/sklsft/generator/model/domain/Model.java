@@ -23,6 +23,7 @@ public class Model {
 	public Project project;
 	
 	public String javaSourcesFolder;
+	public String tsSourcesFolder;
 	public String testJavaSourcesFolder;
 	public String resourcesFolder;
 	public String testResourcesFolder;
@@ -38,6 +39,7 @@ public class Model {
 	public String restArtefactName;
 	public String restClientArtefactName;
 	public String webappArtefactName;
+	public String tsUiArtefactName;
 
 	public List<Package> packages;	
 	

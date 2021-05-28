@@ -12,7 +12,8 @@ public class ViewProperty {
 	public String getterName;
 	public String setterName;
 	public DataType dataType;
-	public String beanDataType;
+	public String javaType;
+	public String tsType;
 	public boolean nullable;
 	public boolean editable;
 	public boolean filterable;

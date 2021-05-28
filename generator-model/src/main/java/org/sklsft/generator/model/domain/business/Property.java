@@ -15,7 +15,8 @@ public class Property {
 	public String getterName;
 	public String setterName;
 	
-	public String beanDataType;
+	public String javaType;
+	public String tsType;
 	public DataType dataType;
 	public boolean nullable;
 	public boolean unique;

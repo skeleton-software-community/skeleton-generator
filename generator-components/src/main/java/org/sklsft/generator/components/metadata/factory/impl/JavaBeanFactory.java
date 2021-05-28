@@ -109,11 +109,13 @@ public class JavaBeanFactory implements BeanFactory {
 				property.capName = JavaClassNaming
 						.toClassName(column.originalName.replaceAll("_ID$", "").replaceAll("_id$", ""));
 				property.referenceBean = bean.myPackage.model.findBean(column.referenceTable.originalName);
-				property.beanDataType = property.referenceBean.className;
+				property.javaType = property.referenceBean.className;
+				property.tsType = property.referenceBean.className;
 			} else {
 				property.name = JavaClassNaming.toObjectName(column.originalName);
 				property.capName = JavaClassNaming.toClassName(column.originalName);
-				property.beanDataType = column.dataType.getJavaType();
+				property.javaType = column.dataType.getJavaType();
+				property.tsType = column.dataType.getTsType();
 
 			}
 			property.getterName = "get" + property.capName;

@@ -222,7 +222,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		write("boolean exists(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
-			write(property.beanDataType + " " + property.name);
+			write(property.javaType + " " + property.name);
 		}
 		writeLine(");");
 		skipLine();
@@ -236,7 +236,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		write(this.bean.className + " findOrNull(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
-			write(property.beanDataType + " " + property.name);
+			write(property.javaType + " " + property.name);
 		}
 		writeLine(");");
 		skipLine();
@@ -248,7 +248,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		write(this.bean.className + " find(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
-			write(property.beanDataType + " " + property.name);
+			write(property.javaType + " " + property.name);
 		}
 		writeLine(");");
 		skipLine();

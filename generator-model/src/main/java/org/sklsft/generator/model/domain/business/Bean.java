@@ -74,6 +74,7 @@ public class Bean {
 	 * build the business key (and its associated unique constraint)
 	 */
 	public String idType;
+	public String idTsType;
 	public int cardinality;
 	public String listRendering;
 	public String detailRendering;

@@ -187,7 +187,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		write(this.bean.fullViewBean.className + " find(");
 		for (ViewProperty property:bean.referenceViewProperties) {
 			if (start) start = false; else write(", ");
-			write(property.beanDataType + " " + property.name);
+			write(property.javaType + " " + property.name);
 		}
 		writeLine(");");
 		skipLine();

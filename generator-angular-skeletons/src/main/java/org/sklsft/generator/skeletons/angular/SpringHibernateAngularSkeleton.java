@@ -6,6 +6,7 @@ import java.util.List;
 import org.sklsft.generator.components.resolvers.DatabaseHandlerDiscovery;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.Skeleton;
+import org.sklsft.generator.skeletons.angular.layers.TypeScriptModelLayer;
 import org.sklsft.generator.skeletons.core.layers.ApiLayer;
 import org.sklsft.generator.skeletons.core.layers.BusinessComponentLayer;
 import org.sklsft.generator.skeletons.core.layers.HibernateBusinessModelLayer;
@@ -44,6 +45,7 @@ public class SpringHibernateAngularSkeleton implements Skeleton {
 		layers.add(new SpringRestClientLayer());
 		layers.add(new PopulatorLayer());
 		layers.add(new JunitLayer());
+		layers.add(new TypeScriptModelLayer());
 		
 		return layers;
 	}	

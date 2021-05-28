@@ -108,7 +108,7 @@ public class EntityMetaModelFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("public static volatile SingularAttribute<" + bean.className + ", " + bean.idType + "> id;");
 		
 		for (Property property:bean.properties) {
-			writeLine("public static volatile SingularAttribute<" + bean.className + ", " + property.beanDataType + "> " + property.name + ";");
+			writeLine("public static volatile SingularAttribute<" + bean.className + ", " + property.javaType + "> " + property.name + ";");
 		}
 
 		for (OneToMany oneToMany : this.bean.oneToManyList) {

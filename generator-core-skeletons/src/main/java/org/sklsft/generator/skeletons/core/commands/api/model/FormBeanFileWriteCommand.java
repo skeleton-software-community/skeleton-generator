@@ -71,7 +71,7 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
         	if (!property.nullable) {
         		writeLine("@NotNull");
         	}
-        	writeLine("private " + property.beanDataType + " " + property.name + ";");
+        	writeLine("private " + property.javaType + " " + property.name + ";");
         }
         skipLine();
 
@@ -84,11 +84,11 @@ public class FormBeanFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" */");
 
         for (ViewProperty property:this.bean.formBean.properties) {
-            writeLine("public " + property.beanDataType + " get" + property.capName + "() {");
+            writeLine("public " + property.javaType + " get" + property.capName + "() {");
             writeLine("return this." + property.name + ";");
             writeLine("}");
             
-            writeLine("public void set" + property.capName + "(" + property.beanDataType + " " + property.name + ") {");
+            writeLine("public void set" + property.capName + "(" + property.javaType + " " + property.name + ") {");
             writeLine("this." + property.name + " = " + property.name + ";");
             writeLine("}");
         }

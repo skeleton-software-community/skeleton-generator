@@ -24,7 +24,8 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.name = property.name;
 			viewProperty.capName = property.capName;
 			viewProperty.mappingPath = property.getterName + "()";
-			viewProperty.beanDataType = property.beanDataType;
+			viewProperty.javaType = property.javaType;
+			viewProperty.tsType = property.tsType;
 			viewProperty.dataType = property.dataType;
 			viewProperty.nullable = property.nullable;
 			viewProperty.visibility = property.visibility;
@@ -55,7 +56,8 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 							viewProperty.capName = property.capName + tempProperty.capName;
 						}
 						viewProperty.mappingPath = property.getterName + "()." + tempProperty.mappingPath;
-						viewProperty.beanDataType = tempProperty.beanDataType;
+						viewProperty.javaType = tempProperty.javaType;
+						viewProperty.tsType = tempProperty.tsType;
 						viewProperty.dataType = tempProperty.dataType;
 						viewProperty.nullable = property.nullable || tempProperty.nullable;
 						viewProperty.visibility = Visibility.min(property.visibility, tempProperty.visibility);
@@ -79,14 +81,15 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.capName = property.capName + referenceBeanProperty.capName;
 					}
 					viewProperty.mappingPath = property.getterName + "()." + referenceBeanProperty.getterName + "()";
-					viewProperty.beanDataType = referenceBeanProperty.beanDataType;
+					viewProperty.javaType = referenceBeanProperty.javaType;
+					viewProperty.tsType = referenceBeanProperty.tsType;
 					viewProperty.dataType = referenceBeanProperty.dataType;
 					viewProperty.nullable = property.nullable || referenceBeanProperty.nullable;
 					viewProperty.visibility = Visibility.min(property.visibility, referenceBeanProperty.visibility);
 					viewProperty.editable = property.embedded?referenceBeanProperty.editable:property.editable;
 					viewProperty.filterable = property.embedded?referenceBeanProperty.filterable:property.filterable;
 					viewProperty.lastPropertyName = referenceBeanProperty.name;
-					viewProperty.lastParentBeanClassName = property.beanDataType;
+					viewProperty.lastParentBeanClassName = property.javaType;
 					viewProperty.joinedAliasName = property.name;
 					viewProperty.referenceBean = property.referenceBean;
 					if (property.referenceBean.selectable) {
