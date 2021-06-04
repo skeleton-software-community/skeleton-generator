@@ -23,8 +23,10 @@ public enum FileType {
     SQL (".sql", StandardCharsets.UTF_8, "-- Specific Code Start --", "-- Specific Code End --"),
     XML (".xml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     XHTML (".xhtml", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
+    HTML (".html", StandardCharsets.UTF_8, "<!-- Specific Code Start -->", "<!-- Specific Code End -->"),
     JS (".js", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     CSS (".css", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
+    SCSS (".scss", StandardCharsets.UTF_8, "/* Specific Code Start */", "/* Specific Code End */"),
     BAT (".bat", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
     CSV (".csv", StandardCharsets.UTF_8, "# Specific Code Start", "# Specific Code End"),
     PROPERTIES (".properties", StandardCharsets.ISO_8859_1, "# Specific Code Start", "# Specific Code End");
