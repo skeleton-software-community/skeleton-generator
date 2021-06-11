@@ -50,7 +50,7 @@ public abstract class TsFileWriteCommand extends SingleFileWriteCommand {
 	protected abstract void fetchSpecificImports();
 	
 	protected final void writeImports() throws IOException{
-		fetchImports();
+		//fetchImports();
 		fetchSpecificImports();
 		
 		for (String imported:imports) {

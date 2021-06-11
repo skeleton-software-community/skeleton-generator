@@ -22,6 +22,7 @@ public class TsBaseRestClientFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { Injectable } from '@angular/core';");
 		imports.add("import { HttpClient, HttpHeaders} from '@angular/common/http';");
 		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
+		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		
 	}
 
@@ -48,6 +49,7 @@ public class TsBaseRestClientFileWriteCommand extends TsFileWriteCommand {
 		writeLine("constructor(private http: HttpClient) { }");
 		
 		createLoadObjectList();
+		createLoadObject();
 		
 		writeLine("}");
 
@@ -66,6 +68,15 @@ public class TsBaseRestClientFileWriteCommand extends TsFileWriteCommand {
 		skipLine();
     }
     
-    
+    private void createLoadObject() {
+		writeLine("/**");
+		writeLine(" * load object");
+		writeLine(" */");
+		writeLine("public load(id:" + bean.idTsType + ") {");	
+        writeLine("return this.http.get<" + this.bean.fullViewBean.className + ">(environment.restApiUrl + '/" + bean.urlPiece + "/' + id);");
+		writeLine("}");
+		skipLine();
+
+	}
     
 }

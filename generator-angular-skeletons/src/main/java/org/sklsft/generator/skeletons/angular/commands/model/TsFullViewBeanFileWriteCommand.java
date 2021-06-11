@@ -8,15 +8,15 @@ import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
-public class TsBasicViewBeanFileWriteCommand extends TsFileWriteCommand {
+public class TsFullViewBeanFileWriteCommand extends TsFileWriteCommand {
 
 	private Bean bean;
 	/*
 	 * constructor
 	 */
-	public TsBasicViewBeanFileWriteCommand(Bean bean) {
+	public TsFullViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.basicViewBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.fullViewBean.className);
 		
 		this.bean = bean;
 		
@@ -24,7 +24,7 @@ public class TsBasicViewBeanFileWriteCommand extends TsFileWriteCommand {
 	
 	@Override
 	protected void fetchSpecificImports() {
-		//
+		imports.add("import { " + bean.formBean.className + " } from './" + bean.formBean.className + "';");
 	}
 	
 	
@@ -34,11 +34,11 @@ public class TsBasicViewBeanFileWriteCommand extends TsFileWriteCommand {
         writeImports();
         
         writeLine("/**");
-        writeLine(" * auto generated basic view bean ts file");
+        writeLine(" * auto generated full veiw bean ts file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("export interface " + this.bean.basicViewBean.className + " {");
+        writeLine("export interface " + this.bean.fullViewBean.className + " {");
         skipLine();
 
         createProperties();
@@ -50,13 +50,10 @@ public class TsBasicViewBeanFileWriteCommand extends TsFileWriteCommand {
     }
 
     private void createProperties() {
+    	
         writeLine("id: " + bean.idTsType + ";");
-        writeLine("selected: boolean;");
-        writeLine("canDelete: boolean;");
-
-        for (ViewProperty property:this.bean.basicViewBean.properties) {
-            writeLine(property.name + ": " + property.tsType + ";");
-        }
+        writeLine("form: " + bean.formBean.className + ";");
+        writeLine("canUpdate: boolean;");
         skipLine();
 
     }

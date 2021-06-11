@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages;
+package org.sklsft.generator.skeletons.angular.commands.pages.list;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +35,8 @@ public class HtmlListComponentFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<!-- -->");
 		skipLine();
 		
+		
+		
 		writeLine("<mat-table [dataSource]=\"dataSource\">");
 
 		for (ViewProperty property:bean.basicViewBean.properties) {
@@ -43,6 +45,11 @@ public class HtmlListComponentFileWriteCommand extends HtmlFileWriteCommand {
 			writeLine("<mat-cell *matCellDef=\"let element\"> {{element." + property.name + "}} </mat-cell>");
 			writeLine("</ng-container>");
 		}
+		
+		writeLine("<ng-container matColumnDef=\"Actions\">");
+		writeLine("<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>");
+		writeLine("<mat-cell *matCellDef=\"let element\"><a href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
+		writeLine("</ng-container>");
 
 		writeLine("<mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>");
 		writeLine("<mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>");

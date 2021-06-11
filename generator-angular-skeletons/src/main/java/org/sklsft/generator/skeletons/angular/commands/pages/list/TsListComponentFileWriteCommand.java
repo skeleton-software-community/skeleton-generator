@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages;
+package org.sklsft.generator.skeletons.angular.commands.pages.list;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,15 +54,12 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("list:" + bean.basicViewBean.className + "[];");
         writeLine("dataSource:MatTableDataSource<" + bean.basicViewBean.className + ">;");
         write("displayedColumns: string[] = [");
-        boolean start = true;
+        
         for (ViewProperty property:bean.basicViewBean.properties) {
-        	if (start) {
-            	start = false;
-            } else {
-            	write(",");
-            }
-        	write("'" + property.name + "'");
+        	
+        	write("'" + property.name + "',");
         }
+        write("'Actions'");
         writeLine("];");
         skipLine();
 

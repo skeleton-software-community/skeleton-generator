@@ -7,15 +7,15 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
-public class TsListModuleFileWriteCommand extends TsFileWriteCommand {
+public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 
 	private Bean bean;
 	/*
 	 * constructor
 	 */
-	public TsListModuleFileWriteCommand(Bean bean) {
+	public TsModuleFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "list", bean.urlPiece + "-list.module");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece, bean.urlPiece + ".module");
 		
 		this.bean = bean;
 		
@@ -27,8 +27,9 @@ public class TsListModuleFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { CommonModule } from '@angular/common';");
 		imports.add("import { SharedModule } from 'src/app/shared/shared.module';");
 		
-		imports.add("import { " + bean.className + "ListRoutingModule } from './" + bean.urlPiece + "-list-routing.module';");
-		imports.add("import { " + bean.className + "ListComponent } from './" + bean.urlPiece + "-list.component';");
+		imports.add("import { " + bean.className + "RoutingModule } from './" + bean.urlPiece + "-routing.module';");
+		imports.add("import { " + bean.className + "ListComponent } from './list/" + bean.urlPiece + "-list.component';");
+		imports.add("import { " + bean.className + "DetailsComponent } from './details/" + bean.urlPiece + "-details.component';");
 	}
 	
 	
@@ -45,10 +46,10 @@ public class TsListModuleFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("@NgModule({");
-        writeLine("declarations: [" + bean.className + "ListComponent],");
-        writeLine("imports: [CommonModule, SharedModule, " + bean.className + "ListRoutingModule]");
+        writeLine("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent],");
+        writeLine("imports: [CommonModule, SharedModule, " + bean.className + "RoutingModule]");
         writeLine("})");
-        writeLine("export class " + bean.className + "ListModule { }");
+        writeLine("export class " + bean.className + "Module { }");
 
 	}
 }
