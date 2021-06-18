@@ -5,10 +5,10 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
-import org.sklsft.generator.skeletons.commands.impl.typed.HtmlFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.AngularHtmlFileWriteCommand;
 
 
-public class HtmlListComponentFileWriteCommand extends HtmlFileWriteCommand {
+public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteCommand {
 
 	private Bean bean;
 	/*
@@ -40,10 +40,7 @@ public class HtmlListComponentFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<mat-table [dataSource]=\"dataSource\">");
 
 		for (ViewProperty property:bean.basicViewBean.properties) {
-			writeLine("<ng-container matColumnDef=\"" + property.name + "\">");
-			writeLine("<mat-header-cell *matHeaderCellDef>" + property.rendering + "</mat-header-cell>");
-			writeLine("<mat-cell *matCellDef=\"let element\"> {{element." + property.name + "}} </mat-cell>");
-			writeLine("</ng-container>");
+			writeListComponent(property, bean);
 		}
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
