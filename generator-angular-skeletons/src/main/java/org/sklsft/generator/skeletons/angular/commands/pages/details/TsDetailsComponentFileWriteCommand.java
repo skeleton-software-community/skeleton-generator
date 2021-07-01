@@ -27,7 +27,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { Component, OnInit, ViewChild } from '@angular/core';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
-		imports.add("import { " + bean.baseRestClientClassName + " } from '../services/" + bean.baseRestClientClassName + "';");
+		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
 	}
 	
 	
@@ -55,7 +55,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("view: " + bean.fullViewBean.className + ";");
         skipLine();
 
-        writeLine("constructor(private service:" + bean.baseRestClientClassName + ", private route: ActivatedRoute) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
+        writeLine("constructor(private service:" + bean.restClientClassName + ", private route: ActivatedRoute) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
         skipLine();
         
         writeLine("ngOnInit(): void {");

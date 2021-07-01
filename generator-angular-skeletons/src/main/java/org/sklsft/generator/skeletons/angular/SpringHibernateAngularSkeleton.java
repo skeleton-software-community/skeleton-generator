@@ -8,6 +8,7 @@ import org.sklsft.generator.skeletons.Skeleton;
 import org.sklsft.generator.skeletons.angular.layers.TypeScriptComponentsLayer;
 import org.sklsft.generator.skeletons.angular.layers.TypeScriptModelLayer;
 import org.sklsft.generator.skeletons.angular.layers.TypeScriptServicesLayer;
+import org.sklsft.generator.skeletons.angular.layers.TypeScriptViewsLayer;
 import org.sklsft.generator.skeletons.layers.Layer;
 
 
@@ -36,6 +37,7 @@ public class SpringHibernateAngularSkeleton implements Skeleton {
 //		layers.add(new PopulatorLayer());
 //		layers.add(new JunitLayer());
 		layers.add(new TypeScriptModelLayer());
+		layers.add(new TypeScriptViewsLayer());
 		layers.add(new TypeScriptServicesLayer());
 		layers.add(new TypeScriptComponentsLayer());
 		

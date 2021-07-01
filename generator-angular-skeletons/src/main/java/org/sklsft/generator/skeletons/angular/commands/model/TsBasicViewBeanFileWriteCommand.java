@@ -38,7 +38,7 @@ public class TsBasicViewBeanFileWriteCommand extends TsFileWriteCommand {
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("export interface " + this.bean.basicViewBean.className + " {");
+        writeLine("export class " + this.bean.basicViewBean.className + " {");
         skipLine();
 
         createProperties();

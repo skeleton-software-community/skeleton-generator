@@ -8,15 +8,15 @@ import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
-public class TsFormBeanFileWriteCommand extends TsFileWriteCommand {
+public class TsSortingFileWriteCommand extends TsFileWriteCommand {
 
 	private Bean bean;
 	/*
 	 * constructor
 	 */
-	public TsFormBeanFileWriteCommand(Bean bean) {
+	public TsSortingFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.formBean.className);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.basicViewBean.sortingClassName);
 		
 		this.bean = bean;
 		
@@ -34,11 +34,11 @@ public class TsFormBeanFileWriteCommand extends TsFileWriteCommand {
         writeImports();
         
         writeLine("/**");
-        writeLine(" * auto generated form bean ts file");
+        writeLine(" * auto generated sorting ts file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("export class " + this.bean.formBean.className + " {");
+        writeLine("export class " + this.bean.basicViewBean.sortingClassName + " {");
         skipLine();
 
         createProperties();
@@ -50,8 +50,9 @@ public class TsFormBeanFileWriteCommand extends TsFileWriteCommand {
     }
 
     private void createProperties() {
-    	for (ViewProperty property:this.bean.formBean.properties) {
-            writeLine(property.name + ": " + property.tsType + ";");
+        
+        for (ViewProperty property:this.bean.basicViewBean.properties) {
+			writeLine(property.name + "OrderType: string;");
         }
         skipLine();
 

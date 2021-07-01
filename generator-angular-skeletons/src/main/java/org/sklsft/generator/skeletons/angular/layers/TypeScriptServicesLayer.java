@@ -3,7 +3,7 @@ package org.sklsft.generator.skeletons.angular.layers;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.skeletons.angular.commands.services.TsBaseRestClientFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.services.TsRestClientFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -38,7 +38,7 @@ public class TypeScriptServicesLayer extends AbstractLayer {
 			packageTreeNode.add(serviceTreeNode);
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
-					FileWriteCommandTreeNode baseRestClientTreeNode = new FileWriteCommandTreeNode(new TsBaseRestClientFileWriteCommand(bean));
+					FileWriteCommandTreeNode baseRestClientTreeNode = new FileWriteCommandTreeNode(new TsRestClientFileWriteCommand(bean));
 					serviceTreeNode.add(baseRestClientTreeNode);
 				}
 			}

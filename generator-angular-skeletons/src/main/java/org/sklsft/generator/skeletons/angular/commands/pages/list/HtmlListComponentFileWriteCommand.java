@@ -51,6 +51,14 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("<mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>");
 		writeLine("<mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>");
 		writeLine("</mat-table>");
+		
+		
+		writeLine("<mat-paginator #paginator [length]=\"view.scrollView.count\"");
+		writeLine("[pageSize]=\"view.scrollForm.elementsPerPage\"");
+		writeLine("[showFirstLastButtons]=\"true\">");
+		writeLine("[pageSizeOptions]=\"pageSizeOptions\">");
+		writeLine("</mat-paginator>");
+		skipLine();
 
         writeNotOverridableContent();
 
