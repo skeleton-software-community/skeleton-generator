@@ -64,7 +64,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("export class " + this.bean.className + "ListComponent implements OnInit, AfterViewInit {");
         skipLine();
 
-        writeLine("view:" + bean.listViewClassName + ";");
+        writeLine("view:" + bean.listViewClassName + " = new " + bean.listViewClassName + "();");
         writeLine("dataSource:MatTableDataSource<" + bean.basicViewBean.className + ">;");
         writeLine("@ViewChild(MatPaginator) paginator: MatPaginator;");
         writeLine("pageSizeOptions: string[] = ['10', '20', '50'];");

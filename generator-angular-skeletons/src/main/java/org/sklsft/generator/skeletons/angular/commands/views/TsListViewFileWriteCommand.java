@@ -44,8 +44,8 @@ public class TsListViewFileWriteCommand extends TsFileWriteCommand {
 		writeLine("export class " + this.bean.listViewClassName + " {");
         skipLine();
 
-		writeLine("scrollForm: ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + ">;");
-		writeLine("scrollView: ScrollView<" + bean.basicViewBean.className + ">;");
+		writeLine("scrollForm: ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> = new ScrollForm();");
+		writeLine("scrollView: ScrollView<" + bean.basicViewBean.className + "> = new ScrollView();");
 		writeLine("selected" + this.bean.className + ": " + this.bean.fullViewBean.className + ";");
 		skipLine();
 

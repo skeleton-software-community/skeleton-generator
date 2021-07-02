@@ -35,7 +35,9 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("<!-- -->");
 		skipLine();
 		
-		
+		writeLine("<h2>");
+		writeLine(bean.listRendering + ": {{view.scrollView.count}} / {{view.scrollView.size}}");
+		writeLine("</h2>");
 		
 		writeLine("<mat-table [dataSource]=\"dataSource\">");
 

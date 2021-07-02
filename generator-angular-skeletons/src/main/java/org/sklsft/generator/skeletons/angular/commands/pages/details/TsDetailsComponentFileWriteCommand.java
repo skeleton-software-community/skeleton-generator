@@ -59,9 +59,18 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("ngOnInit(): void {");
+        writeLine("this.load();");
+        writeLine("}");
+        
+        writeLine("load(): void {");
         writeLine("this.service.load(this.id).subscribe((t) => {");
         writeLine("this.view=t;");
         writeLine("});");
+        writeLine("}");
+        
+        writeLine("update(): void {");
+        writeLine("this.service.update(this.id, this.view.form).subscribe();");
+        writeLine("this.load();");
         writeLine("}");
 
         writeNotOverridableContent();

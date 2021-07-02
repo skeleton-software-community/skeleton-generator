@@ -31,6 +31,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		
 		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
+		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
 		
 		imports.add("import { " + bean.basicViewBean.filterClassName + " } from '../models/" + bean.basicViewBean.filterClassName + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
@@ -74,10 +75,10 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 //		createLoadOneToManyComponent();
 //		createCreateObject();
 //		createCreateOneToManyComponent();
-//		createSaveObject();
+		createSaveObject();
 //		createSaveOneToOneComponent();
 //		createSaveOneToManyComponent();
-//		createUpdateObject();
+		createUpdateObject();
 //		createUpdateOneTOneComponent();
 //		createUpdateOneToManyComponent();
 //		createDeleteObject();
@@ -172,5 +173,27 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		skipLine();
 
 	}
+    
+    
+    private void createSaveObject() {
+        writeLine("/**");
+        writeLine(" * save object");        
+        writeLine(" */");
+        writeLine("public save(form: " + this.bean.formBean.className + ") {");
+        writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "', form, this.httpOptions);");
+        writeLine("}");
+        skipLine();
+    }
+    
+    
+    private void createUpdateObject() {
+        writeLine("/**");
+        writeLine(" * update object");        
+        writeLine(" */");
+        writeLine("public update(id: " + bean.idTsType + ", form: " + this.bean.formBean.className + ") {");
+        writeLine("return this.http.put(environment.restApiUrl + '/" + bean.urlPiece + "/' + id, form, this.httpOptions);");
+        writeLine("}");
+        skipLine();
+    }
     
 }

@@ -36,9 +36,16 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<form #form=\"ngForm\" (ngSubmit)=\"update()\">");
+		
 		for (ViewProperty property:bean.formBean.properties) {
 			writeInput(property, bean);
 		}
+		
+		writeLine("<p>");
+		writeLine("<button mat-raised-button color=\"accent\" type=\"submit\">Update</button>");
+		writeLine("</p>");
+		writeLine("</form>");
 
         writeNotOverridableContent();
 
