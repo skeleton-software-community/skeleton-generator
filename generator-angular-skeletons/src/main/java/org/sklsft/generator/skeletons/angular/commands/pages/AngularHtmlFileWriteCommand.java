@@ -113,7 +113,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -123,7 +123,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -133,7 +133,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -142,15 +142,15 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
 	
 	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-checkbox color=\"accent\" value=\"view.form." + property.name + "\">");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<mat-checkbox color=\"accent\" formControlName=\"" +  property.name + "\">");
+		writeLine(property.rendering);
 		writeLine("</mat-checkbox>");
 		writeLine("</p>");
 	}
@@ -159,7 +159,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -168,7 +168,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -177,7 +177,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -186,7 +186,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
 		writeLine("<mat-datepicker #picker></mat-datepicker>");
 		writeLine("</mat-form-field>");
@@ -197,7 +197,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" [(ngModel)]=\"view.form." + property.name + "\" name=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}

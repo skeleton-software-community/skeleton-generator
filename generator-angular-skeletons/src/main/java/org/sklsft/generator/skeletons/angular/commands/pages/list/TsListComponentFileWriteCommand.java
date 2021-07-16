@@ -67,7 +67,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("view:" + bean.listViewClassName + " = new " + bean.listViewClassName + "();");
         writeLine("dataSource:MatTableDataSource<" + bean.basicViewBean.className + ">;");
         writeLine("@ViewChild(MatPaginator) paginator: MatPaginator;");
-        writeLine("pageSizeOptions: string[] = ['10', '20', '50'];");
+        writeLine("pageSizeOptions: number[] = [10, 20, 50, 100];");
         write("displayedColumns: string[] = [");
         for (ViewProperty property:bean.basicViewBean.properties) {	
         	write("'" + property.name + "',");

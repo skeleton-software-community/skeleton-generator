@@ -36,7 +36,7 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
-		writeLine("<form #form=\"ngForm\" (ngSubmit)=\"update()\">");
+		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"update()\">");
 		
 		for (ViewProperty property:bean.formBean.properties) {
 			writeInput(property, bean);

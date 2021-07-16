@@ -28,6 +28,8 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
+		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
+		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}
 	
 	
@@ -53,23 +55,60 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
         writeLine("id:" + bean.idTsType + ";");
         writeLine("view: " + bean.fullViewBean.className + ";");
+        writeLine("form: FormGroup;");
         skipLine();
 
-        writeLine("constructor(private service:" + bean.restClientClassName + ", private route: ActivatedRoute) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
+        writeLine("constructor(private service:" + bean.restClientClassName + ", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
         skipLine();
-        
+        boolean start = true;
         writeLine("ngOnInit(): void {");
+        writeLine("this.form = this.formBuilder.group({");
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (start) {
+        		start = false;
+        	} else {
+        		writeLine(",");
+        	}
+        	write(property.name + ":[''");
+        	if (!property.nullable) {
+        		write(", Validators.required");
+        	}
+        	write("]");
+        }
+        writeLine("})");
         writeLine("this.load();");
         writeLine("}");
         
+        writeLine("restoreForm(): void {");
+        writeLine("this.form.patchValue({");
+        start = true;
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (start) {
+        		start = false;
+        	} else {
+        		writeLine(",");
+        	}
+            write(property.name + ": this.view.form." + property.name);
+        }
+        skipLine();    
+        writeLine("})");
+        writeLine("}");
+        skipLine();
+
+        writeLine("applyForm(): void {");
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	writeLine("this.view.form." + property.name + " = this.form.get('" + property.name + "').value;");
+        }
+        writeLine("}");
+        skipLine();
+        
         writeLine("load(): void {");
-        writeLine("this.service.load(this.id).subscribe((t) => {");
-        writeLine("this.view=t;");
-        writeLine("});");
+        writeLine("this.service.load(this.id).subscribe((t) => {this.view=t;this.restoreForm();});");
         writeLine("}");
         
         writeLine("update(): void {");
-        writeLine("this.service.update(this.id, this.view.form).subscribe();");
+        writeLine("this.applyForm();");
+        writeLine("this.service.update(this.id, this.view.form).subscribe(success => this.notifications.info(\"Operation completed\"), error => {this.notifications.error(\"Operation failed\")});");
         writeLine("this.load();");
         writeLine("}");
 

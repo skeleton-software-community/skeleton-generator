@@ -57,7 +57,7 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		
 		writeLine("<mat-paginator #paginator [length]=\"view.scrollView.count\"");
 		writeLine("[pageSize]=\"view.scrollForm.elementsPerPage\"");
-		writeLine("[showFirstLastButtons]=\"true\">");
+		writeLine("[showFirstLastButtons]=\"true\"");
 		writeLine("[pageSizeOptions]=\"pageSizeOptions\">");
 		writeLine("</mat-paginator>");
 		skipLine();
