@@ -1,6 +1,7 @@
 package org.sklsft.generator.skeletons.angular.commands.pages;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
@@ -203,107 +204,51 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	}
 	
 	
-	protected void writeFilter(ViewProperty property, Bean bean, Bean parentBean) {
-		
-		writeLine("<label>#{i18n." + bean.objectName + property.capName + "}</label>");
-		
-		String scrollForm = parentBean!=null?parentBean.detailViewObjectName + "." + bean.objectName + "ScrollForm":bean.listViewObjectName + ".scrollForm";
-		String refreshMethod = parentBean!=null?parentBean.detailControllerObjectName + ".refresh" + bean.className + "List":bean.listControllerObjectName + ".refresh";
+	protected void writeFilter(FilterProperty property) {
 		
 		switch (property.dataType) {
 			case STRING:
 			case TEXT:
-				writeLine("<h:inputText");
-				writeLine("value=\"#{" + scrollForm + ".filter." + property.name + "}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");			
+				writeLine("<mat-form-field appearance=\"outline\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("</mat-form-field>");	
 				break;
 				
 			case DATE:				
-				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\" navigator=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</p:calendar>");
-				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd\" mask=\"true\" navigator=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</p:calendar>");
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
+				writeLine("<mat-datepicker #picker></mat-datepicker>");
+				writeLine("</mat-form-field>");
 				break;
 				
 			case DATETIME:				
-				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\" navigator=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</p:calendar>");
-				writeLine("<p:calendar value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("class=\"form-control date-picker\"");
-				writeLine("pattern=\"yyyy-MM-dd HH:mm:ss\" mask=\"true\" navigator=\"true\">");
-				writeLine("<p:ajax event=\"dateSelect\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</p:calendar>");
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
+				writeLine("<mat-datepicker #picker></mat-datepicker>");
+				writeLine("</mat-form-field>");
+				
 				break;
 				
 			case DOUBLE:
-				
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
-				
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
-				break;
-				
 			case BIG_DECIMAL:
-				
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
-				
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
+
 				break;
 			
 			case SHORT:
 			case INTEGER:
 			case LONG:
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MinValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
-				
-				writeLine("<h:inputText value=\"#{" + scrollForm + ".filter." + property.name + "MaxValue}\"");
-				writeLine("styleClass=\"form-control\">");
-				writeLine("<f:convertNumber integerOnly=\"true\" pattern=\"#,##0\"/>");
-				writeLine("<p:ajax event=\"keyup\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:inputText>");
 				
 				break;
 				
 			case BOOLEAN:
 				
-				writeLine("<h:selectOneMenu value=\"#{" + scrollForm + ".filter." + property.name + "}\" styleClass=\"form-control\">");
-				writeLine("<f:selectItem itemLabel=\"\" itemValue=\"#{null}\"></f:selectItem>");
-				writeLine("<f:selectItem itemLabel=\"#{i18n.trueLabel}\" itemValue=\"#{true}\"></f:selectItem>");
-				writeLine("<f:selectItem itemLabel=\"#{i18n.falseLabel}\" itemValue=\"#{false}\"></f:selectItem>");
-				writeLine("<p:ajax event=\"change\" update=\"resultsPanelGroup, sizePanelGroup\" listener=\"#{" + refreshMethod + "}\"/>");
-				writeLine("</h:selectOneMenu>");
-				
 				break;
 
 		}
-	}
-	
-	protected void writeFilter(ViewProperty property, Bean bean) {
-		writeFilter(property, bean, null);
 	}
 }

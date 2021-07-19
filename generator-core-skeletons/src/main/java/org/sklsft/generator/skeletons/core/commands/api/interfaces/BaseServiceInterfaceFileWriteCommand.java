@@ -36,7 +36,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
-		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		
 		for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList) {
@@ -50,7 +50,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 
@@ -150,7 +150,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * scroll object list");
 		writeLine(" */");
-		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
+		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form);");
 		writeLine("public static final String SCROLL_URL = \"/" + bean.urlPiece + "/scroll\";");
 		skipLine();
 		
@@ -159,7 +159,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * scroll object list from " + property.name);
 				writeLine(" */");
-				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form);");
+				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form);");
 				writeLine("public static final String SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL = \"/" + property.referenceBean.urlPiece + "/{" + property.name + "Id}/" + bean.urlPiece + "/scroll\";");
 				skipLine();
 			}
@@ -227,7 +227,7 @@ public class BaseServiceInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
-			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form);");
+			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> form);");
 			writeLine("public static final String SCROLL_" + currentBean.table.originalName + "_URL = \"/" + bean.urlPiece + "/{id}/" + currentBean.urlPiece + "/scroll\";");
 			skipLine();
 		}

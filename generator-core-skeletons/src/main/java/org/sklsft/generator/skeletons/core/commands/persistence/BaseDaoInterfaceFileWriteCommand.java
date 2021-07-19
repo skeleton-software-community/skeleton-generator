@@ -37,13 +37,13 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import org.sklsft.commons.model.patterns.BaseDao;");
 		javaImports.add("import " + bean.myPackage.omPackageName + "." + bean.className + ";");
-		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		
@@ -118,7 +118,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * count filtered object list");
 		writeLine(" */");
-		writeLine("Long count(" + bean.basicViewBean.filterClassName + " filter);");
+		writeLine("Long count(" + bean.basicViewBean.filter.className + " filter);");
 		skipLine();
 		
 		for (Property property : this.bean.properties) {
@@ -133,7 +133,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter);");
+				writeLine("Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filter.className + " filter);");
 				skipLine();
 			}
 		}
@@ -143,7 +143,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * scroll filtered object list");
 		writeLine(" */");
-		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+		writeLine("List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filter.className + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 		skipLine();
 		
 		for (Property property : this.bean.properties) {
@@ -152,7 +152,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * scroll filtered object from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+				writeLine("List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filter.className + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 				skipLine();
 			}
 		}
@@ -184,7 +184,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * count filtered one to many component " + currentBean.className);
 			writeLine(" */");
-			writeLine("Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter);");
+			writeLine("Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filter.className + " filter);");
 			skipLine();
 		}
 	}
@@ -197,7 +197,7 @@ public class BaseDaoInterfaceFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("/**");
 			writeLine(" * scroll filtered one to many component " + currentBean.className); 
 			writeLine(" */");
-			writeLine("List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
+			writeLine("List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filter.className + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults);");
 			skipLine();
 		}
 	}

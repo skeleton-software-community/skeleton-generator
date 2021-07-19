@@ -13,7 +13,7 @@ public class FilterFileWriteCommand extends JavaFileWriteCommand {
 
 	public FilterFileWriteCommand(Bean bean) {
 		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.apiArtefactName + File.separator + bean.myPackage.model.javaSourcesFolder + File.separator
-				+ bean.myPackage.filtersPackageName.replace(".", File.separator), bean.basicViewBean.filterClassName);
+				+ bean.myPackage.filtersPackageName.replace(".", File.separator), bean.basicViewBean.filter.className);
 
 		this.bean = bean;
 	}
@@ -40,7 +40,7 @@ public class FilterFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>write modifications between specific code marks");
 		writeLine(" * <br/>processed by skeleton-generator");
 		writeLine(" */");
-		writeLine("public class " + this.bean.basicViewBean.filterClassName + " implements Serializable {");
+		writeLine("public class " + this.bean.basicViewBean.filter.className + " implements Serializable {");
 		skipLine();
 
 		writeLine("private static final long serialVersionUID = 1L;");

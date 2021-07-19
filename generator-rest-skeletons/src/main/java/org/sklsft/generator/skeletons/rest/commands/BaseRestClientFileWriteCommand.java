@@ -46,7 +46,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
-        javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+        javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
         
         javaImports.add("import " + this.bean.myPackage.baseServiceInterfacePackageName + "." + this.bean.baseServiceInterfaceName + ";");
@@ -66,7 +66,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 			
 		}
@@ -193,7 +193,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * scroll object list");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 		
 		writeLine("return restClient.postForObject(SCROLL_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){});");
 		writeLine("}");
@@ -205,7 +205,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine(" * scroll object list from " + property.name);
 		        writeLine(" */");
 		        writeLine("@Override");
-				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 				writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
 		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
 		        writeLine("return restClient.postForObject(SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){}, vars);");
@@ -296,7 +296,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
+			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " id, ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
 			
 			writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
 	        writeLine("vars.put(\"id\", id);");

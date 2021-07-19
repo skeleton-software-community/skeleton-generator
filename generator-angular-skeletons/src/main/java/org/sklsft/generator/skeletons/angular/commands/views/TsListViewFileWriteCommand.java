@@ -25,7 +25,7 @@ public class TsListViewFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
 		
-		imports.add("import { " + bean.basicViewBean.filterClassName + " } from '../models/" + bean.basicViewBean.filterClassName + "';");
+		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
 		
 	}
@@ -44,7 +44,7 @@ public class TsListViewFileWriteCommand extends TsFileWriteCommand {
 		writeLine("export class " + this.bean.listViewClassName + " {");
         skipLine();
 
-		writeLine("scrollForm: ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> = new ScrollForm();");
+		writeLine("scrollForm: ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> = new ScrollForm();");
 		writeLine("scrollView: ScrollView<" + bean.basicViewBean.className + "> = new ScrollView();");
 		writeLine("selected" + this.bean.className + ": " + this.bean.fullViewBean.className + ";");
 		skipLine();

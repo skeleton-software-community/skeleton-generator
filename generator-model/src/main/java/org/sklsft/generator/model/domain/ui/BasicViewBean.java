@@ -9,8 +9,8 @@ public class BasicViewBean {
 	public String className;
 	public String objectName;
 	
-	public String filterClassName;
-	public String filterObjectName;
+	
+	public FilterBean filter = new FilterBean();
 	public String sortingClassName;
 	
 	public String baseMapperClassName;

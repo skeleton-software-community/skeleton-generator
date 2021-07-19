@@ -43,7 +43,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		
@@ -51,7 +51,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToMany.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 	}
@@ -94,7 +94,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 
 		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
 			Bean currentBean = oneToManyComponent.referenceBean;
-			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
+			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
 			writeLine("protected ScrollView<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "ScrollView = new ScrollView<>();");
 			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + " = new " + currentBean.fullViewBean.className + "();");
 			
@@ -104,7 +104,7 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 		
 		for (OneToMany oneToMany : this.bean.oneToManyList) {
 			Bean currentBean = oneToMany.referenceBean;
-			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
+			writeLine("protected ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm = new ScrollForm<>();");
 			writeLine("protected ScrollView<" + currentBean.basicViewBean.className + "> " + currentBean.objectName + "ScrollView = new ScrollView<>();");
 			writeLine("private " + currentBean.fullViewBean.className + " selected" + currentBean.className + " = new " + currentBean.fullViewBean.className + "();");
 			skipLine();
@@ -145,10 +145,10 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("}");
 			skipLine();
 			
-			writeLine("public ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> get" + currentBean.className + "ScrollForm() {");
+			writeLine("public ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> get" + currentBean.className + "ScrollForm() {");
 			writeLine("return " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
-			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm) {");
+			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm) {");
 			writeLine("this." + currentBean.objectName + "ScrollForm = " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
 			skipLine();
@@ -175,10 +175,10 @@ public class MvcDetailViewFileWriteCommand extends JavaFileWriteCommand {
 			writeLine("}");
 			skipLine();
 			
-			writeLine("public ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> get" + currentBean.className + "ScrollForm() {");
+			writeLine("public ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> get" + currentBean.className + "ScrollForm() {");
 			writeLine("return " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
-			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm) {");
+			writeLine("public void set" + currentBean.className + "ScrollForm(ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> " + currentBean.objectName + "ScrollForm) {");
 			writeLine("this." + currentBean.objectName + "ScrollForm = " + currentBean.objectName + "ScrollForm;");
 			writeLine("}");
 			skipLine();

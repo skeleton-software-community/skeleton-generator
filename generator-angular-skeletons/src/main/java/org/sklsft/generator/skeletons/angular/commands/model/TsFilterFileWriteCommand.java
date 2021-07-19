@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
@@ -16,7 +17,7 @@ public class TsFilterFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsFilterFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.basicViewBean.filterClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.basicViewBean.filter.className);
 		
 		this.bean = bean;
 		
@@ -38,7 +39,7 @@ public class TsFilterFileWriteCommand extends TsFileWriteCommand {
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
-        writeLine("export class " + this.bean.basicViewBean.filterClassName + " {");
+        writeLine("export class " + this.bean.basicViewBean.filter.className + " {");
         skipLine();
 
         createProperties();
@@ -51,13 +52,8 @@ public class TsFilterFileWriteCommand extends TsFileWriteCommand {
 
     private void createProperties() {
         
-        for (ViewProperty property:this.bean.basicViewBean.properties) {
-        	if (property.dataType.isLimitable()) {
-        		writeLine(property.name + "MinValue: " + property.tsType + ";");
-        		writeLine(property.name + "MaxValue: " + property.tsType + ";");
-			} else {
-				writeLine(property.name + ": " + property.tsType + ";");
-			}
+        for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
+			writeLine(property.name + ": " + property.tsType + ";");
         }
         skipLine();
 

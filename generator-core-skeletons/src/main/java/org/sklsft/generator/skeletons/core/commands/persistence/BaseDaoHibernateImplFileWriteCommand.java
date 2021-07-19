@@ -68,7 +68,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + "_;");
 			}
 		}
-		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		javaImports.add("import " + this.bean.myPackage.baseDAOInterfacePackageName + "." + this.bean.baseDaoInterfaceName + ";");
 	
@@ -76,7 +76,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			Bean currentBean = oneToManyComponent.referenceBean;
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + "_;");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		
@@ -246,7 +246,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * count filtered object list");
 		writeLine(" */");
 		writeLine("@Override");
-		writeLine("public Long count(" + bean.basicViewBean.filterClassName + " filter) {");
+		writeLine("public Long count(" + bean.basicViewBean.filter.className + " filter) {");
 		
 		writeLine("Session session = this.sessionFactory.getCurrentSession();");
 		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
@@ -307,7 +307,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("/**");
 				writeLine(" * count filtered object list from " + property.referenceBean.objectName); 
 				writeLine(" */");
-				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter) {");
+				writeLine("public Long countFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filter.className + " filter) {");
 				writeLine("Session session = this.sessionFactory.getCurrentSession();");
 				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
 				writeLine("CriteriaQuery<Long> criteria = builder.createQuery(Long.class);");
@@ -348,7 +348,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("@Override");
 		writeLine("@SuppressWarnings(\"unchecked\")");
-		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+		writeLine("public List<" + this.bean.className + "> scroll(" + bean.basicViewBean.filter.className + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 		
 		writeLine("Session session = this.sessionFactory.getCurrentSession();");
 		writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
@@ -401,7 +401,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 				writeLine(" */");
 				writeLine("@Override");
 				writeLine("@SuppressWarnings(\"unchecked\")");
-				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filterClassName + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+				writeLine("public List<" + this.bean.className + "> scrollFrom" + property.capName + "(" + property.referenceBean.idType + " " + property.name + "Id, " + bean.basicViewBean.filter.className + " filter, " + bean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 				writeLine("Session session = this.sessionFactory.getCurrentSession();");
 				writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
 				writeLine("CriteriaQuery<" + this.bean.className + "> criteria = builder.createQuery(" + this.bean.className + ".class);");
@@ -523,7 +523,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * count filtered one to many component " + currentBean.className);
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter) {");
+			writeLine("public Long count" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filter.className + " filter) {");
 			
 			writeLine("Session session = this.sessionFactory.getCurrentSession();");
 			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");
@@ -564,7 +564,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" * scroll filtered one to many component " + currentBean.className); 
 			writeLine(" */");
 			writeLine("@Override");
-			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filterClassName + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
+			writeLine("public List<" + currentBean.className + "> scroll" + currentBean.className + "(" + bean.idType + " " + bean.objectName + "Id, " + currentBean.basicViewBean.filter.className + " filter, " + currentBean.basicViewBean.sortingClassName + " sorting, Long firstResult, Long maxResults) {");
 			
 			writeLine("Session session = this.sessionFactory.getCurrentSession();");
 			writeLine("CriteriaBuilder builder = session.getCriteriaBuilder();");

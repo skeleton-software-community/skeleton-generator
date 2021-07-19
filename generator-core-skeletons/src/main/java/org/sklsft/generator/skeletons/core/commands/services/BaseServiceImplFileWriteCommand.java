@@ -41,7 +41,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
         javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
-        javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+        javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
         javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
         
@@ -84,7 +84,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewMapperPackageName + "." + currentBean.fullViewBean.mapperClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 			javaImports.add("import " + currentBean.myPackage.formMapperPackageName + "." + currentBean.formBean.mapperClassName + ";");
 		}
@@ -282,7 +282,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" */");
 		writeLine("@Override");
 		writeLine("@Transactional(readOnly=true)");
-		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+		writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scroll(ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 		writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
 		writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
 		writeLine("result.setSize(" + bean.daoObjectName + ".count());");
@@ -307,7 +307,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine(" */");
 		        writeLine("@Override");
 				writeLine("@Transactional(readOnly=true)");
-				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 				writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess();");
 				writeLine("ScrollView<" + this.bean.basicViewBean.className + "> result = new ScrollView<>();");
 				writeLine("result.setSize(" + bean.daoObjectName + ".countFrom" + property.capName + "(" + property.name + "Id));");
@@ -427,7 +427,7 @@ public class BaseServiceImplFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
             writeLine("@Transactional(readOnly=true)");
-			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
+			writeLine("public ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (" + bean.idType + " " + bean.objectName + "Id, ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
 			writeLine(this.bean.className + " " + this.bean.objectName + " = " + this.bean.daoObjectName + ".load(" + bean.objectName + "Id);");
             writeLine(this.bean.rightsManagerObjectName + ".checkCanAccess" + currentBean.className + "(" + this.bean.objectName + ");");
 			writeLine("ScrollView<" + currentBean.basicViewBean.className + "> result = new ScrollView<>();");

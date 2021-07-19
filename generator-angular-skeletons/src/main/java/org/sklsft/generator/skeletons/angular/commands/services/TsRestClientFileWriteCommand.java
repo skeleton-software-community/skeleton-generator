@@ -33,7 +33,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
 		
-		imports.add("import { " + bean.basicViewBean.filterClassName + " } from '../models/" + bean.basicViewBean.filterClassName + "';");
+		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
 		
 	}
@@ -145,7 +145,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		writeLine("/**");
 		writeLine(" * scroll object list");
 		writeLine(" */");
-		writeLine("public scroll(form: ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + ">) {");
+		writeLine("public scroll(form: ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + ">) {");
 		writeLine("return this.http.post<ScrollView<" + this.bean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/scroll', form, this.httpOptions);");
 		writeLine("}");
 		skipLine();
@@ -155,7 +155,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		        writeLine("/**");
 		        writeLine(" * scroll object list from " + property.name);
 		        writeLine(" */");
-				writeLine("public scrollFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ", form: ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + ">) {");
+				writeLine("public scrollFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ", form: ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + ">) {");
 				writeLine("return this.http.post<ScrollView<" + this.bean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/' + " + property.name + "Id + '/" + property.referenceBean.urlPiece + "/scroll', form, this.httpOptions);");
 				writeLine("}");
 				skipLine();

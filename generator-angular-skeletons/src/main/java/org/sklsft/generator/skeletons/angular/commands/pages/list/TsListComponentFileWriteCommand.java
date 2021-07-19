@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
@@ -37,10 +38,12 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
 		
-		imports.add("import { " + bean.basicViewBean.filterClassName + " } from '../models/" + bean.basicViewBean.filterClassName + "';");
+		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
 		
 		imports.add("import { " + bean.listViewClassName + " } from '../views/" + bean.listViewClassName + "';");
+		
+		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 	}
 	
 	
@@ -74,13 +77,26 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         }
         write("'Actions'");
         writeLine("];");
+        writeLine("filter: FormGroup;");
         skipLine();
 
-        writeLine("constructor(private service:" + bean.restClientClassName + ") { }");
+        writeLine("constructor(private service:" + bean.restClientClassName + ", private formBuilder: FormBuilder) { }");
 
         writeLine("ngOnInit(): void {");
+        writeLine("this.filter = this.formBuilder.group({");
+        boolean start = true;
+        for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
+        	if (start) {
+        		start = false;
+        	} else {
+        		writeLine(",");
+        	}
+        	write(property.name + ":['']");
+        }
+        writeLine("})");
         writeLine("this.reset();");
         writeLine("}");
+        skipLine();
         
         writeLine("ngAfterViewInit(): void {");
         writeLine("this.paginator.page.subscribe(");
@@ -88,8 +104,17 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("this.view.scrollForm.page=event.pageIndex+1;");
         writeLine("this.view.scrollForm.elementsPerPage=event.pageSize;");
         writeLine("this.refresh();");
-        writeLine("})");
+        
+        writeLine("});");
+        
+        for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
+    		writeLine("this.filter.controls['" + property.name + "'].valueChanges.subscribe(value=>{");
+    		writeLine("this.view.scrollForm.filter." + property.name + "=value;");
+    		writeLine("this.refresh();");
+    		writeLine("});");
+        }
         writeLine("}");
+        skipLine();
         
         writeLine("refresh(): void {");
         writeLine("this.service.scroll(this.view.scrollForm).subscribe((t) => {");
@@ -97,16 +122,30 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("this.dataSource = new MatTableDataSource(this.view.scrollView.elements);");
         writeLine("});");
         writeLine("}");
+        skipLine();
         
         writeLine("reset(): void {");
         writeLine("this.view = new " + bean.listViewClassName + "();");
         writeLine("this.view.scrollForm = new ScrollForm();");
-        writeLine("this.view.scrollForm.filter = new " + bean.basicViewBean.filterClassName + "();");
+        writeLine("this.view.scrollForm.filter = new " + bean.basicViewBean.filter.className + "();");
         writeLine("this.view.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
         writeLine("this.view.scrollForm.page=1;");
         writeLine("this.view.scrollForm.elementsPerPage=10;");
+        writeLine("this.filter.patchValue({");
+        start = true;
+        for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
+        	if (start) {
+        		start = false;
+        	} else {
+        		writeLine(",");
+        	}
+            write(property.name + ": ['']");
+        }
+        skipLine();    
+        writeLine("})");
         writeLine("this.refresh();");
         writeLine("}");
+        skipLine();
 
         writeNotOverridableContent();
         

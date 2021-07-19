@@ -39,7 +39,7 @@ private Bean bean;
 		javaImports.add("import " + this.bean.myPackage.basicViewsPackageName + "." + this.bean.basicViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.fullViewsPackageName + "." + this.bean.fullViewBean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
-		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filterClassName + ";");
+		javaImports.add("import " + bean.myPackage.filtersPackageName + "." + bean.basicViewBean.filter.className + ";");
 		javaImports.add("import " + bean.myPackage.sortingsPackageName + "." + bean.basicViewBean.sortingClassName + ";");
 		
 		for (OneToOneComponent OneToOneComponent : this.bean.oneToOneComponentList) {
@@ -54,7 +54,7 @@ private Bean bean;
 			javaImports.add("import " + currentBean.myPackage.basicViewsPackageName + "." + currentBean.basicViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.fullViewsPackageName + "." + currentBean.fullViewBean.className + ";");
 			javaImports.add("import " + currentBean.myPackage.formsPackageName + "." + currentBean.formBean.className + ";");
-			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filterClassName + ";");
+			javaImports.add("import " + currentBean.myPackage.filtersPackageName + "." + currentBean.basicViewBean.filter.className + ";");
 			javaImports.add("import " + currentBean.myPackage.sortingsPackageName + "." + currentBean.basicViewBean.sortingClassName + ";");
 		}
 		javaImports.add("import org.springframework.web.bind.annotation.PathVariable;");
@@ -174,7 +174,7 @@ private Bean bean;
 		writeLine(" * scroll object list");
 		writeLine(" */");
 		writeLine("@RequestMapping(value = {" + bean.serviceInterfaceName + ".SCROLL_URL}, method = RequestMethod.POST)");
-		writeLine("public @ResponseBody ScrollView<" + this.bean.basicViewBean.className + "> scroll(@RequestBody ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+		writeLine("public @ResponseBody ScrollView<" + this.bean.basicViewBean.className + "> scroll(@RequestBody ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 		writeLine("return " + bean.serviceObjectName + ".scroll(form);");
 		writeLine("}");
 		skipLine();
@@ -185,7 +185,7 @@ private Bean bean;
 				writeLine(" * scroll object list from " + property.name);
 				writeLine(" */");
 				writeLine("@RequestMapping(value = {" + bean.serviceInterfaceName + ".SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL}, method = RequestMethod.POST)");
-				writeLine("public @ResponseBody ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (@PathVariable(\"" + property.name + "Id\") " + property.referenceBean.idType + " " + property.name + "Id, @RequestBody ScrollForm<" + bean.basicViewBean.filterClassName + ", " + bean.basicViewBean.sortingClassName + "> form) {");
+				writeLine("public @ResponseBody ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (@PathVariable(\"" + property.name + "Id\") " + property.referenceBean.idType + " " + property.name + "Id, @RequestBody ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 				writeLine("return " + bean.serviceObjectName + ".scrollFrom" + property.capName + "(" + property.name + "Id, form);");
 				writeLine("}");
 			}
@@ -267,7 +267,7 @@ private Bean bean;
 			writeLine(" * scroll one to many component " + currentBean.objectName);
 			writeLine(" */");
 			writeLine("@RequestMapping(value = {" + bean.serviceInterfaceName + ".SCROLL_" + currentBean.table.originalName + "_URL}, method = RequestMethod.POST)");
-			writeLine("public @ResponseBody ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (@PathVariable(\"id\") " + bean.idType + " id, @RequestBody ScrollForm<" + currentBean.basicViewBean.filterClassName + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
+			writeLine("public @ResponseBody ScrollView<" + currentBean.basicViewBean.className + "> scroll" + currentBean.className + " (@PathVariable(\"id\") " + bean.idType + " id, @RequestBody ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + "> form) {");
 			writeLine("return " + bean.serviceObjectName + ".scroll" + currentBean.className + "(id, form);");
 			writeLine("}");
 			skipLine();

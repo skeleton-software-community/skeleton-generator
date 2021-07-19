@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.angular.commands.pages.AngularHtmlFileWriteCommand;
 
@@ -38,6 +39,13 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("<h2>");
 		writeLine(bean.listRendering + ": {{view.scrollView.count}} / {{view.scrollView.size}}");
 		writeLine("</h2>");
+		skipLine();
+		
+		writeLine("<form [formGroup]=\"filter\">");
+		for (FilterProperty property : this.bean.basicViewBean.filter.properties) {
+			writeFilter(property);
+		}
+		writeLine("</form>");
 		
 		writeLine("<mat-table [dataSource]=\"dataSource\">");
 
