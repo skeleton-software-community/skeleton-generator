@@ -114,7 +114,10 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
+		writeLine("<mat-option [value]=\"null\"></mat-option>");
+		writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options\" [value]=\"option.key\">{{option.key}}</mat-option>");
+		writeLine("</mat-select>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -122,9 +125,12 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	private void writeAutocomplete(String prefix, ViewProperty property, Bean bean){
 		
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\" class=\"autocomplete\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" [matAutocomplete]=\"" + property.name + "AutoComplete\"/>");
+		writeLine("<mat-autocomplete #" + property.name + "AutoComplete=\"matAutocomplete\">");
+		writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options | async\" [value]=\"option.key\">{{option.key}}</mat-option>");
+		writeLine("</mat-autocomplete>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -187,9 +193,9 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
-		writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
-		writeLine("<mat-datepicker #picker></mat-datepicker>");
+		writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
+		writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -218,20 +224,19 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			case DATE:				
 				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
-				writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
-				writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
-				writeLine("<mat-datepicker #picker></mat-datepicker>");
+				writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
+				writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
 				writeLine("</mat-form-field>");
 				break;
 				
 			case DATETIME:				
 				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
-				writeLine("<input matInput [matDatepicker]=\"picker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
-				writeLine("<mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>");
-				writeLine("<mat-datepicker #picker></mat-datepicker>");
+				writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
+				writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
 				writeLine("</mat-form-field>");
-				
 				break;
 				
 			case DOUBLE:

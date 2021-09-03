@@ -2,15 +2,19 @@ package org.sklsft.generator.skeletons.angular.commands.pages.details;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
 public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
 	private Bean bean;
+	private Map<String, Bean> selectableBeans = new HashMap<>();
 	/*
 	 * constructor
 	 */
@@ -20,16 +24,29 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		
 		this.bean = bean;
 		
+		for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null) {
+        		selectableBeans.put(property.selectableBean.className, property.selectableBean);
+        	}
+		}		
 	}
 	
 	@Override
 	protected void fetchSpecificImports() {
 		imports.add("import { Component, OnInit, ViewChild } from '@angular/core';");
+		imports.add("import { SelectItem } from 'src/app/core/models/SelectItem';");
+		imports.add("import { Observable } from 'rxjs';");
+		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
+		for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null) {
+        		imports.add("import { " + property.selectableBean.restClientClassName + " } from 'src/app/features/" + property.selectableBean.myPackage.name.replace(".","/") + "/" + property.selectableBean.urlPiece + "/" + "services" + "/" + property.selectableBean.restClientClassName + "';");
+        	}
+		}
 	}
 	
 	
@@ -56,9 +73,28 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("id:" + bean.idTsType + ";");
         writeLine("view: " + bean.fullViewBean.className + ";");
         writeLine("form: FormGroup;");
+        
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null) {
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+        			writeLine(property.name + "Options: Observable<SelectItem[]>;");
+        		}
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+        			writeLine(property.name + "Options: SelectItem[];");
+        		}
+        	}
+        }
+        
         skipLine();
 
-        writeLine("constructor(private service:" + bean.restClientClassName + ", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
+        write("constructor(private service:" + bean.restClientClassName);
+        for (Bean selectableBean:selectableBeans.values()) {
+        	
+        	write(", private " + selectableBean.serviceObjectName + ":" + selectableBean.restClientClassName);
+
+		}
+        
+        writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
         skipLine();
         boolean start = true;
         writeLine("ngOnInit(): void {");
@@ -69,13 +105,18 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         	} else {
         		writeLine(",");
         	}
-        	write(property.name + ":[''");
+        	write(property.name + ":[null");
         	if (!property.nullable) {
         		write(", Validators.required");
         	}
         	write("]");
         }
         writeLine("})");
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+        		writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
+        	}
+        }
         writeLine("this.load();");
         writeLine("}");
         
@@ -97,14 +138,40 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
         writeLine("applyForm(): void {");
         for (ViewProperty property:this.bean.formBean.properties) {
-        	writeLine("this.view.form." + property.name + " = this.form.get('" + property.name + "').value;");
+        	writeLine("this.view.form." + property.name + " = StringUtils.emptyToNull(this.form.get('" + property.name + "').value);");
         }
         writeLine("}");
         skipLine();
         
         writeLine("load(): void {");
         writeLine("this.service.load(this.id).subscribe((t) => {this.view=t;this.restoreForm();});");
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+        		writeLine("this.loadOptionsFor" + property.capName + "();");
+        	}
+        }
         writeLine("}");
+        
+        skipLine();
+        
+        for (ViewProperty property:this.bean.formBean.properties) {
+        	if (property.selectableBean!=null) {
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+        			writeLine("searchOptionsFor" + property.capName + "(value:string) {");
+        			writeLine("if (value) {");
+        			writeLine("this." + property.name + "Options = this." + property.selectableBean.serviceObjectName + ".searchOptions(value);");
+        			writeLine("}");
+        			writeLine("}");
+        			skipLine();
+        		}
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+        			writeLine("loadOptionsFor" + property.capName + "() {");
+        			writeLine("this." + property.selectableBean.serviceObjectName + ".getOptions().subscribe((t) => {this." + property.name + "Options=t;});");
+        			writeLine("}");
+        			skipLine();
+        		}
+        	}
+        }
         
         writeLine("update(): void {");
         writeLine("this.applyForm();");
