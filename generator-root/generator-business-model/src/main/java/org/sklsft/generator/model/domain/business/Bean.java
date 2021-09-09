@@ -93,6 +93,7 @@ public class Bean {
 	
 	public boolean selectable = false;
 	public SelectionBehavior selectionBehavior;
+	public AccessRoles accessRoles;
 
 	public boolean isComponent = false;
 	public boolean isEmbedded = false;

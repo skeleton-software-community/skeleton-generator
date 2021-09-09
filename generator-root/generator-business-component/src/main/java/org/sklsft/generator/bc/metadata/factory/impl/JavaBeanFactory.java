@@ -2,6 +2,7 @@ package org.sklsft.generator.bc.metadata.factory.impl;
 
 import org.sklsft.generator.bc.metadata.factory.interfaces.BeanFactory;
 import org.sklsft.generator.model.domain.Model;
+import org.sklsft.generator.model.domain.business.AccessRoles;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
@@ -42,6 +43,16 @@ public class JavaBeanFactory implements BeanFactory {
 			selectionBehavior.selectionMode = tableMetaData.getSelectionBehavior().getSelectionMode();
 			bean.selectionBehavior = selectionBehavior;
 			bean.selectable = true;
+		}
+		
+		if (tableMetaData.getAccessRoles() != null) {
+			AccessRoles accessRoles = new AccessRoles();
+			accessRoles.readRole = tableMetaData.getAccessRoles().getReadRole();
+			accessRoles.createRole = tableMetaData.getAccessRoles().getCreateRole();
+			accessRoles.saveRole = tableMetaData.getAccessRoles().getSaveRole();
+			accessRoles.updateRole = tableMetaData.getAccessRoles().getUpdateRole();
+			accessRoles.deleteRole = tableMetaData.getAccessRoles().getDeleteRole();
+			bean.accessRoles = accessRoles;
 		}
 
 		bean.className = JavaClassNaming.toClassName(table.originalName);

@@ -38,6 +38,8 @@ public class TableMetaData {
 	private DetailMode detailMode;
 	@XmlElement(name="selectionBehavior")
 	private SelectionBehaviorMetaData selectionBehavior;
+	@XmlElement(name="accessRoles")
+	private AccessRolesMetaData accessRoles;
 	
 	@XmlElementWrapper(name="interfaces")
 	@XmlElement(name="interface")
@@ -124,6 +126,12 @@ public class TableMetaData {
 	}
 	public void setSelectionBehavior(SelectionBehaviorMetaData selectionBehavior) {
 		this.selectionBehavior = selectionBehavior;
+	}
+	public AccessRolesMetaData getAccessRoles() {
+		return accessRoles;
+	}
+	public void setAccessRoles(AccessRolesMetaData accessRoles) {
+		this.accessRoles = accessRoles;
 	}
 	public List<String> getInterfaces() {
 		return interfaces;

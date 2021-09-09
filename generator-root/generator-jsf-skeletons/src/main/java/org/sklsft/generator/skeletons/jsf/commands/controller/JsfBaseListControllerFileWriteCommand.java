@@ -29,6 +29,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.PageLoad;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -104,6 +105,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		writeLine("/**");
 		writeLine(" * load object list");
 		writeLine(" */");
+		writeLine("@PageLoad");
 		writeLine("public void load() {");
 		writeLine("this.reset();");
 		writeLine("}");
