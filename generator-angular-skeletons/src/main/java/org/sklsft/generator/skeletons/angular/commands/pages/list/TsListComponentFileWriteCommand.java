@@ -44,6 +44,9 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.listViewClassName + " } from '../views/" + bean.listViewClassName + "';");
 		
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
+		
+		imports.add("import { MatSort } from '@angular/material/sort';");
+		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 	}
 	
 	
@@ -70,6 +73,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("view:" + bean.listViewClassName + " = new " + bean.listViewClassName + "();");
         writeLine("dataSource:MatTableDataSource<" + bean.basicViewBean.className + ">;");
         writeLine("@ViewChild(MatPaginator) paginator: MatPaginator;");
+        writeLine("@ViewChild(MatSort) sort: MatSort");
         writeLine("pageSizeOptions: number[] = [10, 20, 50, 100];");
         write("displayedColumns: string[] = [");
         for (ViewProperty property:bean.basicViewBean.properties) {	
@@ -99,13 +103,26 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("ngAfterViewInit(): void {");
+        
         writeLine("this.paginator.page.subscribe(");
         writeLine("(event) => {");
         writeLine("this.view.scrollForm.page=event.pageIndex+1;");
         writeLine("this.view.scrollForm.elementsPerPage=event.pageSize;");
-        writeLine("this.refresh();");
-        
+        writeLine("this.refresh();");        
         writeLine("});");
+        skipLine();
+        
+        writeLine("this.sort.sortChange.subscribe(");
+        writeLine("(event) => {");
+        writeLine("this.view.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
+        writeLine("switch (this.sort.active) {");
+        for (ViewProperty property:this.bean.basicViewBean.properties) {    
+        	writeLine("case '" + property.name + "': this.view.scrollForm.sorting." + property.name + "OrderType = StringUtils.emptyToNull(this.sort.direction.toUpperCase());break;");
+        }	      
+        writeLine("}");
+        writeLine("this.refresh();");
+        writeLine("});");
+        skipLine();
         
         for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
     		writeLine("this.filter.controls['" + property.name + "'].valueChanges.subscribe(value=>{");

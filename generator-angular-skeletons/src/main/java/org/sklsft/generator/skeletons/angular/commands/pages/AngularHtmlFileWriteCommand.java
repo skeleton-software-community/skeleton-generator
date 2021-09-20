@@ -3,7 +3,6 @@ package org.sklsft.generator.skeletons.angular.commands.pages;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
-import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.HtmlFileWriteCommand;
 
@@ -15,7 +14,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 
 	protected void writeListComponent(ViewProperty property, Bean bean) {
 		writeLine("<ng-container matColumnDef=\"" + property.name + "\">");
-		writeLine("<mat-header-cell *matHeaderCellDef>" + property.rendering + "</mat-header-cell>");
+		writeLine("<mat-header-cell *matHeaderCellDef mat-sort-header class=\"daisy-bg-on-primary-lighter\">" + property.rendering + "</mat-header-cell>");
 		
 		switch (property.dataType) {
 		case BOOLEAN:

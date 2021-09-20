@@ -47,14 +47,14 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		}
 		writeLine("</form>");
 		
-		writeLine("<mat-table [dataSource]=\"dataSource\">");
+		writeLine("<mat-table [dataSource]=\"dataSource\" matSort>");
 
 		for (ViewProperty property:bean.basicViewBean.properties) {
 			writeListComponent(property, bean);
 		}
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
-		writeLine("<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>");
+		writeLine("<mat-header-cell *matHeaderCellDef class=\"daisy-bg-on-primary-lighter\">Actions</mat-header-cell>");
 		writeLine("<mat-cell *matCellDef=\"let element\"><a href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
 		writeLine("</ng-container>");
 
