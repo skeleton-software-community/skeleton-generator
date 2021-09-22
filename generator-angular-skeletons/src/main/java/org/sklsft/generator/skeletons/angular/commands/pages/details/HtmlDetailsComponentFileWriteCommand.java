@@ -36,6 +36,7 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<div class=\"details-form\" >");
 		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"update()\">");
 		
 		for (ViewProperty property:bean.formBean.properties) {
@@ -43,9 +44,10 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		}
 		
 		writeLine("<p>");
-		writeLine("<button mat-raised-button color=\"accent\" type=\"submit\">Update</button>");
+		writeLine("<button mat-raised-button color=\"primary\" type=\"submit\">Update</button>");
 		writeLine("</p>");
 		writeLine("</form>");
+		writeLine("</div>");
 
         writeNotOverridableContent();
 

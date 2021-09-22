@@ -148,14 +148,14 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<textarea matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" cdkTextareaAutosize></textarea>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
 	
 	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-checkbox color=\"accent\" formControlName=\"" +  property.name + "\">");
+		writeLine("<mat-checkbox color=\"primary\" formControlName=\"" +  property.name + "\">");
 		writeLine(property.rendering);
 		writeLine("</mat-checkbox>");
 		writeLine("</p>");
