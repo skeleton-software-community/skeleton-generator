@@ -27,8 +27,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");
-        javaImports.add("import org.sklsft.commons.model.patterns.Processor;");      
+        javaImports.add("import " + this.bean.myPackage.DAOInterfacePackageName + "." + this.bean.daoInterfaceName + ";");   
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList)
         {
@@ -58,7 +57,7 @@ public class BaseProcessorImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseProcessorClassName + " implements Processor<" + this.bean.className + ", " + bean.idType + "> {");
+        writeLine("public class " + this.bean.baseProcessorClassName + " {");
         skipLine();
 
         writeLine("/*"); 

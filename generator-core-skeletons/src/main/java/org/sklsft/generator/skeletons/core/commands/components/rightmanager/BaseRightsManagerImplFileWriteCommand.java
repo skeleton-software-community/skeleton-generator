@@ -29,7 +29,8 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
 
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
-        javaImports.add("import org.sklsft.commons.model.patterns.RightsManager;");
+        
+        javaImports.add("import org.springframework.security.access.prepost.PreAuthorize;");
         
         for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
             Bean currentBean = oneToOneComponent.referenceBean;
@@ -39,7 +40,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
             Bean currentBean = oneToManyComponent.referenceBean;
             javaImports.add("import " + currentBean.myPackage.omPackageName + "." + currentBean.className + ";");
-        }		
+        }
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
 		writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
 
-        writeLine("public class " + this.bean.baseRightsManagerClassName + " implements RightsManager<" + this.bean.className + ", " + bean.idType + "> {");
+        writeLine("public class " + this.bean.baseRightsManagerClassName + " {");
         skipLine();
         
         
@@ -75,6 +76,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can access all");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.readRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.readRole + "')\")");
+        }
         writeLine("public void checkCanAccess() {");
         writeLine("if (!canAccess()) {");        
         writeLine("throw new AccessDeniedException(" + CHAR_34 + this.bean.className + ".accessDenied" + CHAR_34 + ");");
@@ -92,6 +96,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can access");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.readRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.readRole + "')\")");
+        }
         writeLine("public void checkCanAccess(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canAccess(" + this.bean.objectName + ")) {");        
         writeLine("throw new AccessDeniedException(" + CHAR_34 + this.bean.className + ".accessDenied" + CHAR_34 + ");");
@@ -112,6 +119,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can access one to one component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.readRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.readRole + "')\")");
+            }
             writeLine("public void checkCanAccess" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canAccess" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".accessDenied" + CHAR_34 + ");");
@@ -133,6 +143,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can access one to many component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.readRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.readRole + "')\")");
+            }
             writeLine("public void checkCanAccess" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canAccess" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".accessDenied" + CHAR_34 + ");");
@@ -157,6 +170,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can create");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.createRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.createRole + "')\")");
+        }
         writeLine("public void checkCanCreate() {");
         writeLine("if (!canCreate()) {");        
         writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".create.operationDenied" + CHAR_34 + ");");
@@ -176,6 +192,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can create one to one component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.createRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.createRole + "')\")");
+            }
             writeLine("public void checkCanCreate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canCreate" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
@@ -196,6 +215,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can create one to many component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.createRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.createRole + "')\")");
+            }
             writeLine("public void checkCanCreate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canCreate" + currentBean.className + "(" + bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
@@ -221,6 +243,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can save");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.saveRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.saveRole + "')\")");
+        }
         writeLine("public void checkCanSave(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canSave(" + this.bean.objectName + ")) {");        
         writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".save.operationDenied" + CHAR_34 + ");");
@@ -240,6 +265,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can save one to one component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.saveRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.saveRole + "')\")");
+            }
             writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
@@ -260,6 +288,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         	writeLine("/**");
             writeLine(" * check can save one to many component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.saveRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.saveRole + "')\")");
+            }
             writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
@@ -283,6 +314,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can update");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.updateRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.updateRole + "')\")");
+        }
         writeLine("public void checkCanUpdate(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canUpdate(" + this.bean.objectName + ")) {");        
         writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".update.operationDenied" + CHAR_34 + ");");
@@ -302,6 +336,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             writeLine("/**");
             writeLine(" * check can update one to one component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.updateRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.updateRole + "')\")");
+            }
             writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
@@ -322,6 +359,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             writeLine("/**");
             writeLine(" * check can update one to many component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.updateRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.updateRole + "')\")");
+            }
             writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
@@ -346,6 +386,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         writeLine("/**");
         writeLine(" * check can delete");
         writeLine(" */");
+        if (bean.accessRoles!=null && bean.accessRoles.deleteRole!=null) {
+        	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.deleteRole + "')\")");
+        }
         writeLine("public void checkCanDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canDelete(" + bean.objectName + ")) {");        
         writeLine("throw new OperationDeniedException(" + CHAR_34 + bean.className + ".delete.operationDenied" + CHAR_34 + ");");
@@ -365,6 +408,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             writeLine("/**");
             writeLine(" * check can delete one to one component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.deleteRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.deleteRole + "')\")");
+            }
             writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
@@ -385,6 +431,9 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             writeLine("/**");
             writeLine(" * check can delete one to many component " + currentBean.className);
             writeLine(" */");
+            if (bean.accessRoles!=null && bean.accessRoles.deleteRole!=null) {
+            	writeLine("@PreAuthorize(\"hasRole('" + bean.accessRoles.deleteRole + "')\")");
+            }
             writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
             writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");

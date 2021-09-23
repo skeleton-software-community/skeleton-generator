@@ -15,7 +15,7 @@ public interface ProjectMetaDataDao {
 	
 	public static final String DATA_MODEL_FOLDER_NAME = "data-model";	
 	public static final String XML_CONFIG_FILE_NAME = "skeleton.xml";
-	public static final String SCHEMA_LOCATION = "skeleton-metadata-3.4.xsd";
+	public static final String SCHEMA_LOCATION = "skeleton-metadata-4.0.xsd";
 	
 
 	ProjectMetaData loadProjectMetaData(String workspacePath);

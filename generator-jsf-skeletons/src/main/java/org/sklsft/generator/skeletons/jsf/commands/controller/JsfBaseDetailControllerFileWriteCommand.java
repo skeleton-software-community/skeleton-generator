@@ -34,6 +34,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
 		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
+		javaImports.add("import org.sklsft.commons.mvc.annotations.PageLoad;");
 		
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".CommonController;");
 		javaImports.add("import " + this.bean.myPackage.model.controllerPackageName + ".BaseController;");
@@ -140,6 +141,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		writeLine("/**");
 		writeLine(" * load object");
 		writeLine(" */");
+		writeLine("@PageLoad");
 		writeLine("public void load() {");
 	
 		for (ViewProperty property : this.bean.formBean.properties) {
@@ -163,6 +165,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * load one to one component " + currentBean.objectName);
 			writeLine(" */");
+			writeLine("@PageLoad");
 			writeLine("public void load" + currentBean.className + "() {");
 			
 			for (ViewProperty property : currentBean.formBean.properties) {
@@ -186,6 +189,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * load one to many component " + currentBean.objectName + " list");
 			writeLine(" */");
+			writeLine("@PageLoad");
 			writeLine("public void load" + currentBean.className + "List() {");
 
 			writeLine("this.reset" + currentBean.basicViewBean.filter.className + "();");
@@ -212,6 +216,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			writeLine("/**");
 			writeLine(" * load one to many " + currentBean.objectName + " list");
 			writeLine(" */");
+			writeLine("@PageLoad");
 			writeLine("public void load" + currentBean.className + "List() {");
 
 			writeLine("this.reset" + currentBean.basicViewBean.filter.className + "();");

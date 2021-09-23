@@ -3,13 +3,13 @@ package org.sklsft.generator.model.domain.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sklsft.generator.model.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
 import org.sklsft.generator.model.domain.ui.FormBean;
 import org.sklsft.generator.model.domain.ui.FullViewBean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
-import org.sklsft.generator.model.exception.PropertyNotFoundException;
 import org.sklsft.generator.model.metadata.DetailMode;
 
 /**
@@ -94,6 +94,7 @@ public class Bean {
 	
 	public boolean selectable = false;
 	public SelectionBehavior selectionBehavior;
+	public AccessRoles accessRoles;
 
 	public boolean isComponent = false;
 	public boolean isEmbedded = false;
