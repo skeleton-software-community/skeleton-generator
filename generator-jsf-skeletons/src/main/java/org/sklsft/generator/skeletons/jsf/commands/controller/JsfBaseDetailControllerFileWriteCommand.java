@@ -32,7 +32,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
-		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
+		javaImports.add("import org.sklsft.commons.api.exception.rights.AccessDeniedException;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.PageLoad;");
 		
@@ -299,7 +299,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 			}
 			writeLine("try {");
 			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + this.bean.serviceObjectName + ".create" + currentBean.className + "(this." + bean.detailViewObjectName + ".getSelected" + this.bean.className + "().getId()));");
-			writeLine("} catch (OperationDeniedException e) {");
+			writeLine("} catch (AccessDeniedException e) {");
 			writeLine("displayError(e.getMessage());");
 			writeLine("}");
 			writeLine("}");
@@ -325,7 +325,7 @@ public class JsfBaseDetailControllerFileWriteCommand extends JavaFileWriteComman
 
 			writeLine("try {");
 			writeLine(bean.detailViewObjectName + ".setSelected" + currentBean.className + "(this." + currentBean.serviceObjectName + ".create());");
-			writeLine("} catch (OperationDeniedException e) {");
+			writeLine("} catch (AccessDeniedException e) {");
 			writeLine("displayError(e.getMessage());");
 			writeLine("}");
 			writeLine("}");

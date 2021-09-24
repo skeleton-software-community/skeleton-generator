@@ -8,17 +8,17 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import org.sklsft.generator.bash.prompt.PopulatorPrompter;
-import org.sklsft.generator.bc.checker.BackupPostExecutionChecker;
-import org.sklsft.generator.bc.checker.BackupPreExecutionChecker;
 import org.sklsft.generator.bl.services.impl.Populator;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
 import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
+import org.sklsft.generator.components.checker.BackupPostExecutionChecker;
+import org.sklsft.generator.components.checker.BackupPreExecutionChecker;
 import org.sklsft.generator.model.backup.check.BackupPlanPostExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
-import org.sklsft.generator.repository.backup.datasource.interfaces.InputDataSourceProvider;
-import org.sklsft.generator.repository.metadata.interfaces.ProjectMetaDataDao;
+import org.sklsft.generator.persistence.backup.datasource.interfaces.InputDataSourceProvider;
+import org.sklsft.generator.persistence.metadata.interfaces.ProjectMetaDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -38,15 +38,19 @@ public class PopulatorLauncher {
 	 * 
 	 * @param args 0->the workspace folder where the "data-model" folder will be detected
 	 * @param args 1->the folder where the backup plan will be read
-	 * @param args 2(optional)->a list of semicolon separated table names if you want to restrict the population with this list
+	 * @param args 2->the datasource that will be populated
+	 * @param args 3->if a confirmation prompt is needed
+	 * @param args 4(optional)->a list of semicolon separated table names if you want to restrict the population with this list
 	 */
 	public static void main(String[] args) {
 		
-		if (args.length < 2) {
+		if (args.length < 4) {
 			throw new IllegalArgumentException("workspace path and backup plan folder are Mandatory");
 		}
 		String workspacePath = args[0];
 		String backupPath = args[1];
+		System.setProperty("datasource", args[2]);
+		Boolean noPrompt =  Boolean.valueOf(args[3]);
 		
 		String sourcePath = workspacePath + File.separator + ProjectMetaDataDao.DATA_MODEL_FOLDER_NAME;
 
@@ -90,9 +94,9 @@ public class PopulatorLauncher {
 				PopulatorPrompter prompter = new PopulatorPrompter();
 				prompter.printPreExecutionWarnings(preExecutionWarnings);
 				
-				logger.info("noPrompt: " + System.getProperty("noPrompt"));
+				logger.info("noPrompt: " + noPrompt);
 
-				if (!Boolean.valueOf(System.getProperty("noPrompt"))) {
+				if (!noPrompt) {
 					prompter.promptForConfirmation();
 				}
 				
@@ -117,8 +121,8 @@ public class PopulatorLauncher {
 		
 		Set<String> tables = null;
 		
-		if (args.length > 2) {
-			String tablesArg = args[2];
+		if (args.length > 4) {
+			String tablesArg = args[4];
 			String[] tableTokens = tablesArg.split(";");
 			tables = new HashSet<String>();
 			for (String table:tableTokens) {

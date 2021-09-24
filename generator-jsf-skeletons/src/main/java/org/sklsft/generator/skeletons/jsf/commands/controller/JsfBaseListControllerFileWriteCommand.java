@@ -27,7 +27,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import org.sklsft.commons.mvc.ajax.AjaxMethodTemplate;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.AjaxMethod;");
-		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
+		javaImports.add("import org.sklsft.commons.api.exception.rights.AccessDeniedException;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.mvc.annotations.PageLoad;");
 		
@@ -136,7 +136,7 @@ public class JsfBaseListControllerFileWriteCommand extends JavaFileWriteCommand 
 
 		writeLine("try {");
 		writeLine("this." + this.bean.listViewObjectName + ".setSelected" + this.bean.className + "(this." + this.bean.serviceObjectName + ".create());");
-		writeLine("} catch (OperationDeniedException e) {");
+		writeLine("} catch (AccessDeniedException e) {");
 		writeLine("displayError(e.getMessage());");
 		writeLine("}");
 

@@ -16,7 +16,7 @@ http://www.springframework.org/schema/task
 http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 	<!-- here is the bean to access all sources of your project through a map -->
-	<bean id="projectDataSourceProvider" class="org.sklsft.generator.repository.backup.datasource.impl.OutputDataSourceProviderImpl">
+	<bean id="projectDataSourceProvider" class="org.sklsft.generator.persistence.backup.datasource.impl.OutputDataSourceProviderImpl">
 		<constructor-arg name="dataSources">
 	  		<map>
 				<entry key="local" value-ref="local"/>
@@ -26,7 +26,7 @@ http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 	
 	
 	<!-- here is the bean to access all sources used to populate your project database through a map -->	
-	<bean id="inputDataSourceProvider" class="org.sklsft.generator.repository.backup.datasource.impl.InputDataSourceProviderImpl">
+	<bean id="inputDataSourceProvider" class="org.sklsft.generator.persistence.backup.datasource.impl.InputDataSourceProviderImpl">
 		<constructor-arg name="dataSources">
 	  		<map>
 				

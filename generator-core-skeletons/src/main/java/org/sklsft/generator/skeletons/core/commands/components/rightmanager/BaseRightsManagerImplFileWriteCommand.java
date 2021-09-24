@@ -26,7 +26,6 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
 	protected void fetchSpecificImports() {
 	
 		javaImports.add("import org.sklsft.commons.api.exception.rights.AccessDeniedException;");
-		javaImports.add("import org.sklsft.commons.api.exception.rights.OperationDeniedException;");
 
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
         
@@ -175,7 +174,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         }
         writeLine("public void checkCanCreate() {");
         writeLine("if (!canCreate()) {");        
-        writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".create.operationDenied" + CHAR_34 + ");");
+        writeLine("throw new AccessDeniedException(" + CHAR_34 + this.bean.className + ".create.operationDenied" + CHAR_34 + ");");
         writeLine("}");
         writeLine("}");
         skipLine();
@@ -197,7 +196,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanCreate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canCreate" + currentBean.className + "(" + bean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -220,7 +219,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanCreate" + currentBean.className + "(" + bean.className + " " + bean.objectName + ") {");
             writeLine("if (!canCreate" + currentBean.className + "(" + bean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".create.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -248,7 +247,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         }
         writeLine("public void checkCanSave(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canSave(" + this.bean.objectName + ")) {");        
-        writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".save.operationDenied" + CHAR_34 + ");");
+        writeLine("throw new AccessDeniedException(" + CHAR_34 + this.bean.className + ".save.operationDenied" + CHAR_34 + ");");
         writeLine("}");
         writeLine("}");
         skipLine();
@@ -270,7 +269,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -293,7 +292,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
             writeLine("if (!canSave" + currentBean.className + "(" + currentBean.objectName + ", " + this.bean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".save.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -319,7 +318,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         }
         writeLine("public void checkCanUpdate(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canUpdate(" + this.bean.objectName + ")) {");        
-        writeLine("throw new OperationDeniedException(" + CHAR_34 + this.bean.className + ".update.operationDenied" + CHAR_34 + ");");
+        writeLine("throw new AccessDeniedException(" + CHAR_34 + this.bean.className + ".update.operationDenied" + CHAR_34 + ");");
         writeLine("}");
         writeLine("}");
         skipLine();
@@ -341,7 +340,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -364,7 +363,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canUpdate" + currentBean.className + "(" + currentBean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".update.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -391,7 +390,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
         }
         writeLine("public void checkCanDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
         writeLine("if (!canDelete(" + bean.objectName + ")) {");        
-        writeLine("throw new OperationDeniedException(" + CHAR_34 + bean.className + ".delete.operationDenied" + CHAR_34 + ");");
+        writeLine("throw new AccessDeniedException(" + CHAR_34 + bean.className + ".delete.operationDenied" + CHAR_34 + ");");
         writeLine("}");
         writeLine("}");
         skipLine();
@@ -413,7 +412,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
@@ -436,7 +435,7 @@ public class BaseRightsManagerImplFileWriteCommand extends JavaFileWriteCommand 
             }
             writeLine("public void checkCanDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
             writeLine("if (!canDelete" + currentBean.className + "(" + currentBean.objectName + ")) {");        
-            writeLine("throw new OperationDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
+            writeLine("throw new AccessDeniedException(" + CHAR_34 + currentBean.className + ".delete.operationDenied" + CHAR_34 + ");");
             writeLine("}");
             writeLine("}");
             skipLine();
