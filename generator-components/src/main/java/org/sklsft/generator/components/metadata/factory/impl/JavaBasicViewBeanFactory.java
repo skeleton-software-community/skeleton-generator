@@ -1,7 +1,6 @@
 package org.sklsft.generator.components.metadata.factory.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;

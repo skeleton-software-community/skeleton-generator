@@ -51,6 +51,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
 		javaImports.add("import org.sklsft.commons.mapper.impl.StringArrayToBeanMapperImpl;");
 		javaImports.add("import org.sklsft.commons.mapper.interfaces.ObjectArrayToBeanMapper;");
 		javaImports.add("import org.sklsft.commons.mapper.impl.StringToObjectConverter;");
+		javaImports.add("import org.sklsft.commons.mapper.impl.DbObjectToObjectConverter;");
 		
 	}
 
@@ -112,7 +113,7 @@ public class OneToManyComponentPopulatorCommandFileWriteCommand extends JavaFile
         int i = 0;
         for (ViewProperty property:properties) {
         	String type = property.javaType;        	
-        	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")args[" + i + "]:(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
+        	writeLine(type + " arg" + i + " = arguments.isArgumentsTyped()?(" + type + ")(DbObjectToObjectConverter.getObjectFromDbObject(args[" + i + "], " + type + ".class)):(" + type + ")(StringToObjectConverter.getObjectFromString((String)args[" + i + "], " + type + ".class));");
         	i++;
         }
         

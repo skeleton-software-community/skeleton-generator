@@ -3,11 +3,16 @@ package ${project.model.mvcPackageName};
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.sklsft.commons.log.AccessLogger;
 import org.sklsft.commons.log.ErrorLogger;
 import org.sklsft.commons.mvc.ajax.AjaxMethodAspect;
 import org.sklsft.commons.mvc.ajax.AjaxMethodExecutor;
 import org.sklsft.commons.mvc.i18n.JsfLocaleManager;
+import org.sklsft.commons.mvc.loading.PageLoadAspect;
+import org.sklsft.commons.mvc.loading.PageLoadExceptionHandler;
+import org.sklsft.commons.mvc.loading.PageLoadExceptionHandlerDefaultJsfImpl;
 import org.sklsft.commons.mvc.messages.JsfMessageHandler;
 import org.sklsft.commons.mvc.redirection.JsfRedirectionHandler;
 import org.sklsft.commons.mvc.scopes.ViewScope;
@@ -17,12 +22,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.env.Environment;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.afklm.spring.security.habile.EntryPointConfiguration;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -103,5 +110,20 @@ public class ApplicationConfig {
 		AjaxMethodAspect result = new AjaxMethodAspect();
 		result.setExecutor(ajaxMethodExecutor());
 		return result;
+	}
+	
+	@Bean
+	public PageLoadExceptionHandler pageLoadExceptionHandler() {
+		PageLoadExceptionHandlerDefaultJsfImpl result = new PageLoadExceptionHandlerDefaultJsfImpl();
+		result.setRedirectionHandler(redirectionHandler());
+		return result;
+	}
+	
+	@Bean
+	public PageLoadAspect pageLoadAspect() {
+		PageLoadAspect result = new PageLoadAspect();
+		result.setExceptionHandler(pageLoadExceptionHandler());
+		return result;
+		
 	}
 }

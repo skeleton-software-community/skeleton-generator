@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.angular.commands.pages.AngularHtmlFileWriteCommand;
-import org.sklsft.generator.skeletons.commands.impl.typed.HtmlFileWriteCommand;
 
 
 public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCommand {
