@@ -923,7 +923,7 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	private void writeTextRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
+		writeLine("addUnaccentuatedStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
 	}
 	
 	private void writeBooleanRestriction(ViewProperty property) {
