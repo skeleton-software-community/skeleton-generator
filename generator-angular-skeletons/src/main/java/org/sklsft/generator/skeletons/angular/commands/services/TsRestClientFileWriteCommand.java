@@ -73,7 +73,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 //		createLoadOneToManyComponentList();
 //		createScrollOneToManyComponent();
 //		createLoadOneToManyComponent();
-//		createCreateObject();
+		createCreateObject();
 //		createCreateOneToManyComponent();
 		createSaveObject();
 //		createSaveOneToOneComponent();
@@ -81,7 +81,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		createUpdateObject();
 //		createUpdateOneTOneComponent();
 //		createUpdateOneToManyComponent();
-//		createDeleteObject();
+		createDeleteObject();
 //		createDeleteOneToOneComponent();
 //		createDeleteOneToManyComponent();
 //		createDeleteObjectList();
@@ -175,6 +175,18 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 	}
     
     
+    private void createCreateObject() {
+		writeLine("/**");
+		writeLine(" * create object");
+		writeLine(" */");
+		writeLine("public create() {");	
+        writeLine("return this.http.get<" + this.bean.fullViewBean.className + ">(environment.restApiUrl + '/" + bean.urlPiece + "/new');");
+		writeLine("}");
+		skipLine();
+
+	}
+    
+    
     private void createSaveObject() {
         writeLine("/**");
         writeLine(" * save object");        
@@ -192,6 +204,17 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
         writeLine(" */");
         writeLine("public update(id: " + bean.idTsType + ", form: " + this.bean.formBean.className + ") {");
         writeLine("return this.http.put(environment.restApiUrl + '/" + bean.urlPiece + "/' + id, form, this.httpOptions);");
+        writeLine("}");
+        skipLine();
+    }
+    
+    
+    private void createDeleteObject() {
+        writeLine("/**");
+        writeLine(" * delete object");        
+        writeLine(" */");
+        writeLine("public delete(id: " + bean.idTsType + ") {");
+        writeLine("return this.http.delete(environment.restApiUrl + '/" + bean.urlPiece + "/' + id);");
         writeLine("}");
         skipLine();
     }

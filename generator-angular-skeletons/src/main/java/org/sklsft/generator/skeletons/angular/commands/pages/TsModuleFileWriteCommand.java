@@ -30,6 +30,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.className + "RoutingModule } from './" + bean.urlPiece + "-routing.module';");
 		imports.add("import { " + bean.className + "ListComponent } from './list/" + bean.urlPiece + "-list.component';");
 		imports.add("import { " + bean.className + "DetailsComponent } from './details/" + bean.urlPiece + "-details.component';");
+		imports.add("import { " + bean.className + "ModalComponent } from './list/modal/" + bean.urlPiece + "-modal.component';");
 	}
 	
 	
@@ -46,7 +47,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("@NgModule({");
-        writeLine("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent],");
+        writeLine("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent, " + bean.className + "ModalComponent],");
         writeLine("imports: [CommonModule, SharedModule, " + bean.className + "RoutingModule]");
         writeLine("})");
         writeLine("export class " + bean.className + "Module { }");

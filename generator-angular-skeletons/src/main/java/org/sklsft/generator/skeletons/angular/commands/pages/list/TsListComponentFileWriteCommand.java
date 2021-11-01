@@ -46,7 +46,9 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		
 		imports.add("import { MatSort } from '@angular/material/sort';");
+		imports.add("import { MatDialog } from '@angular/material/dialog';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
+		imports.add("import { " + bean.className + "ModalComponent } from './modal/" + bean.urlPiece + "-modal.component';");
 	}
 	
 	
@@ -84,7 +86,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("filter: FormGroup;");
         skipLine();
 
-        writeLine("constructor(private service:" + bean.restClientClassName + ", private formBuilder: FormBuilder) { }");
+        writeLine("constructor(private service:" + bean.restClientClassName + ", private formBuilder: FormBuilder, private dialog: MatDialog) { }");
 
         writeLine("ngOnInit(): void {");
         writeLine("this.filter = this.formBuilder.group({");
@@ -161,6 +163,15 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();    
         writeLine("})");
         writeLine("this.refresh();");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("create(): void {");
+        writeLine("this.service.create().subscribe((t) => {");
+        writeLine("let ref = this.dialog.open(" + bean.className + "ModalComponent);");
+        writeLine("ref.componentInstance.view = t;");
+        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
+        writeLine("});");
         writeLine("}");
         skipLine();
 

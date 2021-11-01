@@ -12,6 +12,9 @@ import org.sklsft.generator.skeletons.angular.commands.pages.details.TsDetailsCo
 import org.sklsft.generator.skeletons.angular.commands.pages.list.HtmlListComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.ScssListComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.TsListComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.HtmlModalComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.ScssModalComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.TsModalComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -58,19 +61,19 @@ public class TypeScriptComponentsLayer extends AbstractLayer {
 				}
 			}
 
-			FileWriteCommandTreeNode listPpagesTreeNode = new FileWriteCommandTreeNode("List Pages");
-			packageTreeNode.add(listPpagesTreeNode);
+			FileWriteCommandTreeNode listPagesTreeNode = new FileWriteCommandTreeNode("List Pages");
+			packageTreeNode.add(listPagesTreeNode);
 			for (Bean bean : myPackage.beans) {
 				if (!bean.isComponent) {
 					
 					FileWriteCommandTreeNode tsComponent = new FileWriteCommandTreeNode(new TsListComponentFileWriteCommand(bean));
-					listPpagesTreeNode.add(tsComponent);
+					listPagesTreeNode.add(tsComponent);
 					
 					FileWriteCommandTreeNode scssComponent = new FileWriteCommandTreeNode(new ScssListComponentFileWriteCommand(bean));
-					listPpagesTreeNode.add(scssComponent);
+					listPagesTreeNode.add(scssComponent);
 					
 					FileWriteCommandTreeNode htmlComponent = new FileWriteCommandTreeNode(new HtmlListComponentFileWriteCommand(bean));
-					listPpagesTreeNode.add(htmlComponent);
+					listPagesTreeNode.add(htmlComponent);
 				}
 			}
 			
@@ -87,6 +90,22 @@ public class TypeScriptComponentsLayer extends AbstractLayer {
 					
 					FileWriteCommandTreeNode htmlComponent = new FileWriteCommandTreeNode(new HtmlDetailsComponentFileWriteCommand(bean));
 					pagesTreeNode.add(htmlComponent);
+				}
+			}
+			
+			FileWriteCommandTreeNode modalsTreeNode = new FileWriteCommandTreeNode("Madals");
+			packageTreeNode.add(modalsTreeNode);
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					
+					FileWriteCommandTreeNode tsComponent = new FileWriteCommandTreeNode(new TsModalComponentFileWriteCommand(bean));
+					modalsTreeNode.add(tsComponent);
+					
+					FileWriteCommandTreeNode scssComponent = new FileWriteCommandTreeNode(new ScssModalComponentFileWriteCommand(bean));
+					modalsTreeNode.add(scssComponent);
+					
+					FileWriteCommandTreeNode htmlComponent = new FileWriteCommandTreeNode(new HtmlModalComponentFileWriteCommand(bean));
+					modalsTreeNode.add(htmlComponent);
 				}
 			}
 		}

@@ -69,6 +69,10 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("[pageSizeOptions]=\"pageSizeOptions\">");
 		writeLine("</mat-paginator>");
 		skipLine();
+		
+		writeLine("<button mat-raised-button (click)=\"create()\" color=\"primary\">");
+		writeLine("Create");
+		writeLine("</button>");
 
         writeNotOverridableContent();
 

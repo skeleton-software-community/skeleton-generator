@@ -27,7 +27,7 @@ public class ScssDetailsComponentFileWriteCommand extends ScssFileWriteCommand {
 	protected void writeContent() throws IOException {
 
         writeLine("/**");
-        writeLine(" * auto generated list component scss file");
+        writeLine(" * auto generated details component scss file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
