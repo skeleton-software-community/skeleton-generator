@@ -97,7 +97,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         	} else {
         		writeLine(",");
         	}
-        	write(property.name + ":['']");
+        	write(property.name + ":[null]");
         }
         writeLine("})");
         writeLine("this.reset();");
@@ -158,7 +158,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         	} else {
         		writeLine(",");
         	}
-            write(property.name + ": ['']");
+            write(property.name + ": [null]");
         }
         skipLine();    
         writeLine("})");
@@ -168,6 +168,15 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         
         writeLine("create(): void {");
         writeLine("this.service.create().subscribe((t) => {");
+        writeLine("let ref = this.dialog.open(" + bean.className + "ModalComponent);");
+        writeLine("ref.componentInstance.view = t;");
+        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
+        writeLine("});");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("edit(id: " + bean.idTsType + "): void {");
+        writeLine("this.service.load(id).subscribe((t) => {");
         writeLine("let ref = this.dialog.open(" + bean.className + "ModalComponent);");
         writeLine("ref.componentInstance.view = t;");
         writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");

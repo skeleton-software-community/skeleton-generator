@@ -43,12 +43,13 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		}
 		
 		writeLine("<p>");
-		writeLine("<button mat-raised-button color=\"primary\" type=\"submit\">Update</button>");
+		writeLine("<button mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
 		writeLine("</p>");
 		writeLine("</form>");
-		writeLine("</div>");
-
+		
         writeNotOverridableContent();
+        
+        writeLine("</div>");
 
     }
 }

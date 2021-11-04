@@ -35,19 +35,19 @@ public class SpringHibernateAngularSkeleton implements Skeleton {
 	public List<Layer> getLayers(Project project) {
 		List<Layer> layers = new ArrayList<>();
 	
-		for (DatabaseHandler handler:DatabaseHandlerDiscovery.handlers) {
-			layers.add(handler.getLayer());
-		}
-		layers.add(new SpringRestRootLayer());
-		layers.add(new ApiLayer());
-		layers.add(new HibernateBusinessModelLayer());
-		layers.add(new HibernateDaoLayer());
-		layers.add(new BusinessComponentLayer());
-		layers.add(new ServiceLayer());
-		layers.add(new SpringRestControllerLayer());
-		layers.add(new SpringRestClientLayer());
-		layers.add(new PopulatorLayer());
-		layers.add(new JunitLayer());
+//		for (DatabaseHandler handler:DatabaseHandlerDiscovery.handlers) {
+//			layers.add(handler.getLayer());
+//		}
+//		layers.add(new SpringRestRootLayer());
+//		layers.add(new ApiLayer());
+//		layers.add(new HibernateBusinessModelLayer());
+//		layers.add(new HibernateDaoLayer());
+//		layers.add(new BusinessComponentLayer());
+//		layers.add(new ServiceLayer());
+//		layers.add(new SpringRestControllerLayer());
+//		layers.add(new SpringRestClientLayer());
+//		layers.add(new PopulatorLayer());
+//		layers.add(new JunitLayer());
 		layers.add(new TypeScriptModelLayer());
 		layers.add(new TypeScriptViewsLayer());
 		layers.add(new TypeScriptServicesLayer());

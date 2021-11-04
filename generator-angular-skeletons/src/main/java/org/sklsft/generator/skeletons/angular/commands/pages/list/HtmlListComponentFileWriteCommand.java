@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.sklsft.generator.model.metadata.DetailMode;
 import org.sklsft.generator.skeletons.angular.commands.pages.AngularHtmlFileWriteCommand;
 
 
@@ -55,7 +56,11 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
 		writeLine("<mat-header-cell *matHeaderCellDef class=\"daisy-bg-on-primary-lighter\">Actions</mat-header-cell>");
-		writeLine("<mat-cell *matCellDef=\"let element\"><a href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
+		if (bean.detailMode.equals(DetailMode.PAGE)) {
+			writeLine("<mat-cell *matCellDef=\"let element\"><a href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
+		} else {
+			writeLine("<mat-cell *matCellDef=\"let element\"><a (click)=\"edit(element.id)\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
+		}
 		writeLine("</ng-container>");
 
 		writeLine("<mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>");

@@ -35,7 +35,8 @@ public class HtmlModalComponentFileWriteCommand extends AngularHtmlFileWriteComm
 		writeLine("<!-- -->");
 		skipLine();
 		
-		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"save()\">");
+		writeLine("<div class=\"modal-form\" >");
+		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"saveOrUpdate()\">");
 		writeLine("<mat-dialog-content class=\"daisy-text-grey-darker\">");
 		writeLine("<div class=\"d-flex mx-n3 mt-n2\">");
 		writeLine("<button mat-icon-button mat-dialog-close disableRipple class=\"ml-auto\">");
@@ -50,11 +51,13 @@ public class HtmlModalComponentFileWriteCommand extends AngularHtmlFileWriteComm
 		writeLine("</section>");
 		writeLine("</mat-dialog-content>");
 		writeLine("<mat-dialog-actions class=\"d-flex flex-column pb-4\">");
-		writeLine("<button mat-raised-button color=\"primary\" type=\"submit\">Save</button>");
+		writeLine("<button mat-raised-button *ngIf=\"view.id == null\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Save</button>");
+		writeLine("<button mat-raised-button *ngIf=\"view.id != null\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
 		writeLine("</mat-dialog-actions>");
 		writeLine("</form>");
 
         writeNotOverridableContent();
 
+        writeLine("</div>");
     }
 }

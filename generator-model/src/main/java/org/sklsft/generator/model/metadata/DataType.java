@@ -25,7 +25,7 @@ public enum DataType {
 	LONG("Long", "number", true, true, IdGeneratorType.SEQUENCE),
 	DOUBLE("Double", "number", true, false, IdGeneratorType.NONE),
 	BIG_DECIMAL("BigDecimal", "number", true, false, IdGeneratorType.NONE),
-	DATE("LocalDate", "Date", true, false, IdGeneratorType.NONE),
+	DATE("LocalDate", "string", true, false, IdGeneratorType.NONE),
 	DATETIME("Date", "Date", true, false, IdGeneratorType.NONE),
 	BOOLEAN("Boolean", "boolean", false, false, IdGeneratorType.NONE);	
 	

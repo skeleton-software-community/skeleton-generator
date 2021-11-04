@@ -110,12 +110,13 @@ public class TsModalComponentFileWriteCommand extends TsFileWriteCommand {
         	}
         	write("]");
         }
-        writeLine("})");
+        writeLine("});");
         for (ViewProperty property:this.bean.formBean.properties) {
         	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         		writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
         	}
         }
+        writeLine("this.restoreForm();");
         writeLine("}");
         
         writeLine("restoreForm(): void {");
@@ -165,11 +166,18 @@ public class TsModalComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("this.applyForm();");
         writeLine("this.service.save(this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
         writeLine("}");
+        skipLine();
         
         writeLine("update(): void {");
         writeLine("this.applyForm();");
         writeLine("this.service.update(this.view.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
         writeLine("}");
+        skipLine();
+        
+        writeLine("saveOrUpdate(): void {");
+        writeLine("if (this.view.id == null) {this.save()} else {this.update()}");
+        writeLine("}");
+        skipLine();
 
         writeNotOverridableContent();
         

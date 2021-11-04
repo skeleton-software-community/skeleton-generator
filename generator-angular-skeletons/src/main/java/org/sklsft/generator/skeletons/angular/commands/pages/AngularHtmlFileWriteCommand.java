@@ -31,7 +31,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			break;
 
 		case DATETIME:
-			writeLine("<mat-cell *matCellDef=\"let element\"> {{element." + property.name + "}} </mat-cell>");
+			writeLine("<mat-cell *matCellDef=\"let element\"> {{element." + property.name + "| date:'yyyy-MM-ddTHH:mm:ssZ':'GMT'}} </mat-cell>");
 
 			break;
 
@@ -111,7 +111,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	private void writeCombobox(String prefix, ViewProperty property, Bean bean){
 		
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
 		writeLine("<mat-option [value]=\"null\"></mat-option>");
@@ -137,7 +137,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeStringInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
@@ -146,7 +146,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeTextInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<textarea matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" cdkTextareaAutosize></textarea>");
 		writeLine("</mat-form-field>");
@@ -163,7 +163,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeDoubleInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
@@ -172,7 +172,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
@@ -181,7 +181,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeLongInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
 		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
@@ -192,7 +192,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"yyyy-MM-dd\" formControlName=\"" + property.name + "\"/>");
 		writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
 		writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
 		writeLine("</mat-form-field>");
@@ -201,9 +201,9 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	
 	private void writeDateTimeInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\">");
+		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input matInput placeholder=\"yyyy-MM-ddTHH:mm:ssZ\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -214,7 +214,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		switch (property.dataType) {
 			case STRING:
 			case TEXT:
-				writeLine("<mat-form-field appearance=\"outline\">");
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
 				writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 				writeLine("</mat-form-field>");	
@@ -223,7 +223,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			case DATE:				
 				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
-				writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"yyyy-MM-dd\" formControlName=\"" + property.name + "\"/>");
 				writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
 				writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
 				writeLine("</mat-form-field>");
@@ -232,9 +232,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			case DATETIME:				
 				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
-				writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
-				writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
-				writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
+				writeLine("<input matInput placeholder=\"yyyy-MM-ddTHH:mm:ssZ\" formControlName=\"" + property.name + "\"/>");
 				writeLine("</mat-form-field>");
 				break;
 				
