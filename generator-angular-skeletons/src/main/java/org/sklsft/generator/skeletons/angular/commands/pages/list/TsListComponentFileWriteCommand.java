@@ -49,6 +49,8 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { MatDialog } from '@angular/material/dialog';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { " + bean.className + "ModalComponent } from './modal/" + bean.urlPiece + "-modal.component';");
+		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
+		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}
 	
 	
@@ -86,7 +88,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("filter: FormGroup;");
         skipLine();
 
-        writeLine("constructor(private service:" + bean.restClientClassName + ", private formBuilder: FormBuilder, private dialog: MatDialog) { }");
+        writeLine("constructor(private service:" + bean.restClientClassName + ", private formBuilder: FormBuilder, private dialog: MatDialog, private notifications: NotificationService) { }");
 
         writeLine("ngOnInit(): void {");
         writeLine("this.filter = this.formBuilder.group({");
@@ -180,6 +182,15 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("let ref = this.dialog.open(" + bean.className + "ModalComponent);");
         writeLine("ref.componentInstance.view = t;");
         writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
+        writeLine("});");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("delete(id: " + bean.idTsType + "): void {");
+        writeLine("this.dialog.open(ConfirmationModalComponent).afterClosed().subscribe(result => {");
+        writeLine("if (result) {");
+        writeLine("this.service.delete(id).subscribe(success => {this.notifications.info(\"Operation completed\");this.refresh()}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("}");
         writeLine("});");
         writeLine("}");
         skipLine();

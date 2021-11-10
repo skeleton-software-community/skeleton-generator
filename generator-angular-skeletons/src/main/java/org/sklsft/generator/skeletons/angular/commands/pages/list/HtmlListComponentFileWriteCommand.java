@@ -56,11 +56,14 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
 		writeLine("<mat-header-cell *matHeaderCellDef class=\"daisy-bg-on-primary-lighter\">Actions</mat-header-cell>");
+		writeLine("<mat-cell *matCellDef=\"let element\">");
 		if (bean.detailMode.equals(DetailMode.PAGE)) {
-			writeLine("<mat-cell *matCellDef=\"let element\"><a href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
-		} else {
-			writeLine("<mat-cell *matCellDef=\"let element\"><a (click)=\"edit(element.id)\"><img src=\"/assets/images/edit.png\"/></a></mat-cell>");
+			writeLine("<a class=\"margin-10\" href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><mat-icon aria-label=\"Edit\" svgIcon=\"table-edit\" class=\"daisy-text-success\"></mat-icon></a>");
 		}
+		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"daisy-text-success\"></mat-icon></a>");
+		writeLine("<a class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
+
+		writeLine("</mat-cell>");
 		writeLine("</ng-container>");
 
 		writeLine("<mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>");
