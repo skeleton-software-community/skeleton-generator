@@ -64,7 +64,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * can save");
         writeLine(" */");
         writeLine("public boolean canSave(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("return true;");        
+        if (bean.createEnabled) {
+        	writeLine("return true;");
+        } else {
+        	writeLine("return false;");
+        }
         writeLine("}");
         skipLine();
         writeLine("/**");
@@ -83,7 +87,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can save one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.createEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
         	writeLine("/**");
@@ -103,7 +111,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can save one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canSave" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + "," + this.bean.className + " " + this.bean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.createEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
         	writeLine("/**");
@@ -121,7 +133,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * can update");
         writeLine(" */");
         writeLine("public boolean canUpdate(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("return true;");        
+        if (bean.updateEnabled) {
+        	writeLine("return true;");
+        } else {
+        	writeLine("return false;");
+        }
         writeLine("}");
         skipLine();
         writeLine("/**");
@@ -140,7 +156,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can update one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.updateEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
             writeLine("/**");
@@ -160,7 +180,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can update one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canUpdate" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.updateEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
             writeLine("/**");
@@ -178,7 +202,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
         writeLine(" * can delete");
         writeLine(" */");
         writeLine("public boolean canDelete(" + this.bean.className + " " + this.bean.objectName + ") {");
-        writeLine("return true;");
+        if (bean.deleteEnabled) {
+        	writeLine("return true;");
+        } else {
+        	writeLine("return false;");
+        }
         writeLine("}");
         skipLine();
         writeLine("/**");
@@ -197,7 +225,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can delete one to one component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.deleteEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
             writeLine("/**");
@@ -217,7 +249,11 @@ public class BaseStateManagerImplFileWriteCommand extends JavaFileWriteCommand {
             writeLine(" * can delete one to many component " + currentBean.className);
             writeLine(" */");
             writeLine("public boolean canDelete" + currentBean.className + "(" + currentBean.className + " " + currentBean.objectName + ") {");
-            writeLine("return true;");
+            if (currentBean.deleteEnabled) {
+            	writeLine("return true;");
+            } else {
+            	writeLine("return false;");
+            }
             writeLine("}");
             skipLine();
             writeLine("/**");

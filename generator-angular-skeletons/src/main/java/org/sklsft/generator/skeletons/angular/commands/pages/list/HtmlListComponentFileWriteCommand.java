@@ -61,7 +61,7 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 			writeLine("<a class=\"margin-10\" href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><mat-icon aria-label=\"Edit\" svgIcon=\"table-edit\" class=\"daisy-text-success\"></mat-icon></a>");
 		}
 		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"daisy-text-success\"></mat-icon></a>");
-		writeLine("<a class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
+		writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
 
 		writeLine("</mat-cell>");
 		writeLine("</ng-container>");
@@ -78,9 +78,11 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("</mat-paginator>");
 		skipLine();
 		
-		writeLine("<button mat-raised-button (click)=\"create()\" color=\"primary\">");
-		writeLine("Create");
-		writeLine("</button>");
+		if (bean.createEnabled) {
+			writeLine("<button mat-raised-button (click)=\"create()\" color=\"primary\">");
+			writeLine("Create");
+			writeLine("</button>");
+		}
 
         writeNotOverridableContent();
 

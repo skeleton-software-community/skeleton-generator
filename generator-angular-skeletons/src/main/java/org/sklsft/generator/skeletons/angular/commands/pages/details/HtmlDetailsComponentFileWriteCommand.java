@@ -43,7 +43,7 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		}
 		
 		writeLine("<p>");
-		writeLine("<button mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
+		writeLine("<button *ngIf=\"view.canUpdate\" mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
 		writeLine("</p>");
 		writeLine("</form>");
 		

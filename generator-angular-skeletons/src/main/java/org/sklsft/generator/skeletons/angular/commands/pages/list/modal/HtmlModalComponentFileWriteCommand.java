@@ -52,7 +52,7 @@ public class HtmlModalComponentFileWriteCommand extends AngularHtmlFileWriteComm
 		writeLine("</mat-dialog-content>");
 		writeLine("<mat-dialog-actions class=\"d-flex flex-column pb-4\">");
 		writeLine("<button mat-raised-button *ngIf=\"view.id == null\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Save</button>");
-		writeLine("<button mat-raised-button *ngIf=\"view.id != null\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
+		writeLine("<button mat-raised-button *ngIf=\"view.id != null && view.canUpdate\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
 		writeLine("</mat-dialog-actions>");
 		writeLine("</form>");
 
