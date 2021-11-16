@@ -87,7 +87,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 					writeDateTimeInput(prefix, property, bean);
 					break;
 				case DOUBLE:
-					writeDoubleInput(prefix, property, bean);
+					writeBigDecimalInput(prefix, property, bean);
 					break;
 				case BIG_DECIMAL:
 					writeBigDecimalInput(prefix, property, bean);
@@ -161,20 +161,11 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeDoubleInput(String prefix, ViewProperty property, Bean bean){
-		writeLine("<p>");
-		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
-		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
-		writeLine("</mat-form-field>");
-		writeLine("</p>");
-	}
-	
 	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input type=\"number\" matInput type=\"decimal\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -183,7 +174,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input type=\"number\" matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -238,17 +229,30 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 				
 			case DOUBLE:
 			case BIG_DECIMAL:
-
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<input type=\"number\" matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("</mat-form-field>");
 				break;
 			
 			case SHORT:
 			case INTEGER:
 			case LONG:
-				
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<input type=\"number\" matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+				writeLine("</mat-form-field>");
 				break;
 				
 			case BOOLEAN:
-				
+				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+				writeLine("<mat-label>" + property.rendering + "</mat-label>");
+				writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
+				writeLine("<mat-option [value]=\"null\"></mat-option>");
+				writeLine("<mat-option [value]=\"true\">true</mat-option>");
+				writeLine("<mat-option [value]=\"false\">false</mat-option>");
+				writeLine("</mat-select>");
+				writeLine("</mat-form-field>");
 				break;
 
 		}
