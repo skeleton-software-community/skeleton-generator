@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
@@ -38,6 +39,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { Observable } from 'rxjs';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
+		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
@@ -71,7 +73,9 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
 
         writeLine("id:" + bean.idTsType + ";");
-        writeLine("view: " + bean.fullViewBean.className + ";");
+        writeLine("links:NavLink[];");
+        writeLine("activePath:string;");
+        writeLine("view: " + bean.fullViewBean.className + " = new " + bean.fullViewBean.className + "();");
         writeLine("form: FormGroup;");
         
         for (ViewProperty property:this.bean.formBean.properties) {
@@ -94,8 +98,18 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
 		}
         
-        writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {this.id = parseInt(this.route.snapshot.paramMap.get('id'));}");
-        skipLine();
+        writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {");
+        
+        writeLine("this.id = parseInt(this.route.snapshot.paramMap.get('id'));");
+		writeLine("this.activePath = '/" + bean.urlPiece + "/' + this.id.toString();");
+	    write("this.links=[{text:'Details',path:'/" + bean.urlPiece + "/' + this.id.toString()}");
+	    for (OneToManyComponent component:bean.oneToManyComponentList) {
+	    	write(",{text:'" + component.referenceBean.listRendering + "',path:'/" + bean.urlPiece + "/' + this.id.toString() + '/" + component.referenceBean.urlPiece + "/list'}");
+	    }
+	    writeLine("];");
+	    writeLine("}");
+	
+	skipLine();
         boolean start = true;
         writeLine("ngOnInit(): void {");
         writeLine("this.form = this.formBuilder.group({");

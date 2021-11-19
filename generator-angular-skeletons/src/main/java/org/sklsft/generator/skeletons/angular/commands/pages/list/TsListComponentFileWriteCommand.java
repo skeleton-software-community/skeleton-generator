@@ -41,8 +41,6 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
 		
-		imports.add("import { " + bean.listViewClassName + " } from '../views/" + bean.listViewClassName + "';");
-		
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		
 		imports.add("import { MatSort } from '@angular/material/sort';");
@@ -74,7 +72,8 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("export class " + this.bean.className + "ListComponent implements OnInit, AfterViewInit {");
         skipLine();
 
-        writeLine("view:" + bean.listViewClassName + " = new " + bean.listViewClassName + "();");
+        writeLine("scrollForm: ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> = new ScrollForm();");
+		writeLine("scrollView: ScrollView<" + bean.basicViewBean.className + "> = new ScrollView();");
         writeLine("dataSource:MatTableDataSource<" + bean.basicViewBean.className + ">;");
         writeLine("@ViewChild(MatPaginator) paginator: MatPaginator;");
         writeLine("@ViewChild(MatSort) sort: MatSort");
@@ -110,18 +109,18 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         
         writeLine("this.paginator.page.subscribe(");
         writeLine("(event) => {");
-        writeLine("this.view.scrollForm.page=event.pageIndex+1;");
-        writeLine("this.view.scrollForm.elementsPerPage=event.pageSize;");
+        writeLine("this.scrollForm.page=event.pageIndex+1;");
+        writeLine("this.scrollForm.elementsPerPage=event.pageSize;");
         writeLine("this.refresh();");        
         writeLine("});");
         skipLine();
         
         writeLine("this.sort.sortChange.subscribe(");
         writeLine("(event) => {");
-        writeLine("this.view.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
+        writeLine("this.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
         writeLine("switch (this.sort.active) {");
         for (ViewProperty property:this.bean.basicViewBean.properties) {    
-        	writeLine("case '" + property.name + "': this.view.scrollForm.sorting." + property.name + "OrderType = StringUtils.emptyToNull(this.sort.direction.toUpperCase());break;");
+        	writeLine("case '" + property.name + "': this.scrollForm.sorting." + property.name + "OrderType = StringUtils.emptyToNull(this.sort.direction.toUpperCase());break;");
         }	      
         writeLine("}");
         writeLine("this.refresh();");
@@ -130,7 +129,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         
         for (FilterProperty property:this.bean.basicViewBean.filter.properties) {
     		writeLine("this.filter.controls['" + property.name + "'].valueChanges.subscribe(value=>{");
-    		writeLine("this.view.scrollForm.filter." + property.name + "=value;");
+    		writeLine("this.scrollForm.filter." + property.name + "=value;");
     		writeLine("this.refresh();");
     		writeLine("});");
         }
@@ -138,20 +137,19 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("refresh(): void {");
-        writeLine("this.service.scroll(this.view.scrollForm).subscribe((t) => {");
-        writeLine("this.view.scrollView=t;");
-        writeLine("this.dataSource = new MatTableDataSource(this.view.scrollView.elements);");
+        writeLine("this.service.scroll(this.scrollForm).subscribe((t) => {");
+        writeLine("this.scrollView=t;");
+        writeLine("this.dataSource = new MatTableDataSource(this.scrollView.elements);");
         writeLine("});");
         writeLine("}");
         skipLine();
         
         writeLine("reset(): void {");
-        writeLine("this.view = new " + bean.listViewClassName + "();");
-        writeLine("this.view.scrollForm = new ScrollForm();");
-        writeLine("this.view.scrollForm.filter = new " + bean.basicViewBean.filter.className + "();");
-        writeLine("this.view.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
-        writeLine("this.view.scrollForm.page=1;");
-        writeLine("this.view.scrollForm.elementsPerPage=10;");
+        writeLine("this.scrollForm = new ScrollForm();");
+        writeLine("this.scrollForm.filter = new " + bean.basicViewBean.filter.className + "();");
+        writeLine("this.scrollForm.sorting = new " + bean.basicViewBean.sortingClassName + "();");
+        writeLine("this.scrollForm.page=1;");
+        writeLine("this.scrollForm.elementsPerPage=10;");
         writeLine("this.filter.patchValue({");
         start = true;
         for (FilterProperty property:this.bean.basicViewBean.filter.properties) {

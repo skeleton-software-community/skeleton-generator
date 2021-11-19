@@ -38,7 +38,7 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		skipLine();
 		
 		writeLine("<h2>");
-		writeLine(bean.listRendering + ": {{view.scrollView.count}} / {{view.scrollView.size}}");
+		writeLine(bean.listRendering + ": {{scrollView.count}} / {{scrollView.size}}");
 		writeLine("</h2>");
 		skipLine();
 		
@@ -61,8 +61,9 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 			writeLine("<a class=\"margin-10\" href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><mat-icon aria-label=\"Edit\" svgIcon=\"table-edit\" class=\"daisy-text-success\"></mat-icon></a>");
 		}
 		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"daisy-text-success\"></mat-icon></a>");
-		writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
-
+		if (bean.deleteEnabled) {
+			writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
+		}
 		writeLine("</mat-cell>");
 		writeLine("</ng-container>");
 
@@ -71,8 +72,8 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("</mat-table>");
 		
 		
-		writeLine("<mat-paginator #paginator [length]=\"view.scrollView.count\"");
-		writeLine("[pageSize]=\"view.scrollForm.elementsPerPage\"");
+		writeLine("<mat-paginator #paginator [length]=\"scrollView.count\"");
+		writeLine("[pageSize]=\"scrollForm.elementsPerPage\"");
 		writeLine("[showFirstLastButtons]=\"true\"");
 		writeLine("[pageSizeOptions]=\"pageSizeOptions\">");
 		writeLine("</mat-paginator>");

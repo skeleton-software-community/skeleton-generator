@@ -35,6 +35,16 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<nav mat-tab-nav-bar>");
+		writeLine("<a mat-tab-link *ngFor=\"let link of links\"");
+		writeLine("[active]=\"activePath == link.path\" [routerLink]=\"link.path\"> {{link.text}} </a>");
+		writeLine("</nav>");
+		
+		writeLine("<h2>");
+		writeLine(bean.detailRendering);
+		writeLine("</h2>");
+		skipLine();
+		
 		writeLine("<div class=\"details-form\" >");
 		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"update()\">");
 		
@@ -42,9 +52,11 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 			writeInput(property, bean);
 		}
 		
-		writeLine("<p>");
-		writeLine("<button *ngIf=\"view.canUpdate\" mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
-		writeLine("</p>");
+		if (bean.updateEnabled) {
+			writeLine("<p>");
+			writeLine("<button *ngIf=\"view.canUpdate\" mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Update</button>");
+			writeLine("</p>");
+		}
 		writeLine("</form>");
 		
         writeNotOverridableContent();

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
@@ -27,6 +28,9 @@ public class TsRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { RouterModule, Routes } from '@angular/router';");
 		imports.add("import { " + bean.className + "ListComponent } from './list/" + bean.urlPiece + "-list.component';");
 		imports.add("import { " + bean.className + "DetailsComponent } from './details/" + bean.urlPiece + "-details.component';");
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+			imports.add("import { " + oneToManyComponent.referenceBean.className + "ListComponent } from './" + oneToManyComponent.referenceBean.urlPiece + "/list/" + oneToManyComponent.referenceBean.urlPiece + "-list.component';");
+		}
 	}
 	
 	
@@ -43,8 +47,11 @@ public class TsRoutingModuleFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("const routes: Routes = [");
-        writeLine( "{path: 'list', component: " + bean.className + "ListComponent },");
-        writeLine( "{path: ':id', component: " + bean.className + "DetailsComponent }");
+        writeLine( "{path: 'list', component: " + bean.className + "ListComponent }");
+        writeLine( ",{path: ':id', component: " + bean.className + "DetailsComponent }");
+        for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+        	writeLine( ",{path: ':id/" + oneToManyComponent.referenceBean.urlPiece + "/list', component: " + oneToManyComponent.referenceBean.className + "ListComponent }");
+		}
         writeLine("];");
         skipLine();
         

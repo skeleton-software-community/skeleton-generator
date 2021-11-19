@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.SelectionMode;
@@ -32,10 +33,15 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
-		
 		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
 		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
-		
+		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.fullViewBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.fullViewBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.formBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.formBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
+		}
 	}
 
 	@Override
@@ -70,8 +76,8 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 			//createFindObject();
 		}
 //		createLoadOneToOneComponent();
-//		createLoadOneToManyComponentList();
-//		createScrollOneToManyComponent();
+		createLoadOneToManyComponentList();
+		createScrollOneToManyComponent();
 //		createLoadOneToManyComponent();
 		createCreateObject();
 //		createCreateOneToManyComponent();
@@ -172,6 +178,36 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		writeLine("}");
 		skipLine();
 
+	}
+    
+    
+    private void createLoadOneToManyComponentList() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.objectName + " list");
+            writeLine(" */");
+            writeLine("public load" + currentBean.className + "List(id:" + bean.idTsType + ") {");
+           
+            writeLine("return this.http.get<" + currentBean.basicViewBean.className + "[]>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/list', this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+    
+    private void createScrollOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * scroll one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("public scroll" + currentBean.className + " (id: " + bean.idTsType + ", form: ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + ">) {");
+			writeLine("return this.http.post<ScrollView<" + currentBean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/scroll', form, this.httpOptions);");
+			writeLine("}");
+			skipLine();
+		}
 	}
     
     

@@ -3,6 +3,7 @@ package org.sklsft.generator.skeletons.angular.layers;
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.skeletons.angular.commands.pages.TsAppRoutingModuleFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.TsModuleFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.TsRoutingModuleFileWriteCommand;
@@ -10,8 +11,11 @@ import org.sklsft.generator.skeletons.angular.commands.pages.details.HtmlDetails
 import org.sklsft.generator.skeletons.angular.commands.pages.details.ScssDetailsComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.details.TsDetailsComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.HtmlListComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.HtmlOneToManyComponentListComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.ScssListComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.ScssOneToManyComponentListComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.TsListComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.angular.commands.pages.list.TsOneToManyComponentListComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.HtmlModalComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.ScssModalComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.TsModalComponentFileWriteCommand;
@@ -106,6 +110,24 @@ public class TypeScriptComponentsLayer extends AbstractLayer {
 					
 					FileWriteCommandTreeNode htmlComponent = new FileWriteCommandTreeNode(new HtmlModalComponentFileWriteCommand(bean));
 					modalsTreeNode.add(htmlComponent);
+				}
+			}
+			
+			FileWriteCommandTreeNode oneToManyComponentListPagesTreeNode = new FileWriteCommandTreeNode("One to many component list Pages");
+			packageTreeNode.add(oneToManyComponentListPagesTreeNode);
+			for (Bean bean : myPackage.beans) {
+				if (!bean.isComponent) {
+					for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
+					
+						FileWriteCommandTreeNode tsComponent = new FileWriteCommandTreeNode(new TsOneToManyComponentListComponentFileWriteCommand(oneToManyComponent));
+						oneToManyComponentListPagesTreeNode.add(tsComponent);
+						
+						FileWriteCommandTreeNode scssComponent = new FileWriteCommandTreeNode(new ScssOneToManyComponentListComponentFileWriteCommand(oneToManyComponent));
+						oneToManyComponentListPagesTreeNode.add(scssComponent);
+						
+						FileWriteCommandTreeNode htmlComponent = new FileWriteCommandTreeNode(new HtmlOneToManyComponentListComponentFileWriteCommand(oneToManyComponent));
+						oneToManyComponentListPagesTreeNode.add(htmlComponent);
+					}
 				}
 			}
 		}
