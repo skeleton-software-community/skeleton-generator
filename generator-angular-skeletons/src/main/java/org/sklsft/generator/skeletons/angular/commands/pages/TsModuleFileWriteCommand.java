@@ -35,6 +35,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			imports.add("import { " + oneToManyComponent.referenceBean.className + "ListComponent } from './" + oneToManyComponent.referenceBean.urlPiece + "/list/" + oneToManyComponent.referenceBean.urlPiece + "-list.component';");
+			imports.add("import { " + oneToManyComponent.referenceBean.className + "ModalComponent } from './" + oneToManyComponent.referenceBean.urlPiece + "/list/modal/" + oneToManyComponent.referenceBean.urlPiece + "-modal.component';");
 		}
 	}
 	
@@ -54,7 +55,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
         writeLine("@NgModule({");
         write("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent, " + bean.className + "ModalComponent");
         for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
-			write(", " + oneToManyComponent.referenceBean.className + "ListComponent");
+			write(", " + oneToManyComponent.referenceBean.className + "ListComponent, " + oneToManyComponent.referenceBean.className + "ModalComponent");
 		}
         writeLine("],");
         

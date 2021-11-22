@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.business.Property;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.SelectionMode;
@@ -75,21 +76,21 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		if (bean.cardinality>0) {
 			//createFindObject();
 		}
-//		createLoadOneToOneComponent();
+		createLoadOneToOneComponent();
 		createLoadOneToManyComponentList();
 		createScrollOneToManyComponent();
-//		createLoadOneToManyComponent();
+		createLoadOneToManyComponent();
 		createCreateObject();
-//		createCreateOneToManyComponent();
+		createCreateOneToManyComponent();
 		createSaveObject();
-//		createSaveOneToOneComponent();
-//		createSaveOneToManyComponent();
+		createSaveOneToOneComponent();
+		createSaveOneToManyComponent();
 		createUpdateObject();
-//		createUpdateOneTOneComponent();
-//		createUpdateOneToManyComponent();
+		createUpdateOneTOneComponent();
+		createUpdateOneToManyComponent();
 		createDeleteObject();
-//		createDeleteOneToOneComponent();
-//		createDeleteOneToManyComponent();
+		createDeleteOneToOneComponent();
+		createDeleteOneToManyComponent();
 //		createDeleteObjectList();
 //		createDeleteOneToManyComponentList();
 		
@@ -181,36 +182,6 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 	}
     
     
-    private void createLoadOneToManyComponentList() {
-        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-            Bean currentBean = oneToManyComponent.referenceBean;
-
-            writeLine("/**");
-            writeLine(" * load one to many component " + currentBean.objectName + " list");
-            writeLine(" */");
-            writeLine("public load" + currentBean.className + "List(id:" + bean.idTsType + ") {");
-           
-            writeLine("return this.http.get<" + currentBean.basicViewBean.className + "[]>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/list', this.httpOptions);");
-            writeLine("}");
-            skipLine();
-        }
-    }
-    
-    private void createScrollOneToManyComponent() {
-		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
-			Bean currentBean = oneToManyComponent.referenceBean;
-			
-			writeLine("/**");
-			writeLine(" * scroll one to many component " + currentBean.objectName);
-			writeLine(" */");
-			writeLine("public scroll" + currentBean.className + " (id: " + bean.idTsType + ", form: ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + ">) {");
-			writeLine("return this.http.post<ScrollView<" + currentBean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/scroll', form, this.httpOptions);");
-			writeLine("}");
-			skipLine();
-		}
-	}
-    
-    
     private void createCreateObject() {
 		writeLine("/**");
 		writeLine(" * create object");
@@ -255,4 +226,161 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
         skipLine();
     }
     
+    
+    private void createLoadOneToManyComponentList() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.objectName + " list");
+            writeLine(" */");
+            writeLine("public load" + currentBean.className + "List(id:" + bean.idTsType + ") {");
+           
+            writeLine("return this.http.get<" + currentBean.basicViewBean.className + "[]>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/list', this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+    
+    private void createScrollOneToManyComponent() {
+		for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+			Bean currentBean = oneToManyComponent.referenceBean;
+			
+			writeLine("/**");
+			writeLine(" * scroll one to many component " + currentBean.objectName);
+			writeLine(" */");
+			writeLine("public scroll" + currentBean.className + " (id: " + bean.idTsType + ", form: ScrollForm<" + currentBean.basicViewBean.filter.className + ", " + currentBean.basicViewBean.sortingClassName + ">) {");
+			writeLine("return this.http.post<ScrollView<" + currentBean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/scroll', form, this.httpOptions);");
+			writeLine("}");
+			skipLine();
+		}
+	}
+    
+    private void createLoadOneToManyComponent() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * load one to many component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public load" + currentBean.className + "(id: " + bean.idTsType + ") {");            
+            writeLine("return this.http.get<" + currentBean.fullViewBean.className + ">(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+    
+    private void createLoadOneToOneComponent() {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * load one to one component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public load" + currentBean.className + "(id: " + bean.idTsType + ") {");            
+            writeLine("return this.http.get<" + currentBean.fullViewBean.className + ">(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+
+
+    private void createCreateOneToManyComponent() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * create one to many component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public create" + currentBean.className + "(id:" + bean.idTsType + ") {");
+            writeLine("return this.http.get<" + currentBean.fullViewBean.className + ">(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "/new', this.httpOptions);");
+            writeLine("}");
+            skipLine();
+            skipLine();
+        }
+    }
+    
+    private void createSaveOneToOneComponent() {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * save one to one component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public save" + currentBean.className + "(id:" + bean.idTsType + ", form: " + currentBean.formBean.className + ") {");
+            writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+
+    private void createSaveOneToManyComponent() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * save one to many component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public save" + currentBean.className + "(id:" + bean.idTsType + ", form: " + currentBean.formBean.className + ") {");
+            writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+
+    private void createUpdateOneTOneComponent() {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * update one to one component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public update" + currentBean.className + "(id: " + currentBean.idTsType + ", form: " + currentBean.formBean.className + ") {");
+            writeLine("return this.http.put(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, form, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+
+    private void createUpdateOneToManyComponent() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");
+            writeLine(" * update one to many component " + currentBean.objectName);
+            writeLine(" */");
+            writeLine("public update" + currentBean.className + "(id: " + currentBean.idTsType + ", form: " + currentBean.formBean.className + ") {");
+            writeLine("return this.http.put(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, form, this.httpOptions);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+
+    private void createDeleteOneToManyComponent() {
+        for (OneToManyComponent oneToManyComponent : this.bean.oneToManyComponentList) {
+            Bean currentBean = oneToManyComponent.referenceBean;
+
+            writeLine("/**");            
+            writeLine(" * delete one to many component " + currentBean.objectName);            
+            writeLine(" */");
+            writeLine("public delete" + currentBean.className + "(id: " + currentBean.idTsType + ") {");
+            writeLine("return this.http.delete(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id);");
+            writeLine("}");
+            skipLine();
+        }
+    }
+    
+    private void createDeleteOneToOneComponent() {
+        for (OneToOneComponent oneToOneComponent : this.bean.oneToOneComponentList) {
+            Bean currentBean = oneToOneComponent.referenceBean;
+
+            writeLine("/**");            
+            writeLine(" * delete one to one component " + currentBean.objectName);            
+            writeLine(" */");
+            writeLine("public delete" + currentBean.className + "(id: " + currentBean.idTsType + ") {");
+            writeLine("return this.http.delete(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id);");
+            writeLine("}");
+            skipLine();
+        }
+    }
 }

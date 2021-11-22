@@ -53,7 +53,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
-		//imports.add("import { " + referenceBean.className + "ModalComponent } from './modal/" + referenceBean.urlPiece + "-modal.component';");
+		imports.add("import { " + referenceBean.className + "ModalComponent } from './modal/" + referenceBean.urlPiece + "-modal.component';");
 		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}
@@ -184,32 +184,33 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
         writeLine("}");
         skipLine();
         
-//        writeLine("create(): void {");
-//        writeLine("this.service.create().subscribe((t) => {");
-//        writeLine("let ref = this.dialog.open(" + referenceBean.className + "ModalComponent);");
-//        writeLine("ref.componentInstance.view = t;");
-//        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
-//        writeLine("});");
-//        writeLine("}");
-//        skipLine();
-//        
-//        writeLine("edit(id: " + referenceBean.idTsType + "): void {");
-//        writeLine("this.service.load(id).subscribe((t) => {");
-//        writeLine("let ref = this.dialog.open(" + referenceBean.className + "ModalComponent);");
-//        writeLine("ref.componentInstance.view = t;");
-//        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
-//        writeLine("});");
-//        writeLine("}");
-//        skipLine();
-//        
-//        writeLine("delete(id: " + referenceBean.idTsType + "): void {");
-//        writeLine("this.dialog.open(ConfirmationModalComponent).afterClosed().subscribe(result => {");
-//        writeLine("if (result) {");
-//        writeLine("this.service.delete(id).subscribe(success => {this.notifications.info(\"Operation completed\");this.refresh()}, error => {this.notifications.error(\"Operation failed\")});");
-//        writeLine("}");
-//        writeLine("});");
-//        writeLine("}");
-//        skipLine();
+        writeLine("create(): void {");
+        writeLine("this.service.create" + referenceBean.className + "(this.id).subscribe((t) => {");
+        writeLine("let ref = this.dialog.open(" + referenceBean.className + "ModalComponent);");
+        writeLine("ref.componentInstance.view = t;");
+        writeLine("ref.componentInstance.parentId = this.id;");
+        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
+        writeLine("});");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("edit(id: " + referenceBean.idTsType + "): void {");
+        writeLine("this.service.load" + referenceBean.className + "(id).subscribe((t) => {");
+        writeLine("let ref = this.dialog.open(" + referenceBean.className + "ModalComponent);");
+        writeLine("ref.componentInstance.view = t;");
+        writeLine("ref.afterClosed().subscribe(result => {this.refresh();});");
+        writeLine("});");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("delete(id: " + referenceBean.idTsType + "): void {");
+        writeLine("this.dialog.open(ConfirmationModalComponent).afterClosed().subscribe(result => {");
+        writeLine("if (result) {");
+        writeLine("this.service.delete" + referenceBean.className + "(id).subscribe(success => {this.notifications.info(\"Operation completed\");this.refresh()}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("}");
+        writeLine("});");
+        writeLine("}");
+        skipLine();
 
         writeNotOverridableContent();
         
