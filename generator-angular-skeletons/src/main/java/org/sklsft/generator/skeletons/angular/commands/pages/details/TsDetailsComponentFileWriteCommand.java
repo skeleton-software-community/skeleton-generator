@@ -46,7 +46,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 		for (ViewProperty property:this.bean.formBean.properties) {
         	if (property.selectableBean!=null) {
-        		imports.add("import { " + property.selectableBean.restClientClassName + " } from 'src/app/features/" + property.selectableBean.myPackage.name.replace(".","/") + "/" + property.selectableBean.urlPiece + "/" + "services" + "/" + property.selectableBean.restClientClassName + "';");
+        		imports.add("import { " + property.selectableBean.restClientClassName + " } from 'src/app/features/generated/" + property.selectableBean.myPackage.name.replace(".","/") + "/" + property.selectableBean.urlPiece + "/" + "services" + "/" + property.selectableBean.restClientClassName + "';");
         	}
 		}
 	}

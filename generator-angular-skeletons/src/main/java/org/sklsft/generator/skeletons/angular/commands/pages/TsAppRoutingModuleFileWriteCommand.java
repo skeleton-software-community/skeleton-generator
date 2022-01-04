@@ -51,10 +51,11 @@ public class TsAppRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 					} else {
 						write(",");
 					}
-					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('src/app/features/" + myPackage.name.replace(".", "/") + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module) }");
+					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('src/app/features/generated/" + myPackage.name.replace(".", "/") + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module) }");
 				}
 			}
         }
+        writeNotOverridableContent();
         writeLine("];");
         skipLine();
         
