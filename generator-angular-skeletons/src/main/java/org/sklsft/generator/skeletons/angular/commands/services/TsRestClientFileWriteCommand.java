@@ -94,6 +94,10 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 //		createDeleteObjectList();
 //		createDeleteOneToManyComponentList();
 		
+		skipLine();
+		writeNotOverridableContent();
+		skipLine();
+		
 		writeLine("}");
 
     }

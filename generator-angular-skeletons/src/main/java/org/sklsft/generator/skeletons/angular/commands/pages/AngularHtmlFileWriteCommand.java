@@ -154,11 +154,24 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	}
 	
 	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
-		writeLine("<p>");
-		writeLine("<mat-checkbox color=\"primary\" formControlName=\"" +  property.name + "\">");
-		writeLine(property.rendering);
-		writeLine("</mat-checkbox>");
-		writeLine("</p>");
+		if (!property.nullable) {
+			writeLine("<p>");
+			writeLine("<mat-checkbox color=\"primary\" formControlName=\"" +  property.name + "\">");
+			writeLine(property.rendering);
+			writeLine("</mat-checkbox>");
+			writeLine("</p>");
+		} else {
+			writeLine("<p>");
+			writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
+			writeLine("<mat-label>" + property.rendering + "</mat-label>");
+			writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
+			writeLine("<mat-option [value]=\"\"></mat-option>");
+			writeLine("<mat-option [value]=\"true\">true</mat-option>");
+			writeLine("<mat-option [value]=\"false\">false</mat-option>");
+			writeLine("</mat-select>");
+			writeLine("</mat-form-field>");
+			writeLine("<p>");
+		}
 	}
 	
 	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
@@ -248,7 +261,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 				writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 				writeLine("<mat-label>" + property.rendering + "</mat-label>");
 				writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
-				writeLine("<mat-option [value]=\"null\"></mat-option>");
+				writeLine("<mat-option [value]=\"\"></mat-option>");
 				writeLine("<mat-option [value]=\"true\">true</mat-option>");
 				writeLine("<mat-option [value]=\"false\">false</mat-option>");
 				writeLine("</mat-select>");

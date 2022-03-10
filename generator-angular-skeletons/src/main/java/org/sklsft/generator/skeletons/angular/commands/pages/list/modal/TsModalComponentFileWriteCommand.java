@@ -137,7 +137,17 @@ public class TsModalComponentFileWriteCommand extends TsFileWriteCommand {
 
         writeLine("applyForm(): void {");
         for (ViewProperty property:this.bean.formBean.properties) {
-        	writeLine("this.view.form." + property.name + " = StringUtils.emptyToNull(this.form.get('" + property.name + "').value);");
+        	switch (property.dataType) {
+        	case BOOLEAN:
+        		if (property.nullable) {
+        			writeLine("this.view.form." + property.name + " = StringUtils.stringToNullableBoolean(this.form.get('" + property.name + "').value);");
+        		} else {
+        			writeLine("this.view.form." + property.name + " = StringUtils.stringToStrictBoolean(this.form.get('" + property.name + "').value);");
+        		}
+        		break;
+        	default:
+        		writeLine("this.view.form." + property.name + " = StringUtils.emptyToNull(this.form.get('" + property.name + "').value);");
+    	}
         }
         writeLine("}");
         skipLine();

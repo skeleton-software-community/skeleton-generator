@@ -8,6 +8,7 @@ import java.util.Map;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
@@ -120,7 +121,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         		writeLine(",");
         	}
         	write(property.name + ":[null");
-        	if (!property.nullable) {
+        	if (!property.nullable && !property.dataType.equals(DataType.BOOLEAN)) {
         		write(", Validators.required");
         	}
         	write("]");
@@ -152,7 +153,17 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
         writeLine("applyForm(): void {");
         for (ViewProperty property:this.bean.formBean.properties) {
-        	writeLine("this.view.form." + property.name + " = StringUtils.emptyToNull(this.form.get('" + property.name + "').value);");
+        	switch (property.dataType) {
+	        	case BOOLEAN:
+	        		if (property.nullable) {
+	        			writeLine("this.view.form." + property.name + " = StringUtils.stringToNullableBoolean(this.form.get('" + property.name + "').value);");
+	        		} else {
+	        			writeLine("this.view.form." + property.name + " = StringUtils.stringToStrictBoolean(this.form.get('" + property.name + "').value);");
+	        		}
+	        		break;
+	        	default:
+	        		writeLine("this.view.form." + property.name + " = StringUtils.emptyToNull(this.form.get('" + property.name + "').value);");
+        	}
         }
         writeLine("}");
         skipLine();

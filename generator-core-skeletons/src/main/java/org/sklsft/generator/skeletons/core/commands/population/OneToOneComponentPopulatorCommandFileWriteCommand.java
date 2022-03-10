@@ -33,8 +33,8 @@ public class OneToOneComponentPopulatorCommandFileWriteCommand extends JavaFileW
 		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		
-		javaImports.add("import org.sklsft.generator.repository.backup.command.interfaces.BackupArgumentsCommand;");
-		javaImports.add("import org.sklsft.generator.repository.backup.reader.model.BackupArguments;");
+		javaImports.add("import org.sklsft.generator.persistence.backup.command.interfaces.BackupArgumentsCommand;");
+		javaImports.add("import org.sklsft.generator.persistence.backup.reader.model.BackupArguments;");
 		
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");
