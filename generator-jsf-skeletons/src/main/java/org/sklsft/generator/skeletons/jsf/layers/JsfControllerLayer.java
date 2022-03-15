@@ -8,9 +8,6 @@ import org.sklsft.generator.skeletons.jsf.commands.controller.JsfBaseListControl
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfCommonControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfDetailControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.JsfListControllerFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.WebappLogbackFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.WebappProjectLocalPropertiesFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.controller.configuration.WebappProjectPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.controller.resources.JsfBaseControllerFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.model.JsfCommonViewFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
@@ -38,14 +35,6 @@ public class JsfControllerLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode propertiesTreeNode = new FileWriteCommandTreeNode(new WebappProjectPropertiesFileWriteCommand(project));
-		configurationTreeNode.add(propertiesTreeNode);
-		
-		FileWriteCommandTreeNode localPropertiesTreeNode = new FileWriteCommandTreeNode(new WebappProjectLocalPropertiesFileWriteCommand(project));
-		configurationTreeNode.add(localPropertiesTreeNode);
-		
-		FileWriteCommandTreeNode logbackTreeNode = new FileWriteCommandTreeNode(new WebappLogbackFileWriteCommand(project));
-		configurationTreeNode.add(logbackTreeNode);
 		
 		return configurationTreeNode;
 	}

@@ -1,6 +1,7 @@
 package org.sklsft.generator.skeletons.commands.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.sklsft.generator.skeletons.tree.FileWriteCommandExecutor;
 
@@ -15,7 +16,7 @@ import org.sklsft.generator.skeletons.tree.FileWriteCommandExecutor;
  */
 public interface FileWriteCommand {
 
-	void execute() throws IOException;
+	void execute() throws IOException, URISyntaxException;
 	
 	String getLabel();
 	

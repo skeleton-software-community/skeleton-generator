@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.sklsft.generator.bash.launcher.ProjectInitializerLauncher"/>
 <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="generator-bash"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="..\..\..\skeleton-demo\demo-root&#13;&#10;org.sklsft&#13;&#10;demo&#13;&#10;SPRING_HIBERNATE_PRIMEFACES&#13;&#10;POSTGRESQL&#13;&#10;False&#13;&#10;demo&#13;&#10;localhost&#13;&#10;5432&#13;&#10;postgres&#13;&#10;postgres"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="..\..\skeleton-demo&#13;&#10;org.sklsft&#13;&#10;demo&#13;&#10;SPRING_HIBERNATE_PRIMEFACES&#13;&#10;POSTGRESQL&#13;&#10;False&#13;&#10;demo&#13;&#10;localhost&#13;&#10;5432&#13;&#10;postgres&#13;&#10;postgres"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="generator-bash"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

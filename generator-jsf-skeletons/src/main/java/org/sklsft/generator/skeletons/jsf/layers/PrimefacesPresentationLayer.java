@@ -18,8 +18,6 @@ import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.Prime
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.PrimefacesOneToManyModalViewFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.PrimefacesOneToOneComponentDetailViewFileWriteCommand;
 import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesSpringWebappApplicationConfigFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesWebXmlFileWriteCommand;
-import org.sklsft.generator.skeletons.jsf.commands.presentation.primefaces.configuration.PrimefacesWebappPomFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -34,7 +32,7 @@ public class PrimefacesPresentationLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode resourcesTreeNode = new FileWriteCommandTreeNode();
 		
-		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, getClass(), "/primefaces/src/",project.projectName + "-webapp"));
+		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, getClass(), "/primefaces",project.projectName + "-webapp"));
 		resourcesTreeNode.add(copyResourcesTreeNode);
 		
 		return resourcesTreeNode;
@@ -44,12 +42,6 @@ public class PrimefacesPresentationLayer extends AbstractLayer {
 	public FileWriteCommandTreeNode getConfigurationNode(Project project) {
 		
 		FileWriteCommandTreeNode configurationTreeNode = new FileWriteCommandTreeNode();
-		
-		FileWriteCommandTreeNode webappPomTreeNode = new FileWriteCommandTreeNode(new PrimefacesWebappPomFileWriteCommand(project));
-		configurationTreeNode.add(webappPomTreeNode);
-		
-		FileWriteCommandTreeNode webXmlPomTreeNode = new FileWriteCommandTreeNode(new PrimefacesWebXmlFileWriteCommand(project));
-		configurationTreeNode.add(webXmlPomTreeNode);
 				
 		FileWriteCommandTreeNode springWebappTreeNode = new FileWriteCommandTreeNode(new PrimefacesSpringWebappApplicationConfigFileWriteCommand(project));
 		configurationTreeNode.add(springWebappTreeNode);
