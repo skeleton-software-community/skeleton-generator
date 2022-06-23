@@ -22,6 +22,7 @@ import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.ScssModa
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.ScssOneToManyComponentModalComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.TsModalComponentFileWriteCommand;
 import org.sklsft.generator.skeletons.angular.commands.pages.list.modal.TsOneToManyComponentModalComponentFileWriteCommand;
+import org.sklsft.generator.skeletons.commands.impl.ResourcesFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -33,7 +34,12 @@ public class TypeScriptComponentsLayer extends AbstractLayer {
 
 	@Override
 	public FileWriteCommandTreeNode getResourcesNode(Project project) {
-		return null;
+		FileWriteCommandTreeNode resourcesTreeNode = new FileWriteCommandTreeNode();
+		
+		FileWriteCommandTreeNode copyResourcesTreeNode = new FileWriteCommandTreeNode(new ResourcesFileWriteCommand(project, getClass(), "/angular",project.projectName + "-ui"));
+		resourcesTreeNode.add(copyResourcesTreeNode);
+		
+		return resourcesTreeNode;
 	}
 
 	@Override

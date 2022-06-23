@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/generator-bash/src/main/java/org/sklsft/generator/bash/launcher/ProjectInitializerLauncher.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.sklsft.generator.bash.launcher.ProjectInitializerLauncher"/>
+<stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="generator-bash"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:\Users\m431001\Java\sources\cargo\cgospa&#13;&#10;com.afklm.cargo&#13;&#10;cgospa&#13;&#10;SPRING_HIBERNATE_ANGULAR&#13;&#10;POSTGRESQL&#13;&#10;False&#13;&#10;cgospa&#13;&#10;localhost&#13;&#10;5432&#13;&#10;postgres&#13;&#10;postgres"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="generator-bash"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+</launchConfiguration>

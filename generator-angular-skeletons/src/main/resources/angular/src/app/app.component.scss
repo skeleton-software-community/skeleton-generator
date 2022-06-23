@@ -1,0 +1,21 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .notification-error-style {
+  background-color: white;
+  color:darkred;
+  .mat-button-wrapper {
+    color:darkred;
+  }
+}
+
+::ng-deep .notification-info-style {
+  background-color: white;
+  color:darkgreen;
+  .mat-button-wrapper {
+    color:darkgreen;
+  }
+}

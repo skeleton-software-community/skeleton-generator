@@ -1,0 +1,12 @@
+<mat-sidenav-container class="h-100">
+  <mat-sidenav #sidenavRef [mode]="mode$ | async" [opened]="large$ | async" class="sidenav mat-elevation-z2 pt-3">
+    <mat-nav-list class="app-nav-list">
+      <nav mat-list-item *ngFor="let menu of menus">
+        <app-navigation-list [menu]="menu" (listItemClick)="sidenavRef.close()"></app-navigation-list>
+      </nav>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="d-flex flex-column">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

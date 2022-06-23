@@ -55,14 +55,14 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		}
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
-		writeLine("<mat-header-cell *matHeaderCellDef class=\"daisy-bg-on-primary-lighter\">Actions</mat-header-cell>");
+		writeLine("<mat-header-cell *matHeaderCellDef class=\"table-header\">Actions</mat-header-cell>");
 		writeLine("<mat-cell *matCellDef=\"let element\">");
 		if (bean.detailMode.equals(DetailMode.PAGE)) {
-			writeLine("<a class=\"margin-10\" href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><mat-icon aria-label=\"Edit\" svgIcon=\"table-edit\" class=\"daisy-text-success\"></mat-icon></a>");
+			writeLine("<a class=\"margin-10\" href=\"{{'/" + bean.urlPiece + "/' + element.id}}\"><mat-icon aria-label=\"Edit\" svgIcon=\"table-edit\" class=\"text-success\"></mat-icon></a>");
 		}
-		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"daisy-text-success\"></mat-icon></a>");
+		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"text-success\"></mat-icon></a>");
 		if (bean.deleteEnabled) {
-			writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
+			writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"text-warn\"></mat-icon></a>");
 		}
 		writeLine("</mat-cell>");
 		writeLine("</ng-container>");

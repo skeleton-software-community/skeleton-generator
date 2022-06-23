@@ -63,11 +63,11 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		}
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");
-		writeLine("<mat-header-cell *matHeaderCellDef class=\"daisy-bg-on-primary-lighter\">Actions</mat-header-cell>");
+		writeLine("<mat-header-cell *matHeaderCellDef class=\"table-header\">Actions</mat-header-cell>");
 		writeLine("<mat-cell *matCellDef=\"let element\">");
 		
-		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"daisy-text-success\"></mat-icon></a>");
-		writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"daisy-text-warn\"></mat-icon></a>");
+		writeLine("<a class=\"margin-10\" (click)=\"edit(element.id)\"><mat-icon aria-label=\"Edit\" svgIcon=\"pencil\" class=\"text-success\"></mat-icon></a>");
+		writeLine("<a *ngIf=\"element.canDelete\" class=\"margin-10\" (click)=\"delete(element.id)\"><mat-icon aria-label=\"Delete\" svgIcon=\"delete\" class=\"text-warn\"></mat-icon></a>");
 
 		writeLine("</mat-cell>");
 		writeLine("</ng-container>");

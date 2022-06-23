@@ -83,12 +83,18 @@ public class Model {
 	}
 	public void setProject(Project project) {
 		this.project = project;
-	}
+	}	
 	public String getJavaSourcesFolder() {
 		return javaSourcesFolder;
 	}
 	public void setJavaSourcesFolder(String javaSourcesFolder) {
 		this.javaSourcesFolder = javaSourcesFolder;
+	}
+	public String getTsSourcesFolder() {
+		return tsSourcesFolder;
+	}
+	public void setTsSourcesFolder(String tsSourcesFolder) {
+		this.tsSourcesFolder = tsSourcesFolder;
 	}
 	public String getTestJavaSourcesFolder() {
 		return testJavaSourcesFolder;
@@ -173,6 +179,12 @@ public class Model {
 	}
 	public void setWebappArtefactName(String webappArtefactName) {
 		this.webappArtefactName = webappArtefactName;
+	}
+	public String getTsUiArtefactName() {
+		return tsUiArtefactName;
+	}
+	public void setTsUiArtefactName(String tsUiArtefactName) {
+		this.tsUiArtefactName = tsUiArtefactName;
 	}
 	public List<Package> getPackages() {
 		return packages;
@@ -317,8 +329,7 @@ public class Model {
 	}
 	public void setJunitPackageName(String junitPackageName) {
 		this.junitPackageName = junitPackageName;
-	}	
-	
+	}
 	/**
      * run through all the tables until it is found
      * @param tableName

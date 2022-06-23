@@ -5,6 +5,8 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -33,9 +35,8 @@ public class TemplatizedReourceCopier {
 
 	public void resolveAndCopy(String resourceLocation, Path targetFile) throws IOException {
 		Template template = engine.getTemplate(resourceLocation);
-		Files.createFile(targetFile);
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
-		Files.write(targetFile, writer.toString().getBytes(StandardCharsets.UTF_8));
+		Files.write(targetFile, writer.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 	}
 }

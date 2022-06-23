@@ -45,10 +45,10 @@ public class HtmlOneToManyComponentModalComponentFileWriteCommand extends Angula
 		
 		writeLine("<div class=\"modal-form\" >");
 		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"saveOrUpdate()\">");
-		writeLine("<mat-dialog-content class=\"daisy-text-grey-darker\">");
+		writeLine("<mat-dialog-content class=\"text-grey-darker\">");
 		writeLine("<div class=\"d-flex mx-n3 mt-n2\">");
 		writeLine("<button mat-icon-button mat-dialog-close disableRipple class=\"ml-auto\">");
-		writeLine("<mat-icon class=\"daisy-text-grey\">close</mat-icon>");
+		writeLine("<mat-icon class=\"text-grey\">close</mat-icon>");
 		writeLine("</button>");
 		writeLine("</div>");
 		writeLine("<section class=\"d-flex flex-column my-3\">");

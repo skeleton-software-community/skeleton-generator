@@ -10,6 +10,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
@@ -50,6 +52,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 		
 		URL url = clazz.getResource(resourcesRoot);
 		Path targetPath = Paths.get(project.workspaceFolder + File.separator + targetRootPath);
+		targetPath = Files.createDirectories(targetPath);
 		
 		if (url.getProtocol().equals("file")){
 			copyRecursively(resourcesRoot, Paths.get(url.toURI()), targetPath);
@@ -89,7 +92,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 					if (isTemplatized(childResourceFileName)) {
 						copier.resolveAndCopy(childRelativeLocation, childTargetPath);
 					} else {
-						Files.copy(childResourcesPath, childTargetPath);
+						Files.copy(childResourcesPath, childTargetPath, StandardCopyOption.REPLACE_EXISTING);
 					}
 				}
 			}

@@ -14,7 +14,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 
 	protected void writeListComponent(ViewProperty property, Bean bean) {
 		writeLine("<ng-container matColumnDef=\"" + property.name + "\">");
-		writeLine("<mat-header-cell *matHeaderCellDef mat-sort-header class=\"daisy-bg-on-primary-lighter\">" + property.rendering + "</mat-header-cell>");
+		writeLine("<mat-header-cell *matHeaderCellDef mat-sort-header class=\"table-header\">" + property.rendering + "</mat-header-cell>");
 		
 		switch (property.dataType) {
 		case BOOLEAN:

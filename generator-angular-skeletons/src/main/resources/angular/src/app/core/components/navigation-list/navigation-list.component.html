@@ -1,0 +1,26 @@
+<button
+        cdkAccordionItem
+        #panel="cdkAccordionItem"
+        (click)="togglePanel(panel);"
+        class="text-uppercase text-left w-100 position-relative pl-4 m-0 mat-subheading-1 border-0">
+        {{ menu.text }}
+        <mat-icon class="nav-arrow" [ngClass]="{ rotate: panel.expanded }" *ngIf="menu.links">
+          keyboard_arrow_right
+        </mat-icon>
+</button>
+<ul [ngClass]="{ openNavList: panel.expanded }" class="mb-2 list-sublinks">
+   <li *ngFor="let link of menu.links" class="border-0">
+     <a
+       #rla="routerLinkActive"
+       (click)="listItemClick.emit()"
+       class="mat-subheading-1 m-0 d-block link-text"
+       [ngClass]="{ 'text-grey-darker': !rla.isActive }"
+       [routerLink]="link.path"
+       routerLinkActive="link-text-active"
+
+     >
+   		<mat-icon *ngIf="link.icon">{{ link.icon }}</mat-icon>
+   		{{ link.text }}
+ 	</a>
+ </li>
+</ul>

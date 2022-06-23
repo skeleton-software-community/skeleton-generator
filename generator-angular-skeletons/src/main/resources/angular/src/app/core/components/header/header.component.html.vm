@@ -1,0 +1,12 @@
+<mat-toolbar class="app-header mat-elevation-z9">
+  <mat-toolbar-row>
+    <button (click)="toggle.emit()" class="mr-3" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a class="d-flex align-items-center h-100" routerLink="/">
+      <img alt="Logo" class="logo mr-5 d-none d-md-inline h-75"
+           src="/assets/images/logo.png"/>
+      <h1 class="mat-title text-uppercase mb-0">${project.projectName}</h1>
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>
