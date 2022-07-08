@@ -141,6 +141,7 @@ public class JavaBeanFactory implements BeanFactory {
 			property.visibility = column.visibility;
 			property.editable = column.editable;
 			property.filterable = column.filterable;
+			property.textFilterType = column.textFilterType;
 			property.rendering = column.rendering;
 			property.annotations = column.annotations;
 			bean.properties.add(property);

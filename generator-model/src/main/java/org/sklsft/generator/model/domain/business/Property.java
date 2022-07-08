@@ -5,6 +5,7 @@ import java.util.List;
 import org.sklsft.generator.model.domain.database.Column;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.RelationType;
+import org.sklsft.generator.model.metadata.TextFilterType;
 import org.sklsft.generator.model.metadata.Visibility;
 
 public class Property {
@@ -25,6 +26,7 @@ public class Property {
 	public boolean embedded;
 	public boolean editable;
 	public boolean filterable;
+	public TextFilterType textFilterType;
 	public Visibility visibility;
 	public String rendering;
 	public List<String> annotations;

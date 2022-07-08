@@ -768,7 +768,20 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		writeLine("Root<" + this.bean.className + "> root = criteria.from(" + this.bean.className + ".class);");	
 		skipLine();
 		
-		writeLine("Predicate predicate = getStringContainsRestriction(builder, root.get(" + bean.className + "_." + targetProperty.name + "), arg);");
+		switch (targetProperty.textFilterType) {
+			case CONTAINS:
+				writeLine("Predicate predicate = getStringContainsRestriction(builder, root.get(" + bean.className + "_." + targetProperty.name + "), arg);");
+				break;
+			case CONTAINS_IGNORE_ACCENTS:
+				writeLine("Predicate predicate = getUnaccentuatedStringContainsRestriction(builder, root.get(" + bean.className + "_." + targetProperty.name + "), arg);");
+				break;
+			case STARTS_WITH:
+				writeLine("Predicate predicate = getStringStartsWithRestriction(builder, root.get(" + bean.className + "_." + targetProperty.name + "), arg);");
+				break;
+			default:
+				break;	
+		}
+		
 		writeLine("if (predicate!=null){");
 		writeLine("criteria.where(predicate);");
 		writeLine("}");
@@ -923,7 +936,22 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 	
 	private void writeTextRestriction(ViewProperty property) {
 		String joinedAliasName = StringUtils.isEmpty(property.joinedAliasName)?"root":property.joinedAliasName;
-		writeLine("addUnaccentuatedStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
+		
+		switch (property.textFilterType) {
+			case CONTAINS:
+				writeLine("addStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
+				break;
+			case CONTAINS_IGNORE_ACCENTS:
+				writeLine("addUnaccentuatedStringContainsRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
+				break;
+			case STARTS_WITH:
+				writeLine("addStringStartsWithRestriction(builder, predicates, " + joinedAliasName + ".get(" + property.lastParentBeanClassName + "_." + property.lastPropertyName + "), filter.get" + property.capName + "());");
+				break;
+			default:
+				break;	
+		}
+		
+		
 	}
 	
 	private void writeBooleanRestriction(ViewProperty property) {

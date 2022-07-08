@@ -31,6 +31,8 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 		createConstraints();
 		
 		createTableFks();
+		
+		createIndexes();
 
 		writeNotOverridableContent();
 
@@ -63,7 +65,7 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 
 	private void createTableFks() {
 
-		writeLine("-- table foreign keys and indexes --");
+		writeLine("-- table foreign keys --");
 		int i = 0;
 		for (Column column:table.columns) {
 			if (column.referenceTable != null) {
@@ -77,8 +79,14 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
 			}
 			i++;
 		}
+	}
 		
-		i = 0;
+	/**
+	 * create indexes
+	 */
+	private void createIndexes() {
+		
+		writeLine("-- table indexes --");
 		for (Index index:table.indexes) {
 			if (index.uniqueConstraint == null) {
                 write("CREATE INDEX " + index.name + " ON " + this.table.name + "(" + index.columns.get(0).name + ")");
@@ -89,7 +97,6 @@ public class OracleTableFkDefinitionFileWriteCommand extends SqlFileWriteCommand
                 writeLine("/");
                 skipLine();
             }
-			i++;
-        }
-	}
+		}
+    }
 }

@@ -31,6 +31,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 			viewProperty.visibility = property.visibility;
 			viewProperty.editable = property.editable;
 			viewProperty.filterable = property.filterable;
+			viewProperty.textFilterType = property.textFilterType;
 			viewProperty.lastPropertyName = property.name;
 			viewProperty.lastParentBeanClassName = bean.className;
 			viewProperty.joinedAliasName = "";				
@@ -63,6 +64,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 						viewProperty.visibility = Visibility.min(property.visibility, tempProperty.visibility);
 						viewProperty.editable = property.embedded?tempProperty.editable:property.editable;
 						viewProperty.filterable = property.embedded?tempProperty.filterable:property.filterable;
+						viewProperty.textFilterType = property.embedded?tempProperty.textFilterType:property.textFilterType;
 						viewProperty.lastPropertyName = tempProperty.lastPropertyName;
 						viewProperty.lastParentBeanClassName = tempProperty.lastParentBeanClassName;
 						viewProperty.joinedAliasName = property.name + JavaClassNaming.getClassNameFromObjectName(tempProperty.joinedAliasName);
@@ -88,6 +90,7 @@ public class JavaViewPropertiesFactory implements ViewPropertiesFactory {
 					viewProperty.visibility = Visibility.min(property.visibility, referenceBeanProperty.visibility);
 					viewProperty.editable = property.embedded?referenceBeanProperty.editable:property.editable;
 					viewProperty.filterable = property.embedded?referenceBeanProperty.filterable:property.filterable;
+					viewProperty.textFilterType = property.embedded?referenceBeanProperty.textFilterType:property.textFilterType;
 					viewProperty.lastPropertyName = referenceBeanProperty.name;
 					viewProperty.lastParentBeanClassName = property.javaType;
 					viewProperty.joinedAliasName = property.name;

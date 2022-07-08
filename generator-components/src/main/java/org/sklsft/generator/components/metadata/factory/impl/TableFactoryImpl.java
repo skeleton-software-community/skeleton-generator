@@ -10,8 +10,10 @@ import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.domain.database.UniqueConstraint;
 import org.sklsft.generator.model.metadata.ColumnMetaData;
 import org.sklsft.generator.model.metadata.DataType;
+import org.sklsft.generator.model.metadata.IndexMetaData;
 import org.sklsft.generator.model.metadata.RelationType;
 import org.sklsft.generator.model.metadata.TableMetaData;
+import org.sklsft.generator.model.metadata.TextFilterType;
 import org.sklsft.generator.model.metadata.UniqueConstraintMetaData;
 import org.sklsft.generator.model.metadata.Visibility;
 import org.slf4j.Logger;
@@ -80,6 +82,11 @@ public class TableFactoryImpl implements TableFactory {
             }
             column.editable = columnMetaData.getEditable();
             column.filterable = columnMetaData.getFilterable();
+            if (columnMetaData.getTextFilterType()!=null) {
+            	column.textFilterType = columnMetaData.getTextFilterType();
+            } else {
+            	column.textFilterType = TextFilterType.STARTS_WITH;
+            }
             if (columnMetaData.getVisibility()!=null) {
             	column.visibility = columnMetaData.getVisibility();
             } else {
@@ -155,6 +162,22 @@ public class TableFactoryImpl implements TableFactory {
         			index.columns.add(column);
         		}
         		table.uniqueConstraints.add(uniqueConstraint);
+        		table.indexes.add(index);
+        	}
+        }
+        
+        // declared indexes
+        if (tableMetaData.getIndexes()!=null) {
+        	for (IndexMetaData indexMetaData:tableMetaData.getIndexes()) {
+        		
+        		Index index = new Index();
+            	
+            	index.name = "IDX_" + indexMetaData.getName();
+            	
+        		for (String columnName:indexMetaData.getFields()) {
+        			Column column = table.findColumnByName(columnName);
+        			index.columns.add(column);
+        		}
         		table.indexes.add(index);
         	}
         }

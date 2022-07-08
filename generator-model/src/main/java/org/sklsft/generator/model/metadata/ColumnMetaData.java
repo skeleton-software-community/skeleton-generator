@@ -34,6 +34,8 @@ public class ColumnMetaData {
 	@XmlAttribute
 	private Boolean filterable = true;
 	@XmlAttribute
+	private TextFilterType textFilterType;
+	@XmlAttribute
 	private Visibility visibility;
 	@XmlAttribute
 	private String rendering;
@@ -92,6 +94,12 @@ public class ColumnMetaData {
 	}
 	public void setFilterable(Boolean filterable) {
 		this.filterable = filterable;
+	}
+	public TextFilterType getTextFilterType() {
+		return textFilterType;
+	}
+	public void setTextFilterType(TextFilterType textFilterType) {
+		this.textFilterType = textFilterType;
 	}
 	public Visibility getVisibility() {
 		return visibility;

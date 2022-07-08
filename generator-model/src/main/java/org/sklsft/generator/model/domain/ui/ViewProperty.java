@@ -3,6 +3,7 @@ package org.sklsft.generator.model.domain.ui;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
+import org.sklsft.generator.model.metadata.TextFilterType;
 import org.sklsft.generator.model.metadata.Visibility;
 
 public class ViewProperty {
@@ -17,6 +18,7 @@ public class ViewProperty {
 	public boolean nullable;
 	public boolean editable;
 	public boolean filterable;
+	public TextFilterType textFilterType;
 	public Visibility visibility;
 	public String rendering;
 	

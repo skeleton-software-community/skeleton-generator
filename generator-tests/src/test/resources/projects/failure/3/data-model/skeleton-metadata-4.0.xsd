@@ -30,8 +30,22 @@
     <xs:attribute name="referenceTableRelation" type="tns:relationType"/>
     <xs:attribute name="editable" type="xs:boolean"/>
     <xs:attribute name="filterable" type="xs:boolean"/>
+    <xs:attribute name="textFilterType" type="tns:textFilterType"/>
     <xs:attribute name="visibility" type="tns:visibility"/>
     <xs:attribute name="rendering" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="index">
+    <xs:sequence>
+      <xs:element name="fields" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="field" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="package">
@@ -83,6 +97,13 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element name="uniqueConstraint" type="tns:uniqueConstraint" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="indexes" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="index" type="tns:index" minOccurs="0" maxOccurs="unbounded"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -160,6 +181,14 @@
       <xs:enumeration value="ONE_TO_ONE"/>
       <xs:enumeration value="ONE_TO_ONE_COMPONENT"/>
       <xs:enumeration value="PROPERTY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="textFilterType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STARTS_WITH"/>
+      <xs:enumeration value="CONTAINS"/>
+      <xs:enumeration value="CONTAINS_IGNORE_ACCENTS"/>
     </xs:restriction>
   </xs:simpleType>
 

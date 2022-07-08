@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * representation of a unique constraint<br/>
+ * representation of an Index<br/>
  * Properties are willingly public because of their intensive use in file write
  * commands<br/>
  * 

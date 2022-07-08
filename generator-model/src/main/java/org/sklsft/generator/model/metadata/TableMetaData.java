@@ -57,6 +57,10 @@ public class TableMetaData {
 	@XmlElement(name="uniqueConstraint")
 	private List<UniqueConstraintMetaData> uniqueConstraints;
 	
+	@XmlElementWrapper(name="indexes")
+	@XmlElement(name="index")
+	private List<IndexMetaData> indexes;
+	
 	
 	/*
 	 * getters and setters
@@ -156,5 +160,11 @@ public class TableMetaData {
 	}
 	public void setUniqueConstraints(List<UniqueConstraintMetaData> uniqueConstraints) {
 		this.uniqueConstraints = uniqueConstraints;
+	}
+	public List<IndexMetaData> getIndexes() {
+		return indexes;
+	}
+	public void setIndexes(List<IndexMetaData> indexes) {
+		this.indexes = indexes;
 	}
 }
