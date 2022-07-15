@@ -78,7 +78,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 			Iterator<Path> iterator = stream.iterator();
 			while(iterator.hasNext()) {
 				Path childResourcesPath = iterator.next();
-				String childResourceFileName = childResourcesPath.toFile().getName();
+				String childResourceFileName = childResourcesPath.getFileName().toString().replace(separator, "");
 				String childRelativeLocation = root + separator + childResourceFileName;
 				
 				String targetFileName = getTargetFileName(childResourceFileName);
