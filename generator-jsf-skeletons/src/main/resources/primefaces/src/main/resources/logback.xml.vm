@@ -7,9 +7,9 @@
 	<!--Console appender -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
+			<layout class="ch.qos.logback.classic.PatternLayout">
 				<pattern>
-				[%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}][%thread][%-5level][%channel][%transactionId][%correlationId] %msg%n
+					{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%X{channel}","transactionId":"%X{transactionId}","correlationId":"%X{correlationId}","logMessage":%msg}%n
 				</pattern>
 			</layout>
 		</encoder>
@@ -25,9 +25,9 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
+			<layout class="ch.qos.logback.classic.PatternLayout">
 				<pattern>
-				{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId",","logMessage":%msg}%n
+					{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%X{channel}","transactionId":"%X{transactionId}","correlationId":"%X{correlationId}","logMessage":%msg}%n
 				</pattern>
 			</layout>
 		</encoder>
@@ -42,9 +42,9 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="org.sklsft.commons.log.logback.PatternLayoutWithRequestContext">
+			<layout class="ch.qos.logback.classic.PatternLayout">
 				<pattern>
-				{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","logLevel":"%-5level","channel":"%channel","transactionId":"%transactionId","correlationId":"%correlationId",","logMessage":%msg}%n
+					{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%X{channel}","transactionId":"%X{transactionId}","correlationId":"%X{correlationId}","logMessage":%msg}%n
 				</pattern>
 			</layout>
 		</encoder>

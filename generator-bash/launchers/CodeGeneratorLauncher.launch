@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.sklsft.generator.bash.launcher.CodeGeneratorLauncher"/>
 <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="generator-bash"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:\Users\m431001\Java\sources\sklsft\skeleton-demo\demo-root"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="..\..\skeleton-demo"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="generator-bash"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

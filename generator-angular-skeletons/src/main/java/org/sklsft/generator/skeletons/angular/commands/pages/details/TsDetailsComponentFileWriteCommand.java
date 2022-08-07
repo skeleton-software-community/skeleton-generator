@@ -101,7 +101,11 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         
         writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {");
         
-        writeLine("this.id = parseInt(this.route.snapshot.paramMap.get('id'));");
+        if (bean.idTsType.equals(DataType.INTEGER.getTsType())) {
+        	writeLine("this.id = parseInt(this.route.snapshot.paramMap.get('id'));");
+        } else {
+        	writeLine("this.id = this.route.snapshot.paramMap.get('id');");
+        }
 		writeLine("this.activePath = '/" + bean.urlPiece + "/' + this.id.toString();");
 	    write("this.links=[{text:'Details',path:'/" + bean.urlPiece + "/' + this.id.toString()}");
 	    for (OneToManyComponent component:bean.oneToManyComponentList) {

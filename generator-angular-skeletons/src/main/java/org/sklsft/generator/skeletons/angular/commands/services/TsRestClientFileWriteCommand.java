@@ -43,6 +43,10 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
 			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
 		}
+		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+			imports.add("import { " + oneToOneComponent.referenceBean.fullViewBean.className + " } from '../../" + oneToOneComponent.referenceBean.urlPiece + "/models/" + oneToOneComponent.referenceBean.fullViewBean.className + "';");
+			imports.add("import { " + oneToOneComponent.referenceBean.formBean.className + " } from '../../" + oneToOneComponent.referenceBean.urlPiece + "/models/" + oneToOneComponent.referenceBean.formBean.className + "';");
+		}
 	}
 
 	@Override
