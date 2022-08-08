@@ -22,7 +22,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsDetailsComponentFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "details", bean.urlPiece + "-details.component");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece + File.separator + "details", bean.urlPiece + "-details.component");
 		
 		this.bean = bean;
 		
@@ -41,13 +41,13 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
-		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
-		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
+		imports.add("import { " + bean.fullViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/full/" + bean.fullViewBean.className + "';");
+		imports.add("import { " + bean.restClientClassName + " } from '" + bean.myPackage.tsServicesSourcePath + "/" + bean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 		for (ViewProperty property:this.bean.formBean.properties) {
         	if (property.selectableBean!=null) {
-        		imports.add("import { " + property.selectableBean.restClientClassName + " } from 'src/app/features/generated/" + property.selectableBean.myPackage.name.replace(".","/") + "/" + property.selectableBean.urlPiece + "/" + "services" + "/" + property.selectableBean.restClientClassName + "';");
+        		imports.add("import { " + property.selectableBean.restClientClassName + " } from '" + property.selectableBean.myPackage.tsServicesSourcePath + "/" + property.selectableBean.restClientClassName + "';");
         	}
 		}
 	}

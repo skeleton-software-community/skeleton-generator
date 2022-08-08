@@ -29,7 +29,13 @@ public class Package {
 	public String fullViewsPackageName;
 	public String formsPackageName;
 	
-	public String tsFeaturePath;
+	public String tsModelsPath;
+	public String tsServicesPath;
+	public String tsComponentsPath;
+	
+	public String tsModelsSourcePath;
+	public String tsServicesSourcePath;
+	public String tsComponentsSourcePath;
 
 	public String baseDAOInterfacePackageName;
 	public String baseDAOImplPackageName;

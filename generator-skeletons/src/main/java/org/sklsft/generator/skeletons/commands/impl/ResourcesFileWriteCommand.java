@@ -11,10 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
 
-import org.apache.commons.io.FileUtils;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.skeletons.commands.impl.templatized.TemplatizedReourceCopier;
 import org.sklsft.generator.skeletons.commands.interfaces.FileWriteCommand;

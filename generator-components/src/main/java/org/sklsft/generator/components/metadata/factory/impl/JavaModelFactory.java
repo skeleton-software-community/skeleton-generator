@@ -79,7 +79,7 @@ public class JavaModelFactory implements ModelFactory {
         model.project = project;
         
         model.javaSourcesFolder = "src" + File.separator + "main" + File.separator + "java";
-        model.tsSourcesFolder = "src" + File.separator + "app";
+        model.tsFeaturesPath = "src" + File.separator + "app" + File.separator + "features";
         model.testJavaSourcesFolder = "src" + File.separator + "test" + File.separator + "java";
         model.resourcesFolder = "src" + File.separator + "main" + File.separator + "resources";
         model.testResourcesFolder = "src" + File.separator + "test" + File.separator + "resources";

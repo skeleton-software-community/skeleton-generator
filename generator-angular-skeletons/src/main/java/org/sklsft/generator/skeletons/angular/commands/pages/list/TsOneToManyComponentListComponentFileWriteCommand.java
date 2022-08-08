@@ -21,7 +21,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 	 */
 	public TsOneToManyComponentListComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsSourcesFolder + File.separator + oneToManyComponent.parentBean.myPackage.tsFeaturePath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
+		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;
@@ -40,11 +40,11 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 		imports.add("import { ScrollView } from \"src/app/core/models/ScrollView\";");
 		imports.add("import { SelectItem } from \"src/app/core/models/SelectItem\";");
 		
-		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.className + " } from '../../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.className + "';");
-		imports.add("import { " + oneToManyComponent.referenceBean.fullViewBean.className + " } from '../../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.fullViewBean.className + "';");
-		imports.add("import { " + oneToManyComponent.referenceBean.formBean.className + " } from '../../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.formBean.className + "';");
-		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '../../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
-		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '../../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
+		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/views/basic/" + oneToManyComponent.referenceBean.basicViewBean.className + "';");
+		imports.add("import { " + oneToManyComponent.referenceBean.fullViewBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + oneToManyComponent.referenceBean.fullViewBean.className + "';");
+		imports.add("import { " + oneToManyComponent.referenceBean.formBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/forms/" + oneToManyComponent.referenceBean.formBean.className + "';");
+		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/filters/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
+		imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/sortings/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
 		
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		

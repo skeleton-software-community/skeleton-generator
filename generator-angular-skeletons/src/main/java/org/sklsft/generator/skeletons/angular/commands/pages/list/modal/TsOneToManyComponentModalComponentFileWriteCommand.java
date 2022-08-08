@@ -23,7 +23,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
 	 */
 	public TsOneToManyComponentModalComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.model.tsSourcesFolder + File.separator + oneToManyComponent.parentBean.myPackage.tsFeaturePath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
+		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;
@@ -42,14 +42,14 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
 		imports.add("import { SelectItem } from 'src/app/core/models/SelectItem';");
 		imports.add("import { Observable } from 'rxjs';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
-		imports.add("import { " + referenceBean.fullViewBean.className + " } from '../../../../" + this.referenceBean.urlPiece + "/models/" + referenceBean.fullViewBean.className + "';");
-		imports.add("import { " + parentBean.restClientClassName + " } from '../../../services/" + parentBean.restClientClassName + "';");
+		imports.add("import { " + referenceBean.fullViewBean.className + " } from '" + referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + referenceBean.fullViewBean.className + "';");
+		imports.add("import { " + parentBean.restClientClassName + " } from '" + parentBean.myPackage.tsServicesSourcePath + "/" + parentBean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		imports.add("import { MatDialogRef } from '@angular/material/dialog';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 		for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null) {
-        		imports.add("import { " + property.selectableBean.restClientClassName + " } from 'src/app/features/generated/" + property.selectableBean.myPackage.name.replace(".","/") + "/" + property.selectableBean.urlPiece + "/" + "services" + "/" + property.selectableBean.restClientClassName + "';");
+        		imports.add("import { " + property.selectableBean.restClientClassName + " } from '" + property.selectableBean.myPackage.tsServicesSourcePath + "/" + property.selectableBean.restClientClassName + "';");
         	}
 		}
 	}

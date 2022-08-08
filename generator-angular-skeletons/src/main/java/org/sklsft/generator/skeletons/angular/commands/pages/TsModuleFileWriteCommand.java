@@ -16,7 +16,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsModuleFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece, bean.urlPiece + ".module");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece, bean.urlPiece + ".module");
 		
 		this.bean = bean;
 		

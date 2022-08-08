@@ -23,7 +23,8 @@ public class Model {
 	public Project project;
 	
 	public String javaSourcesFolder;
-	public String tsSourcesFolder;
+	public String tsFeaturesPath;
+	public String tsFeautresSourcePath;
 	public String testJavaSourcesFolder;
 	public String resourcesFolder;
 	public String testResourcesFolder;
@@ -90,11 +91,17 @@ public class Model {
 	public void setJavaSourcesFolder(String javaSourcesFolder) {
 		this.javaSourcesFolder = javaSourcesFolder;
 	}
-	public String getTsSourcesFolder() {
-		return tsSourcesFolder;
+	public String getTsFeaturesPath() {
+		return tsFeaturesPath;
 	}
-	public void setTsSourcesFolder(String tsSourcesFolder) {
-		this.tsSourcesFolder = tsSourcesFolder;
+	public void setTsFeaturesPath(String tsFeaturesPath) {
+		this.tsFeaturesPath = tsFeaturesPath;
+	}
+	public String getTsFeautresSourcePath() {
+		return tsFeautresSourcePath;
+	}
+	public void setTsFeautresSourcePath(String tsFeautresSourcePath) {
+		this.tsFeautresSourcePath = tsFeautresSourcePath;
 	}
 	public String getTestJavaSourcesFolder() {
 		return testJavaSourcesFolder;

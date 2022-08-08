@@ -17,7 +17,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsListComponentFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "list", bean.urlPiece + "-list.component");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece + File.separator + "list", bean.urlPiece + "-list.component");
 		
 		this.bean = bean;
 		
@@ -29,17 +29,16 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { MatTableDataSource } from '@angular/material/table';");
 		imports.add("import { MatPaginator } from '@angular/material/paginator';");
 		
-		imports.add("import { " + bean.restClientClassName + " } from '../services/" + bean.restClientClassName + "';");
+		imports.add("import { " + bean.restClientClassName + " } from '" + bean.myPackage.tsServicesSourcePath + "/" + bean.restClientClassName + "';");
 		imports.add("import { ScrollForm } from \"src/app/core/models/ScrollForm\";");
 		imports.add("import { ScrollView } from \"src/app/core/models/ScrollView\";");
 		imports.add("import { SelectItem } from \"src/app/core/models/SelectItem\";");
 		
-		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
-		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
-		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
-		
-		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
-		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
+		imports.add("import { " + bean.basicViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/basic/" + bean.basicViewBean.className + "';");
+		imports.add("import { " + bean.fullViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/full/" + bean.fullViewBean.className + "';");
+		imports.add("import { " + bean.formBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/forms/" + bean.formBean.className + "';");
+		imports.add("import { " + bean.basicViewBean.filter.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/filters/" + bean.basicViewBean.filter.className + "';");
+		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '" + bean.myPackage.tsModelsSourcePath + "/sortings/" + bean.basicViewBean.sortingClassName + "';");
 		
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		

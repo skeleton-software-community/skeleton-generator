@@ -16,7 +16,7 @@ public class TsSortingFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsSortingFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.basicViewBean.sortingClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsModelsPath + File.separator + "sortings", bean.basicViewBean.sortingClassName);
 		
 		this.bean = bean;
 		

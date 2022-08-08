@@ -17,7 +17,7 @@ public class TsAppRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsAppRoutingModuleFileWriteCommand(Project project) {
         
-		super(project.workspaceFolder + File.separator + project.model.tsUiArtefactName + File.separator + project.model.tsSourcesFolder, "app-routing.module");
+		super(project.workspaceFolder + File.separator + project.model.tsUiArtefactName + File.separator + "src" + File.separator + "app", "app-routing.module");
 		this.project = project;
 		
 	}
@@ -51,7 +51,7 @@ public class TsAppRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 					} else {
 						write(",");
 					}
-					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('src/app/features/generated/" + myPackage.name.replace(".", "/") + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module) }");
+					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('" + bean.myPackage.tsComponentsSourcePath + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module) }");
 				}
 			}
         }

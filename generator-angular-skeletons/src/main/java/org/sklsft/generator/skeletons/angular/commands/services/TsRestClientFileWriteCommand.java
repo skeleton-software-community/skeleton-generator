@@ -16,7 +16,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 	private Bean bean;
 	
 	public TsRestClientFileWriteCommand(Bean bean) {
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "services", bean.restClientClassName);
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsServicesPath, bean.restClientClassName);
 		
 		this.bean = bean;
 	}
@@ -27,25 +27,25 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { Injectable } from '@angular/core';");
 		imports.add("import { HttpClient, HttpHeaders} from '@angular/common/http';");
 		
-		imports.add("import { ScrollForm } from \"src/app/core/models/ScrollForm\";");
-		imports.add("import { ScrollView } from \"src/app/core/models/ScrollView\";");
-		imports.add("import { SelectItem } from \"src/app/core/models/SelectItem\";");
+		imports.add("import { ScrollForm } from 'src/app/core/models/ScrollForm';");
+		imports.add("import { ScrollView } from 'src/app/core/models/ScrollView';");
+		imports.add("import { SelectItem } from 'src/app/core/models/SelectItem';");
 		
-		imports.add("import { " + bean.basicViewBean.className + " } from '../models/" + bean.basicViewBean.className + "';");
-		imports.add("import { " + bean.fullViewBean.className + " } from '../models/" + bean.fullViewBean.className + "';");
-		imports.add("import { " + bean.formBean.className + " } from '../models/" + bean.formBean.className + "';");
-		imports.add("import { " + bean.basicViewBean.filter.className + " } from '../models/" + bean.basicViewBean.filter.className + "';");
-		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '../models/" + bean.basicViewBean.sortingClassName + "';");
+		imports.add("import { " + bean.basicViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/basic/" + bean.basicViewBean.className + "';");
+		imports.add("import { " + bean.fullViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/full/" + bean.fullViewBean.className + "';");
+		imports.add("import { " + bean.formBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/forms/" + bean.formBean.className + "';");
+		imports.add("import { " + bean.basicViewBean.filter.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/filters/" + bean.basicViewBean.filter.className + "';");
+		imports.add("import { " + bean.basicViewBean.sortingClassName + " } from '" + bean.myPackage.tsModelsSourcePath + "/sortings/" + bean.basicViewBean.sortingClassName + "';");
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
-			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.className + "';");
-			imports.add("import { " + oneToManyComponent.referenceBean.fullViewBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.fullViewBean.className + "';");
-			imports.add("import { " + oneToManyComponent.referenceBean.formBean.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.formBean.className + "';");
-			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
-			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '../../" + oneToManyComponent.referenceBean.urlPiece + "/models/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/views/basic/" + oneToManyComponent.referenceBean.basicViewBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.fullViewBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + oneToManyComponent.referenceBean.fullViewBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.formBean.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/forms/" + oneToManyComponent.referenceBean.formBean.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.filter.className + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/filters/" + oneToManyComponent.referenceBean.basicViewBean.filter.className + "';");
+			imports.add("import { " + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + " } from '" + oneToManyComponent.referenceBean.myPackage.tsModelsSourcePath + "/sortings/" + oneToManyComponent.referenceBean.basicViewBean.sortingClassName + "';");
 		}
 		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
-			imports.add("import { " + oneToOneComponent.referenceBean.fullViewBean.className + " } from '../../" + oneToOneComponent.referenceBean.urlPiece + "/models/" + oneToOneComponent.referenceBean.fullViewBean.className + "';");
-			imports.add("import { " + oneToOneComponent.referenceBean.formBean.className + " } from '../../" + oneToOneComponent.referenceBean.urlPiece + "/models/" + oneToOneComponent.referenceBean.formBean.className + "';");
+			imports.add("import { " + oneToOneComponent.referenceBean.fullViewBean.className + " } from '" + oneToOneComponent.referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + oneToOneComponent.referenceBean.fullViewBean.className + "';");
+			imports.add("import { " + oneToOneComponent.referenceBean.formBean.className + " } from '" + oneToOneComponent.referenceBean.myPackage.tsModelsSourcePath + "/forms/" + oneToOneComponent.referenceBean.formBean.className + "';");
 		}
 	}
 

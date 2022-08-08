@@ -15,7 +15,7 @@ public class TsFullViewBeanFileWriteCommand extends TsFileWriteCommand {
 	 */
 	public TsFullViewBeanFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.model.tsSourcesFolder + File.separator + bean.myPackage.tsFeaturePath + File.separator + bean.urlPiece + File.separator + "models", bean.fullViewBean.className);
+super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsModelsPath + File.separator + "views" + File.separator + "full" , bean.fullViewBean.className);
 		
 		this.bean = bean;
 		
@@ -23,7 +23,7 @@ public class TsFullViewBeanFileWriteCommand extends TsFileWriteCommand {
 	
 	@Override
 	protected void fetchSpecificImports() {
-		imports.add("import { " + bean.formBean.className + " } from './" + bean.formBean.className + "';");
+		imports.add("import { " + bean.formBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/forms/" + bean.formBean.className + "';");
 	}
 	
 	
