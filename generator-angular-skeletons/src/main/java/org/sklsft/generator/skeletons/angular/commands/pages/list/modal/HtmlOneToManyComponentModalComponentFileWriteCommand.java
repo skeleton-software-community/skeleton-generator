@@ -44,19 +44,19 @@ public class HtmlOneToManyComponentModalComponentFileWriteCommand extends Angula
 		writeLine("<div class=\"modal-form\" >");
 		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"saveOrUpdate()\">");
 		writeLine("<mat-dialog-content class=\"text-grey-darker\">");
-		writeLine("<div class=\"d-flex mx-n3 mt-n2\">");
-		writeLine("<button mat-icon-button mat-dialog-close disableRipple class=\"ml-auto\">");
-		writeLine("<mat-icon class=\"text-grey\">close</mat-icon>");
+		writeLine("<div>");
+		writeLine("<button mat-icon-button mat-dialog-close disableRipple>");
+		writeLine("<mat-icon class=\"text-grey\" svgIcon=\"close\"></mat-icon>");
 		writeLine("</button>");
 		writeLine("</div>");
-		writeLine("<section class=\"d-flex flex-column my-3\">");
+		writeLine("<section>");
 		for (ViewProperty property:referenceBean.formBean.properties) {
 			writeInput(property, referenceBean);
 		}
 		
 		writeLine("</section>");
 		writeLine("</mat-dialog-content>");
-		writeLine("<mat-dialog-actions class=\"d-flex flex-column pb-4\">");
+		writeLine("<mat-dialog-actions>");
 		if (referenceBean.createEnabled) {
 			writeLine("<button mat-raised-button *ngIf=\"view.id == null\" color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Save</button>");
 		}

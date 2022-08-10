@@ -35,7 +35,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 		imports.add("import { MatTableDataSource } from '@angular/material/table';");
 		imports.add("import { MatPaginator } from '@angular/material/paginator';");
 		
-		imports.add("import { " + parentBean.restClientClassName + " } from '../../services/" + parentBean.restClientClassName + "';");
+		imports.add("import { " + parentBean.restClientClassName + " } from '" + parentBean.myPackage.tsServicesSourcePath + "/" + parentBean.restClientClassName + "';");
 		imports.add("import { ScrollForm } from \"src/app/core/models/ScrollForm\";");
 		imports.add("import { ScrollView } from \"src/app/core/models/ScrollView\";");
 		imports.add("import { SelectItem } from \"src/app/core/models/SelectItem\";");

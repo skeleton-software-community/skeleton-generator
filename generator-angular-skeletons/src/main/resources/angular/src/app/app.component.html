@@ -1,7 +1,7 @@
-<app-header (toggle)="navigationDrawer.toggle()"></app-header>
-<app-navigation-drawer #navigationDrawer class="flex-grow-1 overflow-auto">
-  <main class="flex-grow-1 p-5">
+<app-header (toggle)="body.toggle()"></app-header>
+<app-body #body class="app-body">
+
     <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer>
-</app-navigation-drawer>
+
+</app-body>
+<app-footer></app-footer>

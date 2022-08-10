@@ -1,12 +1,16 @@
-<mat-toolbar class="app-header mat-elevation-z9">
-  <mat-toolbar-row>
-    <button (click)="toggle.emit()" class="mr-3" mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <a class="d-flex align-items-center h-100" routerLink="/">
-      <img alt="Logo" class="logo mr-5 d-none d-md-inline h-75"
-           src="/assets/images/logo.png"/>
-      <h1 class="mat-title text-uppercase mb-0">${project.projectName}</h1>
+<div class="app-header">
+  <div class="container">
+    <div class="app-menu">
+      <button mat-icon-button (click)="toggle.emit()" class="app-menu-button" mat-icon-button>
+        <mat-icon svgIcon="menu"></mat-icon>
+      </button>
+    </div>
+    <a routerLink="/">
+      <img alt="Logo" class="app-logo"
+              src="/assets/images/logo.png"/>
+      <div class="app-brand">
+        <h1>${project.projectName}</h1>
+      </div>
     </a>
-  </mat-toolbar-row>
-</mat-toolbar>
+  </div>
+</div>

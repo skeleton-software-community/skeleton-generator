@@ -9,24 +9,15 @@ import { Router } from '@angular/router';
 import { CdkAccordionItem } from '@angular/cdk/accordion';
 
 @Component({
-  selector: 'app-navigation-drawer',
-  templateUrl: './navigation-drawer.component.html',
-  styleUrls: ['./navigation-drawer.component.scss']
+  selector: 'app-body',
+  templateUrl: './body.component.html',
+  styleUrls: ['./body.component.scss']
 })
-export class NavigationDrawerComponent {
+export class BodyComponent {
   @ViewChild('sidenavRef', { static: false }) sideNavRef: MatSidenav;
   menus: NavMenu[] = navigationMenus;
-  mode$: Observable<'over' | 'push' | 'side'>;
-  large$: Observable<boolean>;
-
-  constructor(breakpointObserver: BreakpointObserver) {
-    this.large$ = breakpointObserver.observe([Breakpoints.Large, Breakpoints.XLarge]).pipe(map(result => result.matches));
-    this.mode$ = this.large$.pipe(map(large => (large ? 'side' : 'over')));
-  }
 
   toggle(): void {
     this.sideNavRef.toggle();
   }
-
-
 }

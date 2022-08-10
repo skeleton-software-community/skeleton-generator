@@ -1,4 +1,52 @@
 .app-header {
-  background-color: #000087;
-  color: white !important;
+  background-color: rgb(255, 255, 255);
+  border-bottom-color: rgb(192, 192, 192);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  box-sizing: border-box;
+  color: rgb(118, 118, 118);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 71px;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  z-index: 1000;
 }
+
+.app-menu {
+  height:40px;
+  margin-top:30px;
+  margin-left:15px;
+  float:left;
+}
+
+.app-root-link {
+  text-decoration: none;
+}
+
+.app-logo {
+  height: 70px;
+  margin-left: 18px;
+  margin-right: 18px;
+  float:left;
+}
+
+.app-brand {
+  height:40px;
+  margin-top:30px;
+  float:left;
+
+  h1 {
+    color: rgb(118, 118, 118);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    margin-top:2px;
+    font-weight: normal;
+  }
+}
+
+
+
+

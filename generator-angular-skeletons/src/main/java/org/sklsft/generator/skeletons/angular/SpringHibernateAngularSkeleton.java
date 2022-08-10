@@ -44,7 +44,6 @@ public class SpringHibernateAngularSkeleton implements Skeleton {
 		layers.add(new BusinessComponentLayer());
 		layers.add(new ServiceLayer());
 		layers.add(new SpringRestControllerLayer());
-		layers.add(new SpringRestClientLayer());
 		layers.add(new PopulatorLayer());
 		layers.add(new JunitLayer());
 		layers.add(new TypeScriptModelLayer());
