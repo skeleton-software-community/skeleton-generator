@@ -179,7 +179,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 		        writeLine("public List<" + this.bean.basicViewBean.className + "> loadListFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id) {");
 		        writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
 		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
-		        writeLine("return Arrays.asList(restClient.getForObject(GET_" + bean.table.originalName + "_LIST_FROM_" + property.referenceBean.table.originalName + "_URL, " + this.bean.basicViewBean.className + "[].class, vars));");
+		        writeLine("return Arrays.asList(restClient.getForObject(GET_LIST_FROM_" + property.referenceBean.table.originalName + "_URL, " + this.bean.basicViewBean.className + "[].class, vars));");
 		        writeLine("}");
 		        skipLine();
 		    }
@@ -208,7 +208,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 				writeLine("public ScrollView<" + this.bean.basicViewBean.className + "> scrollFrom" + property.capName + " (" + property.referenceBean.idType + " " + property.name + "Id, ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + "> form) {");
 				writeLine("Map<String, Object> vars = new HashMap<String, Object>();");
 		        writeLine("vars.put(\"" + property.name + "Id\", " + property.name + "Id);");
-		        writeLine("return restClient.postForObject(SCROLL_" + bean.table.originalName + "_FROM_" + property.referenceBean.table.originalName + "_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){}, vars);");
+		        writeLine("return restClient.postForObject(SCROLL_FROM_" + property.referenceBean.table.originalName + "_URL, form, new ParameterizedTypeReference<ScrollView<" + this.bean.basicViewBean.className +">>(){}, vars);");
 				writeLine("}");
 				skipLine();
 		    }

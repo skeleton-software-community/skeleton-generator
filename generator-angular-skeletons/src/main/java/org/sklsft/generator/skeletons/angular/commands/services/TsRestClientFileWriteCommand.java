@@ -77,9 +77,9 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		createLoadObjectList();
 		createScroll();
 		createLoadObject();
-		if (bean.cardinality>0) {
-			//createFindObject();
-		}
+//		if (bean.cardinality>0) {
+//			createFindObject();
+//		}
 		createLoadOneToOneComponent();
 		createLoadOneToManyComponentList();
 		createScrollOneToManyComponent();
@@ -148,7 +148,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		        writeLine(" * load object list from " + property.name);
 		        writeLine(" */");
 		        writeLine("public loadListFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ") {");
-		        writeLine("return this.http.get<" + this.bean.basicViewBean.className + "[]>(environment.restApiUrl + '/" + bean.urlPiece + "/' + " + property.name + "Id + '/" + property.referenceBean.urlPiece + "/list');");
+		        writeLine("return this.http.get<" + this.bean.basicViewBean.className + "[]>(environment.restApiUrl + '/" + property.referenceBean.urlPiece + "/' + " + property.name + "Id + '/" + bean.urlPiece + "/list');");
 				writeLine("}");
 		        skipLine();
 		    }
@@ -171,7 +171,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 		        writeLine(" * scroll object list from " + property.name);
 		        writeLine(" */");
 				writeLine("public scrollFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ", form: ScrollForm<" + bean.basicViewBean.filter.className + ", " + bean.basicViewBean.sortingClassName + ">) {");
-				writeLine("return this.http.post<ScrollView<" + this.bean.basicViewBean.className + ">>(environment.restApiUrl + '/" + bean.urlPiece + "/' + " + property.name + "Id + '/" + property.referenceBean.urlPiece + "/scroll', form, this.httpOptions);");
+				writeLine("return this.http.post<ScrollView<" + this.bean.basicViewBean.className + ">>(environment.restApiUrl + '/" + property.referenceBean.urlPiece + "/' + " + property.name + "Id + '/" + bean.urlPiece + "/scroll', form, this.httpOptions);");
 				writeLine("}");
 				skipLine();
 		    }
@@ -210,6 +210,18 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
         writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "', form, this.httpOptions);");
         writeLine("}");
         skipLine();
+        
+        for (Property property : this.bean.properties) {
+		    if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
+		        writeLine("/**");
+		        writeLine(" * save object from " + property.name);
+		        writeLine(" */");
+		        writeLine("public saveFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ", form: " + this.bean.formBean.className + ") {");
+				writeLine("return this.http.post<number>(environment.restApiUrl + '/" + property.referenceBean.urlPiece + "/' + " + property.name + "Id + '/" + bean.urlPiece + "', form, this.httpOptions);");
+				writeLine("}");
+				skipLine();
+		    }
+		}
     }
     
     

@@ -27,7 +27,7 @@ public class ScssOneToManyComponentModalComponentFileWriteCommand extends ScssFi
 	protected void writeContent() throws IOException {
 
         writeLine("/**");
-        writeLine(" * auto generated modal component scss file");
+        writeLine(" * auto generated one to many component modal component scss file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");

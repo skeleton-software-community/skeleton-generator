@@ -45,7 +45,7 @@ public class HtmlModalComponentFileWriteCommand extends AngularHtmlFileWriteComm
 		writeLine("</div>");
 		writeLine("<section>");
 		for (ViewProperty property:bean.formBean.properties) {
-			writeInput(property, bean);
+			writeInput(property);
 		}
 		
 		writeLine("</section>");

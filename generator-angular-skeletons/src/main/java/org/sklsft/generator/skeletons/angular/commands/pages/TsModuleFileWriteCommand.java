@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
@@ -31,11 +32,17 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { " + bean.className + "RoutingModule } from './" + bean.urlPiece + "-routing.module';");
 		imports.add("import { " + bean.className + "ListComponent } from './list/" + bean.urlPiece + "-list.component';");
 		imports.add("import { " + bean.className + "DetailsComponent } from './details/" + bean.urlPiece + "-details.component';");
+		imports.add("import { " + bean.className + "MenuComponent } from './menu/" + bean.urlPiece + "-menu.component';");
 		imports.add("import { " + bean.className + "ModalComponent } from './list/modal/" + bean.urlPiece + "-modal.component';");
 		
 		for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			imports.add("import { " + oneToManyComponent.referenceBean.className + "ListComponent } from './" + oneToManyComponent.referenceBean.urlPiece + "/list/" + oneToManyComponent.referenceBean.urlPiece + "-list.component';");
 			imports.add("import { " + oneToManyComponent.referenceBean.className + "ModalComponent } from './" + oneToManyComponent.referenceBean.urlPiece + "/list/modal/" + oneToManyComponent.referenceBean.urlPiece + "-modal.component';");
+		}
+		
+		for (OneToMany oneToMany:bean.oneToManyList) {
+			imports.add("import { " + oneToMany.referenceBean.className + "ListComponent } from './" + oneToMany.referenceBean.urlPiece + "/list/" + oneToMany.referenceBean.urlPiece + "-list.component';");
+			imports.add("import { " + oneToMany.referenceBean.className + "ModalComponent } from './" + oneToMany.referenceBean.urlPiece + "/list/modal/" + oneToMany.referenceBean.urlPiece + "-modal.component';");
 		}
 	}
 	
@@ -53,9 +60,12 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("@NgModule({");
-        write("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent, " + bean.className + "ModalComponent");
+        write("declarations: [" + bean.className + "ListComponent," + bean.className + "DetailsComponent, " + bean.className + "ModalComponent, " + bean.className + "MenuComponent");
         for (OneToManyComponent oneToManyComponent:bean.oneToManyComponentList) {
 			write(", " + oneToManyComponent.referenceBean.className + "ListComponent, " + oneToManyComponent.referenceBean.className + "ModalComponent");
+		}
+        for (OneToMany oneToMany:bean.oneToManyList) {
+			write(", " + oneToMany.referenceBean.className + "ListComponent, " + oneToMany.referenceBean.className + "ModalComponent");
 		}
         writeLine("],");
         

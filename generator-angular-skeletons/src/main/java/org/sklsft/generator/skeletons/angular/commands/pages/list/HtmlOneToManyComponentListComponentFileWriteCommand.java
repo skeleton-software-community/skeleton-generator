@@ -14,6 +14,7 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 
 	private OneToManyComponent oneToManyComponent;
 	private Bean referenceBean;
+	private Bean parentBean;
 	
 	/*
 	 * constructor
@@ -24,6 +25,7 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;
+		this.parentBean = oneToManyComponent.parentBean;
 		
 	}
 	
@@ -40,10 +42,8 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		writeLine("<!-- -->");
 		skipLine();
 		
-		writeLine("<nav mat-tab-nav-bar>");
-		writeLine("<a mat-tab-link *ngFor=\"let link of links\"");
-		writeLine("[active]=\"activePath == link.path\" [routerLink]=\"link.path\"> {{link.text}} </a>");
-		writeLine("</nav>");
+		writeLine("<app-" + parentBean.urlPiece + "-menu  #menu [activePath]=\"activePath\" [id]=\"id\"></app-" + parentBean.urlPiece + "-menu>");
+		skipLine();
 		
 		writeLine("<h2>");
 		writeLine(referenceBean.listRendering + ": {{scrollView.count}} / {{scrollView.size}}");
@@ -59,7 +59,7 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		writeLine("<mat-table [dataSource]=\"dataSource\" matSort>");
 
 		for (ViewProperty property:referenceBean.basicViewBean.properties) {
-			writeListComponent(property, referenceBean);
+			writeListComponent(property);
 		}
 		
 		writeLine("<ng-container matColumnDef=\"Actions\">");

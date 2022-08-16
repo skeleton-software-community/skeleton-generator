@@ -35,10 +35,8 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
-		writeLine("<nav mat-tab-nav-bar>");
-		writeLine("<a mat-tab-link *ngFor=\"let link of links\"");
-		writeLine("[active]=\"activePath == link.path\" [routerLink]=\"link.path\"> {{link.text}} </a>");
-		writeLine("</nav>");
+		writeLine("<app-" + bean.urlPiece + "-menu  #menu [activePath]=\"activePath\" [id]=\"id\"></app-" + bean.urlPiece + "-menu>");
+		skipLine();
 		
 		writeLine("<h2>");
 		writeLine(bean.detailRendering);
@@ -49,7 +47,7 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<form [formGroup]=\"form\" (ngSubmit)=\"update()\">");
 		
 		for (ViewProperty property:bean.formBean.properties) {
-			writeInput(property, bean);
+			writeInput(property);
 		}
 		
 		if (bean.updateEnabled) {

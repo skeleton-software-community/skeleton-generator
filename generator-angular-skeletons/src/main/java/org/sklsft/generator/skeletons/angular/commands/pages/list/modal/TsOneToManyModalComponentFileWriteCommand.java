@@ -6,30 +6,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.sklsft.generator.model.domain.business.Bean;
+import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
-public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWriteCommand {
+public class TsOneToManyModalComponentFileWriteCommand extends TsFileWriteCommand {
 
-	private OneToManyComponent oneToManyComponent;
+	private OneToMany oneToMany;
 	private Bean referenceBean;
 	private Bean parentBean;
 	private Map<String, Bean> selectableBeans = new HashMap<>();
 	/*
 	 * constructor
 	 */
-	public TsOneToManyComponentModalComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
+	public TsOneToManyModalComponentFileWriteCommand(OneToMany oneToMany) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
+		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToMany.parentBean.myPackage.tsComponentsPath + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToMany.referenceBean.urlPiece + "-modal.component");
 		
-		this.oneToManyComponent = oneToManyComponent;
-		this.referenceBean = oneToManyComponent.referenceBean;
-		this.parentBean = oneToManyComponent.parentBean;
+		this.oneToMany = oneToMany;
+		this.referenceBean = oneToMany.referenceBean;
+		this.parentBean = oneToMany.parentBean;
 		
-		for (ViewProperty property:this.referenceBean.formBean.properties) {
+		for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (property.selectableBean!=null) {
         		selectableBeans.put(property.selectableBean.className, property.selectableBean);
         	}
@@ -43,11 +44,13 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
 		imports.add("import { Observable } from 'rxjs';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { " + referenceBean.fullViewBean.className + " } from '" + referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + referenceBean.fullViewBean.className + "';");
+		imports.add("import { " + referenceBean.restClientClassName + " } from '" + referenceBean.myPackage.tsServicesSourcePath + "/" + referenceBean.restClientClassName + "';");
+		imports.add("import { " + parentBean.fullViewBean.className + " } from '" + parentBean.myPackage.tsModelsSourcePath + "/views/full/" + parentBean.fullViewBean.className + "';");
 		imports.add("import { " + parentBean.restClientClassName + " } from '" + parentBean.myPackage.tsServicesSourcePath + "/" + parentBean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		imports.add("import { MatDialogRef } from '@angular/material/dialog';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
-		for (ViewProperty property:this.referenceBean.formBean.properties) {
+		for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (property.selectableBean!=null) {
         		imports.add("import { " + property.selectableBean.restClientClassName + " } from '" + property.selectableBean.myPackage.tsServicesSourcePath + "/" + property.selectableBean.restClientClassName + "';");
         	}
@@ -61,14 +64,14 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         writeImports();
         
         writeLine("/**");
-        writeLine(" * auto generated one to many component modal component ts file");
+        writeLine(" * auto generated one to many modal component ts file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
         skipLine();
         
         writeLine("@Component({");
-        writeLine("selector: 'app-" + referenceBean.urlPiece + "-modal',");
+        writeLine("selector: 'app-" + referenceBean.urlPiece + "from-" + parentBean.urlPiece + "-modal',");
         writeLine("templateUrl: './" + referenceBean.urlPiece + "-modal.component.html',");
         writeLine("styleUrls: ['./" + referenceBean.urlPiece + "-modal.component.scss']");
         writeLine("})");
@@ -79,7 +82,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         writeLine("view: " + referenceBean.fullViewBean.className + ";");
         writeLine("form: FormGroup;");
         
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (property.selectableBean!=null) {
         		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         			writeLine(property.name + "Options: Observable<SelectItem[]>;");
@@ -92,7 +95,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         
         skipLine();
 
-        write("constructor(private service:" + parentBean.restClientClassName);
+        write("constructor(private service:" + referenceBean.restClientClassName + ", private " + parentBean.serviceObjectName + ":" + parentBean.restClientClassName);
         for (Bean selectableBean:selectableBeans.values()) {
         	
         	write(", private " + selectableBean.serviceObjectName + ":" + selectableBean.restClientClassName);
@@ -104,7 +107,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         boolean start = true;
         writeLine("ngOnInit(): void {");
         writeLine("this.form = this.formBuilder.group({");
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (start) {
         		start = false;
         	} else {
@@ -117,7 +120,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         	write("]");
         }
         writeLine("});");
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         		writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
         	}
@@ -128,7 +131,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         writeLine("restoreForm(): void {");
         writeLine("this.form.patchValue({");
         start = true;
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (start) {
         		start = false;
         	} else {
@@ -142,7 +145,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         skipLine();
 
         writeLine("applyForm(): void {");
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	switch (property.dataType) {
         	case BOOLEAN:
         		if (property.nullable) {
@@ -159,7 +162,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         skipLine();
         
         
-        for (ViewProperty property:this.referenceBean.formBean.properties) {
+        for (ViewProperty property:this.oneToMany.formBean.properties) {
         	if (property.selectableBean!=null) {
         		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         			writeLine("searchOptionsFor" + property.capName + "(value:string) {");
@@ -180,13 +183,22 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         
         writeLine("save(): void {");
         writeLine("this.applyForm();");
-        writeLine("this.service.save" + referenceBean.className + "(this.parentId, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
+        
+        writeLine("let " + parentBean.fullViewBean.objectName + ": " + parentBean.fullViewBean.className + ";"); 
+        writeLine("this." + parentBean.serviceObjectName + ".load(this.parentId).subscribe((t) => {" + parentBean.fullViewBean.objectName + "=t;");
+		for (ViewProperty property:parentBean.referenceViewProperties) {
+			writeLine("this.view.form." + oneToMany.referenceProperty.name + property.capName + " = " + parentBean.fullViewBean.objectName + ".form." + property.name + ";");
+		}
+        
+        writeLine("this.service.save(this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
+        
+        writeLine("});");
         writeLine("}");
         skipLine();
         
         writeLine("update(): void {");
         writeLine("this.applyForm();");
-        writeLine("this.service.update" + referenceBean.className + "(this.view.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("this.service.update(this.view.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.dialogRef.close();}, error => {this.notifications.error(\"Operation failed\")});");
         writeLine("}");
         skipLine();
         

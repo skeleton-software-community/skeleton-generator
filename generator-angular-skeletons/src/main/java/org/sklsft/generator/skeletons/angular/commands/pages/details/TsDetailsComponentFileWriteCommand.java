@@ -74,7 +74,6 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
 
         writeLine("id:" + bean.idTsType + ";");
-        writeLine("links:NavLink[];");
         writeLine("activePath:string;");
         writeLine("view: " + bean.fullViewBean.className + " = new " + bean.fullViewBean.className + "();");
         writeLine("form: FormGroup;");
@@ -94,9 +93,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
         write("constructor(private service:" + bean.restClientClassName);
         for (Bean selectableBean:selectableBeans.values()) {
-        	
         	write(", private " + selectableBean.serviceObjectName + ":" + selectableBean.restClientClassName);
-
 		}
         
         writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {");
@@ -107,14 +104,9 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         	writeLine("this.id = this.route.snapshot.paramMap.get('id');");
         }
 		writeLine("this.activePath = '/" + bean.urlPiece + "/' + this.id.toString();");
-	    write("this.links=[{text:'Details',path:'/" + bean.urlPiece + "/' + this.id.toString()}");
-	    for (OneToManyComponent component:bean.oneToManyComponentList) {
-	    	write(",{text:'" + component.referenceBean.listRendering + "',path:'/" + bean.urlPiece + "/' + this.id.toString() + '/" + component.referenceBean.urlPiece + "/list'}");
-	    }
-	    writeLine("];");
 	    writeLine("}");
 	
-	skipLine();
+	    skipLine();
         boolean start = true;
         writeLine("ngOnInit(): void {");
         writeLine("this.form = this.formBuilder.group({");

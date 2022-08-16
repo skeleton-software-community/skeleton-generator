@@ -12,7 +12,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		super(folderName, fileName);
 	}
 
-	protected void writeListComponent(ViewProperty property, Bean bean) {
+	protected void writeListComponent(ViewProperty property) {
 		writeLine("<ng-container matColumnDef=\"" + property.name + "\">");
 		writeLine("<mat-header-cell *matHeaderCellDef mat-sort-header class=\"table-header\">" + property.rendering + "</mat-header-cell>");
 		
@@ -62,53 +62,49 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	}
 	
 	
-	protected void writeInput(ViewProperty property, Bean bean){
-		writeInput("", property, bean);
-	}
-	
-	protected void writeInput(String prefix, ViewProperty property, Bean bean){
+	protected void writeInput(ViewProperty property){
 		
 		if (property.selectableBean != null) {
 			if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
-				writeCombobox(prefix, property, bean);
+				writeCombobox(property);
 			} else {
-				writeAutocomplete(prefix, property, bean);
+				writeAutocomplete(property);
 			}
 		} else {
 		
 			switch (property.dataType) {
 				case BOOLEAN:
-					writeBooleanInput(prefix, property, bean);
+					writeBooleanInput(property);
 					break;
 				case DATE:
-					writeDateInput(prefix, property, bean);
+					writeDateInput(property);
 					break;
 				case DATETIME:
-					writeDateTimeInput(prefix, property, bean);
+					writeDateTimeInput(property);
 					break;
 				case DOUBLE:
-					writeBigDecimalInput(prefix, property, bean);
+					writeBigDecimalInput(property);
 					break;
 				case BIG_DECIMAL:
-					writeBigDecimalInput(prefix, property, bean);
+					writeBigDecimalInput(property);
 					break;
 				case SHORT:
 				case INTEGER:
 				case LONG:
-					writeLongInput(prefix, property, bean);
+					writeLongInput(property);
 					break;
 				case STRING:
-					writeStringInput(prefix, property, bean);
+					writeStringInput(property);
 					break;
 				case TEXT:
-					writeTextInput(prefix, property, bean);
+					writeTextInput(property);
 					break;
 			}
 		}
         skipLine();
 	}
 	
-	private void writeCombobox(String prefix, ViewProperty property, Bean bean){
+	private void writeCombobox(ViewProperty property){
 		
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
@@ -121,7 +117,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeAutocomplete(String prefix, ViewProperty property, Bean bean){
+	private void writeAutocomplete(ViewProperty property){
 		
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\" class=\"autocomplete\">");
@@ -135,7 +131,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 	}
 	
 	
-	private void writeStringInput(String prefix, ViewProperty property, Bean bean){
+	private void writeStringInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
@@ -144,7 +140,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeTextInput(String prefix, ViewProperty property, Bean bean){
+	private void writeTextInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
@@ -153,7 +149,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeBooleanInput(String prefix, ViewProperty property, Bean bean){
+	private void writeBooleanInput(ViewProperty property){
 		if (!property.nullable) {
 			writeLine("<p>");
 			writeLine("<mat-checkbox color=\"primary\" formControlName=\"" +  property.name + "\">");
@@ -174,7 +170,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		}
 	}
 	
-	private void writeBigDecimalInput(String prefix, ViewProperty property, Bean bean){
+	private void writeBigDecimalInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
@@ -183,7 +179,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeLongInput(String prefix, ViewProperty property, Bean bean){
+	private void writeLongInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
@@ -192,7 +188,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeDateInput(String prefix, ViewProperty property, Bean bean){
+	private void writeDateInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
@@ -203,7 +199,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("</p>");
 	}
 	
-	private void writeDateTimeInput(String prefix, ViewProperty property, Bean bean){
+	private void writeDateTimeInput(ViewProperty property){
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
