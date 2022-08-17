@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages.details.menu;
+package org.sklsft.generator.skeletons.angular.commands.pages.menu;
 
 import java.io.File;
 import java.io.IOException;

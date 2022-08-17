@@ -1,18 +1,17 @@
-package org.sklsft.generator.skeletons.angular.commands.pages.list.modal;
+package org.sklsft.generator.skeletons.angular.commands.pages.modal;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.skeletons.angular.commands.pages.AngularHtmlFileWriteCommand;
 
 
-public class HtmlOneToManyModalComponentFileWriteCommand extends AngularHtmlFileWriteCommand {
+public class HtmlOneToManyComponentModalComponentFileWriteCommand extends AngularHtmlFileWriteCommand {
 
-	private OneToMany oneToMany;
+	private OneToManyComponent oneToManyComponent;
 	private Bean referenceBean;
 	private Bean parentBean;
 
@@ -20,13 +19,13 @@ public class HtmlOneToManyModalComponentFileWriteCommand extends AngularHtmlFile
 	/*
 	 * constructor
 	 */
-	public HtmlOneToManyModalComponentFileWriteCommand(OneToMany oneToMany) {
+	public HtmlOneToManyComponentModalComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToMany.parentBean.myPackage.tsComponentsPath + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToMany.referenceBean.urlPiece + "-modal.component");
+		super(oneToManyComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
 		
-		this.oneToMany = oneToMany;
-		this.referenceBean = oneToMany.referenceBean;
-		this.parentBean = oneToMany.parentBean;
+		this.oneToManyComponent = oneToManyComponent;
+		this.referenceBean = oneToManyComponent.referenceBean;
+		this.parentBean = oneToManyComponent.parentBean;
 	}
 	
 	
@@ -36,7 +35,7 @@ public class HtmlOneToManyModalComponentFileWriteCommand extends AngularHtmlFile
 
         
 		writeLine("<!-- -->");
-		writeLine("<!-- auto generated one to many modal component html file -->");
+		writeLine("<!-- auto generated one to many component modal component html file -->");
 		writeLine("<!-- write modifications between specific code marks -->");
 		writeLine("<!-- processed by skeleton generator -->");
 		writeLine("<!-- -->");
@@ -51,7 +50,7 @@ public class HtmlOneToManyModalComponentFileWriteCommand extends AngularHtmlFile
 		writeLine("</button>");
 		writeLine("</div>");
 		writeLine("<section>");
-		for (ViewProperty property:oneToMany.formBean.properties) {
+		for (ViewProperty property:referenceBean.formBean.properties) {
 			writeInput(property);
 		}
 		

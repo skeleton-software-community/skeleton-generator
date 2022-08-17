@@ -45,7 +45,7 @@ public class TsListComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { MatSort } from '@angular/material/sort';");
 		imports.add("import { MatDialog } from '@angular/material/dialog';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
-		imports.add("import { " + bean.className + "ModalComponent } from './modal/" + bean.urlPiece + "-modal.component';");
+		imports.add("import { " + bean.className + "ModalComponent } from './../modal/" + bean.urlPiece + "-modal.component';");
 		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}

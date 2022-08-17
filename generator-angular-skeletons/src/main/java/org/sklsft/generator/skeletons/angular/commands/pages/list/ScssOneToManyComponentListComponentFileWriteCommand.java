@@ -18,7 +18,7 @@ public class ScssOneToManyComponentListComponentFileWriteCommand extends ScssFil
 	 */
 	public ScssOneToManyComponentListComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
+		super(oneToManyComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;

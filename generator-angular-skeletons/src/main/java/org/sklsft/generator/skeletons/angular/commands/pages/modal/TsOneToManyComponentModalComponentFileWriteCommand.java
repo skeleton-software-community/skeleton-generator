@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages.list.modal;
+package org.sklsft.generator.skeletons.angular.commands.pages.modal;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
 	 */
 	public TsOneToManyComponentModalComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
+		super(oneToManyComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;
@@ -118,8 +118,13 @@ public class TsOneToManyComponentModalComponentFileWriteCommand extends TsFileWr
         }
         writeLine("});");
         for (ViewProperty property:this.referenceBean.formBean.properties) {
-        	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
-        		writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
+        	if (property.selectableBean!=null) {
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
+        			writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
+        		}
+        		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
+        			writeLine("this.loadOptionsFor" + property.capName + "();");
+        		}
         	}
         }
         writeLine("this.restoreForm();");

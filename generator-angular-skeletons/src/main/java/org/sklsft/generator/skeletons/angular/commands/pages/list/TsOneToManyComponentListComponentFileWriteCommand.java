@@ -22,7 +22,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 	 */
 	public TsOneToManyComponentListComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.referenceBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
+		super(oneToManyComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list", oneToManyComponent.referenceBean.urlPiece + "-list.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		this.referenceBean = oneToManyComponent.referenceBean;
@@ -54,7 +54,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
-		imports.add("import { " + referenceBean.className + "ModalComponent } from './modal/" + referenceBean.urlPiece + "-modal.component';");
+		imports.add("import { " + referenceBean.className + "ModalComponent } from './../modal/" + referenceBean.urlPiece + "-modal.component';");
 		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}

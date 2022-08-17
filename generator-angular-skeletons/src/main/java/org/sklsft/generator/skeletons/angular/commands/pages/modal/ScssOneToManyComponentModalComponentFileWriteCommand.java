@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages.list.modal;
+package org.sklsft.generator.skeletons.angular.commands.pages.modal;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class ScssOneToManyComponentModalComponentFileWriteCommand extends ScssFi
 	 */
 	public ScssOneToManyComponentModalComponentFileWriteCommand(OneToManyComponent oneToManyComponent) {
         
-		super(oneToManyComponent.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "list" + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
+		super(oneToManyComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToManyComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToManyComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToManyComponent.parentBean.urlPiece + File.separator + oneToManyComponent.referenceBean.urlPiece + File.separator + "modal", oneToManyComponent.referenceBean.urlPiece + "-modal.component");
 		
 		this.oneToManyComponent = oneToManyComponent;
 		

@@ -22,7 +22,7 @@ public class TsOneToManyListComponentFileWriteCommand extends TsFileWriteCommand
 	 */
 	public TsOneToManyListComponentFileWriteCommand(OneToMany oneToMany) {
         
-		super(oneToMany.referenceBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.referenceBean.myPackage.model.tsUiArtefactName + File.separator + oneToMany.referenceBean.myPackage.tsComponentsPath + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece + File.separator + "list", oneToMany.referenceBean.urlPiece + "-list.component");
+		super(oneToMany.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToMany.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToMany.parentBean.myPackage.tsComponentsPath + File.separator + oneToMany.parentBean.urlPiece + File.separator + oneToMany.referenceBean.urlPiece + File.separator + "list", oneToMany.referenceBean.urlPiece + "-list.component");
 		
 		this.oneToMany = oneToMany;
 		this.referenceBean = oneToMany.referenceBean;
@@ -53,7 +53,7 @@ public class TsOneToManyListComponentFileWriteCommand extends TsFileWriteCommand
 		imports.add("import { MatDialog } from '@angular/material/dialog';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
-		imports.add("import { " + referenceBean.className + "ModalComponent } from './modal/" + referenceBean.urlPiece + "-modal.component';");
+		imports.add("import { " + referenceBean.className + "ModalComponent } from './../modal/" + referenceBean.urlPiece + "-modal.component';");
 		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
 	}

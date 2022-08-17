@@ -1,4 +1,4 @@
-package org.sklsft.generator.skeletons.angular.commands.pages.list.modal;
+package org.sklsft.generator.skeletons.angular.commands.pages.modal;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class HtmlModalComponentFileWriteCommand extends AngularHtmlFileWriteComm
 	 */
 	public HtmlModalComponentFileWriteCommand(Bean bean) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece + File.separator + "list" + File.separator + "modal", bean.urlPiece + "-modal.component");
+		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece + File.separator + "modal", bean.urlPiece + "-modal.component");
 		
 		this.bean = bean;
 		
