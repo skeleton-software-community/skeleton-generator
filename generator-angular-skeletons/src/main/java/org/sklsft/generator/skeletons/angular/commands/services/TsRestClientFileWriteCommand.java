@@ -298,7 +298,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
             writeLine(" * load one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("public load" + currentBean.className + "(id: " + bean.idTsType + ") {");            
-            writeLine("return this.http.get<" + currentBean.fullViewBean.className + ">(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, this.httpOptions);");
+            writeLine("return this.http.get<" + currentBean.fullViewBean.className + ">(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', this.httpOptions);");
             writeLine("}");
             skipLine();
         }
@@ -355,8 +355,8 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
             writeLine("/**");
             writeLine(" * update one to one component " + currentBean.objectName);
             writeLine(" */");
-            writeLine("public update" + currentBean.className + "(id: " + currentBean.idTsType + ", form: " + currentBean.formBean.className + ") {");
-            writeLine("return this.http.put(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id, form, this.httpOptions);");
+            writeLine("public update" + currentBean.className + "(id: " + bean.idTsType + ", form: " + currentBean.formBean.className + ") {");
+            writeLine("return this.http.put(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
             writeLine("}");
             skipLine();
         }
@@ -397,8 +397,8 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
             writeLine("/**");            
             writeLine(" * delete one to one component " + currentBean.objectName);            
             writeLine(" */");
-            writeLine("public delete" + currentBean.className + "(id: " + currentBean.idTsType + ") {");
-            writeLine("return this.http.delete(environment.restApiUrl + '/" + currentBean.urlPiece + "/' + id);");
+            writeLine("public delete" + currentBean.className + "(id: " + bean.idTsType + ") {");
+            writeLine("return this.http.delete(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "');");
             writeLine("}");
             skipLine();
         }

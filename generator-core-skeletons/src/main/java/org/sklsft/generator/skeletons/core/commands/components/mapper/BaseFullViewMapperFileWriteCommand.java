@@ -90,14 +90,22 @@ public class BaseFullViewMapperFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(this.bean.fullViewBean.objectName + ".setCanUpdate(" 
 					+ this.bean.parentBean.rightsManagerObjectName +".canUpdate" + this.bean.className + "(" + this.bean.objectName + ") && "
 					+ this.bean.parentBean.stateManagerObjectName +".canUpdate" + this.bean.className + "(" + this.bean.objectName + "));");
+			
+			writeLine(this.bean.fullViewBean.objectName + ".setCanDelete(" 
+					+ this.bean.parentBean.rightsManagerObjectName + ".canDelete" + bean.className + "(" + this.bean.objectName + ")" 
+					+ " && "
+					+ this.bean.parentBean.stateManagerObjectName + ".canDelete" + bean.className + "(" + this.bean.objectName + "));");
 		} 
 		else {
 			writeLine(this.bean.fullViewBean.objectName + ".setCanUpdate(" 
 					+ this.bean.rightsManagerObjectName +".canUpdate(" + this.bean.objectName + ") && "
 					+ this.bean.stateManagerObjectName +".canUpdate(" + this.bean.objectName + "));");
-		}
-		
-		
+			
+			writeLine(this.bean.fullViewBean.objectName + ".setCanDelete(" 
+					+ this.bean.rightsManagerObjectName + ".canDelete(" + this.bean.objectName + ")" 
+					+ " && "
+					+ this.bean.stateManagerObjectName + ".canDelete(" + this.bean.objectName + "));");
+		}		
 		
 		writeLine("return " + this.bean.fullViewBean.objectName + ";");
 		writeLine("}");

@@ -5,7 +5,7 @@ export class StringUtils {
   }
 
   static stringToStrictBoolean(arg:any) {
-    if (arg == '') { return false;}
+    if (arg == '' || arg == null) {return false;}
 
     return arg;
   }

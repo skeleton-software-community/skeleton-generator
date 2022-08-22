@@ -8,6 +8,7 @@ import java.util.Map;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
@@ -73,6 +74,9 @@ public class TsMenuComponentFileWriteCommand extends TsFileWriteCommand {
 	    }
 	    for (OneToMany component:bean.oneToManyList) {
 	    	write(",{text:'" + component.referenceBean.listRendering + "',path:'/" + bean.urlPiece + "/' + this.id.toString() + '/" + component.referenceBean.urlPiece + "/list'}");
+	    }
+	    for (OneToOneComponent component:bean.oneToOneComponentList) {
+	    	write(",{text:'" + component.referenceBean.detailRendering + "',path:'/" + bean.urlPiece + "/' + this.id.toString() + '/" + component.referenceBean.urlPiece + "'}");
 	    }
 	    writeLine("];");
         writeLine("}");

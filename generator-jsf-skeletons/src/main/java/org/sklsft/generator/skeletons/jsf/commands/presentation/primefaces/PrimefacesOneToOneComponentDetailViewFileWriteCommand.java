@@ -85,7 +85,7 @@ public class PrimefacesOneToOneComponentDetailViewFileWriteCommand extends Prime
         
         if (this.oneToOneComponent.referenceBean.deleteEnabled) {
             writeLine("<p:commandButton value=\"#{i18n.delete}\"" 
-            		+ " rendered=\"#{not empty view.id}\""
+            		+ " rendered=\"#{not empty view.id}\" disabled=\"#{not view.canDelete}\""
             		+ " action=\"#{" + parentBean.detailControllerObjectName + ".delete" + currentBean.className + "}\""
             		+ " styleClass=\"btn btn-warning\" process=\"@this\""
             		+ " update=\":messages, @form:" + currentBean.objectName + "DetailPanelGroup\"/>");

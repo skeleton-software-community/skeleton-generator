@@ -6,27 +6,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.sklsft.generator.model.domain.business.Bean;
-import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
-public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
+public class TsOneToOneComponentDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 
-	private Bean bean;
+	private OneToOneComponent oneToOneComponent;
+	private Bean parentBean;
+	private Bean referenceBean;
 	private Map<String, Bean> selectableBeans = new HashMap<>();
 	/*
 	 * constructor
 	 */
-	public TsDetailsComponentFileWriteCommand(Bean bean) {
+	public TsOneToOneComponentDetailsComponentFileWriteCommand(OneToOneComponent oneToOneComponent) {
         
-		super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPackage.model.tsUiArtefactName + File.separator + bean.myPackage.tsComponentsPath + File.separator + bean.urlPiece + File.separator + "details", bean.urlPiece + "-details.component");
+		super(oneToOneComponent.parentBean.myPackage.model.project.workspaceFolder + File.separator + oneToOneComponent.parentBean.myPackage.model.tsUiArtefactName + File.separator + oneToOneComponent.parentBean.myPackage.tsComponentsPath + File.separator + oneToOneComponent.parentBean.urlPiece + File.separator + oneToOneComponent.referenceBean.urlPiece + File.separator + "details", oneToOneComponent.referenceBean.urlPiece + "-details.component");
 		
-		this.bean = bean;
+		this.oneToOneComponent = oneToOneComponent;
+		this.parentBean = oneToOneComponent.parentBean;
+		this.referenceBean = oneToOneComponent.referenceBean;
 		
-		for (ViewProperty property:this.bean.formBean.properties) {
+		for (ViewProperty property:referenceBean.formBean.properties) {
         	if (property.selectableBean!=null) {
         		selectableBeans.put(property.selectableBean.className, property.selectableBean);
         	}
@@ -41,11 +45,11 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
 		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
-		imports.add("import { " + bean.fullViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/full/" + bean.fullViewBean.className + "';");
-		imports.add("import { " + bean.restClientClassName + " } from '" + bean.myPackage.tsServicesSourcePath + "/" + bean.restClientClassName + "';");
+		imports.add("import { " + referenceBean.fullViewBean.className + " } from '" + referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + referenceBean.fullViewBean.className + "';");
+		imports.add("import { " + parentBean.restClientClassName + " } from '" + parentBean.myPackage.tsServicesSourcePath + "/" + parentBean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");
-		for (ViewProperty property:this.bean.formBean.properties) {
+		for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null) {
         		imports.add("import { " + property.selectableBean.restClientClassName + " } from '" + property.selectableBean.myPackage.tsServicesSourcePath + "/" + property.selectableBean.restClientClassName + "';");
         	}
@@ -59,26 +63,26 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         writeImports();
         
         writeLine("/**");
-        writeLine(" * auto generated details component ts file");
+        writeLine(" * auto generated one to one component details component ts file");
         writeLine(" * <br/>write modifications between specific code marks");
         writeLine(" * <br/>processed by skeleton-generator");
         writeLine(" */");
         skipLine();
         
         writeLine("@Component({");
-        writeLine("selector: 'app-" + bean.urlPiece + "-details',");
-        writeLine("templateUrl: './" + bean.urlPiece + "-details.component.html',");
-        writeLine("styleUrls: ['./" + bean.urlPiece + "-details.component.scss']");
+        writeLine("selector: 'app-" + referenceBean.urlPiece + "-details',");
+        writeLine("templateUrl: './" + referenceBean.urlPiece + "-details.component.html',");
+        writeLine("styleUrls: ['./" + referenceBean.urlPiece + "-details.component.scss']");
         writeLine("})");
-        writeLine("export class " + this.bean.className + "DetailsComponent implements OnInit {");
+        writeLine("export class " + this.referenceBean.className + "DetailsComponent implements OnInit {");
         skipLine();
 
-        writeLine("id:" + bean.idTsType + ";");
+        writeLine("id:" + parentBean.idTsType + ";");
         writeLine("activePath:string;");
-        writeLine("view: " + bean.fullViewBean.className + " = new " + bean.fullViewBean.className + "();");
+        writeLine("view: " + referenceBean.fullViewBean.className + " = new " + referenceBean.fullViewBean.className + "();");
         writeLine("form: FormGroup;");
         
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null) {
         		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         			writeLine(property.name + "Options: Observable<SelectItem[]>;");
@@ -91,26 +95,26 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         
         skipLine();
 
-        write("constructor(private service:" + bean.restClientClassName);
+        write("constructor(private service:" + parentBean.restClientClassName);
         for (Bean selectableBean:selectableBeans.values()) {
         	write(", private " + selectableBean.serviceObjectName + ":" + selectableBean.restClientClassName);
 		}
         
         writeLine(", private route: ActivatedRoute, private formBuilder: FormBuilder, private notifications: NotificationService) {");
         
-        if (bean.idTsType.equals(DataType.INTEGER.getTsType())) {
+        if (parentBean.idTsType.equals(DataType.INTEGER.getTsType())) {
         	writeLine("this.id = parseInt(this.route.snapshot.paramMap.get('id'));");
         } else {
         	writeLine("this.id = this.route.snapshot.paramMap.get('id');");
         }
-		writeLine("this.activePath = '/" + bean.urlPiece + "/' + this.id.toString();");
-	    writeLine("}");
+        writeLine("this.activePath = '/" + parentBean.urlPiece + "/' + this.id.toString() + '/" + referenceBean.urlPiece + "';");
+        writeLine("}");
 	
 	    skipLine();
         boolean start = true;
         writeLine("ngOnInit(): void {");
         writeLine("this.form = this.formBuilder.group({");
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (start) {
         		start = false;
         	} else {
@@ -123,7 +127,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         	write("]");
         }
         writeLine("})");
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         		writeLine("this.form.controls['" + property.name + "'].valueChanges.subscribe(value=>{this.searchOptionsFor" + property.capName + "(value)});");
         	}
@@ -134,7 +138,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         writeLine("restoreForm(): void {");
         writeLine("this.form.patchValue({");
         start = true;
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (start) {
         		start = false;
         	} else {
@@ -148,7 +152,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
 
         writeLine("applyForm(): void {");
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	switch (property.dataType) {
 	        	case BOOLEAN:
 	        		if (property.nullable) {
@@ -165,8 +169,8 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         skipLine();
         
         writeLine("load(): void {");
-        writeLine("this.service.load(this.id).subscribe((t) => {this.view=t;this.restoreForm();});");
-        for (ViewProperty property:this.bean.formBean.properties) {
+        writeLine("this.service.load" + referenceBean.className + "(this.id).subscribe((t) => {this.view=t;this.restoreForm();});");
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null && property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.DROPDOWN_OPTIONS)) {
         		writeLine("this.loadOptionsFor" + property.capName + "();");
         	}
@@ -175,7 +179,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         
         skipLine();
         
-        for (ViewProperty property:this.bean.formBean.properties) {
+        for (ViewProperty property:this.referenceBean.formBean.properties) {
         	if (property.selectableBean!=null) {
         		if (property.selectableBean.selectionBehavior.selectionMode.equals(SelectionMode.AUTO_COMPLETE)) {
         			writeLine("searchOptionsFor" + property.capName + "(value:string) {");
@@ -194,10 +198,28 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
         	}
         }
         
+        writeLine("save(): void {");
+        writeLine("this.applyForm();");
+        writeLine("this.service.save" + referenceBean.className + "(this.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.load();}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("this.load();");
+        writeLine("}");
+        skipLine();
+        
         writeLine("update(): void {");
         writeLine("this.applyForm();");
-        writeLine("this.service.update(this.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.load();}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("this.service.update" + referenceBean.className + "(this.id, this.view.form).subscribe(success => {this.notifications.info(\"Operation completed\");this.load();}, error => {this.notifications.error(\"Operation failed\")});");
         writeLine("}");
+        skipLine();
+        
+        writeLine("saveOrUpdate(): void {");
+        writeLine("if (this.view.id == null) {this.save()} else {this.update()}");
+        writeLine("}");
+        skipLine();
+        
+        writeLine("delete(): void {");
+        writeLine("this.service.delete" + referenceBean.className + "(this.id).subscribe(success => {this.notifications.info(\"Operation completed\");this.load();}, error => {this.notifications.error(\"Operation failed\")});");
+        writeLine("}");
+        skipLine();
 
         writeNotOverridableContent();
         

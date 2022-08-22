@@ -53,6 +53,7 @@ super(bean.myPackage.model.project.workspaceFolder + File.separator + bean.myPac
         writeLine("id: " + bean.idTsType + ";");
         writeLine("form: " + bean.formBean.className + ";");
         writeLine("canUpdate: boolean;");
+        writeLine("canDelete: boolean;");
         skipLine();
 
     }

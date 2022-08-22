@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
@@ -35,6 +36,9 @@ public class TsRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 		for (OneToMany oneToMany:bean.oneToManyList) {
 			imports.add("import { " + oneToMany.referenceBean.className + "ListComponent } from './" + oneToMany.referenceBean.urlPiece + "/list/" + oneToMany.referenceBean.urlPiece + "-list.component';");
 		}
+		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+			imports.add("import { " + oneToOneComponent.referenceBean.className + "DetailsComponent } from './" + oneToOneComponent.referenceBean.urlPiece + "/details/" + oneToOneComponent.referenceBean.urlPiece + "-details.component';");
+		}
 	}
 	
 	
@@ -58,6 +62,9 @@ public class TsRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 		}
         for (OneToMany oneToMany:bean.oneToManyList) {
         	writeLine( ",{path: ':id/" + oneToMany.referenceBean.urlPiece + "/list', component: " + oneToMany.referenceBean.className + "ListComponent }");
+		}
+        for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+        	writeLine( ",{path: ':id/" + oneToOneComponent.referenceBean.urlPiece + "', component: " + oneToOneComponent.referenceBean.className + "DetailsComponent }");
 		}
         writeLine("];");
         skipLine();

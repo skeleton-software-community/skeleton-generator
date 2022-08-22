@@ -9,6 +9,7 @@ import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.sklsft.generator.model.metadata.DataType;
 import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
@@ -114,7 +115,7 @@ public class TsOneToManyModalComponentFileWriteCommand extends TsFileWriteComman
         		writeLine(",");
         	}
         	write(property.name + ":[null");
-        	if (!property.nullable) {
+        	if (!property.nullable && !property.dataType.equals(DataType.BOOLEAN)) {
         		write(", Validators.required");
         	}
         	write("]");

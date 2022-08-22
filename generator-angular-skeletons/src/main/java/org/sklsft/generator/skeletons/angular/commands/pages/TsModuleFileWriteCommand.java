@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
+import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
@@ -44,6 +45,10 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 			imports.add("import { " + oneToMany.referenceBean.className + "ListComponent } from './" + oneToMany.referenceBean.urlPiece + "/list/" + oneToMany.referenceBean.urlPiece + "-list.component';");
 			imports.add("import { " + oneToMany.referenceBean.className + "ModalComponent } from './" + oneToMany.referenceBean.urlPiece + "/modal/" + oneToMany.referenceBean.urlPiece + "-modal.component';");
 		}
+		
+		for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+			imports.add("import { " + oneToOneComponent.referenceBean.className + "DetailsComponent } from './" + oneToOneComponent.referenceBean.urlPiece + "/details/" + oneToOneComponent.referenceBean.urlPiece + "-details.component';");
+		}
 	}
 	
 	
@@ -66,6 +71,9 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		}
         for (OneToMany oneToMany:bean.oneToManyList) {
 			write(", " + oneToMany.referenceBean.className + "ListComponent, " + oneToMany.referenceBean.className + "ModalComponent");
+		}
+        for (OneToOneComponent oneToOneComponent:bean.oneToOneComponentList) {
+			write(", " + oneToOneComponent.referenceBean.className + "DetailsComponent");
 		}
         writeLine("],");
         
