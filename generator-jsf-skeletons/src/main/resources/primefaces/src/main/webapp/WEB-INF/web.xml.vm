@@ -13,10 +13,25 @@
 	<welcome-file-list>
 		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/errors/500.jsf?faces-redirect=true</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/errors/403.jsf?faces-redirect=true</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/404.jsf?faces-redirect=true</location>
+	</error-page>
 
 	<error-page>
 		<exception-type>java.lang.RuntimeException</exception-type>
-		<location>/error.jsf?faces-redirect=true</location>
+		<location>/errors/500.jsf?faces-redirect=true</location>
 	</error-page>
 
 	<error-page>

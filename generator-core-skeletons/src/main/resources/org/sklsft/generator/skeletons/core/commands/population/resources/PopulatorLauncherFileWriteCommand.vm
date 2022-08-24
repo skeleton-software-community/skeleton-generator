@@ -45,7 +45,7 @@ public class PopulatorLauncher {
 	public static void main(String[] args) {
 		
 		if (args.length < 4) {
-			throw new IllegalArgumentException("workspace path and backup plan folder are Mandatory");
+			throw new IllegalArgumentException("workspace path, backup plan folder, datasource and prompt settings are Mandatory");
 		}
 		String workspacePath = args[0];
 		String backupPath = args[1];
