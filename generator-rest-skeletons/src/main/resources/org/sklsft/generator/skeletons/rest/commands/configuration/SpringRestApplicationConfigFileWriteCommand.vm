@@ -18,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -41,6 +42,9 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		
+		converters.removeIf(e -> e instanceof StringHttpMessageConverter);
+		
 		for (HttpMessageConverter<?> converter:converters) {
 			if (converter instanceof MappingJackson2HttpMessageConverter) {
 				((MappingJackson2HttpMessageConverter) converter).setObjectMapper(objectMapper());

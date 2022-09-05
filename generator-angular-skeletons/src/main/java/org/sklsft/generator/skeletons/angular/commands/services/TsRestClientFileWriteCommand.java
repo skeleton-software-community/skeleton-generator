@@ -207,21 +207,9 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
         writeLine(" * save object");        
         writeLine(" */");
         writeLine("public save(form: " + this.bean.formBean.className + ") {");
-        writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "', form, this.httpOptions);");
+        writeLine("return this.http.post<" + bean.idTsType + ">(environment.restApiUrl + '/" + bean.urlPiece + "', form, this.httpOptions);");
         writeLine("}");
         skipLine();
-        
-        for (Property property : this.bean.properties) {
-		    if (property.referenceBean != null && property.relation.equals(RelationType.MANY_TO_ONE)) {
-		        writeLine("/**");
-		        writeLine(" * save object from " + property.name);
-		        writeLine(" */");
-		        writeLine("public saveFrom" + property.capName + " (" + property.name + "Id: " + property.referenceBean.idTsType + ", form: " + this.bean.formBean.className + ") {");
-				writeLine("return this.http.post<number>(environment.restApiUrl + '/" + property.referenceBean.urlPiece + "/' + " + property.name + "Id + '/" + bean.urlPiece + "', form, this.httpOptions);");
-				writeLine("}");
-				skipLine();
-		    }
-		}
     }
     
     
@@ -328,7 +316,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
             writeLine(" * save one to one component " + currentBean.objectName);
             writeLine(" */");
             writeLine("public save" + currentBean.className + "(id:" + bean.idTsType + ", form: " + currentBean.formBean.className + ") {");
-            writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
+            writeLine("return this.http.post<" + currentBean.idTsType + ">(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
             writeLine("}");
             skipLine();
         }
@@ -342,7 +330,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
             writeLine(" * save one to many component " + currentBean.objectName);
             writeLine(" */");
             writeLine("public save" + currentBean.className + "(id:" + bean.idTsType + ", form: " + currentBean.formBean.className + ") {");
-            writeLine("return this.http.post<number>(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
+            writeLine("return this.http.post<" + currentBean.idTsType + ">(environment.restApiUrl + '/" + bean.urlPiece + "/' + id + '/" + currentBean.urlPiece + "', form, this.httpOptions);");
             writeLine("}");
             skipLine();
         }
