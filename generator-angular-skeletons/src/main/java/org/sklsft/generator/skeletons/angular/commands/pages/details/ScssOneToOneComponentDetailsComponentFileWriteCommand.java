@@ -3,7 +3,6 @@ package org.sklsft.generator.skeletons.angular.commands.pages.details;
 import java.io.File;
 import java.io.IOException;
 
-import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.ScssFileWriteCommand;
 

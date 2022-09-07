@@ -1,6 +1,5 @@
 package org.sklsft.generator.skeletons.angular.commands.pages;
 
-import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
 import org.sklsft.generator.model.metadata.SelectionMode;

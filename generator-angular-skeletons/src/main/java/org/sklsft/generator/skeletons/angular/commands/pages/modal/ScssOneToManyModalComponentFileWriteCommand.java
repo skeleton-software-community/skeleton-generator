@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.sklsft.generator.model.domain.business.OneToMany;
-import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.skeletons.commands.impl.typed.ScssFileWriteCommand;
 
 

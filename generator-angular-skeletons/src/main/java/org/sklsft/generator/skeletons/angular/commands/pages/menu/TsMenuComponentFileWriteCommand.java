@@ -10,8 +10,6 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.business.OneToManyComponent;
 import org.sklsft.generator.model.domain.business.OneToOneComponent;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
-import org.sklsft.generator.model.metadata.DataType;
-import org.sklsft.generator.model.metadata.SelectionMode;
 import org.sklsft.generator.skeletons.commands.impl.typed.TsFileWriteCommand;
 
 
