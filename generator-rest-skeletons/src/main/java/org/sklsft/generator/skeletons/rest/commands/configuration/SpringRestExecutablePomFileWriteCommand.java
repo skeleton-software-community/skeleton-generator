@@ -6,9 +6,9 @@ import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.files.FileType;
 import org.sklsft.generator.skeletons.commands.impl.templatized.ProjectTemplatizedFileWriteCommand;
 
-public class SpringRestWarPomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
+public class SpringRestExecutablePomFileWriteCommand extends ProjectTemplatizedFileWriteCommand {
 
-	public SpringRestWarPomFileWriteCommand(Project project) {
+	public SpringRestExecutablePomFileWriteCommand(Project project) {
 		super(project.workspaceFolder + File.separator + project.model.restArtefactName, "pom", FileType.XML, project);
 	}
 }

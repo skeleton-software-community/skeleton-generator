@@ -1,11 +1,12 @@
-# Spring profiles
-spring.profiles.active=server
+# Logger settings
+log.level=INFO
 
 # Access logs settings
 accessLog.traceRequestBody=true
 accessLog.traceResponseBody=true
 accessLog.traceSentBody=true
 accessLog.traceReceivedBody=true
+accessLog.printErrorStack=true
 
 # DB
 db.driverClassName=${project.dataSource.driverClassName}

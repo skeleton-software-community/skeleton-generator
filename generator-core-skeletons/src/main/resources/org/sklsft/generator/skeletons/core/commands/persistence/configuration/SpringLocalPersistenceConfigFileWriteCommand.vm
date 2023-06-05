@@ -14,8 +14,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @Configuration
-@Profile("server")
-public class PersistenceConfig {
+@Profile("local")
+public class LocalPersistenceConfig {
 	
 	@Inject
 	private Environment env;

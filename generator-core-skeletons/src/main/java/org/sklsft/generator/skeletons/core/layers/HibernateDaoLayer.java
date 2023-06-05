@@ -8,7 +8,7 @@ import org.sklsft.generator.skeletons.core.commands.persistence.BaseDaoInterface
 import org.sklsft.generator.skeletons.core.commands.persistence.DaoImplFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.persistence.DaoInterfaceFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.persistence.configuration.PersistencePomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.persistence.configuration.SpringPersistenceConfigFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.persistence.configuration.SpringLocalPersistenceConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 
@@ -31,7 +31,7 @@ public class HibernateDaoLayer extends AbstractLayer {
 		FileWriteCommandTreeNode repositoryPomTreeNode = new FileWriteCommandTreeNode(new PersistencePomFileWriteCommand(project));
 		configurationTreeNode.add(repositoryPomTreeNode);
 		
-		FileWriteCommandTreeNode springRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringPersistenceConfigFileWriteCommand(project));
+		FileWriteCommandTreeNode springRepositoryTreeNode = new FileWriteCommandTreeNode(new SpringLocalPersistenceConfigFileWriteCommand(project));
 		configurationTreeNode.add(springRepositoryTreeNode);
 		
 		

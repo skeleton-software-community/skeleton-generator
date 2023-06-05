@@ -36,7 +36,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @EnableAspectJAutoProxy
 @PropertySources({
 @PropertySource("classpath:application.properties"),
-@PropertySource("classpath:application-${env}.properties")})
+@PropertySource("classpath:application-${spring.profiles.active}.properties")})
 public class ApplicationConfig {
 	
 	@Bean

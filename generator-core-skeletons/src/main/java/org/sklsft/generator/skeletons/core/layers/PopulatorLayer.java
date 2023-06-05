@@ -13,7 +13,7 @@ import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponent
 import org.sklsft.generator.skeletons.core.commands.population.OneToOneComponentPopulatorFileTemplateCommandFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.LogbackPopulatorFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorPomFileWriteCommand;
-import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorProjectPropertiesFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.SpringPopulatorFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.SpringPopulatorRepositoryFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.resources.PopulatorLauncherFileWriteCommand;
@@ -54,7 +54,7 @@ public class PopulatorLayer extends AbstractLayer {
 		FileWriteCommandTreeNode logbackPopulatorTreeNode = new FileWriteCommandTreeNode(new LogbackPopulatorFileWriteCommand(project));
 		configurationTreeNode.add(logbackPopulatorTreeNode);
 		
-		FileWriteCommandTreeNode populatorPropertiesTreeNode = new FileWriteCommandTreeNode(new PopulatorProjectPropertiesFileWriteCommand(project));
+		FileWriteCommandTreeNode populatorPropertiesTreeNode = new FileWriteCommandTreeNode(new PopulatorPropertiesFileWriteCommand(project));
 		configurationTreeNode.add(populatorPropertiesTreeNode);
 		
 		return configurationTreeNode;

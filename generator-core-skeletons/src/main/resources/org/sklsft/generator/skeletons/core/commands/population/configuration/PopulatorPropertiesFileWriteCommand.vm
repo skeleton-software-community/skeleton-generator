@@ -1,5 +1,5 @@
 # Spring profiles
-spring.profiles.active=junit
+spring.profiles.active=population
 
 # Logger settings
 log.level=INFO

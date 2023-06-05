@@ -9,81 +9,37 @@ import org.sklsft.commons.log.ErrorLogger;
 import org.sklsft.commons.rest.aspect.correlation.RestRequestAspect;
 import org.sklsft.commons.rest.aspect.logging.RestLoggingAspect;
 import org.sklsft.commons.rest.exception.RestExceptionHandler;
-import org.sklsft.commons.text.serialization.JsonSerializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
-@ComponentScan(basePackages = "${project.domainName}.${project.projectName}")
-@EnableWebMvc
 @EnableAspectJAutoProxy
-@PropertySources({
-@PropertySource("classpath:application.properties"),
-@PropertySource("classpath:application-${env}.properties")})
 public class ApplicationConfig implements WebMvcConfigurer {
 	
 	@Inject
 	private Environment env;
 	
-	@Override
-	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-		
-		converters.removeIf(e -> e instanceof StringHttpMessageConverter);
-		
-		for (HttpMessageConverter<?> converter:converters) {
-			if (converter instanceof MappingJackson2HttpMessageConverter) {
-				((MappingJackson2HttpMessageConverter) converter).setObjectMapper(objectMapper());
-			}
-		}
-	}
-
-	@Bean
-	public ObjectMapper objectMapper() {
-		ObjectMapper result = new ObjectMapper();
-		result.setSerializationInclusion(Include.NON_NULL);
-		result.registerModule(new JavaTimeModule());
-		result.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		return result;
-	}
-	
-	@Bean
-	public JsonSerializer jsonSerializer() {
-		JsonSerializer result = new JsonSerializer(objectMapper());
-		return result;
-	}
-	
-	@Bean
-	public AccessLogger accessLogger() {
-		AccessLogger result = new AccessLogger(jsonSerializer());
-		return result;
-	}
-	
-	@Bean
-	public ErrorLogger errorLogger() {
-		ErrorLogger result = new ErrorLogger(jsonSerializer());
-		result.setPrintErrorStackInRootLogger(env.getRequiredProperty("log.errorLogsInRootLogger", Boolean.class));
-		return result;
-	}
+	@Inject
+	private ObjectMapper objectMapper;
+ 
+	@Inject
+	private AccessLogger accessLogger;
+ 
+	@Inject
+	private ErrorLogger errorLogger;
 	
 	@Bean
 	public RestExceptionHandler restExceptionHandler() {
 		RestExceptionHandler result = new RestExceptionHandler();
-		result.setPrintErrorStackInRootLogger(env.getRequiredProperty("log.errorLogsInRootLogger", Boolean.class));
+		result.setPrintErrorStackInRootLogger(env.getRequiredProperty("accessLog.printErrorStack", Boolean.class));
 		return result;
 	}
 	
@@ -95,10 +51,23 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	@Bean
 	public RestLoggingAspect restLoggingAspect() {
 		RestLoggingAspect result = new RestLoggingAspect();
-		result.setAccessLogger(accessLogger());
-		result.setErrorLogger(errorLogger());
+		result.setAccessLogger(accessLogger);
+		result.setErrorLogger(errorLogger);
 		result.setTraceRequestBody(Boolean.valueOf(env.getRequiredProperty("accessLog.traceRequestBody", Boolean.class)));
 		result.setTraceResponseBody(Boolean.valueOf(env.getRequiredProperty("accessLog.traceResponseBody", Boolean.class)));
 		return result;
+	}
+	
+	
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		
+		converters.removeIf(e -> e instanceof StringHttpMessageConverter);
+		
+		for (HttpMessageConverter<?> converter:converters) {
+			if (converter instanceof MappingJackson2HttpMessageConverter) {
+				((MappingJackson2HttpMessageConverter) converter).setObjectMapper(objectMapper);
+			}
+		}
 	}
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE xml>
 <configuration>
 
-	<property resource="application.properties" />
+	<property resource="application-${spring.profiles.active}.properties" />
 
 	<!--Console appender -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -14,52 +14,9 @@
 			</layout>
 		</encoder>
 	</appender>
-
-
-	<!--Daily rolling access file appender -->
-	<appender name="ACCESS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${log.directory}/${project.model.webappArtefactName}-access.log</File>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log.directory}/${project.model.webappArtefactName}-access.log.%d{yyyy-MM-dd}.log
-			</FileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="ch.qos.logback.classic.PatternLayout">
-				<pattern>
-					{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%X{channel}","transactionId":"%X{transactionId}","correlationId":"%X{correlationId}","logMessage":%msg}%n
-				</pattern>
-			</layout>
-		</encoder>
-	</appender>
 	
-	<!--Daily rolling access file appender -->
-	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${log.directory}/${project.model.webappArtefactName}-error.log</File>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log.directory}/${project.model.webappArtefactName}-error.log.%d{yyyy-MM-dd}.log
-			</FileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-			<layout class="ch.qos.logback.classic.PatternLayout">
-				<pattern>
-					{"@timestamp":"%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"}","threadId":"%thread","logLevel":"%-5level","channel":"%X{channel}","transactionId":"%X{transactionId}","correlationId":"%X{correlationId}","logMessage":%msg}%n
-				</pattern>
-			</layout>
-		</encoder>
-	</appender>
-	
-
-	<logger name="ACCESS_LOG" level="${log.app.level}" additivity="${log.accessLogsInRootLogger}">
-		<appender-ref ref="ACCESS_FILE" />
-	</logger>
-	
-	<logger name="ERROR_LOG" level="ERROR" additivity="${log.accessLogsInRootLogger}">
-		<appender-ref ref="ERROR_FILE" />
-	</logger>
-
-	<root level="${log.root.level}">
+	<root level="${log.level}">
 		<appender-ref ref="STDOUT" />
 	</root>
+
 </configuration>
