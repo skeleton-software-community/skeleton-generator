@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @include mat.core();
 
@@ -45,6 +45,14 @@ label {
   font-weight:bold;
 }
 
+.text-grey {
+  color:#767676!important;
+}
+
+.text-grey-darker {
+  color:#413c48!important;
+}
+
 .text-success {
   color: #5cb85c;
 }
@@ -58,11 +66,11 @@ label {
   background-color: #ccccf4!important;
 }
 
-.mat-cell {
+.mat-mdc-cell {
   font-size:0.75em;
 }
 
-.mat-cell > a > img {
+.mat-mdc-cell > a > img {
   height:20px;
 }
 
@@ -79,6 +87,10 @@ label {
 
 .margin-10 {
   margin-left:10px;
+}
+
+a {
+  text-decoration: none;
 }
 
 a.blue-link {
@@ -104,16 +116,16 @@ ul.list-group {
   margin-bottom: 10px;
 }
 
-.notification-info-style {
-  background-color: white;
-  color:green;
-  .mat-button-wrapper {color: blue;}
+.mat-mdc-snack-bar-container.notification-info-style {
+  --mdc-snackbar-container-color:: white;
+  --mdc-snackbar-supporting-text-color:green;
+  --mat-snack-bar-button-color: blue;
 }
 
-.notification-error-style {
-  background-color: white;
-  color:red;
-  .mat-button-wrapper {color: blue;}
+.mat-mdc-snack-bar-container.notification-error-style {
+  --mdc-snackbar-container-color:: white;
+  --mdc-snackbar-supporting-text-color:red;
+  --mat-snack-bar-button-color: blue;
 }
 
 

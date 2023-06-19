@@ -1,4 +1,0 @@
-{
-  "*.ts": ["tslint -p tsconfig.json", "git add"],
-  "*.{css,scss,json,json5,md,js,ts}": ["prettier --check", "git add"]
-}

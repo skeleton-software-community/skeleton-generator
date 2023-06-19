@@ -21,7 +21,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
-import { FlexLayoutModule } from '@angular/flex-layout'
 
 @NgModule({
   exports: [MatButtonModule, MatToolbarModule, MatIconModule,
@@ -29,7 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
     MatPaginatorModule, MatSortModule, MatInputModule, MatDatepickerModule,
     MatNativeDateModule, MatCheckboxModule, CdkAccordionModule,
     MatSnackBarModule, MatAutocompleteModule, MatSelectModule,
-    MatDialogModule, MatSlideToggleModule, MatTabsModule, MatChipsModule, FlexLayoutModule]
+    MatDialogModule, MatSlideToggleModule, MatTabsModule, MatChipsModule]
 })
 export class MaterialModule {
 }
