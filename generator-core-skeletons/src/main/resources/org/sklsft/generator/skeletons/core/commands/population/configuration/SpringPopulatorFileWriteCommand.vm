@@ -16,12 +16,6 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 <context:annotation-config/>
 
-<context:component-scan base-package="${project.domainName}.${project.projectName}">
-</context:component-scan>
-
-<context:component-scan base-package="org.sklsft.generator">
-</context:component-scan>
-
-<aop:aspectj-autoproxy />
+<bean class="${project.model.executorPackageName}.ApplicationConfig"/>
 
 </beans>

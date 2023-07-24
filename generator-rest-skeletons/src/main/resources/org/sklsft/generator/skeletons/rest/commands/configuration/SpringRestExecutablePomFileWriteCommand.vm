@@ -48,6 +48,17 @@
 			<artifactId>commons-rest</artifactId>
 		</dependency>
 		
+		<!-- postgresql drivers -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- oracle drivers -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+		</dependency>		
 				
 		<!-- apache commons -->
 		<dependency>

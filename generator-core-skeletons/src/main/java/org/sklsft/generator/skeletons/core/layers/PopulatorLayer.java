@@ -16,6 +16,7 @@ import org.sklsft.generator.skeletons.core.commands.population.configuration.Pop
 import org.sklsft.generator.skeletons.core.commands.population.configuration.PopulatorPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.SpringPopulatorFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.configuration.SpringPopulatorRepositoryFileWriteCommand;
+import org.sklsft.generator.skeletons.core.commands.population.resources.PopulatorConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.core.commands.population.resources.PopulatorLauncherFileWriteCommand;
 import org.sklsft.generator.skeletons.layers.AbstractLayer;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
@@ -33,6 +34,9 @@ public class PopulatorLayer extends AbstractLayer {
 		
 		FileWriteCommandTreeNode populatorLauncherTreeNode = new FileWriteCommandTreeNode(new PopulatorLauncherFileWriteCommand(project));
 		resourcesTreeNode.add(populatorLauncherTreeNode);
+		
+		FileWriteCommandTreeNode populatorConfigTreeNode = new FileWriteCommandTreeNode(new PopulatorConfigFileWriteCommand(project));
+		resourcesTreeNode.add(populatorConfigTreeNode);
 		
 		return resourcesTreeNode;
 	}
