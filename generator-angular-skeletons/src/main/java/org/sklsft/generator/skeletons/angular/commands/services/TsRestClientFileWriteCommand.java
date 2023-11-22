@@ -117,7 +117,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 			writeLine(" * get options");
 			writeLine(" */");
 			writeLine("public getOptions() {");
-			writeLine("return this.http.get<SelectItem[]>(environment.restApiUrl + '/" + bean.urlPiece + "/options');");
+			writeLine("return this.http.options<SelectItem[]>(environment.restApiUrl + '/" + bean.urlPiece + "/options');");
 			writeLine("}");
 			skipLine();
 		}
@@ -126,7 +126,7 @@ public class TsRestClientFileWriteCommand extends TsFileWriteCommand {
 			writeLine(" * get options");
 			writeLine(" */");
 			writeLine("public searchOptions(arg:string) {");
-			writeLine("return this.http.post<SelectItem[]>(environment.restApiUrl + '/" + bean.urlPiece + "/options/search', arg, this.httpOptions);");
+			writeLine("return this.http.options<SelectItem[]>(environment.restApiUrl + '/" + bean.urlPiece + "/options/search', {params:{'arg':arg}});");
 			writeLine("}");
 			skipLine();
 		}
