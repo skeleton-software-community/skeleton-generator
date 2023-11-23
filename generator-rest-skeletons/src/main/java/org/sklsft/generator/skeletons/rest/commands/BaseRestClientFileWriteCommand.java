@@ -152,8 +152,7 @@ public class BaseRestClientFileWriteCommand extends JavaFileWriteCommand {
 			writeLine(" */");
 			writeLine("@Override");
 			writeLine("public List<SelectItem> searchOptions(String arg) {");
-			
-			writeLine("return Arrays.asList(restClient.postForObject(SEARCH_OPTIONS_URL, arg, SelectItem[].class));");
+			writeLine("return Arrays.asList(restClient.getForObject(SEARCH_OPTIONS_URL + \"?arg=\" + arg, SelectItem[].class));");
 			writeLine("}");
 			skipLine();
 		}
