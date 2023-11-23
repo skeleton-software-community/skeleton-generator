@@ -26,6 +26,7 @@ public class TsAppRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 	protected void fetchSpecificImports() {
 		imports.add("import { NgModule } from '@angular/core';");
 		imports.add("import { RouterModule, Routes } from '@angular/router';");
+		imports.add("import { AuthGuard } from './core/services/AuthGuard';");
 	}
 	
 	
@@ -51,7 +52,7 @@ public class TsAppRoutingModuleFileWriteCommand extends TsFileWriteCommand {
 					} else {
 						write(",");
 					}
-					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('" + bean.myPackage.tsComponentsSourcePath + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module) }");
+					writeLine("{path:'" + bean.urlPiece + "', loadChildren:()=>import('" + bean.myPackage.tsComponentsSourcePath + "/" + bean.urlPiece + "/" + bean.urlPiece + ".module').then(m=>m." + bean.className + "Module), canActivate: [AuthGuard] }");
 				}
 			}
         }
