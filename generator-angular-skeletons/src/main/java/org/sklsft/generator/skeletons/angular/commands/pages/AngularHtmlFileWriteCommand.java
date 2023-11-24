@@ -108,10 +108,14 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
-		writeLine("<mat-option [value]=\"null\"></mat-option>");
-		writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options\" [value]=\"option.key\">{{option.key}}</mat-option>");
-		writeLine("</mat-select>");
+		if (!property.editable) {
+			writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		} else {
+			writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
+			writeLine("<mat-option [value]=\"null\"></mat-option>");
+			writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options\" [value]=\"option.key\">{{option.key}}</mat-option>");
+			writeLine("</mat-select>");
+		}
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -121,10 +125,14 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\" class=\"autocomplete\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" [matAutocomplete]=\"" + property.name + "AutoComplete\"/>");
-		writeLine("<mat-autocomplete #" + property.name + "AutoComplete=\"matAutocomplete\">");
-		writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options | async\" [value]=\"option.key\">{{option.key}}</mat-option>");
-		writeLine("</mat-autocomplete>");
+		if (!property.editable) {
+			writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		} else {
+			writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" [matAutocomplete]=\"" + property.name + "AutoComplete\"/>");
+			writeLine("<mat-autocomplete #" + property.name + "AutoComplete=\"matAutocomplete\">");
+			writeLine("<mat-option *ngFor=\"let option of " + property.name + "Options | async\" [value]=\"option.key\">{{option.key}}</mat-option>");
+			writeLine("</mat-autocomplete>");
+		}
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -159,11 +167,15 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			writeLine("<p>");
 			writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 			writeLine("<mat-label>" + property.rendering + "</mat-label>");
-			writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\" >");
-			writeLine("<mat-option [value]=\"\"></mat-option>");
-			writeLine("<mat-option [value]=\"true\">true</mat-option>");
-			writeLine("<mat-option [value]=\"false\">false</mat-option>");
-			writeLine("</mat-select>");
+			if (!property.editable) {
+				writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+			} else {
+				writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"");
+				writeLine("<mat-option [value]=\"\"></mat-option>");
+				writeLine("<mat-option [value]=\"true\">true</mat-option>");
+				writeLine("<mat-option [value]=\"false\">false</mat-option>");
+				writeLine("</mat-select>");
+			}
 			writeLine("</mat-form-field>");
 			writeLine("<p>");
 		}
@@ -173,7 +185,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input type=\"number\" matInput type=\"decimal\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
+		writeLine("<input matInput type=\"decimal\" placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}
@@ -191,9 +203,13 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 		writeLine("<p>");
 		writeLine("<mat-form-field appearance=\"outline\" floatLabel=\"always\">");
 		writeLine("<mat-label>" + property.rendering + "</mat-label>");
-		writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"yyyy-MM-dd\" formControlName=\"" + property.name + "\"/>");
-		writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
-		writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
+		if (!property.editable) {
+			writeLine("<input matInput placeholder=\"yyyy-MM-dd\" formControlName=\"" + property.name + "\"/>");
+		} else {
+			writeLine("<input matInput [matDatepicker]=\"" + property.name + "DatePicker\" placeholder=\"yyyy-MM-dd\" formControlName=\"" + property.name + "\"/>");
+			writeLine("<mat-datepicker-toggle matSuffix [for]=\"" + property.name + "DatePicker\"></mat-datepicker-toggle>");
+			writeLine("<mat-datepicker #" + property.name + "DatePicker></mat-datepicker>");
+		}
 		writeLine("</mat-form-field>");
 		writeLine("</p>");
 	}

@@ -104,7 +104,11 @@ public class TsModalComponentFileWriteCommand extends TsFileWriteCommand {
         	} else {
         		writeLine(",");
         	}
-        	write(property.name + ":[null");
+        	write(property.name + ":[{value:null");
+        	if (!property.editable) {
+        		write(", disabled:true");
+        	}
+        	write("}");
         	if (!property.nullable) {
         		write(", Validators.required");
         	}

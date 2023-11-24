@@ -120,7 +120,11 @@ public class TsOneToOneComponentDetailsComponentFileWriteCommand extends TsFileW
         	} else {
         		writeLine(",");
         	}
-        	write(property.name + ":[null");
+        	write(property.name + ":[{value:null");
+        	if (!property.editable) {
+        		write(", disabled:true");
+        	}
+        	write("}");
         	if (!property.nullable && !property.dataType.equals(DataType.BOOLEAN)) {
         		write(", Validators.required");
         	}
