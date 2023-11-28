@@ -170,7 +170,7 @@ public abstract class AngularHtmlFileWriteCommand extends HtmlFileWriteCommand {
 			if (!property.editable) {
 				writeLine("<input matInput placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"/>");
 			} else {
-				writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\"");
+				writeLine("<mat-select placeholder=\"" + property.rendering + "\" formControlName=\"" + property.name + "\">");
 				writeLine("<mat-option [value]=\"\"></mat-option>");
 				writeLine("<mat-option [value]=\"true\">true</mat-option>");
 				writeLine("<mat-option [value]=\"false\">false</mat-option>");
