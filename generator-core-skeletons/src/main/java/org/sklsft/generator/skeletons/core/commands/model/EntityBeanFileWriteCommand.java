@@ -256,6 +256,7 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				}
 				if (property.dataType.equals(DataType.TEXT)) {
 					writeLine("@Lob");
+					writeLine("@Type(type=" + CHAR_34 + "org.hibernate.type.TextType" + CHAR_34 + ")");
 				}
 				write("@Column(name = " + CHAR_34 + property.column.name + CHAR_34);
 				if (property.dataType.equals(DataType.TEXT)) {
