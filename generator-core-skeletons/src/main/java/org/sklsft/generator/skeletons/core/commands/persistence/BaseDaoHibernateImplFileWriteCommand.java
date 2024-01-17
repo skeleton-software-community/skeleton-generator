@@ -43,14 +43,14 @@ public class BaseDaoHibernateImplFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.util.List;");
 		javaImports.add("import java.util.ArrayList;");
 		
-		javaImports.add("import javax.persistence.criteria.CriteriaBuilder;");
-		javaImports.add("import javax.persistence.criteria.CriteriaQuery;");
-		javaImports.add("import javax.persistence.criteria.Fetch;");
-		javaImports.add("import javax.persistence.criteria.Join;");
-		javaImports.add("import javax.persistence.criteria.JoinType;");
-		javaImports.add("import javax.persistence.criteria.Order;");
-		javaImports.add("import javax.persistence.criteria.Predicate;");
-		javaImports.add("import javax.persistence.criteria.Root;");
+		javaImports.add("import jakarta.persistence.criteria.CriteriaBuilder;");
+		javaImports.add("import jakarta.persistence.criteria.CriteriaQuery;");
+		javaImports.add("import jakarta.persistence.criteria.Fetch;");
+		javaImports.add("import jakarta.persistence.criteria.Join;");
+		javaImports.add("import jakarta.persistence.criteria.JoinType;");
+		javaImports.add("import jakarta.persistence.criteria.Order;");
+		javaImports.add("import jakarta.persistence.criteria.Predicate;");
+		javaImports.add("import jakarta.persistence.criteria.Root;");
 		javaImports.add("import org.hibernate.Session;");
 		javaImports.add("import org.hibernate.query.Query;");
 		

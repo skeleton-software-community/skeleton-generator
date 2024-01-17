@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
-
 import org.sklsft.generator.components.metadata.factory.interfaces.BeanFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.PackageFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.ProjectFactory;
@@ -19,9 +16,9 @@ import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.TableMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-
 
 @Component(value="javaPackageFactory")
 public class JavaPackageFactory implements PackageFactory {
@@ -34,9 +31,11 @@ public class JavaPackageFactory implements PackageFactory {
 	/*
 	 * properties
 	 */
-	@Inject
+	@Autowired
 	private TableFactory tableFactory;
-	@Resource(name="javaBeanFactory")
+	
+	@Autowired
+	@Qualifier("javaBeanFactory")
 	private BeanFactory beanFactory;
 
 	@Override

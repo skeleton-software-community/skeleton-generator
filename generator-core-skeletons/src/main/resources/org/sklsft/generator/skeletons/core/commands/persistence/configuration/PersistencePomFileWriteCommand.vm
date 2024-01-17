@@ -22,13 +22,7 @@
 			<groupId>${project.domainName}.${project.projectName}</groupId>
 			<artifactId>${project.model.modelArtefactName}</artifactId>
 		</dependency>
-		
-		<!-- Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		
+
 		
 		<!-- Spring -->
 		<dependency>
@@ -39,13 +33,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-		</dependency>
-		
-		
-		<!-- Inject annotation -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
 		</dependency>
 		
 		

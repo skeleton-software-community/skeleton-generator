@@ -1,6 +1,6 @@
 package org.sklsft.generator.model.metadata;
 
-import javax.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnum;
 
 /**
  * A skeleton.xml file is a database like representation of meta data<br/>

@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -17,6 +14,10 @@ import org.sklsft.generator.model.backup.SourceAndScript;
 import org.sklsft.generator.model.exception.BackupFileNotFoundException;
 import org.sklsft.generator.model.exception.InvalidXmlBackupFileException;
 import org.xml.sax.SAXException;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * This class is used to convert a xml file to a {@link SourceAndScript}<br/>

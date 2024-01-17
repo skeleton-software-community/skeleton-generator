@@ -2,13 +2,12 @@ package ${project.model.restControllerPackageName};
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.sklsft.commons.log.AccessLogger;
 import org.sklsft.commons.log.ErrorLogger;
 import org.sklsft.commons.rest.aspect.correlation.RestRequestAspect;
 import org.sklsft.commons.rest.aspect.logging.RestLoggingAspect;
 import org.sklsft.commons.rest.exception.RestExceptionHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -24,16 +23,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableAspectJAutoProxy
 public class ApplicationConfig implements WebMvcConfigurer {
 	
-	@Inject
+	@Autowired
 	private Environment env;
 	
-	@Inject
+	@Autowired
 	private ObjectMapper objectMapper;
  
-	@Inject
+	@Autowired
 	private AccessLogger accessLogger;
  
-	@Inject
+	@Autowired
 	private ErrorLogger errorLogger;
 	
 	@Bean

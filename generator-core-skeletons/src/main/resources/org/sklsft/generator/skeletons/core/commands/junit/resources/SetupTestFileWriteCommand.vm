@@ -1,6 +1,6 @@
 package ${project.model.junitPackageName};
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class SetupTest {
 	 */
 	private final Logger logger = LoggerFactory.getLogger(SetupTest.class);
 	
-	@Inject
+	@Autowired
 	private JUnitDataInitializer dataInitializer;
 
 	

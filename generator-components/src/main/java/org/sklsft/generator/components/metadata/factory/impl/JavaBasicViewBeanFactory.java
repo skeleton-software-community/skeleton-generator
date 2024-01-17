@@ -3,8 +3,6 @@ package org.sklsft.generator.components.metadata.factory.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.sklsft.generator.components.metadata.factory.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.business.Bean;
@@ -12,12 +10,15 @@ import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.BasicViewBean;
 import org.sklsft.generator.model.domain.ui.FilterProperty;
 import org.sklsft.generator.model.domain.ui.ViewProperty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("javaBasicViewBeanFactory")
 public class JavaBasicViewBeanFactory implements BasicViewBeanFactory {
 	
-	@Resource(name="javaViewPropertiesFactory")
+	@Autowired
+	@Qualifier("javaViewPropertiesFactory")
 	private ViewPropertiesFactory viewPropertiesFactory;
 
 	@Override

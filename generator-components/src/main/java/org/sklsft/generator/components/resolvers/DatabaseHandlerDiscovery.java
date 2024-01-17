@@ -36,7 +36,7 @@ public class DatabaseHandlerDiscovery {
 		
 		for (BeanDefinition def:defs) {
 			try {
-				DatabaseHandler handler = (DatabaseHandler) Class.forName(def.getBeanClassName()).newInstance();
+				DatabaseHandler handler = (DatabaseHandler) Class.forName(def.getBeanClassName()).getConstructor().newInstance();
 				handlersMap.put(handler.getName(), handler);
 				byDriverHandlersMap.put(handler.getDriverClassName(), handler);
 				handlers.add(handler);

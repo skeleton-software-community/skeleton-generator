@@ -1,17 +1,16 @@
 package org.sklsft.generator.persistence.backup.command.impl;
 
-import javax.inject.Inject;
-
 import org.sklsft.generator.persistence.backup.command.interfaces.BackupArgumentsCommand;
 import org.sklsft.generator.persistence.backup.reader.impl.StandardCsvFileBackupReader;
 import org.sklsft.generator.persistence.backup.reader.interfaces.BackupArgumentReader;
 import org.sklsft.generator.persistence.backup.reader.model.BackupArguments;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JUnitDataInjector {
 	
-	@Inject
+	@Autowired
 	private BackupArgumentsCommandFactory commandFactory;
 		
 	

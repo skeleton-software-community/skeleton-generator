@@ -1,6 +1,6 @@
 package org.sklsft.generator.model.metadata;
 
-import javax.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnum;
 
 /**
  * Different possibilities to select an object an object

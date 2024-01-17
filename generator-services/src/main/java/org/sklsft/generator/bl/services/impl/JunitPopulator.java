@@ -4,8 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.sklsft.generator.model.domain.Package;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.domain.business.Bean;
@@ -16,6 +14,7 @@ import org.sklsft.generator.persistence.backup.command.interfaces.BackupCommand;
 import org.sklsft.generator.persistence.backup.file.impl.BackupFileLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,10 +31,10 @@ public class JunitPopulator {
 
 	private static final Logger logger = LoggerFactory.getLogger(JunitPopulator.class);
 	
-	@Inject
+	@Autowired
 	private BackupCommandFactory commandFactory;
 	
-	@Inject
+	@Autowired
 	private BackupFileLocator backupLocator;
 	
 	

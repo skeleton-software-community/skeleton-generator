@@ -1,6 +1,6 @@
 package org.sklsft.generator.model.metadata;
 
-import javax.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnum;
 
 /**
  * Defines the differents kind of visibilities that are supported for the current version :

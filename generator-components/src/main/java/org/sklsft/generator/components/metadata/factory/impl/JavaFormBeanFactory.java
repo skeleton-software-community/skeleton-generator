@@ -1,18 +1,19 @@
 package org.sklsft.generator.components.metadata.factory.impl;
 
-import javax.annotation.Resource;
-
 import org.sklsft.generator.components.metadata.factory.interfaces.FormBeanFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.ViewPropertiesFactory;
 import org.sklsft.generator.model.domain.business.Bean;
 import org.sklsft.generator.model.domain.business.OneToMany;
 import org.sklsft.generator.model.domain.ui.FormBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("javaFormBeanFactory")
 public class JavaFormBeanFactory implements FormBeanFactory {
 	
-	@Resource(name="javaViewPropertiesFactory")
+	@Autowired
+	@Qualifier("javaViewPropertiesFactory")
 	private ViewPropertiesFactory viewPropertiesFactory;
 
 	@Override

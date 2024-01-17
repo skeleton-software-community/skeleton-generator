@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.inject.Inject;
-
 import org.apache.commons.dbcp.BasicDataSource;
 import org.sklsft.generator.bl.services.interfaces.DatabaseBuilder;
 import org.sklsft.generator.components.build.DatabaseCleaner;
@@ -18,6 +16,7 @@ import org.sklsft.generator.model.exception.InvalidFileException;
 import org.sklsft.generator.model.util.folder.FolderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,7 +24,7 @@ public class DatabaseBuilderImpl implements DatabaseBuilder {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseBuilderImpl.class);
 	
-	@Inject
+	@Autowired
 	private DatabaseCleaner databaseCleaner;
 
 	@Override

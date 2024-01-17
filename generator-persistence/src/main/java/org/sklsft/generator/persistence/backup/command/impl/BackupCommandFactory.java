@@ -1,7 +1,5 @@
 package org.sklsft.generator.persistence.backup.command.impl;
 
-import javax.inject.Inject;
-
 import org.sklsft.generator.model.domain.database.Table;
 import org.sklsft.generator.model.metadata.PersistenceMode;
 import org.sklsft.generator.model.util.naming.JavaClassNaming;
@@ -10,6 +8,7 @@ import org.sklsft.generator.persistence.backup.command.interfaces.BackupCommand;
 import org.sklsft.generator.persistence.backup.datasource.interfaces.InputDataSourceProvider;
 import org.sklsft.generator.persistence.backup.reader.impl.BackupArgumentReaderFactory;
 import org.sklsft.generator.persistence.backup.reader.interfaces.BackupArgumentReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,13 +25,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackupCommandFactory {
 	
-	@Inject
+	@Autowired
 	private BackupArgumentReaderFactory readerFactory;
 	
-	@Inject
+	@Autowired
 	private BackupArgumentsCommandFactory backupArgumentsCommandFactory;
 	
-	@Inject
+	@Autowired
 	private BackupCommandRawImpl backupCommandRawImpl;
 
 

@@ -28,7 +28,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");		
 		
-		javaImports.add("import javax.inject.Inject;");
+		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
         javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
@@ -63,7 +63,7 @@ public class BeanPopulatorCommandFileWriteCommand extends JavaFileWriteCommand {
         writeLine("private static final Logger logger = LoggerFactory.getLogger(" + bean.className + "Command.class);");
         skipLine();
         
-        writeLine("@Inject");
+        writeLine("@Autowired");
         writeLine("private " + this.bean.serviceInterfaceName + " " + this.bean.serviceObjectName + ";");
         skipLine();
 

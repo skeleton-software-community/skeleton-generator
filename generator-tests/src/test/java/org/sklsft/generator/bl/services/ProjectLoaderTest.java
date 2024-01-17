@@ -1,7 +1,5 @@
 package org.sklsft.generator.bl.services;
 
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sklsft.generator.bl.services.interfaces.ProjectLoader;
@@ -9,6 +7,7 @@ import org.sklsft.generator.bl.services.interfaces.ProjectMetaDataService;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.model.metadata.validation.ProjectValidationReport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -16,10 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = { "classpath:applicationContext-generator-test.xml" })
 public class ProjectLoaderTest {
 	
-	@Inject
+	@Autowired
 	private ProjectMetaDataService service;
 	
-	@Inject
+	@Autowired
 	private ProjectLoader loader;
 
 	@Test

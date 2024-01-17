@@ -1,16 +1,14 @@
 package org.sklsft.generator.components.metadata.factory.impl;
 
-import javax.annotation.Resource;
-
 import org.sklsft.generator.components.metadata.factory.interfaces.ModelFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.ProjectFactory;
 import org.sklsft.generator.model.domain.Project;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-
 
 
 /**
@@ -29,7 +27,8 @@ public class JavaProjectFactory implements ProjectFactory {
 	/*
 	 * properties injected by spring
 	 */
-	@Resource(name="javaModelFactory")
+	@Autowired
+	@Qualifier("javaModelFactory")
 	private ModelFactory modelFactory;
 	
 

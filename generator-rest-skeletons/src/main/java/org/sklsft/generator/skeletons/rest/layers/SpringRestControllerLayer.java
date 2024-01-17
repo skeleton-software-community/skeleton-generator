@@ -9,8 +9,8 @@ import org.sklsft.generator.skeletons.rest.commands.SpringRestControllerCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestApplicationConfigFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestApplicationStarterFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestExecutablePomFileWriteCommand;
-import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLogbackFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLocalPropertiesFileWriteCommand;
+import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestLogbackFileWriteCommand;
 import org.sklsft.generator.skeletons.rest.commands.configuration.SpringRestPropertiesFileWriteCommand;
 import org.sklsft.generator.skeletons.tree.FileWriteCommandTreeNode;
 

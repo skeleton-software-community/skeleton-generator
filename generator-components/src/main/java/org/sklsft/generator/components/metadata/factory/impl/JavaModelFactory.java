@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.sklsft.generator.components.metadata.factory.interfaces.BasicViewBeanFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.FormBeanFactory;
 import org.sklsft.generator.components.metadata.factory.interfaces.FullViewBeanFactory;
@@ -23,8 +21,9 @@ import org.sklsft.generator.model.metadata.PackageMetaData;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 
 
 /**
@@ -43,19 +42,24 @@ public class JavaModelFactory implements ModelFactory {
 	/*
 	 * properties injected by spring
 	 */
-	@Resource(name="javaPackageFactory")
+	@Autowired
+	@Qualifier("javaPackageFactory")
 	private PackageFactory packageFactory;
 	
-	@Resource(name="javaBasicViewBeanFactory")
+	@Autowired
+	@Qualifier("javaBasicViewBeanFactory")
 	private BasicViewBeanFactory basicViewBeanFactory;
 	
-	@Resource(name="javaFullViewBeanFactory")
+	@Autowired
+	@Qualifier("javaFullViewBeanFactory")
 	private FullViewBeanFactory fullViewBeanFactory;
 	
-	@Resource(name="javaFormBeanFactory")
+	@Autowired
+	@Qualifier("javaFormBeanFactory")
 	private FormBeanFactory formBeanFactory;
 	
-	@Resource(name="javaViewPropertiesFactory")
+	@Autowired
+	@Qualifier("javaViewPropertiesFactory")
 	private ViewPropertiesFactory viewPropertiesFactory;
 		
 	

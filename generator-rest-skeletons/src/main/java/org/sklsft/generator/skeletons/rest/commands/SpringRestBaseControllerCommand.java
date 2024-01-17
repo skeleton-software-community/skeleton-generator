@@ -30,8 +30,8 @@ private Bean bean;
 		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.util.List;");
-		javaImports.add("import javax.inject.Inject;");
 		javaImports.add("import javax.validation.Valid;");
+		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollForm;");
 		javaImports.add("import org.sklsft.commons.api.model.ScrollView;");
 		javaImports.add("import org.sklsft.commons.api.model.SelectItem;");
@@ -85,7 +85,7 @@ private Bean bean;
 		writeLine("/*");
 		writeLine(" * services injected by spring");
 		writeLine(" */");
-		writeLine("@Inject");
+		writeLine("@Autowired");
 		writeLine("protected " + this.bean.serviceInterfaceName + " " + this.bean.serviceObjectName + ";");
 		skipLine();
 		

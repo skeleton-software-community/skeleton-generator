@@ -3,7 +3,7 @@ package org.sklsft.generator.model.metadata.files;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import javax.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnum;
 
 /**
  * Different kind of files can be generated :

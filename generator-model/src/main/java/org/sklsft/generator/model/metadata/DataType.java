@@ -1,6 +1,6 @@
 package org.sklsft.generator.model.metadata;
 
-import javax.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnum;
 
 /**
  * For the current release, the data types that are supported are :

@@ -44,32 +44,37 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 		if (bean.myPackage.model.project.audited) {
 			javaImports.add("import org.hibernate.envers.Audited;");
 		}
+		
+		javaImports.add("import org.hibernate.Length;");
+		javaImports.add("import org.hibernate.annotations.JdbcTypeCode;");
+		javaImports.add("import org.hibernate.type.SqlTypes;");
+		
 		javaImports.add("import java.util.Set;");
 		javaImports.add("import java.util.Date;");
 		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		javaImports.add("import java.io.Serializable;");
-		javaImports.add("import javax.persistence.CascadeType;");
-		javaImports.add("import javax.persistence.Column;");
-		javaImports.add("import javax.persistence.Entity;");
-		javaImports.add("import javax.persistence.FetchType;");
-		javaImports.add("import javax.persistence.GeneratedValue;");
-		javaImports.add("import javax.persistence.GenerationType;");
-		javaImports.add("import javax.persistence.Id;");
-		javaImports.add("import javax.persistence.JoinColumn;");
-		javaImports.add("import javax.persistence.ManyToOne;");
-		javaImports.add("import javax.persistence.OneToMany;");
-		javaImports.add("import javax.persistence.OneToOne;");
-		javaImports.add("import javax.persistence.SequenceGenerator;");
+		javaImports.add("import jakarta.persistence.CascadeType;");
+		javaImports.add("import jakarta.persistence.Column;");
+		javaImports.add("import jakarta.persistence.Entity;");
+		javaImports.add("import jakarta.persistence.FetchType;");
+		javaImports.add("import jakarta.persistence.GeneratedValue;");
+		javaImports.add("import jakarta.persistence.GenerationType;");
+		javaImports.add("import jakarta.persistence.Id;");
+		javaImports.add("import jakarta.persistence.JoinColumn;");
+		javaImports.add("import jakarta.persistence.ManyToOne;");
+		javaImports.add("import jakarta.persistence.OneToMany;");
+		javaImports.add("import jakarta.persistence.OneToOne;");
+		javaImports.add("import jakarta.persistence.SequenceGenerator;");
 		javaImports.add("import org.hibernate.annotations.GenericGenerator;");
-		javaImports.add("import javax.persistence.Table;");
-		javaImports.add("import javax.persistence.Temporal;");
-		javaImports.add("import javax.persistence.TemporalType;");
-		javaImports.add("import javax.persistence.Lob;");
+		javaImports.add("import jakarta.persistence.Table;");
+		javaImports.add("import jakarta.persistence.Temporal;");
+		javaImports.add("import jakarta.persistence.TemporalType;");
+		javaImports.add("import jakarta.persistence.Lob;");
 		javaImports.add("import org.hibernate.annotations.Fetch;");
 		javaImports.add("import org.hibernate.annotations.FetchMode;");
-		javaImports.add("import javax.persistence.UniqueConstraint;");
-		javaImports.add("import javax.persistence.Index;");
+		javaImports.add("import jakarta.persistence.UniqueConstraint;");
+		javaImports.add("import jakarta.persistence.Index;");
 		javaImports.add("import org.hibernate.annotations.Type;");
 		
 		
@@ -256,11 +261,11 @@ public class EntityBeanFileWriteCommand extends JavaFileWriteCommand {
 				}
 				if (property.dataType.equals(DataType.TEXT)) {
 					writeLine("@Lob");
-					writeLine("@Type(type=" + CHAR_34 + "org.hibernate.type.TextType" + CHAR_34 + ")");
+					writeLine("@JdbcTypeCode(SqlTypes.LONGVARCHAR)");
 				}
 				write("@Column(name = " + CHAR_34 + property.column.name + CHAR_34);
 				if (property.dataType.equals(DataType.TEXT)) {
-					write(", length = Integer.MAX_VALUE");
+					write(", length = Length.LOB_DEFAULT");
 				}
 				if (!property.nullable) {
 					write(", nullable = false");

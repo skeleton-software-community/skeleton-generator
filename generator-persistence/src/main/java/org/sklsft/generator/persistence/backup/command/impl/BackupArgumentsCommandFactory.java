@@ -1,8 +1,7 @@
 package org.sklsft.generator.persistence.backup.command.impl;
 
-import javax.inject.Inject;
-
 import org.sklsft.generator.persistence.backup.command.interfaces.BackupArgumentsCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackupArgumentsCommandFactory {
 
-	@Inject
+	@Autowired
 	private ApplicationContext applicationContext;
 
 

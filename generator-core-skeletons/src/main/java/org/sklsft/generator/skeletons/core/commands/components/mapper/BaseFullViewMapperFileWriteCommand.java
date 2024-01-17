@@ -23,8 +23,8 @@ public class BaseFullViewMapperFileWriteCommand extends JavaFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 
-        javaImports.add("import org.sklsft.commons.mapper.impl.FullViewMapper;");
-		javaImports.add("import javax.inject.Inject;");
+		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
+		javaImports.add("import org.sklsft.commons.mapper.impl.FullViewMapper;");
 
         javaImports.add("import " + this.bean.myPackage.omPackageName + "." + this.bean.className + ";");
 		javaImports.add("import " + this.bean.myPackage.formsPackageName + "." + this.bean.formBean.className + ";");
@@ -60,17 +60,17 @@ public class BaseFullViewMapperFileWriteCommand extends JavaFileWriteCommand {
         skipLine();
         
         if (this.bean.isComponent) {
-			writeLine("@Inject");
+			writeLine("@Autowired");
 			writeLine("protected " + this.bean.parentBean.rightsManagerClassName + " " + this.bean.parentBean.rightsManagerObjectName + ";");
 			
-			writeLine("@Inject");
+			writeLine("@Autowired");
 			writeLine("protected " + this.bean.parentBean.stateManagerClassName + " " + this.bean.parentBean.stateManagerObjectName + ";");
 		} 
 		else {
-			writeLine("@Inject");
+			writeLine("@Autowired");
 			writeLine("protected " + this.bean.rightsManagerClassName + " " + this.bean.rightsManagerObjectName + ";");
 			
-			writeLine("@Inject");
+			writeLine("@Autowired");
 			writeLine("protected " + this.bean.stateManagerClassName + " " + this.bean.stateManagerObjectName + ";");
 		}
         skipLine();

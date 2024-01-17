@@ -35,7 +35,7 @@ public class SkeletonResolver {
 		
 		for (BeanDefinition def:defs) {
 			try {
-				Skeleton handler = (Skeleton) Class.forName(def.getBeanClassName()).newInstance();
+				Skeleton handler = (Skeleton) Class.forName(def.getBeanClassName()).getConstructor().newInstance();
 				skeletons.put(handler.getName(), handler);			
 			} catch (Exception e) {
 				throw new IllegalArgumentException("Invalid DatabaseHandler : " + def.getBeanClassName(), e);

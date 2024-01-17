@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.sklsft.generator.model.backup.check.BackupPlanPreExecutionWarning;
 import org.sklsft.generator.model.backup.check.BackupPlanWarningType;
 import org.sklsft.generator.model.domain.Package;
@@ -19,6 +17,7 @@ import org.sklsft.generator.persistence.backup.datasource.interfaces.InputDataSo
 import org.sklsft.generator.persistence.backup.file.impl.BackupFileLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +38,7 @@ public class BackupPreExecutionChecker {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BackupPreExecutionChecker.class);
 	
-	@Inject
+	@Autowired
 	private BackupFileLocator backupLocator;
 	
 	

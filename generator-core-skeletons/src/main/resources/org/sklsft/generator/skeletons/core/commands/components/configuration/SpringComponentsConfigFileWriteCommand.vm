@@ -1,6 +1,6 @@
 package ${project.model.componentsPackageName};
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.sklsft.commons.log.AccessLogger;
 import org.sklsft.commons.log.ErrorLogger;
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @Configuration
 public class ComponentsConfig {
 
-	@Inject
+	@Autowired
 	private Environment env;
 	
 	@Bean

@@ -63,7 +63,7 @@ public class ResourcesFileWriteCommand implements FileWriteCommand {
 				throw new IOException("failed to jar path", e);
 			}
 
-			try (FileSystem jarMount = FileSystems.newFileSystem(jar.toPath(), null)) {
+			try (FileSystem jarMount = FileSystems.newFileSystem(jar.toPath())) {
 				Path resourcesPath = jarMount.getPath(resourcesRoot);
 				copyRecursively(resourcesRoot, resourcesPath, targetPath);
 			}

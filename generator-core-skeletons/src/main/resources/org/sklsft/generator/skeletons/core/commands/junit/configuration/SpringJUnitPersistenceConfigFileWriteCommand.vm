@@ -2,11 +2,11 @@ package ${project.model.persistencePackageName};
 
 import java.util.Properties;
 
-import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,7 +17,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @Profile("junit")
 public class JUnitPersistenceConfig {
 	
-	@Inject
+	@Autowired
 	private Environment env;
 
 	@Bean

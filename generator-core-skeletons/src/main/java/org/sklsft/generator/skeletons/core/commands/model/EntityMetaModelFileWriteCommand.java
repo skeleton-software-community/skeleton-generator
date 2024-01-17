@@ -43,9 +43,9 @@ public class EntityMetaModelFileWriteCommand extends JavaFileWriteCommand {
 		javaImports.add("import java.time.LocalDate;");
 		javaImports.add("import java.math.BigDecimal;");
 		
-		javaImports.add("import javax.persistence.metamodel.SetAttribute;");
-		javaImports.add("import javax.persistence.metamodel.SingularAttribute;");
-		javaImports.add("import javax.persistence.metamodel.StaticMetamodel;");
+		javaImports.add("import jakarta.persistence.metamodel.SetAttribute;");
+		javaImports.add("import jakarta.persistence.metamodel.SingularAttribute;");
+		javaImports.add("import jakarta.persistence.metamodel.StaticMetamodel;");
 		
 
 		for (Property property : this.bean.properties) {

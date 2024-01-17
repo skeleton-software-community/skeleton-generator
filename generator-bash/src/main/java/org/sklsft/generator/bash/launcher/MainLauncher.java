@@ -34,7 +34,7 @@ public class MainLauncher {
 		String[] launcherArgs = null;
 		try {
 			if (launcher.getPrompterClass() != null) {
-				ArgumentsPrompter prompter = launcher.getPrompterClass().newInstance();
+				ArgumentsPrompter prompter = launcher.getPrompterClass().getConstructor().newInstance();
 				List<String> argList = prompter.promptForArguments();
 				
 				launcherArgs = new String[argList.size()+1];

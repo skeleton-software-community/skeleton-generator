@@ -9,12 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.inject.Inject;
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -24,8 +19,14 @@ import org.sklsft.generator.model.exception.ProjectInitFailureException;
 import org.sklsft.generator.model.exception.ProjectNotFoundException;
 import org.sklsft.generator.model.metadata.ProjectMetaData;
 import org.sklsft.generator.persistence.metadata.interfaces.ProjectMetaDataDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * Implementation that uses jaxb to persist a project meta-data
@@ -35,7 +36,7 @@ import org.xml.sax.SAXException;
 @Component(value="projectMetaDataXmlDao")
 public class ProjectMetaDataXMLDaoImpl implements ProjectMetaDataDao {
 	
-	@Inject
+	@Autowired
 	private DataSourceContextInitializer dataSourceContextInitializer;
 
 

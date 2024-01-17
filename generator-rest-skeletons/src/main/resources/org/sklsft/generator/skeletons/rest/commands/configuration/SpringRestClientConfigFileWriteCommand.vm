@@ -3,13 +3,12 @@ package ${project.model.restClientPackageName};
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.sklsft.commons.log.AccessLogger;
 import org.sklsft.commons.rest.client.RestClient;
 import org.sklsft.commons.rest.client.exception.ErrorReportHandler;
 import org.sklsft.commons.rest.client.interceptors.CorrelationIdInterceptor;
 import org.sklsft.commons.rest.client.interceptors.RestClientLoggerInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -24,13 +23,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class RestClientConfig {
 	
-	@Inject
+	@Autowired
 	private Environment env;
 	
-	@Inject
+	@Autowired
 	private AccessLogger accessLogger;
 	
-	@Inject
+	@Autowired
 	private ObjectMapper objectMapper;
 	
 	@Bean

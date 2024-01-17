@@ -39,7 +39,7 @@ public class OneToOneComponentPopulatorCommandFileWriteCommand extends JavaFileW
 		javaImports.add("import org.slf4j.Logger;");
 		javaImports.add("import org.slf4j.LoggerFactory;");
 		
-		javaImports.add("import javax.inject.Inject;");
+		javaImports.add("import org.springframework.beans.factory.annotation.Autowired;");
 		javaImports.add("import org.springframework.stereotype.Component;");
 		
         javaImports.add("import " + referenceBean.myPackage.fullViewsPackageName + "." + referenceBean.fullViewBean.className + ";");
@@ -78,7 +78,7 @@ public class OneToOneComponentPopulatorCommandFileWriteCommand extends JavaFileW
         writeLine("private static final Logger logger = LoggerFactory.getLogger(" + oneToOneComponent.referenceBean.className + "Command.class);");
         skipLine();
     
-        writeLine("@Inject");
+        writeLine("@Autowired");
         writeLine("private " + oneToOneComponent.parentBean.serviceInterfaceName + " " + parentBean.serviceObjectName + ";");
         skipLine();
         
