@@ -35,8 +35,8 @@
 		<java.version>17</java.version>
 		<maven.compiler.release.version>17</maven.compiler.release.version>
 		
-		<skeleton.commons.version>5.0.0-SNAPSHOT</skeleton.commons.version>
-		<skeleton.generator.version>5.0.0-SNAPSHOT</skeleton.generator.version>
+		<skeleton.commons.version>5.0.0-M1</skeleton.commons.version>
+		<skeleton.generator.version>5.0.0-M1</skeleton.generator.version>
 
 		<hibernate.validator.version>5.2.3.Final</hibernate.validator.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
@@ -44,8 +44,6 @@
 		<hsqldb.version>2.3.3</hsqldb.version>
 		<postgresql.version>9.4.1208</postgresql.version>
 		<ojdbc.version>12.2.0.1</ojdbc.version>
-		
-		<javax.el.version>3.0.1-b08</javax.el.version>
 		
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<commons.digester.version>1.8.1</commons.digester.version>
@@ -174,14 +172,6 @@
 				<version>${hsqldb.version}</version>
 			</dependency>
 			
-			
-			<!-- WEBAPP -->
-			<dependency>
-				<groupId>org.glassfish</groupId>
-				<artifactId>javax.el</artifactId>
-				<version>${javax.el.version}</version>
-			</dependency>
-
 			
 			<!-- apache commons -->
 			<dependency>
