@@ -1,0 +1,23 @@
+<div class="app-header">
+  <div class="container">
+    <div class="app-menu">
+      <button mat-icon-button (click)="toggle.emit()" class="app-menu-button" mat-icon-button>
+        <mat-icon svgIcon="menu"></mat-icon>
+      </button>
+    </div>
+    <a routerLink="/index">
+      <img alt="Logo" class="app-logo"
+              src="/assets/images/logo.png"/>
+      <div class="app-brand">
+        <h1>${project.projectName}</h1>
+      </div>
+    </a>
+    <a routerLink="/logout">
+      <div class="app-logout">
+        <button mat-icon-button class="app-menu-button" mat-icon-button>
+          <mat-icon svgIcon="logout"></mat-icon>
+        </button>
+      </div>
+    </a>
+  </div>
+</div>

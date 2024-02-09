@@ -1,0 +1,12 @@
+    <mat-sidenav-container class="app-body-container">
+      <mat-sidenav #sidenavRef mode="over" opened="false" class="app-body-sidenav">
+        <mat-nav-list>
+          <nav mat-list-item *ngFor="let menu of menus">
+            <app-navigation-list [menu]="menu" (listItemClick)="sidenavRef.close()"></app-navigation-list>
+          </nav>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content class="app-body-content">
+        <ng-content></ng-content>
+      </mat-sidenav-content>
+    </mat-sidenav-container>

@@ -39,7 +39,7 @@ public class TsDetailsComponentFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { Observable } from 'rxjs';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
-		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
+		imports.add("import { NavLink } from 'src/app/templates/private/models/nav-link';");
 		imports.add("import { " + bean.fullViewBean.className + " } from '" + bean.myPackage.tsModelsSourcePath + "/views/full/" + bean.fullViewBean.className + "';");
 		imports.add("import { " + bean.restClientClassName + " } from '" + bean.myPackage.tsServicesSourcePath + "/" + bean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");

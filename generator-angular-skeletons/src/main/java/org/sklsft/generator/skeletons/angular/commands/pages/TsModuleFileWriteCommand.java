@@ -29,6 +29,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		imports.add("import { NgModule } from '@angular/core';");
 		imports.add("import { CommonModule } from '@angular/common';");
 		imports.add("import { SharedModule } from 'src/app/shared/shared.module';");
+		imports.add("import { PrivateTemplatesModule } from 'src/app/templates/private/templates.module';");
 		
 		imports.add("import { " + bean.className + "RoutingModule } from './" + bean.urlPiece + "-routing.module';");
 		imports.add("import { " + bean.className + "ListComponent } from './list/" + bean.urlPiece + "-list.component';");
@@ -77,7 +78,7 @@ public class TsModuleFileWriteCommand extends TsFileWriteCommand {
 		}
         writeLine("],");
         
-        writeLine("imports: [CommonModule, SharedModule, " + bean.className + "RoutingModule]");
+        writeLine("imports: [CommonModule, SharedModule, " + bean.className + "RoutingModule, PrivateTemplatesModule]");
         writeLine("})");
         writeLine("export class " + bean.className + "Module { }");
 

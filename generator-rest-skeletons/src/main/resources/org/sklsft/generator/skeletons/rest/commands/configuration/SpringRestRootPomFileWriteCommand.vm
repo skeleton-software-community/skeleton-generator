@@ -41,10 +41,6 @@
 		<hibernate.validator.version>5.2.3.Final</hibernate.validator.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		
-		<hsqldb.version>2.3.3</hsqldb.version>
-		<postgresql.version>9.4.1208</postgresql.version>
-		<ojdbc.version>12.2.0.1</ojdbc.version>
-		
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<commons.digester.version>1.8.1</commons.digester.version>
 		<commons.lang.version>2.5</commons.lang.version>
@@ -147,29 +143,6 @@
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
 				<version>${javax.validation.version}</version>
-			</dependency>
-			
-			
-			<!-- postgresql drivers -->
-			<dependency>
-				<groupId>org.postgresql</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>${postgresql.version}</version>
-			</dependency>
-
-			<!-- oracle drivers -->
-			<dependency>
-				<groupId>com.oracle.database.jdbc</groupId>
-				<artifactId>ojdbc8</artifactId>
-				<version>${ojdbc.version}</version>
-			</dependency>
-
-
-			<!-- hsqldb Driver -->
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>${hsqldb.version}</version>
 			</dependency>
 			
 			

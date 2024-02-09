@@ -53,7 +53,7 @@ public class TsOneToManyComponentListComponentFileWriteCommand extends TsFileWri
 		imports.add("import { MatDialog } from '@angular/material/dialog';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
-		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
+		imports.add("import { NavLink } from 'src/app/templates/private/models/nav-link';");
 		imports.add("import { " + referenceBean.className + "ModalComponent } from './../modal/" + referenceBean.urlPiece + "-modal.component';");
 		imports.add("import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';");
 		imports.add("import { NotificationService } from 'src/app/core/services/NotificationService';");

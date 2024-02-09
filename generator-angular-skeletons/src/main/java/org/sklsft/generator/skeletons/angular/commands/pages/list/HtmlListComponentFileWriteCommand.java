@@ -37,6 +37,7 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<app-private-template>");
 		writeLine("<h2>");
 		writeLine(bean.listRendering + ": {{scrollView.count}} / {{scrollView.size}}");
 		writeLine("</h2>");
@@ -86,6 +87,7 @@ public class HtmlListComponentFileWriteCommand extends AngularHtmlFileWriteComma
 		}
 
         writeNotOverridableContent();
+        writeLine("</app-private-template>");
 
     }
 }

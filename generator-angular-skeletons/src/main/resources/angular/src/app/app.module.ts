@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { PrivateTemplatesModule } from './templates/private/templates.module';
+import { PublicTemplatesModule } from './templates/public/templates.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    PublicTemplatesModule,
+    PrivateTemplatesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

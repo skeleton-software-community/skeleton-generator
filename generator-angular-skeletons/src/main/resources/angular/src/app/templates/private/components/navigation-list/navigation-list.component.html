@@ -13,9 +13,7 @@
        (click)="listItemClick.emit()"
        [ngClass]="{ 'text-grey-darker': !rla.isActive }"
        [routerLink]="link.path"
-       routerLinkActive="link-text-active"
-
-     >
+       routerLinkActive="link-text-active">
    		{{ link.text }}
  	  </a>
  </li>

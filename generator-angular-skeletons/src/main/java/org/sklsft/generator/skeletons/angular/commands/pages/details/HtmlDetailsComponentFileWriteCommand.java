@@ -35,6 +35,7 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<app-private-template>");
 		writeLine("<app-" + bean.urlPiece + "-menu  #menu [activePath]=\"activePath\" [id]=\"id\"></app-" + bean.urlPiece + "-menu>");
 		skipLine();
 		
@@ -60,6 +61,6 @@ public class HtmlDetailsComponentFileWriteCommand extends AngularHtmlFileWriteCo
         writeNotOverridableContent();
         
         writeLine("</div>");
-
+        writeLine("</app-private-template>");
     }
 }

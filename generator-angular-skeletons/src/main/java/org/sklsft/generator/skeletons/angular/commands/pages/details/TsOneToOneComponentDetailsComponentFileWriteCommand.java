@@ -44,7 +44,7 @@ public class TsOneToOneComponentDetailsComponentFileWriteCommand extends TsFileW
 		imports.add("import { Observable } from 'rxjs';");
 		imports.add("import { StringUtils } from 'src/app/core/services/StringUtils';");
 		imports.add("import { ActivatedRoute } from '@angular/router';");
-		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
+		imports.add("import { NavLink } from 'src/app/templates/private/models/nav-link';");
 		imports.add("import { " + referenceBean.fullViewBean.className + " } from '" + referenceBean.myPackage.tsModelsSourcePath + "/views/full/" + referenceBean.fullViewBean.className + "';");
 		imports.add("import { " + parentBean.restClientClassName + " } from '" + parentBean.myPackage.tsServicesSourcePath + "/" + parentBean.restClientClassName + "';");
 		imports.add("import { FormBuilder, FormGroup, Validators } from '@angular/forms';");

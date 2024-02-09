@@ -42,6 +42,7 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		writeLine("<!-- -->");
 		skipLine();
 		
+		writeLine("<app-private-template>");
 		writeLine("<app-" + parentBean.urlPiece + "-menu  #menu [activePath]=\"activePath\" [id]=\"id\"></app-" + parentBean.urlPiece + "-menu>");
 		skipLine();
 		
@@ -91,6 +92,6 @@ public class HtmlOneToManyComponentListComponentFileWriteCommand extends Angular
 		}
 
         writeNotOverridableContent();
-
+        writeLine("</app-private-template>");
     }
 }

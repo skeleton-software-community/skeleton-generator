@@ -36,7 +36,7 @@ public class TsMenuComponentFileWriteCommand extends TsFileWriteCommand {
 	@Override
 	protected void fetchSpecificImports() {
 		imports.add("import { Component, Input, OnInit } from '@angular/core';");
-		imports.add("import { NavLink } from 'src/app/core/models/nav-link';");
+		imports.add("import { NavLink } from 'src/app/templates/private/models/nav-link';");
 	}
 	
 	

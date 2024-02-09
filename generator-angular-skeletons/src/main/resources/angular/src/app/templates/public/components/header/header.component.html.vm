@@ -1,11 +1,6 @@
 <div class="app-header">
   <div class="container">
-    <div class="app-menu">
-      <button mat-icon-button (click)="toggle.emit()" class="app-menu-button" mat-icon-button>
-        <mat-icon svgIcon="menu"></mat-icon>
-      </button>
-    </div>
-    <a routerLink="/">
+    <a routerLink="/index">
       <img alt="Logo" class="app-logo"
               src="/assets/images/logo.png"/>
       <div class="app-brand">
