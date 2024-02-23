@@ -75,7 +75,7 @@
 			
 		<velocity.version>1.7</velocity.version>
 		
-		<postgresql.version>42.4.3</postgresql.version>
+		<postgresql.version>42.7.2</postgresql.version>
 		<ojdbc.version>12.2.0.1</ojdbc.version>
 		
 		<commons.lang.version>2.5</commons.lang.version>
