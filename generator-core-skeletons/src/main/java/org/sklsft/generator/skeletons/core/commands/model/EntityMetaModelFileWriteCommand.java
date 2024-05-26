@@ -152,7 +152,7 @@ public class EntityMetaModelFileWriteCommand extends JavaFileWriteCommand {
 		}
 
 		for (OneToOne oneToOne : this.bean.oneToOneList) {
-			writeLine("public static volatile SingularAttribute<" + bean.className + ", " + oneToOne.referenceBean.className + "> " + oneToOne.referenceBean.objectName + ";");
+			writeLine("public static final String " + JavaClassNaming.toDatabaseName(oneToOne.referenceBean.className) + " = \"" + oneToOne.referenceBean.className + "\";");
 		}
 		
 		skipLine();

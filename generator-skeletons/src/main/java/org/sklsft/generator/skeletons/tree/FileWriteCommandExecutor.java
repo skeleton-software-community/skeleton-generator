@@ -1,6 +1,6 @@
 package org.sklsft.generator.skeletons.tree;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sklsft.generator.skeletons.commands.interfaces.FileWriteCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
