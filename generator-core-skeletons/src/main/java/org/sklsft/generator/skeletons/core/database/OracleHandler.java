@@ -25,7 +25,7 @@ public class OracleHandler implements DatabaseHandler {
 	
 	@Override
 	public String getDialect() {
-		return "org.hibernate.dialect.Oracle12cDialect";
+		return "org.hibernate.dialect.OracleDialect";
 	}
 
 	@Override

@@ -64,13 +64,14 @@ public class OracleTableDefinitionFileWriteCommand extends SqlFileWriteCommand {
 		write(" USING INDEX (CREATE INDEX IDX_" + table.name + "_PK ON " + table.name + "(ID)");
 		
 		if (table.myPackage.model.project.indexesTableSpace != null) {
-			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace + ")");
+			write(" TABLESPACE " + table.myPackage.model.project.indexesTableSpace);
 		}
 		skipLine();
 		write(")");
 		if (table.myPackage.model.project.tablesTableSpace != null) {
 			write(" TABLESPACE " + table.myPackage.model.project.tablesTableSpace);
 		}
+		write(")");
 		skipLine();
 		writeLine("/");
 		skipLine();
